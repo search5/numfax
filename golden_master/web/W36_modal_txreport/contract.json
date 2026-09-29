@@ -1,0 +1,11 @@
+{
+  "status_code": 200,
+  "title": "- AvantFAX - Transmission Report",
+  "required_text": [
+    "Transmission Report",
+    "Company",
+    "Date",
+    "Pages",
+    "Print"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "id": "W14_addressbook",
+  "description": "Address book companies list",
+  "route": "/addressbook",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

@@ -1,0 +1,127 @@
+{% extends "admin_layout.jinja2" %}
+
+{% block title %}- NamiFAX - Admin Control Panel{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+  
+  <!-- Dashboard Banner / Server Status Ribbon -->
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-800 gap-4">
+    <div class="flex items-center space-x-3">
+      <div class="w-10 h-10 rounded-lg bg-sky-950 border border-sky-800 flex items-center justify-center text-sky-400 shadow-inner">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+      </div>
+      <div>
+        <h2 class="text-base font-bold text-white tracking-tight flex items-center gap-2">
+          Dashboard Overview
+          <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-800">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span>
+            SYSTEM OPERATIONAL
+          </span>
+        </h2>
+        <p class="text-xs text-slate-400">Real-time status of fax spools, hardware serial modems, and registered users</p>
+      </div>
+    </div>
+
+    <!-- Quick Navigation Links (Required by Contract) -->
+    <div class="flex items-center space-x-2 text-xs">
+      <a href="/admin/users" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-sky-400 hover:text-sky-300 border border-slate-700 font-semibold transition">Users</a>
+      <a href="/admin/modems" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-sky-400 hover:text-sky-300 border border-slate-700 font-semibold transition">Modems</a>
+      <a href="/admin/did" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-sky-400 hover:text-sky-300 border border-slate-700 font-semibold transition">DID Routes</a>
+      <a href="/admin/syslog" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-sky-400 hover:text-sky-300 border border-slate-700 font-semibold transition">Logs</a>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    
+    <!-- Left: Registered Users Overview (2 Cols) -->
+    <div class="lg:col-span-2 bg-slate-950/60 border border-slate-800/90 rounded-xl p-5 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center space-x-2">
+          <span class="w-2 h-2 rounded-full bg-sky-500"></span>
+          <h3 class="text-xs font-bold text-slate-200 uppercase tracking-wider">Registered User Accounts ({{ total_users }})</h3>
+        </div>
+        <a href="/admin/users" class="text-xs text-sky-400 hover:text-sky-300 hover:underline font-semibold">+ Manage Users</a>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs text-left border-collapse">
+          <thead>
+            <tr class="bg-slate-900 border-b border-slate-800 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+              <th scope="col" class="py-2.5 px-3">Name</th>
+              <th scope="col" class="py-2.5 px-3">Username</th>
+              <th scope="col" class="py-2.5 px-3">Last Login</th>
+              <th scope="col" class="py-2.5 px-3">Email</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800/60 text-slate-300">
+            {% for u in users %}
+              <tr class="hover:bg-slate-800/40 transition">
+                <td class="py-2.5 px-3 font-semibold text-white">{{ u.name }}</td>
+                <td class="py-2.5 px-3 font-mono text-slate-300">{{ u.username }}</td>
+                <td class="py-2.5 px-3 text-slate-400 text-[11px] font-mono">{{ u.last_login or '-' }}</td>
+                <td class="py-2.5 px-3 text-sky-400 font-mono">{{ u.email }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Right: Server Status & Hardware Modems (1 Col) -->
+    <div class="bg-slate-950/60 border border-slate-800/90 rounded-xl p-5 space-y-5 text-xs">
+      <div>
+        <div class="flex items-center space-x-2 border-b border-slate-800 pb-3 mb-3">
+          <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+          <h3 class="text-xs font-bold text-slate-200 uppercase tracking-wider">Server Status</h3>
+        </div>
+        
+        <div class="space-y-2.5 text-slate-300">
+          <div class="flex items-center justify-between py-1 border-b border-slate-800/40">
+            <span class="text-slate-400">HylaFAX&trade; Core</span>
+            <strong class="text-white font-mono">{{ hylafax_version or '6.0.7' }}</strong>
+          </div>
+          <div class="flex items-center justify-between py-1 border-b border-slate-800/40">
+            <span class="text-slate-400">Database Engine</span>
+            <strong class="text-white font-mono">SQLAlchemy / SQLite</strong>
+          </div>
+          <div class="flex items-center justify-between py-1 border-b border-slate-800/40">
+            <span class="text-slate-400">System Scheduler</span>
+            <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-400 border border-emerald-800">
+              APScheduler Active
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="flex items-center space-x-2 border-b border-slate-800 pb-2 mb-3">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider">Configured Modems</h4>
+        </div>
+
+        <div class="space-y-2" id="modem-status-div">
+          {% for m in modems %}
+            <div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-900 border border-slate-800 shadow-2xs">
+              <div class="flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="font-mono text-slate-200 font-semibold">{{ m.device }}</span>
+                {% if m.alias %}
+                  <span class="text-[11px] text-slate-400">({{ m.alias }})</span>
+                {% endif %}
+              </div>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-800">
+                {{ m.status or 'IDLE' }}
+              </span>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

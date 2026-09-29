@@ -1,0 +1,17 @@
+{
+  "id": "04_avantfaxcron_no_args",
+  "description": "avantfaxcron with missing required -t option",
+  "legacy_cmd": [
+    "php",
+    "-d",
+    "display_errors=0",
+    "avantfaxcron.php"
+  ],
+  "target_cmd": [
+    "/usr/local/bin/python3",
+    "-m",
+    "avantfax.cli.cron"
+  ],
+  "cwd": "legacy/avantfax/includes",
+  "target_cwd": "."
+}

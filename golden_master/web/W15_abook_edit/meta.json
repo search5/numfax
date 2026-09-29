@@ -1,0 +1,8 @@
+{
+  "id": "W15_abook_edit",
+  "description": "Address book edit company form",
+  "route": "/addressbook/edit",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

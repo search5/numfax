@@ -1,0 +1,17 @@
+{
+  "id": "12_faxrcvd_no_args",
+  "description": "faxrcvd with no arguments (usage exit)",
+  "legacy_cmd": [
+    "php",
+    "-d",
+    "display_errors=0",
+    "faxrcvd.php"
+  ],
+  "target_cmd": [
+    "/usr/local/bin/python3",
+    "-m",
+    "avantfax.cli.faxrcvd"
+  ],
+  "cwd": "legacy/avantfax/includes",
+  "target_cwd": "."
+}

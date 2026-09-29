@@ -1,0 +1,131 @@
+{
+  "status_code": 200,
+  "title": "AvantFAX - Admin - Configure DID Routing",
+  "forms": [
+    {
+      "method": "post",
+      "inputs": [
+        {
+          "name": "route",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "alias",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "contact"
+        },
+        {
+          "name": "printer"
+        },
+        {
+          "name": "faxcatid"
+        },
+        {
+          "name": "didr_id",
+          "type": "hidden"
+        },
+        {
+          "name": "_submit_check",
+          "type": "hidden"
+        }
+      ],
+      "submit_button": true
+    }
+  ],
+  "required_text": [
+    "Configure Routing Rule",
+    "Route Code",
+    "Alias",
+    "Save",
+    "Delete"
+  ],
+  "form_structure": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/routing/did?didr_id=1",
+        "method": "POST",
+        "inputs_count": 7,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "route",
+            "tag": "input",
+            "type": "text",
+            "id": "route",
+            "required": true
+          },
+          {
+            "name": "alias",
+            "tag": "input",
+            "type": "text",
+            "id": "alias",
+            "required": true
+          },
+          {
+            "name": "contact",
+            "tag": "input",
+            "type": "email",
+            "id": "contact",
+            "required": false
+          },
+          {
+            "name": "printer",
+            "tag": "input",
+            "type": "text",
+            "id": "printer",
+            "required": false
+          },
+          {
+            "name": "faxcatid",
+            "tag": "select",
+            "type": "select",
+            "id": "faxcatid",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "didr_id",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "delete",
+            "text": "Delete"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "save",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "dynamic_states": {
+    "delete_rule": {
+      "trigger_selector": "button[name='delete']",
+      "affected_inputs": [
+        "didr_id"
+      ]
+    }
+  }
+}

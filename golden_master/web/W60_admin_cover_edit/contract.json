@@ -1,0 +1,93 @@
+{
+  "status_code": 200,
+  "title": "AvantFAX - Admin - Configure Cover Pages",
+  "forms": [
+    {
+      "method": "post",
+      "inputs": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "cover_id",
+          "type": "hidden"
+        },
+        {
+          "name": "_submit_check",
+          "type": "hidden"
+        }
+      ],
+      "submit_button": true
+    }
+  ],
+  "required_text": [
+    "Cover Page",
+    "Delete"
+  ],
+  "form_structure": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/covers?cover_id=1",
+        "method": "POST",
+        "inputs_count": 4,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "title",
+            "tag": "input",
+            "type": "text",
+            "id": "title",
+            "required": true
+          },
+          {
+            "name": "file",
+            "tag": "input",
+            "type": "text",
+            "id": "file",
+            "required": true
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "cover_id",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "delete",
+            "text": "Delete"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "save",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "dynamic_states": {
+    "delete_template": {
+      "trigger_selector": "button[name='delete']",
+      "affected_inputs": [
+        "cover_id"
+      ]
+    }
+  }
+}

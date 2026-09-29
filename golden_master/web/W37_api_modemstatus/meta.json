@@ -1,0 +1,8 @@
+{
+  "id": "W37_api_modemstatus",
+  "description": "Async AJAX modem status XML poller",
+  "route": "/ajax/modemstatus",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

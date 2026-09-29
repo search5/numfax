@@ -1,0 +1,8 @@
+{
+  "id": "W43_api_archive_fax",
+  "description": "Async AJAX archive fax endpoint",
+  "route": "/ajax/archivefax",
+  "method": "POST",
+  "expected_status": 200,
+  "implemented": true
+}

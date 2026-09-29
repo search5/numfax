@@ -1,0 +1,17 @@
+{
+  "id": "17_import_users_no_args",
+  "description": "import_users with no arguments (usage exit)",
+  "legacy_cmd": [
+    "php",
+    "-d",
+    "display_errors=0",
+    "import_users.php"
+  ],
+  "target_cmd": [
+    "python",
+    "-m",
+    "avantfax.cli.import_users"
+  ],
+  "cwd": "legacy/avantfax/tools",
+  "target_cwd": "."
+}

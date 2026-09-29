@@ -1,0 +1,21 @@
+{
+  "id": "03_dynconf_sip_number",
+  "description": "dynconf with SIP callid that requires stripping",
+  "legacy_cmd": [
+    "php",
+    "-d",
+    "display_errors=0",
+    "dynconf.php",
+    "ttyS0",
+    "sip:12345@domain.com"
+  ],
+  "target_cmd": [
+    "/usr/local/bin/python3",
+    "-m",
+    "avantfax.cli.dynconf",
+    "ttyS0",
+    "sip:12345@domain.com"
+  ],
+  "cwd": "legacy/avantfax/includes",
+  "target_cwd": "."
+}

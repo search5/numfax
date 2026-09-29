@@ -1,0 +1,236 @@
+{% extends "layout.jinja2" %}
+
+{% block title %}NamiFAX — Send Fax{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto space-y-6">
+
+  <!-- Page Header -->
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl font-bold text-slate-900">Send Fax</h1>
+      <p class="text-sm text-slate-500 mt-1">Dispatch documents via on-premise hardware modems</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <a href="/addressbook" class="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 rounded-xl text-sm font-medium shadow-sm transition-colors">
+        <svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+        Address Book
+      </a>
+      <a href="/distrolist" class="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 rounded-xl text-sm font-medium shadow-sm transition-colors">
+        <svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+        </svg>
+        Distribution Lists
+      </a>
+    </div>
+  </div>
+
+  {% if error %}
+    <div class="p-4 bg-red-50 border border-red-200 text-red-800 rounded-xl text-sm flex items-start gap-3">
+      <svg class="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <span>{{ error }}</span>
+    </div>
+  {% endif %}
+
+  <!-- Transmission Form -->
+  <form action="/sendfax" method="post" enctype="multipart/form-data" class="space-y-6">
+
+    <!-- 1. Destination & Recipients -->
+    <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+      <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+        <h2 class="text-base font-semibold text-slate-900 flex items-center gap-2">
+          <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">1</span>
+          Destination &amp; Recipients
+        </h2>
+        <p class="text-sm text-slate-500 mt-0.5 ml-8">Enter the fax number and recipient details</p>
+      </div>
+
+      <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="md:col-span-2">
+          <label for="faxnumber" class="block text-sm font-semibold text-slate-800 mb-1.5">
+            Destination Number <span class="text-red-500">*</span>
+          </label>
+          <input type="text" name="faxnumber" id="faxnumber"
+                 value="{{ form_data.faxnumber or form_data.destinations or '' }}"
+                 required
+                 placeholder="+1-555-0199  or  comma-separated list for multiple recipients"
+                 class="w-full border border-slate-300 rounded-xl px-4 py-3 text-sm font-mono text-slate-900 bg-white
+                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
+          <p class="text-xs text-slate-400 mt-1">Separate multiple numbers with commas</p>
+        </div>
+
+        <div>
+          <label for="to_person" class="block text-sm font-semibold text-slate-800 mb-1.5">Attention To</label>
+          <input type="text" name="to_person" id="to_person"
+                 value="{{ form_data.to_person or '' }}"
+                 placeholder="e.g. Jane Doe"
+                 class="w-full border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-900 bg-white
+                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
+        </div>
+
+        <div>
+          <label for="to_company" class="block text-sm font-semibold text-slate-800 mb-1.5">Company</label>
+          <input type="text" name="to_company" id="to_company"
+                 value="{{ form_data.to_company or '' }}"
+                 placeholder="e.g. Acme Corporation"
+                 class="w-full border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-900 bg-white
+                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
+        </div>
+
+        <div class="md:col-span-2">
+          <label for="regarding" class="block text-sm font-semibold text-slate-800 mb-1.5">Subject / Regarding</label>
+          <input type="text" name="regarding" id="regarding"
+                 value="{{ form_data.regarding or '' }}"
+                 placeholder="e.g. Purchase Order #4921"
+                 class="w-full border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-900 bg-white
+                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Document Attachment -->
+    <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+      <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+        <h2 class="text-base font-semibold text-slate-900 flex items-center gap-2">
+          <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">2</span>
+          Document Attachment
+        </h2>
+        <p class="text-sm text-slate-500 mt-0.5 ml-8">Attach the document to transmit</p>
+      </div>
+
+      <div class="p-6">
+        <label for="file"
+               class="flex flex-col items-center justify-center w-full border-2 border-dashed border-slate-300 hover:border-blue-400 rounded-xl p-10 text-center cursor-pointer group transition-colors bg-slate-50 hover:bg-blue-50/30">
+          <div class="w-14 h-14 rounded-2xl bg-white border border-slate-200 group-hover:border-blue-300 flex items-center justify-center mb-4 shadow-sm transition-colors">
+            <svg class="w-7 h-7 text-slate-400 group-hover:text-blue-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+          </div>
+          <p class="text-sm font-semibold text-slate-700 group-hover:text-blue-700 transition-colors">Click to select a file</p>
+          <p class="text-xs text-slate-400 mt-1">PDF, TIFF, PostScript, TXT — Max 10 MB</p>
+          <input type="file" name="file" id="file" class="sr-only" />
+        </label>
+      </div>
+    </div>
+
+    <!-- 3. Cover Page -->
+    <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+      <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+        <div>
+          <h2 class="text-base font-semibold text-slate-900 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center">3</span>
+            Cover Page
+          </h2>
+          <p class="text-sm text-slate-500 mt-0.5 ml-8">Optional cover sheet settings</p>
+        </div>
+        <label class="inline-flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" name="coverpage" id="coverpage" value="1"
+                 {% if form_data.coverpage != '0' %}checked{% endif %}
+                 class="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
+          <span class="text-sm font-medium text-slate-700">Include Cover Page</span>
+        </label>
+      </div>
+
+      <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div>
+          <label for="whichcover" class="block text-sm font-semibold text-slate-800 mb-1.5">Cover Template</label>
+          <select name="whichcover" id="whichcover"
+                  class="w-full border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-900 bg-white
+                         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm">
+            <option value="standard" {% if form_data.whichcover == 'standard' or not form_data.whichcover %}selected{% endif %}>Standard (Default)</option>
+            <option value="urgent" {% if form_data.whichcover == 'urgent' %}selected{% endif %}>Urgent Attention</option>
+            <option value="confidential" {% if form_data.whichcover == 'confidential' %}selected{% endif %}>Confidential</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="modem" class="block text-sm font-semibold text-slate-800 mb-1.5">Send via Modem Line</label>
+          <select name="modem" id="modem"
+                  class="w-full border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-900 bg-white
+                         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm">
+            <option value="">Any Available Modem (Auto)</option>
+            {% for m in modem_list %}
+              <option value="{{ m.device }}" {% if form_data.modem == m.device %}selected{% endif %}>{{ m.alias or m.device }} [{{ m.status or 'IDLE' }}]</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="md:col-span-2">
+          <label for="comments" class="block text-sm font-semibold text-slate-800 mb-1.5">Cover Comments / Message</label>
+          <textarea name="comments" id="comments" rows="4"
+                    placeholder="Notes or comments to print on the cover sheet..."
+                    class="w-full border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-900 bg-white
+                           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm resize-none">{{ form_data.comments or '' }}</textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Advanced Options (collapsible) -->
+    <details class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden group">
+      <summary class="px-6 py-4 flex items-center justify-between cursor-pointer select-none list-none hover:bg-slate-50 transition-colors">
+        <div class="flex items-center gap-2">
+          <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 text-xs font-bold flex items-center justify-center">4</span>
+          <span class="text-base font-semibold text-slate-900">Advanced Options</span>
+          <span class="text-sm text-slate-400 font-normal">Priority, retries, notifications</span>
+        </div>
+        <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </summary>
+
+      <div class="border-t border-slate-100 p-6 grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div>
+          <label for="priority" class="block text-sm font-semibold text-slate-800 mb-1.5">Priority</label>
+          <select name="priority" id="priority"
+                  class="w-full border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-900 bg-white
+                         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm">
+            <option value="normal" {% if form_data.priority == 'normal' or not form_data.priority %}selected{% endif %}>Normal</option>
+            <option value="low" {% if form_data.priority == 'low' %}selected{% endif %}>Low</option>
+            <option value="high" {% if form_data.priority == 'high' %}selected{% endif %}>High (Urgent)</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="numtries" class="block text-sm font-semibold text-slate-800 mb-1.5">Max Retries</label>
+          <input type="number" name="numtries" id="numtries"
+                 value="{{ form_data.numtries or 3 }}" min="1" max="10"
+                 class="w-full border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-900 bg-white
+                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
+        </div>
+
+        <div class="flex items-end pb-1">
+          <label class="inline-flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" name="notify_requeue" id="notify_requeue" value="1"
+                   {% if form_data.notify_requeue %}checked{% endif %}
+                   class="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
+            <span class="text-sm text-slate-700">Notify on retry</span>
+          </label>
+        </div>
+      </div>
+    </details>
+
+    <!-- Hidden submit check -->
+    <input type="hidden" name="_submit_check" value="1" />
+
+    <!-- Submit Actions -->
+    <div class="flex items-center justify-between pt-2">
+      <a href="/inbox" class="text-sm text-slate-500 hover:text-slate-700 font-medium transition-colors">
+        ← Cancel &amp; return to Inbox
+      </a>
+      <button type="submit"
+              class="inline-flex items-center gap-2 px-8 py-3 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white rounded-xl text-sm font-bold shadow-sm transition-all">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+        </svg>
+        Send Fax Now
+      </button>
+    </div>
+
+  </form>
+
+</div>
+{% endblock %}

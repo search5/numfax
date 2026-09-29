@@ -1,0 +1,8 @@
+{
+  "id": "W10_sendfax_err",
+  "description": "SendFax validation error when fax number is missing",
+  "route": "/sendfax",
+  "method": "POST",
+  "expected_status": 200,
+  "implemented": true
+}

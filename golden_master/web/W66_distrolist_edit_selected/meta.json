@@ -1,0 +1,8 @@
+{
+  "id": "W66_distrolist_edit_selected",
+  "description": "Distribution list group editing mode with members and delete action",
+  "route": "/distrolist/edit?dl_id=1",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

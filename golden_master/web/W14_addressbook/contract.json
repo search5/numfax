@@ -1,0 +1,40 @@
+{
+  "status_code": 200,
+  "title": "- AvantFAX - Contacts",
+  "required_links": [
+    "/addressbook/edit"
+  ],
+  "required_text": [
+    "Address Book",
+    "New Company"
+  ],
+  "form_structure": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/addressbook",
+        "method": "GET",
+        "inputs_count": 1,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "q",
+            "tag": "input",
+            "type": "text",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Search"
+          }
+        ]
+      }
+    ]
+  }
+}

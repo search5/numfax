@@ -1,0 +1,9 @@
+{
+  "status_code": 200,
+  "content_type": "text/xml",
+  "required_text": [
+    "<response>",
+    "<modem>",
+    "<status>"
+  ]
+}

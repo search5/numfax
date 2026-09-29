@@ -1,0 +1,8 @@
+{
+  "id": "W57_admin_did_edit",
+  "description": "Admin DID routing rule editing mode with pre-filled fields and delete button",
+  "route": "/admin/routing/did?didr_id=1",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

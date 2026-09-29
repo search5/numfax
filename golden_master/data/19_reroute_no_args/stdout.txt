@@ -1,0 +1,1 @@
+Usage: reroute.php [device | DIDnum] email-address

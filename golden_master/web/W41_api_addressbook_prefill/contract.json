@@ -1,0 +1,10 @@
+{
+  "status_code": 200,
+  "content_type": "text/xml",
+  "required_text": [
+    "<response>",
+    "<to_company>",
+    "<to_person>",
+    "<to_address>"
+  ]
+}

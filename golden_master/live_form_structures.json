@@ -1,0 +1,2805 @@
+{
+  "W09_sendfax_form": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/sendfax",
+        "method": "POST",
+        "inputs_count": 13,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "faxnumber",
+            "tag": "input",
+            "type": "text",
+            "id": "faxnumber",
+            "required": true
+          },
+          {
+            "name": "to_person",
+            "tag": "input",
+            "type": "text",
+            "id": "to_person",
+            "required": false
+          },
+          {
+            "name": "to_company",
+            "tag": "input",
+            "type": "text",
+            "id": "to_company",
+            "required": false
+          },
+          {
+            "name": "regarding",
+            "tag": "input",
+            "type": "text",
+            "id": "regarding",
+            "required": false
+          },
+          {
+            "name": "coverpage",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "coverpage",
+            "required": false
+          },
+          {
+            "name": "whichcover",
+            "tag": "select",
+            "type": "select",
+            "id": "whichcover",
+            "required": false
+          },
+          {
+            "name": "modem",
+            "tag": "select",
+            "type": "select",
+            "id": "modem",
+            "required": false
+          },
+          {
+            "name": "comments",
+            "tag": "textarea",
+            "type": "textarea",
+            "id": "comments",
+            "required": false
+          },
+          {
+            "name": "priority",
+            "tag": "select",
+            "type": "select",
+            "id": "priority",
+            "required": false
+          },
+          {
+            "name": "numtries",
+            "tag": "input",
+            "type": "number",
+            "id": "numtries",
+            "required": false
+          },
+          {
+            "name": "notify_requeue",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "notify_requeue",
+            "required": false
+          },
+          {
+            "name": "file",
+            "tag": "input",
+            "type": "file",
+            "id": "file",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Send Fax"
+          }
+        ]
+      }
+    ]
+  },
+  "W12_archive_form": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/archive",
+        "method": "GET",
+        "inputs_count": 6,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "search",
+            "tag": "input",
+            "type": "text",
+            "id": "search",
+            "required": false
+          },
+          {
+            "name": "category",
+            "tag": "select",
+            "type": "select",
+            "id": "category",
+            "required": false
+          },
+          {
+            "name": "date_from",
+            "tag": "input",
+            "type": "text",
+            "id": "date_from",
+            "required": false
+          },
+          {
+            "name": "date_to",
+            "tag": "input",
+            "type": "text",
+            "id": "date_to",
+            "required": false
+          },
+          {
+            "name": "sentrecvd",
+            "tag": "select",
+            "type": "select",
+            "id": "sentrecvd",
+            "required": false
+          },
+          {
+            "name": "faxid",
+            "tag": "input",
+            "type": "text",
+            "id": "faxid",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Search"
+          }
+        ]
+      }
+    ]
+  },
+  "W13_archive_res": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/archive",
+        "method": "GET",
+        "inputs_count": 6,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "search",
+            "tag": "input",
+            "type": "text",
+            "id": "search",
+            "required": false
+          },
+          {
+            "name": "category",
+            "tag": "select",
+            "type": "select",
+            "id": "category",
+            "required": false
+          },
+          {
+            "name": "date_from",
+            "tag": "input",
+            "type": "text",
+            "id": "date_from",
+            "required": false
+          },
+          {
+            "name": "date_to",
+            "tag": "input",
+            "type": "text",
+            "id": "date_to",
+            "required": false
+          },
+          {
+            "name": "sentrecvd",
+            "tag": "select",
+            "type": "select",
+            "id": "sentrecvd",
+            "required": false
+          },
+          {
+            "name": "faxid",
+            "tag": "input",
+            "type": "text",
+            "id": "faxid",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Search"
+          }
+        ]
+      }
+    ]
+  },
+  "W14_addressbook": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/addressbook",
+        "method": "GET",
+        "inputs_count": 1,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "q",
+            "tag": "input",
+            "type": "text",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Search"
+          }
+        ]
+      }
+    ]
+  },
+  "W15_abook_edit": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/addressbook/edit",
+        "method": "POST",
+        "inputs_count": 10,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "company",
+            "tag": "input",
+            "type": "text",
+            "id": "company",
+            "required": true
+          },
+          {
+            "name": "faxnumber",
+            "tag": "input",
+            "type": "text",
+            "id": "faxnumber",
+            "required": false
+          },
+          {
+            "name": "email",
+            "tag": "input",
+            "type": "email",
+            "id": "email",
+            "required": false
+          },
+          {
+            "name": "to_person",
+            "tag": "input",
+            "type": "text",
+            "id": "to_person",
+            "required": false
+          },
+          {
+            "name": "to_voicenumber",
+            "tag": "input",
+            "type": "text",
+            "id": "to_voicenumber",
+            "required": false
+          },
+          {
+            "name": "to_address",
+            "tag": "input",
+            "type": "text",
+            "id": "to_address",
+            "required": false
+          },
+          {
+            "name": "to_city",
+            "tag": "input",
+            "type": "text",
+            "id": "to_city",
+            "required": false
+          },
+          {
+            "name": "category",
+            "tag": "select",
+            "type": "select",
+            "id": "category",
+            "required": false
+          },
+          {
+            "name": "description",
+            "tag": "input",
+            "type": "text",
+            "id": "description",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "save",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "W16_distrolist": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/distrolist/edit",
+        "method": "POST",
+        "inputs_count": 4,
+        "buttons_count": 4,
+        "field_sequence": [
+          {
+            "name": "listname",
+            "tag": "input",
+            "type": "text",
+            "id": "listname",
+            "required": true
+          },
+          {
+            "name": "",
+            "tag": "input",
+            "type": "text",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "dl_id",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "button",
+            "name": "",
+            "text": "Remove"
+          },
+          {
+            "tag": "button",
+            "type": "button",
+            "name": "",
+            "text": "Remove"
+          },
+          {
+            "tag": "button",
+            "type": "button",
+            "name": "",
+            "text": "Add Member"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Save Changes"
+          }
+        ]
+      }
+    ]
+  },
+  "W17_settings": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/settings",
+        "method": "POST",
+        "inputs_count": 15,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "name",
+            "tag": "input",
+            "type": "text",
+            "id": "name",
+            "required": true
+          },
+          {
+            "name": "email",
+            "tag": "input",
+            "type": "email",
+            "id": "email",
+            "required": true
+          },
+          {
+            "name": "from_company",
+            "tag": "input",
+            "type": "text",
+            "id": "from_company",
+            "required": false
+          },
+          {
+            "name": "from_location",
+            "tag": "input",
+            "type": "text",
+            "id": "from_location",
+            "required": false
+          },
+          {
+            "name": "from_voicenumber",
+            "tag": "input",
+            "type": "text",
+            "id": "from_voicenumber",
+            "required": false
+          },
+          {
+            "name": "from_faxnumber",
+            "tag": "input",
+            "type": "text",
+            "id": "from_faxnumber",
+            "required": false
+          },
+          {
+            "name": "user_tsi",
+            "tag": "input",
+            "type": "text",
+            "id": "user_tsi",
+            "required": false
+          },
+          {
+            "name": "email_sig",
+            "tag": "textarea",
+            "type": "textarea",
+            "id": "email_sig",
+            "required": false
+          },
+          {
+            "name": "language",
+            "tag": "select",
+            "type": "select",
+            "id": "language",
+            "required": false
+          },
+          {
+            "name": "coverpage_id",
+            "tag": "select",
+            "type": "select",
+            "id": "coverpage_id",
+            "required": false
+          },
+          {
+            "name": "faxperpageinbox",
+            "tag": "select",
+            "type": "select",
+            "id": "faxperpageinbox",
+            "required": false
+          },
+          {
+            "name": "old_password",
+            "tag": "input",
+            "type": "password",
+            "id": "old_password",
+            "required": false
+          },
+          {
+            "name": "new_password",
+            "tag": "input",
+            "type": "password",
+            "id": "new_password",
+            "required": false
+          },
+          {
+            "name": "confirm_password",
+            "tag": "input",
+            "type": "password",
+            "id": "confirm_password",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Update Settings"
+          }
+        ]
+      }
+    ]
+  },
+  "W19_admin_users": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/users",
+        "method": "POST",
+        "inputs_count": 15,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "name",
+            "tag": "input",
+            "type": "text",
+            "id": "name",
+            "required": true
+          },
+          {
+            "name": "username",
+            "tag": "input",
+            "type": "text",
+            "id": "username",
+            "required": true
+          },
+          {
+            "name": "password",
+            "tag": "input",
+            "type": "password",
+            "id": "password",
+            "required": false
+          },
+          {
+            "name": "email",
+            "tag": "input",
+            "type": "email",
+            "id": "email",
+            "required": true
+          },
+          {
+            "name": "is_admin",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "superuser",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "can_del",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "any_modem",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "didrouting[]",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "didrouting[]",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "modemdevs[]",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "modemdevs[]",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "faxcats[]",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "faxcats[]",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "create",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "W20_admin_modems": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/modems",
+        "method": "POST",
+        "inputs_count": 5,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "device",
+            "tag": "input",
+            "type": "text",
+            "id": "device",
+            "required": true
+          },
+          {
+            "name": "alias",
+            "tag": "input",
+            "type": "text",
+            "id": "alias",
+            "required": true
+          },
+          {
+            "name": "contact",
+            "tag": "input",
+            "type": "email",
+            "id": "contact",
+            "required": false
+          },
+          {
+            "name": "printer",
+            "tag": "input",
+            "type": "text",
+            "id": "printer",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Save Modem"
+          }
+        ]
+      }
+    ]
+  },
+  "W21_admin_routing": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/routing/did",
+        "method": "POST",
+        "inputs_count": 6,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "route",
+            "tag": "input",
+            "type": "text",
+            "id": "route",
+            "required": true
+          },
+          {
+            "name": "alias",
+            "tag": "input",
+            "type": "text",
+            "id": "alias",
+            "required": true
+          },
+          {
+            "name": "contact",
+            "tag": "input",
+            "type": "email",
+            "id": "contact",
+            "required": false
+          },
+          {
+            "name": "printer",
+            "tag": "input",
+            "type": "text",
+            "id": "printer",
+            "required": false
+          },
+          {
+            "name": "faxcatid",
+            "tag": "select",
+            "type": "select",
+            "id": "faxcatid",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "create",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "W22_admin_syslogs": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/system_logs",
+        "method": "GET",
+        "inputs_count": 5,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "kw",
+            "tag": "input",
+            "type": "text",
+            "id": "kw",
+            "required": false
+          },
+          {
+            "name": "day",
+            "tag": "select",
+            "type": "select",
+            "id": "day",
+            "required": false
+          },
+          {
+            "name": "month",
+            "tag": "select",
+            "type": "select",
+            "id": "month",
+            "required": false
+          },
+          {
+            "name": "year",
+            "tag": "select",
+            "type": "select",
+            "id": "year",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Search"
+          }
+        ]
+      }
+    ]
+  },
+  "W23_auth_forgot": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/forgot",
+        "method": "POST",
+        "inputs_count": 2,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "username",
+            "tag": "input",
+            "type": "text",
+            "id": "username",
+            "required": true
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Reset Password"
+          }
+        ]
+      }
+    ]
+  },
+  "W24_auth_pwdexpired": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/pwdexpired",
+        "method": "POST",
+        "inputs_count": 4,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "oldpwd",
+            "tag": "input",
+            "type": "password",
+            "id": "oldpwd",
+            "required": true
+          },
+          {
+            "name": "newpwd",
+            "tag": "input",
+            "type": "password",
+            "id": "newpwd",
+            "required": true
+          },
+          {
+            "name": "conpwd",
+            "tag": "input",
+            "type": "password",
+            "id": "conpwd",
+            "required": true
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Update Password"
+          }
+        ]
+      }
+    ]
+  },
+  "W25_admin_covers": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/covers",
+        "method": "POST",
+        "inputs_count": 3,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "title",
+            "tag": "input",
+            "type": "text",
+            "id": "title",
+            "required": true
+          },
+          {
+            "name": "file",
+            "tag": "input",
+            "type": "text",
+            "id": "file",
+            "required": true
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "create",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "W26_admin_categories": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/categories",
+        "method": "POST",
+        "inputs_count": 2,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "name",
+            "tag": "input",
+            "type": "text",
+            "id": "name",
+            "required": true
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "create",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "W27_admin_barcodes": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/barcodes",
+        "method": "POST",
+        "inputs_count": 5,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "barcode",
+            "tag": "input",
+            "type": "text",
+            "id": "barcode",
+            "required": true
+          },
+          {
+            "name": "alias",
+            "tag": "input",
+            "type": "text",
+            "id": "alias",
+            "required": true
+          },
+          {
+            "name": "contact",
+            "tag": "input",
+            "type": "email",
+            "id": "contact",
+            "required": false
+          },
+          {
+            "name": "printer",
+            "tag": "input",
+            "type": "text",
+            "id": "printer",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "create",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "W28_admin_dynconf": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/dynconf",
+        "method": "POST",
+        "inputs_count": 3,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "callid",
+            "tag": "input",
+            "type": "text",
+            "id": "callid",
+            "required": true
+          },
+          {
+            "name": "device",
+            "tag": "select",
+            "type": "select",
+            "id": "device",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "create",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "W29_admin_fax2email": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/fax2email",
+        "method": "POST",
+        "inputs_count": 4,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "company",
+            "tag": "input",
+            "type": "text",
+            "id": "company",
+            "required": true
+          },
+          {
+            "name": "email",
+            "tag": "input",
+            "type": "text",
+            "id": "email",
+            "required": true
+          },
+          {
+            "name": "printer",
+            "tag": "input",
+            "type": "text",
+            "id": "printer",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "save",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "W30_admin_sysfunc": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/system_func",
+        "method": "POST",
+        "inputs_count": 1,
+        "buttons_count": 4,
+        "field_sequence": [
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "reboot",
+            "text": "Reboot Services"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "shutdown",
+            "text": "Shutdown Services"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "download_ar",
+            "text": "Download Archive"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "download_db",
+            "text": "Download Database"
+          }
+        ]
+      }
+    ]
+  },
+  "W31_modal_email": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/email",
+        "method": "POST",
+        "inputs_count": 5,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "emails",
+            "tag": "textarea",
+            "type": "textarea",
+            "id": "emails",
+            "required": true
+          },
+          {
+            "name": "subject",
+            "tag": "input",
+            "type": "text",
+            "id": "subject",
+            "required": false
+          },
+          {
+            "name": "msg",
+            "tag": "textarea",
+            "type": "textarea",
+            "id": "msg",
+            "required": false
+          },
+          {
+            "name": "fid",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "button",
+            "name": "",
+            "text": "Cancel"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Send"
+          }
+        ]
+      }
+    ]
+  },
+  "W32_modal_assign": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/assign",
+        "method": "POST",
+        "inputs_count": 4,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "regexp",
+            "tag": "input",
+            "type": "text",
+            "id": "regexp",
+            "required": false
+          },
+          {
+            "name": "myselect",
+            "tag": "select",
+            "type": "select",
+            "id": "myselect",
+            "required": false
+          },
+          {
+            "name": "abook_id",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "button",
+            "name": "",
+            "text": "Cancel"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "W33_modal_note": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/note",
+        "method": "POST",
+        "inputs_count": 3,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "description",
+            "tag": "textarea",
+            "type": "textarea",
+            "id": "description",
+            "required": true
+          },
+          {
+            "name": "fid",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "button",
+            "name": "",
+            "text": "Cancel"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "W34_modal_delete": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/delete",
+        "method": "POST",
+        "inputs_count": 2,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "fid",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "button",
+            "name": "",
+            "text": "Cancel"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Delete"
+          }
+        ]
+      }
+    ]
+  },
+  "W35_modal_refax": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/refax",
+        "method": "POST",
+        "inputs_count": 5,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "destinations",
+            "tag": "textarea",
+            "type": "textarea",
+            "id": "destinations",
+            "required": true
+          },
+          {
+            "name": "regarding",
+            "tag": "input",
+            "type": "text",
+            "id": "regarding",
+            "required": false
+          },
+          {
+            "name": "comments",
+            "tag": "textarea",
+            "type": "textarea",
+            "id": "comments",
+            "required": false
+          },
+          {
+            "name": "fid",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "button",
+            "name": "",
+            "text": "Cancel"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Send"
+          }
+        ]
+      }
+    ]
+  },
+  "W44_api_faxalter": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/ajax/faxalter",
+        "method": "POST",
+        "inputs_count": 7,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "destination",
+            "tag": "input",
+            "type": "text",
+            "id": "dest",
+            "required": false
+          },
+          {
+            "name": "priority",
+            "tag": "select",
+            "type": "select",
+            "id": "priority",
+            "required": false
+          },
+          {
+            "name": "numtries",
+            "tag": "input",
+            "type": "text",
+            "id": "numtries",
+            "required": false
+          },
+          {
+            "name": "killtime",
+            "tag": "input",
+            "type": "text",
+            "id": "killtime",
+            "required": false
+          },
+          {
+            "name": "sendtime",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "sendtime",
+            "required": false
+          },
+          {
+            "name": "jid",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "W45_popup_distro_helper": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/helper/distrolist",
+        "method": "POST",
+        "inputs_count": 6,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "regexp",
+            "tag": "input",
+            "type": "text",
+            "id": "regexp",
+            "required": false
+          },
+          {
+            "name": "myselect[]",
+            "tag": "select",
+            "type": "select",
+            "id": "myselect",
+            "required": false
+          },
+          {
+            "name": "dl_id",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "add",
+            "tag": "input",
+            "type": "submit",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "",
+            "tag": "input",
+            "type": "button",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "input",
+            "type": "submit",
+            "name": "add",
+            "text": "Add"
+          },
+          {
+            "tag": "input",
+            "type": "button",
+            "name": "",
+            "text": "Close Window"
+          }
+        ]
+      }
+    ]
+  },
+  "W46_popup_distro_contacts": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "",
+        "method": "GET",
+        "inputs_count": 4,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "regexp",
+            "tag": "input",
+            "type": "text",
+            "id": "regexp",
+            "required": false
+          },
+          {
+            "name": "dl_id",
+            "tag": "select",
+            "type": "select",
+            "id": "dl_id",
+            "required": false
+          },
+          {
+            "name": "add",
+            "tag": "input",
+            "type": "button",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "",
+            "tag": "input",
+            "type": "button",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "input",
+            "type": "button",
+            "name": "add",
+            "text": "Add"
+          },
+          {
+            "tag": "input",
+            "type": "button",
+            "name": "",
+            "text": "Close Window"
+          }
+        ]
+      }
+    ]
+  },
+  "W47_popup_fax_contacts": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "",
+        "method": "GET",
+        "inputs_count": 4,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "regexp",
+            "tag": "input",
+            "type": "text",
+            "id": "regexp",
+            "required": false
+          },
+          {
+            "name": "myselect",
+            "tag": "select",
+            "type": "select",
+            "id": "myselect",
+            "required": false
+          },
+          {
+            "name": "add",
+            "tag": "input",
+            "type": "button",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "",
+            "tag": "input",
+            "type": "button",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "input",
+            "type": "button",
+            "name": "add",
+            "text": "Add"
+          },
+          {
+            "tag": "input",
+            "type": "button",
+            "name": "",
+            "text": "Close Window"
+          }
+        ]
+      }
+    ]
+  },
+  "W48_popup_email_contacts": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "",
+        "method": "GET",
+        "inputs_count": 4,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "regexp",
+            "tag": "input",
+            "type": "text",
+            "id": "regexp",
+            "required": false
+          },
+          {
+            "name": "abookemail_id",
+            "tag": "select",
+            "type": "select",
+            "id": "abookemail_id",
+            "required": false
+          },
+          {
+            "name": "add",
+            "tag": "input",
+            "type": "button",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "",
+            "tag": "input",
+            "type": "button",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "input",
+            "type": "button",
+            "name": "add",
+            "text": "Add"
+          },
+          {
+            "tag": "input",
+            "type": "button",
+            "name": "",
+            "text": "Close Window"
+          }
+        ]
+      }
+    ]
+  },
+  "W49_upload_contacts": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/upload/contacts",
+        "method": "POST",
+        "inputs_count": 2,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "upload",
+            "tag": "input",
+            "type": "file",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Upload"
+          }
+        ]
+      }
+    ]
+  },
+  "W50_upload_faxcontacts": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/upload/faxcontacts",
+        "method": "POST",
+        "inputs_count": 3,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "catid",
+            "tag": "select",
+            "type": "select",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "upload",
+            "tag": "input",
+            "type": "file",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Upload"
+          }
+        ]
+      }
+    ]
+  },
+  "W54_emailbook_edit": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/emailbook/edit",
+        "method": "POST",
+        "inputs_count": 6,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "company",
+            "tag": "input",
+            "type": "text",
+            "id": "company",
+            "required": false
+          },
+          {
+            "name": "contact_name",
+            "tag": "input",
+            "type": "text",
+            "id": "contact_name",
+            "required": true
+          },
+          {
+            "name": "contact_email",
+            "tag": "input",
+            "type": "email",
+            "id": "contact_email",
+            "required": true
+          },
+          {
+            "name": "email_id",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "abookemail_id",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "delete",
+            "text": "Delete"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "save",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "W55_ajax_deletefaxes": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/ajax/deletefaxes",
+        "method": "POST",
+        "inputs_count": 2,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "fids",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "button",
+            "name": "",
+            "text": "Cancel"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Delete"
+          }
+        ]
+      }
+    ]
+  },
+  "W57_admin_did_edit": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/routing/did?didr_id=1",
+        "method": "POST",
+        "inputs_count": 7,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "route",
+            "tag": "input",
+            "type": "text",
+            "id": "route",
+            "required": true
+          },
+          {
+            "name": "alias",
+            "tag": "input",
+            "type": "text",
+            "id": "alias",
+            "required": true
+          },
+          {
+            "name": "contact",
+            "tag": "input",
+            "type": "email",
+            "id": "contact",
+            "required": false
+          },
+          {
+            "name": "printer",
+            "tag": "input",
+            "type": "text",
+            "id": "printer",
+            "required": false
+          },
+          {
+            "name": "faxcatid",
+            "tag": "select",
+            "type": "select",
+            "id": "faxcatid",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "didr_id",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "delete",
+            "text": "Delete"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "save",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "W58_admin_modem_edit": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/modems",
+        "method": "POST",
+        "inputs_count": 5,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "device",
+            "tag": "input",
+            "type": "text",
+            "id": "device",
+            "required": true
+          },
+          {
+            "name": "alias",
+            "tag": "input",
+            "type": "text",
+            "id": "alias",
+            "required": true
+          },
+          {
+            "name": "contact",
+            "tag": "input",
+            "type": "email",
+            "id": "contact",
+            "required": false
+          },
+          {
+            "name": "printer",
+            "tag": "input",
+            "type": "text",
+            "id": "printer",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Save Modem"
+          }
+        ]
+      }
+    ]
+  },
+  "W59_admin_barcode_edit": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/barcodes?barcode_id=1",
+        "method": "POST",
+        "inputs_count": 6,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "barcode",
+            "tag": "input",
+            "type": "text",
+            "id": "barcode",
+            "required": true
+          },
+          {
+            "name": "alias",
+            "tag": "input",
+            "type": "text",
+            "id": "alias",
+            "required": true
+          },
+          {
+            "name": "contact",
+            "tag": "input",
+            "type": "email",
+            "id": "contact",
+            "required": false
+          },
+          {
+            "name": "printer",
+            "tag": "input",
+            "type": "text",
+            "id": "printer",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "barcode_id",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "delete",
+            "text": "Delete"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "save",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "W60_admin_cover_edit": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/covers?cover_id=1",
+        "method": "POST",
+        "inputs_count": 4,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "title",
+            "tag": "input",
+            "type": "text",
+            "id": "title",
+            "required": true
+          },
+          {
+            "name": "file",
+            "tag": "input",
+            "type": "text",
+            "id": "file",
+            "required": true
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "cover_id",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "delete",
+            "text": "Delete"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "save",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "W61_admin_dynconf_edit": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/dynconf",
+        "method": "POST",
+        "inputs_count": 4,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "dynconf_id",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "callid",
+            "tag": "input",
+            "type": "text",
+            "id": "callid",
+            "required": true
+          },
+          {
+            "name": "device",
+            "tag": "select",
+            "type": "select",
+            "id": "device",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "delete",
+            "text": "Delete"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "save",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "W62_admin_fax2email_edit": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/fax2email",
+        "method": "POST",
+        "inputs_count": 6,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "c_id",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "abook_id",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "company",
+            "tag": "input",
+            "type": "text",
+            "id": "company",
+            "required": true
+          },
+          {
+            "name": "email",
+            "tag": "input",
+            "type": "text",
+            "id": "email",
+            "required": true
+          },
+          {
+            "name": "printer",
+            "tag": "input",
+            "type": "text",
+            "id": "printer",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "delete",
+            "text": "Delete"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "save",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "W63_admin_category_edit": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/categories",
+        "method": "POST",
+        "inputs_count": 3,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "catid",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "name",
+            "tag": "input",
+            "type": "text",
+            "id": "name",
+            "required": true
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "delete",
+            "text": "Delete"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "save",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "W64_admin_user_edit": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/users",
+        "method": "POST",
+        "inputs_count": 16,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "name",
+            "tag": "input",
+            "type": "text",
+            "id": "name",
+            "required": true
+          },
+          {
+            "name": "username",
+            "tag": "input",
+            "type": "text",
+            "id": "username",
+            "required": true
+          },
+          {
+            "name": "password",
+            "tag": "input",
+            "type": "password",
+            "id": "password",
+            "required": false
+          },
+          {
+            "name": "email",
+            "tag": "input",
+            "type": "email",
+            "id": "email",
+            "required": true
+          },
+          {
+            "name": "is_admin",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "superuser",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "can_del",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "any_modem",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "didrouting[]",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "didrouting[]",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "modemdevs[]",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "modemdevs[]",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "faxcats[]",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "faxcats[]",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "uid",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "delete",
+            "text": "Delete"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "save",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "W65_addressbook_edit_selected": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/addressbook/edit",
+        "method": "POST",
+        "inputs_count": 12,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "company_id",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "id",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "company",
+            "tag": "input",
+            "type": "text",
+            "id": "company",
+            "required": true
+          },
+          {
+            "name": "faxnumber",
+            "tag": "input",
+            "type": "text",
+            "id": "faxnumber",
+            "required": false
+          },
+          {
+            "name": "email",
+            "tag": "input",
+            "type": "email",
+            "id": "email",
+            "required": false
+          },
+          {
+            "name": "to_person",
+            "tag": "input",
+            "type": "text",
+            "id": "to_person",
+            "required": false
+          },
+          {
+            "name": "to_voicenumber",
+            "tag": "input",
+            "type": "text",
+            "id": "to_voicenumber",
+            "required": false
+          },
+          {
+            "name": "to_address",
+            "tag": "input",
+            "type": "text",
+            "id": "to_address",
+            "required": false
+          },
+          {
+            "name": "to_city",
+            "tag": "input",
+            "type": "text",
+            "id": "to_city",
+            "required": false
+          },
+          {
+            "name": "category",
+            "tag": "select",
+            "type": "select",
+            "id": "category",
+            "required": false
+          },
+          {
+            "name": "description",
+            "tag": "input",
+            "type": "text",
+            "id": "description",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "delete",
+            "text": "Delete"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "save",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "W66_distrolist_edit_selected": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/distrolist/edit",
+        "method": "POST",
+        "inputs_count": 3,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "dl_id",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "listname",
+            "tag": "input",
+            "type": "text",
+            "id": "listname",
+            "required": true
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "delete",
+            "text": "Delete"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "save",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "W67_emailbook_edit_selected": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/emailbook/edit",
+        "method": "POST",
+        "inputs_count": 6,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "company",
+            "tag": "input",
+            "type": "text",
+            "id": "company",
+            "required": false
+          },
+          {
+            "name": "contact_name",
+            "tag": "input",
+            "type": "text",
+            "id": "contact_name",
+            "required": true
+          },
+          {
+            "name": "contact_email",
+            "tag": "input",
+            "type": "email",
+            "id": "contact_email",
+            "required": true
+          },
+          {
+            "name": "email_id",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "abookemail_id",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "delete",
+            "text": "Delete"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "save",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  }
+}

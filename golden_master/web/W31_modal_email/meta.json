@@ -1,0 +1,8 @@
+{
+  "id": "W31_modal_email",
+  "description": "Modal dialog to send fax via email",
+  "route": "/email",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

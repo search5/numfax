@@ -1,0 +1,190 @@
+{
+  "status_code": 200,
+  "title": "AvantFAX - Admin - Users",
+  "forms": [
+    {
+      "method": "post",
+      "inputs": [
+        {
+          "name": "name"
+        },
+        {
+          "name": "username"
+        },
+        {
+          "name": "email"
+        },
+        {
+          "name": "uid",
+          "type": "hidden"
+        },
+        {
+          "name": "_submit_check",
+          "type": "hidden"
+        }
+      ],
+      "submit_button": true
+    }
+  ],
+  "required_text": [
+    "Configure User",
+    "Save",
+    "Delete"
+  ],
+  "form_structure": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/users",
+        "method": "POST",
+        "inputs_count": 16,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "name",
+            "tag": "input",
+            "type": "text",
+            "id": "name",
+            "required": true
+          },
+          {
+            "name": "username",
+            "tag": "input",
+            "type": "text",
+            "id": "username",
+            "required": true
+          },
+          {
+            "name": "password",
+            "tag": "input",
+            "type": "password",
+            "id": "password",
+            "required": false
+          },
+          {
+            "name": "email",
+            "tag": "input",
+            "type": "email",
+            "id": "email",
+            "required": true
+          },
+          {
+            "name": "is_admin",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "superuser",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "can_del",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "any_modem",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "didrouting[]",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "didrouting[]",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "modemdevs[]",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "modemdevs[]",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "faxcats[]",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "faxcats[]",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "uid",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "delete",
+            "text": "Delete"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "save",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "dynamic_states": {
+    "superuser_rights": {
+      "trigger_selector": "input[name='superuser']",
+      "affected_inputs": [
+        "didrouting[]",
+        "modemdevs[]",
+        "faxcats[]"
+      ]
+    },
+    "delete_action": {
+      "trigger_selector": "button[name='delete']",
+      "affected_inputs": [
+        "uid"
+      ]
+    }
+  }
+}

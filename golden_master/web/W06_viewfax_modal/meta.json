@@ -1,0 +1,8 @@
+{
+  "id": "W06_viewfax_modal",
+  "description": "Fax preview and viewer modal dialog",
+  "route": "/viewfax?fid=1",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

@@ -1,0 +1,8 @@
+{
+  "id": "W58_admin_modem_edit",
+  "description": "Admin modem device editing mode with pre-filled configuration",
+  "route": "/admin/modems?devid=1",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

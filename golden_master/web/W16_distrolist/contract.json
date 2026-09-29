@@ -1,0 +1,79 @@
+{
+  "status_code": 200,
+  "title": "- AvantFAX - Distribution Lists",
+  "required_links": [
+    "/distrolist/edit"
+  ],
+  "required_text": [
+    "Distribution Lists",
+    "Create List"
+  ],
+  "form_structure": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/distrolist/edit",
+        "method": "POST",
+        "inputs_count": 4,
+        "buttons_count": 4,
+        "field_sequence": [
+          {
+            "name": "listname",
+            "tag": "input",
+            "type": "text",
+            "id": "listname",
+            "required": true
+          },
+          {
+            "name": "",
+            "tag": "input",
+            "type": "text",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "dl_id",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "button",
+            "name": "",
+            "text": "Remove"
+          },
+          {
+            "tag": "button",
+            "type": "button",
+            "name": "",
+            "text": "Remove"
+          },
+          {
+            "tag": "button",
+            "type": "button",
+            "name": "",
+            "text": "Add Member"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Save Changes"
+          }
+        ]
+      }
+    ]
+  }
+}

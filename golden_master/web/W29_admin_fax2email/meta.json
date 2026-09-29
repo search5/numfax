@@ -1,0 +1,8 @@
+{
+  "id": "W29_admin_fax2email",
+  "description": "Admin fax to email forwarding configuration",
+  "route": "/admin/fax2email",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

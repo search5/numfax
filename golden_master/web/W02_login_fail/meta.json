@@ -1,0 +1,8 @@
+{
+  "id": "W02_login_fail",
+  "description": "Login failure with invalid credentials",
+  "route": "/login",
+  "method": "POST",
+  "expected_status": 200,
+  "implemented": true
+}

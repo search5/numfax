@@ -1,0 +1,25 @@
+{
+  "status_code": 200,
+  "title": "- AvantFAX - Inbox",
+  "table_headers": [
+    "FROM",
+    "DATE",
+    "MODEM/DID",
+    "PAGES",
+    "ACTIONS"
+  ],
+  "required_actions": [
+    "viewfax",
+    "rotate",
+    "download",
+    "reply",
+    "email",
+    "note",
+    "archive",
+    "delete"
+  ],
+  "required_text": [
+    "Acme Corp",
+    "2026-09-29"
+  ]
+}

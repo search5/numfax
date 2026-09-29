@@ -1,0 +1,8 @@
+{
+  "id": "W46_popup_distro_contacts",
+  "description": "Popup dialog to select distribution group for fax recipient",
+  "route": "/helper/distrocontacts",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

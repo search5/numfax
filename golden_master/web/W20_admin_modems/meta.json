@@ -1,0 +1,8 @@
+{
+  "id": "W20_admin_modems",
+  "description": "Admin modem device configuration and settings form",
+  "route": "/admin/modems",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

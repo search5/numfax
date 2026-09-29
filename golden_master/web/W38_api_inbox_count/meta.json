@@ -1,0 +1,8 @@
+{
+  "id": "W38_api_inbox_count",
+  "description": "Async AJAX inbox unread fax counter",
+  "route": "/ajax/inbox",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

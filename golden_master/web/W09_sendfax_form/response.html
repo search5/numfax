@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head><title>- AvantFAX - Send Fax</title></head>
+<body>
+<form action="/sendfax" method="post" enctype="multipart/form-data">
+  <input type="text" name="to_person" />
+  <input type="text" name="to_company" />
+  <input type="text" name="faxnumber" required="required" />
+  <select name="coverpage"><option value="standard">standard</option></select>
+  <input type="file" name="file" />
+  <input type="hidden" name="_submit_check" value="1" />
+  <button type="submit">Send Fax</button>
+</form>
+</body>
+</html>

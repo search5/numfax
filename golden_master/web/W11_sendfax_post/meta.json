@@ -1,0 +1,8 @@
+{
+  "id": "W11_sendfax_post",
+  "description": "Successful fax dispatch redirect to outbox",
+  "route": "/sendfax",
+  "method": "POST",
+  "expected_status": 302,
+  "implemented": true
+}

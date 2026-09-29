@@ -1,0 +1,8 @@
+{
+  "id": "W12_archive_form",
+  "description": "Archive search and filter view",
+  "route": "/archive",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

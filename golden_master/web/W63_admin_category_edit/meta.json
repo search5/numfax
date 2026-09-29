@@ -1,0 +1,8 @@
+{
+  "id": "W63_admin_category_edit",
+  "description": "Admin fax category editing and deletion mode",
+  "route": "/admin/categories?catid=1",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

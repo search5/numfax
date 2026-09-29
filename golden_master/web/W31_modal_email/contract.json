@@ -1,0 +1,98 @@
+{
+  "status_code": 200,
+  "title": "- AvantFAX - Send Fax via Email",
+  "forms": [
+    {
+      "method": "post",
+      "action": "/email",
+      "inputs": [
+        {
+          "name": "emails",
+          "type": "textarea"
+        },
+        {
+          "name": "subject",
+          "type": "text"
+        },
+        {
+          "name": "msg",
+          "type": "textarea"
+        },
+        {
+          "name": "_submit_check",
+          "type": "hidden",
+          "value": "1"
+        }
+      ],
+      "submit_button": true
+    }
+  ],
+  "required_text": [
+    "Send Fax via Email",
+    "Recipients",
+    "Subject"
+  ],
+  "form_structure": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/email",
+        "method": "POST",
+        "inputs_count": 5,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "emails",
+            "tag": "textarea",
+            "type": "textarea",
+            "id": "emails",
+            "required": true
+          },
+          {
+            "name": "subject",
+            "tag": "input",
+            "type": "text",
+            "id": "subject",
+            "required": false
+          },
+          {
+            "name": "msg",
+            "tag": "textarea",
+            "type": "textarea",
+            "id": "msg",
+            "required": false
+          },
+          {
+            "name": "fid",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "button",
+            "name": "",
+            "text": "Cancel"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Send"
+          }
+        ]
+      }
+    ]
+  }
+}

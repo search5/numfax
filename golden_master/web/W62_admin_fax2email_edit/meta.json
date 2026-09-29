@@ -1,0 +1,8 @@
+{
+  "id": "W62_admin_fax2email_edit",
+  "description": "Admin Fax to Email route editing mode",
+  "route": "/admin/fax2email?c_id=1",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

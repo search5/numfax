@@ -1,0 +1,8 @@
+{
+  "id": "W28_admin_dynconf",
+  "description": "Admin dynamic configuration and blacklist",
+  "route": "/admin/dynconf",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

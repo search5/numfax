@@ -1,0 +1,8 @@
+{
+  "id": "W45_popup_distro_helper",
+  "description": "Popup helper dialog to select contacts for distribution list",
+  "route": "/helper/distrolist",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

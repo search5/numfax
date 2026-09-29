@@ -1,0 +1,8 @@
+{
+  "id": "W41_api_addressbook_prefill",
+  "description": "Async AJAX contact prefill XML data",
+  "route": "/ajax/prefillto",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

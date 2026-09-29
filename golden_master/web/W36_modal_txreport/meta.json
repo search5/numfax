@@ -1,0 +1,8 @@
+{
+  "id": "W36_modal_txreport",
+  "description": "Transmission report popup dialog",
+  "route": "/txreport",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

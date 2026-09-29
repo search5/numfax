@@ -1,0 +1,98 @@
+{
+  "status_code": 200,
+  "title": "- AvantFAX - Reply to Fax",
+  "forms": [
+    {
+      "method": "post",
+      "action": "/refax",
+      "inputs": [
+        {
+          "name": "destinations",
+          "type": "textarea"
+        },
+        {
+          "name": "regarding",
+          "type": "text"
+        },
+        {
+          "name": "comments",
+          "type": "textarea"
+        },
+        {
+          "name": "_submit_check",
+          "type": "hidden",
+          "value": "1"
+        }
+      ],
+      "submit_button": true
+    }
+  ],
+  "required_text": [
+    "Reply to Fax",
+    "Destination",
+    "Comments"
+  ],
+  "form_structure": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/refax",
+        "method": "POST",
+        "inputs_count": 5,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "destinations",
+            "tag": "textarea",
+            "type": "textarea",
+            "id": "destinations",
+            "required": true
+          },
+          {
+            "name": "regarding",
+            "tag": "input",
+            "type": "text",
+            "id": "regarding",
+            "required": false
+          },
+          {
+            "name": "comments",
+            "tag": "textarea",
+            "type": "textarea",
+            "id": "comments",
+            "required": false
+          },
+          {
+            "name": "fid",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "button",
+            "name": "",
+            "text": "Cancel"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Send"
+          }
+        ]
+      }
+    ]
+  }
+}

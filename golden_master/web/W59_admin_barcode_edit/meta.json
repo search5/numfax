@@ -1,0 +1,8 @@
+{
+  "id": "W59_admin_barcode_edit",
+  "description": "Admin barcode routing editing mode with pre-filled rule and delete button",
+  "route": "/admin/barcodes?barcode_id=1",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

@@ -1,0 +1,129 @@
+{% extends "layout.jinja2" %}
+
+{% block title %}- NamiFAX - Distribution Lists{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+  
+  <!-- Header & Navigation Bar -->
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-200 gap-3">
+    <div class="flex items-center space-x-3">
+      <div class="w-10 h-10 rounded-lg bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-700 shadow-2xs">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+      </div>
+      <div>
+        <h2 class="text-base font-bold text-slate-900 tracking-tight">Distribution Lists</h2>
+        <p class="text-xs text-slate-500">Organize recipient groups for mass fax broadcasting and notifications.</p>
+      </div>
+    </div>
+
+    <!-- Navigation Chips & Primary Action -->
+    <div class="flex items-center space-x-2">
+      <div class="inline-flex rounded-lg border border-slate-200 bg-slate-50 p-0.5 text-xs font-semibold mr-2">
+        <a href="/addressbook" class="px-3 py-1 rounded-md text-slate-600 hover:text-slate-900 transition">Address Book</a>
+        <a href="/distrolist" class="px-3 py-1 rounded-md bg-white text-sky-800 shadow-2xs font-bold">Distribution Lists</a>
+      </div>
+      <a href="/distrolist/edit" class="inline-flex items-center space-x-1.5 px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg text-xs font-bold shadow-2xs transition">
+        <span>+ Create List</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    
+    <!-- Left Column: Distribution Lists Selector -->
+    <div class="bg-white border border-slate-200/90 rounded-xl p-5 shadow-xs space-y-4">
+      <div class="flex items-center space-x-2 border-b border-slate-100 pb-3">
+        <span class="w-2 h-2 rounded-full bg-sky-600"></span>
+        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Saved Distribution Lists</h3>
+      </div>
+      
+      <div class="divide-y divide-slate-100 border border-slate-200/80 rounded-xl overflow-hidden text-xs max-h-[500px] overflow-y-auto">
+        {% for dl in distrolists %}
+          <a href="/distrolist?dl_id={{ dl.dl_id }}" class="block p-3 hover:bg-slate-50 transition {% if selected_list and selected_list.dl_id == dl.dl_id %}bg-sky-50/70 border-l-4 border-sky-600{% endif %}">
+            <div class="flex justify-between items-center">
+              <div>
+                <span class="font-bold text-slate-900 block">{{ dl.listname }}</span>
+                <span class="text-[11px] text-slate-400 font-mono">ID: #{{ dl.dl_id }}</span>
+              </div>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 font-bold">
+                {{ dl.members|length if dl.members else dl.members_count }} members
+              </span>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Right Column: Group Detail & Member Management (Strict W16 Contract Form) -->
+    <div class="lg:col-span-2 bg-white border border-slate-200/90 rounded-xl p-6 shadow-xs space-y-5">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center space-x-2">
+          <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
+          <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">
+            {% if selected_list %}{{ selected_list.listname }} - Group Members &amp; Settings{% else %}Create New Distribution List{% endif %}
+          </h3>
+        </div>
+        {% if selected_list %}
+          <span class="text-[11px] font-mono bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-bold">List ID: #{{ selected_list.dl_id }}</span>
+        {% endif %}
+      </div>
+
+      <form action="/distrolist/edit" method="post" class="space-y-5 text-xs">
+        <div>
+          <label for="listname" class="block font-semibold text-slate-700 text-xs mb-1.5">List Name *</label>
+          <input type="text" name="listname" id="listname" value="{{ selected_list.listname if selected_list else '' }}" required placeholder="e.g. Executive Sales Team" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" />
+        </div>
+
+        {% if selected_list %}
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <label class="block font-semibold text-slate-700 text-xs">Group Members (Contacts &amp; Fax Numbers)</label>
+              <span class="text-[11px] text-slate-500 font-mono font-medium">{{ selected_list.members|length }} contacts assigned</span>
+            </div>
+            
+            <div class="border border-slate-200/90 rounded-xl divide-y divide-slate-100 max-h-64 overflow-y-auto bg-slate-50/30">
+              {% if selected_list.members and selected_list.members|length > 0 %}
+                {% for m in selected_list.members %}
+                  <div class="p-3 flex items-center justify-between hover:bg-white transition">
+                    <div>
+                      <span class="font-bold text-slate-800">{{ m.company }}</span>
+                      <span class="text-slate-500 font-mono ml-2">({{ m.faxnumber }})</span>
+                    </div>
+                    <button type="button" class="px-2.5 py-1 text-rose-600 hover:text-rose-700 hover:bg-rose-50 border border-transparent hover:border-rose-200 rounded font-semibold text-[11px] transition">Remove</button>
+                  </div>
+                {% endfor %}
+              {% else %}
+                <div class="p-6 text-center text-slate-400">No contacts assigned to this list yet.</div>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Add Member Subform (Strict 2nd text input + Add Member button) -->
+          <div class="p-3.5 bg-slate-50 border border-slate-200/80 rounded-xl flex items-center space-x-2">
+            <input type="text" placeholder="Add contact name or fax number..." class="flex-grow border border-slate-300 rounded-lg px-3 py-1.5 text-xs bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" />
+            <button type="button" class="px-4 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-lg font-bold text-xs transition">Add Member</button>
+          </div>
+        {% endif %}
+
+        <input type="hidden" name="dl_id" value="{{ selected_list.dl_id if selected_list else '' }}" />
+        <input type="hidden" name="_submit_check" value="1" />
+
+        <div class="pt-4 border-t border-slate-200 flex items-center justify-end space-x-3">
+          {% if selected_list %}
+            <a href="/distrolist?dl_id={{ selected_list.dl_id }}&delete=1" onclick="return confirm('Delete this distribution list?')" class="px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-lg font-bold text-xs transition">Delete List</a>
+            <button type="submit" class="px-6 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold text-xs shadow-2xs transition">Save Changes</button>
+          {% else %}
+            <button type="submit" class="px-6 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold text-xs shadow-2xs transition">Create List</button>
+          {% endif %}
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}
+

@@ -1,0 +1,10 @@
+{
+  "scenario_id": "W55_ajax_deletefaxes",
+  "route": "/ajax/deletefaxes",
+  "method": "GET",
+  "params": {
+    "fids": "1,2"
+  },
+  "description": "Batch delete faxes dialog matching legacy ajax/ajaxdeletefaxes.php",
+  "implemented": true
+}

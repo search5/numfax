@@ -1,0 +1,8 @@
+{
+  "id": "W08_outbox_queue",
+  "description": "Outbox monitoring queue table",
+  "route": "/outbox",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

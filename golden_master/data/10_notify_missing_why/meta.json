@@ -1,0 +1,19 @@
+{
+  "id": "10_notify_missing_why",
+  "description": "notify with only qfile and missing why argument",
+  "legacy_cmd": [
+    "php",
+    "-d",
+    "display_errors=0",
+    "notify.php",
+    "qfile1"
+  ],
+  "target_cmd": [
+    "/usr/local/bin/python3",
+    "-m",
+    "avantfax.cli.notify",
+    "qfile1"
+  ],
+  "cwd": "legacy/avantfax/includes",
+  "target_cwd": "."
+}

@@ -1,0 +1,3 @@
+usage: import_blacklist.php filename [device]
+Example: import_blacklist.php blacklist.txt ttyS0
+One CallID (fax number) per line

@@ -1,0 +1,8 @@
+{
+  "id": "W35_modal_refax",
+  "description": "Modal dialog to resend or reply to fax",
+  "route": "/refax",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

@@ -1,0 +1,62 @@
+{
+  "status_code": 200,
+  "title": "- AvantFAX - Lost Password",
+  "forms": [
+    {
+      "method": "post",
+      "action": "/forgot",
+      "inputs": [
+        {
+          "name": "username",
+          "type": "text"
+        },
+        {
+          "name": "_submit_check",
+          "type": "hidden",
+          "value": "1"
+        }
+      ],
+      "submit_button": true
+    }
+  ],
+  "required_text": [
+    "Lost Password",
+    "Reset Password"
+  ],
+  "form_structure": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/forgot",
+        "method": "POST",
+        "inputs_count": 2,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "username",
+            "tag": "input",
+            "type": "text",
+            "id": "username",
+            "required": true
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Reset Password"
+          }
+        ]
+      }
+    ]
+  }
+}

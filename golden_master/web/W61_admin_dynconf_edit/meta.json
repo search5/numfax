@@ -1,0 +1,8 @@
+{
+  "id": "W61_admin_dynconf_edit",
+  "description": "Admin dynamic configuration blacklist editing mode",
+  "route": "/admin/dynconf?dynconf_id=1",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

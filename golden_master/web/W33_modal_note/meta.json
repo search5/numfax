@@ -1,0 +1,8 @@
+{
+  "id": "W33_modal_note",
+  "description": "Modal dialog to add note to fax",
+  "route": "/note",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

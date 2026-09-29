@@ -1,0 +1,106 @@
+{
+  "status_code": 200,
+  "title": "AvantFAX - Email Book",
+  "forms": [
+    {
+      "method": "post",
+      "inputs": [
+        {
+          "name": "company"
+        },
+        {
+          "name": "email_id",
+          "type": "hidden"
+        },
+        {
+          "name": "_submit_check",
+          "type": "hidden"
+        }
+      ],
+      "submit_button": true
+    }
+  ],
+  "required_text": [
+    "Email Book",
+    "Save",
+    "Delete"
+  ],
+  "form_structure": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/emailbook/edit",
+        "method": "POST",
+        "inputs_count": 6,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "company",
+            "tag": "input",
+            "type": "text",
+            "id": "company",
+            "required": false
+          },
+          {
+            "name": "contact_name",
+            "tag": "input",
+            "type": "text",
+            "id": "contact_name",
+            "required": true
+          },
+          {
+            "name": "contact_email",
+            "tag": "input",
+            "type": "email",
+            "id": "contact_email",
+            "required": true
+          },
+          {
+            "name": "email_id",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "abookemail_id",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "delete",
+            "text": "Delete"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "save",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "dynamic_states": {
+    "delete_contact": {
+      "trigger_selector": "button[name='delete']",
+      "affected_inputs": [
+        "email_id"
+      ]
+    }
+  }
+}

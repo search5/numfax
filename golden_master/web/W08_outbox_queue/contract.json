@@ -1,0 +1,14 @@
+{
+  "status_code": 200,
+  "title": "- AvantFAX - Outbox",
+  "table_headers": [
+    "Job ID",
+    "Destination",
+    "Status",
+    "Actions"
+  ],
+  "required_text": [
+    "Outbox",
+    "No jobs in queue"
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "status_code": 200,
+  "required_text": [
+    "Archive Search",
+    "Results",
+    "test"
+  ],
+  "form_structure": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/archive",
+        "method": "GET",
+        "inputs_count": 6,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "search",
+            "tag": "input",
+            "type": "text",
+            "id": "search",
+            "required": false
+          },
+          {
+            "name": "category",
+            "tag": "select",
+            "type": "select",
+            "id": "category",
+            "required": false
+          },
+          {
+            "name": "date_from",
+            "tag": "input",
+            "type": "text",
+            "id": "date_from",
+            "required": false
+          },
+          {
+            "name": "date_to",
+            "tag": "input",
+            "type": "text",
+            "id": "date_to",
+            "required": false
+          },
+          {
+            "name": "sentrecvd",
+            "tag": "select",
+            "type": "select",
+            "id": "sentrecvd",
+            "required": false
+          },
+          {
+            "name": "faxid",
+            "tag": "input",
+            "type": "text",
+            "id": "faxid",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Search"
+          }
+        ]
+      }
+    ]
+  }
+}

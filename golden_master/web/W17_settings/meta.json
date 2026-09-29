@@ -1,0 +1,8 @@
+{
+  "id": "W17_settings",
+  "description": "User preferences and password settings",
+  "route": "/settings",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

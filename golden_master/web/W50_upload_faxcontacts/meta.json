@@ -1,0 +1,8 @@
+{
+  "id": "W50_upload_faxcontacts",
+  "description": "Upload vCard file to import fax contacts",
+  "route": "/upload/faxcontacts",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

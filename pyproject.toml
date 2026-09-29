@@ -1,0 +1,49 @@
+[project]
+name = "namifax"
+version = "4.0.0"
+description = "Modernized Enterprise HylaFAX Platform with Pyramid, SQLAlchemy, and APScheduler"
+readme = "README.md"
+authors = [
+    { name = "Lee Ji-ho", email = "search5@mz.co.kr" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "pyramid>=2.0",
+    "pyramid_jinja2>=2.10.0",
+    "waitress>=3.0.0",
+    "plaster_pastedeploy>=1.0.0",
+    "apscheduler>=3.10.0",
+    "sqlalchemy>=2.0.0",
+    "pydantic>=2.0.0",
+]
+
+[project.scripts]
+namifax = "namifax.main:main"
+namifax-server = "namifax.main:serve_main"
+namifax-scheduler = "namifax.main:scheduler_main"
+namifax-createuser = "namifax.main:createuser_main"
+namifax-dynconf = "namifax.main:dynconf_main"
+namifax-faxrcvd = "namifax.main:faxrcvd_main"
+namifax-notify = "namifax.main:notify_main"
+namifax-faxcover = "namifax.main:faxcover_main"
+namifax-cron = "namifax.main:cron_main"
+namifax-phb = "namifax.main:phb_main"
+
+[project.entry-points."paste.app_factory"]
+main = "namifax:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.0.0",
+    "webtest>=3.0.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.10.12,<0.11.0"]
+build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+addopts = "--strict-markers"
+testpaths = ["tests"]
+pythonpath = [".", "src"]

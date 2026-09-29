@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head><title>AvantFAX - Admin - Configure DID Routing</title></head>
+<body>
+<h2>Configure DID Routing</h2>
+<div id="main-content">
+  <form action="/admin/routing/did" method="post">
+    <p><label for="route">Route Code:</label> <input type="text" name="route" id="route" required /></p>
+    <p><label for="alias">Alias:</label> <input type="text" name="alias" id="alias" required /></p>
+    <p><label for="contact">Contact Email:</label> <input type="text" name="contact" id="contact" /></p>
+    <p><label for="printer">Printer:</label> <input type="text" name="printer" id="printer" /></p>
+    <input type="hidden" name="_submit_check" value="1" />
+    <button type="submit">Save</button>
+  </form>
+</div>
+</body>
+</html>

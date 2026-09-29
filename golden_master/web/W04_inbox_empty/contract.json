@@ -1,0 +1,19 @@
+{
+  "status_code": 200,
+  "title": "- AvantFAX - Inbox",
+  "required_links": [
+    "/inbox",
+    "/sendfax",
+    "/archive",
+    "/outbox",
+    "/addressbook",
+    "/settings",
+    "/logout"
+  ],
+  "required_text": [
+    "0 FAXES",
+    "Inbox",
+    "MODEM",
+    "IDLE"
+  ]
+}

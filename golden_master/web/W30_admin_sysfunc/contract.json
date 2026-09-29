@@ -1,0 +1,71 @@
+{
+  "status_code": 200,
+  "title": "AvantFAX - Admin - System Functions",
+  "forms": [
+    {
+      "method": "post",
+      "action": "/admin/system_func",
+      "inputs": [
+        {
+          "name": "_submit_check",
+          "type": "hidden",
+          "value": "1"
+        }
+      ],
+      "submit_button": true
+    }
+  ],
+  "required_text": [
+    "System Functions",
+    "Reboot",
+    "Shutdown",
+    "Download"
+  ],
+  "form_structure": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/system_func",
+        "method": "POST",
+        "inputs_count": 1,
+        "buttons_count": 4,
+        "field_sequence": [
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "reboot",
+            "text": "Reboot Services"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "shutdown",
+            "text": "Shutdown Services"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "download_ar",
+            "text": "Download Archive"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "download_db",
+            "text": "Download Database"
+          }
+        ]
+      }
+    ]
+  }
+}

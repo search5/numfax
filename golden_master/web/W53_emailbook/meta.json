@@ -1,0 +1,7 @@
+{
+  "scenario_id": "W53_emailbook",
+  "route": "/emailbook",
+  "method": "GET",
+  "description": "Email address book manager matching legacy emailbook.php",
+  "implemented": true
+}

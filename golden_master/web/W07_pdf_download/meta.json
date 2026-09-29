@@ -1,0 +1,8 @@
+{
+  "id": "W07_pdf_download",
+  "description": "Streaming PDF binary download endpoint",
+  "route": "/faxes/download/1",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

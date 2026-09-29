@@ -1,0 +1,17 @@
+{
+  "id": "15_ocr_import_no_args",
+  "description": "ocr_import with OCR support disabled (config check exit)",
+  "legacy_cmd": [
+    "php",
+    "-d",
+    "display_errors=0",
+    "ocr_import.php"
+  ],
+  "target_cmd": [
+    "python",
+    "-m",
+    "avantfax.cli.ocr_import"
+  ],
+  "cwd": "legacy/avantfax/tools",
+  "target_cwd": "."
+}

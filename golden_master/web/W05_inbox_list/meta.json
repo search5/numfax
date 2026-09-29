@@ -1,0 +1,8 @@
+{
+  "id": "W05_inbox_list",
+  "description": "Inbox with list of received faxes and 9 action buttons",
+  "route": "/inbox",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

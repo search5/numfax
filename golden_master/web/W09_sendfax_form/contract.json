@@ -1,0 +1,179 @@
+{
+  "status_code": 200,
+  "title": "- AvantFAX - Send Fax",
+  "forms": [
+    {
+      "method": "post",
+      "action": "/sendfax",
+      "enctype": "multipart/form-data",
+      "inputs": [
+        {
+          "name": "to_person",
+          "type": "text"
+        },
+        {
+          "name": "to_company",
+          "type": "text"
+        },
+        {
+          "name": "faxnumber",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "coverpage",
+          "type": "select"
+        },
+        {
+          "name": "file",
+          "type": "file"
+        },
+        {
+          "name": "_submit_check",
+          "type": "hidden",
+          "value": "1"
+        }
+      ]
+    }
+  ],
+  "required_text": [
+    "Send Fax",
+    "Destination Number"
+  ],
+  "form_structure": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/sendfax",
+        "method": "POST",
+        "inputs_count": 13,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "faxnumber",
+            "tag": "input",
+            "type": "text",
+            "id": "faxnumber",
+            "required": true
+          },
+          {
+            "name": "to_person",
+            "tag": "input",
+            "type": "text",
+            "id": "to_person",
+            "required": false
+          },
+          {
+            "name": "to_company",
+            "tag": "input",
+            "type": "text",
+            "id": "to_company",
+            "required": false
+          },
+          {
+            "name": "regarding",
+            "tag": "input",
+            "type": "text",
+            "id": "regarding",
+            "required": false
+          },
+          {
+            "name": "coverpage",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "coverpage",
+            "required": false
+          },
+          {
+            "name": "whichcover",
+            "tag": "select",
+            "type": "select",
+            "id": "whichcover",
+            "required": false
+          },
+          {
+            "name": "modem",
+            "tag": "select",
+            "type": "select",
+            "id": "modem",
+            "required": false
+          },
+          {
+            "name": "comments",
+            "tag": "textarea",
+            "type": "textarea",
+            "id": "comments",
+            "required": false
+          },
+          {
+            "name": "priority",
+            "tag": "select",
+            "type": "select",
+            "id": "priority",
+            "required": false
+          },
+          {
+            "name": "numtries",
+            "tag": "input",
+            "type": "number",
+            "id": "numtries",
+            "required": false
+          },
+          {
+            "name": "notify_requeue",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "notify_requeue",
+            "required": false
+          },
+          {
+            "name": "file",
+            "tag": "input",
+            "type": "file",
+            "id": "file",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Send Fax"
+          }
+        ]
+      }
+    ]
+  },
+  "dynamic_states": {
+    "coverpage_options": {
+      "trigger_selector": "#coverpage",
+      "affected_inputs": [
+        "whichcover",
+        "comments"
+      ]
+    },
+    "scheduling_options": {
+      "trigger_selector": "details > summary",
+      "affected_inputs": [
+        "priority",
+        "numtries",
+        "notify_requeue"
+      ]
+    },
+    "file_attachment": {
+      "trigger_selector": "#file",
+      "affected_inputs": [
+        "file"
+      ]
+    }
+  }
+}

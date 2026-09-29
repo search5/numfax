@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-900/50 backdrop-blur-xs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>- NamiFAX - Send Fax via Email</title>
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="/static/css/main.css?v=3.3.5" type="text/css" />
+</head>
+<body class="min-h-full flex items-center justify-center p-4 sm:p-6 font-sans antialiased text-slate-800">
+
+  <div class="w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-slate-200/90 overflow-hidden">
+    
+    <!-- Modal Header -->
+    <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/70">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-8 h-8 rounded-lg bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-700 shadow-2xs">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-sm font-bold text-slate-900 tracking-tight">Send Fax via Email</h1>
+          <p class="text-[11px] text-slate-500">Dispatch PDF document attachment to email recipients</p>
+        </div>
+      </div>
+      <button type="button" onclick="window.close()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Modal Form (Strict W31 Sequence Contract) -->
+    <form action="/email" method="post" class="p-6 space-y-4 text-xs">
+      <div>
+        <label for="emails" class="block font-semibold text-slate-700 text-xs mb-1.5">Recipients *</label>
+        <textarea name="emails" id="emails" rows="3" required class="w-full border border-slate-300 rounded-lg p-3 bg-slate-50/50 text-slate-900 font-mono text-[11px] focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="recipient@example.com (comma separated)">{{ emails }}</textarea>
+      </div>
+
+      <div>
+        <label for="subject" class="block font-semibold text-slate-700 text-xs mb-1.5">Subject</label>
+        <input type="text" name="subject" id="subject" value="{{ subject }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="NamiFAX Transmission Document" />
+      </div>
+
+      <div>
+        <label for="msg" class="block font-semibold text-slate-700 text-xs mb-1.5">Message</label>
+        <textarea name="msg" id="msg" rows="3" class="w-full border border-slate-300 rounded-lg p-3 bg-slate-50/50 text-slate-900 text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="Please find the attached facsimile document.">{{ msg }}</textarea>
+      </div>
+
+      <input type="hidden" name="fid" value="{{ fid }}" />
+      <input type="hidden" name="_submit_check" value="1" />
+
+      <!-- Action Buttons (Strict Sequence: Cancel -> Send) -->
+      <div class="pt-4 border-t border-slate-100 flex items-center justify-end space-x-2.5">
+        <button type="button" onclick="window.close()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-semibold text-xs transition">
+          Cancel
+        </button>
+        <button type="submit" class="px-5 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold text-xs shadow-2xs transition">
+          Send
+        </button>
+      </div>
+    </form>
+
+  </div>
+
+</body>
+</html>
+

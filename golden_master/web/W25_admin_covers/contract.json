@@ -1,0 +1,74 @@
+{
+  "status_code": 200,
+  "title": "AvantFAX - Admin - Configure Cover Pages",
+  "forms": [
+    {
+      "method": "post",
+      "action": "/admin/covers",
+      "inputs": [
+        {
+          "name": "title",
+          "type": "text"
+        },
+        {
+          "name": "file",
+          "type": "text"
+        },
+        {
+          "name": "_submit_check",
+          "type": "hidden",
+          "value": "1"
+        }
+      ],
+      "submit_button": true
+    }
+  ],
+  "required_text": [
+    "Configure Cover Pages",
+    "Title",
+    "File"
+  ],
+  "form_structure": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/covers",
+        "method": "POST",
+        "inputs_count": 3,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "title",
+            "tag": "input",
+            "type": "text",
+            "id": "title",
+            "required": true
+          },
+          {
+            "name": "file",
+            "tag": "input",
+            "type": "text",
+            "id": "file",
+            "required": true
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "create",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  }
+}

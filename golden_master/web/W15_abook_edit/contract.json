@@ -1,0 +1,126 @@
+{
+  "status_code": 200,
+  "forms": [
+    {
+      "method": "post",
+      "action": "/addressbook/edit",
+      "inputs": [
+        {
+          "name": "company",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "faxnumber",
+          "type": "text"
+        },
+        {
+          "name": "email",
+          "type": "text"
+        },
+        {
+          "name": "_submit_check",
+          "type": "hidden",
+          "value": "1"
+        }
+      ]
+    }
+  ],
+  "required_text": [
+    "Company Name",
+    "Fax Number",
+    "Email"
+  ],
+  "form_structure": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/addressbook/edit",
+        "method": "POST",
+        "inputs_count": 10,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "company",
+            "tag": "input",
+            "type": "text",
+            "id": "company",
+            "required": true
+          },
+          {
+            "name": "faxnumber",
+            "tag": "input",
+            "type": "text",
+            "id": "faxnumber",
+            "required": false
+          },
+          {
+            "name": "email",
+            "tag": "input",
+            "type": "email",
+            "id": "email",
+            "required": false
+          },
+          {
+            "name": "to_person",
+            "tag": "input",
+            "type": "text",
+            "id": "to_person",
+            "required": false
+          },
+          {
+            "name": "to_voicenumber",
+            "tag": "input",
+            "type": "text",
+            "id": "to_voicenumber",
+            "required": false
+          },
+          {
+            "name": "to_address",
+            "tag": "input",
+            "type": "text",
+            "id": "to_address",
+            "required": false
+          },
+          {
+            "name": "to_city",
+            "tag": "input",
+            "type": "text",
+            "id": "to_city",
+            "required": false
+          },
+          {
+            "name": "category",
+            "tag": "select",
+            "type": "select",
+            "id": "category",
+            "required": false
+          },
+          {
+            "name": "description",
+            "tag": "input",
+            "type": "text",
+            "id": "description",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "save",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  }
+}

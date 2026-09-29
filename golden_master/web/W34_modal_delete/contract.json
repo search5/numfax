@@ -1,0 +1,68 @@
+{
+  "status_code": 200,
+  "title": "- AvantFAX - Delete Fax",
+  "forms": [
+    {
+      "method": "post",
+      "action": "/delete",
+      "inputs": [
+        {
+          "name": "fid",
+          "type": "hidden"
+        },
+        {
+          "name": "_submit_check",
+          "type": "hidden",
+          "value": "1"
+        }
+      ],
+      "submit_button": true
+    }
+  ],
+  "required_text": [
+    "Delete Fax",
+    "Are you sure you want to delete this fax?"
+  ],
+  "form_structure": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/delete",
+        "method": "POST",
+        "inputs_count": 2,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "fid",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "button",
+            "name": "",
+            "text": "Cancel"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Delete"
+          }
+        ]
+      }
+    ]
+  }
+}

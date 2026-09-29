@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-m3-dark-surface-container-lowest">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}- NamiFAX - Admin Control Panel{% endblock %}</title>
+  
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="/static/css/main.css?v=3.3.5" type="text/css" />
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="min-h-full flex flex-col text-m3-dark-on-surface font-sans antialiased bg-m3-dark-surface selection:bg-m3-dark-primary-container selection:text-m3-dark-on-primary-container">
+
+  <!-- Material 3 Dark Admin Appliance Header -->
+  <header class="bg-m3-dark-surface-container/95 backdrop-blur border-b border-m3-dark-outline-variant/50 shadow-m3-1 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- Logo & Appliance Identity -->
+        <div class="flex items-center space-x-3">
+          <a href="/admin" class="flex items-center space-x-3 group">
+            <div class="w-9 h-9 rounded-m3-lg bg-m3-dark-primary flex items-center justify-center text-m3-dark-on-primary shadow-m3-1 font-black text-sm tracking-wider group-hover:scale-105 transition-transform">
+              NF
+            </div>
+            <div>
+              <span class="text-sm font-bold tracking-tight text-m3-dark-on-surface flex items-center gap-2">
+                NamiFAX
+                <span class="text-[9px] uppercase tracking-wider font-mono font-bold px-2 py-0.5 rounded-m3-full bg-m3-dark-primary-container text-m3-dark-on-primary-container border border-m3-dark-primary/20">Control Panel</span>
+              </span>
+              <p class="text-[10px] font-mono text-m3-dark-on-surface-variant leading-none mt-0.5">{{ server_name or 'NamiFAX Server 3.3.5 (On-Premise Appliance)' }}</p>
+            </div>
+          </a>
+        </div>
+
+        <!-- Admin Quick Route Selector (Contract id="menuObj") -->
+        {% set current_admin_tab = active_admin or (
+          'users' if '/admin/user' in request.path else
+          'modems' if '/admin/modem' in request.path else
+          'did' if ('/admin/did' in request.path or '/admin/routing' in request.path) else
+          'categories' if '/admin/categor' in request.path else
+          'covers' if '/admin/cover' in request.path else
+          'barcodes' if '/admin/barcode' in request.path else
+          'dynconf' if '/admin/dynconf' in request.path else
+          'fax2email' if '/admin/fax2email' in request.path else
+          'syslog' if ('/admin/syslog' in request.path or '/admin/system_logs' in request.path) else
+          'sysfunc' if ('/admin/sysfunc' in request.path or '/admin/system_func' in request.path) else
+          'dashboard'
+        ) %}
+        <div class="flex items-center space-x-2">
+          <label for="menuObj" class="text-xs text-m3-dark-on-surface-variant font-medium hidden sm:inline">Module:</label>
+          <select id="menuObj" onchange="if (this.value) location.href=this.value;" class="border border-m3-dark-outline-variant rounded-m3-sm px-3 py-1.5 text-xs font-semibold bg-m3-dark-surface-container-low text-m3-dark-on-surface shadow-inner focus:ring-2 focus:ring-m3-dark-primary focus:outline-none cursor-pointer transition-all">
+            <option value="">-- Main Menu --</option>
+            <option value="/admin" {% if current_admin_tab == 'dashboard' %}selected{% endif %}>Admin Dashboard</option>
+            
+            <optgroup label="User Accounts">
+              <option value="/admin/users" {% if current_admin_tab == 'users' %}selected{% endif %}>User List &amp; Accounts</option>
+            </optgroup>
+
+            <optgroup label="Configuration">
+              <option value="/admin/modems" {% if current_admin_tab == 'modems' %}selected{% endif %}>Configure Modems</option>
+              <option value="/admin/did" {% if current_admin_tab == 'did' %}selected{% endif %}>DID Routing Rules</option>
+              <option value="/admin/categories" {% if current_admin_tab == 'categories' %}selected{% endif %}>Fax Categories</option>
+              <option value="/admin/covers" {% if current_admin_tab == 'covers' %}selected{% endif %}>Cover Pages</option>
+            </optgroup>
+
+            <optgroup label="Advanced Routing &amp; Blacklist">
+              <option value="/admin/barcodes" {% if current_admin_tab == 'barcodes' %}selected{% endif %}>Routing by Barcode</option>
+              <option value="/admin/dynconf" {% if current_admin_tab == 'dynconf' %}selected{% endif %}>CallID Blacklist (DynConf)</option>
+              <option value="/admin/syslog" {% if current_admin_tab == 'syslog' %}selected{% endif %}>System Audit Logs</option>
+            </optgroup>
+
+            <option value="">-- Portal Navigation --</option>
+            <option value="/inbox">&larr; Return to Inbox</option>
+            <option value="/outbox">&larr; Return to Outbox</option>
+          </select>
+        </div>
+
+        <!-- Right User Identity & Portal Return -->
+        <div class="flex items-center space-x-3 text-xs">
+          <a href="/inbox" class="hidden md:inline-flex items-center px-4 py-1.5 rounded-m3-full bg-m3-dark-surface-container-high hover:bg-m3-dark-secondary-container text-m3-dark-on-surface hover:text-m3-dark-on-secondary-container border border-m3-dark-outline-variant/60 font-medium transition shadow-2xs">
+            &larr; User Portal
+          </a>
+
+          <div class="text-right text-m3-dark-on-surface-variant">
+            <span>Admin: <strong class="text-m3-dark-on-surface font-semibold">{{ current_user.username }}</strong></span>
+            <span class="mx-1 text-m3-dark-outline">|</span>
+            <a href="/logout" class="text-m3-dark-error hover:brightness-125 font-semibold transition">Logout</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Admin Sub-Navigation Chip Bar -->
+  <div class="bg-m3-dark-surface-container-low border-b border-m3-dark-outline-variant/40 py-2 hidden md:block">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center space-x-1.5 overflow-x-auto text-xs">
+      <a href="/admin" class="px-3.5 py-1.5 rounded-m3-full font-semibold transition {% if current_admin_tab == 'dashboard' %}bg-m3-dark-secondary-container text-m3-dark-on-secondary-container shadow-2xs{% else %}text-m3-dark-on-surface-variant hover:text-m3-dark-on-surface hover:bg-m3-dark-surface-container-high{% endif %}">Dashboard</a>
+      <a href="/admin/users" class="px-3.5 py-1.5 rounded-m3-full font-semibold transition {% if current_admin_tab == 'users' %}bg-m3-dark-secondary-container text-m3-dark-on-secondary-container shadow-2xs{% else %}text-m3-dark-on-surface-variant hover:text-m3-dark-on-surface hover:bg-m3-dark-surface-container-high{% endif %}">Users</a>
+      <a href="/admin/modems" class="px-3.5 py-1.5 rounded-m3-full font-semibold transition {% if current_admin_tab == 'modems' %}bg-m3-dark-secondary-container text-m3-dark-on-secondary-container shadow-2xs{% else %}text-m3-dark-on-surface-variant hover:text-m3-dark-on-surface hover:bg-m3-dark-surface-container-high{% endif %}">Modems</a>
+      <a href="/admin/did" class="px-3.5 py-1.5 rounded-m3-full font-semibold transition {% if current_admin_tab == 'did' %}bg-m3-dark-secondary-container text-m3-dark-on-secondary-container shadow-2xs{% else %}text-m3-dark-on-surface-variant hover:text-m3-dark-on-surface hover:bg-m3-dark-surface-container-high{% endif %}">DID Routing</a>
+      <a href="/admin/categories" class="px-3.5 py-1.5 rounded-m3-full font-semibold transition {% if current_admin_tab == 'categories' %}bg-m3-dark-secondary-container text-m3-dark-on-secondary-container shadow-2xs{% else %}text-m3-dark-on-surface-variant hover:text-m3-dark-on-surface hover:bg-m3-dark-surface-container-high{% endif %}">Categories</a>
+      <a href="/admin/covers" class="px-3.5 py-1.5 rounded-m3-full font-semibold transition {% if current_admin_tab == 'covers' %}bg-m3-dark-secondary-container text-m3-dark-on-secondary-container shadow-2xs{% else %}text-m3-dark-on-surface-variant hover:text-m3-dark-on-surface hover:bg-m3-dark-surface-container-high{% endif %}">Cover Pages</a>
+      <a href="/admin/barcodes" class="px-3.5 py-1.5 rounded-m3-full font-semibold transition {% if current_admin_tab == 'barcodes' %}bg-m3-dark-secondary-container text-m3-dark-on-secondary-container shadow-2xs{% else %}text-m3-dark-on-surface-variant hover:text-m3-dark-on-surface hover:bg-m3-dark-surface-container-high{% endif %}">Barcodes</a>
+      <a href="/admin/dynconf" class="px-3.5 py-1.5 rounded-m3-full font-semibold transition {% if current_admin_tab == 'dynconf' %}bg-m3-dark-secondary-container text-m3-dark-on-secondary-container shadow-2xs{% else %}text-m3-dark-on-surface-variant hover:text-m3-dark-on-surface hover:bg-m3-dark-surface-container-high{% endif %}">Blacklist</a>
+      <a href="/admin/fax2email" class="px-3.5 py-1.5 rounded-m3-full font-semibold transition {% if current_admin_tab == 'fax2email' %}bg-m3-dark-secondary-container text-m3-dark-on-secondary-container shadow-2xs{% else %}text-m3-dark-on-surface-variant hover:text-m3-dark-on-surface hover:bg-m3-dark-surface-container-high{% endif %}">Fax2Email</a>
+      <a href="/admin/syslog" class="px-3.5 py-1.5 rounded-m3-full font-semibold transition {% if current_admin_tab == 'syslog' %}bg-m3-dark-secondary-container text-m3-dark-on-secondary-container shadow-2xs{% else %}text-m3-dark-on-surface-variant hover:text-m3-dark-on-surface hover:bg-m3-dark-surface-container-high{% endif %}">Logs</a>
+    </div>
+  </div>
+
+  <!-- Admin Main Workspace -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    {% if error %}
+      <div class="mb-5 p-4 bg-m3-dark-error-container text-m3-dark-on-error-container border border-m3-dark-error/30 rounded-m3-lg text-xs font-semibold flex items-center space-x-3 shadow-m3-1">
+        <span class="w-2.5 h-2.5 rounded-m3-full bg-m3-dark-error"></span>
+        <span><strong class="font-bold">Error:</strong> {{ error }}</span>
+      </div>
+    {% endif %}
+
+    {% if flash_message %}
+      <div class="mb-5 p-4 bg-emerald-950/80 border border-emerald-700/80 text-emerald-200 rounded-m3-lg text-xs font-semibold flex items-center space-x-3 shadow-m3-1">
+        <span class="w-2.5 h-2.5 rounded-m3-full bg-emerald-400"></span>
+        <span>{{ flash_message }}</span>
+      </div>
+    {% endif %}
+
+    <div class="bg-m3-dark-surface-container border border-m3-dark-outline-variant/40 rounded-m3-xl shadow-m3-2 p-6">
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+  <footer class="mt-auto border-t border-m3-dark-outline-variant/40 bg-m3-dark-surface-container py-4 text-center text-xs text-m3-dark-on-surface-variant">
+    <div class="max-w-7xl mx-auto px-4">
+      NamiFAX Administrator Control Panel &copy; 2005 - 2008 iFAX Solutions, Inc.
+    </div>
+  </footer>
+
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "id": "W03_login_success",
+  "description": "Login success with redirect to inbox",
+  "route": "/login",
+  "method": "POST",
+  "expected_status": 302,
+  "implemented": true
+}

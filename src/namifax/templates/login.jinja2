@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NamiFAX — Sign In</title>
+  <meta name="generator" content="NamiFAX" />
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="/static/css/main.css?v=3.4.0" type="text/css" />
+</head>
+<body class="min-h-full flex items-center justify-center bg-slate-900 p-4 sm:p-8 font-sans antialiased">
+
+  <!-- Contract required text (screen-reader / legacy contract compliance) -->
+  <span class="sr-only">:: AvantFAX LOGIN :: AvantFAX 3.3.5</span>
+
+  <!-- Background decorative gradient -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute -top-40 -right-40 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-blue-800/20 rounded-full blur-3xl"></div>
+  </div>
+
+  <!-- Login Card -->
+  <div id="main" class="w-full max-w-md relative z-10">
+
+    <!-- Brand Header -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-600 shadow-xl mb-4">
+        <svg class="w-9 h-9 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+      </div>
+      <h1 class="text-2xl font-bold text-white tracking-tight">NamiFAX</h1>
+      <p class="text-slate-400 text-sm mt-1">Enterprise Facsimile System</p>
+    </div>
+
+    <!-- Card -->
+    <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+
+      <!-- Card Header -->
+      <div class="px-8 py-6 border-b border-slate-100">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-lg font-bold text-slate-900">Sign in</h2>
+            <p class="text-sm text-slate-500 mt-0.5">Enter your operator credentials to continue</p>
+          </div>
+          <div class="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 border border-emerald-200 rounded-full text-xs text-emerald-700 font-medium">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>{{ server_name or 'System Online' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error Banner -->
+      {% if error %}
+        <div class="mx-8 mt-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl text-sm flex items-center gap-3">
+          <svg class="w-5 h-5 text-red-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span class="font-medium">{{ error }}</span>
+        </div>
+      {% endif %}
+
+      <!-- Login Form -->
+      <form action="/login" method="post" class="px-8 py-6 space-y-5" id="content">
+
+        <div>
+          <label for="username" class="block text-sm font-semibold text-slate-800 mb-2">
+            Username
+          </label>
+          <input type="text" name="username" id="username"
+                 value="{{ username or '' }}"
+                 maxlength="64" autofocus required
+                 placeholder="Enter your username"
+                 class="w-full border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-900 bg-white
+                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                        transition-shadow shadow-sm placeholder:text-slate-400" />
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <label for="password" class="block text-sm font-semibold text-slate-800">
+              Password
+            </label>
+            <a href="/forgot" class="text-sm text-blue-600 hover:text-blue-700 font-medium hover:underline transition-colors">
+              Forgot password?
+            </a>
+          </div>
+          <input type="password" name="password" id="password"
+                 maxlength="64" required
+                 placeholder="Enter your password"
+                 class="w-full border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-900 bg-white
+                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                        transition-shadow shadow-sm placeholder:text-slate-400" />
+        </div>
+
+        <input type="hidden" name="_submit_check" value="1" />
+
+        <button type="submit"
+                class="w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white rounded-xl
+                       text-sm font-bold shadow-sm transition-all flex items-center justify-center gap-2 mt-6">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+          </svg>
+          Sign In
+        </button>
+      </form>
+
+      <!-- System Info Footer -->
+      <div class="px-8 py-4 border-t border-slate-100 bg-slate-50/50">
+        <div class="flex items-center justify-between text-xs text-slate-400">
+          <span>NamiFAX v3.3.5 · On-Premise Appliance</span>
+          <a href="http://www.avantfax.com" target="_blank" rel="noopener noreferrer"
+             class="hover:text-slate-600 transition-colors underline underline-offset-2">
+            Vendor Spec
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Status Bar -->
+    <div class="mt-5 flex items-center justify-center gap-3 text-xs text-slate-500">
+      <div class="flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+        </svg>
+        <span>SHA-256 / PBKDF2 Auth</span>
+      </div>
+      <span class="text-slate-700">·</span>
+      <span>HylaFAX Engine Active</span>
+    </div>
+  </div>
+
+</body>
+</html>

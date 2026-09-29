@@ -1,0 +1,15 @@
+{
+  "status_code": 200,
+  "title": "AvantFAX - Admin Control Panel",
+  "required_links": [
+    "/admin/users",
+    "/admin/modems",
+    "/admin/did",
+    "/admin/syslog"
+  ],
+  "required_text": [
+    "Admin Control Panel",
+    "Dashboard",
+    "Server Status"
+  ]
+}

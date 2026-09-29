@@ -1,0 +1,87 @@
+{
+  "status_code": 200,
+  "title": "AvantFAX - Admin - Fax Categories",
+  "forms": [
+    {
+      "method": "post",
+      "inputs": [
+        {
+          "name": "name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "catid",
+          "type": "hidden"
+        },
+        {
+          "name": "_submit_check",
+          "type": "hidden"
+        }
+      ],
+      "submit_button": true
+    }
+  ],
+  "required_text": [
+    "Fax Categories",
+    "Save",
+    "Delete"
+  ],
+  "form_structure": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/admin/categories",
+        "method": "POST",
+        "inputs_count": 3,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "catid",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "name",
+            "tag": "input",
+            "type": "text",
+            "id": "name",
+            "required": true
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "delete",
+            "text": "Delete"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "save",
+            "text": "Save"
+          }
+        ]
+      }
+    ]
+  },
+  "dynamic_states": {
+    "delete_category": {
+      "trigger_selector": "button[name='delete']",
+      "affected_inputs": [
+        "catid"
+      ]
+    }
+  }
+}

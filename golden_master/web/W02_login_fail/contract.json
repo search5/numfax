@@ -1,0 +1,14 @@
+{
+  "status_code": 200,
+  "title": "- AvantFAX - Login",
+  "forms": [
+    {
+      "method": "post",
+      "action": "/login"
+    }
+  ],
+  "required_text": [
+    "Invalid username or password",
+    ":: AvantFAX LOGIN ::"
+  ]
+}

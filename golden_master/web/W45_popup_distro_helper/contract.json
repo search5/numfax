@@ -1,0 +1,105 @@
+{
+  "status_code": 200,
+  "title": "- AvantFAX - Distribution List Helper",
+  "forms": [
+    {
+      "method": "post",
+      "action": "/helper/distrolist",
+      "inputs": [
+        {
+          "name": "regexp",
+          "type": "text"
+        },
+        {
+          "name": "myselect[]",
+          "type": "select"
+        },
+        {
+          "name": "dl_id",
+          "type": "hidden"
+        },
+        {
+          "name": "_submit_check",
+          "type": "hidden",
+          "value": "1"
+        }
+      ],
+      "submit_button": true
+    }
+  ],
+  "required_text": [
+    "Search",
+    "Add",
+    "Close Window"
+  ],
+  "form_structure": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "/helper/distrolist",
+        "method": "POST",
+        "inputs_count": 6,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "regexp",
+            "tag": "input",
+            "type": "text",
+            "id": "regexp",
+            "required": false
+          },
+          {
+            "name": "myselect[]",
+            "tag": "select",
+            "type": "select",
+            "id": "myselect",
+            "required": false
+          },
+          {
+            "name": "dl_id",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "add",
+            "tag": "input",
+            "type": "submit",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "",
+            "tag": "input",
+            "type": "button",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "input",
+            "type": "submit",
+            "name": "add",
+            "text": "Add"
+          },
+          {
+            "tag": "input",
+            "type": "button",
+            "name": "",
+            "text": "Close Window"
+          }
+        ]
+      }
+    ]
+  }
+}

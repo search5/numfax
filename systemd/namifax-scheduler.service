@@ -1,0 +1,20 @@
+[Unit]
+Description=NamiFAX Dedicated Background APScheduler Daemon
+After=network.target hylafax.service mariadb.service mysql.service
+
+[Service]
+Type=simple
+User=uucp
+Group=uucp
+WorkingDirectory=/opt/namifax
+Environment="PYTHONPATH=/opt/namifax/src"
+ExecStart=/opt/namifax/.venv/bin/namifax scheduler
+Restart=always
+RestartSec=5s
+
+ProtectSystem=full
+ProtectHome=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

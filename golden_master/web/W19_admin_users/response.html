@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head><title>AvantFAX - Admin - Users</title></head>
+<body>
+<h2>User Accounts</h2>
+<table>
+  <tr><th>Username</th><th>Email</th><th>Superuser</th><th>Admin</th><th>Actions</th></tr>
+</table>
+<div id="user-form">
+  <form action="/admin/users" method="post">
+    <p><label for="name">Name:</label> <input type="text" name="name" id="name" required /></p>
+    <p><label for="username">Username:</label> <input type="text" name="username" id="username" required /></p>
+    <p><label for="password">Password:</label> <input type="password" name="password" id="password" /></p>
+    <p><label for="email">Email:</label> <input type="email" name="email" id="email" required /></p>
+    <fieldset><legend>DID Routes</legend></fieldset>
+    <fieldset><legend>Fax Lines</legend></fieldset>
+    <fieldset><legend>Categories</legend></fieldset>
+    <input type="hidden" name="_submit_check" value="1" />
+    <button type="submit">Save User</button>
+  </form>
+</div>
+</body>
+</html>

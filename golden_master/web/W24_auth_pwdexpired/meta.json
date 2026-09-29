@@ -1,0 +1,8 @@
+{
+  "id": "W24_auth_pwdexpired",
+  "description": "Password expired force update form",
+  "route": "/pwdexpired",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

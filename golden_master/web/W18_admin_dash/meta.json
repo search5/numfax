@@ -1,0 +1,8 @@
+{
+  "id": "W18_admin_dash",
+  "description": "Administrator dashboard and server overview",
+  "route": "/admin",
+  "method": "GET",
+  "expected_status": 200,
+  "implemented": true
+}

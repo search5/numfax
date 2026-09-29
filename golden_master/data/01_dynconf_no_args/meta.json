@@ -1,0 +1,17 @@
+{
+  "id": "01_dynconf_no_args",
+  "description": "dynconf with no arguments (usage exit)",
+  "legacy_cmd": [
+    "php",
+    "-d",
+    "display_errors=0",
+    "dynconf.php"
+  ],
+  "target_cmd": [
+    "/usr/local/bin/python3",
+    "-m",
+    "avantfax.cli.dynconf"
+  ],
+  "cwd": "legacy/avantfax/includes",
+  "target_cwd": "."
+}

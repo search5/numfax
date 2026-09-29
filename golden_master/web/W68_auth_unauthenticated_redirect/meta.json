@@ -1,0 +1,12 @@
+{
+  "id": "W68_auth_unauthenticated_redirect",
+  "description": "Unauthenticated browser navigation redirecting to login page",
+  "route": "/inbox",
+  "method": "GET",
+  "expected_status": 302,
+  "authenticated": false,
+  "headers": {
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+  },
+  "implemented": true
+}

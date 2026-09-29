@@ -1,0 +1,10 @@
+{
+  "scenario_id": "W51_rotate_fax",
+  "route": "/rotate",
+  "method": "GET",
+  "params": {
+    "fid": "1"
+  },
+  "description": "Rotate fax 90 degrees matching legacy rotate.php",
+  "implemented": true
+}

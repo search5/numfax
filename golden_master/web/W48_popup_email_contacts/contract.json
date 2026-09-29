@@ -1,0 +1,79 @@
+{
+  "status_code": 200,
+  "title": "- AvantFAX - Email Contacts",
+  "forms": [
+    {
+      "inputs": [
+        {
+          "name": "regexp",
+          "type": "text"
+        },
+        {
+          "name": "abookemail_id",
+          "type": "select"
+        }
+      ]
+    }
+  ],
+  "required_text": [
+    "Search",
+    "Add",
+    "Close Window"
+  ],
+  "form_structure": {
+    "total_forms": 1,
+    "forms": [
+      {
+        "index": 0,
+        "action": "",
+        "method": "GET",
+        "inputs_count": 4,
+        "buttons_count": 2,
+        "field_sequence": [
+          {
+            "name": "regexp",
+            "tag": "input",
+            "type": "text",
+            "id": "regexp",
+            "required": false
+          },
+          {
+            "name": "abookemail_id",
+            "tag": "select",
+            "type": "select",
+            "id": "abookemail_id",
+            "required": false
+          },
+          {
+            "name": "add",
+            "tag": "input",
+            "type": "button",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "",
+            "tag": "input",
+            "type": "button",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "input",
+            "type": "button",
+            "name": "add",
+            "text": "Add"
+          },
+          {
+            "tag": "input",
+            "type": "button",
+            "name": "",
+            "text": "Close Window"
+          }
+        ]
+      }
+    ]
+  }
+}
