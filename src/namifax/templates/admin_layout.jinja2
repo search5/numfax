@@ -85,6 +85,7 @@
           <option value="/admin/fax2email" {% if current_admin_tab == 'fax2email' %}selected{% endif %}>Fax2Email Rules</option>
           <option value="/admin/syslog" {% if current_admin_tab == 'syslog' %}selected{% endif %}>System Audit Logs</option>
           <option value="/admin/sysfunc" {% if current_admin_tab == 'sysfunc' %}selected{% endif %}>System Functions</option>
+          <option value="/admin/smtp" {% if current_admin_tab == 'smtp' %}selected{% endif %}>SMTP Gateway</option>
         </optgroup>
         <option value="">-- Portal Navigation --</option>
         <option value="/inbox">&larr; Return to Inbox</option>
@@ -217,6 +218,14 @@
           </svg>
           <span>{{ _('System Functions') }}</span>
         </a>
+        <a href="/admin/smtp"
+           class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium transition
+                  {% if current_admin_tab == 'smtp' %}bg-blue-600/15 text-blue-400 border border-blue-500/30 font-semibold{% else %}text-slate-300 hover:text-white hover:bg-slate-800/80{% endif %}">
+          <svg class="w-4 h-4 text-slate-400 {% if current_admin_tab == 'smtp' %}text-blue-400{% endif %}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          <span>{{ _('SMTP Gateway') }}</span>
+        </a>
       </div>
 
     </nav>
@@ -263,6 +272,7 @@
           {% elif current_admin_tab == 'fax2email' %}{{ _('Fax to Email') }}
           {% elif current_admin_tab == 'syslog' %}{{ _('System Audit Logs') }}
           {% elif current_admin_tab == 'sysfunc' %}{{ _('System Functions') }}
+          {% elif current_admin_tab == 'smtp' %}{{ _('SMTP Gateway') }}
           {% else %}{{ current_admin_tab }}
           {% endif %}
         </span>
@@ -290,6 +300,7 @@
             <option value="/admin/fax2email" {% if current_admin_tab == 'fax2email' %}selected{% endif %}>Fax2Email</option>
             <option value="/admin/syslog" {% if current_admin_tab == 'syslog' %}selected{% endif %}>Logs</option>
             <option value="/admin/sysfunc" {% if current_admin_tab == 'sysfunc' %}selected{% endif %}>Functions</option>
+            <option value="/admin/smtp" {% if current_admin_tab == 'smtp' %}selected{% endif %}>SMTP</option>
           </select>
         </div>
       </div>

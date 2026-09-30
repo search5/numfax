@@ -43,6 +43,7 @@ def includeme(config):
     config.add_route("admin_sysfunc", "/admin/sysfunc")
     config.add_route("admin_system_logs", "/admin/system_logs")
     config.add_route("admin_syslog", "/admin/syslog")
+    config.add_route("admin_smtp", "/admin/smtp")
 
     # Interaction Modal Dialog routes
     config.add_route("modal_email", "/email")

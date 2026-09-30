@@ -162,6 +162,20 @@ SCHEMA_STATEMENTS = [
         logdate TEXT NOT NULL,
         logtext TEXT NOT NULL
     );""",
+    """CREATE TABLE IF NOT EXISTS SystemSettings (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        smtp_host TEXT DEFAULT 'localhost',
+        smtp_port INTEGER DEFAULT 25,
+        smtp_security TEXT DEFAULT 'NONE',
+        smtp_auth INTEGER DEFAULT 0,
+        smtp_username TEXT,
+        smtp_password TEXT,
+        from_email TEXT DEFAULT 'root@localhost',
+        from_name TEXT DEFAULT 'NamiFAX',
+        email_sig_text TEXT,
+        email_sig_html TEXT,
+        updated_at TEXT
+    );""",
 ]
 
 

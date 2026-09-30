@@ -283,6 +283,7 @@ MySQL 스키마(`create_tables.sql`)를 기준으로 신규 Python 시스템(`SQ
 | **35** | `WebArchive` | `archive.php`, `search.php` | `src/avantfax/web/views/archive.py` | `[COMPLETE]` | 19, 20, 21, 27 | 팩스 검색 및 아카이브 뷰 구현 및 단위 테스트 통과 |
 | **36** | `WebSendFax` | `sendfax.php`, `upload_*.php` | `src/avantfax/web/views/sendfax.py` | `[COMPLETE]` | 06, 11, 19, 21, 26, 27 | 팩스 작성 및 전송 뷰 구현 및 단위 테스트 통과 |
 | **37** | `WebAdmin` | `admin/*.php` | `src/avantfax/web/views/admin.py` | `[COMPLETE]` | 12, 14, 15, 16, 17, 18, 21, 27 | 시스템 관리자 뷰 및 설정 API 구현 및 단위 테스트 통과 |
+| **39** | `AdminSmtpGateway` | `NEW` (엔터프라이즈) | `src/namifax/services/smtp_settings.py`, `src/namifax/views/admin.py` | `[COMPLETE]` | 07 | 외부 SMTP 게이트웨이 웹 설정 및 실시간 연결 진단 도구 완료 |
 
 ---
 
@@ -680,6 +681,7 @@ Pyramid 뷰 컨트롤러는 Jinja2 템플릿에 다음 표준 컨텍스트 딕�
 | **동적상태**| 배포 목록 그룹 선택편집 | `distrolist_edit.php` | `views/distrolist.py` (`/distrolist/edit?dl_id=1`) | `[COMPLETE]` | 그룹 멤버 로드 및 수정/삭제 폼 계약 (W66) |
 | **동적상태**| 이메일북 연락처 선택편집| `emailbook_edit.php` | `views/addressbook.py` (`/emailbook/edit?email_id=1`) | `[COMPLETE]` | 이메일 연락처 로드 및 수정/삭제 계약 (W67) |
 | **동적상태**| 미인증 브라우저 리다이렉트 | `check_login.php` | `views/forbidden.py` (`/inbox` -> 302 `/login`) | `[COMPLETE]` | 세션 만료 시 로그인 페이지 자동 이동 (W68) |
+| **관리자** | 외부 SMTP 게이트웨이 | `NEW` (엔터프라이즈) | `views/admin.py` (`/admin/smtp`), `templates/admin_smtp.jinja2` | `[COMPLETE]` | 외부 SMTP 서버 연동 및 실시간 연결 진단 UI (W69) |
 
 ---
 

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from pyramid.httpexceptions import HTTPFound
+from pyramid.httpexceptions import HTTPFound, HTTPForbidden
 from pyramid.view import view_config
 
 from avantfax.services.barcode import BarcodeRouting
@@ -858,5 +858,89 @@ def admin_system_func_view(request):
         "active_tab": "admin",
         "active_admin": "sysfunc",
         "message": message,
+    }
+
+
+@view_config(route_name="admin_smtp", renderer="namifax:templates/admin_smtp.jinja2", permission="admin")
+def admin_smtp_view(request):
+    """Admin SMTP Gateway settings and connectivity diagnostics view."""
+    identity = getattr(request, "identity", None)
+    session = getattr(request, "session", {})
+    is_admin = False
+    if identity:
+        is_admin = bool(identity.get("superuser") or identity.get("is_admin") or identity.get("is_superadmin"))
+    elif session:
+        is_admin = bool(session.get("is_superadmin") or session.get("is_admin"))
+
+    if not is_admin:
+        raise HTTPForbidden("Access denied. Superadmin permission required.")
+
+    db = getattr(request, "db", None)
+    db_engine = getattr(request, "db_engine", None)
+    if not db:
+        from avantfax.db.engine import DatabaseEngine
+        db = DatabaseEngine()
+        if db_engine:
+            # If a custom engine was provided
+            try:
+                db._conn = db_engine.raw_connection().connection
+            except Exception:
+                pass
+
+    from src.namifax.services.smtp_settings import SmtpSettingsService, SmtpConfig
+    service = SmtpSettingsService(db)
+
+    message = None
+    error = None
+    test_result = None
+
+    params = dict(getattr(request, "POST", {}))
+    if hasattr(request, "params") and request.params:
+        params.update(request.params)
+
+    if request.method == "POST":
+        action = params.get("action")
+        if action == "save":
+            try:
+                service.save_settings(params)
+                message = "SMTP Gateway settings saved successfully."
+                loc = "/admin/smtp"
+                if hasattr(request, "route_url"):
+                    try:
+                        loc = request.route_url("admin_smtp")
+                    except Exception:
+                        pass
+                return HTTPFound(location=loc)
+            except Exception as exc:
+                error = str(exc)
+        elif action == "test":
+            target_email = params.get("test_email", "admin@localhost")
+            cfg = SmtpConfig(
+                smtp_host=params.get("smtp_host", "localhost"),
+                smtp_port=int(params.get("smtp_port", 25) or 25),
+                smtp_security=params.get("smtp_security", "NONE"),
+                smtp_auth=params.get("smtp_auth") in ("on", "1", "true", True),
+                smtp_username=params.get("smtp_username"),
+                smtp_password=params.get("smtp_password"),
+                from_email=params.get("from_email", "root@localhost"),
+                from_name=params.get("from_name", "NamiFAX"),
+            )
+            res = service.test_connection(target_email, cfg)
+            test_result = {
+                "success": res.success,
+                "message": res.message,
+                "details": res.details,
+            }
+
+    config = service.get_settings()
+    return {
+        "title": "NamiFAX - Admin - SMTP Gateway",
+        "current_user": identity or {"username": session.get("username", "admin"), "is_admin": True, "superuser": True},
+        "active_tab": "admin",
+        "active_admin": "smtp",
+        "config": config,
+        "message": message,
+        "error": error,
+        "test_result": test_result,
     }
 

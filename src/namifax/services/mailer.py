@@ -44,6 +44,30 @@ class MailerService:
         self._attachments: list[dict[str, Any]] = []
         self._embedded_images: list[dict[str, Any]] = []
 
+    @classmethod
+    def from_settings(cls, engine: Any = None) -> MailerService:
+        if engine is None:
+            return cls()
+        try:
+            from src.namifax.services.smtp_settings import SmtpSettingsService
+            service = SmtpSettingsService(engine)
+            cfg = service.get_settings()
+            use_ssl = (cfg.smtp_security == "SSL")
+            use_tls = (cfg.smtp_security == "STARTTLS")
+            return cls(
+                smtp_server=cfg.smtp_host,
+                smtp_port=cfg.smtp_port,
+                smtp_user=cfg.smtp_username if cfg.smtp_auth else None,
+                smtp_password=cfg.smtp_password if cfg.smtp_auth else None,
+                use_ssl=use_ssl,
+                use_tls=use_tls,
+                admin_email=cfg.from_email,
+                email_sig_text=cfg.email_sig_text,
+                email_sig_html=cfg.email_sig_html,
+            )
+        except Exception:
+            return cls()
+
     def set_message(self, text: str, subject: str | None = None) -> None:
         """Construct multi-part plaintext and HTML message bodies."""
         if subject:
