@@ -30,18 +30,19 @@ NamiFAX는 오픈소스 팩스 솔루션인 AvantFAX(PHP 5 + MySQL + HylaFAX)를
 
 ## 3. 기능별 상세 분석 및 신규 아키텍처 설계
 
-### 3.1 네트워크 프린터 추가 (Network Printer Management)
+### 3.1 네트워크 프린터 연동 및 가상 프린터 에뮬레이션 (Network Printer & Print-to-Fax)
 - **레거시 한계**:
   - 레거시 AvantFAX의 `DIDRouting`, `BarcodeRouting`, `FaxModem`, `Fax2Email` 테이블에는 모두 `printer` 컬럼이 존재했으나, 이는 단순 문자열로 서버의 CUPS 큐 이름(`-P printer_name`)을 넘기는 방식이었습니다.
-  - 관리자가 시스템 콘솔에서 CUPS 드라이버를 직접 수동 설치하지 않으면 작동하지 않았습니다.
-- **신규 아키텍처**:
-  - **프로토콜 지원**: RAW 9100 (HP JetDirect), LPR/LPD (RFC 1179), IPP/IPPS (Internet Printing Protocol).
-  - **프린터 관리 서비스 (`NetworkPrinterService`)**:
-    - 관리자 콘솔(`Admin > Hardware & Lines > Network Printers`) 화면 추가.
-    - 프린터 IP, 포트, 프로토콜, 용지 규격(A4/Letter), 디바이스 명칭 관리.
-    - "Test Print" 버튼을 통해 팩스 테스트 출력 기능 제공.
-  - **라우팅 연동**:
-    - DID, 모뎀, 바코드별 수신 시 해당 네트워크 프린터 소켓으로 TIFF/PDF를 직접 포스트스크립트/PCL/RAW 바이너리로 전송 출력.
+  - 관리자가 시스템 콘솔에서 CUPS 드라이버를 직접 수동 설치하지 않으면 작동하지 않았으며, PC에서 '인쇄'하여 팩스를 발송하는 기능은 전무했습니다.
+- **신규 아키텍처 (양방향 네트워크 프린팅 지원)**:
+  1. **아웃바운드 인쇄 (수신 팩스 ➔ 실물 프린터 자동 출력)**:
+     - **프로토콜 지원**: RAW 9100 (HP JetDirect), LPR/LPD (RFC 1179), IPP/IPPS (Internet Printing Protocol).
+     - **프린터 관리 서비스 (`NetworkPrinterService`)**: 관리자 콘솔(`Admin > Hardware & Lines > Network Printers`)에서 프린터 IP, 포트, 프로토콜, 용지 규격 등록 및 "Test Print" 진단 제공. DID/모뎀/바코드별 수신 즉시 실물 프린터 소켓으로 TIFF/PDF 직접 자동 출력.
+  2. **인바운드 인쇄 (클라이언트 PC 인쇄 ➔ NamiFAX 가상 프린터 수신 ➔ 팩스 자동 발송)**:
+     - **NamiFAX 가상 프린터 데몬 (Virtual Print Server)**: NamiFAX 서버 자체에 포트 9100(RAW) 및 포트 631(IPP) 리스너를 내장하여 사내망에서 일반 네트워크 프린터로 가장.
+     - **클라이언트 무설치 전송**: Windows/Mac/Linux 사용자나 ERP 시스템이 드라이버 추가 없이 표준 PostScript 프린터로 NamiFAX에 출력 가능.
+     - **문서 내 태그 인식 (Text Tagging)**: 수신된 인쇄 데이터에서 `[[FAX: 02-123-4567]]` 정규식을 파싱하여 해당 번호로 자동 즉시 발송하고, 태그 텍스트는 최종 팩스에서 마스킹 제거.
+     - **웹 드래프트 폴백**: 태그가 없는 문서는 웹 "임시보관함(Drafts)"으로 자동 저장하여 사용자가 웹에서 수신처를 지정하여 발송할 수 있도록 안내.
 
 ---
 
