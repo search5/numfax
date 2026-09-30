@@ -21,8 +21,18 @@ def settings_view(request):
         "from_faxnumber": "+1-555-0199",
         "user_tsi": "ENTERPRISE-HQ",
         "email_sig": "-- \nBest regards,\nNamiFAX Administrator",
-        "language": "en",
     }
+
+    # Determine current language from cookie, session, or identity
+    current_lang = "en"
+    if hasattr(request, "cookies") and request.cookies.get("_LOCALE_"):
+        current_lang = request.cookies.get("_LOCALE_")
+    elif hasattr(request, "session") and request.session.get("language"):
+        current_lang = request.session.get("language")
+    elif identity.get("language"):
+        current_lang = identity.get("language")
+
+    profile_data["language"] = current_lang
 
     if request.method == "POST":
         params = request.params
@@ -33,6 +43,7 @@ def settings_view(request):
         if new_pw and new_pw != confirm_pw:
             error = "New passwords do not match."
         else:
+            selected_lang = params.get("language", "en")
             profile_data.update({
                 "name": params.get("name", profile_data["name"]),
                 "email": params.get("email", profile_data["email"]),
@@ -42,8 +53,17 @@ def settings_view(request):
                 "from_faxnumber": params.get("from_faxnumber", ""),
                 "user_tsi": params.get("user_tsi", ""),
                 "email_sig": params.get("email_sig", ""),
-                "language": params.get("language", "en"),
+                "language": selected_lang,
             })
+
+            # Update session language
+            if hasattr(request, "session"):
+                request.session["language"] = selected_lang
+
+            # Set _LOCALE_ cookie for immediate persistence across requests
+            if hasattr(request, "response"):
+                request.response.set_cookie("_LOCALE_", selected_lang, max_age=31536000, path="/")
+
             message = "Settings updated successfully."
 
     return {

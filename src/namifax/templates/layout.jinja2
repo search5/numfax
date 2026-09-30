@@ -42,11 +42,11 @@
         <!-- Main Navigation -->
         <nav class="hidden md:flex items-center gap-0.5 flex-1 justify-center">
           {% set nav_items = [
-            ('inbox',    '/inbox',       'Inbox',    'View received faxes',      num_inbox),
-            ('sendfax',  '/sendfax',     'Send Fax', 'Send a document via fax',  none),
-            ('outbox',   '/outbox',      'Outbox',   'Pending outbound faxes',   num_outbox),
-            ('archive',  '/archive',     'Archive',  'Search all fax records',   none),
-            ('contacts', '/addressbook', 'Contacts', 'Manage your address book', none),
+            ('inbox',    '/inbox',       _('Inbox'),    'View received faxes',      num_inbox),
+            ('sendfax',  '/sendfax',     _('Send Fax'), 'Send a document via fax',  none),
+            ('outbox',   '/outbox',      _('Outbox'),   'Pending outbound faxes',   num_outbox),
+            ('archive',  '/archive',     _('Archive'),  'Search all fax records',   none),
+            ('contacts', '/addressbook', _('Contacts'), 'Manage your address book', none),
           ] %}
           {% for tab, href, label, desc, badge in nav_items %}
           <a href="{{ href }}"
@@ -75,7 +75,7 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
             </svg>
-            Send Fax
+            {{ _('Send Fax') }}
           </a>
 
           <!-- Fax line status -->
@@ -106,9 +106,9 @@
             <div class="hidden sm:block">
               <div class="text-sm font-semibold text-slate-900 leading-tight">{{ current_user.username }}</div>
               <div class="flex items-center gap-2 text-xs text-slate-400">
-                <a href="/settings" class="hover:text-blue-600 transition-colors">Settings</a>
+                <a href="/settings" class="hover:text-blue-600 transition-colors">{{ _('Settings') }}</a>
                 <span>·</span>
-                <a href="/logout" class="hover:text-red-500 transition-colors">Logout</a>
+                <a href="/logout" class="hover:text-red-500 transition-colors">{{ _('Logout') }}</a>
               </div>
             </div>
           </div>
