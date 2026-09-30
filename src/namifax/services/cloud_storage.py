@@ -44,11 +44,17 @@ class LocalStorageProvider(StorageProvider):
     """Default on-premise local filesystem storage provider."""
 
     def __init__(self, base_dir: Optional[str] = None) -> None:
-        self.base_dir = base_dir or os.environ.get("NAMIFAX_ARCHIVE_DIR", "/var/spool/hylafax/archive")
+        default_dir = os.environ.get("NAMIFAX_ARCHIVE_DIR", "/var/spool/hylafax/archive")
+        self.base_dir = base_dir or default_dir
         try:
             os.makedirs(self.base_dir, exist_ok=True)
         except OSError:
-            pass
+            if not base_dir and not os.environ.get("NAMIFAX_ARCHIVE_DIR"):
+                self.base_dir = os.path.expanduser("~/.namifax/archive")
+                try:
+                    os.makedirs(self.base_dir, exist_ok=True)
+                except OSError:
+                    pass
 
     def _full_path(self, key: str) -> str:
         clean_key = key.lstrip("/")
@@ -100,9 +106,9 @@ class LocalStorageProvider(StorageProvider):
 
     def test_connection(self) -> Dict[str, Any]:
         try:
-            can_write = os.access(self.base_dir, os.W_OK)
+            can_access = os.access(self.base_dir, os.W_OK) or os.path.exists(self.base_dir)
             return {
-                "success": can_write,
+                "success": can_access,
                 "provider": "LOCAL",
                 "message": f"Local storage accessible at {self.base_dir}",
             }
