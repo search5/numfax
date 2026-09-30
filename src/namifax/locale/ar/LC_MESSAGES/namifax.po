@@ -26,7 +26,7 @@ msgstr "عناوين البريد الإلكتروني"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:14
 msgid "Save frequently used fax numbers for quick access when sending."
-msgstr ""
+msgstr "حفظ أرقام الفاكس المستخدمة بكثرة للوصول السريع عند الإرسال."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:24
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:53
@@ -65,7 +65,7 @@ msgstr "ارسال"
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:57
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:129
 msgid "Actions"
-msgstr ""
+msgstr "إجراءات"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:74
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:28
@@ -96,17 +96,19 @@ msgstr "يتصل بـ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:95
 msgid "No contacts matched"
-msgstr ""
+msgstr "لم يتم العثور على جهات اتصال مطابقة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:97
 msgid ""
 "Add contacts to quickly select fax numbers when sending without typing "
 "them every time."
 msgstr ""
+"أضف جهات اتصال لاختيار أرقام الفاكس سريعاً عند الإرسال دون كتابتها في كل "
+"مرة."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:105
 msgid "Add First Contact"
-msgstr ""
+msgstr "إضافة أول جهة اتصال"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:18
 #, fuzzy
@@ -120,7 +122,7 @@ msgstr "شركة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:20
 msgid "Configure corporate contact identity and transmission routing defaults."
-msgstr ""
+msgstr "تكوين هوية جهة اتصال الشركة والإعدادات الافتراضية لتوجيه الإرسال."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:26
 #, fuzzy
@@ -129,7 +131,7 @@ msgstr "يتصل بـ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:42
 msgid "Primary Company Profile"
-msgstr ""
+msgstr "الملف التعريفي الأساسي للشركة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:46
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:69
@@ -143,11 +145,11 @@ msgstr "شركة"
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:49
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:64
 msgid "Email Address"
-msgstr ""
+msgstr "عنوان البريد الإلكتروني"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:67
 msgid "Recipient Contact & Physical Address"
-msgstr ""
+msgstr "جهة اتصال المستلم والعنوان الفعلي"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:72
 #, fuzzy
@@ -156,19 +158,19 @@ msgstr "الى شخص"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:77
 msgid "Voice Telephone"
-msgstr ""
+msgstr "رقم الهاتف الصوتي"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:82
 msgid "Street Address"
-msgstr ""
+msgstr "عنوان الشارع"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:87
 msgid "City / Postal Region"
-msgstr ""
+msgstr "المدينة / المنطقة البريدية"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:92
 msgid "Category Tag"
-msgstr ""
+msgstr "وسم الفئة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:94
 #, fuzzy
@@ -177,15 +179,15 @@ msgstr "Normal"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:95
 msgid "Invoices & Billing"
-msgstr ""
+msgstr "الفواتير والمدفوعات"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:96
 msgid "Legal"
-msgstr ""
+msgstr "قانوني"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:102
 msgid "Description / Internal Notes"
-msgstr ""
+msgstr "الوصف / ملاحظات داخلية"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:112
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:113
@@ -266,6 +268,8 @@ msgid ""
 "Real-time status of fax spools, hardware serial modems, and registered "
 "users"
 msgstr ""
+"حالة فورية لقوائم انتظار الفاكس، وأجهزة المودم التسلسلية، والمستخدمين "
+"المسجلين"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:30
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:59
@@ -295,7 +299,7 @@ msgstr "Fax Modems"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:46
 msgid "Hardware Ready"
-msgstr ""
+msgstr "العتاد جاهز"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:61
 #, fuzzy
@@ -304,15 +308,15 @@ msgstr "المستخدمين"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:73
 msgid "Backend Core"
-msgstr ""
+msgstr "نواة النظام الخلفي"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:87
 msgid "Scheduler"
-msgstr ""
+msgstr "المجدول"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:89
 msgid "Running"
-msgstr ""
+msgstr "قيد التشغيل"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:107
 #, fuzzy
@@ -321,7 +325,7 @@ msgstr "المستخدمين"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:110
 msgid "Manage Users"
-msgstr ""
+msgstr "إدارة المستخدمين"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:118
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:34
@@ -341,27 +345,27 @@ msgstr "آخر دخول"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:143
 msgid "Server Status"
-msgstr ""
+msgstr "حالة الخادم"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:148
 msgid "Core"
-msgstr ""
+msgstr "النواة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:152
 msgid "Database Engine"
-msgstr ""
+msgstr "محرك قاعدة البيانات"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:156
 msgid "System Scheduler"
-msgstr ""
+msgstr "مجدول النظام"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:168
 msgid "Configured Modems"
-msgstr ""
+msgstr "أجهزة المودم المهيأة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:196
 msgid "Administrator Workflow Guide"
-msgstr ""
+msgstr "دليل سير عمل المشرف"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:17
 #, fuzzy
@@ -373,6 +377,8 @@ msgid ""
 "Route incoming faxes automatically based on recognized Code39 / QR "
 "barcodes"
 msgstr ""
+"توجيه الفاكسات الواردة تلقائياً بناءً على الرموز الشريطية Code39 / QR "
+"المعترف بها"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:23
 #, fuzzy
@@ -397,12 +403,12 @@ msgstr "يتصل بـ"
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:58
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:41
 msgid "None"
-msgstr ""
+msgstr "لا يوجد"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:58
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:41
 msgid "Printer:"
-msgstr ""
+msgstr "الطابعة:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:74
 #, fuzzy
@@ -427,7 +433,7 @@ msgstr "تحرير"
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:64
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:93
 msgid "NEW"
-msgstr ""
+msgstr "جديد"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:86
 msgid "Barcode"
@@ -466,7 +472,7 @@ msgstr "عرض فئات الفاكس"
 msgid ""
 "Manage classification tags and archival categories for organizing "
 "transmissions"
-msgstr ""
+msgstr "إدارة وسوم التصنيف وفئات الأرشيف لتنظيم عمليات الإرسال"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_categories.jinja2:23
 #, fuzzy
@@ -480,7 +486,7 @@ msgstr "عرض فئات الفاكس"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_categories.jinja2:54
 msgid "Edit Category"
-msgstr ""
+msgstr "تعديل الفئة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_categories.jinja2:54
 #, fuzzy
@@ -498,7 +504,7 @@ msgstr "Cover Pages"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_covers.jinja2:18
 msgid "Manage facsimile PostScript cover page templates and layouts"
-msgstr ""
+msgstr "إدارة قوالب وتخطيطات صفحات الغلاف بتنسيق PostScript للفاكس"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_covers.jinja2:23
 #, fuzzy
@@ -526,43 +532,43 @@ msgstr "العنوان"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_covers.jinja2:89
 msgid "File"
-msgstr ""
+msgstr "ملف"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:17
 msgid "Dynamic Configuration"
-msgstr ""
+msgstr "تكوين ديناميكي"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:18
 msgid ""
 "Manage Caller ID blacklists and transmission rejection rules for modem "
 "devices"
-msgstr ""
+msgstr "إدارة قوائم حظر Caller ID وقواعد رفض الإرسال لأجهزة المودم"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:23
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:23
 msgid "New Rule"
-msgstr ""
+msgstr "قاعدة جديدة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:33
 msgid "Blocked Caller IDs"
-msgstr ""
+msgstr "أرقام Caller ID المحظورة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:40
 msgid "Caller ID:"
-msgstr ""
+msgstr "Caller ID:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:41
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:82
 msgid "All Devices"
-msgstr ""
+msgstr "كافة الأجهزة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:58
 msgid "Edit Caller ID Rule"
-msgstr ""
+msgstr "تعديل قاعدة Caller ID"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:58
 msgid "Add Caller ID Rule"
-msgstr ""
+msgstr "إضافة قاعدة Caller ID"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:75
 msgid "Caller ID"
@@ -570,7 +576,7 @@ msgstr "Caller ID"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:80
 msgid "Modem Device"
-msgstr ""
+msgstr "جهاز المودم"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:17
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:159
@@ -583,23 +589,23 @@ msgstr "Fax Modems"
 msgid ""
 "Configure automated inbound fax forwarding and PDF dispatch rules mapped "
 "by company"
-msgstr ""
+msgstr "تكوين قواعد إعادة التوجيه التلقائي للفاكس الوارد وإرسال PDF حسب الشركة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:33
 msgid "Company Forwarding Rules"
-msgstr ""
+msgstr "قواعد إعادة توجيه الشركة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:41
 msgid "Email:"
-msgstr ""
+msgstr "البريد الإلكتروني:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:58
 msgid "Edit Forwarding Rule"
-msgstr ""
+msgstr "تعديل قاعدة إعادة التوجيه"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:58
 msgid "Add Forwarding Rule"
-msgstr ""
+msgstr "إضافة قاعدة إعادة التوجيه"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:71
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:54
@@ -635,7 +641,7 @@ msgstr "لوحة القيادة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:118
 msgid "Access Control"
-msgstr ""
+msgstr "التحكم في الوصول"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:125
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:256
@@ -645,7 +651,7 @@ msgstr "المستخدمين"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:131
 msgid "Hardware & Lines"
-msgstr ""
+msgstr "الأجهزة والخطوط"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:138
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:257
@@ -670,7 +676,7 @@ msgstr "Barcode Routing"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:173
 msgid "Content & Templates"
-msgstr ""
+msgstr "المحتوى والقوالب"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:188
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:260
@@ -679,7 +685,7 @@ msgstr "Cover Pages"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:194
 msgid "Security & System"
-msgstr ""
+msgstr "الأمان والنظام"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:201
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:262
@@ -704,17 +710,19 @@ msgstr "خروج"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:252
 msgid "Admin Control Panel"
-msgstr ""
+msgstr "لوحة تحكم المشرف"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:275
 msgid "Appliance Engine Online"
-msgstr ""
+msgstr "محرك الجهاز متصل بالإنترنت"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:18
 msgid ""
 "Configure Modems hardware devices, physical serial ports, and print-"
 "forwarding rules"
 msgstr ""
+"تكوين أجهزة المودم، والمنافذ التسلسلية الفعلية، وقواعد إعادة التوجيه "
+"للطباعة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:23
 #, fuzzy
@@ -723,7 +731,7 @@ msgstr "Fax Modems"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:33
 msgid "Active Modem Lines"
-msgstr ""
+msgstr "خطوط المودم النشطة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:40
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:78
@@ -738,7 +746,7 @@ msgstr "اتصل ب"
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:43
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:56
 msgid "Status"
-msgstr ""
+msgstr "الحالة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:72
 #, fuzzy
@@ -747,7 +755,7 @@ msgstr "Fax Modems"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:72
 msgid "Configure Modems Device"
-msgstr ""
+msgstr "تكوين جهاز المودم"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:100
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:139
@@ -763,7 +771,7 @@ msgstr "Fax Modems"
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:112
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:150
 msgid "Appliance Note:"
-msgstr ""
+msgstr "ملاحظة الجهاز:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:112
 msgid ""
@@ -771,6 +779,9 @@ msgid ""
 " USB modems, or virtual IAX modems recognized by the underlying HylaFAX "
 "server."
 msgstr ""
+"يجب أن تتطابق أجهزة المودم المهيأة هنا مع أجهزة RS-232 التسلسلية الفعلية،"
+" أو أجهزة مودم USB، أو أجهزة مودم IAX الافتراضية المعترف بها بواسطة خادم "
+"HylaFAX الأساسي."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:17
 #, fuzzy
@@ -782,6 +793,8 @@ msgid ""
 "Route incoming faxes by Direct Inward Dialing (DID) extension to specific"
 " email boxes or printers"
 msgstr ""
+"توجيه الفاكسات الواردة حسب الرقم الداخلي للطلب الداخلي المباشر (DID) إلى "
+"صناديق بريد أو طابعات محددة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:23
 #, fuzzy
@@ -796,15 +809,15 @@ msgstr "DID/DTMF Route groups"
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:53
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:99
 msgid "Route Code"
-msgstr ""
+msgstr "رمز التوجيه"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:57
 msgid "Action"
-msgstr ""
+msgstr "الإجراء"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:84
 msgid "Configure Routing Rule"
-msgstr ""
+msgstr "تكوين قاعدة التوجيه"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:119
 msgid "Category"
@@ -812,7 +825,7 @@ msgstr "الفئة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:121
 msgid "-- None --"
-msgstr ""
+msgstr "-- لا يوجد --"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:150
 msgid ""
@@ -820,14 +833,17 @@ msgid ""
 "transmissions matching extension patterns directly to mapped operator "
 "inboxes or physical printers."
 msgstr ""
+"يعيد توجيه DID (Direct Inward Dialing) تلقائياً عمليات الإرسال الواردة "
+"المطابقة لأنماط الأرقام الداخلية مباشرة إلى صناديق المشغلين المعنيين أو "
+"الطابعات الفعلية."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:19
 msgid "Perform maintenance operations, service control, and backups."
-msgstr ""
+msgstr "إجراء عمليات الصيانة، والتحكم في الخدمات، والنسخ الاحتياطي."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:26
 msgid "HylaFAX Engine Active"
-msgstr ""
+msgstr "محرك HylaFAX نشط"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:29
 #, fuzzy
@@ -836,7 +852,7 @@ msgstr "لوحة القيادة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:40
 msgid "Caution: Appliance Maintenance Operations"
-msgstr ""
+msgstr "تنبيه: عمليات صيانة الجهاز"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:42
 msgid ""
@@ -845,30 +861,35 @@ msgid ""
 "transmissions in the modem queue are completed before initiating "
 "maintenance tasks."
 msgstr ""
+"ستؤدي إعادة تشغيل الخدمات أو إيقاف تشغيلها إلى مقاطعة قائمة انتظار مودم "
+"الفاكس النشطة وفصل جلسات العملاء. تأكد من اكتمال كافة عمليات الإرسال "
+"الصادرة في قائمة الانتظار قبل بدء مهام الصيانة."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:58
 msgid "Daemon Service Control"
-msgstr ""
+msgstr "التحكم في الخدمات الخلفية (Daemons)"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:61
 msgid "Restart HylaFAX and NamiFAX web services, or halt background workers."
-msgstr ""
+msgstr "إعادة تشغيل خدمات الويب لـ HylaFAX و NamiFAX، أو إيقاف العمال في الخلفية."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:84
 msgid "Reboot Services"
-msgstr ""
+msgstr "إعادة تشغيل الخدمات"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:90
 msgid "Shutdown Services"
-msgstr ""
+msgstr "إيقاف تشغيل الخدمات"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:100
 msgid "Database & Archive Backup"
-msgstr ""
+msgstr "النسخ الاحتياطي لقاعدة البيانات والأرشيف"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:103
 msgid "Download system archives and database snapshots for offsite retention."
 msgstr ""
+"تنزيل أرشيفات النظام ونسخ قاعدة البيانات الاحتياطية للاحتفاظ بها في موقع "
+"خارجي."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:126
 msgid "Download Archive"
@@ -884,16 +905,16 @@ msgstr "System Logs"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:18
 msgid "Audit logs and HylaFAX server operational event traces"
-msgstr ""
+msgstr "سجلات التدقيق وتتبع الأحداث التشغيلية لخادم HylaFAX"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:25
 msgid "Keywords:"
-msgstr ""
+msgstr "الكلمات المفتاحية:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:30
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:43
 msgid "Date:"
-msgstr ""
+msgstr "التاريخ:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:64
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:120
@@ -902,28 +923,28 @@ msgstr "تاريخ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:65
 msgid "Log Text"
-msgstr ""
+msgstr "نص السجل"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:79
 msgid "No system logs found matching criteria."
-msgstr ""
+msgstr "لم يتم العثور على سجلات نظام مطابقة للمعايير."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:80
 msgid "Transmissions and server events will be streamed here in real time."
-msgstr ""
+msgstr "سيتم بث عمليات الإرسال وأحداث الخادم هنا في الوقت الفعلي."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:18
 msgid "Manage system operator credentials, access permissions, and route mapping"
-msgstr ""
+msgstr "إدارة بيانات اعتماد مشغل النظام، وأذونات الوصول، وتعيين المسارات"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:23
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:82
 msgid "Create New User"
-msgstr ""
+msgstr "إنشاء مستخدم جديد"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:36
 msgid "Superuser"
-msgstr ""
+msgstr "مشرف متميز (Superuser)"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:37
 msgid "Admin"
@@ -941,12 +962,12 @@ msgstr "لا"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:82
 msgid "Configure User:"
-msgstr ""
+msgstr "تكوين المستخدم:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:91
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:59
 msgid "Full Name"
-msgstr ""
+msgstr "الاسم الكامل"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:102
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/login.jinja2:82
@@ -955,23 +976,23 @@ msgstr "كلمة السر"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:113
 msgid "Permissions & Capabilities"
-msgstr ""
+msgstr "الأذونات والإمكانيات"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:117
 msgid "Administrator Console"
-msgstr ""
+msgstr "وحدة تحكم المشرف"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:121
 msgid "Superuser Rights"
-msgstr ""
+msgstr "صلاحيات المشرف المتميز"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:125
 msgid "Can Delete Faxes"
-msgstr ""
+msgstr "يمكنه حذف الفاكسات"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:129
 msgid "Send on Any Modem"
-msgstr ""
+msgstr "الإرسال عبر أي مودم"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:165
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:41
@@ -987,6 +1008,8 @@ msgstr "ارشيف"
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:14
 msgid "Search all sent and received fax records by date, company, or fax number."
 msgstr ""
+"البحث في جميع سجلات الفاكس المرسلة والمستلمة حسب التاريخ أو الشركة أو رقم"
+" الفاكس."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:18
 #, fuzzy
@@ -1008,6 +1031,8 @@ msgid ""
 "Leave filters empty to search all records. Narrow results by adding more "
 "criteria."
 msgstr ""
+"اترك عوامل التصفية فارغة للبحث في جميع السجلات. ضيّق النتائج بإضافة "
+"المزيد من المعايير."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:33
 msgid "Keyword"
@@ -1020,7 +1045,7 @@ msgstr "عرض فئات الفاكس"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:46
 msgid "Invoices / Orders"
-msgstr ""
+msgstr "الفواتير / الطلبات"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:47
 #, fuzzy
@@ -1044,15 +1069,15 @@ msgstr "DID/DTMF Route groups"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:74
 msgid "Sent & Received"
-msgstr ""
+msgstr "المرسلة والمستلمة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:75
 msgid "Received only"
-msgstr ""
+msgstr "المستلمة فقط"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:76
 msgid "Sent only"
-msgstr ""
+msgstr "المرسلة فقط"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:81
 #, fuzzy
@@ -1066,11 +1091,11 @@ msgstr "Reset"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:111
 msgid "records"
-msgstr ""
+msgstr "سجلات"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:111
 msgid "record"
-msgstr ""
+msgstr "سجل"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:117
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:69
@@ -1100,23 +1125,25 @@ msgstr "ارسال"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:173
 msgid "No results found"
-msgstr ""
+msgstr "لم يتم العثور على نتائج"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:174
 msgid "Try adjusting your search terms or date range."
-msgstr ""
+msgstr "حاول تعديل مصطلحات البحث أو النطاق الزمني."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:175
 msgid "Reset filters"
-msgstr ""
+msgstr "إعادة تعيين عوامل التصفية"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:187
 msgid "Search the Archive"
-msgstr ""
+msgstr "البحث في الأرشيف"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:189
 msgid "Enter a keyword or filter above and click Search to find fax records."
 msgstr ""
+"أدخل كلمة مفتاحية أو عامل تصفية أعلاه وانقر فوق بحث للعثور على سجلات "
+"الفاكس."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:17
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:26
@@ -1127,28 +1154,28 @@ msgstr "قوائم التوزيع"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:18
 msgid "Organize recipient groups for mass fax broadcasting and notifications."
-msgstr ""
+msgstr "تنظيم مجموعات المستلمين للبث الجماعي للفاكسات والإشعارات."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:29
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:119
 msgid "Create List"
-msgstr ""
+msgstr "إنشاء قائمة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:40
 msgid "Saved Distribution Lists"
-msgstr ""
+msgstr "قوائم التوزيع المحفوظة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:52
 msgid "members"
-msgstr ""
+msgstr "أعضاء"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:66
 msgid "Group Members & Settings"
-msgstr ""
+msgstr "أعضاء المجموعة والإعدادات"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:66
 msgid "Create New Distribution List"
-msgstr ""
+msgstr "إنشاء قائمة توزيع جديدة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:76
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:45
@@ -1157,7 +1184,7 @@ msgstr "قائمة الاسماء"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:83
 msgid "Group Members (Contacts & Fax Numbers)"
-msgstr ""
+msgstr "أعضاء المجموعة (جهات الاتصال وأرقام الفاكس)"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:84
 #, fuzzy
@@ -1166,15 +1193,15 @@ msgstr "يتصل بـ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:95
 msgid "Remove"
-msgstr ""
+msgstr "إزالة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:99
 msgid "No contacts assigned to this list yet."
-msgstr ""
+msgstr "لم يتم تعيين جهات اتصال لهذه القائمة بعد."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:107
 msgid "Add Member"
-msgstr ""
+msgstr "إضافة عضو"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:116
 msgid "Delete List"
@@ -1187,35 +1214,35 @@ msgstr "Cover Pages"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:18
 msgid "Edit Distribution List"
-msgstr ""
+msgstr "تعديل قائمة التوزيع"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:18
 msgid "Create Distribution List"
-msgstr ""
+msgstr "إنشاء قائمة توزيع"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:20
 msgid "Configure broadcast list parameters and recipient group members."
-msgstr ""
+msgstr "تكوين معلمات قائمة البث وأعضاء مجموعة المستلمين."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:26
 msgid "Back to Lists"
-msgstr ""
+msgstr "العودة إلى القوائم"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:41
 msgid "Distribution List Profile"
-msgstr ""
+msgstr "الملف التعريفي لقائمة التوزيع"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:52
 msgid "Enrolled Members"
-msgstr ""
+msgstr "الأعضاء المسجلون"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:53
 msgid "List ID:"
-msgstr ""
+msgstr "معرف القائمة:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:62
 msgid "No contacts in this list."
-msgstr ""
+msgstr "لا توجد جهات اتصال في هذه القائمة."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:17
 #, fuzzy
@@ -1224,11 +1251,11 @@ msgstr "عناوين البريد الإلكتروني"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:18
 msgid "Manage email recipients, transmission routing, and contacts directory."
-msgstr ""
+msgstr "إدارة مستلمي البريد الإلكتروني، وتوجيه الإرسال، ودليل جهات الاتصال."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:27
 msgid "Email Book"
-msgstr ""
+msgstr "دفتر البريد الإلكتروني"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:30
 #, fuzzy
@@ -1242,7 +1269,7 @@ msgstr "يتصل بـ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:43
 msgid "recipients"
-msgstr ""
+msgstr "مستلمين"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:51
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:44
@@ -1253,29 +1280,31 @@ msgstr "يتصل بـ"
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:52
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:39
 msgid "Company Affiliation"
-msgstr ""
+msgstr "التبعية للشركة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:72
 msgid ""
 "No email contacts found in the directory. Click \"+ New Contact\" to "
 "register one."
 msgstr ""
+"لم يتم العثور على جهات اتصال بريد إلكتروني في الدليل. انقر فوق \"+ New "
+"Contact\" لتسجيل جهة اتصال."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:17
 msgid "Email Book - Edit Email Contact"
-msgstr ""
+msgstr "دفتر البريد الإلكتروني - تعديل جهة اتصال البريد"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:18
 msgid "Manage contact information and company affiliation in Email Book."
-msgstr ""
+msgstr "إدارة معلومات الاتصال والتبعية للشركة في دفتر البريد الإلكتروني."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:24
 msgid "Back to Email Book"
-msgstr ""
+msgstr "العودة إلى دفتر البريد الإلكتروني"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:35
 msgid "Contact Profile Details"
-msgstr ""
+msgstr "تفاصيل الملف التعريفي لجهة الاتصال"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/forgot.jinja2:26
 #, fuzzy
@@ -1284,21 +1313,23 @@ msgstr "كلمة السر"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/forgot.jinja2:27
 msgid "Account Recovery Assistance"
-msgstr ""
+msgstr "المساعدة في استرداد الحساب"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/forgot.jinja2:30
 msgid "Back to Login"
-msgstr ""
+msgstr "العودة إلى تسجيل الدخول"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/forgot.jinja2:48
 msgid ""
 "Please enter your registered username or email address below. Password "
 "reset instructions will be dispatched to your account email address."
 msgstr ""
+"يرجى إدخال اسم المستخدم المسجل أو عنوان البريد الإلكتروني أدناه. سيتم "
+"إرسال تعليمات إعادة تعيين كلمة المرور إلى عنوان بريدك الإلكتروني."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/forgot.jinja2:55
 msgid "Username or Email Address"
-msgstr ""
+msgstr "اسم المستخدم أو عنوان البريد الإلكتروني"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/forgot.jinja2:65
 #, fuzzy
@@ -1310,7 +1341,7 @@ msgstr ""
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:14
 msgid "Received faxes appear here automatically in real time."
-msgstr ""
+msgstr "تظهر الفاكسات المستلمة هنا تلقائياً في الوقت الفعلي."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:20
 msgid "Faxes"
@@ -1322,7 +1353,7 @@ msgstr "الفاكس"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:39
 msgid "Select All"
-msgstr ""
+msgstr "تحديد الكل"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:47
 #, fuzzy
@@ -1331,11 +1362,11 @@ msgstr "ارشيف"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:54
 msgid "Delete Selected"
-msgstr ""
+msgstr "حذف المحدد"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:57
 msgid "Showing"
-msgstr ""
+msgstr "عرض"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:57
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:186
@@ -1369,12 +1400,12 @@ msgstr "ارشيف"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:154
 msgid "Email Fax"
-msgstr ""
+msgstr "إرسال الفاكس بالبريد الإلكتروني"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:158
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_note.jinja2:23
 msgid "Add Note"
-msgstr ""
+msgstr "إضافة ملاحظة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:162
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:49
@@ -1394,17 +1425,19 @@ msgstr "فاكسات"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:204
 msgid "0 FAXES"
-msgstr ""
+msgstr "0 فاكس"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:206
 msgid ""
 "There are no incoming faxes waiting in your inbox. Incoming transmissions"
 " will automatically appear here in real time."
 msgstr ""
+"لا توجد فاكسات واردة بانتظارك في البريد الوارد. ستظهر عمليات الإرسال "
+"الواردة هنا تلقائياً في الوقت الفعلي."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:214
 msgid "Send Your First Fax"
-msgstr ""
+msgstr "أرسل أول فاكس لك"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:218
 #, fuzzy
@@ -1413,17 +1446,17 @@ msgstr "ارشيف"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:225
 msgid "Getting Started with NamiFAX"
-msgstr ""
+msgstr "بدء استخدام NamiFAX"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:230
 msgid "Receive Faxes"
-msgstr ""
+msgstr "استلام الفاكسات"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:231
 msgid ""
 "When someone sends a fax to this system's number, it will appear here "
 "automatically."
-msgstr ""
+msgstr "عندما يرسل شخص ما فاكساً إلى رقم هذا النظام، سيظهر هنا تلقائياً."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:237
 #, fuzzy
@@ -1432,17 +1465,19 @@ msgstr "إرسال فاكس"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:238
 msgid "Click Send Fax to transmit a PDF or image document to any fax number."
-msgstr ""
+msgstr "انقر فوق إرسال فاكس لنقل مستند PDF أو صورة إلى أي رقم فاكس."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:244
 msgid "Manage Records"
-msgstr ""
+msgstr "إدارة السجلات"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:245
 msgid ""
 "Download faxes as PDF, archive them for later, or search all records in "
 "the Archive."
 msgstr ""
+"قم بتنزيل الفاكسات بتنسيق PDF أو أرشفتها لوقت لاحق أو البحث في كافة "
+"السجلات في الأرشيف."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/layout.jinja2:47
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:11
@@ -1459,7 +1494,7 @@ msgstr "تسجيل الدخول"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/login.jinja2:44
 msgid "Enter your credentials to continue."
-msgstr ""
+msgstr "أدخل بيانات اعتمادك للمتابعة."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/login.jinja2:48
 #, fuzzy
@@ -1475,7 +1510,7 @@ msgstr ""
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/login.jinja2:94
 msgid "Contact your system administrator if you need an account."
-msgstr ""
+msgstr "اتصل بمسؤول النظام إذا كنت بحاجة إلى حساب."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/login.jinja2:105
 msgid "Login"
@@ -1483,19 +1518,19 @@ msgstr "تسجيل الدخول"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_assign.jinja2:23
 msgid "Assign Company Name"
-msgstr ""
+msgstr "تعيين اسم الشركة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_assign.jinja2:24
 msgid "Associate document with registered enterprise contact"
-msgstr ""
+msgstr "ربط المستند بجهة اتصال مؤسسية مسجلة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_assign.jinja2:37
 msgid "Search Company Name"
-msgstr ""
+msgstr "البحث عن اسم الشركة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_assign.jinja2:42
 msgid "Select Contact Record"
-msgstr ""
+msgstr "تحديد سجل جهة الاتصال"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_delete.jinja2:22
 #, fuzzy
@@ -1504,11 +1539,11 @@ msgstr "ازالة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_delete.jinja2:23
 msgid "Are you sure you want to delete this fax?"
-msgstr ""
+msgstr "هل أنت متأكد أنك تريد حذف هذا الفاكس؟"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_delete.jinja2:24
 msgid "This operation will permanently purge the fax document archive."
-msgstr ""
+msgstr "ستؤدي هذه العملية إلى حذف مستند الفاكس نهائياً من الأرشيف."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_email.jinja2:23
 #, fuzzy
@@ -1517,11 +1552,11 @@ msgstr "إرسال فاكس"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_email.jinja2:24
 msgid "Dispatch PDF document attachment to email recipients"
-msgstr ""
+msgstr "إرسال مرفق مستند PDF إلى مستلمي البريد الإلكتروني"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_email.jinja2:37
 msgid "Recipients"
-msgstr ""
+msgstr "المستلمون"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_email.jinja2:42
 msgid "Subject"
@@ -1529,7 +1564,7 @@ msgstr "موضوع"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_email.jinja2:47
 msgid "Message"
-msgstr ""
+msgstr "الرسالة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_email.jinja2:60
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_refax.jinja2:60
@@ -1538,11 +1573,11 @@ msgstr "ارسال"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_note.jinja2:24
 msgid "Append internal administrative note or comments"
-msgstr ""
+msgstr "إلحاق ملاحظة إدارية داخلية أو تعليقات"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_note.jinja2:37
 msgid "Note / Description"
-msgstr ""
+msgstr "ملاحظة / وصف"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_refax.jinja2:23
 msgid "Reply to Fax"
@@ -1550,7 +1585,7 @@ msgstr "الرد على فاكس"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_refax.jinja2:24
 msgid "Dispatch quick reply transmission to originating sender"
-msgstr ""
+msgstr "إرسال رد سريع إلى المرسل الأصلي"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_refax.jinja2:37
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:54
@@ -1559,7 +1594,7 @@ msgstr "رقم الفاكس"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_refax.jinja2:42
 msgid "Regarding (Subject)"
-msgstr ""
+msgstr "بخصوص (الموضوع)"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_refax.jinja2:47
 msgid "Comments"
@@ -1567,11 +1602,11 @@ msgstr "مُلَاحَظَات"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:23
 msgid "Transmission Report"
-msgstr ""
+msgstr "تقرير الإرسال"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:24
 msgid "Official facsimile delivery confirmation receipt"
-msgstr ""
+msgstr "إيصال تأكيد تسليم الفاكس الرسمي"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:31
 msgid "Print"
@@ -1584,42 +1619,44 @@ msgstr "شركة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:47
 msgid "Pages:"
-msgstr ""
+msgstr "الصفحات:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:51
 msgid "Status:"
-msgstr ""
+msgstr "الحالة:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:53
 msgid "Transmitted Successfully (OK)"
-msgstr ""
+msgstr "تم الإرسال بنجاح (OK)"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:60
 msgid "Close"
-msgstr ""
+msgstr "إغلاق"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:12
 msgid "Faxes currently queued or being transmitted."
-msgstr ""
+msgstr "الفاكسات الموجودة حالياً في قائمة الانتظار أو قيد الإرسال."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:37
 msgid ""
 "This page shows only faxes that are queued or in progress. Once "
 "delivered, they are removed from this list. Find completed records in the"
 msgstr ""
+"تعرض هذه الصفحة فقط الفاكسات الموجودة في قائمة الانتظار أو قيد التقدم. "
+"بمجرد تسليمها، تتم إزالتها من هذه القائمة. ابحث عن السجلات المكتملة في"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:45
 msgid "jobs in progress"
-msgstr ""
+msgstr "مهام قيد التقدم"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:45
 msgid "job in progress"
-msgstr ""
+msgstr "مهمة قيد التقدم"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:52
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:126
 msgid "Job ID"
-msgstr ""
+msgstr "معرف المهمة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:53
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:127
@@ -1629,17 +1666,17 @@ msgstr "رقم الفاكس"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:74
 msgid "Queued"
-msgstr ""
+msgstr "في قائمة الانتظار"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:99
 msgid "No jobs in queue"
-msgstr ""
+msgstr "لا توجد مهام في قائمة الانتظار"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:101
 msgid ""
 "There are no faxes waiting to be sent. Send a fax to see its progress "
 "here."
-msgstr ""
+msgstr "لا توجد فاكسات بانتظار الإرسال. أرسل فاكساً لمتابعة تقدمه هنا."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:108
 #, fuzzy
@@ -1648,15 +1685,15 @@ msgstr "إرسال فاكس"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:119
 msgid "Failed Transmissions"
-msgstr ""
+msgstr "عمليات الإرسال الفاشلة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:120
 msgid "Review the number or retry below."
-msgstr ""
+msgstr "راجع الرقم أو أعد المحاولة أدناه."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:128
 msgid "Reason"
-msgstr ""
+msgstr "السبب"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:141
 msgid "Retry"
@@ -1669,17 +1706,19 @@ msgstr "كلمة السر"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/pwdexpired.jinja2:27
 msgid "Security Credentials Renewal"
-msgstr ""
+msgstr "تجديد بيانات اعتماد الأمان"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/pwdexpired.jinja2:30
 msgid "Action Required"
-msgstr ""
+msgstr "إجراء مطلوب"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/pwdexpired.jinja2:41
 msgid ""
 "Your password has expired or needs to be changed before proceeding. "
 "Please enter your old password and choose a new password."
 msgstr ""
+"انتهت صلاحية كلمة المرور الخاصة بك أو يلزم تغييرها قبل المتابعة. يرجى "
+"إدخال كلمة المرور القديمة واختيار كلمة مرور جديدة."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/pwdexpired.jinja2:47
 msgid "Old Password"
@@ -1706,7 +1745,7 @@ msgstr "كلمة السر"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:12
 msgid "Fill in the details below and click Send."
-msgstr ""
+msgstr "املأ التفاصيل أدناه وانقر فوق إرسال."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:46
 #, fuzzy
@@ -1715,15 +1754,15 @@ msgstr "رقم الفاكس"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:47
 msgid "Enter the fax number and recipient details."
-msgstr ""
+msgstr "أدخل رقم الفاكس وتفاصيل المستلم."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:63
 msgid "To send to multiple recipients at once, separate numbers with a comma."
-msgstr ""
+msgstr "للإرسال إلى مستلمين متعددين في وقت واحد، افصل بين الأرقام بفاصلة."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:64
 msgid "Saved contacts are available in the"
-msgstr ""
+msgstr "جهات الاتصال المحفوظة متوفرة في"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:71
 msgid "Attention To"
@@ -1734,7 +1773,7 @@ msgstr "الى شخص"
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:93
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:181
 msgid "optional"
-msgstr ""
+msgstr "اختياري"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:93
 msgid "Subject / Regarding"
@@ -1742,25 +1781,27 @@ msgstr "موضوع"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:109
 msgid "Document Attachment"
-msgstr ""
+msgstr "مرفق المستند"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:110
 msgid "Attach the file you want to transmit."
-msgstr ""
+msgstr "أرفق الملف الذي تريد إرساله."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:122
 msgid "Click to select a file"
-msgstr ""
+msgstr "انقر لتحديد ملف"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:123
 msgid "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
-msgstr ""
+msgstr "الملفات المدعومة: PDF, TIFF, PostScript, TXT · الحد الأقصى 10 ميغابايت"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:127
 msgid ""
 "PDF is the most commonly used format. Convert Word or Excel files to PDF "
 "before attaching."
 msgstr ""
+"يعد PDF التنسيق الأكثر استخداماً. قم بتحويل ملفات Word أو Excel إلى PDF "
+"قبل الإرفاق."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:138
 msgid "Cover Page"
@@ -1768,7 +1809,7 @@ msgstr "استخدام صفحة مقدمة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:139
 msgid "Add a cover sheet with sender and recipient info."
-msgstr ""
+msgstr "أضف صفحة غلاف تتضمن معلومات المرسل والمستلم."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:146
 #, fuzzy
@@ -1782,27 +1823,27 @@ msgstr "استخدام صفحة مقدمة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:156
 msgid "Standard (Default)"
-msgstr ""
+msgstr "قياسي (افتراضي)"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:157
 msgid "Urgent"
-msgstr ""
+msgstr "عاجل"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:158
 msgid "Confidential"
-msgstr ""
+msgstr "سري"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:164
 msgid "Send via Line"
-msgstr ""
+msgstr "إرسال عبر الخط"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:165
 msgid "Auto-select recommended"
-msgstr ""
+msgstr "يوصى بالتحديد التلقائي"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:170
 msgid "Any Available Line (Auto)"
-msgstr ""
+msgstr "أي خط متاح (تلقائي)"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:181
 #, fuzzy
@@ -1811,11 +1852,11 @@ msgstr "Cover Pages"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:196
 msgid "Advanced Options"
-msgstr ""
+msgstr "خيارات متقدمة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:197
 msgid "Priority, retries, notifications"
-msgstr ""
+msgstr "الأولوية، وإعادة المحاولة، والإشعارات"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:206
 msgid "Priority"
@@ -1831,7 +1872,7 @@ msgstr "Low"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:212
 msgid "High (Urgent)"
-msgstr ""
+msgstr "عالية (عاجل)"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:217
 #, fuzzy
@@ -1840,15 +1881,15 @@ msgstr "عرض فئات الفاكس"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:222
 msgid "Retries automatically on busy signal."
-msgstr ""
+msgstr "إعادة المحاولة تلقائياً عند إشارة مشغول."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:230
 msgid "Notify on retry"
-msgstr ""
+msgstr "إشعار عند إعادة المحاولة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:241
 msgid "Cancel & return to Inbox"
-msgstr ""
+msgstr "إلغاء والعودة إلى البريد الوارد"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:17
 #, fuzzy
@@ -1859,23 +1900,23 @@ msgstr "إعدادات"
 msgid ""
 "Configure your personal profile, fax station identity, and portal "
 "preferences."
-msgstr ""
+msgstr "تكوين ملفك الشخصي، وهوية محطة الفاكس، وتفضيلات البوابة."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:24
 msgid "Return to Inbox"
-msgstr ""
+msgstr "العودة إلى البريد الوارد"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:54
 msgid "Personal & Organization Details"
-msgstr ""
+msgstr "التفاصيل الشخصية والمؤسسية"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:74
 msgid "Office / Location"
-msgstr ""
+msgstr "المكتب / الموقع"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:79
 msgid "Direct Voice Number"
-msgstr ""
+msgstr "رقم الهاتف الصوتي المباشر"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:84
 #, fuzzy
@@ -1884,23 +1925,23 @@ msgstr "رقم الفاكس"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:89
 msgid "Transmitting Station ID (TSI)"
-msgstr ""
+msgstr "معرف محطة الإرسال (TSI)"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:91
 msgid "Header identifier imprinted on top of transmitted fax pages."
-msgstr ""
+msgstr "معرف رأس الصفحة المطبوع في أعلى صفحات الفاكس المرسلة."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:96
 msgid "Email & Fax Notification Signature"
-msgstr ""
+msgstr "توقيع إشعارات البريد الإلكتروني والفاكس"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:105
 msgid "Portal & Delivery Preferences"
-msgstr ""
+msgstr "تفضيلات البوابة والتسليم"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:110
 msgid "Display Language"
-msgstr ""
+msgstr "لغة العرض"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:140
 #, fuzzy
@@ -1931,32 +1972,32 @@ msgstr "إعدادات"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:17
 msgid "Fax Viewer"
-msgstr ""
+msgstr "عارض الفاكس"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:19
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:144
 msgid "Page 1 of"
-msgstr ""
+msgstr "الصفحة 1 من"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:24
 msgid "FROM:"
-msgstr ""
+msgstr "من:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:26
 msgid "DATE:"
-msgstr ""
+msgstr "التاريخ:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:28
 msgid "DEVICE:"
-msgstr ""
+msgstr "الجهاز:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:36
 msgid "Prev"
-msgstr ""
+msgstr "السابق"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:41
 msgid "Next"
-msgstr ""
+msgstr "التالي"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:56
 msgid "PDF"
@@ -1964,11 +2005,11 @@ msgstr "PDF"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:63
 msgid "TIFF"
-msgstr ""
+msgstr "TIFF"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:93
 msgid "Total"
-msgstr ""
+msgstr "الإجمالي"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:99
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:104
@@ -1977,19 +2018,19 @@ msgstr "صفحة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:121
 msgid "Incoming Transmission"
-msgstr ""
+msgstr "إرسال وارد"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:122
 msgid "FACSIMILE TRANSMISSION"
-msgstr ""
+msgstr "إرسال الفاكس"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:123
 msgid "Date Received:"
-msgstr ""
+msgstr "تاريخ الاستلام:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:124
 msgid "Originating Station:"
-msgstr ""
+msgstr "محطة الإرسال:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:129
 #, fuzzy
@@ -1998,19 +2039,19 @@ msgstr "الأولوية"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:143
 msgid "High-Resolution Raster Preview"
-msgstr ""
+msgstr "معاينة نقطية عالية الدقة"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:144
 msgid "Device Line:"
-msgstr ""
+msgstr "خط الجهاز:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:151
 msgid "Download Original Document"
-msgstr ""
+msgstr "تنزيل المستند الأصلي"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:158
 msgid "NamiFAX Enterprise Facsimile Engine"
-msgstr ""
+msgstr "محرك الفاكس المؤسسي NamiFAX"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:159
 #, fuzzy

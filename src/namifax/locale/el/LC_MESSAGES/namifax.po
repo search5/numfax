@@ -26,6 +26,8 @@ msgstr "Διευθύνσεις e-mail"
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:14
 msgid "Save frequently used fax numbers for quick access when sending."
 msgstr ""
+"Αποθηκεύστε συχνά χρησιμοποιούμενους αριθμούς φαξ για γρήγορη πρόσβαση "
+"κατά την αποστολή."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:24
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:53
@@ -64,7 +66,7 @@ msgstr "E-mail"
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:57
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:129
 msgid "Actions"
-msgstr ""
+msgstr "Ενέργειες"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:74
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:28
@@ -95,17 +97,19 @@ msgstr "Επαφές"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:95
 msgid "No contacts matched"
-msgstr ""
+msgstr "Δεν βρέθηκαν επαφές που να ταιριάζουν"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:97
 msgid ""
 "Add contacts to quickly select fax numbers when sending without typing "
 "them every time."
 msgstr ""
+"Προσθέστε επαφές για να επιλέγετε γρήγορα αριθμούς φαξ κατά την αποστολή "
+"χωρίς να τους πληκτρολογείτε κάθε φορά."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:105
 msgid "Add First Contact"
-msgstr ""
+msgstr "Προσθήκη πρώτης επαφής"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:18
 #, fuzzy
@@ -120,6 +124,8 @@ msgstr "Εταιρία"
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:20
 msgid "Configure corporate contact identity and transmission routing defaults."
 msgstr ""
+"Διαμορφώστε την εταιρική ταυτότητα επαφής και τις προεπιλογές "
+"δρομολόγησης μετάδοσης."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:26
 #, fuzzy
@@ -128,7 +134,7 @@ msgstr "Επαφές"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:42
 msgid "Primary Company Profile"
-msgstr ""
+msgstr "Κύριο εταιρικό προφίλ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:46
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:69
@@ -142,11 +148,11 @@ msgstr "Εταιρία"
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:49
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:64
 msgid "Email Address"
-msgstr ""
+msgstr "Διεύθυνση Email"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:67
 msgid "Recipient Contact & Physical Address"
-msgstr ""
+msgstr "Επαφή παραλήπτη & φυσική διεύθυνση"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:72
 #, fuzzy
@@ -155,19 +161,19 @@ msgstr "Υπόψιν"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:77
 msgid "Voice Telephone"
-msgstr ""
+msgstr "Τηλέφωνο φωνής"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:82
 msgid "Street Address"
-msgstr ""
+msgstr "Διεύθυνση (Οδός & αριθμός)"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:87
 msgid "City / Postal Region"
-msgstr ""
+msgstr "Πόλη / Ταχυδρομικός τομέας"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:92
 msgid "Category Tag"
-msgstr ""
+msgstr "Ετικέτα κατηγορίας"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:94
 #, fuzzy
@@ -176,15 +182,15 @@ msgstr "Normal"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:95
 msgid "Invoices & Billing"
-msgstr ""
+msgstr "Τιμολόγια & Χρεώσεις"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:96
 msgid "Legal"
-msgstr ""
+msgstr "Νομικά"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:102
 msgid "Description / Internal Notes"
-msgstr ""
+msgstr "Περιγραφή / Εσωτερικές σημειώσεις"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:112
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:113
@@ -265,6 +271,8 @@ msgid ""
 "Real-time status of fax spools, hardware serial modems, and registered "
 "users"
 msgstr ""
+"Κατάσταση σε πραγματικό χρόνο ουρών φαξ, σειριακών μόντεμ υλικού και "
+"εγγεγραμμένων χρηστών"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:30
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:59
@@ -294,7 +302,7 @@ msgstr "Fax Modems"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:46
 msgid "Hardware Ready"
-msgstr ""
+msgstr "Υλικό έτοιμο"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:61
 #, fuzzy
@@ -303,15 +311,15 @@ msgstr "Χρήστες"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:73
 msgid "Backend Core"
-msgstr ""
+msgstr "Πυρήνας backend"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:87
 msgid "Scheduler"
-msgstr ""
+msgstr "Χρονοπρογραμματιστής"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:89
 msgid "Running"
-msgstr ""
+msgstr "Σε εκτέλεση"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:107
 #, fuzzy
@@ -320,7 +328,7 @@ msgstr "Χρήστες"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:110
 msgid "Manage Users"
-msgstr ""
+msgstr "Διαχείριση χρηστών"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:118
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:34
@@ -340,27 +348,27 @@ msgstr "Τελευταία είσοδος"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:143
 msgid "Server Status"
-msgstr ""
+msgstr "Κατάσταση διακομιστή"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:148
 msgid "Core"
-msgstr ""
+msgstr "Πυρήνας"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:152
 msgid "Database Engine"
-msgstr ""
+msgstr "Μηχανή βάσης δεδομένων"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:156
 msgid "System Scheduler"
-msgstr ""
+msgstr "Χρονοπρογραμματιστής συστήματος"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:168
 msgid "Configured Modems"
-msgstr ""
+msgstr "Ρυθμισμένα μόντεμ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:196
 msgid "Administrator Workflow Guide"
-msgstr ""
+msgstr "Οδηγός ροής εργασιών διαχειριστή"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:17
 #, fuzzy
@@ -372,6 +380,8 @@ msgid ""
 "Route incoming faxes automatically based on recognized Code39 / QR "
 "barcodes"
 msgstr ""
+"Αυτόματη δρομολόγηση εισερχόμενων φαξ βάσει αναγνωρισμένων γραμμωτών "
+"κωδικών Code39 / QR"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:23
 #, fuzzy
@@ -396,12 +406,12 @@ msgstr "Επαφές"
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:58
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:41
 msgid "None"
-msgstr ""
+msgstr "Κανένα"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:58
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:41
 msgid "Printer:"
-msgstr ""
+msgstr "Εκτυπωτής:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:74
 #, fuzzy
@@ -426,7 +436,7 @@ msgstr "Επεξεργασία"
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:64
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:93
 msgid "NEW"
-msgstr ""
+msgstr "ΝΕΟ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:86
 msgid "Barcode"
@@ -466,6 +476,8 @@ msgid ""
 "Manage classification tags and archival categories for organizing "
 "transmissions"
 msgstr ""
+"Διαχείριση ετικετών ταξινόμησης και κατηγοριών αρχειοθέτησης για οργάνωση"
+" μεταδόσεων"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_categories.jinja2:23
 #, fuzzy
@@ -479,7 +491,7 @@ msgstr "Προβολή κατηγοριών φαξ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_categories.jinja2:54
 msgid "Edit Category"
-msgstr ""
+msgstr "Επεξεργασία κατηγορίας"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_categories.jinja2:54
 #, fuzzy
@@ -497,7 +509,7 @@ msgstr "Cover Pages"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_covers.jinja2:18
 msgid "Manage facsimile PostScript cover page templates and layouts"
-msgstr ""
+msgstr "Διαχείριση προτύπων και διατάξεων συνοδευτικών σελίδων PostScript φαξ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_covers.jinja2:23
 #, fuzzy
@@ -525,43 +537,45 @@ msgstr "Τίτλος"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_covers.jinja2:89
 msgid "File"
-msgstr ""
+msgstr "Αρχείο"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:17
 msgid "Dynamic Configuration"
-msgstr ""
+msgstr "Δυναμική ρύθμιση παραμέτρων"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:18
 msgid ""
 "Manage Caller ID blacklists and transmission rejection rules for modem "
 "devices"
 msgstr ""
+"Διαχείριση λιστών αποκλεισμού Caller ID και κανόνων απόρριψης μεταδόσεων "
+"για μόντεμ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:23
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:23
 msgid "New Rule"
-msgstr ""
+msgstr "Νέος κανόνας"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:33
 msgid "Blocked Caller IDs"
-msgstr ""
+msgstr "Αποκλεισμένα Caller ID"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:40
 msgid "Caller ID:"
-msgstr ""
+msgstr "Caller ID:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:41
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:82
 msgid "All Devices"
-msgstr ""
+msgstr "Όλες οι συσκευές"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:58
 msgid "Edit Caller ID Rule"
-msgstr ""
+msgstr "Επεξεργασία κανόνα Caller ID"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:58
 msgid "Add Caller ID Rule"
-msgstr ""
+msgstr "Προσθήκη κανόνα Caller ID"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:75
 msgid "Caller ID"
@@ -569,7 +583,7 @@ msgstr "Caller ID"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:80
 msgid "Modem Device"
-msgstr ""
+msgstr "Συσκευή μόντεμ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:17
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:159
@@ -583,22 +597,24 @@ msgid ""
 "Configure automated inbound fax forwarding and PDF dispatch rules mapped "
 "by company"
 msgstr ""
+"Ρύθμιση αυτοματοποιημένης προώθησης εισερχόμενων φαξ και κανόνων "
+"αποστολής PDF ανά εταιρεία"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:33
 msgid "Company Forwarding Rules"
-msgstr ""
+msgstr "Κανόνες προώθησης ανά εταιρεία"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:41
 msgid "Email:"
-msgstr ""
+msgstr "Email:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:58
 msgid "Edit Forwarding Rule"
-msgstr ""
+msgstr "Επεξεργασία κανόνα προώθησης"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:58
 msgid "Add Forwarding Rule"
-msgstr ""
+msgstr "Προσθήκη κανόνα προώθησης"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:71
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:54
@@ -634,7 +650,7 @@ msgstr "Dashboard"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:118
 msgid "Access Control"
-msgstr ""
+msgstr "Έλεγχος πρόσβασης"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:125
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:256
@@ -644,7 +660,7 @@ msgstr "Χρήστες"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:131
 msgid "Hardware & Lines"
-msgstr ""
+msgstr "Υλικό & Γραμμές"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:138
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:257
@@ -669,7 +685,7 @@ msgstr "Barcode Routing"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:173
 msgid "Content & Templates"
-msgstr ""
+msgstr "Περιεχόμενο & Πρότυπα"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:188
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:260
@@ -678,7 +694,7 @@ msgstr "Cover Pages"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:194
 msgid "Security & System"
-msgstr ""
+msgstr "Ασφάλεια & Σύστημα"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:201
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:262
@@ -703,17 +719,19 @@ msgstr "Έξοδος"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:252
 msgid "Admin Control Panel"
-msgstr ""
+msgstr "Πίνακας ελέγχου διαχειριστή"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:275
 msgid "Appliance Engine Online"
-msgstr ""
+msgstr "Μηχανή συσκευής σε σύνδεση"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:18
 msgid ""
 "Configure Modems hardware devices, physical serial ports, and print-"
 "forwarding rules"
 msgstr ""
+"Διαμόρφωση συσκευών υλικού μόντεμ, φυσικών σειριακών θυρών και κανόνων "
+"προώθησης εκτύπωσης"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:23
 #, fuzzy
@@ -722,7 +740,7 @@ msgstr "Fax Modems"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:33
 msgid "Active Modem Lines"
-msgstr ""
+msgstr "Ενεργές γραμμές μόντεμ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:40
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:78
@@ -737,7 +755,7 @@ msgstr "Επικοινωνία με"
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:43
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:56
 msgid "Status"
-msgstr ""
+msgstr "Κατάσταση"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:72
 #, fuzzy
@@ -746,7 +764,7 @@ msgstr "Fax Modems"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:72
 msgid "Configure Modems Device"
-msgstr ""
+msgstr "Διαμόρφωση συσκευής μόντεμ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:100
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:139
@@ -762,7 +780,7 @@ msgstr "Fax Modems"
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:112
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:150
 msgid "Appliance Note:"
-msgstr ""
+msgstr "Σημείωση συσκευής:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:112
 msgid ""
@@ -770,6 +788,9 @@ msgid ""
 " USB modems, or virtual IAX modems recognized by the underlying HylaFAX "
 "server."
 msgstr ""
+"Τα μόντεμ που διαμορφώνονται εδώ πρέπει να αντιστοιχούν σε φυσικές "
+"σειριακές συσκευές RS-232, μόντεμ USB ή εικονικά μόντεμ IAX αναγνωρισμένα"
+" από τον υποκείμενο διακομιστή HylaFAX."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:17
 #, fuzzy
@@ -781,6 +802,8 @@ msgid ""
 "Route incoming faxes by Direct Inward Dialing (DID) extension to specific"
 " email boxes or printers"
 msgstr ""
+"Δρομολόγηση εισερχόμενων φαξ μέσω εσωτερικού αριθμού DID σε συγκεκριμένα "
+"γραμματοκιβώτια email ή εκτυπωτές"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:23
 #, fuzzy
@@ -795,15 +818,15 @@ msgstr "DID/DTMF Route groups"
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:53
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:99
 msgid "Route Code"
-msgstr ""
+msgstr "Κωδικός διαδρομής"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:57
 msgid "Action"
-msgstr ""
+msgstr "Ενέργεια"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:84
 msgid "Configure Routing Rule"
-msgstr ""
+msgstr "Διαμόρφωση κανόνα δρομολόγησης"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:119
 msgid "Category"
@@ -811,7 +834,7 @@ msgstr "Κατηγορία"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:121
 msgid "-- None --"
-msgstr ""
+msgstr "-- Κανένα --"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:150
 msgid ""
@@ -819,14 +842,19 @@ msgid ""
 "transmissions matching extension patterns directly to mapped operator "
 "inboxes or physical printers."
 msgstr ""
+"Η δρομολόγηση DID (Άμεση εσωτερική κλήση) ανακατευθύνει αυτόματα τις "
+"εισερχόμενες μεταδόσεις που ταιριάζουν με μοτίβα εσωτερικών γραμμών "
+"απευθείας σε αντιστοιχισμένα εισερχόμενα χειριστών ή φυσικούς εκτυπωτές."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:19
 msgid "Perform maintenance operations, service control, and backups."
 msgstr ""
+"Εκτέλεση λειτουργιών συντήρησης, ελέγχου υπηρεσιών και αντιγράφων "
+"ασφαλείας."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:26
 msgid "HylaFAX Engine Active"
-msgstr ""
+msgstr "Μηχανή HylaFAX ενεργή"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:29
 #, fuzzy
@@ -835,7 +863,7 @@ msgstr "Dashboard"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:40
 msgid "Caution: Appliance Maintenance Operations"
-msgstr ""
+msgstr "Προσοχή: Λειτουργίες συντήρησης συσκευής"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:42
 msgid ""
@@ -844,30 +872,38 @@ msgid ""
 "transmissions in the modem queue are completed before initiating "
 "maintenance tasks."
 msgstr ""
+"Η επανεκκίνηση ή ο τερματισμός υπηρεσιών θα διακόψει την ενεργή ουρά "
+"μόντεμ φαξ και θα αποσυνδέσει τις περιόδους λειτουργίας πελατών. "
+"Βεβαιωθείτε ότι όλες οι εξερχόμενες μεταδόσεις στην ουρά μόντεμ έχουν "
+"ολοκληρωθεί πριν από την έναρξη εργασιών συντήρησης."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:58
 msgid "Daemon Service Control"
-msgstr ""
+msgstr "Έλεγχος υπηρεσιών δαίμονα (Daemon)"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:61
 msgid "Restart HylaFAX and NamiFAX web services, or halt background workers."
 msgstr ""
+"Επανεκκίνηση υπηρεσιών ιστού HylaFAX και NamiFAX ή διακοπή διεργασιών "
+"παρασκηνίου."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:84
 msgid "Reboot Services"
-msgstr ""
+msgstr "Επανεκκίνηση υπηρεσιών"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:90
 msgid "Shutdown Services"
-msgstr ""
+msgstr "Τερματισμός υπηρεσιών"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:100
 msgid "Database & Archive Backup"
-msgstr ""
+msgstr "Αντίγραφο ασφαλείας βάσης δεδομένων & αρχείου"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:103
 msgid "Download system archives and database snapshots for offsite retention."
 msgstr ""
+"Λήψη αρχείων συστήματος και στιγμιοτύπων βάσης δεδομένων για εξωτερική "
+"διατήρηση."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:126
 msgid "Download Archive"
@@ -883,16 +919,16 @@ msgstr "Αρχεία καταγραφής συστήματος"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:18
 msgid "Audit logs and HylaFAX server operational event traces"
-msgstr ""
+msgstr "Καταγραφές ελέγχου και ίχνη λειτουργικών συμβάντων διακομιστή HylaFAX"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:25
 msgid "Keywords:"
-msgstr ""
+msgstr "Λέξεις-κλειδιά:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:30
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:43
 msgid "Date:"
-msgstr ""
+msgstr "Ημερομηνία:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:64
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:120
@@ -901,28 +937,34 @@ msgstr "Ημερομηνία"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:65
 msgid "Log Text"
-msgstr ""
+msgstr "Κείμενο καταγραφής"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:79
 msgid "No system logs found matching criteria."
 msgstr ""
+"Δεν βρέθηκαν αρχεία καταγραφής συστήματος που να ταιριάζουν με τα "
+"κριτήρια."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:80
 msgid "Transmissions and server events will be streamed here in real time."
 msgstr ""
+"Οι μεταδόσεις και τα συμβάντα διακομιστή θα μεταδίδονται εδώ σε "
+"πραγματικό χρόνο."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:18
 msgid "Manage system operator credentials, access permissions, and route mapping"
 msgstr ""
+"Διαχείριση διαπιστευτηρίων χειριστών συστήματος, δικαιωμάτων πρόσβασης "
+"και αντιστοίχισης δρομολόγησης"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:23
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:82
 msgid "Create New User"
-msgstr ""
+msgstr "Δημιουργία νέου χρήστη"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:36
 msgid "Superuser"
-msgstr ""
+msgstr "Υπερχρήστης"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:37
 msgid "Admin"
@@ -940,12 +982,12 @@ msgstr "Όχι"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:82
 msgid "Configure User:"
-msgstr ""
+msgstr "Διαμόρφωση χρήστη:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:91
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:59
 msgid "Full Name"
-msgstr ""
+msgstr "Πλήρες όνομα"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:102
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/login.jinja2:82
@@ -954,23 +996,23 @@ msgstr "συνθηματικό"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:113
 msgid "Permissions & Capabilities"
-msgstr ""
+msgstr "Δικαιώματα & Δυνατότητες"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:117
 msgid "Administrator Console"
-msgstr ""
+msgstr "Κονσόλα διαχειριστή"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:121
 msgid "Superuser Rights"
-msgstr ""
+msgstr "Δικαιώματα υπερχρήστη"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:125
 msgid "Can Delete Faxes"
-msgstr ""
+msgstr "Δυνατότητα διαγραφής φαξ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:129
 msgid "Send on Any Modem"
-msgstr ""
+msgstr "Αποστολή μέσω οποιουδήποτε μόντεμ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:165
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:41
@@ -986,6 +1028,8 @@ msgstr "Αρχείο"
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:14
 msgid "Search all sent and received fax records by date, company, or fax number."
 msgstr ""
+"Αναζήτηση όλων των απεσταλμένων και ληφθέντων φαξ βάσει ημερομηνίας, "
+"εταιρείας ή αριθμού φαξ."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:18
 #, fuzzy
@@ -1007,6 +1051,8 @@ msgid ""
 "Leave filters empty to search all records. Narrow results by adding more "
 "criteria."
 msgstr ""
+"Αφήστε τα φίλτρα κενά για αναζήτηση όλων των εγγραφών. Περιορίστε τα "
+"αποτελέσματα προσθέτοντας περισσότερα κριτήρια."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:33
 msgid "Keyword"
@@ -1019,7 +1065,7 @@ msgstr "Προβολή κατηγοριών φαξ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:46
 msgid "Invoices / Orders"
-msgstr ""
+msgstr "Τιμολόγια / Παραγγελίες"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:47
 #, fuzzy
@@ -1043,15 +1089,15 @@ msgstr "DID/DTMF Route groups"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:74
 msgid "Sent & Received"
-msgstr ""
+msgstr "Απεσταλμένα & Ληφθέντα"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:75
 msgid "Received only"
-msgstr ""
+msgstr "Μόνο ληφθέντα"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:76
 msgid "Sent only"
-msgstr ""
+msgstr "Μόνο απεσταλμένα"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:81
 #, fuzzy
@@ -1065,11 +1111,11 @@ msgstr "Reset"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:111
 msgid "records"
-msgstr ""
+msgstr "εγγραφές"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:111
 msgid "record"
-msgstr ""
+msgstr "εγγραφή"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:117
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:69
@@ -1099,23 +1145,25 @@ msgstr "Αποστολή"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:173
 msgid "No results found"
-msgstr ""
+msgstr "Δεν βρέθηκαν αποτελέσματα"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:174
 msgid "Try adjusting your search terms or date range."
-msgstr ""
+msgstr "Δοκιμάστε να προσαρμόσετε τους όρους αναζήτησης ή το εύρος ημερομηνιών."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:175
 msgid "Reset filters"
-msgstr ""
+msgstr "Επαναφορά φίλτρων"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:187
 msgid "Search the Archive"
-msgstr ""
+msgstr "Αναζήτηση στο αρχείο"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:189
 msgid "Enter a keyword or filter above and click Search to find fax records."
 msgstr ""
+"Εισαγάγετε μια λέξη-κλειδί ή φίλτρο παραπάνω και κάντε κλικ στην "
+"Αναζήτηση για να βρείτε εγγραφές φαξ."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:17
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:26
@@ -1126,28 +1174,28 @@ msgstr "Λίστες διανομής"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:18
 msgid "Organize recipient groups for mass fax broadcasting and notifications."
-msgstr ""
+msgstr "Οργάνωση ομάδων παραληπτών για μαζική αποστολή φαξ και ειδοποιήσεων."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:29
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:119
 msgid "Create List"
-msgstr ""
+msgstr "Δημιουργία λίστας"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:40
 msgid "Saved Distribution Lists"
-msgstr ""
+msgstr "Αποθηκευμένες λίστες διανομής"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:52
 msgid "members"
-msgstr ""
+msgstr "μέλη"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:66
 msgid "Group Members & Settings"
-msgstr ""
+msgstr "Μέλη ομάδας & Ρυθμίσεις"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:66
 msgid "Create New Distribution List"
-msgstr ""
+msgstr "Δημιουργία νέας λίστας διανομής"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:76
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:45
@@ -1156,7 +1204,7 @@ msgstr "Ονομασία λίστας"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:83
 msgid "Group Members (Contacts & Fax Numbers)"
-msgstr ""
+msgstr "Μέλη ομάδας (Επαφές & Αριθμοί φαξ)"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:84
 #, fuzzy
@@ -1165,15 +1213,15 @@ msgstr "Επαφές"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:95
 msgid "Remove"
-msgstr ""
+msgstr "Αφαίρεση"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:99
 msgid "No contacts assigned to this list yet."
-msgstr ""
+msgstr "Δεν έχουν εκχωρηθεί ακόμη επαφές σε αυτήν τη λίστα."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:107
 msgid "Add Member"
-msgstr ""
+msgstr "Προσθήκη μέλους"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:116
 msgid "Delete List"
@@ -1186,35 +1234,37 @@ msgstr "Cover Pages"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:18
 msgid "Edit Distribution List"
-msgstr ""
+msgstr "Επεξεργασία λίστας διανομής"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:18
 msgid "Create Distribution List"
-msgstr ""
+msgstr "Δημιουργία λίστας διανομής"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:20
 msgid "Configure broadcast list parameters and recipient group members."
 msgstr ""
+"Διαμόρφωση παραμέτρων λίστας μαζικής αποστολής και μελών ομάδας "
+"παραληπτών."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:26
 msgid "Back to Lists"
-msgstr ""
+msgstr "Επιστροφή στις λίστες"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:41
 msgid "Distribution List Profile"
-msgstr ""
+msgstr "Προφίλ λίστας διανομής"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:52
 msgid "Enrolled Members"
-msgstr ""
+msgstr "Εγγεγραμμένα μέλη"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:53
 msgid "List ID:"
-msgstr ""
+msgstr "ID λίστας:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:62
 msgid "No contacts in this list."
-msgstr ""
+msgstr "Δεν υπάρχουν επαφές σε αυτήν τη λίστα."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:17
 #, fuzzy
@@ -1223,11 +1273,11 @@ msgstr "Διευθύνσεις e-mail"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:18
 msgid "Manage email recipients, transmission routing, and contacts directory."
-msgstr ""
+msgstr "Διαχείριση παραληπτών email, δρομολόγησης μεταδόσεων και καταλόγου επαφών."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:27
 msgid "Email Book"
-msgstr ""
+msgstr "Ευρετήριο email"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:30
 #, fuzzy
@@ -1241,7 +1291,7 @@ msgstr "Επαφές"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:43
 msgid "recipients"
-msgstr ""
+msgstr "παραλήπτες"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:51
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:44
@@ -1252,29 +1302,31 @@ msgstr "Επαφές"
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:52
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:39
 msgid "Company Affiliation"
-msgstr ""
+msgstr "Εταιρική υπαγωγή"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:72
 msgid ""
 "No email contacts found in the directory. Click \"+ New Contact\" to "
 "register one."
 msgstr ""
+"Δεν βρέθηκαν επαφές email στον κατάλογο. Κάντε κλικ στο \\\"+ Νέα "
+"επαφή\\\" για να καταχωρίσετε μία."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:17
 msgid "Email Book - Edit Email Contact"
-msgstr ""
+msgstr "Ευρετήριο email - Επεξεργασία επαφής email"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:18
 msgid "Manage contact information and company affiliation in Email Book."
-msgstr ""
+msgstr "Διαχείριση πληροφοριών επαφής και εταιρικής υπαγωγής στο ευρετήριο email."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:24
 msgid "Back to Email Book"
-msgstr ""
+msgstr "Επιστροφή στο ευρετήριο email"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:35
 msgid "Contact Profile Details"
-msgstr ""
+msgstr "Στοιχεία προφίλ επαφής"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/forgot.jinja2:26
 #, fuzzy
@@ -1283,21 +1335,24 @@ msgstr "συνθηματικό"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/forgot.jinja2:27
 msgid "Account Recovery Assistance"
-msgstr ""
+msgstr "Βοήθεια ανάκτησης λογαριασμού"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/forgot.jinja2:30
 msgid "Back to Login"
-msgstr ""
+msgstr "Επιστροφή στη σύνδεση"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/forgot.jinja2:48
 msgid ""
 "Please enter your registered username or email address below. Password "
 "reset instructions will be dispatched to your account email address."
 msgstr ""
+"Παρακαλούμε εισαγάγετε το όνομα χρήστη ή τη διεύθυνση email σας παρακάτω."
+" Οδηγίες για την επαναφορά κωδικού πρόσβασης θα σταλούν στη διεύθυνση "
+"email του λογαριασμού σας."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/forgot.jinja2:55
 msgid "Username or Email Address"
-msgstr ""
+msgstr "Όνομα χρήστη ή διεύθυνση Email"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/forgot.jinja2:65
 #, fuzzy
@@ -1309,7 +1364,7 @@ msgstr ""
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:14
 msgid "Received faxes appear here automatically in real time."
-msgstr ""
+msgstr "Τα ληφθέντα φαξ εμφανίζονται εδώ αυτόματα σε πραγματικό χρόνο."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:20
 msgid "Faxes"
@@ -1321,7 +1376,7 @@ msgstr "Φαξ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:39
 msgid "Select All"
-msgstr ""
+msgstr "Επιλογή όλων"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:47
 #, fuzzy
@@ -1330,11 +1385,11 @@ msgstr "Αρχείο"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:54
 msgid "Delete Selected"
-msgstr ""
+msgstr "Διαγραφή επιλεγμένων"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:57
 msgid "Showing"
-msgstr ""
+msgstr "Εμφάνιση"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:57
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:186
@@ -1368,12 +1423,12 @@ msgstr "Αρχείο"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:154
 msgid "Email Fax"
-msgstr ""
+msgstr "Αποστολή φαξ μέσω Email"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:158
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_note.jinja2:23
 msgid "Add Note"
-msgstr ""
+msgstr "Προσθήκη σημείωσης"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:162
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:49
@@ -1393,17 +1448,19 @@ msgstr "φαξ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:204
 msgid "0 FAXES"
-msgstr ""
+msgstr "0 ΦΑΞ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:206
 msgid ""
 "There are no incoming faxes waiting in your inbox. Incoming transmissions"
 " will automatically appear here in real time."
 msgstr ""
+"Δεν υπάρχουν εισερχόμενα φαξ στα εισερχόμενά σας. Οι εισερχόμενες "
+"μεταδόσεις θα εμφανίζονται εδώ αυτόματα σε πραγματικό χρόνο."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:214
 msgid "Send Your First Fax"
-msgstr ""
+msgstr "Στείλτε το πρώτο σας φαξ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:218
 #, fuzzy
@@ -1412,17 +1469,19 @@ msgstr "Αρχείο"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:225
 msgid "Getting Started with NamiFAX"
-msgstr ""
+msgstr "Ξεκινώντας με το NamiFAX"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:230
 msgid "Receive Faxes"
-msgstr ""
+msgstr "Λήψη φαξ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:231
 msgid ""
 "When someone sends a fax to this system's number, it will appear here "
 "automatically."
 msgstr ""
+"Όταν κάποιος στέλνει φαξ στον αριθμό αυτού του συστήματος, θα εμφανίζεται"
+" εδώ αυτόματα."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:237
 #, fuzzy
@@ -1432,16 +1491,20 @@ msgstr "Νέο φαξ"
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:238
 msgid "Click Send Fax to transmit a PDF or image document to any fax number."
 msgstr ""
+"Κάντε κλικ στο Αποστολή φαξ για να μεταδώσετε έγγραφο PDF ή εικόνας σε "
+"οποιονδήποτε αριθμό φαξ."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:244
 msgid "Manage Records"
-msgstr ""
+msgstr "Διαχείριση εγγραφών"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:245
 msgid ""
 "Download faxes as PDF, archive them for later, or search all records in "
 "the Archive."
 msgstr ""
+"Κατεβάστε φαξ ως PDF, αρχειοθετήστε τα για αργότερα ή αναζητήστε όλες τις"
+" εγγραφές στο Αρχείο."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/layout.jinja2:47
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:11
@@ -1458,7 +1521,7 @@ msgstr "Είσοδος"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/login.jinja2:44
 msgid "Enter your credentials to continue."
-msgstr ""
+msgstr "Εισαγάγετε τα διαπιστευτήριά σας για να συνεχίσετε."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/login.jinja2:48
 #, fuzzy
@@ -1475,6 +1538,8 @@ msgstr ""
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/login.jinja2:94
 msgid "Contact your system administrator if you need an account."
 msgstr ""
+"Επικοινωνήστε με τον διαχειριστή του συστήματός σας εάν χρειάζεστε "
+"λογαριασμό."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/login.jinja2:105
 msgid "Login"
@@ -1482,19 +1547,19 @@ msgstr "Είσοδος"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_assign.jinja2:23
 msgid "Assign Company Name"
-msgstr ""
+msgstr "Ανάθεση ονόματος εταιρείας"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_assign.jinja2:24
 msgid "Associate document with registered enterprise contact"
-msgstr ""
+msgstr "Σύνδεση εγγράφου με καταχωρισμένη εταιρική επαφή"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_assign.jinja2:37
 msgid "Search Company Name"
-msgstr ""
+msgstr "Αναζήτηση ονόματος εταιρείας"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_assign.jinja2:42
 msgid "Select Contact Record"
-msgstr ""
+msgstr "Επιλογή εγγραφής επαφής"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_delete.jinja2:22
 #, fuzzy
@@ -1503,11 +1568,11 @@ msgstr "Διαγραφή"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_delete.jinja2:23
 msgid "Are you sure you want to delete this fax?"
-msgstr ""
+msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το φαξ;"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_delete.jinja2:24
 msgid "This operation will permanently purge the fax document archive."
-msgstr ""
+msgstr "Αυτή η λειτουργία θα διαγράψει οριστικά το αρχείο εγγράφων φαξ."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_email.jinja2:23
 #, fuzzy
@@ -1516,11 +1581,11 @@ msgstr "Νέο φαξ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_email.jinja2:24
 msgid "Dispatch PDF document attachment to email recipients"
-msgstr ""
+msgstr "Αποστολή συνημμένου εγγράφου PDF σε παραλήπτες email"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_email.jinja2:37
 msgid "Recipients"
-msgstr ""
+msgstr "Παραλήπτες"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_email.jinja2:42
 msgid "Subject"
@@ -1528,7 +1593,7 @@ msgstr "Θέμα"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_email.jinja2:47
 msgid "Message"
-msgstr ""
+msgstr "Μήνυμα"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_email.jinja2:60
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_refax.jinja2:60
@@ -1537,11 +1602,11 @@ msgstr "Αποστολή"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_note.jinja2:24
 msgid "Append internal administrative note or comments"
-msgstr ""
+msgstr "Προσθήκη εσωτερικής διοικητικής σημείωσης ή σχολίων"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_note.jinja2:37
 msgid "Note / Description"
-msgstr ""
+msgstr "Σημείωση / Περιγραφή"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_refax.jinja2:23
 msgid "Reply to Fax"
@@ -1549,7 +1614,7 @@ msgstr "Απάντηση φαξ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_refax.jinja2:24
 msgid "Dispatch quick reply transmission to originating sender"
-msgstr ""
+msgstr "Αποστολή γρήγορης απάντησης στον αρχικό αποστολέα"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_refax.jinja2:37
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:54
@@ -1558,7 +1623,7 @@ msgstr "Αριθμός φαξ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_refax.jinja2:42
 msgid "Regarding (Subject)"
-msgstr ""
+msgstr "Θέμα"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_refax.jinja2:47
 msgid "Comments"
@@ -1566,11 +1631,11 @@ msgstr "Σχόλια"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:23
 msgid "Transmission Report"
-msgstr ""
+msgstr "Αναφορά μετάδοσης"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:24
 msgid "Official facsimile delivery confirmation receipt"
-msgstr ""
+msgstr "Επίσημη απόδειξη επιβεβαίωσης παράδοσης φαξ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:31
 msgid "Print"
@@ -1583,42 +1648,45 @@ msgstr "Εταιρία"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:47
 msgid "Pages:"
-msgstr ""
+msgstr "Σελίδες:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:51
 msgid "Status:"
-msgstr ""
+msgstr "Κατάσταση:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:53
 msgid "Transmitted Successfully (OK)"
-msgstr ""
+msgstr "Μεταδόθηκε επιτυχώς (OK)"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:60
 msgid "Close"
-msgstr ""
+msgstr "Κλείσιμο"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:12
 msgid "Faxes currently queued or being transmitted."
-msgstr ""
+msgstr "Φαξ που βρίσκονται σε ουρά αναμονής ή μεταδίδονται αυτήν τη στιγμή."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:37
 msgid ""
 "This page shows only faxes that are queued or in progress. Once "
 "delivered, they are removed from this list. Find completed records in the"
 msgstr ""
+"Αυτή η σελίδα εμφανίζει μόνο φαξ που βρίσκονται σε ουρά ή σε εξέλιξη. "
+"Μετά την παράδοσή τους, αφαιρούνται από αυτήν τη λίστα. Βρείτε "
+"ολοκληρωμένες εγγραφές στο"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:45
 msgid "jobs in progress"
-msgstr ""
+msgstr "εργασίες σε εξέλιξη"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:45
 msgid "job in progress"
-msgstr ""
+msgstr "εργασία σε εξέλιξη"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:52
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:126
 msgid "Job ID"
-msgstr ""
+msgstr "ID εργασίας"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:53
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:127
@@ -1628,17 +1696,19 @@ msgstr "Αριθμός φαξ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:74
 msgid "Queued"
-msgstr ""
+msgstr "Σε ουρά"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:99
 msgid "No jobs in queue"
-msgstr ""
+msgstr "Δεν υπάρχουν εργασίες στην ουρά"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:101
 msgid ""
 "There are no faxes waiting to be sent. Send a fax to see its progress "
 "here."
 msgstr ""
+"Δεν υπάρχουν φαξ σε αναμονή για αποστολή. Στείλτε ένα φαξ για να "
+"παρακολουθήσετε την πρόοδό του εδώ."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:108
 #, fuzzy
@@ -1647,15 +1717,15 @@ msgstr "Νέο φαξ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:119
 msgid "Failed Transmissions"
-msgstr ""
+msgstr "Αποτυχημένες μεταδόσεις"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:120
 msgid "Review the number or retry below."
-msgstr ""
+msgstr "Ελέγξτε τον αριθμό ή δοκιμάστε ξανά παρακάτω."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:128
 msgid "Reason"
-msgstr ""
+msgstr "Αιτία"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:141
 msgid "Retry"
@@ -1668,17 +1738,20 @@ msgstr "συνθηματικό"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/pwdexpired.jinja2:27
 msgid "Security Credentials Renewal"
-msgstr ""
+msgstr "Ανανέωση διαπιστευτηρίων ασφαλείας"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/pwdexpired.jinja2:30
 msgid "Action Required"
-msgstr ""
+msgstr "Απαιτείται ενέργεια"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/pwdexpired.jinja2:41
 msgid ""
 "Your password has expired or needs to be changed before proceeding. "
 "Please enter your old password and choose a new password."
 msgstr ""
+"Ο κωδικός πρόσβασής σας έχει λήξει ή πρέπει να αλλάξει πριν συνεχίσετε. "
+"Παρακαλούμε εισαγάγετε τον παλιό σας κωδικό πρόσβασης και επιλέξτε έναν "
+"νέο κωδικό πρόσβασης."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/pwdexpired.jinja2:47
 msgid "Old Password"
@@ -1705,7 +1778,7 @@ msgstr "συνθηματικό"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:12
 msgid "Fill in the details below and click Send."
-msgstr ""
+msgstr "Συμπληρώστε τα παρακάτω στοιχεία και κάντε κλικ στο Αποστολή."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:46
 #, fuzzy
@@ -1714,15 +1787,17 @@ msgstr "Αριθμός φαξ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:47
 msgid "Enter the fax number and recipient details."
-msgstr ""
+msgstr "Εισαγάγετε τον αριθμό φαξ και τα στοιχεία του παραλήπτη."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:63
 msgid "To send to multiple recipients at once, separate numbers with a comma."
 msgstr ""
+"Για αποστολή σε πολλούς παραλήπτες ταυτόχρονα, διαχωρίστε τους αριθμούς "
+"με κόμμα."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:64
 msgid "Saved contacts are available in the"
-msgstr ""
+msgstr "Οι αποθηκευμένες επαφές είναι διαθέσιμες στο"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:71
 msgid "Attention To"
@@ -1733,7 +1808,7 @@ msgstr "Υπόψιν"
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:93
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:181
 msgid "optional"
-msgstr ""
+msgstr "προαιρετικό"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:93
 msgid "Subject / Regarding"
@@ -1741,25 +1816,27 @@ msgstr "Θέμα"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:109
 msgid "Document Attachment"
-msgstr ""
+msgstr "Συνημμένο έγγραφο"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:110
 msgid "Attach the file you want to transmit."
-msgstr ""
+msgstr "Επισυνάψτε το αρχείο που θέλετε να μεταδώσετε."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:122
 msgid "Click to select a file"
-msgstr ""
+msgstr "Κάντε κλικ για να επιλέξετε αρχείο"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:123
 msgid "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
-msgstr ""
+msgstr "Υποστηριζόμενα: PDF, TIFF, PostScript, TXT · Μέγιστο 10 MB"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:127
 msgid ""
 "PDF is the most commonly used format. Convert Word or Excel files to PDF "
 "before attaching."
 msgstr ""
+"Το PDF είναι η πιο συνηθισμένη μορφή. Μετατρέψτε αρχεία Word ή Excel σε "
+"PDF πριν από την επισύναψη."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:138
 msgid "Cover Page"
@@ -1767,7 +1844,7 @@ msgstr "Αποστολή εξωφύλλου"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:139
 msgid "Add a cover sheet with sender and recipient info."
-msgstr ""
+msgstr "Προσθέστε μια συνοδευτική σελίδα με πληροφορίες αποστολέα και παραλήπτη."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:146
 #, fuzzy
@@ -1781,27 +1858,27 @@ msgstr "Αποστολή εξωφύλλου"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:156
 msgid "Standard (Default)"
-msgstr ""
+msgstr "Τυπικό (Προεπιλογή)"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:157
 msgid "Urgent"
-msgstr ""
+msgstr "Επείγον"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:158
 msgid "Confidential"
-msgstr ""
+msgstr "Εμπιστευτικό"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:164
 msgid "Send via Line"
-msgstr ""
+msgstr "Αποστολή μέσω γραμμής"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:165
 msgid "Auto-select recommended"
-msgstr ""
+msgstr "Συνιστάται αυτόματη επιλογή"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:170
 msgid "Any Available Line (Auto)"
-msgstr ""
+msgstr "Οποιαδήποτε διαθέσιμη γραμμή (Αυτόματο)"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:181
 #, fuzzy
@@ -1810,11 +1887,11 @@ msgstr "Cover Pages"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:196
 msgid "Advanced Options"
-msgstr ""
+msgstr "Σύνθετες επιλογές"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:197
 msgid "Priority, retries, notifications"
-msgstr ""
+msgstr "Προτεραιότητα, επαναπροσπάθειες, ειδοποιήσεις"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:206
 msgid "Priority"
@@ -1830,7 +1907,7 @@ msgstr "Low"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:212
 msgid "High (Urgent)"
-msgstr ""
+msgstr "Υψηλή (Επείγον)"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:217
 #, fuzzy
@@ -1839,15 +1916,15 @@ msgstr "Προβολή κατηγοριών φαξ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:222
 msgid "Retries automatically on busy signal."
-msgstr ""
+msgstr "Αυτόματη επανάληψη σε περίπτωση σήματος κατειλημμένου."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:230
 msgid "Notify on retry"
-msgstr ""
+msgstr "Ειδοποίηση κατά την επανάληψη"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:241
 msgid "Cancel & return to Inbox"
-msgstr ""
+msgstr "Ακύρωση & επιστροφή στα Εισερχόμενα"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:17
 #, fuzzy
@@ -1859,22 +1936,24 @@ msgid ""
 "Configure your personal profile, fax station identity, and portal "
 "preferences."
 msgstr ""
+"Διαμορφώστε το προσωπικό σας προφίλ, την ταυτότητα σταθμού φαξ και τις "
+"προτιμήσεις πύλης."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:24
 msgid "Return to Inbox"
-msgstr ""
+msgstr "Επιστροφή στα Εισερχόμενα"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:54
 msgid "Personal & Organization Details"
-msgstr ""
+msgstr "Προσωπικά στοιχεία & στοιχεία οργανισμού"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:74
 msgid "Office / Location"
-msgstr ""
+msgstr "Γραφείο / Τοποθεσία"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:79
 msgid "Direct Voice Number"
-msgstr ""
+msgstr "Αριθμός άμεσης φωνητικής κλήσης"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:84
 #, fuzzy
@@ -1883,23 +1962,23 @@ msgstr "Αριθμός φαξ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:89
 msgid "Transmitting Station ID (TSI)"
-msgstr ""
+msgstr "Αναγνωριστικό σταθμού μετάδοσης (TSI)"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:91
 msgid "Header identifier imprinted on top of transmitted fax pages."
-msgstr ""
+msgstr "Αναγνωριστικό κεφαλίδας που αποτυπώνεται στο επάνω μέρος των σελίδων φαξ."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:96
 msgid "Email & Fax Notification Signature"
-msgstr ""
+msgstr "Υπογραφή ειδοποίησης Email & Φαξ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:105
 msgid "Portal & Delivery Preferences"
-msgstr ""
+msgstr "Προτιμήσεις πύλης & παράδοσης"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:110
 msgid "Display Language"
-msgstr ""
+msgstr "Γλώσσα εμφάνισης"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:140
 #, fuzzy
@@ -1930,32 +2009,32 @@ msgstr "Ρυθμίσεις"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:17
 msgid "Fax Viewer"
-msgstr ""
+msgstr "Πρόγραμμα προβολής φαξ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:19
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:144
 msgid "Page 1 of"
-msgstr ""
+msgstr "Σελίδα 1 από"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:24
 msgid "FROM:"
-msgstr ""
+msgstr "ΑΠΟ:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:26
 msgid "DATE:"
-msgstr ""
+msgstr "ΗΜΕΡΟΜΗΝΙΑ:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:28
 msgid "DEVICE:"
-msgstr ""
+msgstr "ΣΥΣΚΕΥΗ:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:36
 msgid "Prev"
-msgstr ""
+msgstr "Προηγ."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:41
 msgid "Next"
-msgstr ""
+msgstr "Επόμ."
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:56
 msgid "PDF"
@@ -1963,11 +2042,11 @@ msgstr "PDF"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:63
 msgid "TIFF"
-msgstr ""
+msgstr "TIFF"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:93
 msgid "Total"
-msgstr ""
+msgstr "Σύνολο"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:99
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:104
@@ -1976,19 +2055,19 @@ msgstr "Σελίδα"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:121
 msgid "Incoming Transmission"
-msgstr ""
+msgstr "Εισερχόμενη μετάδοση"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:122
 msgid "FACSIMILE TRANSMISSION"
-msgstr ""
+msgstr "ΜΕΤΑΔΟΣΗ ΦΑΞ"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:123
 msgid "Date Received:"
-msgstr ""
+msgstr "Ημερομηνία λήψης:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:124
 msgid "Originating Station:"
-msgstr ""
+msgstr "Σταθμός προέλευσης:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:129
 #, fuzzy
@@ -1997,19 +2076,19 @@ msgstr "Priority"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:143
 msgid "High-Resolution Raster Preview"
-msgstr ""
+msgstr "Προεπισκόπηση ψηφιογραφικής ανάλυσης υψηλής ευκρίνειας"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:144
 msgid "Device Line:"
-msgstr ""
+msgstr "Γραμμή συσκευής:"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:151
 msgid "Download Original Document"
-msgstr ""
+msgstr "Λήψη αρχικού εγγράφου"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:158
 msgid "NamiFAX Enterprise Facsimile Engine"
-msgstr ""
+msgstr "Εταιρική μηχανή τηλεομοιοτυπίας (φαξ) NamiFAX"
 
 #: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:159
 #, fuzzy
