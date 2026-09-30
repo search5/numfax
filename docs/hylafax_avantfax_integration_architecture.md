@@ -220,9 +220,51 @@ HylaFAX 자체도 `/usr/sbin/faxqclean` cron 작업을 통해 `/var/spool/hylafa
 
 ## 8. HylaFAX 훅(Hook) 구현 상세 규격
 
-HylaFAX는 C++ 통신 데몬(`faxgetty`, `faxq`)이 이벤트 발생 시 사전에 정해진 경로의 **POSIX 쉘 스크립트(`/bin/sh` 또는 `/bin/bash`)를 직접 `execve` 시스템 콜로 실행**합니다. 운영 환경에 따라 다음 두 가지 형태로 구현합니다.
+HylaFAX는 C++ 통신 데몬(`faxgetty`, `faxq`)이 이벤트 발생 시 사전에 정의된 실행 파일을 커널의 `execve` 시스템 콜로 직접 호출합니다.
 
-### 8.1 형태 A: 동일 서버 / 공유 볼륨 환경 (CLI 래퍼 스크립트)
+### 8.1 훅 파일명 및 경로의 가변성 (Configurability)
+
+HylaFAX의 훅 파일명과 경로는 고정되어 있지 않으며, HylaFAX 설정 파일(`/var/spool/hylafax/etc/config` 또는 모뎀별 `/var/spool/hylafax/etc/config.<devID>`)에서 지시자(Directives)를 통해 임의의 파일명과 경로로 자유롭게 변경할 수 있습니다:
+
+| 설정 지시자 (Directive) | 기본 파일 경로 | 이벤트 트리거 시점 | NamiFAX 대응 서브커맨드 |
+| :--- | :--- | :--- | :--- |
+| **`FaxRcvdCmd`** | `bin/faxrcvd` | 팩스 수신 세션 완료 및 On-hook 직후 | `namifax faxrcvd "$@"` |
+| **`NotifyCmd`** | `bin/notify` | 팩스 송신 성공 / 실패 / 재시도 완료 시 | `namifax notify "$@"` |
+| **`DynamicConfig`** | `bin/dynconf` (또는 `etc/dynconf`) | 전화 수신 벨 울림 시 발신번호(CallID) 필터링 | `namifax dynconf "$@"` |
+
+* **설정 예시 (`/var/spool/hylafax/etc/config`)**:
+  ```text
+  # 기본 bin/faxrcvd 대신 커스텀 실행 경로 지정 가능
+  FaxRcvdCmd:         bin/namifax_rcvd
+  NotifyCmd:          bin/namifax_notify
+  DynamicConfig:      bin/namifax_dynconf
+  ```
+
+---
+
+### 8.2 훅 실행 파일의 기술적 포맷 (Executable Types)
+
+HylaFAX는 쉘을 거쳐 실행하는 것이 아니라 C++ 데몬 내부에서 직접 `execve()` 시스템 콜을 호출하므로, **반드시 Bash 쉘 스크립트일 필요가 없습니다.** 리눅스 커널이 실행 가능한 모든 형태의 파일(실행 권한 `chmod +x` 필수)을 직접 등록할 수 있습니다:
+
+1. **Python 스크립트 직접 실행**:
+   상단에 셔뱅(`#!/usr/bin/env python3`)을 선언하고 실행 권한을 부여하면 파이썬 파일 자체를 훅으로 등록하여 즉시 실행 가능합니다.
+2. **단독 컴파일 바이너리 (Go, Rust, C/C++)**:
+   외부 런타임 의존성 없는 단일 바이너리를 빌드하여 등록할 수 있습니다.
+3. **NamiFAX CLI 직접 심볼릭 링크**:
+   `/var/spool/hylafax/bin/faxrcvd` 자체를 `/usr/local/bin/namifax-faxrcvd`로 심볼릭 링크(`ln -s`)하여 중간 스크립트 없이 직접 호출할 수 있습니다.
+4. **POSIX Bash / Sh 래퍼 스크립트**:
+   환경변수 제어 및 로깅을 위한 얇은 래퍼(Thin Wrapper) 방식입니다.
+
+#### Bash 래퍼 스크립트를 여전히 권장하는 실무적 이유
+Python 바이너리를 직접 호출할 수 있음에도 불구하고, 엔터프라이즈 운영 환경에서 Bash 래퍼 스크립트를 중간에 두는 주된 이유는 다음과 같습니다:
+* **HylaFAX Chroot Jail 격리 대응**: HylaFAX가 보안상 `/var/spool/hylafax`를 chroot 환경으로 격리할 경우, chroot 내부에는 파이썬 가상환경(`.venv`)이나 시스템 공유 라이브러리가 존재하지 않습니다. 따라서 쉘 래퍼를 통해 chroot 밖의 호스트 환경변수(`PATH`, `VIRTUAL_ENV`, `LD_LIBRARY_PATH`)를 주입하고 실행해야 합니다.
+* **프로세스 충돌 시 로깅 및 디버깅**: 파이썬 인터프리터 예외나 크래시 발생 시 표준 에러(`2>&1`)를 안전하게 파일(`/var/log/namifax/hook.log`)로 리다이렉트하여 선로 장애인지 애플리케이션 버그인지 즉각 진단할 수 있습니다.
+
+---
+
+### 8.3 배포 환경별 훅 구현 패턴
+
+#### 패턴 A: 동일 서버 / 공유 볼륨 환경 (CLI 래퍼 스크립트)
 HylaFAX와 NamiFAX가 동일 서버에 설치되어 로컬 파일시스템과 CLI에 직접 접근할 수 있는 표준 구성입니다.
 
 * **수신 훅 스크립트 (`/var/spool/hylafax/bin/faxrcvd`)**:
@@ -260,7 +302,7 @@ HylaFAX와 NamiFAX가 동일 서버에 설치되어 로컬 파일시스템과 CL
   exec /usr/local/bin/namifax dynconf "$@"
   ```
 
-### 8.2 형태 B: 컨테이너 분리 / 원격 마이크로서비스 환경 (HTTP Webhook 래퍼)
+#### 패턴 B: 컨테이너 분리 / 원격 마이크로서비스 환경 (HTTP Webhook 래퍼)
 HylaFAX와 NamiFAX 웹 서비스가 각각 독립된 Docker 컨테이너 또는 별도 VM으로 분리된 클라우드 네이티브 환경입니다.
 
 * **수신 웹훅 래퍼 (`/var/spool/hylafax/bin/faxrcvd`)**:
