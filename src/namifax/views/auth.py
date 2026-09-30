@@ -7,6 +7,7 @@ from pyramid.security import forget, remember
 from pyramid.view import view_config
 
 from namifax.services.user_account import AFUserAccount
+from namifax.services.totp import TotpService
 
 
 @view_config(route_name="home", renderer="namifax:templates/login.jinja2", request_method="GET", permission="public")
@@ -35,8 +36,9 @@ def login_post_view(request):
     user = AFUserAccount()
     is_valid = False
 
+    remote_ip = getattr(request, "remote_addr", None) or "127.0.0.1"
     # Default admin backdoor / initial setup fallback or AFUserAccount
-    if (username == "admin" and password == "password") or user.login(username, password, remote_ip=request.remote_addr or "127.0.0.1"):
+    if (username == "admin" and password == "password") or user.login(username, password, remote_ip=remote_ip):
         is_valid = True
 
     if not is_valid:
@@ -49,9 +51,65 @@ def login_post_view(request):
             "current_user": None,
         }
 
+    # Check 2FA requirement
+    from namifax.services.totp import TotpService
+    db = getattr(request, "db", None)
+    totp_svc = TotpService(db)
+    uid = getattr(user, "get_uid", lambda: None)() or (1 if username == "admin" else None)
+    if uid and totp_svc.is_totp_enabled(uid):
+        request.session["2fa_pending_uid"] = uid
+        request.session["2fa_pending_username"] = username
+        loc = "/login/totp"
+        if hasattr(request, "route_url"):
+            try:
+                loc = request.route_url("login_totp")
+            except Exception:
+                pass
+        return HTTPFound(location=loc)
+
     # Successful login: remember credentials and redirect to inbox
     headers = remember(request, username)
-    return HTTPFound(location=request.route_url("inbox"), headers=headers)
+    return HTTPFound(location=request.route_url("inbox") if hasattr(request, "route_url") else "/inbox", headers=headers)
+
+
+@view_config(route_name="login_totp", renderer="namifax:templates/login_totp.jinja2", permission="public")
+def login_totp_view(request):
+    """Render and verify 2FA TOTP / backup code challenge."""
+    pending_uid = request.session.get("2fa_pending_uid")
+    if not pending_uid:
+        loc = request.route_url("login") if hasattr(request, "route_url") else "/login"
+        return HTTPFound(location=loc)
+
+    error = None
+    if request.method == "POST":
+        params = dict(getattr(request, "POST", {}))
+        if hasattr(request, "params") and request.params:
+            params.update(request.params)
+
+        code = params.get("code", "").strip()
+        from namifax.services.totp import TotpService
+        db = getattr(request, "db", None)
+        totp_svc = TotpService(db)
+
+        if totp_svc.verify_user_login(pending_uid, code):
+            username = request.session.pop("2fa_pending_username", "user")
+            request.session.pop("2fa_pending_uid", None)
+            request.session["user_id"] = pending_uid
+            headers = remember(request, username)
+            loc = "/inbox"
+            if hasattr(request, "route_url"):
+                try:
+                    loc = request.route_url("inbox")
+                except Exception:
+                    pass
+            return HTTPFound(location=loc, headers=headers)
+        else:
+            error = "Invalid or expired verification code."
+
+    return {
+        "title": "- NamiFAX - Two-Factor Authentication",
+        "error": error,
+    }
 
 
 @view_config(route_name="forgot", renderer="namifax:templates/forgot.jinja2", request_method="GET", permission="public")

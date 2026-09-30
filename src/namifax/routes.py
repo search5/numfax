@@ -13,6 +13,7 @@ def includeme(config):
     config.add_route("logout", "/logout")
     config.add_route("forgot", "/forgot")
     config.add_route("pwdexpired", "/pwdexpired")
+    config.add_route("login_totp", "/login/totp")
 
     # Authenticated user routes (permission: 'view' or 'send_fax')
     config.add_route("inbox", "/inbox")

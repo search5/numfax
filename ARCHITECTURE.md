@@ -287,6 +287,7 @@ MySQL 스키마(`create_tables.sql`)를 기준으로 신규 Python 시스템(`SQ
 | **40** | `StorageLifecycle` | `NEW` (엔터프라이즈) | `src/namifax/services/storage_lifecycle.py`, `src/namifax/cli/cron.py` | `[COMPLETE]` | 28 | 로컬 원본 TIFF 선별 삭제 및 원격 클라우드 객체 통합 수명주기 엔진 완료 |
 | **41** | `CloudStorage` | `NEW` (엔터프라이즈) | `src/namifax/services/cloud_storage.py` | `[COMPLETE]` | 40 | AWS S3, MinIO, GCS 호환 멀티 클라우드 오브젝트 스토리지 연동 완료 |
 | **42** | `NetworkPrinter` | `NEW` (엔터프라이즈) | `src/namifax/services/printer.py`, `src/namifax/cli/print_in.py` | `[COMPLETE]` | 01, 16, 26 | 네트워크 실물 프린터 직접 연동(RAW 9100) 및 CUPS Print-to-Fax 인바운드 파이프라인 완료 |
+| **43** | `TotpAuth` | `NEW` (엔터프라이즈) | `src/namifax/services/totp.py`, `src/namifax/views/auth.py` | `[COMPLETE]` | 04, 21, 32 | RFC 6238 TOTP 2단계 인증, QR 프로비저닝 및 비상 복구 백업 코드 완료 |
 
 ---
 

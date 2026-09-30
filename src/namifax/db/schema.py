@@ -185,6 +185,13 @@ SCHEMA_STATEMENTS = [
         queue_name TEXT,
         description TEXT
     );""",
+    """CREATE TABLE IF NOT EXISTS UserTOTP (
+        uid INTEGER PRIMARY KEY,
+        secret_key TEXT NOT NULL,
+        is_enabled INTEGER DEFAULT 0,
+        backup_codes TEXT,
+        created_at TEXT
+    );""",
 ]
 
 
