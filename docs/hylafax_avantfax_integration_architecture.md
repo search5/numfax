@@ -469,26 +469,28 @@ HylaFAX `sendfax` 스풀러 및 NamiFAX 파이프라인이 기본적으로 수�
 
 ---
 
-### 11.3 NamiFAX 가상 네트워크 프린터 에뮬레이션 (Virtual Network Print Server)
+### 11.3 호스트 OS CUPS 네트워크 프린터 공유 및 NamiFAX 인쇄 수신 연동
 
-수백 대의 클라이언트 PC마다 전용 드라이버나 팝업 프로그램을 설치하고 관리하는 비용을 없애기 위해, **NamiFAX 서버 자체가 네트워크 프린터 장비로 직접 가장(Emulation)하여 인쇄 스트림을 수신하는 서버 데몬**을 내장합니다.
+NamiFAX 내부에 저수준 소켓 리스너(RAW 9100, IPP 631)를 바닥부터 직접 개발하는 오버엔지니어링을 지양하고, **리눅스 호스트 OS의 표준 인쇄 데몬인 CUPS(Common Unix Printing System)의 네트워크 공유 큐**를 활용합니다.
 
 ```
  [ Windows / Mac / Linux / ERP ] (클라이언트 무설치)
          |
          | 표준 네트워크 인쇄 (Generic PostScript 드라이버 사용)
+         | ipp://서버IP:631/printers/namifax (CUPS 표준 공유)
          v
  +-------------------------------------------------------------------------------+
- |                       NamiFAX Virtual Print Daemon                            |
+ |                       호스트 OS 표준 CUPS 데몬                                 |
  |                                                                               |
- |   [ RAW 9100 소켓 리스너 ]          [ IPP 631 드라이버리스 리스너 ]           |
- |    (HP JetDirect / AppSocket)        (AirPrint / Windows / Linux CUPS)        |
+ |   - 네트워크 프린터 큐 공유 및 인쇄 스풀 관리                                 |
+ |   - NamiFAX CUPS 백엔드 필터 (/usr/lib/cups/backend/namifax) 호출             |
  +---------------------------------------+---------------------------------------+
                                          |
-                            PostScript / PDF 바이트 스트림 수신
+                            표준 입력 / 파일 경로 전달
                                          v
  +-------------------------------------------------------------------------------+
- |                        Text Tagging & Dispatch Pipeline                       |
+ |                        NamiFAX Text Tagging CLI 파이프라인                    |
+ |                       (namifax print-in /path/to/spool.pdf)                   |
  |                                                                               |
  |  1. 텍스트 레이어 파싱 (PyMuPDF / pdfplumber) 및 첫 페이지 고속 OCR           |
  |  2. 정규식 매칭: [[FAX: 02-123-4567]] 또는 <<FAX: 010-1234-5678>>          |
@@ -500,11 +502,12 @@ HylaFAX `sendfax` 스풀러 및 NamiFAX 파이프라인이 기본적으로 수�
  +-------------------------------------------------------------------------------+
 ```
 
-#### 에뮬레이션 프로토콜 사양:
-1. **RAW 9100 (HP JetDirect / AppSocket)**:
-   - 전 세계 모든 OS(Windows "표준 TCP/IP 포트", Mac, Linux) 및 SAP/ERP 시스템이 지원하는 가장 단순하고 안정적인 포트 9100 TCP 소켓 리스너.
-2. **IPP (Internet Printing Protocol / 포트 631)**:
-   - macOS AirPrint, Windows IPP, Linux CUPS에서 드라이버 설치 없이 자동 탐색(Bonjour/mDNS)되는 최신 표준 프로토콜.
+#### 연동 및 배포 구성:
+1. **호스트 CUPS 설정**:
+   - CUPS에 `namifax` 가상 프린터 큐를 등록하고 `Share printers connected to this system` 옵션을 활성화합니다.
+   - CUPS 백엔드로 등록된 스크립트가 인쇄 작업을 수신하여 `namifax print-in "$1" "$2" ...` CLI로 인쇄 파일을 즉시 넘겨줍니다.
+2. **클라이언트 설정 (전 OS 공통 무설치)**:
+   - 클라이언트 PC(Windows, macOS, Linux)에서는 드라이버 설치 없이 "네트워크 프린터 추가"에서 NamiFAX 서버의 CUPS 공유 주소(`ipp://namifax-server:631/printers/namifax`)를 지정하고 제조사를 `Generic / PostScript`로 선택하면 즉시 인쇄 준비가 완료됩니다.
 
 ---
 

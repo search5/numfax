@@ -39,8 +39,9 @@ NamiFAX는 오픈소스 팩스 솔루션인 AvantFAX(PHP 5 + MySQL + HylaFAX)를
      - **프로토콜 지원**: RAW 9100 (HP JetDirect), LPR/LPD (RFC 1179), IPP/IPPS (Internet Printing Protocol).
      - **프린터 관리 서비스 (`NetworkPrinterService`)**: 관리자 콘솔(`Admin > Hardware & Lines > Network Printers`)에서 프린터 IP, 포트, 프로토콜, 용지 규격 등록 및 "Test Print" 진단 제공. DID/모뎀/바코드별 수신 즉시 실물 프린터 소켓으로 TIFF/PDF 직접 자동 출력.
   2. **인바운드 인쇄 (클라이언트 PC 인쇄 ➔ NamiFAX 가상 프린터 수신 ➔ 팩스 자동 발송)**:
-     - **NamiFAX 가상 프린터 데몬 (Virtual Print Server)**: NamiFAX 서버 자체에 포트 9100(RAW) 및 포트 631(IPP) 리스너를 내장하여 사내망에서 일반 네트워크 프린터로 가장.
-     - **클라이언트 무설치 전송**: Windows/Mac/Linux 사용자나 ERP 시스템이 드라이버 추가 없이 표준 PostScript 프린터로 NamiFAX에 출력 가능.
+     - **호스트 OS CUPS 네트워크 프린터 공유**: NamiFAX 내부에 복잡한 소켓 데몬을 직접 개발하지 않고, 리눅스 호스트의 표준 CUPS 데몬에서 가상 팩스 큐를 네트워크로 공유(IPP).
+     - **클라이언트 무설치 전송**: Windows/Mac/Linux 사용자나 ERP 시스템이 드라이버 추가 없이 표준 PostScript 네트워크 프린터(`ipp://서버:631/printers/namifax`)로 NamiFAX에 직접 출력.
+     - **CUPS ➔ NamiFAX CLI 파이프라인**: CUPS 백엔드가 인쇄된 문서를 `namifax print-in` CLI로 전달.
      - **문서 내 태그 인식 (Text Tagging)**: 수신된 인쇄 데이터에서 `[[FAX: 02-123-4567]]` 정규식을 파싱하여 해당 번호로 자동 즉시 발송하고, 태그 텍스트는 최종 팩스에서 마스킹 제거.
      - **웹 드래프트 폴백**: 태그가 없는 문서는 웹 "임시보관함(Drafts)"으로 자동 저장하여 사용자가 웹에서 수신처를 지정하여 발송할 수 있도록 안내.
 
