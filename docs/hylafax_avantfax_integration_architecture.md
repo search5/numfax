@@ -205,16 +205,20 @@ HylaFAX 자체도 `/usr/sbin/faxqclean` cron 작업을 통해 `/var/spool/hylafa
   1. **임시 파일 보존 기간 (`tmp_retention_days`)**: 변환 임시 파일 정리 기준일 (기본: 2일)
   2. **수신함 팩스 보존 기간 (`inbox_retention_days`)**: 수신함에 머문 팩스를 아카이브로 자동 전환할 기준일 (기본: 30일)
   3. **아카이브 팩스 보존 기간 (`archive_retention_days`)**: 아카이브 보관 팩스를 영구 삭제할 기준일 (기본: 90일 / 비활성화 옵션)
-  4. **원본 TIFF 파일 정리 정책 (`tiff_lifecycle_policy`)**:
+  4. **로컬 원본 TIFF 파일 정리 정책 (`tiff_lifecycle_policy`)**:
      - `KEEP_ALL`: 원본 TIFF 영구 보존
-     - `PRUNE_AFTER_PDF`: PDF 변환 성공 즉시 TIFF 삭제 (용량 절감 극대화)
-     - `PRUNE_AFTER_DAYS`: 지정 일수(예: 7일/30일) 경과 후 TIFF만 선별 삭제
-  5. **자동 스케줄 설정**: 매일 특정 시각(예: 03:00) 또는 사용자 정의 Cron 표현식
+     - `PRUNE_AFTER_PDF`: PDF 변환 성공 즉시 로컬 TIFF 삭제 (디스크 용량 절감 극대화)
+     - `PRUNE_AFTER_DAYS`: 지정 일수(예: 7일/30일) 경과 후 로컬 TIFF만 선별 삭제
+  5. **원격 클라우드(S3/GCS) 객체 동기화 및 수명주기 정책 (`remote_lifecycle_policy`)**:
+     - `REMOTE_KEEP_FOREVER`: 로컬은 삭제하더라도 S3/GCS 원격 객체는 영구 보존 (하이브리드 백업)
+     - `REMOTE_SYNC_LIFECYCLE`: 보존 기간 만료 또는 관리자 영구 삭제 시 **원격 S3/GCS 버킷의 해당 파일(TIFF, PDF)까지 `DeleteObject` 동기화 삭제**
+     - `REMOTE_PURGE_TIFF_ONLY`: 원격 버킷에서도 보존 기간이 지난 대용량 원본 TIFF만 골라 삭제하고 PDF만 영구 보존
+  6. **자동 스케줄 설정**: 매일 특정 시각(예: 03:00) 또는 사용자 정의 Cron 표현식
 * **작업 이력 및 진단 패널**:
   - 최근 작업 실행 시각 (Last Run Time)
   - 실행 상태 (SUCCESS, FAILED, RUNNING)
-  - 정리 결과 (삭제된 임시 파일 수, 아카이빙된 팩스 수, 삭제된 팩스 수, 회수된 디스크 용량 MB)
-  - `[Run Clean Now]` 즉시 실행 버튼
+  - 정리 결과 (삭제된 임시 파일 수, 아카이빙된 팩스 수, 삭제된 팩스 수, 삭제된 원격 S3/GCS 객체 수, 회수된 디스크 용량 MB)
+  - `[Run Clean Now]` 즉시 실행 버튼 (로컬 및 원격 클라우드 동시 수명주기 정리 트리거)
 
 ---
 
@@ -326,9 +330,9 @@ HylaFAX와 NamiFAX 웹 서비스가 각각 독립된 Docker 컨테이너 또는 
 
 ---
 
-## 9. S3 파일 업로드 완료 감지 및 3단계 무결성 보장 메커니즘
+## 9. 멀티 클라우드(AWS S3 & GCP GCS) 연동, 3단계 무결성 보장 및 원격 수명주기 동기화
 
-팩스가 전화선으로 전송 중인 불완전한 상태에서 S3에 업로드되는 것을 원천 차단하기 위해, 시스템은 **이벤트 완료 보장 → 포맷 무결성 검증 → 로컬 트랜잭션 완료**의 3단계 파이프라인을 엄격히 적용합니다.
+팩스가 전화선으로 전송 중인 불완전한 상태에서 원격 오브젝트 스토리지에 업로드되는 것을 원천 차단하기 위해, 시스템은 **이벤트 완료 보장 → 포맷 무결성 검증 → 로컬 트랜잭션 완료**의 3단계 파이프라인을 엄격히 적용합니다.
 
 ```mermaid
 sequenceDiagram
@@ -337,7 +341,7 @@ sequenceDiagram
     participant Modem as HylaFAX (faxgetty)
     participant Hook as NamiFAX Hook (faxrcvd)
     participant Local as 로컬 아카이브 디렉터리
-    participant S3 as AWS S3 / MinIO
+    participant Cloud as AWS S3 / GCP Cloud Storage
 
     Sender->>Modem: 전화 발신 및 팩스 데이터 프레임 전송
     Note over Modem: /var/spool/hylafax/recvq/ 에 TIFF 기록 중
@@ -353,9 +357,9 @@ sequenceDiagram
     Hook->>Local: 무손실 PDF 변환 (fax.pdf) 및 썸네일 생성
     Note over Hook: [검증 3] PDF 파일 크기 > 0 검증 완료
     
-    Hook->>S3: PutObject (s3://bucket/faxes/YYYY/MM/DD/...)
-    S3-->>Hook: 200 OK (ETag 반환)
-    Note over Hook: DB 레코드 갱신 (s3_uploaded=1, s3_key=...)
+    Hook->>Cloud: PutObject (s3://bucket/ 또는 gs://bucket/faxes/...)
+    Cloud-->>Hook: 200 OK (ETag 또는 MD5 반환)
+    Note over Hook: DB 레코드 갱신 (cloud_uploaded=1, cloud_key=...)
 ```
 
 ### 9.1 1단계: HylaFAX 통신 라이프사이클에 의한 수신 완료 보장
@@ -365,17 +369,32 @@ sequenceDiagram
 ### 9.2 2단계: TIFF 포맷 헤더 및 에러 파라미터 무결성 검증
 통신 도중 선로 잡음이나 강제 단선으로 인해 불완전하게 수신된 파일을 필터링합니다:
 * **HylaFAX 에러 인수 검사**: `$4`(error-msg)가 빈 문자열인지 확인합니다. 통신 오류가 발생한 경우 에러 메시지가 기록되어 즉시 에러 큐로 분기합니다.
-* **TIFF 구조 무결성 검사**: Python `Pillow` 및 LibTIFF 라이브러리로 원본 TIFF를 열어, 파일 헤더의 유효성, IFD(Image File Directory) 엔드 태그 정상 종료 여부, 페이지 수(Pages) 메타데이터를 정밀 파싱합니다. 손상된 파일은 S3 전송을 중단하고 관리자 감사 로그에 기록합니다.
+* **TIFF 구조 무결성 검사**: Python `Pillow` 및 LibTIFF 라이브러리로 원본 TIFF를 열어, 파일 헤더의 유효성, IFD(Image File Directory) 엔드 태그 정상 종료 여부, 페이지 수(Pages) 메타데이터를 정밀 파싱합니다. 손상된 파일은 클라우드 전송을 중단하고 관리자 감사 로그에 기록합니다.
 
-### 9.3 3단계: 로컬 무손실 PDF 변환 트랜잭션 후 S3 업로드
+### 9.3 3단계: 로컬 무손실 PDF 변환 트랜잭션 후 클라우드 업로드
 * **로컬 가공 선행**: 수신된 TIFF로부터 `fax.pdf`와 `previewN.png`를 로컬 디렉터리에서 완전히 생성합니다.
 * **업로드 트리거 조건**:
   - `os.path.exists(pdffile)` 및 `os.path.getsize(pdffile) > 0` 검증 통과
   - `os.path.exists(faxfile)` 및 `os.path.getsize(faxfile) > 0` 검증 통과
 * **트랜잭션 확정**:
-  - 상기 조건을 만족할 때 비로소 S3 클라이언트(`boto3` 등)를 호출하여 버킷에 업로드합니다.
-  - S3로부터 정상 `200 OK` 및 `ETag`를 수신하면 데이터베이스 `FaxArchive` 레코드에 `s3_uploaded = 1`, `s3_key = '...'`를 기록합니다.
-* **장애 복구 보장**: 만약 S3 엔드포인트 네트워크 장애 등으로 업로드가 실패하더라도, 파일은 로컬 아카이브 디렉터리에 온전히 남아있으므로 내장 APScheduler의 백그라운드 재시도 큐(Retry Worker)를 통해 유실 없이 안전하게 재업로드됩니다.
+  - 상기 조건을 만족할 때 비로소 스토리지 클라이언트(AWS S3 Boto3 또는 GCP Cloud Storage)를 호출하여 버킷에 업로드합니다.
+  - 클라우드 엔드포인트로부터 정상 `200 OK` 및 식별자(ETag)를 수신하면 데이터베이스 `FaxArchive` 레코드에 `cloud_uploaded = 1`, `cloud_key = '...'`를 기록합니다.
+* **장애 복구 보장**: 만약 클라우드 엔드포인트 네트워크 장애 등으로 업로드가 실패하더라도, 파일은 로컬 아카이브 디렉터리에 온전히 남아있으므로 내장 APScheduler의 백그라운드 재시도 큐(Retry Worker)를 통해 유실 없이 안전하게 재업로드됩니다.
+
+---
+
+### 9.4 스토리지 수명주기 청소 스크립트와 클라우드(S3/GCS) 원격 객체 삭제 연동
+
+NamiFAX의 청소 스크립트(APScheduler 기반 수명주기 엔진)는 로컬 디스크뿐만 아니라 **원격 S3 및 GCP Cloud Storage 버킷에 직접 접근하여 보존 기간이 만료된 객체를 삭제하는 권한과 제어 로직을 내장**합니다:
+
+1. **원격 객체 삭제 메커니즘**:
+   - 스케줄러가 매일 자정에 실행될 때, `archive_retention_days`(예: 3년)가 경과한 팩스 목록을 DB에서 조회합니다.
+   - 관리자가 `REMOTE_SYNC_LIFECYCLE` 정책을 설정한 경우, 스토리지 어댑터의 `delete_file(remote_key)`를 호출하여 원격 버킷의 `fax.pdf`, `fax.tif`, `thumb.png`를 `DeleteObject` API로 안전하게 삭제합니다.
+   - 단건 수동 삭제 시에도, 관리자가 웹 UI에서 "팩스 영구 삭제"를 클릭하면 로컬 파일/DB 레코드 제거와 동시에 원격 S3/GCS 객체도 함께 폐기됩니다.
+2. **선별적 원격 TIFF 삭제를 통한 클라우드 비용 절감 (`REMOTE_PURGE_TIFF_ONLY`)**:
+   - 수신 30일이 지난 아카이브 팩스의 경우, 사용 빈도가 낮고 용량이 큰 원본 멀티페이지 TIFF(`fax.tif`)만 원격 버킷에서 `DeleteObject`로 제거하고, 경량 PDF(`fax.pdf`)만 클라우드에 영구 보존하여 스토리지 청구 비용을 70~80% 이상 절감합니다.
+3. **삭제 실패 안전장치 (Fail-Safe)**:
+   - 원격 객체 삭제 중 네트워크 장애나 API Rate Limit이 발생할 경우, DB의 `cloud_delete_pending = 1` 플래그로 마킹하고 다음 스케줄러 루프에서 멱등성(Idempotency)을 유지하며 재시도합니다.
 
 ---
 

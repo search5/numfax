@@ -23,8 +23,8 @@ NamiFAX는 오픈소스 팩스 솔루션인 AvantFAX(PHP 5 + MySQL + HylaFAX)를
 | **5** | **팩스 커버 업로드/탐색/관리** | **제한적 지원 (메타데이터만 관리)**<br>• 웹에서 파일 업로드/탐색 불가<br>• 서버 디렉터리에 수동 복사된 `.ps` 파일명만 DB 등록 | **완전 지원 (Cover Studio)**<br>• 웹 브라우저 기반 PS/PDF/HTML 템플릿 드래그앤드롭 업로드<br>• 썸네일 미리보기, 동적 필드 태그 매핑 및 관리 UI | 중간 |
 | **6** | **팩스 수신 시 PDF 자동 변환** | **부분 지원 (시스템 바이너리 의존)**<br>• HylaFAX 내장 `tiff2pdf` 및 `gs` 서브프로세스 호출<br>• (현재 NamiFAX는 스텁 처리 상태) | **완전 지원 (고품질 변환 파이프라인)**<br>• Pillow / PyMuPDF 기반 무손실 멀티페이지 PDF 변환 엔진<br>• `faxrcvd` 수신 즉시 비동기 썸네일/PDF 자동 생성 파이프라인 실체화 | 보통 |
 | **7** | **외부 이메일 서버 설정** | **미지원 (설정 파일 하드코딩)**<br>• `config.php` 내 상수로 직접 기입<br>• 관리자 웹 설정 UI 및 연결 테스트 기능 부재 | **완전 지원 (Admin SMTP Gateway)**<br>• 관리자 콘솔 내 SMTP 호스트, 포트, TLS/SSL, 인증정보 설정<br>• 실시간 "연결 및 테스트 메일 발송" 진단 도구 제공 | 낮음~중간 |
-| **8** | **S3 호환 스토리지 업로드 & 서버 설정** | **미지원 (전무)**<br>• 로컬 파일시스템 디렉터리(`/var/spool/hylafax/archive/`) 고정 | **완전 지원 (Hybrid Cloud S3 Archive)**<br>• MinIO, AWS S3, Ceph, R2 등 S3 호환 설정 UI<br>• 수신/발신 팩스 즉시/백그라운드 S3 업로드 및 스트리밍 다운로드 | 중간~높음 |
-| **9** | **쌓여있는 TIFF 자동 삭제** | **제한적 지원 (단순 전체 삭제)**<br>• `avantfaxcron.php -d`로 팩스 전체(DB+파일) 일괄 삭제만 가능<br>• PDF 변환 후 TIFF만 선별 정리하는 기능 부재 | **완전 지원 (Storage Lifecycle Engine)**<br>• "PDF 변환 및 S3 업로드 완료 후 원본 TIFF 자동 삭제" 정책<br>• 디스크 용량 절감 및 보존 주기(즉시/7일/30일) 기반 스케줄러 태스크 | 보통 |
+| **8** | **오브젝트 스토리지 연동 (AWS S3 & GCP GCS)** | **미지원 (전무)**<br>• 로컬 파일시스템 디렉터리(`/var/spool/hylafax/archive/`) 고정 | **완전 지원 (멀티 클라우드 오브젝트 스토리지)**<br>• AWS S3, Google Cloud Storage(GCS), MinIO, SeaweedFS, Cloudflare R2 등<br>• 수신/발신 팩스 즉시/백그라운드 원격 업로드 및 스트리밍 다운로드 | 중간~높음 |
+| **9** | **스토리지 수명주기 & 로컬/원격 자동 삭제** | **제한적 지원 (단순 전체 삭제)**<br>• `avantfaxcron.php -d`로 팩스 전체(DB+파일) 일괄 삭제만 가능<br>• PDF 변환 후 TIFF 선별 정리 및 원격(S3/GCS) 객체 라이프사이클 관리 전무 | **완전 지원 (통합 Storage Lifecycle Engine)**<br>• "PDF 변환 및 S3/GCS 업로드 완료 후 원본 TIFF 자동 삭제" 정책<br>• 보존 주기 만료 시 로컬 파일 및 원격 S3/GCS 객체 자동 삭제(DeleteObject) 연동 | 보통 |
 
 ---
 
@@ -134,35 +134,48 @@ NamiFAX는 오픈소스 팩스 솔루션인 AvantFAX(PHP 5 + MySQL + HylaFAX)를
 
 ---
 
-### 3.8 S3 Compatible Object Storage 연동 및 자동 업로드 (Hybrid Cloud S3 Archive)
+### 3.8 멀티 클라우드 오브젝트 스토리지 연동 (AWS S3 & Google Cloud Storage)
 - **레거시 한계**:
-  - S3 개념 부재. 온프레미스 단일 서버 디스크에만 보관되어 디스크 용량 고갈 및 이중화 백업에 한계.
+  - 클라우드 스토리지 개념 부재. 온프레미스 단일 서버 디스크에만 보관되어 디스크 용량 고갈 및 이중화 백업에 한계.
 - **신규 아키텍처**:
-  - **지원 스토리지**: AWS S3, MinIO (온프레미스 오브젝트 스토리지), Ceph RADOS, Cloudflare R2, Wasabi, NCP Object Storage 등 모든 S3 API 호환 스토리지.
-  - **표준 라이브러리**: `boto3` 또는 가벼운 `aioboto3` / `minio`.
-  - **관리자 설정 UI (`Admin > Storage & Retention > S3 Storage`)**:
-    - Endpoint URL (MinIO 등의 커스텀 엔드포인트 지원), Region, Bucket Name.
-    - Access Key, Secret Key, Path Prefix (예: `namifax/archive/`).
-    - "Test S3 Connection" 버튼 (버킷 존재 확인 및 PutObject/DeleteObject 권한 테스트).
+  - **추상화된 스토리지 인터페이스 (`StorageProvider`)**:
+    - `upload_file(local_path, remote_key)`
+    - `download_file(remote_key, local_path)`
+    - `delete_file(remote_key)`
+    - `generate_presigned_url(remote_key, expires_in)`
+  - **지원 스토리지 프로바이더**:
+    1. **AWS S3 & S3 호환 스토리지**: AWS S3, MinIO, SeaweedFS, Garage, Cloudflare R2, Ceph RADOS (`boto3` 기반).
+    2. **Google Cloud Storage (GCS)**:
+       - **GCS 상호 운용성(HMAC) 방식**: GCS의 S3 호환 XML 엔드포인트(`https://storage.googleapis.com`)에 HMAC Access/Secret Key로 접속하여 일관된 Boto3 클라이언트로 고속 통신.
+       - **GCP 서비스 계정 키 방식**: 서비스 계정 JSON 키 업로드를 통한 네이티브 인증 지원.
+  - **관리자 설정 UI (`Admin > Storage & Retention > Cloud Storage`)**:
+    - 스토리지 유형 선택: `Local Only`, `AWS S3 / S3-Compatible`, `Google Cloud Storage (GCS)`
+    - 설정 입력 필드:
+      - S3 모드: Endpoint URL, Region, Bucket Name, Access Key, Secret Key, Prefix
+      - GCS 모드: Project ID, Bucket Name, HMAC Key (또는 Service Account JSON 파일 업로드), Prefix
+    - "Test Connection" 진단 버튼 (버킷 존재 확인 및 읽기/쓰기/삭제 권한 실시간 진단).
   - **동기화 및 뷰어 전략**:
-    - **업로드 파이프라인**: 팩스 수신(`faxrcvd`) 및 발신(`notify`) 완료 시 로컬 저장과 동시에 백그라운드 태스크로 S3에 `fax.tif`, `fax.pdf`, `thumb.png` 자동 업로드.
-    - **스마트 다운로드**: 로컬 디스크에 파일이 삭제된 경우 S3로부터 스트리밍 프록시하거나 1회용 Presigned Download URL을 생성하여 웹 뷰어 서빙.
+    - **업로드 파이프라인**: 팩스 수신(`faxrcvd`) 및 발신(`notify`) 완료 시 로컬 저장과 동시에 백그라운드 워커로 S3/GCS에 `fax.tif`, `fax.pdf`, `thumb.png` 자동 업로드.
+    - **스마트 다운로드**: 로컬 디스크에 파일이 삭제된 경우 S3/GCS로부터 스트리밍 프록시하거나 1회용 Presigned Download URL을 생성하여 웹 뷰어 서빙.
 
 ---
 
-### 3.9 스토리지 라이프사이클 및 수신 TIFF 자동 정리 (Storage Lifecycle & TIFF Auto-Purge)
+### 3.9 통합 스토리지 라이프사이클 및 로컬/원격 객체 자동 삭제 (Storage Lifecycle & Remote Purge)
 - **레거시 한계**:
-  - 레거시 크론(`avantfaxcron.php`)은 팩스 전체(DB 레코드 + PDF + TIFF)를 통째로 지우는 기능만 제공하여, 원본 TIFF만 선택적으로 삭제하여 디스크를 절약하는 기능이 전무했습니다.
+  - 레거시 크론(`avantfaxcron.php`)은 팩스 전체(DB 레코드 + PDF + TIFF)를 통째로 지우는 기능만 제공하여, 원본 TIFF만 선택적으로 삭제하거나 클라우드(S3/GCS)에 보관된 파일까지 수명주기를 제어하는 기능이 전무했습니다.
 - **신규 아키텍처**:
-  - **TIFF 파일의 특성**: 팩스 원본 멀티페이지 TIFF는 PDF 대비 용량이 크고, 웹 뷰어 및 사용자 다운로드는 99% PDF로 이루어집니다.
-  - **스토리지 수명주기 정책 (`StorageLifecyclePolicy`)**:
-    - **정책 옵션 (관리자 설정)**:
-      1. `Keep Forever` (영구 보존 - 레거시 기본 동작)
-      2. `Purge immediately after PDF/S3 sync` (PDF 생성 및 S3 업로드 확인 즉시 로컬 TIFF 삭제)
-      3. `Purge TIFFs older than N days` (N일 경과한 로컬 원본 TIFF만 선별 삭제, 예: 7일/30일)
+  - **로컬 디스크 최적화 (TIFF 선별 삭제)**:
+    - 팩스 원본 멀티페이지 TIFF는 PDF 대비 용량이 크며, 일반적인 뷰어 및 다운로드는 PDF로 충분함.
+    - 관리자 정책에 따라 PDF 변환 및 S3/GCS 업로드가 확인된 원본 TIFF를 즉시 또는 N일(예: 7일/30일) 후 로컬에서 선별 삭제하여 디스크 고갈 방지.
+  - **원격 클라우드(S3/GCS) 수명주기 연동 정책**:
+    1. **하이브리드 보존 모드 (`REMOTE_KEEP_FOREVER`)**:
+       - 로컬 디스크는 N일 후 파일(TIFF 또는 전체)을 삭제하여 서버 용량을 확보하되, 원격 S3/GCS에는 영구 보존(장기 법적 보존/감사 대응).
+    2. **원격 동기화 삭제 모드 (`REMOTE_SYNC_LIFECYCLE`)**:
+       - 관리자가 웹 UI에서 팩스를 영구 삭제하거나 아카이브 보존 기한(예: 3년/5년)이 만료되었을 때, 로컬 DB/파일 삭제와 동시에 **원격 S3/GCS의 `DeleteObject` API를 호출하여 클라우드 상의 객체까지 영구 폐기**.
+    3. **선별적 원격 TIFF 삭제 (`REMOTE_PURGE_TIFF_ONLY`)**:
+       - 원격 버킷에서도 보존 기간이 지난 대용량 원본 TIFF만 골라 삭제하고 경량 PDF만 남겨 클라우드 스토리지 비용 절감.
   - **자동 백그라운드 실행**:
-    - NamiFAX 내장 APScheduler를 통해 매일 자정에 `purge_expired_tiffs` 태스크 자동 실행.
-    - 수신 스풀(`/var/spool/hylafax/recvq/`)의 잔여 임시 TIFF 파일 자동 정리 연동.
+    - NamiFAX 내장 APScheduler를 통해 매일 자정에 `run_storage_lifecycle_job` 태스크가 실행되어, 정책에 정의된 로컬 파일 및 원격 S3/GCS 객체 삭제 파이프라인을 일괄 처리.
 
 ---
 
