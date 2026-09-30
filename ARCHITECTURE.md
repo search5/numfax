@@ -290,6 +290,7 @@ MySQL 스키마(`create_tables.sql`)를 기준으로 신규 Python 시스템(`SQ
 | **43** | `TotpAuth` | `NEW` (엔터프라이즈) | `src/namifax/services/totp.py`, `src/namifax/views/auth.py` | `[COMPLETE]` | 04, 21, 32 | RFC 6238 TOTP 2단계 인증, QR 프로비저닝 및 비상 복구 백업 코드 완료 |
 | **44** | `CoverStudio` | `NEW` (엔터프라이즈) | `src/namifax/services/cover_studio.py`, `src/namifax/views/admin.py` | `[COMPLETE]` | 03, 32 | 팩스 표지 템플릿(PS/HTML/PDF) 렌더링 엔진, 동적 태그 치환 및 가이드 UI 완료 |
 | **45** | `WebAuthnPasskeys` | `NEW` (엔터프라이즈) | `src/namifax/services/webauthn.py`, `src/namifax/views/webauthn.py` | `[COMPLETE]` | 04, 21, 32 | W3C WebAuthn / FIDO2 Passkeys 생체인증/패스워드리스 인증 및 REST API 완료 |
+| **46** | `SAML2SSO` | `NEW` (엔터프라이즈) | `src/namifax/services/saml.py`, `src/namifax/views/saml.py` | `[COMPLETE]` | 04, 21, 32 | SAML 2.0 엔터프라이즈 SP 메타데이터, AuthnRequest, Response 파싱 및 JIT 프로비저닝 완료 |
 
 ---
 

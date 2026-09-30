@@ -89,3 +89,9 @@ def includeme(config):
     config.add_route("api_webauthn_auth_verify", "/api/webauthn/auth/verify")
     config.add_route("api_webauthn_credentials", "/api/webauthn/credentials")
     config.add_route("api_webauthn_credentials_delete", "/api/webauthn/credentials/delete")
+
+    # SAML 2.0 Enterprise SSO routes
+    config.add_route("saml_metadata", "/auth/saml/metadata")
+    config.add_route("saml_login", "/auth/saml/login")
+    config.add_route("saml_acs", "/auth/saml/acs")
+    config.add_route("saml_sls", "/auth/saml/sls")
