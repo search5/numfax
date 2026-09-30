@@ -62,7 +62,7 @@ class TestAdminSmtpView(unittest.TestCase):
         self.assertIsInstance(res, HTTPFound)
         self.assertEqual(res.location, "/admin/smtp")
 
-    @patch("src.namifax.services.smtp_settings.SmtpSettingsService.test_connection")
+    @patch("namifax.services.smtp_settings.SmtpSettingsService.test_connection")
     def test_post_test_smtp_connection(self, mock_test):
         mock_test.return_value = MagicMock(success=True, message="SMTP Handshake OK", details=["Log 1"])
 

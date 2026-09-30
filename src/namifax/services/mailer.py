@@ -49,7 +49,7 @@ class MailerService:
         if engine is None:
             return cls()
         try:
-            from src.namifax.services.smtp_settings import SmtpSettingsService
+            from namifax.services.smtp_settings import SmtpSettingsService
             service = SmtpSettingsService(engine)
             cfg = service.get_settings()
             use_ssl = (cfg.smtp_security == "SSL")

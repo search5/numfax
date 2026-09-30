@@ -78,6 +78,7 @@
           <option value="/admin/did" {% if current_admin_tab == 'did' %}selected{% endif %}>DID Routing Rules</option>
           <option value="/admin/categories" {% if current_admin_tab == 'categories' %}selected{% endif %}>Fax Categories</option>
           <option value="/admin/covers" {% if current_admin_tab == 'covers' %}selected{% endif %}>Cover Pages</option>
+          <option value="/admin/printers" {% if current_admin_tab == 'printers' %}selected{% endif %}>Network Printers</option>
         </optgroup>
         <optgroup label="Advanced Routing &amp; Blacklist">
           <option value="/admin/barcodes" {% if current_admin_tab == 'barcodes' %}selected{% endif %}>Routing by Barcode</option>
@@ -86,6 +87,8 @@
           <option value="/admin/syslog" {% if current_admin_tab == 'syslog' %}selected{% endif %}>System Audit Logs</option>
           <option value="/admin/sysfunc" {% if current_admin_tab == 'sysfunc' %}selected{% endif %}>System Functions</option>
           <option value="/admin/smtp" {% if current_admin_tab == 'smtp' %}selected{% endif %}>SMTP Gateway</option>
+          <option value="/admin/storage" {% if current_admin_tab == 'storage' %}selected{% endif %}>Storage &amp; Cloud</option>
+          <option value="/admin/saml" {% if current_admin_tab == 'saml' %}selected{% endif %}>SAML 2.0 SSO</option>
         </optgroup>
         <option value="">-- Portal Navigation --</option>
         <option value="/inbox">&larr; Return to Inbox</option>
@@ -137,6 +140,14 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
           <span class="flex-1">{{ _('Fax Modems') }}</span>
+        </a>
+        <a href="/admin/printers"
+           class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium transition
+                  {% if current_admin_tab == 'printers' %}bg-blue-600/15 text-blue-400 border border-blue-500/30 font-semibold{% else %}text-slate-300 hover:text-white hover:bg-slate-800/80{% endif %}">
+          <svg class="w-4 h-4 text-slate-400 {% if current_admin_tab == 'printers' %}text-blue-400{% endif %}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+          </svg>
+          <span class="flex-1">{{ _('Network Printers') }}</span>
         </a>
       </div>
 
@@ -225,6 +236,22 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
           </svg>
           <span>{{ _('SMTP Gateway') }}</span>
+        </a>
+        <a href="/admin/storage"
+           class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium transition
+                  {% if current_admin_tab == 'storage' %}bg-blue-600/15 text-blue-400 border border-blue-500/30 font-semibold{% else %}text-slate-300 hover:text-white hover:bg-slate-800/80{% endif %}">
+          <svg class="w-4 h-4 text-slate-400 {% if current_admin_tab == 'storage' %}text-blue-400{% endif %}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2 1.5 3 3.5 3h9c2 0 3.5-1 3.5-3V7M4 7c0-2 1.5-3 3.5-3h9c2 0 3.5 1 3.5 3M4 7h16m-8 4v4m-2-2h4" />
+          </svg>
+          <span>{{ _('Storage & Cloud') }}</span>
+        </a>
+        <a href="/admin/saml"
+           class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium transition
+                  {% if current_admin_tab == 'saml' %}bg-blue-600/15 text-blue-400 border border-blue-500/30 font-semibold{% else %}text-slate-300 hover:text-white hover:bg-slate-800/80{% endif %}">
+          <svg class="w-4 h-4 text-slate-400 {% if current_admin_tab == 'saml' %}text-blue-400{% endif %}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+          </svg>
+          <span>{{ _('SAML 2.0 SSO') }}</span>
         </a>
       </div>
 

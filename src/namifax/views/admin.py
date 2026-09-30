@@ -904,7 +904,7 @@ def admin_smtp_view(request):
             except Exception:
                 pass
 
-    from src.namifax.services.smtp_settings import SmtpSettingsService, SmtpConfig
+    from namifax.services.smtp_settings import SmtpSettingsService, SmtpConfig
     service = SmtpSettingsService(db)
 
     message = None
@@ -959,5 +959,269 @@ def admin_smtp_view(request):
         "message": message,
         "error": error,
         "test_result": test_result,
+    }
+
+
+@view_config(route_name="admin_printers", renderer="namifax:templates/admin_printers.jinja2", permission="admin")
+def admin_printers_view(request):
+    """Network Printer management console."""
+    identity = getattr(request, "identity", None)
+    session = getattr(request, "session", {})
+    is_admin = False
+    if identity:
+        is_admin = bool(identity.get("superuser") or identity.get("is_admin") or identity.get("is_superadmin"))
+    elif session:
+        is_admin = bool(session.get("is_superadmin") or session.get("is_admin"))
+
+    if not is_admin:
+        raise HTTPForbidden(_("Access denied. Superadmin permission required."))
+
+    db = getattr(request, "db", None)
+    if not db:
+        from avantfax.db.engine import DatabaseEngine
+        db = DatabaseEngine()
+
+    from namifax.services.printer import NetworkPrinterService
+    service = NetworkPrinterService(db)
+
+    message = None
+    error = None
+    test_result = None
+
+    if request.method == "POST":
+        action = request.params.get("action", "")
+        if action == "add":
+            name = request.params.get("name", "").strip()
+            protocol = request.params.get("protocol", "RAW").strip()
+            host = request.params.get("host", "").strip()
+            port = int(request.params.get("port", 9100) or 9100)
+            queue_name = request.params.get("queue_name", "").strip() or None
+            description = request.params.get("description", "").strip() or None
+            if not name or not host:
+                error = _("Printer name and host are required.")
+            else:
+                try:
+                    service.create_printer(name, protocol, host, port, queue_name, description)
+                    message = _("Network printer registered successfully.")
+                except Exception as exc:
+                    error = f"Error creating printer: {exc}"
+        elif action == "delete":
+            printer_id = int(request.params.get("printer_id", 0))
+            if printer_id:
+                service.delete_printer(printer_id)
+                message = _("Printer deleted successfully.")
+        elif action == "test":
+            host = request.params.get("test_host", "").strip()
+            port = int(request.params.get("test_port", 9100) or 9100)
+            if host:
+                res = service.send_raw_print(host, port, b"NamiFAX Direct Print Test OK\r\n\x0c")
+                test_result = res
+                if res.get("success"):
+                    message = res.get("message")
+                else:
+                    error = res.get("message")
+
+    printers = service.list_printers()
+
+    return {
+        "current_admin_tab": "printers",
+        "current_user": identity or {"username": session.get("username", "admin"), "is_admin": True, "superuser": True},
+        "active_tab": "admin",
+        "active_admin": "printers",
+        "printers": printers,
+        "message": message,
+        "error": error,
+        "test_result": test_result,
+    }
+
+
+@view_config(route_name="admin_storage", renderer="namifax:templates/admin_storage.jinja2", permission="admin")
+def admin_storage_view(request):
+    """Enterprise Storage & Cloud Lifecycle management console."""
+    identity = getattr(request, "identity", None)
+    session = getattr(request, "session", {})
+    is_admin = False
+    if identity:
+        is_admin = bool(identity.get("superuser") or identity.get("is_admin") or identity.get("is_superadmin"))
+    elif session:
+        is_admin = bool(session.get("is_superadmin") or session.get("is_admin"))
+
+    if not is_admin:
+        raise HTTPForbidden(_("Access denied. Superadmin permission required."))
+
+    db = getattr(request, "db", None)
+    if not db:
+        from avantfax.db.engine import DatabaseEngine
+        db = DatabaseEngine()
+
+    from namifax.services.cloud_storage import StorageConfig, CloudStorageManager
+    from namifax.services.storage_lifecycle import StorageLifecyclePolicy, StorageLifecycleService
+
+    db.query("CREATE TABLE IF NOT EXISTS SystemConfig (key TEXT PRIMARY KEY, value TEXT)")
+
+    def get_cfg(k: str, default: str = "") -> str:
+        res = db.query(f"SELECT value FROM SystemConfig WHERE key = {db.quote(k)}")
+        recs = db.get_records() if res.executed else []
+        return recs[0]["value"] if recs and "value" in recs[0] else default
+
+    def set_cfg(k: str, v: str) -> None:
+        db.query(f"INSERT OR REPLACE INTO SystemConfig (key, value) VALUES ({db.quote(k)}, {db.quote(v)})")
+
+    message = None
+    error = None
+    test_result = None
+
+    if request.method == "POST":
+        action = request.params.get("action", "")
+        if action == "save_lifecycle":
+            purge_tiff = int(request.params.get("purge_tiff_after_days", 7) or 7)
+            retention = int(request.params.get("full_retention_days", 365) or 365)
+            remote_sync = "remote_sync_delete" in request.params
+            set_cfg("storage_purge_tiff_days", str(purge_tiff))
+            set_cfg("storage_retention_days", str(retention))
+            set_cfg("storage_remote_sync_delete", "1" if remote_sync else "0")
+            message = _("Lifecycle policy saved successfully.")
+        elif action == "save_cloud":
+            stype = request.params.get("storage_type", "LOCAL").strip()
+            endpoint = request.params.get("endpoint_url", "").strip()
+            region = request.params.get("region_name", "").strip()
+            bucket = request.params.get("bucket_name", "").strip()
+            access_key = request.params.get("access_key", "").strip()
+            secret_key = request.params.get("secret_key", "").strip()
+            prefix = request.params.get("prefix", "").strip()
+
+            set_cfg("cloud_storage_type", stype)
+            set_cfg("cloud_endpoint_url", endpoint)
+            set_cfg("cloud_region_name", region)
+            set_cfg("cloud_bucket_name", bucket)
+            set_cfg("cloud_access_key", access_key)
+            if secret_key:
+                set_cfg("cloud_secret_key", secret_key)
+            set_cfg("cloud_prefix", prefix)
+            message = _("Cloud storage configuration saved successfully.")
+        elif action == "test_cloud":
+            stype = request.params.get("storage_type", "LOCAL").strip()
+            endpoint = request.params.get("endpoint_url", "").strip() or None
+            region = request.params.get("region_name", "").strip() or None
+            bucket = request.params.get("bucket_name", "").strip() or None
+            access_key = request.params.get("access_key", "").strip() or None
+            secret_key = request.params.get("secret_key", "").strip() or get_cfg("cloud_secret_key", "")
+            prefix = request.params.get("prefix", "").strip()
+
+            cfg = StorageConfig(
+                storage_type=stype,
+                endpoint_url=endpoint,
+                region_name=region,
+                bucket_name=bucket,
+                access_key=access_key,
+                secret_key=secret_key,
+                prefix=prefix,
+            )
+            provider = CloudStorageManager.get_provider(cfg)
+            res = provider.test_connection()
+            test_result = res
+            if res.get("success"):
+                message = res.get("message")
+            else:
+                error = res.get("message")
+
+    # Load current configs
+    lifecycle = {
+        "purge_tiff_after_days": int(get_cfg("storage_purge_tiff_days", "7")),
+        "full_retention_days": int(get_cfg("storage_retention_days", "365")),
+        "remote_sync_delete": get_cfg("storage_remote_sync_delete", "1") == "1",
+    }
+    cloud = {
+        "storage_type": get_cfg("cloud_storage_type", "LOCAL"),
+        "endpoint_url": get_cfg("cloud_endpoint_url", ""),
+        "region_name": get_cfg("cloud_region_name", "us-east-1"),
+        "bucket_name": get_cfg("cloud_bucket_name", ""),
+        "access_key": get_cfg("cloud_access_key", ""),
+        "has_secret_key": bool(get_cfg("cloud_secret_key", "")),
+        "prefix": get_cfg("cloud_prefix", ""),
+    }
+
+    return {
+        "current_admin_tab": "storage",
+        "current_user": identity or {"username": session.get("username", "admin"), "is_admin": True, "superuser": True},
+        "active_tab": "admin",
+        "active_admin": "storage",
+        "lifecycle": lifecycle,
+        "cloud": cloud,
+        "message": message,
+        "error": error,
+        "test_result": test_result,
+    }
+
+
+@view_config(route_name="admin_saml", renderer="namifax:templates/admin_saml.jinja2", permission="admin")
+def admin_saml_view(request):
+    """Enterprise SAML 2.0 Identity Provider configuration console."""
+    identity = getattr(request, "identity", None)
+    session = getattr(request, "session", {})
+    is_admin = False
+    if identity:
+        is_admin = bool(identity.get("superuser") or identity.get("is_admin") or identity.get("is_superadmin"))
+    elif session:
+        is_admin = bool(session.get("is_superadmin") or session.get("is_admin"))
+
+    if not is_admin:
+        raise HTTPForbidden(_("Access denied. Superadmin permission required."))
+
+    db = getattr(request, "db", None)
+    if not db:
+        from avantfax.db.engine import DatabaseEngine
+        db = DatabaseEngine()
+
+    from namifax.services.saml import SAMLSettings, SAMLService
+
+    db.query("CREATE TABLE IF NOT EXISTS SystemConfig (key TEXT PRIMARY KEY, value TEXT)")
+
+    def get_cfg(k: str, default: str = "") -> str:
+        res = db.query(f"SELECT value FROM SystemConfig WHERE key = {db.quote(k)}")
+        recs = db.get_records() if res.executed else []
+        return recs[0]["value"] if recs and "value" in recs[0] else default
+
+    def set_cfg(k: str, v: str) -> None:
+        db.query(f"INSERT OR REPLACE INTO SystemConfig (key, value) VALUES ({db.quote(k)}, {db.quote(v)})")
+
+    message = None
+    error = None
+
+    if request.method == "POST":
+        enabled = "enabled" in request.params
+        idp_entity_id = request.params.get("idp_entity_id", "").strip()
+        idp_sso_url = request.params.get("idp_sso_url", "").strip()
+        idp_x509_cert = request.params.get("idp_x509_cert", "").strip()
+        jit_provisioning = "jit_provisioning" in request.params
+        default_role = request.params.get("default_role", "user").strip()
+
+        set_cfg("saml_enabled", "1" if enabled else "0")
+        set_cfg("saml_idp_entity_id", idp_entity_id)
+        set_cfg("saml_idp_sso_url", idp_sso_url)
+        set_cfg("saml_idp_x509_cert", idp_x509_cert)
+        set_cfg("saml_jit_provisioning", "1" if jit_provisioning else "0")
+        set_cfg("saml_default_role", default_role)
+        message = _("SAML 2.0 configuration saved successfully.")
+
+    settings = {
+        "enabled": get_cfg("saml_enabled", "0") == "1",
+        "idp_entity_id": get_cfg("saml_idp_entity_id", ""),
+        "idp_sso_url": get_cfg("saml_idp_sso_url", ""),
+        "idp_x509_cert": get_cfg("saml_idp_x509_cert", ""),
+        "jit_provisioning": get_cfg("saml_jit_provisioning", "1") == "1",
+        "default_role": get_cfg("saml_default_role", "user"),
+        "sp_metadata_url": request.route_url("saml_metadata"),
+        "sp_acs_url": request.route_url("saml_acs"),
+    }
+
+    return {
+        "current_admin_tab": "saml",
+        "current_user": identity or {"username": session.get("username", "admin"), "is_admin": True, "superuser": True},
+        "active_tab": "admin",
+        "active_admin": "saml",
+        "saml": settings,
+        "message": message,
+        "error": error,
     }
 

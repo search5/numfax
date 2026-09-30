@@ -66,6 +66,14 @@ def settings_view(request):
 
             message = "Settings updated successfully."
 
+    totp_enabled = False
+    if identity and identity.get("uid"):
+        try:
+            from namifax.services.totp import TotpService
+            totp_enabled = TotpService(getattr(request, "db", None)).is_totp_enabled(identity["uid"])
+        except Exception:
+            pass
+
     return {
         "title": "- NamiFAX - Settings",
         "current_user": identity,
@@ -73,4 +81,5 @@ def settings_view(request):
         "message": message,
         "error": error,
         "user_profile": profile_data,
+        "totp_enabled": totp_enabled,
     }

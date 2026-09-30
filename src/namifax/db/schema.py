@@ -192,6 +192,10 @@ SCHEMA_STATEMENTS = [
         backup_codes TEXT,
         created_at TEXT
     );""",
+    """CREATE TABLE IF NOT EXISTS SystemConfig (
+        key TEXT PRIMARY KEY,
+        value TEXT
+    );""",
 ]
 
 
