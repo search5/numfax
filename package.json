@@ -8,7 +8,10 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:css": "npx tailwindcss -i ./src/namifax/static/css/input.css -o ./src/namifax/static/css/main.css --minify"
+    "build:css": "npx tailwindcss -i ./src/namifax/static/css/input.css -o ./src/namifax/static/css/main.css --minify",
+    "i18n:extract": "uv run pybabel extract -F babel.cfg -o src/namifax/locale/namifax.pot .",
+    "i18n:update": "uv run pybabel update -i src/namifax/locale/namifax.pot -d src/namifax/locale -D namifax",
+    "i18n:compile": "uv run pybabel compile -d src/namifax/locale -D namifax"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,135 @@
+# Korean translations for NamiFAX Enterprise.
+# Copyright (C) 2026 iFAX Solutions & NamiFAX
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: NamiFAX 4.0.0\n"
+"Report-Msgid-Bugs-To: support@namifax.local\n"
+"POT-Creation-Date: 2026-09-30 11:06+0900\n"
+"PO-Revision-Date: 2026-09-30 11:06+0900\n"
+"Last-Translator: NamiFAX Architect <admin@namifax.local>\n"
+"Language: ko\n"
+"Language-Team: Korean <ko@namifax.local>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+# Navigation
+msgid "Inbox"
+msgstr "받은 팩스함"
+
+msgid "Send Fax"
+msgstr "팩스 보내기"
+
+msgid "Outbox"
+msgstr "발송 현황"
+
+msgid "Archive"
+msgstr "보관함"
+
+msgid "Contacts"
+msgstr "연락처"
+
+msgid "Address Book"
+msgstr "주소록"
+
+msgid "Settings"
+msgstr "설정"
+
+msgid "Logout"
+msgstr "로그아웃"
+
+msgid "Admin"
+msgstr "관리자"
+
+msgid "User Portal"
+msgstr "사용자 포털"
+
+# Actions
+msgid "View"
+msgstr "보기"
+
+msgid "Reply"
+msgstr "답신"
+
+msgid "Delete"
+msgstr "삭제"
+
+msgid "Rotate"
+msgstr "회전"
+
+msgid "Search"
+msgstr "검색"
+
+msgid "Reset"
+msgstr "초기화"
+
+msgid "Cancel"
+msgstr "취소"
+
+msgid "Save"
+msgstr "저장"
+
+msgid "Send"
+msgstr "전송"
+
+# Fields
+msgid "Destination Number"
+msgstr "수신 팩스 번호"
+
+msgid "Attention To"
+msgstr "받는 사람"
+
+msgid "Company"
+msgstr "회사명"
+
+msgid "Subject / Regarding"
+msgstr "제목 / 참조"
+
+msgid "Cover Page"
+msgstr "표지"
+
+msgid "Priority"
+msgstr "우선순위"
+
+msgid "Normal"
+msgstr "보통"
+
+msgid "High"
+msgstr "높음"
+
+msgid "Low"
+msgstr "낮음"
+
+# Admin navigation
+msgid "Dashboard"
+msgstr "대시보드"
+
+msgid "User Accounts"
+msgstr "사용자 계정"
+
+msgid "Fax Modems"
+msgstr "팩스 모뎀"
+
+msgid "DID Routing"
+msgstr "DID 라우팅"
+
+msgid "Fax Categories"
+msgstr "팩스 카테고리"
+
+msgid "Cover Pages"
+msgstr "표지 양식"
+
+msgid "Barcode Routing"
+msgstr "바코드 라우팅"
+
+msgid "Blacklist (DynConf)"
+msgstr "블랙리스트 (DynConf)"
+
+msgid "System Audit Logs"
+msgstr "시스템 감사 로그"
+
+msgid "System Functions"
+msgstr "시스템 기능"
