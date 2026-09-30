@@ -176,6 +176,15 @@ SCHEMA_STATEMENTS = [
         email_sig_html TEXT,
         updated_at TEXT
     );""",
+    """CREATE TABLE IF NOT EXISTS NetworkPrinters (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        protocol TEXT DEFAULT 'RAW',
+        host TEXT NOT NULL,
+        port INTEGER DEFAULT 9100,
+        queue_name TEXT,
+        description TEXT
+    );""",
 ]
 
 
