@@ -52,7 +52,7 @@ def run_cron(
     args = list(argv[1:]) if argv is not None else list(sys.argv[1:])
 
     try:
-        opts, _ = getopt.getopt(args, "i:t:d:")
+        opts, _ = getopt.getopt(args, "i:t:d:p:")
     except getopt.GetoptError:
         print(USAGE, end="")
         return 0
@@ -99,6 +99,16 @@ def run_cron(
                     deltree(full_p)
             except OSError:
                 pass
+
+    # 4. Storage Lifecycle TIFF purge
+    if "-p" in opt_dict:
+        try:
+            purgelifedays = int(opt_dict["-p"])
+            from namifax.services.storage_lifecycle import StorageLifecycleService
+            lifecycle = StorageLifecycleService()
+            lifecycle.purge_local_tiffs(days_old=purgelifedays)
+        except ValueError:
+            pass
 
     return 0
 
