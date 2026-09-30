@@ -8,6 +8,7 @@ from pyramid.view import view_config
 
 from namifax.services.user_account import AFUserAccount
 from namifax.services.totp import TotpService
+from namifax.i18n import _
 
 
 @view_config(route_name="home", renderer="namifax:templates/login.jinja2", request_method="GET", permission="public")
@@ -104,7 +105,7 @@ def login_totp_view(request):
                     pass
             return HTTPFound(location=loc, headers=headers)
         else:
-            error = "Invalid or expired verification code."
+            error = _("Invalid or expired verification code.")
 
     return {
         "title": "- NamiFAX - Two-Factor Authentication",

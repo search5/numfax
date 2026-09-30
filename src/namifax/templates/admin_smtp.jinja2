@@ -113,15 +113,15 @@
           <div class="grid grid-cols-3 gap-3">
             <label class="flex items-center gap-2 p-2.5 rounded-lg border border-slate-800 bg-slate-950/40 cursor-pointer hover:border-slate-700 transition">
               <input type="radio" name="smtp_security" value="NONE" {% if config.smtp_security == 'NONE' %}checked{% endif %} class="text-blue-600 focus:ring-blue-500 bg-slate-900 border-slate-700" />
-              <span class="text-xs text-slate-200">None (Plain)</span>
+              <span class="text-xs text-slate-200">{{ _('None (Plain)') }}</span>
             </label>
             <label class="flex items-center gap-2 p-2.5 rounded-lg border border-slate-800 bg-slate-950/40 cursor-pointer hover:border-slate-700 transition">
               <input type="radio" name="smtp_security" value="STARTTLS" {% if config.smtp_security == 'STARTTLS' %}checked{% endif %} class="text-blue-600 focus:ring-blue-500 bg-slate-900 border-slate-700" />
-              <span class="text-xs text-slate-200">STARTTLS (587)</span>
+              <span class="text-xs text-slate-200">{{ _('STARTTLS (587)') }}</span>
             </label>
             <label class="flex items-center gap-2 p-2.5 rounded-lg border border-slate-800 bg-slate-950/40 cursor-pointer hover:border-slate-700 transition">
               <input type="radio" name="smtp_security" value="SSL" {% if config.smtp_security == 'SSL' %}checked{% endif %} class="text-blue-600 focus:ring-blue-500 bg-slate-900 border-slate-700" />
-              <span class="text-xs text-slate-200">SSL / TLS (465)</span>
+              <span class="text-xs text-slate-200">{{ _('SSL / TLS (465)') }}</span>
             </label>
           </div>
         </div>

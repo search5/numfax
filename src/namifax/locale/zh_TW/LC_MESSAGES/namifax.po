@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: zh_TMIME-Version: 1.Content-"
 "Type: text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-30 11:45+0900\n"
+"POT-Creation-Date: 2026-10-01 00:54+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_TW\n"
@@ -15,829 +15,949 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:13
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:25
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:25
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:19
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:64
+#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:13
+#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:25
+#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:25
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:19
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:64
 msgid "Address Book"
 msgstr "E-mail 位址"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:14
+#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:14
 msgid "Save frequently used fax numbers for quick access when sending."
 msgstr "儲存常用傳真號碼，以便發送時快速選擇。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:24
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:53
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:98
+#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:24
+#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:53
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:98
 msgid "Search"
 msgstr "搜尋"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:32
+#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:32
 #, fuzzy
 msgid "New Company"
 msgstr "公司"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:43
+#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:43
 #, fuzzy
 msgid "Company / Name"
 msgstr "公司"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:44
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:52
+#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:44
+#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:52
 msgid "Fax Number"
 msgstr "傳真號碼"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:45
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:121
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:76
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:35
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:77
+#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:45
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:121
+#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:76
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:35
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:77
 msgid "Email"
 msgstr "E-mail"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:46
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:38
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:121
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:54
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:72
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:57
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:129
+#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:46
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:38
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:121
+#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:54
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:72
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:57
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:129
 msgid "Actions"
 msgstr "操作"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:74
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:28
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/layout.jinja2:46
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/layout.jinja2:78
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:19
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:11
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:248
+#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:74
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:28
+#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:46
+#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:78
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:19
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:11
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:248
 msgid "Send Fax"
 msgstr "傳送傳真"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:78
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:61
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_categories.jinja2:42
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_covers.jinja2:59
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:45
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:45
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:69
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:67
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:65
+#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:78
+#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:61
+#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:42
+#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:59
+#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:45
+#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:45
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:69
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:67
+#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:65
 msgid "Edit"
 msgstr "編輯"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:92
+#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:92
 #, fuzzy
 msgid "No contacts yet"
 msgstr "聯絡人"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:95
+#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:95
 msgid "No contacts matched"
 msgstr "找不到相符的聯絡人"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:97
+#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:97
 msgid ""
 "Add contacts to quickly select fax numbers when sending without typing "
 "them every time."
 msgstr "新增聯絡人以便在發送時快速選擇傳真號碼，無需每次重複輸入。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook.jinja2:105
+#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:105
 msgid "Add First Contact"
 msgstr "新增第一個聯絡人"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:18
+#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:18
 #, fuzzy
 msgid "Edit Company"
 msgstr "公司"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:18
+#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:18
 #, fuzzy
 msgid "Add New Company"
 msgstr "公司"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:20
+#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:20
 msgid "Configure corporate contact identity and transmission routing defaults."
 msgstr "設定企業聯絡人識別資訊及傳輸路由預設值。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:26
+#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:26
 #, fuzzy
 msgid "Back to Contacts"
 msgstr "聯絡人"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:42
+#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:42
 msgid "Primary Company Profile"
 msgstr "主要企業資料"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:46
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:69
+#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:46
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:69
 #, fuzzy
 msgid "Company Name"
 msgstr "公司"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:57
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:106
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:53
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:49
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:64
+#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:57
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:106
+#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:53
+#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:49
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:64
 msgid "Email Address"
 msgstr "電子郵件地址"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:67
+#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:67
 msgid "Recipient Contact & Physical Address"
 msgstr "收件者聯絡資訊及實際地址"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:72
+#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:72
 #, fuzzy
 msgid "Attention Person"
 msgstr "收件者"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:77
+#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:77
 msgid "Voice Telephone"
 msgstr "語音電話"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:82
+#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:82
 msgid "Street Address"
 msgstr "街道地址"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:87
+#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:87
 msgid "City / Postal Region"
 msgstr "城市 / 郵遞區號"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:92
+#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:92
 msgid "Category Tag"
 msgstr "分類標籤"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:94
+#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:94
 #, fuzzy
 msgid "General"
 msgstr "Normal"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:95
+#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:95
 msgid "Invoices & Billing"
 msgstr "發票與帳單"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:96
+#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:96
 msgid "Legal"
 msgstr "法務"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:102
+#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:102
 msgid "Description / Internal Notes"
 msgstr "描述 / 內部備忘錄"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:112
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:113
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_categories.jinja2:72
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_covers.jinja2:101
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:92
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:88
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:136
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:186
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:74
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:62
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:171
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_delete.jinja2:39
+#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:112
+#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:113
+#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:72
+#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:101
+#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:92
+#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:88
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:136
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:186
+#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:74
+#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:62
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:171
+#: /home/jiho/numfax/src/namifax/templates/modal_delete.jinja2:39
 msgid "Delete"
 msgstr "刪除"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:115
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:123
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:112
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_categories.jinja2:74
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_covers.jinja2:100
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:94
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:90
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:135
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:188
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:196
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:77
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:85
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:65
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/forgot.jinja2:63
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_assign.jinja2:56
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_delete.jinja2:36
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_email.jinja2:57
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_note.jinja2:47
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_refax.jinja2:57
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:81
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/pwdexpired.jinja2:64
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:187
+#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:115
+#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:123
+#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:112
+#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:74
+#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:100
+#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:94
+#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:90
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:135
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:188
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:196
+#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:77
+#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:85
+#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:65
+#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:63
+#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:56
+#: /home/jiho/numfax/src/namifax/templates/modal_delete.jinja2:36
+#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:57
+#: /home/jiho/numfax/src/namifax/templates/modal_note.jinja2:47
+#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:57
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:81
+#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:64
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:187
 msgid "Cancel"
 msgstr "取消"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:117
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/addressbook_edit.jinja2:125
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:114
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:116
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_categories.jinja2:75
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_categories.jinja2:80
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_covers.jinja2:102
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_covers.jinja2:104
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:95
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:100
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:91
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:96
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:137
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:140
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:190
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:198
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:79
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:87
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:67
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_assign.jinja2:59
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_note.jinja2:50
+#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:117
+#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:125
+#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:114
+#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:116
+#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:75
+#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:80
+#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:102
+#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:104
+#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:95
+#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:100
+#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:91
+#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:96
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:137
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:140
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:190
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:198
+#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:79
+#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:87
+#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:67
+#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:59
+#: /home/jiho/numfax/src/namifax/templates/modal_note.jinja2:50
 msgid "Save"
 msgstr "儲存"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:18
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:18
 #, fuzzy
 msgid "Dashboard Overview"
 msgstr "Dashboard"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:21
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:21
 #, fuzzy
 msgid "SYSTEM OPERATIONAL"
 msgstr "系統功能"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:24
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:24
 msgid ""
 "Real-time status of fax spools, hardware serial modems, and registered "
 "users"
 msgstr "傳真佇列、硬體序列數據機及已註冊使用者的即時狀態"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:30
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:59
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:30
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:59
 msgid "Users"
 msgstr "個使用者"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:31
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:31
 msgid "Modems"
 msgstr "設定數據機"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:32
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:139
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:32
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:139
 #, fuzzy
 msgid "DID Routes"
 msgstr "DID/DTMF Route groups"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:33
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:33
 #, fuzzy
 msgid "Logs"
 msgstr "登出"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:43
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:152
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:43
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:152
 #, fuzzy
 msgid "Fax Lines"
 msgstr "Fax Modems"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:46
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:46
 msgid "Hardware Ready"
 msgstr "硬體就緒"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:61
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:61
 #, fuzzy
 msgid "Active accounts"
 msgstr "個使用者"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:73
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:73
 msgid "Backend Core"
 msgstr "後端核心"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:87
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:87
 msgid "Scheduler"
 msgstr "排程器"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:89
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:89
 msgid "Running"
 msgstr "執行中"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:107
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:107
 #, fuzzy
 msgid "Registered User Accounts"
 msgstr "個使用者"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:110
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:110
 msgid "Manage Users"
 msgstr "使用者管理"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:118
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:34
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:118
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:34
 msgid "Name"
 msgstr "姓名"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:119
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:33
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:95
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/login.jinja2:68
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:119
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:33
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:95
+#: /home/jiho/numfax/src/namifax/templates/login.jinja2:68
 msgid "Username"
 msgstr "使用者名稱"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:120
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:120
 msgid "Last Login"
 msgstr "最近一次登入的時間"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:143
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:143
 msgid "Server Status"
 msgstr "伺服器狀態"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:148
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:148
 msgid "Core"
 msgstr "核心"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:152
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:152
 msgid "Database Engine"
 msgstr "資料庫引擎"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:156
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:156
 msgid "System Scheduler"
 msgstr "系統排程器"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:168
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:168
 msgid "Configured Modems"
 msgstr "已設定的數據機"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin.jinja2:196
+#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:196
 msgid "Administrator Workflow Guide"
 msgstr "管理員工作流程指南"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:17
+#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:17
 #, fuzzy
 msgid "Configure Barcode Routing"
 msgstr "Barcode Routing"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:18
+#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:18
 msgid ""
 "Route incoming faxes automatically based on recognized Code39 / QR "
 "barcodes"
 msgstr "根據辨識的Code39 / QR條碼自動路由傳入的傳真"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:23
+#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:23
 #, fuzzy
 msgid "New Barcode Route"
 msgstr "Barcode Routing"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:46
+#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:46
 #, fuzzy
 msgid "Barcode Routing Rules"
 msgstr "Barcode Routing"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:55
+#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:55
 #, fuzzy
 msgid "Barcode:"
 msgstr "Barcode Routing"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:58
+#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:58
 #, fuzzy
 msgid "Contact:"
 msgstr "聯絡人"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:58
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:41
+#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:58
+#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:41
 msgid "None"
 msgstr "無"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:58
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:41
+#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:58
+#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:41
 msgid "Printer:"
 msgstr "印表機:"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:74
+#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:74
 #, fuzzy
 msgid "Edit Barcode Route"
 msgstr "Barcode Routing"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:74
+#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:74
 #, fuzzy
 msgid "Add Barcode Route"
 msgstr "Barcode Routing"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:78
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_covers.jinja2:76
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:62
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:91
+#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:78
+#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:76
+#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:62
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:91
 #, fuzzy
 msgid "EDIT MODE"
 msgstr "編輯"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:80
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_covers.jinja2:78
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:64
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:93
+#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:80
+#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:78
+#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:64
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:93
 msgid "NEW"
 msgstr "新增"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:86
+#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:86
 msgid "Barcode"
 msgstr "Barcode"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:91
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:41
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:83
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:54
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:104
+#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:91
+#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:41
+#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:83
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:54
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:104
 msgid "Alias"
 msgstr "別名"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:96
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:88
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:109
+#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:96
+#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:88
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:109
 #, fuzzy
 msgid "Contact Email"
 msgstr "聯絡人"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_barcodes.jinja2:101
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:81
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:93
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:56
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:114
+#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:101
+#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:81
+#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:93
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:56
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:114
 msgid "Printer"
 msgstr "Printer"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_categories.jinja2:17
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:180
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:259
+#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:17
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:181
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:268
 msgid "Fax Categories"
 msgstr "允許檢視傳真類別"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_categories.jinja2:18
+#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:18
 msgid ""
 "Manage classification tags and archival categories for organizing "
 "transmissions"
 msgstr "管理用於整理傳真記錄的分類標籤與封存類別"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_categories.jinja2:23
+#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:23
 #, fuzzy
 msgid "New Category"
 msgstr "允許檢視傳真類別"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_categories.jinja2:33
+#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:33
 #, fuzzy
 msgid "Existing Categories"
 msgstr "允許檢視傳真類別"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_categories.jinja2:54
+#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:54
 msgid "Edit Category"
 msgstr "編輯類別"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_categories.jinja2:54
+#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:54
 #, fuzzy
 msgid "Add Category"
 msgstr "允許檢視傳真類別"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_categories.jinja2:65
+#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:65
 msgid "Category Name"
 msgstr "分類名稱"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_covers.jinja2:17
+#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:17
 #, fuzzy
 msgid "Configure Cover Pages"
 msgstr "Cover Pages"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_covers.jinja2:18
+#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:18
 msgid "Manage facsimile PostScript cover page templates and layouts"
 msgstr "管理傳真PostScript封面範本與版面配置"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_covers.jinja2:23
+#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:23
 #, fuzzy
 msgid "New Cover Page"
 msgstr "使用傳真封面"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_covers.jinja2:46
+#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:46
 #, fuzzy
 msgid "Available Cover Pages"
 msgstr "Cover Pages"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_covers.jinja2:72
+#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:72
 #, fuzzy
 msgid "Edit Cover Page"
 msgstr "使用傳真封面"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_covers.jinja2:72
+#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:72
 #, fuzzy
 msgid "Add Cover Page"
 msgstr "使用傳真封面"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_covers.jinja2:84
+#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:84
 msgid "Title"
 msgstr "標題"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_covers.jinja2:89
+#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:89
 msgid "File"
 msgstr "檔案"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:17
+#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:115
+msgid "Cover Template Studio: Dynamic Tag References"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:117
+msgid ""
+"Use these placeholder tags in your PostScript (.ps), HTML (.html), or PDF"
+" templates. The Cover Studio engine automatically substitutes them during"
+" fax rendering."
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:17
 msgid "Dynamic Configuration"
 msgstr "動態設定"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:18
+#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:18
 msgid ""
 "Manage Caller ID blacklists and transmission rejection rules for modem "
 "devices"
 msgstr "管理數據機裝置的來電顯示(Caller ID)黑名單與拒收規則"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:23
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:23
+#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:23
+#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:23
 msgid "New Rule"
 msgstr "新增規則"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:33
+#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:33
 msgid "Blocked Caller IDs"
 msgstr "已封鎖的來電顯示"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:40
+#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:40
 msgid "Caller ID:"
 msgstr "來電顯示:"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:41
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:82
+#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:41
+#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:82
 msgid "All Devices"
 msgstr "所有裝置"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:58
+#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:58
 msgid "Edit Caller ID Rule"
 msgstr "編輯來電顯示規則"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:58
+#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:58
 msgid "Add Caller ID Rule"
 msgstr "新增來電顯示規則"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:75
+#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:75
 msgid "Caller ID"
 msgstr "Caller ID"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_dynconf.jinja2:80
+#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:80
 msgid "Modem Device"
 msgstr "數據機裝置"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:17
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:159
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:263
+#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:17
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:160
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:272
 #, fuzzy
 msgid "Fax to Email"
 msgstr "Fax Modems"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:18
+#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:18
 msgid ""
 "Configure automated inbound fax forwarding and PDF dispatch rules mapped "
 "by company"
 msgstr "設定依企業對應的自動傳入傳真轉發及PDF發送規則"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:33
+#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:33
 msgid "Company Forwarding Rules"
 msgstr "企業轉發規則"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:41
+#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:41
 msgid "Email:"
 msgstr "電子郵件:"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:58
+#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:58
 msgid "Edit Forwarding Rule"
 msgstr "編輯轉發規則"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:58
+#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:58
 msgid "Add Forwarding Rule"
 msgstr "新增轉發規則"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_fax2email.jinja2:71
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:54
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:81
+#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:71
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:54
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:81
 msgid "Company"
 msgstr "公司"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:49
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:49
 #, fuzzy
 msgid "Control Panel"
 msgstr "使用傳真封面"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:61
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:61
 msgid "User Portal"
 msgstr "User Portal"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:63
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:13
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/layout.jinja2:45
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:81
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:63
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:13
+#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:45
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:81
 msgid "Inbox"
 msgstr "收件匣"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:105
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:106
 #, fuzzy
 msgid "Overview"
 msgstr "檢視傳真"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:112
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:255
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:113
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:264
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:118
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:119
 msgid "Access Control"
 msgstr "存取控制"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:125
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:256
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:17
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:126
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:265
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:17
 msgid "User Accounts"
 msgstr "個使用者"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:131
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:132
 msgid "Hardware & Lines"
 msgstr "硬體與線路"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:138
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:257
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:17
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:139
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:266
+#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:17
 msgid "Fax Modems"
 msgstr "Fax Modems"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:144
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:145
 #, fuzzy
 msgid "Inbound Routing"
 msgstr "DID/DTMF Route groups"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:151
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:258
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:152
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:267
 msgid "DID Routing"
 msgstr "DID/DTMF Route groups"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:167
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:261
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:168
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:270
 msgid "Barcode Routing"
 msgstr "Barcode Routing"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:173
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:174
 msgid "Content & Templates"
 msgstr "內容與範本"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:188
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:260
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:189
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:269
 msgid "Cover Pages"
 msgstr "Cover Pages"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:194
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:195
 msgid "Security & System"
 msgstr "安全與系統"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:201
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:262
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:202
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:271
 msgid "Blacklist (DynConf)"
 msgstr "Blacklist (DynConf)"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:209
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:264
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:210
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:273
 msgid "System Audit Logs"
 msgstr "System Audit Logs"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:218
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:265
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:18
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:219
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:274
+#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:18
 msgid "System Functions"
 msgstr "系統功能"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:236
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/layout.jinja2:111
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:227
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:275
+msgid "SMTP Gateway"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:245
+#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:111
 msgid "Logout"
 msgstr "登出"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:252
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:261
 msgid "Admin Control Panel"
 msgstr "管理員控制台"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_layout.jinja2:275
+#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:285
 msgid "Appliance Engine Online"
 msgstr "設備引擎連線正常"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:18
+#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:18
 msgid ""
 "Configure Modems hardware devices, physical serial ports, and print-"
 "forwarding rules"
 msgstr "設定數據機硬體裝置、實體序列埠及列印轉發規則"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:23
+#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:23
 #, fuzzy
 msgid "Configure Modems"
 msgstr "Fax Modems"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:33
+#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:33
 msgid "Active Modem Lines"
 msgstr "作用中數據機線路"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:40
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:78
+#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:40
+#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:78
 msgid "Device"
 msgstr "裝置"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:42
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:55
+#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:42
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:55
 msgid "Contact"
 msgstr "聯絡人"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:43
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:56
+#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:43
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:56
 msgid "Status"
 msgstr "狀態"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:72
+#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:72
 #, fuzzy
 msgid "Edit Modem"
 msgstr "Fax Modems"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:72
+#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:72
 msgid "Configure Modems Device"
 msgstr "設定數據機裝置"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:100
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:139
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:91
+#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:100
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:139
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:91
 msgid "Reset"
 msgstr "Reset"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:102
+#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:102
 #, fuzzy
 msgid "Save Modem"
 msgstr "Fax Modems"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:112
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:150
+#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:112
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:150
 msgid "Appliance Note:"
 msgstr "設備注意事項:"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_modems.jinja2:112
+#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:112
 msgid ""
 "Modems configured here must correspond to physical RS-232 serial devices,"
 " USB modems, or virtual IAX modems recognized by the underlying HylaFAX "
 "server."
 msgstr "此處設定的數據機必須對應至底層HylaFAX伺服器所辨識的實體RS-232序列裝置、USB數據機或虛擬IAX數據機。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:17
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:17
 #, fuzzy
 msgid "Configure DID Routing"
 msgstr "DID/DTMF Route groups"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:18
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:18
 msgid ""
 "Route incoming faxes by Direct Inward Dialing (DID) extension to specific"
 " email boxes or printers"
 msgstr "透過直接入站撥號(DID)分機號碼將傳入的傳真路由至指定的電子郵件信箱或印表機"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:23
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:23
 #, fuzzy
 msgid "New DID Route"
 msgstr "DID/DTMF Route groups"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:46
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:46
 #, fuzzy
 msgid "Active DID Routing Rules"
 msgstr "DID/DTMF Route groups"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:53
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:99
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:53
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:99
 msgid "Route Code"
 msgstr "路由代碼"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:57
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:57
 msgid "Action"
 msgstr "操作"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:84
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:84
 msgid "Configure Routing Rule"
 msgstr "設定路由規則"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:119
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:119
 msgid "Category"
 msgstr "分類"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:121
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:121
 msgid "-- None --"
 msgstr "-- 無 --"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_routing_did.jinja2:150
+#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:150
 msgid ""
 "DID (Direct Inward Dialing) routing automatically redirects incoming "
 "transmissions matching extension patterns directly to mapped operator "
 "inboxes or physical printers."
 msgstr "DID（直接入站撥號）路由會自動將符合分機模式的傳入傳真直接重新導向至對應的操作員收件匣或實體印表機。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:19
+#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:18
+msgid "External SMTP Gateway"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:21
+msgid ""
+"Configure external mail delivery server for inbound fax notifications and"
+" user alerts"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:62
+msgid "Diagnostics Result"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:89
+msgid "Server Connection & Security"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:95
+msgid "SMTP Host / Server"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:103
+#, fuzzy
+msgid "Port"
+msgstr "Priority"
+
+#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:112
+msgid "Encryption Protocol"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:116
+msgid "None (Plain)"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:120
+msgid "STARTTLS (587)"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:124
+msgid "SSL / TLS (465)"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:134
+msgid "Requires SMTP Authentication"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:139
+#, fuzzy
+msgid "Username / Login"
+msgstr "使用者名稱"
+
+#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:145
+#, fuzzy
+msgid "Password / App Key"
+msgstr "密碼"
+
+#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:160
+msgid "Default Sender Profile & Signatures"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:165
+#, fuzzy
+msgid "From Email Address"
+msgstr "電子郵件地址"
+
+#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:171
+#, fuzzy
+msgid "From Display Name"
+msgstr "公司"
+
+#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:179
+msgid "Email Signature (Plaintext)"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:187
+#, fuzzy
+msgid "Last updated"
+msgstr "旋轉傳真"
+
+#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:194
+#, fuzzy
+msgid "Save Gateway Settings"
+msgstr "設定"
+
+#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:207
+msgid "Diagnostic Self-Test"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:210
+msgid ""
+"Verify server reachability, TLS handshake, credentials and message "
+"dispatch in real time."
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:214
+msgid "Target Recipient Email"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:226
+#, fuzzy
+msgid "Send Diagnostic Email"
+msgstr "傳送傳真"
+
+#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:19
 msgid "Perform maintenance operations, service control, and backups."
 msgstr "執行維護操作、服務控制及備份。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:26
+#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:26
 msgid "HylaFAX Engine Active"
 msgstr "HylaFAX引擎運作中"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:29
+#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:29
 #, fuzzy
 msgid "Admin Dashboard"
 msgstr "Dashboard"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:40
+#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:40
 msgid "Caution: Appliance Maintenance Operations"
 msgstr "注意：設備維護操作"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:42
+#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:42
 msgid ""
 "Restarting or shutting down services will interrupt active fax modem "
 "spooling and disconnect client sessions. Ensure all outbound "
@@ -845,1164 +965,1220 @@ msgid ""
 "maintenance tasks."
 msgstr "重新啟動或關閉服務將中斷進行中的傳真數據機佇列，並中斷客戶端工作階段。在開始維護工作之前，請確認數據機佇列中的所有傳出傳輸均已完成。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:58
+#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:58
 msgid "Daemon Service Control"
 msgstr "常駐程式服務控制"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:61
+#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:61
 msgid "Restart HylaFAX and NamiFAX web services, or halt background workers."
 msgstr "重新啟動HylaFAX和NamiFAX Web服務，或停止背景工作處理程序。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:84
+#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:84
 msgid "Reboot Services"
 msgstr "重新啟動服務"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:90
+#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:90
 msgid "Shutdown Services"
 msgstr "關閉服務"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:100
+#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:100
 msgid "Database & Archive Backup"
 msgstr "資料庫與封存備份"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:103
+#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:103
 msgid "Download system archives and database snapshots for offsite retention."
 msgstr "下載系統封存檔與資料庫快照以進行異地保存。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:126
+#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:126
 msgid "Download Archive"
 msgstr "Download Archive"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_sysfunc.jinja2:132
+#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:132
 msgid "Download Database"
 msgstr "Download Database"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:17
+#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:17
 msgid "System Logs"
 msgstr "系統紀錄"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:18
+#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:18
 msgid "Audit logs and HylaFAX server operational event traces"
 msgstr "稽核記錄與HylaFAX伺服器操作事件追蹤"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:25
+#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:25
 msgid "Keywords:"
 msgstr "關鍵字:"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:30
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:43
+#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:30
+#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:43
 msgid "Date:"
 msgstr "日期:"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:64
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:120
+#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:64
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:120
 msgid "Date"
 msgstr "日期"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:65
+#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:65
 msgid "Log Text"
 msgstr "記錄內容"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:79
+#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:79
 msgid "No system logs found matching criteria."
 msgstr "找不到符合條件的系統記錄。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_system_logs.jinja2:80
+#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:80
 msgid "Transmissions and server events will be streamed here in real time."
 msgstr "傳輸記錄與伺服器事件將在此即時串流顯示。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:18
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:18
 msgid "Manage system operator credentials, access permissions, and route mapping"
 msgstr "管理系統操作員憑證、存取權限與路由對應"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:23
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:82
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:23
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:82
 msgid "Create New User"
 msgstr "建立新使用者"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:36
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:36
 msgid "Superuser"
 msgstr "超級使用者"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:37
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:37
 msgid "Admin"
 msgstr "Admin"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:53
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:60
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:53
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:60
 msgid "YES"
 msgstr "是"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:55
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:62
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:55
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:62
 msgid "NO"
 msgstr "否"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:82
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:82
 msgid "Configure User:"
 msgstr "設定使用者:"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:91
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:59
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:91
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:59
 msgid "Full Name"
 msgstr "姓名"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:102
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/login.jinja2:82
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:102
+#: /home/jiho/numfax/src/namifax/templates/login.jinja2:82
 msgid "Password"
 msgstr "密碼"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:113
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:113
 msgid "Permissions & Capabilities"
 msgstr "權限與功能"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:117
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:117
 msgid "Administrator Console"
 msgstr "管理員控制台"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:121
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:121
 msgid "Superuser Rights"
 msgstr "超級使用者權限"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:125
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:125
 msgid "Can Delete Faxes"
 msgstr "可刪除傳真"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:129
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:129
 msgid "Send on Any Modem"
 msgstr "允許使用任意數據機發送"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/admin_users.jinja2:165
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:41
+#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:165
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:41
 #, fuzzy
 msgid "Categories"
 msgstr "允許檢視傳真類別"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:13
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:13
 #, fuzzy
 msgid "Archive Search"
 msgstr "檔案櫃"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:14
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:14
 msgid "Search all sent and received fax records by date, company, or fax number."
 msgstr "依日期、企業或傳真號碼搜尋所有已發送和已接收的傳真記錄。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:18
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:18
 #, fuzzy
 msgid "results"
 msgstr "Reset"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:18
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:18
 #, fuzzy
 msgid "result"
 msgstr "Reset"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:26
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:26
 #, fuzzy
 msgid "Search Filters"
 msgstr "搜尋"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:27
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:27
 msgid ""
 "Leave filters empty to search all records. Narrow results by adding more "
 "criteria."
 msgstr "將篩選條件留空以搜尋所有記錄。新增更多條件可縮小搜尋範圍。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:33
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:33
 msgid "Keyword"
 msgstr "Keyword"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:45
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:45
 #, fuzzy
 msgid "All Categories"
 msgstr "允許檢視傳真類別"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:46
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:46
 msgid "Invoices / Orders"
 msgstr "發票 / 訂單"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:47
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:47
 #, fuzzy
 msgid "Legal / Contracts"
 msgstr "聯絡人"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:52
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:52
 #, fuzzy
 msgid "From Date"
 msgstr "旋轉傳真"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:60
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:60
 #, fuzzy
 msgid "To Date"
 msgstr "旋轉傳真"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:70
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:70
 #, fuzzy
 msgid "Direction"
 msgstr "DID/DTMF Route groups"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:74
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:74
 msgid "Sent & Received"
 msgstr "發送與接收"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:75
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:75
 msgid "Received only"
 msgstr "僅接收"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:76
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:76
 msgid "Sent only"
 msgstr "僅發送"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:81
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:81
 #, fuzzy
 msgid "Fax ID"
 msgstr "Fax Modems"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:110
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:110
 #, fuzzy
 msgid "Results"
 msgstr "Reset"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:111
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:111
 msgid "records"
 msgstr "筆記錄"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:111
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:111
 msgid "record"
 msgstr "筆記錄"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:117
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:69
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:117
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:69
 msgid "Sender"
 msgstr "Sender"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:118
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:118
 msgid "Description"
 msgstr "詳細資料"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:119
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:71
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:55
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:92
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:119
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:71
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:55
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:92
 msgid "Pages"
 msgstr "頁數"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:147
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:122
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:147
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:122
 msgid "View"
 msgstr "檢視傳真"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:155
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:155
 #, fuzzy
 msgid "Re-send"
 msgstr "傳送"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:173
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:173
 msgid "No results found"
 msgstr "找不到結果"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:174
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:174
 msgid "Try adjusting your search terms or date range."
 msgstr "請嘗試調整搜尋字詞或日期範圍。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:175
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:175
 msgid "Reset filters"
 msgstr "重設篩選條件"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:187
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:187
 msgid "Search the Archive"
 msgstr "搜尋封存"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/archive.jinja2:189
+#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:189
 msgid "Enter a keyword or filter above and click Search to find fax records."
 msgstr "在上方輸入關鍵字或篩選條件，然後按一下「搜尋」以尋找傳真記錄。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:17
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:26
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:26
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:25
+#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:17
+#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:26
+#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:26
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:25
 msgid "Distribution Lists"
 msgstr "群組傳送列表"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:18
+#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:18
 msgid "Organize recipient groups for mass fax broadcasting and notifications."
 msgstr "組織用於大量傳真群組發送與通知的收件者群組。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:29
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:119
+#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:29
+#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:119
 msgid "Create List"
 msgstr "建立發送清單"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:40
+#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:40
 msgid "Saved Distribution Lists"
 msgstr "已儲存的發送清單"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:52
+#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:52
 msgid "members"
 msgstr "位成員"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:66
+#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:66
 msgid "Group Members & Settings"
 msgstr "群組成員與設定"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:66
+#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:66
 msgid "Create New Distribution List"
 msgstr "建立新發送清單"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:76
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:45
+#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:76
+#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:45
 msgid "List Name"
 msgstr "列表名稱"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:83
+#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:83
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "群組成員（聯絡人與傳真號碼）"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:84
+#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:84
 #, fuzzy
 msgid "contacts assigned"
 msgstr "聯絡人"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:95
+#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:95
 msgid "Remove"
 msgstr "移除"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:99
+#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:99
 msgid "No contacts assigned to this list yet."
 msgstr "此清單中尚未指派任何聯絡人。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:107
+#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:107
 msgid "Add Member"
 msgstr "新增成員"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:116
+#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:116
 msgid "Delete List"
 msgstr "刪除列表"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist.jinja2:117
+#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:117
 #, fuzzy
 msgid "Save Changes"
 msgstr "Cover Pages"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:18
+#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:18
 msgid "Edit Distribution List"
 msgstr "編輯發送清單"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:18
+#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:18
 msgid "Create Distribution List"
 msgstr "建立發送清單"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:20
+#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:20
 msgid "Configure broadcast list parameters and recipient group members."
 msgstr "設定群組發送清單參數與收件者群組成員。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:26
+#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:26
 msgid "Back to Lists"
 msgstr "返回清單"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:41
+#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:41
 msgid "Distribution List Profile"
 msgstr "發送清單資料"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:52
+#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:52
 msgid "Enrolled Members"
 msgstr "已加入的成員"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:53
+#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:53
 msgid "List ID:"
 msgstr "清單ID:"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/distrolist_edit.jinja2:62
+#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:62
 msgid "No contacts in this list."
 msgstr "此清單中沒有聯絡人。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:17
+#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:17
 #, fuzzy
 msgid "Email Address Book"
 msgstr "E-mail 位址"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:18
+#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:18
 msgid "Manage email recipients, transmission routing, and contacts directory."
 msgstr "管理電子郵件收件者、傳輸路由及聯絡人目錄。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:27
+#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:27
 msgid "Email Book"
 msgstr "電子郵件通訊錄"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:30
+#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:30
 #, fuzzy
 msgid "New Contact"
 msgstr "聯絡人"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:40
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/layout.jinja2:49
+#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:40
+#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:49
 msgid "Contacts"
 msgstr "聯絡人"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:43
+#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:43
 msgid "recipients"
 msgstr "位收件者"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:51
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:44
+#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:51
+#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:44
 #, fuzzy
 msgid "Contact Name"
 msgstr "聯絡人"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:52
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:39
+#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:52
+#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:39
 msgid "Company Affiliation"
 msgstr "所屬企業"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook.jinja2:72
+#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:72
 msgid ""
 "No email contacts found in the directory. Click \"+ New Contact\" to "
 "register one."
 msgstr "通訊錄中找不到電子郵件聯絡人。按一下「+ 新增聯絡人」以建立。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:17
+#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:17
 msgid "Email Book - Edit Email Contact"
 msgstr "電子郵件通訊錄 - 編輯電子郵件聯絡人"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:18
+#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:18
 msgid "Manage contact information and company affiliation in Email Book."
 msgstr "在電子郵件通訊錄中管理聯絡人資訊與所屬企業。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:24
+#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:24
 msgid "Back to Email Book"
 msgstr "返回電子郵件通訊錄"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/emailbook_edit.jinja2:35
+#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:35
 msgid "Contact Profile Details"
 msgstr "聯絡人資料詳細資料"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/forgot.jinja2:26
+#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:26
 #, fuzzy
 msgid "Lost Password"
 msgstr "密碼"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/forgot.jinja2:27
+#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:27
 msgid "Account Recovery Assistance"
 msgstr "帳號復原協助"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/forgot.jinja2:30
+#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:30
+#: /home/jiho/numfax/src/namifax/templates/login_totp.jinja2:48
 msgid "Back to Login"
 msgstr "返回登入"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/forgot.jinja2:48
+#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:48
 msgid ""
 "Please enter your registered username or email address below. Password "
 "reset instructions will be dispatched to your account email address."
 msgstr "請在下方輸入您註冊的使用者名稱或電子郵件地址。密碼重設指示將發送至您的帳號電子郵件地址。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/forgot.jinja2:55
+#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:55
 msgid "Username or Email Address"
 msgstr "使用者名稱或電子郵件地址"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/forgot.jinja2:65
+#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:65
 #, fuzzy
 msgid "Reset Password"
 msgstr "請輸入您的 E-mail 位址，並按下傳送密碼按鈕。您將很快的收到新密碼。之後使用新密碼登入系統。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:14
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:14
 msgid "Received faxes appear here automatically in real time."
 msgstr "收到的傳真將在此即時自動顯示。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:20
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:20
 msgid "Faxes"
 msgstr "份傳真"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:20
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:20
 msgid "Fax"
 msgstr "傳真"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:39
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:39
 msgid "Select All"
 msgstr "全選"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:47
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:47
 #, fuzzy
 msgid "Archive Selected"
 msgstr "檔案櫃"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:54
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:54
 msgid "Delete Selected"
 msgstr "刪除選取項目"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:57
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:57
 msgid "Showing"
 msgstr "顯示"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:57
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:186
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:57
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:186
 msgid "of"
 msgstr "/"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:67
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:67
 msgid "Select"
 msgstr "選取"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:68
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:68
 #, fuzzy
 msgid "Preview"
 msgstr "檢視傳真"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:70
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:70
 #, fuzzy
 msgid "Received"
 msgstr "檔案櫃"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:136
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:70
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:136
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:70
 msgid "Reply"
 msgstr "回覆傳真"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:150
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/layout.jinja2:48
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:37
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:150
+#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:48
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:37
 msgid "Archive"
 msgstr "檔案櫃"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:154
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:154
 msgid "Email Fax"
 msgstr "以電子郵件傳送傳真"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:158
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_note.jinja2:23
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:158
+#: /home/jiho/numfax/src/namifax/templates/modal_note.jinja2:23
 msgid "Add Note"
 msgstr "新增備忘錄"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:162
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:49
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:162
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:49
 msgid "Rotate"
 msgstr "旋轉傳真"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:166
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:166
 msgid "Download TIFF"
 msgstr "下載 TIFF"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:186
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:150
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:151
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:152
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:186
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:150
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:151
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:152
 msgid "faxes"
 msgstr "份傳真"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:204
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:204
 msgid "0 FAXES"
 msgstr "0 份傳真"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:206
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:206
 msgid ""
 "There are no incoming faxes waiting in your inbox. Incoming transmissions"
 " will automatically appear here in real time."
 msgstr "收件匣中沒有等待中的傳入傳真。新傳入的傳真將在此即時自動顯示。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:214
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:214
 msgid "Send Your First Fax"
 msgstr "發送您的第一份傳真"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:218
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:218
 #, fuzzy
 msgid "Search Archive"
 msgstr "檔案櫃"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:225
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:225
 msgid "Getting Started with NamiFAX"
 msgstr "開始使用 NamiFAX"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:230
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:230
 msgid "Receive Faxes"
 msgstr "接收傳真"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:231
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:231
 msgid ""
 "When someone sends a fax to this system's number, it will appear here "
 "automatically."
 msgstr "當有人向此系統的號碼發送傳真時，傳真將自動顯示在此處。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:237
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:237
 #, fuzzy
 msgid "Send Faxes"
 msgstr "傳送傳真"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:238
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:238
 msgid "Click Send Fax to transmit a PDF or image document to any fax number."
 msgstr "按一下「發送傳真」即可將PDF或影像文件發送至任何傳真號碼。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:244
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:244
 msgid "Manage Records"
 msgstr "管理記錄"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/inbox.jinja2:245
+#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:245
 msgid ""
 "Download faxes as PDF, archive them for later, or search all records in "
 "the Archive."
 msgstr "將傳真下載為PDF、封存以供日後查看，或在封存庫中搜尋所有記錄。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/layout.jinja2:47
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:11
+#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:47
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:11
 msgid "Outbox"
 msgstr "寄件匣"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/layout.jinja2:109
+#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:109
 msgid "Settings"
 msgstr "設定"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/login.jinja2:43
+#: /home/jiho/numfax/src/namifax/templates/login.jinja2:43
 msgid "Sign in"
 msgstr "登入"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/login.jinja2:44
+#: /home/jiho/numfax/src/namifax/templates/login.jinja2:44
 msgid "Enter your credentials to continue."
 msgstr "請輸入您的憑證以繼續。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/login.jinja2:48
+#: /home/jiho/numfax/src/namifax/templates/login.jinja2:48
 #, fuzzy
 msgid "System Online"
 msgstr "系統功能"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/login.jinja2:85
+#: /home/jiho/numfax/src/namifax/templates/login.jinja2:85
 msgid "Forgot password?"
 msgstr "請輸入您的 E-mail 位址，並按下傳送密碼按鈕。您將很快的收到新密碼。之後使用新密碼登入系統。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/login.jinja2:94
+#: /home/jiho/numfax/src/namifax/templates/login.jinja2:94
 msgid "Contact your system administrator if you need an account."
 msgstr "如需帳號，請聯絡系統管理員。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/login.jinja2:105
+#: /home/jiho/numfax/src/namifax/templates/login.jinja2:105
 msgid "Login"
 msgstr "登入"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_assign.jinja2:23
+#: /home/jiho/numfax/src/namifax/templates/login_totp.jinja2:18
+msgid "Two-Factor Authentication"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/templates/login_totp.jinja2:19
+msgid ""
+"Enter the 6-digit code from your authenticator app or an emergency "
+"recovery code."
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/templates/login_totp.jinja2:33
+#, fuzzy
+msgid "Authentication Code"
+msgstr "收件者"
+
+#: /home/jiho/numfax/src/namifax/templates/login_totp.jinja2:44
+msgid "Verify & Log In"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:23
 msgid "Assign Company Name"
 msgstr "指定企業名稱"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_assign.jinja2:24
+#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:24
 msgid "Associate document with registered enterprise contact"
 msgstr "將文件與已註冊的企業聯絡人關聯"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_assign.jinja2:37
+#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:37
 msgid "Search Company Name"
 msgstr "搜尋企業名稱"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_assign.jinja2:42
+#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:42
 msgid "Select Contact Record"
 msgstr "選取聯絡人記錄"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_delete.jinja2:22
+#: /home/jiho/numfax/src/namifax/templates/modal_delete.jinja2:22
 #, fuzzy
 msgid "Delete Fax"
 msgstr "刪除"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_delete.jinja2:23
+#: /home/jiho/numfax/src/namifax/templates/modal_delete.jinja2:23
 msgid "Are you sure you want to delete this fax?"
 msgstr "確定要刪除此傳真嗎？"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_delete.jinja2:24
+#: /home/jiho/numfax/src/namifax/templates/modal_delete.jinja2:24
 msgid "This operation will permanently purge the fax document archive."
 msgstr "此操作將永久清除該傳真文件封存。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_email.jinja2:23
+#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:23
 #, fuzzy
 msgid "Send Fax via Email"
 msgstr "傳送傳真"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_email.jinja2:24
+#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:24
 msgid "Dispatch PDF document attachment to email recipients"
 msgstr "將PDF文件附件發送給電子郵件收件者"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_email.jinja2:37
+#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:37
 msgid "Recipients"
 msgstr "收件者"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_email.jinja2:42
+#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:42
 msgid "Subject"
 msgstr "主旨"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_email.jinja2:47
+#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:47
 msgid "Message"
 msgstr "訊息"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_email.jinja2:60
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_refax.jinja2:60
+#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:60
+#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:60
 msgid "Send"
 msgstr "傳送"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_note.jinja2:24
+#: /home/jiho/numfax/src/namifax/templates/modal_note.jinja2:24
 msgid "Append internal administrative note or comments"
 msgstr "附加內部管理備忘錄或備註"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_note.jinja2:37
+#: /home/jiho/numfax/src/namifax/templates/modal_note.jinja2:37
 msgid "Note / Description"
 msgstr "備忘錄 / 描述"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_refax.jinja2:23
+#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:23
 msgid "Reply to Fax"
 msgstr "回覆傳真"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_refax.jinja2:24
+#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:24
 msgid "Dispatch quick reply transmission to originating sender"
 msgstr "向原始發信人發送快速回覆"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_refax.jinja2:37
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:54
+#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:37
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:54
 msgid "Destination Number"
 msgstr "傳真號碼"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_refax.jinja2:42
+#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:42
 msgid "Regarding (Subject)"
 msgstr "主旨（主題）"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_refax.jinja2:47
+#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:47
 msgid "Comments"
 msgstr "註解"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:23
+#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:23
 msgid "Transmission Report"
 msgstr "傳輸報告"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:24
+#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:24
 msgid "Official facsimile delivery confirmation receipt"
 msgstr "官方傳真送達確認回條"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:31
+#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:31
 msgid "Print"
 msgstr "Print"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:39
+#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:39
 #, fuzzy
 msgid "Company:"
 msgstr "公司"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:47
+#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:47
 msgid "Pages:"
 msgstr "頁數:"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:51
+#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:51
 msgid "Status:"
 msgstr "狀態:"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:53
+#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:53
 msgid "Transmitted Successfully (OK)"
 msgstr "傳輸成功 (OK)"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/modal_txreport.jinja2:60
+#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:60
 msgid "Close"
 msgstr "關閉"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:12
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:12
 msgid "Faxes currently queued or being transmitted."
 msgstr "目前佇列中或正在傳送的傳真。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:37
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:37
 msgid ""
 "This page shows only faxes that are queued or in progress. Once "
 "delivered, they are removed from this list. Find completed records in the"
 msgstr "此頁面僅顯示正在佇列中或正在進行的傳真。發送完成後將從此清單中移除。可在以下位置尋找已完成的記錄:"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:45
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:45
 msgid "jobs in progress"
 msgstr "個進行中的工作"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:45
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:45
 msgid "job in progress"
 msgstr "個進行中的工作"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:52
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:126
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:52
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:126
 msgid "Job ID"
 msgstr "工作ID"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:53
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:127
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:53
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:127
 #, fuzzy
 msgid "Destination"
 msgstr "傳真號碼"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:74
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:74
 msgid "Queued"
 msgstr "已佇列"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:99
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:99
 msgid "No jobs in queue"
 msgstr "佇列中沒有工作"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:101
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:101
 msgid ""
 "There are no faxes waiting to be sent. Send a fax to see its progress "
 "here."
 msgstr "沒有等待發送的傳真。發送傳真即可在此查看其進度。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:108
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:108
 #, fuzzy
 msgid "Send a Fax"
 msgstr "傳送傳真"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:119
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:119
 msgid "Failed Transmissions"
 msgstr "傳輸失敗記錄"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:120
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:120
 msgid "Review the number or retry below."
 msgstr "請檢查號碼或在下方重試。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:128
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:128
 msgid "Reason"
 msgstr "原因"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/outbox.jinja2:141
+#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:141
 msgid "Retry"
 msgstr "Retry"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/pwdexpired.jinja2:26
+#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:26
 #, fuzzy
 msgid "Password Expired"
 msgstr "密碼"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/pwdexpired.jinja2:27
+#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:27
 msgid "Security Credentials Renewal"
 msgstr "安全憑證更新"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/pwdexpired.jinja2:30
+#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:30
 msgid "Action Required"
 msgstr "需要採取動作"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/pwdexpired.jinja2:41
+#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:41
 msgid ""
 "Your password has expired or needs to be changed before proceeding. "
 "Please enter your old password and choose a new password."
 msgstr "您的密碼已過期或需要變更才能繼續。請輸入您的舊密碼並設定新密碼。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/pwdexpired.jinja2:47
+#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:47
 msgid "Old Password"
 msgstr "舊密碼"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/pwdexpired.jinja2:52
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:172
+#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:52
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:172
 msgid "New Password"
 msgstr "新密碼"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/pwdexpired.jinja2:57
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:176
+#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:57
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:176
 #, fuzzy
 msgid "Confirm New Password"
 msgstr "請輸入您的 E-mail 位址，並按下傳送密碼按鈕。您將很快的收到新密碼。之後使用新密碼登入系統。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/pwdexpired.jinja2:66
+#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:66
 #, fuzzy
 msgid "Update Password"
 msgstr "密碼"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:12
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:12
 msgid "Fill in the details below and click Send."
 msgstr "填寫以下詳細資訊並按一下「發送」。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:46
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:46
 #, fuzzy
 msgid "Destination & Recipients"
 msgstr "傳真號碼"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:47
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:47
 msgid "Enter the fax number and recipient details."
 msgstr "輸入傳真號碼和收件者詳細資訊。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:63
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:63
 msgid "To send to multiple recipients at once, separate numbers with a comma."
 msgstr "若要同時發送給多個收件者，請用逗號分隔號碼。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:64
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:64
 msgid "Saved contacts are available in the"
 msgstr "已儲存的聯絡人可在此處取得:"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:71
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:71
 msgid "Attention To"
 msgstr "收件者"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:71
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:81
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:93
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:181
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:71
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:81
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:93
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:181
 msgid "optional"
 msgstr "選填"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:93
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:93
 msgid "Subject / Regarding"
 msgstr "主旨"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:109
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:109
 msgid "Document Attachment"
 msgstr "文件附件"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:110
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:110
 msgid "Attach the file you want to transmit."
 msgstr "附加要發送的檔案。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:122
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:122
 msgid "Click to select a file"
 msgstr "按一下選取檔案"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:123
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:123
 msgid "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
 msgstr "支援格式: PDF, TIFF, PostScript, TXT · 最大 10 MB"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:127
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:127
 msgid ""
 "PDF is the most commonly used format. Convert Word or Excel files to PDF "
 "before attaching."
 msgstr "PDF是最常用的格式。附加前請先將Word或Excel檔案轉換為PDF。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:138
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:138
 msgid "Cover Page"
 msgstr "使用傳真封面"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:139
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:139
 msgid "Add a cover sheet with sender and recipient info."
 msgstr "新增包含寄件者和收件者資訊的封面。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:146
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:146
 #, fuzzy
 msgid "Include Cover Page"
 msgstr "使用傳真封面"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:152
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:152
 #, fuzzy
 msgid "Cover Template"
 msgstr "使用傳真封面"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:156
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:156
 msgid "Standard (Default)"
 msgstr "標準 (預設)"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:157
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:157
 msgid "Urgent"
 msgstr "緊急"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:158
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:158
 msgid "Confidential"
 msgstr "機密"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:164
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:164
 msgid "Send via Line"
 msgstr "發送線路"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:165
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:165
 msgid "Auto-select recommended"
 msgstr "建議自動選取"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:170
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:170
 msgid "Any Available Line (Auto)"
 msgstr "任意可用線路 (自動)"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:181
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:181
 #, fuzzy
 msgid "Cover Comments"
 msgstr "Cover Pages"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:196
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:196
 msgid "Advanced Options"
 msgstr "進階選項"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:197
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:197
 msgid "Priority, retries, notifications"
 msgstr "優先順序、重試次數、通知設定"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:206
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:206
 msgid "Priority"
 msgstr "Priority"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:210
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:210
 msgid "Normal"
 msgstr "Normal"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:211
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:211
 msgid "Low"
 msgstr "Low"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:212
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:212
 msgid "High (Urgent)"
 msgstr "高 (緊急)"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:217
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:217
 #, fuzzy
 msgid "Max Retries"
 msgstr "允許檢視傳真類別"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:222
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:222
 msgid "Retries automatically on busy signal."
 msgstr "佔線時自動重試。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:230
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:230
 msgid "Notify on retry"
 msgstr "重試時通知"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/sendfax.jinja2:241
+#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:241
 msgid "Cancel & return to Inbox"
 msgstr "取消並返回收件匣"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:17
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:17
 #, fuzzy
 msgid "User Settings"
 msgstr "設定"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:18
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:18
 msgid ""
 "Configure your personal profile, fax station identity, and portal "
 "preferences."
 msgstr "設定您的個人資料、傳真台台號識別及入口網站偏好設定。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:24
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:24
 msgid "Return to Inbox"
 msgstr "返回收件匣"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:54
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:54
 msgid "Personal & Organization Details"
 msgstr "個人與組織詳細資料"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:74
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:74
 msgid "Office / Location"
 msgstr "辦公室 / 地點"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:79
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:79
 msgid "Direct Voice Number"
 msgstr "直撥電話號碼"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:84
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:84
 #, fuzzy
 msgid "Direct Fax Number"
 msgstr "傳真號碼"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:89
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:89
 msgid "Transmitting Station ID (TSI)"
 msgstr "發送台辨識碼 (TSI)"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:91
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:91
 msgid "Header identifier imprinted on top of transmitted fax pages."
 msgstr "印在已發送傳真頁面頂端的頁首識別碼。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:96
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:96
 msgid "Email & Fax Notification Signature"
 msgstr "電子郵件與傳真通知簽名"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:105
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:105
 msgid "Portal & Delivery Preferences"
 msgstr "入口網站與傳遞偏好設定"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:110
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:110
 msgid "Display Language"
 msgstr "顯示語言"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:140
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:140
 #, fuzzy
 msgid "Default Cover Page"
 msgstr "使用傳真封面"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:148
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:148
 msgid "Faxes Per Page"
 msgstr "faxes per page"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:162
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:162
 #, fuzzy
 msgid "Change Password"
 msgstr "密碼"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:166
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:166
 #, fuzzy
 msgid "Current Password"
 msgstr "請輸入您的 E-mail 位址，並按下傳送密碼按鈕。您將很快的收到新密碼。之後使用新密碼登入系統。"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/settings.jinja2:189
+#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:189
 #, fuzzy
 msgid "Update Settings"
 msgstr "設定"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:17
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:17
 msgid "Fax Viewer"
 msgstr "傳真檢視器"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:19
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:144
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:19
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:144
 msgid "Page 1 of"
 msgstr "第 1 頁，共"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:24
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:24
 msgid "FROM:"
 msgstr "寄件者:"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:26
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:26
 msgid "DATE:"
 msgstr "日期:"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:28
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:28
 msgid "DEVICE:"
 msgstr "裝置:"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:36
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:36
 msgid "Prev"
 msgstr "上一頁"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:41
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:41
 msgid "Next"
 msgstr "下一頁"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:56
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:56
 msgid "PDF"
 msgstr "PDF"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:63
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:63
 msgid "TIFF"
 msgstr "TIFF"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:93
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:93
 msgid "Total"
 msgstr "總計"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:99
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:104
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:99
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:104
 msgid "Page"
 msgstr "頁碼"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:121
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:121
 msgid "Incoming Transmission"
 msgstr "傳入傳輸"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:122
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:122
 msgid "FACSIMILE TRANSMISSION"
 msgstr "傳真傳輸"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:123
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:123
 msgid "Date Received:"
 msgstr "接收日期:"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:124
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:124
 msgid "Originating Station:"
 msgstr "發起台站:"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:129
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:129
 #, fuzzy
 msgid "PORT"
 msgstr "Priority"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:143
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:143
 msgid "High-Resolution Raster Preview"
 msgstr "高解析度光柵預覽"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:144
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:144
 msgid "Device Line:"
 msgstr "裝置線路:"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:151
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:151
 msgid "Download Original Document"
 msgstr "下載原始文件"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:158
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:158
 msgid "NamiFAX Enterprise Facsimile Engine"
 msgstr "NamiFAX 企業級傳真引擎"
 
-#: /Users/mzc01-search5/nami-fax/avantfax/src/namifax/templates/viewfax.jinja2:159
+#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:159
 #, fuzzy
 msgid "Archive ID:"
 msgstr "檔案櫃"
+
+#: /home/jiho/numfax/src/namifax/views/admin.py:434
+msgid "Cover page template removed successfully"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/views/admin.py:437
+msgid "Failed to remove cover page template"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/views/admin.py:446
+msgid "Cover page template updated successfully"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/views/admin.py:448
+msgid "Failed to update cover page template"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/views/admin.py:454
+msgid "Cover page template registered successfully"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/views/admin.py:458
+msgid "Title and File are required"
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/views/admin.py:893
+msgid "Access denied. Superadmin permission required."
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/views/admin.py:923
+msgid "SMTP Gateway settings saved successfully."
+msgstr ""
+
+#: /home/jiho/numfax/src/namifax/views/auth.py:108
+msgid "Invalid or expired verification code."
+msgstr ""
 
 #~ msgid "High"
 #~ msgstr "High"

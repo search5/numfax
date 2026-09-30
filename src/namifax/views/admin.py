@@ -10,6 +10,7 @@ from avantfax.services.categories import FaxPDFCategory
 from avantfax.services.covers import Covers
 from avantfax.services.did import DIDRouting
 from avantfax.services.dynconf import DynamicConfig
+from namifax.i18n import _
 
 def get_all_admin_users() -> list[dict[str, Any]]:
     """Retrieve users directly from database."""
@@ -430,10 +431,10 @@ def admin_covers_view(request):
 
         if request.params.get("delete") and cid:
             if cv.delete_cover(cid):
-                message = "Cover page template removed successfully"
+                message = _("Cover page template removed successfully")
                 selected_id = None
             else:
-                error = cv.error or "Failed to remove cover page template"
+                error = cv.error or _("Failed to remove cover page template")
         elif cid and (request.params.get("save") or not request.params.get("create")):
             title = request.params.get("title", "").strip()
             if cv.load_by_id(cid):
@@ -442,19 +443,19 @@ def admin_covers_view(request):
                 filename = request.params.get("file", "").strip()
                 if filename:
                     cv.set_file(filename)
-                message = "Cover page template updated successfully"
+                message = _("Cover page template updated successfully")
             else:
-                error = cv.error or "Failed to update cover page template"
+                error = cv.error or _("Failed to update cover page template")
         elif request.params.get("create") or not cid:
             title = request.params.get("title", "").strip()
             filename = request.params.get("file", "").strip()
             if title and filename:
                 if cv.create(title, filename):
-                    message = "Cover page template registered successfully"
+                    message = _("Cover page template registered successfully")
                 else:
                     error = cv.error
             else:
-                error = "Title and File are required"
+                error = _("Title and File are required")
 
     covers = cv.list_all() or [
         {"cover_id": 1, "title": "standard", "file": "standard.ps"},
@@ -889,7 +890,7 @@ def admin_smtp_view(request):
         is_admin = bool(session.get("is_superadmin") or session.get("is_admin"))
 
     if not is_admin:
-        raise HTTPForbidden("Access denied. Superadmin permission required.")
+        raise HTTPForbidden(_("Access denied. Superadmin permission required."))
 
     db = getattr(request, "db", None)
     db_engine = getattr(request, "db_engine", None)
@@ -919,7 +920,7 @@ def admin_smtp_view(request):
         if action == "save":
             try:
                 service.save_settings(params)
-                message = "SMTP Gateway settings saved successfully."
+                message = _("SMTP Gateway settings saved successfully.")
                 loc = "/admin/smtp"
                 if hasattr(request, "route_url"):
                     try:
