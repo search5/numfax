@@ -46,7 +46,7 @@
             <span class="font-bold text-white text-sm tracking-tight">NamiFAX</span>
             <span class="text-[9px] uppercase tracking-wider font-mono font-bold px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30">Admin</span>
           </div>
-          <p class="text-[11px] text-slate-400 font-mono mt-0.5 leading-none">Control Panel</p>
+          <p class="text-[11px] text-slate-400 font-mono mt-0.5 leading-none">{{ _('Control Panel') }}</p>
         </div>
       </a>
     </div>
@@ -58,9 +58,9 @@
           <svg class="w-4 h-4 text-slate-400 group-hover:text-blue-400 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          <span>User Portal</span>
+          <span>{{ _('User Portal') }}</span>
         </span>
-        <span class="text-[10px] text-slate-400 font-normal">Inbox &rarr;</span>
+        <span class="text-[10px] text-slate-400 font-normal">{{ _('Inbox') }} &rarr;</span>
       </a>
     </div>
 
@@ -102,7 +102,7 @@
       
       <!-- Group 1: General / Overview -->
       <div>
-        <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Overview</p>
+        <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">{{ _('Overview') }}</p>
         <a href="/admin"
            class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium transition
                   {% if current_admin_tab == 'dashboard' %}bg-blue-600/15 text-blue-400 border border-blue-500/30 font-semibold{% else %}text-slate-300 hover:text-white hover:bg-slate-800/80{% endif %}">
@@ -115,7 +115,7 @@
 
       <!-- Group 2: Access & Accounts -->
       <div>
-        <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Access Control</p>
+        <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">{{ _('Access Control') }}</p>
         <a href="/admin/users"
            class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium transition
                   {% if current_admin_tab == 'users' %}bg-blue-600/15 text-blue-400 border border-blue-500/30 font-semibold{% else %}text-slate-300 hover:text-white hover:bg-slate-800/80{% endif %}">
@@ -128,7 +128,7 @@
 
       <!-- Group 3: Hardware & Modems -->
       <div>
-        <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Hardware &amp; Lines</p>
+        <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">{{ _('Hardware & Lines') }}</p>
         <a href="/admin/modems"
            class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium transition
                   {% if current_admin_tab == 'modems' %}bg-blue-600/15 text-blue-400 border border-blue-500/30 font-semibold{% else %}text-slate-300 hover:text-white hover:bg-slate-800/80{% endif %}">
@@ -141,7 +141,7 @@
 
       <!-- Group 4: Inbound Routing Rules -->
       <div class="space-y-1">
-        <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Inbound Routing</p>
+        <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">{{ _('Inbound Routing') }}</p>
         <a href="/admin/did"
            class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium transition
                   {% if current_admin_tab == 'did' %}bg-blue-600/15 text-blue-400 border border-blue-500/30 font-semibold{% else %}text-slate-300 hover:text-white hover:bg-slate-800/80{% endif %}">
@@ -156,7 +156,7 @@
           <svg class="w-4 h-4 text-slate-400 {% if current_admin_tab == 'fax2email' %}text-blue-400{% endif %}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
           </svg>
-          <span>Fax to Email</span>
+          <span>{{ _('Fax to Email') }}</span>
         </a>
         <a href="/admin/barcodes"
            class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium transition
@@ -170,7 +170,7 @@
 
       <!-- Group 5: Content & Classification -->
       <div class="space-y-1">
-        <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Content &amp; Templates</p>
+        <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">{{ _('Content & Templates') }}</p>
         <a href="/admin/categories"
            class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium transition
                   {% if current_admin_tab == 'categories' %}bg-blue-600/15 text-blue-400 border border-blue-500/30 font-semibold{% else %}text-slate-300 hover:text-white hover:bg-slate-800/80{% endif %}">
@@ -191,7 +191,7 @@
 
       <!-- Group 6: Security & System -->
       <div class="space-y-1">
-        <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Security &amp; System</p>
+        <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">{{ _('Security & System') }}</p>
         <a href="/admin/dynconf"
            class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium transition
                   {% if current_admin_tab == 'dynconf' %}bg-blue-600/15 text-blue-400 border border-blue-500/30 font-semibold{% else %}text-slate-300 hover:text-white hover:bg-slate-800/80{% endif %}">
@@ -233,7 +233,7 @@
         </div>
       </div>
       <a href="/logout" class="px-2.5 py-1 rounded bg-slate-800/80 hover:bg-red-500/20 text-slate-400 hover:text-red-400 border border-slate-700 font-medium transition text-[11px]">
-        Logout
+        {{ _('Logout') }}
       </a>
     </div>
 
@@ -249,20 +249,20 @@
       
       <!-- Breadcrumb -->
       <div class="flex items-center gap-2 text-xs">
-        <a href="/admin" class="text-slate-400 hover:text-slate-200 transition font-medium">Admin Control Panel</a>
+        <a href="/admin" class="text-slate-400 hover:text-slate-200 transition font-medium">{{ _('Admin Control Panel') }}</a>
         <span class="text-slate-400">/</span>
         <span class="font-semibold text-white capitalize">
-          {% if current_admin_tab == 'dashboard' %}Dashboard
-          {% elif current_admin_tab == 'users' %}User Accounts
-          {% elif current_admin_tab == 'modems' %}Fax Modems
-          {% elif current_admin_tab == 'did' %}DID Routing
-          {% elif current_admin_tab == 'categories' %}Fax Categories
-          {% elif current_admin_tab == 'covers' %}Cover Pages
-          {% elif current_admin_tab == 'barcodes' %}Barcode Routing
-          {% elif current_admin_tab == 'dynconf' %}Dynamic Configuration (Blacklist)
-          {% elif current_admin_tab == 'fax2email' %}Fax to Email
-          {% elif current_admin_tab == 'syslog' %}System Audit Logs
-          {% elif current_admin_tab == 'sysfunc' %}System Functions
+          {% if current_admin_tab == 'dashboard' %}{{ _('Dashboard') }}
+          {% elif current_admin_tab == 'users' %}{{ _('User Accounts') }}
+          {% elif current_admin_tab == 'modems' %}{{ _('Fax Modems') }}
+          {% elif current_admin_tab == 'did' %}{{ _('DID Routing') }}
+          {% elif current_admin_tab == 'categories' %}{{ _('Fax Categories') }}
+          {% elif current_admin_tab == 'covers' %}{{ _('Cover Pages') }}
+          {% elif current_admin_tab == 'barcodes' %}{{ _('Barcode Routing') }}
+          {% elif current_admin_tab == 'dynconf' %}{{ _('Blacklist (DynConf)') }}
+          {% elif current_admin_tab == 'fax2email' %}{{ _('Fax to Email') }}
+          {% elif current_admin_tab == 'syslog' %}{{ _('System Audit Logs') }}
+          {% elif current_admin_tab == 'sysfunc' %}{{ _('System Functions') }}
           {% else %}{{ current_admin_tab }}
           {% endif %}
         </span>
@@ -272,7 +272,7 @@
       <div class="hidden sm:flex items-center gap-3">
         <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] font-semibold text-emerald-400">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span>Appliance Engine Online</span>
+          <span>{{ _('Appliance Engine Online') }}</span>
         </div>
 
         <div class="flex items-center gap-1.5 text-xs">

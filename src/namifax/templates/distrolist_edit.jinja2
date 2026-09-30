@@ -15,15 +15,15 @@
       </div>
       <div>
         <h2 class="text-base font-bold text-slate-900 tracking-tight">
-          {% if selected_list %}Edit Distribution List - {{ selected_list.listname }}{% else %}Create Distribution List{% endif %}
+          {% if selected_list %}{{ _('Edit Distribution List') }} - {{ selected_list.listname }}{% else %}{{ _('Create Distribution List') }}{% endif %}
         </h2>
-        <p class="text-xs text-slate-500">Configure broadcast list parameters and recipient group members.</p>
+        <p class="text-xs text-slate-500">{{ _('Configure broadcast list parameters and recipient group members.') }}</p>
       </div>
     </div>
     
     <div class="flex items-center space-x-2">
       <a href="/distrolist" class="px-3.5 py-1.5 bg-white hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-semibold border border-slate-300 shadow-2xs transition">
-        &larr; Back to Lists
+        &larr; {{ _('Back to Lists') }}
       </a>
     </div>
   </div>
@@ -38,19 +38,19 @@
     <div class="bg-white border border-slate-200/90 rounded-xl p-5 shadow-xs space-y-4">
       <div class="flex items-center space-x-2 border-b border-slate-100 pb-3">
         <span class="w-2 h-2 rounded-full bg-sky-600"></span>
-        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Distribution List Profile</h3>
+        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">{{ _('Distribution List Profile') }}</h3>
       </div>
 
       <div>
-        <label for="listname" class="block font-semibold text-slate-700 text-xs mb-1.5">List Name *</label>
+        <label for="listname" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('List Name') }} *</label>
         <input type="text" name="listname" id="listname" required value="{{ selected_list.listname if selected_list else '' }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="e.g. Finance Operations" />
       </div>
 
       {% if selected_list %}
         <div class="space-y-2 pt-2">
           <div class="flex items-center justify-between">
-            <span class="font-bold text-slate-700 uppercase tracking-wider text-[11px]">Enrolled Members ({{ selected_list.members|length }})</span>
-            <span class="text-[11px] font-mono text-slate-400">List ID: #{{ selected_list.dl_id }}</span>
+            <span class="font-bold text-slate-700 uppercase tracking-wider text-[11px]">{{ _('Enrolled Members') }} ({{ selected_list.members|length }})</span>
+            <span class="text-[11px] font-mono text-slate-400">{{ _('List ID:') }} #{{ selected_list.dl_id }}</span>
           </div>
           <div class="border border-slate-200/80 rounded-xl divide-y divide-slate-100 max-h-48 overflow-y-auto bg-slate-50/30">
             {% for m in selected_list.members %}
@@ -59,7 +59,7 @@
                 <span class="text-slate-500 font-mono text-[11px]">{{ m.faxnumber }}</span>
               </div>
             {% else %}
-              <div class="p-4 text-center text-slate-400">No contacts in this list.</div>
+              <div class="p-4 text-center text-slate-400">{{ _('No contacts in this list.') }}</div>
             {% endfor %}
           </div>
         </div>
@@ -71,20 +71,20 @@
       {% if selected_list %}
         <div class="flex items-center justify-between">
           <button type="submit" name="delete" value="1" class="px-5 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-lg font-bold text-xs transition" onclick="return confirm('Are you sure you want to delete this distribution list?');">
-            Delete
+            {{ _('Delete') }}
           </button>
           <div class="space-x-3">
-            <a href="/distrolist" class="px-5 py-2.5 bg-slate-100 text-slate-700 rounded-lg font-semibold hover:bg-slate-200 transition">Cancel</a>
+            <a href="/distrolist" class="px-5 py-2.5 bg-slate-100 text-slate-700 rounded-lg font-semibold hover:bg-slate-200 transition">{{ _('Cancel') }}</a>
             <button type="submit" name="save" value="1" class="px-6 py-2.5 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold shadow-2xs transition">
-              Save
+              {{ _('Save') }}
             </button>
           </div>
         </div>
       {% else %}
         <div class="flex items-center justify-end space-x-3">
-          <a href="/distrolist" class="px-5 py-2.5 bg-slate-100 text-slate-700 rounded-lg font-semibold hover:bg-slate-200 transition">Cancel</a>
+          <a href="/distrolist" class="px-5 py-2.5 bg-slate-100 text-slate-700 rounded-lg font-semibold hover:bg-slate-200 transition">{{ _('Cancel') }}</a>
           <button type="submit" name="save" value="1" class="px-6 py-2.5 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold shadow-2xs transition">
-            Save
+            {{ _('Save') }}
           </button>
         </div>
       {% endif %}

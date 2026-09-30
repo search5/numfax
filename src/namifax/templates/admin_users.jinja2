@@ -14,13 +14,13 @@
         </svg>
       </div>
       <div>
-        <h2 class="text-base font-bold text-white tracking-tight">User Accounts</h2>
-        <p class="text-xs text-slate-400">Manage system operator credentials, access permissions, and route mapping</p>
+        <h2 class="text-base font-bold text-white tracking-tight">{{ _('User Accounts') }}</h2>
+        <p class="text-xs text-slate-400">{{ _('Manage system operator credentials, access permissions, and route mapping') }}</p>
       </div>
     </div>
 
     <a href="#user-form" class="inline-flex items-center space-x-1.5 px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg text-xs font-bold shadow-2xs transition">
-      <span>+ Create New User</span>
+      <span>+ {{ _('Create New User') }}</span>
     </a>
   </div>
 
@@ -30,12 +30,12 @@
       <table class="w-full text-xs text-left border-collapse">
         <thead>
           <tr class="bg-slate-900 border-b border-slate-800 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-            <th scope="col" class="py-3 px-4">Username</th>
-            <th scope="col" class="py-3 px-4">Name</th>
-            <th scope="col" class="py-3 px-4">Email</th>
-            <th scope="col" class="py-3 px-3 text-center">Superuser</th>
-            <th scope="col" class="py-3 px-3 text-center">Admin</th>
-            <th scope="col" class="py-3 px-4 text-right">Actions</th>
+            <th scope="col" class="py-3 px-4">{{ _('Username') }}</th>
+            <th scope="col" class="py-3 px-4">{{ _('Name') }}</th>
+            <th scope="col" class="py-3 px-4">{{ _('Email') }}</th>
+            <th scope="col" class="py-3 px-3 text-center">{{ _('Superuser') }}</th>
+            <th scope="col" class="py-3 px-3 text-center">{{ _('Admin') }}</th>
+            <th scope="col" class="py-3 px-4 text-right">{{ _('Actions') }}</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-800/60 text-slate-300">
@@ -50,21 +50,21 @@
               </td>
               <td class="py-3 px-3 text-center">
                 {% if u.superuser %}
-                  <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-800">YES</span>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-800">{{ _('YES') }}</span>
                 {% else %}
-                  <span class="text-slate-600 font-mono text-[11px]">NO</span>
+                  <span class="text-slate-600 font-mono text-[11px]">{{ _('NO') }}</span>
                 {% endif %}
               </td>
               <td class="py-3 px-3 text-center">
                 {% if u.is_admin %}
-                  <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-sky-950 text-sky-300 border border-sky-800">YES</span>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-sky-950 text-sky-300 border border-sky-800">{{ _('YES') }}</span>
                 {% else %}
-                  <span class="text-slate-600 font-mono text-[11px]">NO</span>
+                  <span class="text-slate-600 font-mono text-[11px]">{{ _('NO') }}</span>
                 {% endif %}
               </td>
               <td class="py-3 px-4 text-right whitespace-nowrap">
                 <a href="/admin/users?uid={{ u.uid }}" class="inline-flex items-center px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-sky-400 rounded-lg text-xs font-semibold border border-slate-700 transition">
-                  Edit
+                  {{ _('Edit') }}
                 </a>
               </td>
             </tr>
@@ -79,7 +79,7 @@
     <div class="border-b border-slate-800 pb-3 flex items-center space-x-2">
       <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
       <h3 class="text-xs font-bold text-white uppercase tracking-wider">
-        {% if selected_user and selected_user.uid %}Configure User: {{ selected_user.username }}{% else %}Create New User{% endif %}
+        {% if selected_user and selected_user.uid %}{{ _('Configure User:') }} {{ selected_user.username }}{% else %}{{ _('Create New User') }}{% endif %}
       </h3>
     </div>
 
@@ -88,45 +88,45 @@
       <!-- Primary Credentials -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label for="name" class="block font-semibold text-slate-300 text-xs mb-1.5">Full Name *</label>
+          <label for="name" class="block font-semibold text-slate-300 text-xs mb-1.5">{{ _('Full Name') }} *</label>
           <input type="text" name="name" id="name" value="{{ selected_user.name or '' }}" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition" />
         </div>
         <div>
-          <label for="username" class="block font-semibold text-slate-300 text-xs mb-1.5">Username *</label>
+          <label for="username" class="block font-semibold text-slate-300 text-xs mb-1.5">{{ _('Username') }} *</label>
           <input type="text" name="username" id="username" value="{{ selected_user.username or '' }}" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white font-mono focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition" />
         </div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label for="password" class="block font-semibold text-slate-300 text-xs mb-1.5">Password</label>
+          <label for="password" class="block font-semibold text-slate-300 text-xs mb-1.5">{{ _('Password') }}</label>
           <input type="password" name="password" id="password" placeholder="{% if selected_user.username %}Leave empty to keep current{% else %}Required for new user{% endif %}" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition" />
         </div>
         <div>
-          <label for="email" class="block font-semibold text-slate-300 text-xs mb-1.5">Email Address *</label>
+          <label for="email" class="block font-semibold text-slate-300 text-xs mb-1.5">{{ _('Email Address') }} *</label>
           <input type="email" name="email" id="email" value="{{ selected_user.email or '' }}" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white font-mono focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition" />
         </div>
       </div>
 
       <!-- Permission Checkboxes (Sequence: is_admin, superuser, can_del, any_modem) -->
       <div class="pt-3 border-t border-slate-800">
-        <span class="block font-bold text-slate-400 uppercase text-[11px] tracking-wider mb-2.5">Permissions &amp; Capabilities</span>
+        <span class="block font-bold text-slate-400 uppercase text-[11px] tracking-wider mb-2.5">{{ _('Permissions & Capabilities') }}</span>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           <label class="flex items-center space-x-2.5 p-3 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-slate-700 transition">
             <input type="checkbox" name="is_admin" value="1" {% if selected_user.is_admin %}checked{% endif %} class="rounded border-slate-700 bg-slate-800 text-sky-600 focus:ring-sky-500 w-4 h-4" />
-            <span class="font-medium text-slate-200">Administrator Console</span>
+            <span class="font-medium text-slate-200">{{ _('Administrator Console') }}</span>
           </label>
           <label class="flex items-center space-x-2.5 p-3 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-slate-700 transition">
             <input type="checkbox" name="superuser" value="1" {% if selected_user.superuser %}checked{% endif %} class="rounded border-slate-700 bg-slate-800 text-sky-600 focus:ring-sky-500 w-4 h-4" />
-            <span class="font-medium text-slate-200">Superuser Rights</span>
+            <span class="font-medium text-slate-200">{{ _('Superuser Rights') }}</span>
           </label>
           <label class="flex items-center space-x-2.5 p-3 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-slate-700 transition">
             <input type="checkbox" name="can_del" value="1" {% if selected_user.can_del %}checked{% endif %} class="rounded border-slate-700 bg-slate-800 text-sky-600 focus:ring-sky-500 w-4 h-4" />
-            <span class="font-medium text-slate-200">Can Delete Faxes</span>
+            <span class="font-medium text-slate-200">{{ _('Can Delete Faxes') }}</span>
           </label>
           <label class="flex items-center space-x-2.5 p-3 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer hover:border-slate-700 transition">
             <input type="checkbox" name="any_modem" value="1" {% if selected_user.any_modem %}checked{% endif %} class="rounded border-slate-700 bg-slate-800 text-sky-600 focus:ring-sky-500 w-4 h-4" />
-            <span class="font-medium text-slate-200">Send on Any Modem</span>
+            <span class="font-medium text-slate-200">{{ _('Send on Any Modem') }}</span>
           </label>
         </div>
       </div>
@@ -136,7 +136,7 @@
         
         <!-- DID Routes -->
         <fieldset class="border border-slate-800 rounded-xl p-4 bg-slate-900">
-          <legend class="px-2 font-bold text-slate-300 text-[11px] uppercase tracking-wider">DID Routes</legend>
+          <legend class="px-2 font-bold text-slate-300 text-[11px] uppercase tracking-wider">{{ _('DID Routes') }}</legend>
           <div class="space-y-2 max-h-44 overflow-y-auto pt-1">
             {% for route in did_routes %}
               <label class="flex items-center space-x-2.5 cursor-pointer text-slate-300 hover:text-white">
@@ -149,7 +149,7 @@
 
         <!-- Fax Lines (Modems) -->
         <fieldset class="border border-slate-800 rounded-xl p-4 bg-slate-900">
-          <legend class="px-2 font-bold text-slate-300 text-[11px] uppercase tracking-wider">Fax Lines</legend>
+          <legend class="px-2 font-bold text-slate-300 text-[11px] uppercase tracking-wider">{{ _('Fax Lines') }}</legend>
           <div class="space-y-2 max-h-44 overflow-y-auto pt-1">
             {% for modem in modem_devices %}
               <label class="flex items-center space-x-2.5 cursor-pointer text-slate-300 hover:text-white">
@@ -162,7 +162,7 @@
 
         <!-- Categories -->
         <fieldset class="border border-slate-800 rounded-xl p-4 bg-slate-900">
-          <legend class="px-2 font-bold text-slate-300 text-[11px] uppercase tracking-wider">Categories</legend>
+          <legend class="px-2 font-bold text-slate-300 text-[11px] uppercase tracking-wider">{{ _('Categories') }}</legend>
           <div class="space-y-2 max-h-44 overflow-y-auto pt-1">
             {% for cat in categories %}
               <label class="flex items-center space-x-2.5 cursor-pointer text-slate-300 hover:text-white">
@@ -183,19 +183,19 @@
       <!-- Submit / Cancel -->
       <div class="pt-4 border-t border-slate-800 flex items-center justify-between">
         {% if selected_user and selected_user.uid %}
-          <button type="submit" name="delete" value="1" class="px-4 py-2 bg-rose-900 hover:bg-rose-800 text-white rounded-lg font-bold text-xs transition" onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
+          <button type="submit" name="delete" value="1" class="px-4 py-2 bg-rose-900 hover:bg-rose-800 text-white rounded-lg font-bold text-xs transition" onclick="return confirm('Are you sure you want to delete this user?');">{{ _('Delete') }}</button>
           <div class="space-x-3">
-            <a href="/admin/users" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg font-semibold text-xs transition">Cancel</a>
+            <a href="/admin/users" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg font-semibold text-xs transition">{{ _('Cancel') }}</a>
             <button type="submit" name="save" value="1" class="px-6 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold text-xs shadow-2xs transition">
-              Save
+              {{ _('Save') }}
             </button>
           </div>
         {% else %}
           <div></div>
           <div class="space-x-3">
-            <a href="/admin/users" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg font-semibold text-xs transition">Cancel</a>
+            <a href="/admin/users" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg font-semibold text-xs transition">{{ _('Cancel') }}</a>
             <button type="submit" name="create" value="1" class="px-6 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold text-xs shadow-2xs transition">
-              Save
+              {{ _('Save') }}
             </button>
           </div>
         {% endif %}

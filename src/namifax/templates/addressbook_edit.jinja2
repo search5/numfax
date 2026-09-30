@@ -15,15 +15,15 @@
       </div>
       <div>
         <h2 class="text-base font-bold text-slate-900 tracking-tight">
-          {% if company and company.company %}Edit Company - {{ company.company }}{% else %}Add New Company{% endif %}
+          {% if company and company.company %}{{ _('Edit Company') }} - {{ company.company }}{% else %}{{ _('Add New Company') }}{% endif %}
         </h2>
-        <p class="text-xs text-slate-500">Configure corporate contact identity and transmission routing defaults.</p>
+        <p class="text-xs text-slate-500">{{ _('Configure corporate contact identity and transmission routing defaults.') }}</p>
       </div>
     </div>
     
     <div class="flex items-center space-x-2">
       <a href="/addressbook" class="px-3.5 py-1.5 bg-white hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-semibold border border-slate-300 shadow-2xs transition">
-        &larr; Back to Contacts
+        &larr; {{ _('Back to Contacts') }}
       </a>
     </div>
   </div>
@@ -39,22 +39,22 @@
     <div class="bg-white border border-slate-200/90 rounded-xl p-5 shadow-xs space-y-4">
       <div class="flex items-center space-x-2 border-b border-slate-100 pb-3">
         <span class="w-2 h-2 rounded-full bg-sky-600"></span>
-        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Primary Company Profile</h3>
+        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">{{ _('Primary Company Profile') }}</h3>
       </div>
 
       <div>
-        <label for="company" class="block font-semibold text-slate-700 text-xs mb-1.5">Company Name *</label>
+        <label for="company" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Company Name') }} *</label>
         <input type="text" name="company" id="company" value="{{ company.company or '' }}" required class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="e.g. Acme Corporation" />
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label for="faxnumber" class="block font-semibold text-slate-700 text-xs mb-1.5">Fax Number</label>
+          <label for="faxnumber" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Fax Number') }}</label>
           <input type="text" name="faxnumber" id="faxnumber" value="{{ company.faxnumber or '' }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 font-mono bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="+1-555-0199" />
         </div>
 
         <div>
-          <label for="email" class="block font-semibold text-slate-700 text-xs mb-1.5">Email Address</label>
+          <label for="email" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Email Address') }}</label>
           <input type="email" name="email" id="email" value="{{ company.email or '' }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="contact@company.com" />
         </div>
       </div>
@@ -64,42 +64,42 @@
     <div class="bg-white border border-slate-200/90 rounded-xl p-5 shadow-xs space-y-4">
       <div class="flex items-center space-x-2 border-b border-slate-100 pb-3">
         <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
-        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Recipient Contact &amp; Physical Address</h3>
+        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">{{ _('Recipient Contact & Physical Address') }}</h3>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label for="to_person" class="block font-semibold text-slate-700 text-xs mb-1.5">Attention Person</label>
+          <label for="to_person" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Attention Person') }}</label>
           <input type="text" name="to_person" id="to_person" value="{{ company.to_person or '' }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="John Doe" />
         </div>
 
         <div>
-          <label for="to_voicenumber" class="block font-semibold text-slate-700 text-xs mb-1.5">Voice Telephone</label>
+          <label for="to_voicenumber" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Voice Telephone') }}</label>
           <input type="text" name="to_voicenumber" id="to_voicenumber" value="{{ company.to_voicenumber or '' }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 font-mono bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="+1-555-0100" />
         </div>
 
         <div class="md:col-span-2">
-          <label for="to_address" class="block font-semibold text-slate-700 text-xs mb-1.5">Street Address</label>
+          <label for="to_address" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Street Address') }}</label>
           <input type="text" name="to_address" id="to_address" value="{{ company.to_address or '' }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="123 Business Boulevard" />
         </div>
 
         <div>
-          <label for="to_city" class="block font-semibold text-slate-700 text-xs mb-1.5">City / Postal Region</label>
+          <label for="to_city" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('City / Postal Region') }}</label>
           <input type="text" name="to_city" id="to_city" value="{{ company.to_city or '' }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="Metropolis" />
         </div>
 
         <div>
-          <label for="category" class="block font-semibold text-slate-700 text-xs mb-1.5">Category Tag</label>
+          <label for="category" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Category Tag') }}</label>
           <select name="category" id="category" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition">
-            <option value="">General</option>
-            <option value="invoices" {% if company.category == 'invoices' %}selected{% endif %}>Invoices &amp; Billing</option>
-            <option value="legal" {% if company.category == 'legal' %}selected{% endif %}>Legal</option>
+            <option value="">{{ _('General') }}</option>
+            <option value="invoices" {% if company.category == 'invoices' %}selected{% endif %}>{{ _('Invoices & Billing') }}</option>
+            <option value="legal" {% if company.category == 'legal' %}selected{% endif %}>{{ _('Legal') }}</option>
           </select>
         </div>
       </div>
 
       <div>
-        <label for="description" class="block font-semibold text-slate-700 text-xs mb-1.5">Description / Internal Notes</label>
+        <label for="description" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Description / Internal Notes') }}</label>
         <input type="text" name="description" id="description" value="{{ company.description or '' }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="Optional notes regarding this contact" />
       </div>
     </div>
@@ -109,20 +109,20 @@
       {% if company and (company.id or company.company_id) %}
         <div class="flex items-center justify-between">
           <button type="submit" name="delete" value="1" class="px-5 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-lg font-bold text-xs transition" onclick="return confirm('Are you sure you want to delete this company?');">
-            Delete
+            {{ _('Delete') }}
           </button>
           <div class="space-x-3">
-            <a href="/addressbook" class="px-5 py-2.5 bg-slate-100 text-slate-700 rounded-lg font-semibold hover:bg-slate-200 transition">Cancel</a>
+            <a href="/addressbook" class="px-5 py-2.5 bg-slate-100 text-slate-700 rounded-lg font-semibold hover:bg-slate-200 transition">{{ _('Cancel') }}</a>
             <button type="submit" name="save" value="1" class="px-6 py-2.5 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold shadow-2xs transition">
-              Save
+              {{ _('Save') }}
             </button>
           </div>
         </div>
       {% else %}
         <div class="flex items-center justify-end space-x-3">
-          <a href="/addressbook" class="px-5 py-2.5 bg-slate-100 text-slate-700 rounded-lg font-semibold hover:bg-slate-200 transition">Cancel</a>
+          <a href="/addressbook" class="px-5 py-2.5 bg-slate-100 text-slate-700 rounded-lg font-semibold hover:bg-slate-200 transition">{{ _('Cancel') }}</a>
           <button type="submit" name="save" value="1" class="px-6 py-2.5 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold shadow-2xs transition">
-            Save
+            {{ _('Save') }}
           </button>
         </div>
       {% endif %}

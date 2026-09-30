@@ -10,14 +10,14 @@
   <!-- Page Header -->
   <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
     <div>
-      <h1 class="text-xl font-bold text-slate-900">Inbox</h1>
-      <p class="text-sm text-slate-500 mt-0.5">Received faxes appear here automatically in real time.</p>
+      <h1 class="text-xl font-bold text-slate-900">{{ _('Inbox') }}</h1>
+      <p class="text-sm text-slate-500 mt-0.5">{{ _('Received faxes appear here automatically in real time.') }}</p>
     </div>
     <div class="flex items-center gap-2">
       {% if faxes and faxes|length > 0 %}
       <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 border border-blue-200 text-blue-700 rounded-full text-sm font-semibold">
         <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-        {{ total_faxes or 0 }} Fax{{ 'es' if (total_faxes or 0) != 1 else '' }}
+        {{ total_faxes or 0 }} {{ _('Faxes') if (total_faxes or 0) != 1 else _('Fax') }}
       </span>
       {% endif %}
       <a href="/sendfax"
@@ -25,7 +25,7 @@
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
         </svg>
-        Send Fax
+        {{ _('Send Fax') }}
       </a>
     </div>
   </div>
@@ -36,7 +36,7 @@
   <div class="flex items-center gap-3 flex-wrap">
     <label class="inline-flex items-center gap-2 cursor-pointer text-sm text-slate-700 font-medium select-none">
       <input type="checkbox" id="selectAll" class="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
-      <span>Select All</span>
+      <span>{{ _('Select All') }}</span>
     </label>
     <div class="h-4 w-px bg-slate-300"></div>
     <button type="button"
@@ -44,17 +44,17 @@
       <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
       </svg>
-      Archive Selected
+      {{ _('Archive Selected') }}
     </button>
     <button type="button"
             class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-red-50 border border-slate-200 hover:border-red-200 text-slate-600 hover:text-red-600 rounded-lg text-sm font-medium transition-colors">
       <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
       </svg>
-      Delete Selected
+      {{ _('Delete Selected') }}
     </button>
     <span class="ml-auto text-sm text-slate-400">
-      Showing {{ faxes|length }} of {{ total_faxes or faxes|length }}
+      {{ _('Showing') }} {{ faxes|length }} {{ _('of') }} {{ total_faxes or faxes|length }}
     </span>
   </div>
 
@@ -64,12 +64,12 @@
       <table class="w-full text-left">
         <thead>
           <tr class="border-b border-slate-100 bg-slate-50/80">
-            <th class="py-3 px-4 w-10"><span class="sr-only">Select</span></th>
-            <th class="py-3 px-3 w-16 text-xs font-semibold text-slate-400 uppercase tracking-wider text-center">Preview</th>
-            <th class="py-3 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Sender</th>
-            <th class="py-3 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Received</th>
-            <th class="py-3 px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider text-center">Pages</th>
-            <th class="py-3 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider text-right">Actions</th>
+            <th class="py-3 px-4 w-10"><span class="sr-only">{{ _('Select') }}</span></th>
+            <th class="py-3 px-3 w-16 text-xs font-semibold text-slate-400 uppercase tracking-wider text-center">{{ _('Preview') }}</th>
+            <th class="py-3 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">{{ _('Sender') }}</th>
+            <th class="py-3 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">{{ _('Received') }}</th>
+            <th class="py-3 px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider text-center">{{ _('Pages') }}</th>
+            <th class="py-3 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider text-right">{{ _('Actions') }}</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-100">
@@ -119,7 +119,7 @@
                 <a href="/viewfax?fid={{ fax.id }}"
                    class="inline-flex items-center gap-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-colors shadow-sm">
                   <img src="/static/images/viewfax.png" alt="" class="w-3.5 h-3.5 brightness-[10]" />
-                  View
+                  {{ _('View') }}
                 </a>
 
                 <!-- PDF -->
@@ -133,7 +133,7 @@
                 <a href="/sendfax?refax={{ fax.id }}"
                    class="inline-flex items-center gap-1 px-3 py-1.5 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-medium rounded-lg transition-colors">
                   <img src="/static/images/refax.png" alt="" class="w-3.5 h-3.5" />
-                  Reply
+                  {{ _('Reply') }}
                 </a>
 
                 <!-- More (fixed-position dropdown) -->
@@ -147,28 +147,28 @@
                      data-fax-id="{{ fax.id }}">
                   <a href="/archive/move/{{ fax.id }}"
                      class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
-                    <img src="/static/images/folder.png" alt="" class="w-4 h-4 shrink-0" /> Archive
+                    <img src="/static/images/folder.png" alt="" class="w-4 h-4 shrink-0" /> {{ _('Archive') }}
                   </a>
                   <a href="/email?fid={{ fax.id }}"
                      class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
-                    <img src="/static/images/email.png" alt="" class="w-4 h-4 shrink-0" /> Email Fax
+                    <img src="/static/images/email.png" alt="" class="w-4 h-4 shrink-0" /> {{ _('Email Fax') }}
                   </a>
                   <a href="/note?fid={{ fax.id }}"
                      class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
-                    <img src="/static/images/note.png" alt="" class="w-4 h-4 shrink-0" /> Add Note
+                    <img src="/static/images/note.png" alt="" class="w-4 h-4 shrink-0" /> {{ _('Add Note') }}
                   </a>
                   <a href="/faxes/rotate/{{ fax.id }}"
                      class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
-                    <img src="/static/images/rotate.png" alt="" class="w-4 h-4 shrink-0" /> Rotate
+                    <img src="/static/images/rotate.png" alt="" class="w-4 h-4 shrink-0" /> {{ _('Rotate') }}
                   </a>
                   <a href="/faxes/download/{{ fax.id }}?format=tiff"
                      class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
-                    <img src="/static/images/tiff.png" alt="" class="w-4 h-4 shrink-0" /> Download TIFF
+                    <img src="/static/images/tiff.png" alt="" class="w-4 h-4 shrink-0" /> {{ _('Download TIFF') }}
                   </a>
                   <div class="border-t border-slate-100 mt-1 pt-1">
                     <a href="/delete/{{ fax.id }}"
                        class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors">
-                      <img src="/static/images/remove.png" alt="" class="w-4 h-4 shrink-0" /> Delete
+                      <img src="/static/images/remove.png" alt="" class="w-4 h-4 shrink-0" /> {{ _('Delete') }}
                     </a>
                   </div>
                 </div>
@@ -183,7 +183,7 @@
     <!-- Pagination -->
     <div class="border-t border-slate-100 px-5 py-3 flex items-center justify-between bg-slate-50/50">
       <p class="text-sm text-slate-500">
-        {{ faxes|length }} of {{ total_faxes or faxes|length }} faxes
+        {{ faxes|length }} {{ _('of') }} {{ total_faxes or faxes|length }} {{ _('faxes') }}
       </p>
       <div class="flex items-center gap-1">
         <button class="w-8 h-8 flex items-center justify-center rounded-lg text-sm font-bold bg-blue-600 text-white">1</button>
@@ -201,9 +201,9 @@
             d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
         </svg>
       </div>
-      <h3 class="text-lg font-bold text-slate-800">0 FAXES</h3>
+      <h3 class="text-lg font-bold text-slate-800">{{ _('0 FAXES') }}</h3>
       <p class="text-sm text-slate-500 mt-2 max-w-sm mx-auto">
-        There are no incoming faxes waiting in your inbox. Incoming transmissions will automatically appear here in real time.
+        {{ _('There are no incoming faxes waiting in your inbox. Incoming transmissions will automatically appear here in real time.') }}
       </p>
       <div class="mt-6 flex items-center justify-center gap-3">
         <a href="/sendfax"
@@ -211,38 +211,38 @@
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
           </svg>
-          Send Your First Fax
+          {{ _('Send Your First Fax') }}
         </a>
         <a href="/archive"
            class="inline-flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 rounded-xl text-sm font-semibold transition-colors">
-          Search Archive
+          {{ _('Search Archive') }}
         </a>
       </div>
     </div>
 
     <!-- Getting Started Guide -->
     <div class="px-8 py-6 bg-slate-50/60">
-      <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4">Getting Started with NamiFAX</p>
+      <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4">{{ _('Getting Started with NamiFAX') }}</p>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div class="flex items-start gap-3">
           <div class="w-7 h-7 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center shrink-0">1</div>
           <div>
-            <p class="text-sm font-semibold text-slate-700">Receive Faxes</p>
-            <p class="text-xs text-slate-500 mt-0.5">When someone sends a fax to this system's number, it will appear here automatically.</p>
+            <p class="text-sm font-semibold text-slate-700">{{ _('Receive Faxes') }}</p>
+            <p class="text-xs text-slate-500 mt-0.5">{{ _('When someone sends a fax to this system\'s number, it will appear here automatically.') }}</p>
           </div>
         </div>
         <div class="flex items-start gap-3">
           <div class="w-7 h-7 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center shrink-0">2</div>
           <div>
-            <p class="text-sm font-semibold text-slate-700">Send Faxes</p>
-            <p class="text-xs text-slate-500 mt-0.5">Click <strong>Send Fax</strong> to transmit a PDF or image document to any fax number.</p>
+            <p class="text-sm font-semibold text-slate-700">{{ _('Send Faxes') }}</p>
+            <p class="text-xs text-slate-500 mt-0.5">{{ _('Click Send Fax to transmit a PDF or image document to any fax number.') }}</p>
           </div>
         </div>
         <div class="flex items-start gap-3">
           <div class="w-7 h-7 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center shrink-0">3</div>
           <div>
-            <p class="text-sm font-semibold text-slate-700">Manage Records</p>
-            <p class="text-xs text-slate-500 mt-0.5">Download faxes as PDF, archive them for later, or search all records in the Archive.</p>
+            <p class="text-sm font-semibold text-slate-700">{{ _('Manage Records') }}</p>
+            <p class="text-xs text-slate-500 mt-0.5">{{ _('Download faxes as PDF, archive them for later, or search all records in the Archive.') }}</p>
           </div>
         </div>
       </div>

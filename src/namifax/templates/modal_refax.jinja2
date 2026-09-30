@@ -20,8 +20,8 @@
           </svg>
         </div>
         <div>
-          <h1 class="text-sm font-bold text-slate-900 tracking-tight">Reply to Fax</h1>
-          <p class="text-[11px] text-slate-500">Dispatch quick reply transmission to originating sender</p>
+          <h1 class="text-sm font-bold text-slate-900 tracking-tight">{{ _('Reply to Fax') }}</h1>
+          <p class="text-[11px] text-slate-500">{{ _('Dispatch quick reply transmission to originating sender') }}</p>
         </div>
       </div>
       <button type="button" onclick="window.close()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition">
@@ -34,17 +34,17 @@
     <!-- Modal Form (Strict W35 Sequence Contract) -->
     <form action="/refax" method="post" class="p-6 space-y-4 text-xs">
       <div>
-        <label for="destinations" class="block font-semibold text-slate-700 text-xs mb-1.5">Destination Number *</label>
+        <label for="destinations" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Destination Number') }} *</label>
         <textarea name="destinations" id="destinations" rows="2" required class="w-full border border-slate-300 rounded-lg p-3 bg-slate-50/50 text-slate-900 font-mono text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="+1 555 0199">{{ destinations }}</textarea>
       </div>
 
       <div>
-        <label for="regarding" class="block font-semibold text-slate-700 text-xs mb-1.5">Regarding (Subject)</label>
+        <label for="regarding" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Regarding (Subject)') }}</label>
         <input type="text" name="regarding" id="regarding" value="{{ regarding }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="RE: Transmitted Fax" />
       </div>
 
       <div>
-        <label for="comments" class="block font-semibold text-slate-700 text-xs mb-1.5">Comments</label>
+        <label for="comments" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Comments') }}</label>
         <textarea name="comments" id="comments" rows="3" class="w-full border border-slate-300 rounded-lg p-3 bg-slate-50/50 text-slate-900 text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="Add reply notes or cover page text...">{{ comments }}</textarea>
       </div>
 
@@ -54,10 +54,10 @@
       <!-- Action Buttons (Strict Sequence: Cancel -> Send) -->
       <div class="pt-4 border-t border-slate-100 flex items-center justify-end space-x-2.5">
         <button type="button" onclick="window.close()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-semibold text-xs transition">
-          Cancel
+          {{ _('Cancel') }}
         </button>
         <button type="submit" class="px-5 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold text-xs shadow-2xs transition">
-          Send
+          {{ _('Send') }}
         </button>
       </div>
     </form>

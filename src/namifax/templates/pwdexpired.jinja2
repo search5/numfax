@@ -23,11 +23,11 @@
           </svg>
         </div>
         <div>
-          <h1 class="text-sm font-bold text-m3-dark-on-surface tracking-wide">:: NamiFAX :: Password Expired</h1>
-          <p class="text-[11px] font-mono text-m3-dark-on-surface-variant">Security Credentials Renewal</p>
+          <h1 class="text-sm font-bold text-m3-dark-on-surface tracking-wide">:: NamiFAX :: {{ _('Password Expired') }}</h1>
+          <p class="text-[11px] font-mono text-m3-dark-on-surface-variant">{{ _('Security Credentials Renewal') }}</p>
         </div>
       </div>
-      <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-m3-full bg-amber-950/80 text-amber-300 border border-amber-800/80">Action Required</span>
+      <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-m3-full bg-amber-950/80 text-amber-300 border border-amber-800/80">{{ _('Action Required') }}</span>
     </div>
 
     {% if error %}
@@ -38,32 +38,32 @@
     {% endif %}
 
     <p class="text-xs text-m3-dark-on-surface-variant mb-6 leading-relaxed">
-      Your password has expired or needs to be changed before proceeding. Please enter your old password and choose a new password.
+      {{ _('Your password has expired or needs to be changed before proceeding. Please enter your old password and choose a new password.') }}
     </p>
 
     <!-- Strict Form Contract -->
     <form action="/pwdexpired" method="post" class="space-y-4 text-xs">
       <div>
-        <label for="oldpwd" class="block text-xs font-semibold text-m3-dark-on-surface mb-1.5">Old Password *</label>
+        <label for="oldpwd" class="block text-xs font-semibold text-m3-dark-on-surface mb-1.5">{{ _('Old Password') }} *</label>
         <input type="password" name="oldpwd" id="oldpwd" required class="w-full bg-m3-dark-surface-container-low border border-m3-dark-outline-variant rounded-m3-sm px-3.5 py-2 text-xs text-m3-dark-on-surface focus:outline-none focus:ring-2 focus:ring-m3-dark-primary focus:border-m3-dark-primary transition shadow-inner font-mono" placeholder="Current credentials" />
       </div>
 
       <div>
-        <label for="newpwd" class="block text-xs font-semibold text-m3-dark-on-surface mb-1.5">New Password *</label>
+        <label for="newpwd" class="block text-xs font-semibold text-m3-dark-on-surface mb-1.5">{{ _('New Password') }} *</label>
         <input type="password" name="newpwd" id="newpwd" required class="w-full bg-m3-dark-surface-container-low border border-m3-dark-outline-variant rounded-m3-sm px-3.5 py-2 text-xs text-m3-dark-on-surface focus:outline-none focus:ring-2 focus:ring-m3-dark-primary focus:border-m3-dark-primary transition shadow-inner font-mono" placeholder="New secure passphrase" />
       </div>
 
       <div>
-        <label for="conpwd" class="block text-xs font-semibold text-m3-dark-on-surface mb-1.5">Confirm New Password *</label>
+        <label for="conpwd" class="block text-xs font-semibold text-m3-dark-on-surface mb-1.5">{{ _('Confirm New Password') }} *</label>
         <input type="password" name="conpwd" id="conpwd" required class="w-full bg-m3-dark-surface-container-low border border-m3-dark-outline-variant rounded-m3-sm px-3.5 py-2 text-xs text-m3-dark-on-surface focus:outline-none focus:ring-2 focus:ring-m3-dark-primary focus:border-m3-dark-primary transition shadow-inner font-mono" placeholder="Re-type new passphrase" />
       </div>
 
       <input type="hidden" name="_submit_check" value="1" />
 
       <div class="pt-3 border-t border-m3-dark-outline-variant/40 flex items-center justify-between">
-        <a href="/login" class="text-xs text-m3-dark-on-surface-variant hover:text-m3-dark-on-surface transition">Cancel</a>
+        <a href="/login" class="text-xs text-m3-dark-on-surface-variant hover:text-m3-dark-on-surface transition">{{ _('Cancel') }}</a>
         <button type="submit" class="px-6 py-2.5 bg-m3-dark-primary hover:brightness-110 text-m3-dark-on-primary rounded-m3-full font-bold text-xs shadow-m3-1 transition">
-          Update Password
+          {{ _('Update Password') }}
         </button>
       </div>
     </form>

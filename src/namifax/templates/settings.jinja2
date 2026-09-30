@@ -14,14 +14,14 @@
         </svg>
       </div>
       <div>
-        <h2 class="text-base font-bold text-slate-900 tracking-tight">User Settings</h2>
-        <p class="text-xs text-slate-500">Configure your personal profile, fax station identity, and portal preferences.</p>
+        <h2 class="text-base font-bold text-slate-900 tracking-tight">{{ _('User Settings') }}</h2>
+        <p class="text-xs text-slate-500">{{ _('Configure your personal profile, fax station identity, and portal preferences.') }}</p>
       </div>
     </div>
     
     <div class="flex items-center space-x-2">
       <a href="/inbox" class="px-3.5 py-1.5 bg-white hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-semibold border border-slate-300 shadow-2xs transition">
-        &larr; Return to Inbox
+        &larr; {{ _('Return to Inbox') }}
       </a>
     </div>
   </div>
@@ -51,49 +51,49 @@
     <div class="bg-white border border-slate-200/90 rounded-xl p-5 shadow-xs space-y-4">
       <div class="flex items-center space-x-2 border-b border-slate-100 pb-3">
         <span class="w-2 h-2 rounded-full bg-sky-600"></span>
-        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Personal &amp; Organization Details</h3>
+        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">{{ _('Personal & Organization Details') }}</h3>
       </div>
       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label for="name" class="block font-semibold text-slate-700 text-xs mb-1.5">Full Name *</label>
+          <label for="name" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Full Name') }} *</label>
           <input type="text" name="name" id="name" value="{{ user_profile.name or '' }}" required class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" />
         </div>
 
         <div>
-          <label for="email" class="block font-semibold text-slate-700 text-xs mb-1.5">Email Address *</label>
+          <label for="email" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Email Address') }} *</label>
           <input type="email" name="email" id="email" value="{{ user_profile.email or '' }}" required class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" />
         </div>
 
         <div>
-          <label for="from_company" class="block font-semibold text-slate-700 text-xs mb-1.5">Company Name</label>
+          <label for="from_company" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Company Name') }}</label>
           <input type="text" name="from_company" id="from_company" value="{{ user_profile.from_company or '' }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" />
         </div>
 
         <div>
-          <label for="from_location" class="block font-semibold text-slate-700 text-xs mb-1.5">Office / Location</label>
+          <label for="from_location" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Office / Location') }}</label>
           <input type="text" name="from_location" id="from_location" value="{{ user_profile.from_location or '' }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" />
         </div>
 
         <div>
-          <label for="from_voicenumber" class="block font-semibold text-slate-700 text-xs mb-1.5">Direct Voice Number</label>
+          <label for="from_voicenumber" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Direct Voice Number') }}</label>
           <input type="text" name="from_voicenumber" id="from_voicenumber" value="{{ user_profile.from_voicenumber or '' }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" />
         </div>
 
         <div>
-          <label for="from_faxnumber" class="block font-semibold text-slate-700 text-xs mb-1.5">Direct Fax Number</label>
+          <label for="from_faxnumber" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Direct Fax Number') }}</label>
           <input type="text" name="from_faxnumber" id="from_faxnumber" value="{{ user_profile.from_faxnumber or '' }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" />
         </div>
 
         <div class="md:col-span-2">
-          <label for="user_tsi" class="block font-semibold text-slate-700 text-xs mb-1.5">Transmitting Station ID (TSI)</label>
+          <label for="user_tsi" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Transmitting Station ID (TSI)') }}</label>
           <input type="text" name="user_tsi" id="user_tsi" value="{{ user_profile.user_tsi or '' }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 font-mono bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="e.g. +1 555 123 4567" />
-          <p class="text-[11px] text-slate-400 mt-1">Header identifier imprinted on top of transmitted fax pages.</p>
+          <p class="text-[11px] text-slate-400 mt-1">{{ _('Header identifier imprinted on top of transmitted fax pages.') }}</p>
         </div>
       </div>
 
       <div>
-        <label for="email_sig" class="block font-semibold text-slate-700 text-xs mb-1.5">Email &amp; Fax Notification Signature</label>
+        <label for="email_sig" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Email & Fax Notification Signature') }}</label>
         <textarea name="email_sig" id="email_sig" rows="3" class="w-full border border-slate-300 rounded-lg p-3 bg-slate-50/50 text-slate-900 font-mono text-[11px] focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition">{{ user_profile.email_sig or '' }}</textarea>
       </div>
     </div>
@@ -102,12 +102,12 @@
     <div class="bg-white border border-slate-200/90 rounded-xl p-5 shadow-xs space-y-4">
       <div class="flex items-center space-x-2 border-b border-slate-100 pb-3">
         <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
-        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Portal &amp; Delivery Preferences</h3>
+        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">{{ _('Portal & Delivery Preferences') }}</h3>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <label for="language" class="block font-semibold text-slate-700 text-xs mb-1.5">Display Language</label>
+          <label for="language" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Display Language') }}</label>
           <select name="language" id="language" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition">
             <option value="en" {% if user_profile.language == 'en' %}selected{% endif %}>English (US)</option>
             <option value="ko" {% if user_profile.language == 'ko' %}selected{% endif %}>한국어 (Korean)</option>
@@ -137,7 +137,7 @@
         </div>
 
         <div>
-          <label for="coverpage_id" class="block font-semibold text-slate-700 text-xs mb-1.5">Default Cover Page</label>
+          <label for="coverpage_id" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Default Cover Page') }}</label>
           <select name="coverpage_id" id="coverpage_id" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition">
             <option value="standard" selected>standard</option>
             <option value="urgent">urgent</option>
@@ -145,11 +145,11 @@
         </div>
 
         <div>
-          <label for="faxperpageinbox" class="block font-semibold text-slate-700 text-xs mb-1.5">Faxes Per Page</label>
+          <label for="faxperpageinbox" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Faxes Per Page') }}</label>
           <select name="faxperpageinbox" id="faxperpageinbox" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition">
-            <option value="10">10 faxes</option>
-            <option value="20" selected>20 faxes</option>
-            <option value="50">50 faxes</option>
+            <option value="10">10 {{ _('faxes') }}</option>
+            <option value="20" selected>20 {{ _('faxes') }}</option>
+            <option value="50">50 {{ _('faxes') }}</option>
           </select>
         </div>
       </div>
@@ -159,21 +159,21 @@
     <div class="bg-white border border-slate-200/90 rounded-xl p-5 shadow-xs space-y-4">
       <div class="flex items-center space-x-2 border-b border-slate-100 pb-3">
         <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Change Password</h3>
+        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">{{ _('Change Password') }}</h3>
       </div>
       
       <div>
-        <label for="old_password" class="block font-semibold text-slate-700 text-xs mb-1.5">Current Password</label>
+        <label for="old_password" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Current Password') }}</label>
         <input type="password" name="old_password" id="old_password" class="w-full md:w-80 border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="Enter current password to verify" />
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label for="new_password" class="block font-semibold text-slate-700 text-xs mb-1.5">New Password</label>
+          <label for="new_password" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('New Password') }}</label>
           <input type="password" name="new_password" id="new_password" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="Enter secure new password" />
         </div>
         <div>
-          <label for="confirm_password" class="block font-semibold text-slate-700 text-xs mb-1.5">Confirm New Password</label>
+          <label for="confirm_password" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Confirm New Password') }}</label>
           <input type="password" name="confirm_password" id="confirm_password" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="Re-type new password" />
         </div>
       </div>
@@ -184,9 +184,9 @@
 
     <!-- Form Footer Actions -->
     <div class="pt-4 border-t border-slate-200 flex items-center justify-end space-x-3">
-      <a href="/inbox" class="px-5 py-2.5 bg-slate-100 text-slate-700 rounded-lg font-semibold hover:bg-slate-200 transition">Cancel</a>
+      <a href="/inbox" class="px-5 py-2.5 bg-slate-100 text-slate-700 rounded-lg font-semibold hover:bg-slate-200 transition">{{ _('Cancel') }}</a>
       <button type="submit" class="px-6 py-2.5 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold shadow-2xs transition">
-        Update Settings
+        {{ _('Update Settings') }}
       </button>
     </div>
 

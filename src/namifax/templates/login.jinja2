@@ -40,12 +40,12 @@
       <div class="px-8 py-6 border-b border-slate-100">
         <div class="flex items-center justify-between">
           <div>
-            <h2 class="text-lg font-bold text-slate-900">Sign in</h2>
-            <p class="text-sm text-slate-500 mt-0.5">Enter your credentials to continue.</p>
+            <h2 class="text-lg font-bold text-slate-900">{{ _('Sign in') }}</h2>
+            <p class="text-sm text-slate-500 mt-0.5">{{ _('Enter your credentials to continue.') }}</p>
           </div>
           <div class="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 border border-emerald-200 rounded-full text-xs text-emerald-700 font-medium">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>System Online</span>
+            <span>{{ _('System Online') }}</span>
           </div>
         </div>
       </div>
@@ -65,7 +65,7 @@
 
         <div>
           <label for="username" class="block text-sm font-semibold text-slate-800 mb-2">
-            Username
+            {{ _('Username') }}
           </label>
           <input type="text" name="username" id="username"
                  value="{{ username or '' }}"
@@ -79,10 +79,10 @@
         <div>
           <div class="flex items-center justify-between mb-2">
             <label for="password" class="block text-sm font-semibold text-slate-800">
-              Password
+              {{ _('Password') }}
             </label>
             <a href="/forgot" class="text-sm text-blue-600 hover:text-blue-700 font-medium hover:underline transition-colors">
-              Forgot password?
+              {{ _('Forgot password?') }}
             </a>
           </div>
           <input type="password" name="password" id="password"
@@ -91,7 +91,7 @@
                  class="w-full border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-900 bg-white
                         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
                         transition-shadow shadow-sm placeholder:text-slate-400" />
-          <p class="text-xs text-slate-400 mt-1.5">Contact your system administrator if you need an account.</p>
+          <p class="text-xs text-slate-400 mt-1.5">{{ _('Contact your system administrator if you need an account.') }}</p>
         </div>
 
         <input type="hidden" name="_submit_check" value="1" />
@@ -102,7 +102,7 @@
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
           </svg>
-          Sign In
+          {{ _('Login') }}
         </button>
       </form>
 

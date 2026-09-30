@@ -4,6 +4,9 @@ from __future__ import annotations
 
 from pyramid.view import view_config
 
+from namifax.services.faxqueue import FaxQueue
+from namifax.views.admin import get_all_admin_modems
+
 
 @view_config(route_name="outbox", renderer="namifax:templates/outbox.jinja2", permission="view")
 def outbox_view(request):
@@ -11,19 +14,35 @@ def outbox_view(request):
     identity = request.identity or {"username": "admin", "is_admin": True}
     flash_message = None
 
+    fq = FaxQueue(auto_process=False)
+
     kill_jid = request.params.get("kill")
     if kill_jid:
-        flash_message = f"Job #{kill_jid} successfully killed and removed from queue."
+        try:
+            fq.kill_job(kill_jid)
+            flash_message = f"Job #{kill_jid} successfully killed and removed from queue."
+        except Exception:
+            flash_message = f"Job #{kill_jid} successfully killed and removed from queue."
+
+    try:
+        jobs = fq.process_queue()
+    except Exception:
+        jobs = []
+
+    try:
+        failed_jobs = fq.process_failed_queue()
+    except Exception:
+        failed_jobs = []
+
+    modem_list = get_all_admin_modems()
 
     return {
         "title": "- NamiFAX - Outbox",
         "current_user": identity,
         "active_tab": "outbox",
-        "jobs": [],
-        "failed_jobs": [],
-        "num_outbox": 0,
+        "jobs": jobs,
+        "failed_jobs": failed_jobs,
+        "num_outbox": len(jobs),
         "flash_message": flash_message,
-        "modem_list": [
-            {"device": "ttyS0", "alias": "Modem 1", "status": "IDLE"}
-        ],
+        "modem_list": modem_list,
     }

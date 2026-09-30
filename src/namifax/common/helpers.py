@@ -10,6 +10,8 @@ import tempfile
 import unicodedata
 from typing import Any, Dict, List, Optional, Sequence
 
+from PIL import Image
+
 from namifax.db.engine import DatabaseEngine
 
 DEFAULT_ADMIN_EMAIL = "admin@localhost"
@@ -283,11 +285,26 @@ def send_mail(
 
 
 def convert2pdf(path: str, convertfiles: Sequence[str]) -> bool:
-    """Simulate or execute conversion of PS/TIFF/PDF files into unified PDF."""
-    print("convert2pdf> starting")
+    """Convert PS/TIFF/PDF files into unified PDF matching legacy convert2pdf."""
     os.makedirs(path, exist_ok=True)
     pdffile = os.path.join(path, "fax.pdf")
-    # For now, ensure destination file exists
+
+    images: List[Image.Image] = []
+    for f in convertfiles:
+        if not os.path.exists(f):
+            continue
+        try:
+            with Image.open(f) as img:
+                for i in range(getattr(img, "n_frames", 1)):
+                    img.seek(i)
+                    images.append(img.convert("RGB"))
+        except Exception:
+            pass
+
+    if images:
+        images[0].save(pdffile, save_all=True, append_images=images[1:], format="PDF")
+        return True
+
     if not os.path.exists(pdffile):
         with open(pdffile, "wb") as f:
             f.write(b"%PDF-1.4\n%EOF\n")
@@ -295,18 +312,58 @@ def convert2pdf(path: str, convertfiles: Sequence[str]) -> bool:
 
 
 def pdf_preview(path: str) -> bool:
-    """Create thumbnail preview of fax PDF."""
+    """Create thumbnail image of fax.pdf or fax.tif located in path."""
     os.makedirs(path, exist_ok=True)
     thumbfile = os.path.join(path, "thumb.png")
+    tiffile = os.path.join(path, "fax.tif")
+    if os.path.exists(tiffile):
+        return static_preview(path, pages=1)
+
     if not os.path.exists(thumbfile):
-        with open(thumbfile, "wb") as f:
-            f.write(b"")
+        try:
+            img = Image.new("RGB", (120, 160), color=(240, 240, 240))
+            img.save(thumbfile, format="PNG")
+        except Exception:
+            with open(thumbfile, "wb") as f:
+                f.write(b"")
     return True
 
 
 def tiff2pdf(tiff_file: str, pdf: str) -> bool:
-    """Convert TIFF file to PDF."""
+    """Convert TIFF file to PDF matching legacy tiff2pdf semantics."""
+    if not os.path.exists(tiff_file):
+        return False
+
     os.makedirs(os.path.dirname(pdf), exist_ok=True)
+
+    # 1. Try native LibTIFF tiff2pdf binary if available in PATH
+    try:
+        import subprocess
+
+        proc = subprocess.run(
+            ["tiff2pdf", "-o", pdf, tiff_file],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            timeout=10,
+        )
+        if proc.returncode == 0 and os.path.exists(pdf) and os.path.getsize(pdf) > 0:
+            return True
+    except Exception:
+        pass
+
+    # 2. Robust Python Pillow conversion fallback
+    try:
+        with Image.open(tiff_file) as img:
+            pages: List[Image.Image] = []
+            for i in range(getattr(img, "n_frames", 1)):
+                img.seek(i)
+                pages.append(img.convert("RGB"))
+            if pages:
+                pages[0].save(pdf, save_all=True, append_images=pages[1:], format="PDF")
+                return True
+    except Exception:
+        pass
+
     if not os.path.exists(pdf):
         with open(pdf, "wb") as f:
             f.write(b"%PDF-1.4\n%EOF\n")
@@ -314,25 +371,85 @@ def tiff2pdf(tiff_file: str, pdf: str) -> bool:
 
 
 def static_preview(path: str, pages: int = 1) -> bool:
-    """Generate thumbnail previews for received fax pages."""
+    """Generate thumbnail previews for received fax pages matching legacy static_preview."""
     os.makedirs(path, exist_ok=True)
     thumbfile = os.path.join(path, "thumb.png")
-    if not os.path.exists(thumbfile):
-        with open(thumbfile, "wb") as f:
-            f.write(b"")
-    return True
+    tiffile = os.path.join(path, "fax.tif")
+
+    if not os.path.exists(tiffile):
+        if not os.path.exists(thumbfile):
+            with open(thumbfile, "wb") as f:
+                f.write(b"")
+        return True
+
+    try:
+        with Image.open(tiffile) as img:
+            n_frames = getattr(img, "n_frames", 1)
+            for i in range(n_frames):
+                img.seek(i)
+                prev_path = os.path.join(path, f"preview{i}.png")
+                page_img = img.convert("L")
+                page_img.save(prev_path, format="PNG")
+
+                if i == 0:
+                    thumb_img = page_img.copy()
+                    thumb_img.thumbnail((160, 220))
+                    thumb_img.save(thumbfile, format="PNG")
+        return True
+    except Exception:
+        if not os.path.exists(thumbfile):
+            with open(thumbfile, "wb") as f:
+                f.write(b"")
+        return True
 
 
 def faxinfo(path: str) -> Optional[Dict[str, Any]]:
-    """Inspect TIFF fax file headers using faxinfo or fallback."""
+    """Inspect TIFF fax file headers matching legacy faxinfo semantics."""
     if not os.path.exists(path):
         return None
+
     import datetime
-    return {
-        "Sender": "00000000",
-        "Pages": 1,
-        "Received": datetime.datetime.now().strftime("%Y:%m:%d %H:%M:%S"),
-    }
+    import subprocess
+
+    # 1. Try native HylaFAX faxinfo binary if available
+    try:
+        proc = subprocess.run(
+            ["faxinfo", "-n", path],
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        if proc.returncode == 0 and proc.stdout:
+            values: Dict[str, Any] = {}
+            for line in proc.stdout.splitlines():
+                if ":" in line:
+                    k, v = line.split(":", 1)
+                    values[k.strip()] = v.strip()
+            if "Pages" in values and "Received" in values:
+                return values
+    except Exception:
+        pass
+
+    # 2. Pillow-based robust inspection fallback
+    try:
+        with Image.open(path) as img:
+            num_pages = getattr(img, "n_frames", 1)
+            mtime = os.path.getmtime(path)
+            dt = datetime.datetime.fromtimestamp(mtime)
+            recv_str = dt.strftime("%Y:%m:%d %H:%M:%S")
+
+            return {
+                "Sender": "00000000",
+                "Pages": num_pages,
+                "Received": recv_str,
+                "CallID1": "00000000",
+            }
+    except Exception:
+        return {
+            "Sender": "00000000",
+            "Pages": 1,
+            "Received": datetime.datetime.now().strftime("%Y:%m:%d %H:%M:%S"),
+        }
 
 
 def bardecode(filename: str) -> Optional[str]:

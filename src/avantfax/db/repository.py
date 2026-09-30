@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Any, Generic, TypeVar
 
 from avantfax.db.base import MDBObject
-from avantfax.db.engine import DatabaseEngine
+from avantfax.db.engine import DatabaseEngine, get_default_engine
 from avantfax.db.query import QueryBuilder, SQL_AND
 
 T = TypeVar("T", bound=MDBObject)
@@ -15,7 +15,7 @@ class Repository(Generic[T]):
     """Generic repository managing CRUD and queries for MDBObject entities."""
 
     def __init__(self, model_class: type[T] | str, db: DatabaseEngine | None = None) -> None:
-        self._db = db
+        self._db = db or get_default_engine()
         if isinstance(model_class, str):
             import avantfax.models.entities as ent_mod
 

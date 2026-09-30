@@ -129,7 +129,8 @@ class DistributionList:
         if not self.listdata:
             return []
 
-        return [item for item in self.listdata.split(DL_SEPARATOR) if item]
+        import re
+        return [item.strip() for item in re.split(r"[:;]\s*", self.listdata) if item.strip()]
 
     def add_entries(self, entries: list[str]) -> bool:
         """Add new entries without duplicates to the loaded distribution list."""

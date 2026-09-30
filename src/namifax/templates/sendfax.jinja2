@@ -8,21 +8,21 @@
   <!-- Page Header -->
   <div class="flex items-start justify-between">
     <div>
-      <h1 class="text-xl font-bold text-slate-900">Send Fax</h1>
-      <p class="text-sm text-slate-500 mt-0.5">Fill in the details below and click <strong>Send</strong>.</p>
+      <h1 class="text-xl font-bold text-slate-900">{{ _('Send Fax') }}</h1>
+      <p class="text-sm text-slate-500 mt-0.5">{{ _('Fill in the details below and click Send.') }}</p>
     </div>
     <div class="flex items-center gap-2">
       <a href="/addressbook" class="inline-flex items-center gap-1.5 px-3 py-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 rounded-lg text-sm font-medium transition-colors">
         <svg class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
         </svg>
-        Address Book
+        {{ _('Address Book') }}
       </a>
       <a href="/distrolist" class="inline-flex items-center gap-1.5 px-3 py-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 rounded-lg text-sm font-medium transition-colors">
         <svg class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
         </svg>
-        Distribution Lists
+        {{ _('Distribution Lists') }}
       </a>
     </div>
   </div>
@@ -43,15 +43,15 @@
       <div class="px-5 py-4 border-b border-slate-100 bg-slate-50/60 flex items-center gap-2">
         <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center shrink-0">1</span>
         <div>
-          <h2 class="text-sm font-semibold text-slate-900">Destination &amp; Recipients</h2>
-          <p class="text-xs text-slate-400">Enter the fax number and recipient details.</p>
+          <h2 class="text-sm font-semibold text-slate-900">{{ _('Destination & Recipients') }}</h2>
+          <p class="text-xs text-slate-400">{{ _('Enter the fax number and recipient details.') }}</p>
         </div>
       </div>
 
       <div class="p-5 space-y-4">
         <div>
           <label for="faxnumber" class="block text-sm font-semibold text-slate-800 mb-1">
-            Destination Number <span class="text-red-500">*</span>
+            {{ _('Destination Number') }} <span class="text-red-500">*</span>
           </label>
           <input type="text" name="faxnumber" id="faxnumber"
                  value="{{ form_data.faxnumber or form_data.destinations or '' }}"
@@ -60,15 +60,15 @@
                  class="w-full border border-slate-300 rounded-lg px-4 py-3 text-sm font-mono text-slate-900 bg-white
                         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
           <p class="text-xs text-slate-400 mt-1.5">
-            💡 To send to multiple recipients at once, separate numbers with a comma.
-            Saved contacts are available in the <a href="/addressbook" class="text-blue-600 hover:underline">Address Book</a>.
+            💡 {{ _('To send to multiple recipients at once, separate numbers with a comma.') }}
+            {{ _('Saved contacts are available in the') }} <a href="/addressbook" class="text-blue-600 hover:underline">{{ _('Address Book') }}</a>.
           </p>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label for="to_person" class="block text-sm font-semibold text-slate-800 mb-1">
-              Attention To <span class="text-xs font-normal text-slate-400">optional</span>
+              {{ _('Attention To') }} <span class="text-xs font-normal text-slate-400">{{ _('optional') }}</span>
             </label>
             <input type="text" name="to_person" id="to_person"
                    value="{{ form_data.to_person or '' }}"
@@ -78,7 +78,7 @@
           </div>
           <div>
             <label for="to_company" class="block text-sm font-semibold text-slate-800 mb-1">
-              Company <span class="text-xs font-normal text-slate-400">optional</span>
+              {{ _('Company') }} <span class="text-xs font-normal text-slate-400">{{ _('optional') }}</span>
             </label>
             <input type="text" name="to_company" id="to_company"
                    value="{{ form_data.to_company or '' }}"
@@ -90,7 +90,7 @@
 
         <div>
           <label for="regarding" class="block text-sm font-semibold text-slate-800 mb-1">
-            Subject / Regarding <span class="text-xs font-normal text-slate-400">optional</span>
+            {{ _('Subject / Regarding') }} <span class="text-xs font-normal text-slate-400">{{ _('optional') }}</span>
           </label>
           <input type="text" name="regarding" id="regarding"
                  value="{{ form_data.regarding or '' }}"
@@ -106,8 +106,8 @@
       <div class="px-5 py-4 border-b border-slate-100 bg-slate-50/60 flex items-center gap-2">
         <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center shrink-0">2</span>
         <div>
-          <h2 class="text-sm font-semibold text-slate-900">Document Attachment</h2>
-          <p class="text-xs text-slate-400">Attach the file you want to transmit.</p>
+          <h2 class="text-sm font-semibold text-slate-900">{{ _('Document Attachment') }}</h2>
+          <p class="text-xs text-slate-400">{{ _('Attach the file you want to transmit.') }}</p>
         </div>
       </div>
 
@@ -119,12 +119,12 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
             </svg>
           </div>
-          <p class="text-sm font-semibold text-slate-700 group-hover:text-blue-700 transition-colors" id="file-label">Click to select a file</p>
-          <p class="text-xs text-slate-400 mt-1">Supported: <strong>PDF</strong>, TIFF, PostScript, TXT &nbsp;·&nbsp; Max 10 MB</p>
+          <p class="text-sm font-semibold text-slate-700 group-hover:text-blue-700 transition-colors" id="file-label">{{ _('Click to select a file') }}</p>
+          <p class="text-xs text-slate-400 mt-1">{{ _('Supported: PDF, TIFF, PostScript, TXT · Max 10 MB') }}</p>
           <input type="file" name="file" id="file" class="sr-only" accept=".pdf,.tif,.tiff,.ps,.txt" />
         </label>
         <p class="text-xs text-slate-400 mt-2">
-          💡 PDF is the most commonly used format. Convert Word or Excel files to PDF before attaching.
+          💡 {{ _('PDF is the most commonly used format. Convert Word or Excel files to PDF before attaching.') }}
         </p>
       </div>
     </div>
@@ -135,39 +135,39 @@
         <div class="flex items-center gap-2">
           <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center shrink-0">3</span>
           <div>
-            <h2 class="text-sm font-semibold text-slate-900">Cover Page</h2>
-            <p class="text-xs text-slate-400">Add a cover sheet with sender and recipient info.</p>
+            <h2 class="text-sm font-semibold text-slate-900">{{ _('Cover Page') }}</h2>
+            <p class="text-xs text-slate-400">{{ _('Add a cover sheet with sender and recipient info.') }}</p>
           </div>
         </div>
         <label class="inline-flex items-center gap-2 cursor-pointer">
           <input type="checkbox" name="coverpage" id="coverpage" value="1"
                  {% if form_data.coverpage != '0' %}checked{% endif %}
                  class="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
-          <span class="text-sm text-slate-700">Include Cover Page</span>
+          <span class="text-sm text-slate-700">{{ _('Include Cover Page') }}</span>
         </label>
       </div>
 
       <div class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label for="whichcover" class="block text-sm font-semibold text-slate-800 mb-1">Cover Template</label>
+          <label for="whichcover" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('Cover Template') }}</label>
           <select name="whichcover" id="whichcover"
                   class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white
                          focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm">
-            <option value="standard" {% if form_data.whichcover == 'standard' or not form_data.whichcover %}selected{% endif %}>Standard (Default)</option>
-            <option value="urgent"   {% if form_data.whichcover == 'urgent' %}selected{% endif %}>Urgent</option>
-            <option value="confidential" {% if form_data.whichcover == 'confidential' %}selected{% endif %}>Confidential</option>
+            <option value="standard" {% if form_data.whichcover == 'standard' or not form_data.whichcover %}selected{% endif %}>{{ _('Standard (Default)') }}</option>
+            <option value="urgent"   {% if form_data.whichcover == 'urgent' %}selected{% endif %}>{{ _('Urgent') }}</option>
+            <option value="confidential" {% if form_data.whichcover == 'confidential' %}selected{% endif %}>{{ _('Confidential') }}</option>
           </select>
         </div>
 
         <div>
           <label for="modem" class="block text-sm font-semibold text-slate-800 mb-1">
-            Send via Line
-            <span class="text-xs font-normal text-slate-400">— Auto-select recommended</span>
+            {{ _('Send via Line') }}
+            <span class="text-xs font-normal text-slate-400">— {{ _('Auto-select recommended') }}</span>
           </label>
           <select name="modem" id="modem"
                   class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white
                          focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm">
-            <option value="">Any Available Line (Auto)</option>
+            <option value="">{{ _('Any Available Line (Auto)') }}</option>
             {% for m in modem_list %}
             <option value="{{ m.device }}" {% if form_data.modem == m.device %}selected{% endif %}>
               Line {{ loop.index }} — {{ m.alias or m.device }} [{{ m.status or 'IDLE' }}]
@@ -178,7 +178,7 @@
 
         <div class="sm:col-span-2">
           <label for="comments" class="block text-sm font-semibold text-slate-800 mb-1">
-            Cover Comments <span class="text-xs font-normal text-slate-400">optional</span>
+            {{ _('Cover Comments') }} <span class="text-xs font-normal text-slate-400">{{ _('optional') }}</span>
           </label>
           <textarea name="comments" id="comments" rows="3"
                     placeholder="Notes or message to print on the cover sheet..."
@@ -193,8 +193,8 @@
       <summary class="px-5 py-4 flex items-center justify-between cursor-pointer select-none list-none hover:bg-slate-50 transition-colors">
         <div class="flex items-center gap-2">
           <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-500 text-xs font-bold flex items-center justify-center shrink-0">4</span>
-          <span class="text-sm font-semibold text-slate-700">Advanced Options</span>
-          <span class="text-xs text-slate-400">Priority, retries, notifications</span>
+          <span class="text-sm font-semibold text-slate-700">{{ _('Advanced Options') }}</span>
+          <span class="text-xs text-slate-400">{{ _('Priority, retries, notifications') }}</span>
         </div>
         <svg class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -203,23 +203,23 @@
 
       <div class="border-t border-slate-100 p-5 grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div>
-          <label for="priority" class="block text-sm font-semibold text-slate-800 mb-1">Priority</label>
+          <label for="priority" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('Priority') }}</label>
           <select name="priority" id="priority"
                   class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white
                          focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm">
-            <option value="normal" {% if form_data.priority == 'normal' or not form_data.priority %}selected{% endif %}>Normal</option>
-            <option value="low"    {% if form_data.priority == 'low' %}selected{% endif %}>Low</option>
-            <option value="high"   {% if form_data.priority == 'high' %}selected{% endif %}>High (Urgent)</option>
+            <option value="normal" {% if form_data.priority == 'normal' or not form_data.priority %}selected{% endif %}>{{ _('Normal') }}</option>
+            <option value="low"    {% if form_data.priority == 'low' %}selected{% endif %}>{{ _('Low') }}</option>
+            <option value="high"   {% if form_data.priority == 'high' %}selected{% endif %}>{{ _('High (Urgent)') }}</option>
           </select>
         </div>
 
         <div>
-          <label for="numtries" class="block text-sm font-semibold text-slate-800 mb-1">Max Retries</label>
+          <label for="numtries" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('Max Retries') }}</label>
           <input type="number" name="numtries" id="numtries"
                  value="{{ form_data.numtries or 3 }}" min="1" max="10"
                  class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white
                         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
-          <p class="text-xs text-slate-400 mt-1">Retries automatically on busy signal.</p>
+          <p class="text-xs text-slate-400 mt-1">{{ _('Retries automatically on busy signal.') }}</p>
         </div>
 
         <div class="flex items-end pb-1">
@@ -227,7 +227,7 @@
             <input type="checkbox" name="notify_requeue" id="notify_requeue" value="1"
                    {% if form_data.notify_requeue %}checked{% endif %}
                    class="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
-            <span class="text-sm text-slate-700">Notify on retry</span>
+            <span class="text-sm text-slate-700">{{ _('Notify on retry') }}</span>
           </label>
         </div>
       </div>
@@ -238,14 +238,14 @@
     <!-- Submit -->
     <div class="flex items-center justify-between pt-1">
       <a href="/inbox" class="text-sm text-slate-500 hover:text-slate-700 font-medium transition-colors">
-        ← Cancel &amp; return to Inbox
+        ← {{ _('Cancel & return to Inbox') }}
       </a>
       <button type="submit"
               class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white rounded-xl text-sm font-bold shadow-sm transition-all">
         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
         </svg>
-        Send Fax Now
+        {{ _('Send Fax') }}
       </button>
     </div>
 

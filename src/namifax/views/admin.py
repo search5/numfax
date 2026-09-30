@@ -11,126 +11,171 @@ from avantfax.services.covers import Covers
 from avantfax.services.did import DIDRouting
 from avantfax.services.dynconf import DynamicConfig
 
-# Mock in-memory administration data
-_SAMPLE_USERS = [
-    {
-        "uid": 1,
-        "name": "Administrator",
-        "username": "admin",
-        "email": "admin@avantfax.local",
-        "superuser": True,
-        "is_admin": True,
-        "last_login": "2026-09-29 12:00:00",
-        "last_ip": "127.0.0.1",
-    },
-    {
-        "uid": 2,
-        "name": "General Operator",
-        "username": "operator",
-        "email": "operator@avantfax.local",
-        "superuser": False,
-        "is_admin": False,
-        "last_login": "2026-09-28 17:30:00",
-        "last_ip": "192.168.1.105",
-    },
-]
+def get_all_admin_users() -> list[dict[str, Any]]:
+    """Retrieve users directly from database."""
+    try:
+        from namifax.services.user_account import AFUserAccount
+        svc = AFUserAccount()
+        rows = svc.list_accounts()
+        if rows:
+            users_list = []
+            for r in rows:
+                users_list.append({
+                    "uid": r.get("uid"),
+                    "name": r.get("name") or r.get("username"),
+                    "username": r.get("username"),
+                    "email": r.get("email"),
+                    "superuser": bool(r.get("superuser")),
+                    "is_admin": bool(r.get("is_admin") or r.get("superuser")),
+                    "last_login": r.get("last_login") or "Never",
+                    "last_ip": r.get("last_ip") or "-",
+                    "can_del": bool(r.get("can_del")),
+                    "any_modem": bool(r.get("any_modem", 1)),
+                })
+            # Ensure admin user is first if present
+            users_list.sort(key=lambda u: 0 if u.get("uid") == 1 else 1)
+            return users_list
+    except Exception:
+        pass
+    return []
 
-_SAMPLE_MODEMS = [
-    {"devid": 1, "device": "ttyS0", "alias": "Sales Inbound", "contact": "sales@avantfax.local", "status": "Running and idle"},
-    {"devid": 2, "device": "ttyS1", "alias": "Support Outbound", "contact": "support@avantfax.local", "status": "Running and idle"},
-]
 
-_SAMPLE_DID_ROUTES = [
-    {"didr_id": 1, "route": "1000", "alias": "Main Trunk", "contact": "reception@avantfax.local", "printer": "lp1"},
-    {"didr_id": 2, "route": "1001", "alias": "Accounting Direct", "contact": "billing@avantfax.local", "printer": "lp2"},
-]
-
-_SAMPLE_SYSLOGS = [
-    {"logdate": "2026-09-29 12:30:01", "logtext": "HylaFAX daemon started on ttyS0 (14400 baud, Class 2.0)"},
-    {"logdate": "2026-09-29 12:35:10", "logtext": "Fax job #12 dispatched to destination +1-555-0199: SUCCESS"},
-    {"logdate": "2026-09-29 12:40:22", "logtext": "User 'admin' successfully authenticated from IP 127.0.0.1"},
-]
+def get_all_admin_modems() -> list[dict[str, Any]]:
+    """Retrieve modems directly from database."""
+    try:
+        from namifax.services.modem import FaxModem
+        svc = FaxModem()
+        rows = svc.list_all()
+        if rows:
+            modems_list = []
+            for r in rows:
+                modems_list.append({
+                    "devid": r.get("devid"),
+                    "device": r.get("device"),
+                    "alias": r.get("alias"),
+                    "contact": r.get("contact") or "",
+                    "printer": r.get("printer") or "",
+                    "faxcatid": r.get("faxcatid"),
+                    "status": "Running and idle",
+                })
+            return modems_list
+    except Exception:
+        pass
+    return []
 
 
 @view_config(route_name="admin", renderer="namifax:templates/admin.jinja2", permission="admin")
 def admin_dashboard_view(request):
     """Admin Dashboard and server overview."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
+    users = get_all_admin_users()
+    modems = get_all_admin_modems()
 
     if "Authorization" in request.headers or "application/json" in request.headers.get("Accept", ""):
         from pyramid.response import Response
-        return Response(json_body={"modems": _SAMPLE_MODEMS, "users": _SAMPLE_USERS}, content_type="application/json")
+        return Response(json_body={"modems": modems, "users": users}, content_type="application/json")
 
     return {
         "title": "NamiFAX - Admin Control Panel",
         "current_user": identity,
         "active_tab": "admin",
         "active_admin": "dashboard",
-        "users": _SAMPLE_USERS,
-        "total_users": len(_SAMPLE_USERS),
-        "modems": _SAMPLE_MODEMS,
+        "users": users,
+        "total_users": len(users),
+        "modems": modems,
         "hylafax_version": "6.0.7",
     }
 
 
 @view_config(route_name="admin_users", renderer="namifax:templates/admin_users.jinja2", permission="admin")
 def admin_users_view(request):
-    """Admin user account management, creation, and permission configuration."""
+    """Admin user account management matching legacy admin/users.php semantics."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    global _SAMPLE_USERS
 
     if request.method == "POST":
         if request.params.get("delete"):
             uid = request.params.get("uid")
             if uid and str(uid) != "1":
-                _SAMPLE_USERS = [u for u in _SAMPLE_USERS if str(u.get("uid")) != str(uid)]
+                try:
+                    from namifax.services.user_account import AFUserAccount
+                    svc = AFUserAccount()
+                    svc.remove(int(uid))
+                except Exception:
+                    pass
             return HTTPFound(location=request.route_url("admin_users"))
 
         uid = request.params.get("uid")
         name = request.params.get("name", "").strip()
         username = request.params.get("username", "").strip()
         email = request.params.get("email", "").strip()
-        
+        password = request.params.get("password", "").strip()
+        superuser = bool(request.params.get("superuser"))
+        is_admin = bool(request.params.get("is_admin"))
+        can_del = bool(request.params.get("can_del"))
+        any_modem = bool(request.params.get("any_modem", True))
+
         if name and username:
-            if uid:
-                user = next((u for u in _SAMPLE_USERS if str(u.get("uid")) == str(uid)), None)
-                if user:
-                    user["name"] = name
-                    user["username"] = username
-                    user["email"] = email
-                    user["is_admin"] = bool(request.params.get("is_admin"))
-                    user["superuser"] = bool(request.params.get("superuser"))
-            else:
-                new_uid = len(_SAMPLE_USERS) + 1
-                _SAMPLE_USERS.append({
-                    "uid": new_uid,
-                    "name": name,
-                    "username": username,
-                    "email": email,
-                    "superuser": bool(request.params.get("superuser")),
-                    "is_admin": bool(request.params.get("is_admin")),
-                    "last_login": "Never",
-                    "last_ip": "-",
-                })
+            try:
+                from namifax.services.user_account import AFUserAccount
+                svc = AFUserAccount()
+                if uid:
+                    if svc.load(int(uid)):
+                        svc.set_username(username)
+                        svc.set_email(email)
+                        svc.dbdata["name"] = name
+                        svc.dbdata["superuser"] = int(superuser)
+                        svc.dbdata["is_admin"] = int(is_admin)
+                        svc.dbdata["can_del"] = int(can_del)
+                        svc.dbdata["any_modem"] = int(any_modem)
+                        if password:
+                            svc.change_password(password)
+                        svc.update()
+                else:
+                    svc.create({
+                        "name": name,
+                        "username": username,
+                        "email": email,
+                        "password": password or "password",
+                        "superuser": int(superuser),
+                        "is_admin": int(is_admin),
+                        "can_del": int(can_del),
+                        "any_modem": int(any_modem),
+                    })
+            except Exception:
+                pass
+
             return HTTPFound(location=request.route_url("admin_users"))
 
+    users = get_all_admin_users()
     uid = request.params.get("uid")
     selected_user = None
     if uid:
-        selected_user = next((u for u in _SAMPLE_USERS if str(u.get("uid")) == str(uid)), None)
-        if not selected_user and str(uid) == "1":
-            selected_user = _SAMPLE_USERS[0]
+        selected_user = next((u for u in users if str(u.get("uid")) == str(uid)), None)
+        if not selected_user and str(uid) == "1" and users:
+            selected_user = users[0]
+
+    did = DIDRouting()
+    try:
+        did_routes = did.list_all()
+    except Exception:
+        did_routes = []
+
+    fc = FaxPDFCategory()
+    try:
+        categories = fc.get_categories() or []
+    except Exception:
+        categories = []
 
     return {
         "title": "NamiFAX - Admin - Users",
         "current_user": identity,
         "active_tab": "admin",
         "active_admin": "users",
-        "users": _SAMPLE_USERS,
+        "users": users,
         "selected_user": selected_user or {"name": "", "username": "", "email": "", "is_admin": False, "superuser": False, "can_del": False, "any_modem": True},
-        "did_routes": _SAMPLE_DID_ROUTES,
-        "modem_devices": _SAMPLE_MODEMS,
-        "categories": [{"catid": 1, "name": "General Inquiries"}, {"catid": 2, "name": "Confidential"}],
+        "did_routes": did_routes,
+        "modem_devices": get_all_admin_modems(),
+        "categories": categories,
     }
 
 
@@ -138,42 +183,63 @@ def admin_users_view(request):
 def admin_modems_view(request):
     """Admin fax modem line devices configuration and settings form."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    
     if request.method == "POST":
         device = request.params.get("device", "").strip()
         alias = request.params.get("alias", "").strip()
         contact = request.params.get("contact", "").strip()
         printer = request.params.get("printer", "").strip()
+        faxcatid = request.params.get("faxcatid")
+        faxcatid_val = int(faxcatid) if faxcatid and str(faxcatid).isdigit() else None
+        devid = request.params.get("devid")
 
-        if device and alias:
-            existing = next((m for m in _SAMPLE_MODEMS if m["device"] == device), None)
-            if existing:
-                existing["alias"] = alias
-                existing["contact"] = contact
-                existing["printer"] = printer
-            else:
-                new_id = len(_SAMPLE_MODEMS) + 1
-                _SAMPLE_MODEMS.append({
-                    "devid": new_id,
-                    "device": device,
-                    "alias": alias,
-                    "contact": contact,
-                    "printer": printer,
-                    "status": "Running and idle",
-                })
+        if request.params.get("delete"):
+            if devid:
+                try:
+                    from namifax.services.modem import FaxModem
+                    svc = FaxModem()
+                    svc.delete_device(int(devid))
+                except Exception:
+                    pass
             return HTTPFound(location=request.route_url("admin_modems"))
 
+        if device and alias:
+            try:
+                from namifax.services.modem import FaxModem
+                svc = FaxModem()
+                if devid and svc.loadbyid(int(devid)):
+                    svc.set_alias(alias)
+                    svc.set_contact(contact)
+                    svc.set_printer(printer)
+                    if faxcatid_val is not None:
+                        svc.set_faxcatid(faxcatid_val)
+                elif svc.load_device(device):
+                    svc.set_alias(alias)
+                    svc.set_contact(contact)
+                    svc.set_printer(printer)
+                    if faxcatid_val is not None:
+                        svc.set_faxcatid(faxcatid_val)
+                else:
+                    svc.create(device=device, alias=alias, contact=contact, printer=printer, faxcatid=faxcatid_val)
+            except Exception:
+                pass
+
+            return HTTPFound(location=request.route_url("admin_modems"))
+
+    modems = get_all_admin_modems()
     devid = request.params.get("devid")
+    device_param = request.params.get("device")
     selected_modem = None
     if devid:
-        selected_modem = next((m for m in _SAMPLE_MODEMS if str(m.get("devid")) == str(devid)), None)
+        selected_modem = next((m for m in modems if str(m.get("devid")) == str(devid)), None)
+    elif device_param:
+        selected_modem = next((m for m in modems if m.get("device") == device_param), None)
 
     return {
         "title": "NamiFAX - Admin - Modems",
         "current_user": identity,
         "active_tab": "admin",
         "active_admin": "modems",
-        "modems": _SAMPLE_MODEMS,
+        "modems": modems,
         "selected_modem": selected_modem or {"device": "", "alias": "", "contact": "", "printer": ""},
     }
 
@@ -182,7 +248,6 @@ def admin_modems_view(request):
 @view_config(route_name="admin_did", renderer="namifax:templates/admin_routing_did.jinja2", permission="admin")
 def admin_routing_did_view(request):
     """Admin DID inbound routing configuration and full CRUD management."""
-    global _SAMPLE_DID_ROUTES
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
     did = DIDRouting()
     fc = FaxPDFCategory()
@@ -205,7 +270,6 @@ def admin_routing_did_view(request):
                 did.delete_route(selected_id)
             except Exception:
                 pass
-            _SAMPLE_DID_ROUTES = [r for r in _SAMPLE_DID_ROUTES if r.get("didr_id") != selected_id]
             message = "DID routing rule deleted successfully"
             selected_id = None
         elif selected_id and (request.params.get("save") or not request.params.get("create")):
@@ -223,16 +287,6 @@ def admin_routing_did_view(request):
                         updated = True
                 except Exception:
                     pass
-                for r in _SAMPLE_DID_ROUTES:
-                    if r.get("didr_id") == selected_id:
-                        r["route"] = route_code
-                        r["alias"] = alias
-                        r["contact"] = contact
-                        r["printer"] = printer
-                        if faxcatid is not None:
-                            r["faxcatid"] = faxcatid
-                        updated = True
-                        break
                 if updated:
                     message = "DID routing rule updated successfully"
                 else:
@@ -240,18 +294,9 @@ def admin_routing_did_view(request):
         elif route_code and alias:
             try:
                 did.create(route_code, alias, contact=contact, printer=printer, faxcatid=faxcatid)
+                message = "DID routing rule created successfully"
             except Exception:
-                pass
-            new_id = (max([r.get("didr_id", 0) for r in _SAMPLE_DID_ROUTES] or [0])) + 1
-            _SAMPLE_DID_ROUTES.append({
-                "didr_id": new_id,
-                "route": route_code,
-                "alias": alias,
-                "contact": contact,
-                "printer": printer,
-                "faxcatid": faxcatid,
-            })
-            message = "DID routing rule created successfully"
+                error = "Failed to create DID route"
         else:
             error = "Route Code and Alias are required"
 
@@ -259,8 +304,11 @@ def admin_routing_did_view(request):
         did_routes = did.list_all()
     except Exception:
         did_routes = []
-    if not did_routes:
-        did_routes = list(_SAMPLE_DID_ROUTES)
+
+    # Ensure route field compatibility
+    for r in did_routes:
+        if "route" not in r:
+            r["route"] = r.get("routecode", "")
 
     selected_route = None
     if selected_id:
@@ -278,15 +326,11 @@ def admin_routing_did_view(request):
             pass
         if not selected_route:
             selected_route = next((r for r in did_routes if r.get("didr_id") == selected_id), None)
-        if not selected_route and selected_id == 1:
-            selected_route = {"didr_id": 1, "route": "1000", "alias": "Main Trunk", "contact": "reception@avantfax.local", "printer": "lp1"}
 
     try:
-        categories = fc.get_categories()
+        categories = fc.list_all() if hasattr(fc, "list_all") else fc.get_categories()
     except Exception:
         categories = []
-    if not categories:
-        categories = [{"catid": 1, "name": "General"}, {"catid": 2, "name": "Invoices"}]
 
     return {
         "title": "NamiFAX - Admin - Configure DID Routing",
@@ -301,16 +345,57 @@ def admin_routing_did_view(request):
     }
 
 
+def get_all_syslogs(kw: str = "", day: str = "", month: str = "", year: str = "") -> list[dict[str, Any]]:
+    """Retrieve system logs directly from database."""
+    try:
+        from namifax.db.repository import MDBOData
+        repo = MDBOData("SysLog")
+        clauses = []
+        if kw:
+            clauses.append(f"logtext LIKE '%{kw}%'")
+
+        date_part = ""
+        if day and month and year and day != "*" and month != "*" and year != "*":
+            d_val = f"{int(day):02d}" if day.isdigit() else day
+            m_val = f"{int(month):02d}" if month.isdigit() else month
+            date_part = f"{year}-{m_val}-{d_val}"
+        elif month and year and month != "*" and year != "*":
+            m_val = f"{int(month):02d}" if month.isdigit() else month
+            date_part = f"{year}-{m_val}"
+        elif year and year != "*":
+            date_part = f"{year}"
+
+        if date_part:
+            clauses.append(f"logdate LIKE '{date_part}%'")
+
+        where_clause = " WHERE " + " AND ".join(clauses) if clauses else ""
+        query = f"SELECT logdate, logtext FROM SysLog{where_clause} ORDER BY logdate DESC LIMIT 100"
+        rows = repo.query(query, reduce_single=False)
+        if rows and isinstance(rows, list):
+            result = []
+            for r in rows:
+                result.append({
+                    "logdate": str(r.get("logdate", "")),
+                    "logtext": str(r.get("logtext", "")),
+                })
+            return result
+    except Exception:
+        pass
+
+    return []
+
+
 @view_config(route_name="admin_system_logs", renderer="namifax:templates/admin_system_logs.jinja2", permission="admin")
 @view_config(route_name="admin_syslog", renderer="namifax:templates/admin_system_logs.jinja2", permission="admin")
 def admin_system_logs_view(request):
     """Admin system events and HylaFAX audit log viewer with keyword and date filter."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    kw = request.params.get("kw", "").strip().lower()
-    
-    logs = _SAMPLE_SYSLOGS
-    if kw:
-        logs = [log for log in logs if kw in log["logtext"].lower()]
+    kw = request.params.get("kw", "").strip()
+    day = request.params.get("day", "")
+    month = request.params.get("month", "")
+    year = request.params.get("year", "")
+
+    logs = get_all_syslogs(kw=kw, day=day, month=month, year=year)
 
     return {
         "title": "NamiFAX - Admin - System Logs",
@@ -319,6 +404,9 @@ def admin_system_logs_view(request):
         "active_admin": "syslog",
         "logs": logs,
         "kw": kw,
+        "day": day,
+        "month": month,
+        "year": year,
         "days": [f"{d:02d}" for d in range(1, 32)],
         "months": [f"{m:02d}" for m in range(1, 13)],
         "years": ["2024", "2025", "2026", "2027"],

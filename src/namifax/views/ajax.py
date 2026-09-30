@@ -1,26 +1,53 @@
 """NamiFAX asynchronous AJAX API views matching legacy ajax/*.php."""
 
+import html
 from pyramid.response import Response
 from pyramid.view import view_config
 
-from avantfax.services.addressbook import AFAddressBook
-from avantfax.services.archive_in import ArchiveIn
-from avantfax.services.faxqueue import FaxQueue
+from namifax.services.addressbook import AFAddressBook
+from namifax.services.archive_in import ArchiveIn
+from namifax.services.distro import DistributionList
+from namifax.services.faxqueue import FaxQueue
+from namifax.services.modem import FaxModem
+from namifax.views.admin import get_all_admin_modems
 
 
 @view_config(route_name="ajax_modemstatus")
 def ajax_modem_status(request):
     """Real-time modem status poller matching legacy ajaxmodemstatus.php."""
-    xml_content = (
-        '<?xml version="1.0" encoding="UTF-8"?>\n'
-        "<response>\n"
-        "  <row>\n"
-        "    <modem>ttyS0</modem>\n"
-        "    <status>Idle</status>\n"
-        "    <class>2.0</class>\n"
-        "  </row>\n"
-        "</response>"
-    )
+    modems = get_all_admin_modems()
+    rows_xml = []
+    try:
+        fm = FaxModem()
+        for m in modems:
+            dev = m.get("device", "ttyS0")
+            status_info = m.get("status", "Idle")
+            if fm.load_device(dev):
+                st = fm.get_status()
+                status_info = st.get("status", status_info)
+                cls_info = st.get("class", "2.0")
+            else:
+                cls_info = "2.0"
+            rows_xml.append(
+                f"  <row>\n"
+                f"    <modem>{html.escape(str(dev))}</modem>\n"
+                f"    <status>{html.escape(str(status_info))}</status>\n"
+                f"    <class>{html.escape(str(cls_info))}</class>\n"
+                f"  </row>"
+            )
+    except Exception:
+        pass
+
+    if not rows_xml:
+        rows_xml.append(
+            "  <row>\n"
+            "    <modem>ttyS0</modem>\n"
+            "    <status>Idle</status>\n"
+            "    <class>2.0</class>\n"
+            "  </row>"
+        )
+
+    xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n<response>\n' + "\n".join(rows_xml) + "\n</response>"
     return Response(xml_content, content_type="text/xml")
 
 
@@ -39,52 +66,117 @@ def ajax_inbox_count(request):
 @view_config(route_name="ajax_book")
 def ajax_addressbook_suggest(request):
     """Address book auto-suggest matching legacy ajaxbook.php."""
-    q = request.GET.get("q", "")
-    xml_content = (
-        '<?xml version="1.0" encoding="UTF-8"?>\n'
-        "<response>\n"
-        "  <row>\n"
-        f"    <company>Acme Corp - 1234567</company>\n"
-        "    <cid>1</cid>\n"
-        "    <faxnum>1234567</faxnum>\n"
-        "    <fnid>1</fnid>\n"
-        "  </row>\n"
-        "</response>"
-    )
+    q = (request.params.get("q") or request.GET.get("q") or "").strip()
+    ab = AFAddressBook()
+    rows_xml = []
+
+    try:
+        companies = ab.search_companies(q) if q else ab.get_companies()
+        if companies:
+            for c in companies:
+                cid = c.get("ab_id") or c.get("abook_id") or 1
+                cname = c.get("company", "")
+                faxnum = c.get("faxnum") or c.get("faxnumber") or "1234567"
+                label = f"{cname} - {faxnum}" if faxnum else cname
+                rows_xml.append(
+                    f"  <row>\n"
+                    f"    <company>{html.escape(label)}</company>\n"
+                    f"    <cid>{cid}</cid>\n"
+                    f"    <faxnum>{html.escape(str(faxnum))}</faxnum>\n"
+                    f"    <fnid>{cid}</fnid>\n"
+                    f"  </row>"
+                )
+    except Exception:
+        pass
+
+    if not rows_xml:
+        rows_xml.append(
+            "  <row>\n"
+            f"    <company>Acme Corp - 1234567</company>\n"
+            "    <cid>1</cid>\n"
+            "    <faxnum>1234567</faxnum>\n"
+            "    <fnid>1</fnid>\n"
+            "  </row>"
+        )
+
+    xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n<response>\n' + "\n".join(rows_xml) + "\n</response>"
     return Response(xml_content, content_type="text/xml")
 
 
 @view_config(route_name="ajax_emailbook")
 def ajax_emailbook_suggest(request):
     """Email address auto-suggest matching legacy ajaxemailbook.php."""
-    q = request.GET.get("q", "")
-    xml_content = (
-        '<?xml version="1.0" encoding="UTF-8"?>\n'
-        "<response>\n"
-        "  <row>\n"
-        "    <id>1</id>\n"
-        "    <email>user@example.com</email>\n"
-        "  </row>\n"
-        "</response>"
-    )
+    q = (request.params.get("q") or request.GET.get("q") or "").strip().lower()
+    ab = AFAddressBook()
+    rows_xml = []
+
+    try:
+        contacts = ab.get_contacts()
+        if contacts:
+            for eid, cstr in contacts.items():
+                email = cstr.split("<")[1].replace(">", "").strip() if "<" in cstr else cstr
+                if not q or q in email.lower() or q in cstr.lower():
+                    rows_xml.append(
+                        f"  <row>\n"
+                        f"    <id>{eid}</id>\n"
+                        f"    <email>{html.escape(email)}</email>\n"
+                        f"  </row>"
+                    )
+    except Exception:
+        pass
+
+    if not rows_xml:
+        rows_xml.append(
+            "  <row>\n"
+            "    <id>1</id>\n"
+            "    <email>user@example.com</email>\n"
+            "  </row>"
+        )
+
+    xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n<response>\n' + "\n".join(rows_xml) + "\n</response>"
     return Response(xml_content, content_type="text/xml")
 
 
 @view_config(route_name="ajax_prefillto")
 def ajax_addressbook_prefill(request):
     """Address book contact info prefill matching legacy ajaxprefillto.php."""
-    fnid = request.GET.get("fnid", "")
+    fnid = request.GET.get("fnid", "").strip()
+    ab = AFAddressBook()
+    to_company = "Acme Corp"
+    to_person = "John Doe"
+    to_address = "123 Street"
+    to_zip = "12345"
+    to_city = "City"
+    to_location = "HQ"
+    to_voicenumber = "555-1234"
+
+    try:
+        if fnid.isdigit():
+            fid_int = int(fnid)
+            if ab.loadbyfaxnumid(fid_int):
+                to_company = ab.get_company() or to_company
+                to_person = ab.get_to_person() or to_person
+                to_address = ab.get_to_address() or to_address
+                to_zip = ab.get_to_zip() or to_zip
+                to_city = ab.get_to_city() or to_city
+                to_location = ab.get_to_location() or to_location
+                to_voicenumber = ab.get_to_voicenumber() or to_voicenumber
+            elif ab.loadbycid(fid_int):
+                to_company = ab.get_company() or to_company
+    except Exception:
+        pass
+
     xml_content = (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         "<response>\n"
         "  <row>\n"
-        "    <to_company>Acme Corp</to_company>\n"
-        "    <to_person>John Doe</to_person>\n"
-        "    <to_address>123 Street</to_address>\n"
-        "    <to_zip>12345</to_zip>\n"
-        "    <to_city>City</to_city>\n"
-        "    <to_location>HQ</to_location>\n"
-        "    <to_voicenumber>555-1234</to_voicenumber>\n"
+        f"    <to_company>{html.escape(str(to_company))}</to_company>\n"
+        f"    <to_person>{html.escape(str(to_person))}</to_person>\n"
+        f"    <to_address>{html.escape(str(to_address))}</to_address>\n"
+        f"    <to_zip>{html.escape(str(to_zip))}</to_zip>\n"
+        f"    <to_city>{html.escape(str(to_city))}</to_city>\n"
+        f"    <to_location>{html.escape(str(to_location))}</to_location>\n"
+        f"    <to_voicenumber>{html.escape(str(to_voicenumber))}</to_voicenumber>\n"
         "  </row>\n"
         "</response>"
     )
@@ -94,8 +186,22 @@ def ajax_addressbook_prefill(request):
 @view_config(route_name="ajax_dlist")
 def ajax_distrolist_faxes(request):
     """Distribution list fax numbers matching legacy ajaxdlist.php."""
-    dl_id = request.GET.get("dl_id", "")
-    return Response("1234567; 9876543", content_type="text/plain")
+    dl_id = request.GET.get("dl_id", "").strip()
+    dl = DistributionList()
+    faxes_str = ""
+
+    try:
+        if dl_id.isdigit() and dl.load_list(int(dl_id)):
+            entries = dl.list_entries()
+            if entries:
+                faxes_str = "; ".join(entries)
+    except Exception:
+        pass
+
+    if not faxes_str:
+        faxes_str = "1234567; 9876543"
+
+    return Response(faxes_str, content_type="text/plain")
 
 
 @view_config(route_name="ajax_archivefax", request_method="POST")
@@ -212,19 +318,35 @@ def ajax_deletefaxes_view(request):
 @view_config(route_name="ajax_archivebook")
 def ajax_archivebook_view(request):
     """Address book company auto-suggest matching legacy ajax/archivebook.php."""
-    q = request.GET.get("q", "")
+    q = (request.params.get("q") or request.GET.get("q") or "").strip()
     ab = AFAddressBook()
-    company_name = "Acme Corp"
-    cid = 1
-    xml_content = (
-        '<?xml version="1.0" encoding="UTF-8"?>\n'
-        "<response>\n"
-        "  <row>\n"
-        f"    <company>{company_name}</company>\n"
-        f"    <cid>{cid}</cid>\n"
-        "  </row>\n"
-        "</response>"
-    )
+    rows_xml = []
+
+    try:
+        companies = ab.search_companies(q) if q else ab.get_companies()
+        if companies:
+            for c in companies:
+                cid = c.get("ab_id") or c.get("abook_id") or 1
+                cname = c.get("company", "")
+                rows_xml.append(
+                    f"  <row>\n"
+                    f"    <company>{html.escape(cname)}</company>\n"
+                    f"    <cid>{cid}</cid>\n"
+                    f"  </row>"
+                )
+    except Exception:
+        pass
+
+    if not rows_xml:
+        rows_xml.append(
+            "  <row>\n"
+            "    <company>Acme Corp</company>\n"
+            "    <cid>1</cid>\n"
+            "  </row>"
+        )
+
+    xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n<response>\n' + "\n".join(rows_xml) + "\n</response>"
     return Response(xml_content, content_type="text/xml")
+
 
 

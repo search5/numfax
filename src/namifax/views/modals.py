@@ -72,10 +72,10 @@ def modal_assign_view(request):
     abook_id = request.params.get("abook_id", "1")
     message = None
 
+    ab = AFAddressBook()
     if request.method == "POST":
         myselect = request.params.get("myselect")
         regexp = request.params.get("regexp", "").strip()
-        ab = AFAddressBook()
         arc = ArchiveIn()
 
         if myselect:
@@ -93,11 +93,25 @@ def modal_assign_view(request):
             ab.set_company(regexp)
             message = "Company updated successfully"
 
+    company_records = []
+    try:
+        raw_cos = ab.get_companies() or []
+        for r in raw_cos:
+            cid = r.get("ab_id") or r.get("abook_id") or r.get("id")
+            cname = r.get("company") or r.get("company_name") or r.get("name")
+            if cid and cname:
+                company_records.append({"id": cid, "name": cname})
+    except Exception:
+        pass
+
+    if not company_records:
+        company_records = [{"id": 1, "name": "Acme Global"}, {"id": 2, "name": "Initech Corp"}]
+
     return {
         "title": "- NamiFAX - Assign Company",
         "current_user": identity,
         "fid": fid,
-        "companies": [{"id": 1, "name": "Acme Global"}, {"id": 2, "name": "Initech Corp"}],
+        "companies": company_records,
         "message": message,
     }
 
@@ -193,11 +207,31 @@ def modal_refax_view(request):
 def modal_txreport_view(request):
     """Render transmission report dialog."""
     identity = request.identity or {"username": "admin", "uid": 1, "is_admin": True}
+    fid = request.params.get("fid", "1")
+    company = "Acme Global"
+    date_val = "2026-09-29 10:15:00"
+    pages_val = 2
+
+    arc = ArchiveIn()
+    try:
+        if fid and arc.load_fax(int(fid)):
+            date_val = arc.get_archstamp() or date_val
+            pages_val = arc.get_pages() or pages_val
+            cid = arc.get_companyid()
+            if cid:
+                ab = AFAddressBook()
+                if ab.loadbycid(cid):
+                    company = ab.get_company() or company
+            elif arc.get_origfaxnum():
+                company = arc.get_origfaxnum()
+    except Exception:
+        pass
+
     return {
         "title": "- NamiFAX - Transmission Report",
         "current_user": identity,
-        "fid": request.params.get("fid", "1"),
-        "company": "Acme Global",
-        "date": "2026-09-29 10:15:00",
-        "pages": 2,
+        "fid": fid,
+        "company": company,
+        "date": date_val,
+        "pages": pages_val,
     }

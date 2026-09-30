@@ -242,3 +242,9 @@ class DatabaseEngine:
         except Exception:
             self._conn.rollback()
             raise
+
+
+def get_default_engine() -> DatabaseEngine:
+    """Retrieve default DatabaseEngine from namifax application layer."""
+    from namifax.db.engine import get_default_engine as _get_default_engine
+    return _get_default_engine()

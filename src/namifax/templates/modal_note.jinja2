@@ -20,8 +20,8 @@
           </svg>
         </div>
         <div>
-          <h1 class="text-sm font-bold text-slate-900 tracking-tight">Add Note</h1>
-          <p class="text-[11px] text-slate-500">Append internal administrative note or comments</p>
+          <h1 class="text-sm font-bold text-slate-900 tracking-tight">{{ _('Add Note') }}</h1>
+          <p class="text-[11px] text-slate-500">{{ _('Append internal administrative note or comments') }}</p>
         </div>
       </div>
       <button type="button" onclick="window.close()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition">
@@ -34,7 +34,7 @@
     <!-- Modal Form (Strict W33 Sequence Contract) -->
     <form action="/note" method="post" class="p-6 space-y-4 text-xs">
       <div>
-        <label for="description" class="block font-semibold text-slate-700 text-xs mb-1.5">Note / Description *</label>
+        <label for="description" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Note / Description') }} *</label>
         <textarea name="description" id="description" rows="4" required class="w-full border border-slate-300 rounded-lg p-3 bg-slate-50/50 text-slate-900 text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="Enter transaction note or dispatch comments...">{{ description }}</textarea>
       </div>
 
@@ -44,10 +44,10 @@
       <!-- Action Buttons (Strict Sequence: Cancel -> Save) -->
       <div class="pt-4 border-t border-slate-100 flex items-center justify-end space-x-2.5">
         <button type="button" onclick="window.close()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-semibold text-xs transition">
-          Cancel
+          {{ _('Cancel') }}
         </button>
         <button type="submit" class="px-5 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold text-xs shadow-2xs transition">
-          Save
+          {{ _('Save') }}
         </button>
       </div>
     </form>

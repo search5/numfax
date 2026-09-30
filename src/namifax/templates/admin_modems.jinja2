@@ -14,13 +14,13 @@
         </svg>
       </div>
       <div>
-        <h2 class="text-base font-bold text-white tracking-tight">Fax Modems</h2>
-        <p class="text-xs text-slate-400">Configure Modems hardware devices, physical serial ports, and print-forwarding rules</p>
+        <h2 class="text-base font-bold text-white tracking-tight">{{ _('Fax Modems') }}</h2>
+        <p class="text-xs text-slate-400">{{ _('Configure Modems hardware devices, physical serial ports, and print-forwarding rules') }}</p>
       </div>
     </div>
 
     <a href="#configure-form" class="inline-flex items-center space-x-1.5 px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg text-xs font-bold shadow-2xs transition">
-      <span>+ Configure Modems</span>
+      <span>+ {{ _('Configure Modems') }}</span>
     </a>
   </div>
 
@@ -30,17 +30,17 @@
     <div class="bg-slate-950/60 border border-slate-800/90 rounded-xl p-5 space-y-4">
       <div class="flex items-center space-x-2 border-b border-slate-800 pb-3">
         <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-        <h3 class="text-xs font-bold text-white uppercase tracking-wider">Active Modem Lines</h3>
+        <h3 class="text-xs font-bold text-white uppercase tracking-wider">{{ _('Active Modem Lines') }}</h3>
       </div>
 
       <div class="overflow-x-auto">
         <table class="w-full text-xs text-left border-collapse">
           <thead>
             <tr class="bg-slate-900 border-b border-slate-800 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-              <th scope="col" class="py-2.5 px-3">Device</th>
-              <th scope="col" class="py-2.5 px-3">Alias</th>
-              <th scope="col" class="py-2.5 px-3">Contact</th>
-              <th scope="col" class="py-2.5 px-3">Status</th>
+              <th scope="col" class="py-2.5 px-3">{{ _('Device') }}</th>
+              <th scope="col" class="py-2.5 px-3">{{ _('Alias') }}</th>
+              <th scope="col" class="py-2.5 px-3">{{ _('Contact') }}</th>
+              <th scope="col" class="py-2.5 px-3">{{ _('Status') }}</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-800/60 text-slate-300">
@@ -69,37 +69,37 @@
       <div class="flex items-center space-x-2 border-b border-slate-800 pb-3">
         <span class="w-2 h-2 rounded-full bg-sky-500"></span>
         <h3 class="text-xs font-bold text-white uppercase tracking-wider">
-          {% if selected_modem and selected_modem.device %}Edit Modem ({{ selected_modem.device }}){% else %}Configure Modems Device{% endif %}
+          {% if selected_modem and selected_modem.device %}{{ _('Edit Modem') }} ({{ selected_modem.device }}){% else %}{{ _('Configure Modems Device') }}{% endif %}
         </h3>
       </div>
 
       <form action="/admin/modems" method="post" class="space-y-4 text-xs">
         <div>
-          <label for="device" class="block font-semibold text-slate-300 text-xs mb-1.5">Device *</label>
+          <label for="device" class="block font-semibold text-slate-300 text-xs mb-1.5">{{ _('Device') }} *</label>
           <input type="text" name="device" id="device" value="{{ selected_modem.device or '' }}" required placeholder="e.g. ttyS0" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white font-mono focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition" />
         </div>
 
         <div>
-          <label for="alias" class="block font-semibold text-slate-300 text-xs mb-1.5">Alias *</label>
+          <label for="alias" class="block font-semibold text-slate-300 text-xs mb-1.5">{{ _('Alias') }} *</label>
           <input type="text" name="alias" id="alias" value="{{ selected_modem.alias or '' }}" required placeholder="e.g. Main Inbound Line" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition" />
         </div>
 
         <div>
-          <label for="contact" class="block font-semibold text-slate-300 text-xs mb-1.5">Contact Email</label>
+          <label for="contact" class="block font-semibold text-slate-300 text-xs mb-1.5">{{ _('Contact Email') }}</label>
           <input type="email" name="contact" id="contact" value="{{ selected_modem.contact or '' }}" placeholder="operator@namifax.local" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white font-mono focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition" />
         </div>
 
         <div>
-          <label for="printer" class="block font-semibold text-slate-300 text-xs mb-1.5">Printer</label>
+          <label for="printer" class="block font-semibold text-slate-300 text-xs mb-1.5">{{ _('Printer') }}</label>
           <input type="text" name="printer" id="printer" value="{{ selected_modem.printer or '' }}" placeholder="lp0" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white font-mono focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition" />
         </div>
 
         <input type="hidden" name="_submit_check" value="1" />
 
         <div class="pt-3 border-t border-slate-800 flex items-center justify-end space-x-3">
-          <a href="/admin/modems" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg font-semibold text-xs transition">Reset</a>
+          <a href="/admin/modems" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg font-semibold text-xs transition">{{ _('Reset') }}</a>
           <button type="submit" class="px-6 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold text-xs shadow-2xs transition">
-            Save Modem
+            {{ _('Save Modem') }}
           </button>
         </div>
       </form>
@@ -109,7 +109,7 @@
 
   <!-- Bottom Hardware Diagnostic Note -->
   <div class="p-4 bg-slate-950/40 border border-slate-800/80 rounded-xl text-xs text-slate-400 leading-relaxed" id="explain-me">
-    <p><strong class="text-slate-300">Appliance Note:</strong> Modems configured here must correspond to physical RS-232 serial devices, USB modems, or virtual IAX modems recognized by the underlying HylaFAX server.</p>
+    <p><strong class="text-slate-300">{{ _('Appliance Note:') }}</strong> {{ _('Modems configured here must correspond to physical RS-232 serial devices, USB modems, or virtual IAX modems recognized by the underlying HylaFAX server.') }}</p>
   </div>
 
 </div>

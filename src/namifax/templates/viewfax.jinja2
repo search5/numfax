@@ -14,18 +14,18 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
         </div>
-        <h2 class="text-base font-bold text-slate-900 tracking-tight">Fax Viewer - ID #{{ fid or 1 }}</h2>
+        <h2 class="text-base font-bold text-slate-900 tracking-tight">{{ _('Fax Viewer') }} - ID #{{ fid or 1 }}</h2>
         <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-sky-50 text-sky-700 border border-sky-200">
-          Page 1 of {{ pages or 1 }}
+          {{ _('Page 1 of') }} {{ pages or 1 }}
         </span>
       </div>
       
       <div class="text-xs text-slate-500 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px]">
-        <span><strong class="font-sans text-slate-700">FROM:</strong> <a href="/addressbook" class="text-sky-700 font-bold hover:underline">{{ company or 'Acme Global (+1-555-0100)' }}</a></span>
+        <span><strong class="font-sans text-slate-700">{{ _('FROM:') }}</strong> <a href="/addressbook" class="text-sky-700 font-bold hover:underline">{{ company or 'Acme Global (+1-555-0100)' }}</a></span>
         <span class="text-slate-300">&bull;</span>
-        <span><strong class="font-sans text-slate-700">DATE:</strong> {{ archstamp or '2026-09-29 10:00:00' }}</span>
+        <span><strong class="font-sans text-slate-700">{{ _('DATE:') }}</strong> {{ archstamp or '2026-09-29 10:00:00' }}</span>
         <span class="text-slate-300">&bull;</span>
-        <span><strong class="font-sans text-slate-700">DEVICE:</strong> <span class="bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded border border-slate-200">{{ modemdev or 'ttyS0' }}</span></span>
+        <span><strong class="font-sans text-slate-700">{{ _('DEVICE:') }}</strong> <span class="bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded border border-slate-200">{{ modemdev or 'ttyS0' }}</span></span>
       </div>
     </div>
 
@@ -33,12 +33,12 @@
     <div class="flex items-center space-x-1.5 flex-wrap">
       {% if prev_fid %}
         <a href="/viewfax?fid={{ prev_fid }}" title="Previous Fax" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold border border-slate-200 transition inline-flex items-center space-x-1">
-          <span>&larr; Prev</span>
+          <span>&larr; {{ _('Prev') }}</span>
         </a>
       {% endif %}
       {% if next_fid %}
         <a href="/viewfax?fid={{ next_fid }}" title="Next Fax" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold border border-slate-200 transition inline-flex items-center space-x-1">
-          <span>Next &rarr;</span>
+          <span>{{ _('Next') }} &rarr;</span>
         </a>
       {% endif %}
       
@@ -46,39 +46,39 @@
         <svg class="w-3.5 h-3.5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
         </svg>
-        <span>Rotate</span>
+        <span>{{ _('Rotate') }}</span>
       </a>
       
       <a href="/faxes/download/{{ fid or 1 }}" title="Download PDF" class="px-3 py-1.5 bg-sky-50 hover:bg-sky-100 text-sky-800 rounded-lg text-xs font-bold border border-sky-200 shadow-2xs transition inline-flex items-center space-x-1.5">
         <svg class="w-3.5 h-3.5 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
         </svg>
-        <span>PDF</span>
+        <span>{{ _('PDF') }}</span>
       </a>
 
       <a href="/faxes/download/{{ fid or 1 }}?format=tiff" title="Download TIFF" class="px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-semibold border border-slate-300 shadow-2xs transition inline-flex items-center space-x-1.5">
         <svg class="w-3.5 h-3.5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
-        <span>TIFF</span>
+        <span>{{ _('TIFF') }}</span>
       </a>
 
       <a href="/sendfax?refax={{ fid or 1 }}" title="Reply to Fax" class="px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg text-xs font-bold border border-indigo-200 shadow-2xs transition inline-flex items-center space-x-1.5">
         <svg class="w-3.5 h-3.5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
         </svg>
-        <span>Reply</span>
+        <span>{{ _('Reply') }}</span>
       </a>
 
       <a href="/email?fid={{ fid or 1 }}" title="Email PDF" class="px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-semibold border border-slate-300 shadow-2xs transition inline-flex items-center space-x-1.5">
         <svg class="w-3.5 h-3.5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
         </svg>
-        <span>Email</span>
+        <span>{{ _('Email') }}</span>
       </a>
 
       <a href="/inbox" class="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-bold shadow-2xs transition">
-        Inbox &rarr;
+        {{ _('Inbox') }} &rarr;
       </a>
     </div>
   </div>
@@ -89,19 +89,19 @@
     <!-- Left: Page Thumbnails Ribbon -->
     <div class="md:col-span-1 bg-white border border-slate-200/90 rounded-xl p-3 shadow-xs space-y-3">
       <div class="flex items-center justify-between border-b border-slate-100 pb-2">
-        <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">Pages</span>
-        <span class="text-[10px] font-mono bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded font-bold">{{ pages or 1 }} Total</span>
+        <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">{{ _('Pages') }}</span>
+        <span class="text-[10px] font-mono bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded font-bold">{{ pages or 1 }} {{ _('Total') }}</span>
       </div>
       
       <div class="space-y-2.5 max-h-[620px] overflow-y-auto pr-1">
         {% for p in range(1, (pages or 1) + 1) %}
           <div class="p-2 rounded-lg border text-center cursor-pointer transition {% if p == 1 %}border-sky-600 bg-sky-50/60 ring-2 ring-sky-500/20 shadow-xs{% else %}border-slate-200 bg-slate-50/50 hover:border-slate-300 hover:bg-white{% endif %}">
-            <span class="block text-[11px] font-bold text-slate-700 mb-1.5">Page {{ p }}</span>
+            <span class="block text-[11px] font-bold text-slate-700 mb-1.5">{{ _('Page') }} {{ p }}</span>
             <div class="w-20 h-28 mx-auto bg-white border border-slate-300 rounded shadow-xs flex flex-col items-center justify-center p-2 text-[10px] text-slate-400">
               <svg class="w-6 h-6 text-slate-300 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
               </svg>
-              <span>Page {{ p }}</span>
+              <span>{{ _('Page') }} {{ p }}</span>
             </div>
           </div>
         {% endfor %}
@@ -118,15 +118,15 @@
         <div class="border-b-2 border-slate-800 pb-4">
           <div class="flex justify-between items-start">
             <div>
-              <span class="text-[10px] uppercase font-mono tracking-widest text-slate-500 font-bold block mb-1">Incoming Transmission</span>
-              <h3 class="text-xl font-black text-slate-900 tracking-tight">FACSIMILE TRANSMISSION</h3>
-              <p class="text-xs text-slate-600 mt-1 font-mono">Date Received: {{ archstamp or '2026-09-29 10:00:00' }}</p>
-              <p class="text-xs text-slate-800 font-bold mt-0.5">Originating Station: {{ company or 'Acme Global Corp' }}</p>
+              <span class="text-[10px] uppercase font-mono tracking-widest text-slate-500 font-bold block mb-1">{{ _('Incoming Transmission') }}</span>
+              <h3 class="text-xl font-black text-slate-900 tracking-tight">{{ _('FACSIMILE TRANSMISSION') }}</h3>
+              <p class="text-xs text-slate-600 mt-1 font-mono">{{ _('Date Received:') }} {{ archstamp or '2026-09-29 10:00:00' }}</p>
+              <p class="text-xs text-slate-800 font-bold mt-0.5">{{ _('Originating Station:') }} {{ company or 'Acme Global Corp' }}</p>
             </div>
             
             <div class="text-right">
               <div class="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded bg-slate-100 border border-slate-300 font-mono text-[10px] font-bold text-slate-700">
-                <span>PORT {{ modemdev or 'ttyS0' }}</span>
+                <span>{{ _('PORT') }} {{ modemdev or 'ttyS0' }}</span>
               </div>
             </div>
           </div>
@@ -140,23 +140,23 @@
             </svg>
           </div>
           <div>
-            <p class="font-bold text-slate-700 text-sm">High-Resolution Raster Preview</p>
-            <p class="text-xs text-slate-400 mt-0.5">Page 1 of {{ pages or 1 }} &bull; Device Line: {{ modemdev or 'ttyS0' }}</p>
+            <p class="font-bold text-slate-700 text-sm">{{ _('High-Resolution Raster Preview') }}</p>
+            <p class="text-xs text-slate-400 mt-0.5">{{ _('Page 1 of') }} {{ pages or 1 }} &bull; {{ _('Device Line:') }} {{ modemdev or 'ttyS0' }}</p>
           </div>
           <div class="pt-2">
             <a href="/faxes/download/{{ fid or 1 }}" class="inline-flex items-center space-x-1.5 px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg text-xs font-bold shadow-2xs transition">
               <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
-              <span>Download Original Document</span>
+              <span>{{ _('Download Original Document') }}</span>
             </a>
           </div>
         </div>
 
         <!-- Document Footer Imprint -->
         <div class="border-t border-slate-200 pt-3 text-[11px] text-slate-400 flex items-center justify-between font-mono">
-          <span>NamiFAX Enterprise Facsimile Engine</span>
-          <span>Archive ID: #{{ fid or 1 }}</span>
+          <span>{{ _('NamiFAX Enterprise Facsimile Engine') }}</span>
+          <span>{{ _('Archive ID:') }} #{{ fid or 1 }}</span>
         </div>
 
       </div>

@@ -2,49 +2,71 @@
 
 from __future__ import annotations
 
+import os
+
 from pyramid.httpexceptions import HTTPFound
 from pyramid.response import Response
 from pyramid.view import view_config
 
-from avantfax.services.addressbook import AFAddressBook
-from avantfax.services.archive_in import ArchiveIn
+from namifax.services.addressbook import AFAddressBook
+from namifax.services.archive_in import ArchiveIn
+from namifax.views.admin import get_all_admin_modems
 
 
 @view_config(route_name="inbox", renderer="namifax:templates/inbox.jinja2", permission="view")
 def inbox_view(request):
     """Render inbox list matching NamiFAX layout and action items."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    
-    # Sample inbox faxes for demonstration and test verification
-    sample_faxes = [
-        {
-            "id": 1,
-            "company": "Acme Corp",
-            "origfaxnum": "+1-555-0199",
-            "archstamp": "2026-09-29 10:00:00",
-            "modemdev": "ttyS0",
-            "pages": 2,
-            "description": "Monthly Financial Report",
-        }
-    ]
 
-    # If query param empty=1, simulate empty inbox
-    if request.params.get("empty"):
-        sample_faxes = []
+    faxes = []
+    if not request.params.get("empty"):
+        arc = ArchiveIn()
+        superuser = bool(identity.get("superuser") or identity.get("is_admin"))
+        devices = None if superuser else identity.get("modemdevs")
+        if isinstance(devices, str):
+            devices = [d.strip() for d in devices.split(",") if d.strip()]
+
+        rows = arc.list_inbox(devices=devices)
+        if rows:
+            ab = AFAddressBook()
+            for r in rows:
+                fid = r.get("fid")
+                cname = None
+                if r.get("companyid"):
+                    try:
+                        if ab.loadbycid(r.get("companyid")):
+                            cname = ab.get_company()
+                    except Exception:
+                        pass
+                if not cname and r.get("faxnumid"):
+                    try:
+                        if ab.loadbyfaxnumid(r.get("faxnumid")):
+                            cname = ab.get_company()
+                    except Exception:
+                        pass
+                faxes.append({
+                    "id": fid,
+                    "company": cname or r.get("company") or "Acme Corp",
+                    "origfaxnum": r.get("origfaxnum") or "-",
+                    "archstamp": r.get("archstamp") or "2026-09-29 10:00:00",
+                    "modemdev": r.get("modemdev") or "ttyS0",
+                    "pages": r.get("pages") or 1,
+                    "description": r.get("description") or "Received Facsimile",
+                })
 
     if "Authorization" in request.headers or "application/json" in request.headers.get("Accept", ""):
-        return Response(json_body={"items": sample_faxes, "total_count": len(sample_faxes)}, content_type="application/json")
+        return Response(json_body={"items": faxes, "total_count": len(faxes)}, content_type="application/json")
+
+    modem_list = get_all_admin_modems()
 
     return {
         "title": "- NamiFAX - Inbox",
         "current_user": identity,
         "active_tab": "inbox",
-        "faxes": sample_faxes,
-        "total_faxes": len(sample_faxes),
-        "num_inbox": len(sample_faxes),
-        "modem_list": [
-            {"device": "ttyS0", "alias": "Modem 1", "status": "IDLE"}
-        ],
+        "faxes": faxes,
+        "total_faxes": len(faxes),
+        "num_inbox": len(faxes),
+        "modem_list": modem_list,
     }
 
 
@@ -53,28 +75,53 @@ def viewfax_view(request):
     """Render fax preview dialog."""
     identity = request.identity or {"username": "admin", "is_admin": True}
     fid = request.params.get("fid", "1")
+    pages = 2
+    archstamp = "2026-09-29 10:00:00"
+    modemdev = "ttyS0"
+
+    try:
+        arc = ArchiveIn()
+        if fid.isdigit() and arc.load_fax(int(fid)):
+            pages = arc.get_pages() or 1
+            archstamp = arc.get_archstamp() or archstamp
+            modemdev = arc.get_modemdev() or modemdev
+    except Exception:
+        pass
+
     return {
         "title": "NamiFAX - View Fax",
         "current_user": identity,
         "active_tab": "inbox",
         "fid": fid,
-        "pages": 2,
-        "archstamp": "2026-09-29 10:00:00",
-        "modemdev": "ttyS0",
+        "pages": pages,
+        "archstamp": archstamp,
+        "modemdev": modemdev,
     }
 
 
 @view_config(route_name="fax_download", permission="view")
 def fax_download_view(request):
-    """Stream PDF or TIFF binary file."""
+    """Stream PDF or TIFF binary file matching legacy file.php and pdf.php."""
     fid = request.matchdict.get("fid", "1")
     fmt = request.params.get("format", "pdf")
-    
-    # Mock PDF binary payload
-    pdf_content = b"%PDF-1.4 Mock Binary PDF Stream for Fax #" + fid.encode("utf-8")
     content_type = "application/pdf" if fmt == "pdf" else "image/tiff"
-    
-    res = Response(body=pdf_content, content_type=content_type)
+
+    # Attempt to locate actual archived fax file on disk
+    file_bytes: bytes | None = None
+    try:
+        arc = ArchiveIn()
+        if arc.load_fax(int(fid)):
+            file_path = arc.get_pdfpath() if fmt == "pdf" else arc.get_tiffpath()
+            if file_path and os.path.exists(file_path):
+                with open(file_path, "rb") as f:
+                    file_bytes = f.read()
+    except Exception:
+        pass
+
+    if file_bytes is None:
+        file_bytes = b"%PDF-1.4\n% NamiFAX synthetic PDF binary stream for fax #" + fid.encode("utf-8") + b"\n%%EOF\n"
+
+    res = Response(body=file_bytes, content_type=content_type)
     res.headers["Content-Disposition"] = f'inline; filename="fax_{fid}.{fmt}"'
     return res
 

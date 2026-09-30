@@ -14,13 +14,13 @@
         </svg>
       </div>
       <div>
-        <h2 class="text-base font-bold text-white tracking-tight">Configure Cover Pages</h2>
-        <p class="text-xs text-slate-400">Manage facsimile PostScript cover page templates and layouts</p>
+        <h2 class="text-base font-bold text-white tracking-tight">{{ _('Configure Cover Pages') }}</h2>
+        <p class="text-xs text-slate-400">{{ _('Manage facsimile PostScript cover page templates and layouts') }}</p>
       </div>
     </div>
 
     <a href="/admin/covers" class="inline-flex items-center space-x-1.5 px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg text-xs font-bold shadow-2xs transition">
-      <span>+ New Cover Page</span>
+      <span>+ {{ _('New Cover Page') }}</span>
     </a>
   </div>
 
@@ -43,7 +43,7 @@
     <div class="bg-slate-950/60 border border-slate-800/90 rounded-xl p-5 space-y-4">
       <div class="flex items-center space-x-2 border-b border-slate-800 pb-3">
         <span class="w-2 h-2 rounded-full bg-sky-500"></span>
-        <h3 class="text-xs font-bold text-white uppercase tracking-wider">Available Cover Pages</h3>
+        <h3 class="text-xs font-bold text-white uppercase tracking-wider">{{ _('Available Cover Pages') }}</h3>
       </div>
 
       <div class="divide-y divide-slate-800/60 border border-slate-800/80 rounded-xl overflow-hidden text-xs">
@@ -56,7 +56,7 @@
             </div>
             <div class="flex items-center space-x-2">
               <span class="text-[10px] font-mono bg-slate-900 text-slate-400 border border-slate-800 px-2 py-0.5 rounded">ID: {{ cid }}</span>
-              <a href="/admin/covers?cover_id={{ cid }}" class="inline-flex items-center px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-sky-400 text-[11px] font-semibold border border-slate-700 transition">Edit</a>
+              <a href="/admin/covers?cover_id={{ cid }}" class="inline-flex items-center px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-sky-400 text-[11px] font-semibold border border-slate-700 transition">{{ _('Edit') }}</a>
             </div>
           </div>
         {% endfor %}
@@ -69,24 +69,24 @@
         <div class="flex items-center space-x-2">
           <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
           <h3 class="text-xs font-bold text-white uppercase tracking-wider">
-            {% if selected_cover %}Edit Cover Page ({{ selected_cover.title }}){% else %}Add Cover Page{% endif %}
+            {% if selected_cover %}{{ _('Edit Cover Page') }} ({{ selected_cover.title }}){% else %}{{ _('Add Cover Page') }}{% endif %}
           </h3>
         </div>
         {% if selected_cover %}
-          <span class="px-2 py-0.5 bg-amber-950 text-amber-300 border border-amber-800 text-[10px] font-bold rounded">EDIT MODE</span>
+          <span class="px-2 py-0.5 bg-amber-950 text-amber-300 border border-amber-800 text-[10px] font-bold rounded">{{ _('EDIT MODE') }}</span>
         {% else %}
-          <span class="px-2 py-0.5 bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-bold rounded">NEW</span>
+          <span class="px-2 py-0.5 bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-bold rounded">{{ _('NEW') }}</span>
         {% endif %}
       </div>
 
       <form action="/admin/covers{% if selected_cover %}?cover_id={{ selected_cover.cover_id }}{% endif %}" method="post" class="space-y-4 text-xs">
         <div>
-          <label for="title" class="block font-semibold text-slate-300 text-xs mb-1.5">Title *</label>
+          <label for="title" class="block font-semibold text-slate-300 text-xs mb-1.5">{{ _('Title') }} *</label>
           <input type="text" name="title" id="title" required value="{{ selected_cover.title if selected_cover else '' }}" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition" />
         </div>
 
         <div>
-          <label for="file" class="block font-semibold text-slate-300 text-xs mb-1.5">File *</label>
+          <label for="file" class="block font-semibold text-slate-300 text-xs mb-1.5">{{ _('File') }} *</label>
           <input type="text" name="file" id="file" required value="{{ selected_cover.file if selected_cover else '' }}" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white font-mono focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition" placeholder="e.g. custom.ps" />
         </div>
 
@@ -97,11 +97,11 @@
 
         <div class="pt-3 border-t border-slate-800 flex items-center justify-end space-x-2">
           {% if selected_cover %}
-            <a href="/admin/covers" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg font-semibold text-xs transition">Cancel</a>
-            <button type="submit" name="delete" value="1" onclick="return confirm('Delete this cover page template?');" class="px-4 py-2 bg-rose-900 hover:bg-rose-800 text-white rounded-lg font-bold text-xs transition">Delete</button>
-            <button type="submit" name="save" value="1" class="px-6 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold text-xs shadow-2xs transition">Save</button>
+            <a href="/admin/covers" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg font-semibold text-xs transition">{{ _('Cancel') }}</a>
+            <button type="submit" name="delete" value="1" onclick="return confirm('Delete this cover page template?');" class="px-4 py-2 bg-rose-900 hover:bg-rose-800 text-white rounded-lg font-bold text-xs transition">{{ _('Delete') }}</button>
+            <button type="submit" name="save" value="1" class="px-6 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold text-xs shadow-2xs transition">{{ _('Save') }}</button>
           {% else %}
-            <button type="submit" name="create" value="1" class="px-6 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold text-xs shadow-2xs transition">Save</button>
+            <button type="submit" name="create" value="1" class="px-6 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold text-xs shadow-2xs transition">{{ _('Save') }}</button>
           {% endif %}
         </div>
       </form>

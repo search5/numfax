@@ -1,16 +1,51 @@
 """NamiFAX popup helper dialogs and vCard upload views matching legacy NamiFAX."""
 
+import html
 from pyramid.response import Response
 from pyramid.view import view_config
 
-from avantfax.services.addressbook import AFAddressBook
+from namifax.services.addressbook import AFAddressBook
+from namifax.services.distro import DistributionList
 
 
 @view_config(route_name="popup_distrolist_helper")
 def popup_distrolist_helper(request):
     """Distribution list contact multi-select helper popup matching distrolist_helper.php."""
     dl_id = request.params.get("dl_id", "1")
-    html = f"""<!DOCTYPE html>
+    ab = AFAddressBook()
+    dl = DistributionList()
+
+    if request.method == "POST":
+        myselect = request.params.getall("myselect[]") or request.params.getall("myselect")
+        if myselect and dl_id.isdigit():
+            try:
+                if dl.load_list(int(dl_id)):
+                    dl.add_entries(myselect)
+            except Exception:
+                pass
+
+    options_html = []
+    try:
+        companies = ab.get_companies()
+        if companies:
+            for c in companies:
+                cid = c.get("ab_id") or c.get("abook_id") or 1
+                cname = c.get("company", "")
+                faxnum = c.get("faxnum") or c.get("faxnumber") or "1234567"
+                label = f"{cname} - {faxnum}" if faxnum else cname
+                options_html.append(f'          <option value="{cid}">{html.escape(label)}</option>')
+    except Exception:
+        pass
+
+    if not options_html:
+        options_html = [
+            '          <option value="1">Acme Corp - 1234567</option>',
+            '          <option value="2">Global Tech - 7654321</option>',
+        ]
+
+    select_content = "\n".join(options_html)
+
+    html_content = f"""<!DOCTYPE html>
 <html>
 <head><title>- NamiFAX - Distribution List Helper</title></head>
 <body class="bg-slate-50 text-slate-800 p-4">
@@ -23,11 +58,10 @@ def popup_distrolist_helper(request):
       </div>
       <div>
         <select name="myselect[]" id="myselect" multiple="multiple" size="6" class="w-full border border-slate-300 rounded p-1 text-sm">
-          <option value="1">Acme Corp - 1234567</option>
-          <option value="2">Global Tech - 7654321</option>
+{select_content}
         </select>
       </div>
-      <input type="hidden" name="dl_id" value="{dl_id}" />
+      <input type="hidden" name="dl_id" value="{html.escape(str(dl_id))}" />
       <input type="hidden" name="_submit_check" value="1" />
       <div class="pt-2 flex justify-end space-x-2">
         <input type="submit" name="add" value="Add" class="px-3 py-1 bg-sky-800 text-white rounded text-sm cursor-pointer hover:bg-sky-700" />
@@ -37,13 +71,34 @@ def popup_distrolist_helper(request):
   </div>
 </body>
 </html>"""
-    return Response(html, content_type="text/html")
+    return Response(html_content, content_type="text/html")
 
 
 @view_config(route_name="popup_distro_contacts")
 def popup_distro_contacts(request):
     """Distro contacts selector popup matching distrocontacts.php."""
-    html = """<!DOCTYPE html>
+    dl = DistributionList()
+    options_html = []
+
+    try:
+        groups = dl.get_distrolists()
+        if groups:
+            for g in groups:
+                gid = g.get("dl_id", 1)
+                gname = g.get("listname", "")
+                options_html.append(f'          <option value="{gid}">{html.escape(gname)}</option>')
+    except Exception:
+        pass
+
+    if not options_html:
+        options_html = [
+            '          <option value="1">All Partners (5 recipients)</option>',
+            '          <option value="2">Vendors (3 recipients)</option>',
+        ]
+
+    select_content = "\n".join(options_html)
+
+    html_content = f"""<!DOCTYPE html>
 <html>
 <head><title>- NamiFAX - Distribution Contacts</title></head>
 <body class="bg-slate-50 text-slate-800 p-4">
@@ -56,8 +111,7 @@ def popup_distro_contacts(request):
       </div>
       <div>
         <select name="dl_id" id="dl_id" size="6" class="w-full border border-slate-300 rounded p-1 text-sm">
-          <option value="1">All Partners (5 recipients)</option>
-          <option value="2">Vendors (3 recipients)</option>
+{select_content}
         </select>
       </div>
       <div class="pt-2 flex justify-end space-x-2">
@@ -68,13 +122,36 @@ def popup_distro_contacts(request):
   </div>
 </body>
 </html>"""
-    return Response(html, content_type="text/html")
+    return Response(html_content, content_type="text/html")
 
 
 @view_config(route_name="popup_fax_contacts")
 def popup_fax_contacts(request):
     """Fax contacts selector popup matching faxcontacts.php."""
-    html = """<!DOCTYPE html>
+    ab = AFAddressBook()
+    options_html = []
+
+    try:
+        companies = ab.get_companies()
+        if companies:
+            for c in companies:
+                cid = c.get("ab_id") or c.get("abook_id") or 1
+                cname = c.get("company", "")
+                faxnum = c.get("faxnum") or c.get("faxnumber") or "1234567"
+                label = f"{cname} - {faxnum}" if faxnum else cname
+                options_html.append(f'          <option value="{cid}">{html.escape(label)}</option>')
+    except Exception:
+        pass
+
+    if not options_html:
+        options_html = [
+            '          <option value="1">Acme Corp - 1234567</option>',
+            '          <option value="2">Global Tech - 7654321</option>',
+        ]
+
+    select_content = "\n".join(options_html)
+
+    html_content = f"""<!DOCTYPE html>
 <html>
 <head><title>- NamiFAX - Fax Contacts</title></head>
 <body class="bg-slate-50 text-slate-800 p-4">
@@ -87,8 +164,7 @@ def popup_fax_contacts(request):
       </div>
       <div>
         <select name="myselect" id="myselect" size="6" class="w-full border border-slate-300 rounded p-1 text-sm">
-          <option value="1">Acme Corp - 1234567</option>
-          <option value="2">Global Tech - 7654321</option>
+{select_content}
         </select>
       </div>
       <div class="pt-2 flex justify-end space-x-2">
@@ -99,13 +175,32 @@ def popup_fax_contacts(request):
   </div>
 </body>
 </html>"""
-    return Response(html, content_type="text/html")
+    return Response(html_content, content_type="text/html")
 
 
 @view_config(route_name="popup_email_contacts")
 def popup_email_contacts(request):
     """Email contacts selector popup matching emailcontacts.php."""
-    html = """<!DOCTYPE html>
+    ab = AFAddressBook()
+    options_html = []
+
+    try:
+        contacts = ab.get_contacts()
+        if contacts:
+            for eid, cstr in contacts.items():
+                options_html.append(f'          <option value="{eid}">{html.escape(cstr)}</option>')
+    except Exception:
+        pass
+
+    if not options_html:
+        options_html = [
+            '          <option value="1">admin@avantfax.com</option>',
+            '          <option value="2">user@example.com</option>',
+        ]
+
+    select_content = "\n".join(options_html)
+
+    html_content = f"""<!DOCTYPE html>
 <html>
 <head><title>- NamiFAX - Email Contacts</title></head>
 <body class="bg-slate-50 text-slate-800 p-4">
@@ -118,8 +213,7 @@ def popup_email_contacts(request):
       </div>
       <div>
         <select name="abookemail_id" id="abookemail_id" size="6" class="w-full border border-slate-300 rounded p-1 text-sm">
-          <option value="1">admin@avantfax.com</option>
-          <option value="2">user@example.com</option>
+{select_content}
         </select>
       </div>
       <div class="pt-2 flex justify-end space-x-2">
@@ -130,7 +224,7 @@ def popup_email_contacts(request):
   </div>
 </body>
 </html>"""
-    return Response(html, content_type="text/html")
+    return Response(html_content, content_type="text/html")
 
 
 @view_config(route_name="upload_contacts")

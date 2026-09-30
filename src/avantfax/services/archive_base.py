@@ -120,7 +120,9 @@ class FaxPDFArchive:
                 else:
                     myroutes.append(f"modemdev = {qdev}")
 
-        if myroutes:
+        if devices is None:
+            self.sqlroutes = ""
+        elif myroutes:
             self.sqlroutes = " AND (" + " OR ".join(myroutes) + ")"
         else:
             self.sqlroutes = " AND modemdev = '' "

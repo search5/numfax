@@ -10,12 +10,12 @@
   <!-- Page Header -->
   <div class="flex items-center justify-between">
     <div>
-      <h1 class="text-xl font-bold text-slate-900">Archive Search</h1>
-      <p class="text-sm text-slate-500 mt-0.5">Search all sent and received fax records by date, company, or fax number.</p>
+      <h1 class="text-xl font-bold text-slate-900">{{ _('Archive Search') }}</h1>
+      <p class="text-sm text-slate-500 mt-0.5">{{ _('Search all sent and received fax records by date, company, or fax number.') }}</p>
     </div>
     {% if results %}
     <span class="inline-flex items-center px-3 py-1.5 bg-slate-100 border border-slate-200 text-slate-700 rounded-full text-sm font-semibold">
-      {{ results|length }} result{{ 's' if results|length != 1 else '' }}
+      {{ results|length }} {{ _('results') if results|length != 1 else _('result') }}
     </span>
     {% endif %}
   </div>
@@ -23,14 +23,14 @@
   <!-- Search Form -->
   <form action="/archive" method="get" class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
     <div class="px-5 py-4 border-b border-slate-100 bg-slate-50/60">
-      <h2 class="text-sm font-semibold text-slate-900">Search Filters</h2>
-      <p class="text-xs text-slate-400 mt-0.5">Leave filters empty to search all records. Narrow results by adding more criteria.</p>
+      <h2 class="text-sm font-semibold text-slate-900">{{ _('Search Filters') }}</h2>
+      <p class="text-xs text-slate-400 mt-0.5">{{ _('Leave filters empty to search all records. Narrow results by adding more criteria.') }}</p>
     </div>
 
     <div class="p-5 space-y-4">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div>
-          <label for="search" class="block text-sm font-semibold text-slate-800 mb-1">Keyword</label>
+          <label for="search" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('Keyword') }}</label>
           <input type="text" name="search" id="search" value="{{ search or '' }}"
                  placeholder="Company, number, notes..."
                  class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white
@@ -38,18 +38,18 @@
         </div>
 
         <div>
-          <label for="category" class="block text-sm font-semibold text-slate-800 mb-1">Categories</label>
+          <label for="category" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('Categories') }}</label>
           <select name="category" id="category"
                   class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white
                          focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm">
-            <option value="">All Categories</option>
-            <option value="invoices" {% if category == 'invoices' %}selected{% endif %}>Invoices / Orders</option>
-            <option value="legal"    {% if category == 'legal' %}selected{% endif %}>Legal / Contracts</option>
+            <option value="">{{ _('All Categories') }}</option>
+            <option value="invoices" {% if category == 'invoices' %}selected{% endif %}>{{ _('Invoices / Orders') }}</option>
+            <option value="legal"    {% if category == 'legal' %}selected{% endif %}>{{ _('Legal / Contracts') }}</option>
           </select>
         </div>
 
         <div>
-          <label for="date_from" class="block text-sm font-semibold text-slate-800 mb-1">From Date</label>
+          <label for="date_from" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('From Date') }}</label>
           <input type="text" name="date_from" id="date_from" value="{{ date_from or '' }}"
                  placeholder="YYYY-MM-DD"
                  class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm font-mono text-slate-900 bg-white
@@ -57,7 +57,7 @@
         </div>
 
         <div>
-          <label for="date_to" class="block text-sm font-semibold text-slate-800 mb-1">To Date</label>
+          <label for="date_to" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('To Date') }}</label>
           <input type="text" name="date_to" id="date_to" value="{{ date_to or '' }}"
                  placeholder="YYYY-MM-DD"
                  class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm font-mono text-slate-900 bg-white
@@ -67,18 +67,18 @@
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-slate-100 items-end">
         <div>
-          <label for="sentrecvd" class="block text-sm font-semibold text-slate-800 mb-1">Direction</label>
+          <label for="sentrecvd" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('Direction') }}</label>
           <select name="sentrecvd" id="sentrecvd"
                   class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white
                          focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm">
-            <option value="">Sent &amp; Received</option>
-            <option value="inbox" {% if sentrecvd == 'inbox' %}selected{% endif %}>Received only</option>
-            <option value="sent"  {% if sentrecvd == 'sent' %}selected{% endif %}>Sent only</option>
+            <option value="">{{ _('Sent & Received') }}</option>
+            <option value="inbox" {% if sentrecvd == 'inbox' %}selected{% endif %}>{{ _('Received only') }}</option>
+            <option value="sent"  {% if sentrecvd == 'sent' %}selected{% endif %}>{{ _('Sent only') }}</option>
           </select>
         </div>
 
         <div>
-          <label for="faxid" class="block text-sm font-semibold text-slate-800 mb-1">Fax ID</label>
+          <label for="faxid" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('Fax ID') }}</label>
           <input type="text" name="faxid" id="faxid" value="{{ faxid or '' }}"
                  placeholder="e.g. 104"
                  class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm font-mono text-slate-900 bg-white
@@ -88,14 +88,14 @@
         <div class="lg:col-span-2 flex items-end gap-2 justify-end">
           <a href="/archive"
              class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-semibold transition-colors">
-            Reset
+            {{ _('Reset') }}
           </a>
           <button type="submit"
                   class="inline-flex items-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-bold shadow-sm transition-colors">
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
             </svg>
-            Search
+            {{ _('Search') }}
           </button>
         </div>
       </div>
@@ -107,18 +107,18 @@
     {% if results and results|length > 0 %}
     <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
       <div class="px-5 py-4 border-b border-slate-100 bg-slate-50/60 flex items-center justify-between">
-        <h2 class="text-sm font-semibold text-slate-900">Results — "{{ search or faxid }}"</h2>
-        <span class="text-xs text-slate-500">{{ results|length }} record{{ 's' if results|length != 1 else '' }}</span>
+        <h2 class="text-sm font-semibold text-slate-900">{{ _('Results') }} — "{{ search or faxid }}"</h2>
+        <span class="text-xs text-slate-500">{{ results|length }} {{ _('records') if results|length != 1 else _('record') }}</span>
       </div>
       <div class="overflow-x-auto">
         <table class="w-full text-left">
           <thead>
             <tr class="border-b border-slate-100 bg-slate-50/80">
-              <th class="py-3 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Sender</th>
-              <th class="py-3 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Description</th>
-              <th class="py-3 px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider text-center">Pages</th>
-              <th class="py-3 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Date</th>
-              <th class="py-3 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider text-right">Actions</th>
+              <th class="py-3 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">{{ _('Sender') }}</th>
+              <th class="py-3 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">{{ _('Description') }}</th>
+              <th class="py-3 px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider text-center">{{ _('Pages') }}</th>
+              <th class="py-3 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">{{ _('Date') }}</th>
+              <th class="py-3 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider text-right">{{ _('Actions') }}</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-100">
@@ -144,7 +144,7 @@
                 <div class="inline-flex items-center gap-1">
                   <a href="/viewfax?fid={{ r.id }}"
                      class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-colors shadow-sm">
-                    View
+                    {{ _('View') }}
                   </a>
                   <a href="/faxes/download/{{ r.id }}?format=pdf"
                      class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-medium rounded-lg transition-colors">
@@ -152,7 +152,7 @@
                   </a>
                   <a href="/sendfax?refax={{ r.id }}"
                      class="inline-flex items-center gap-1 px-2.5 py-1.5 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-medium rounded-lg transition-colors">
-                    Re-send
+                    {{ _('Re-send') }}
                   </a>
                 </div>
               </td>
@@ -170,9 +170,9 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
       </div>
-      <h3 class="text-base font-bold text-slate-800">No results found</h3>
-      <p class="text-sm text-slate-500 mt-1.5">Try adjusting your search terms or date range.</p>
-      <a href="/archive" class="mt-4 inline-block text-sm text-blue-600 hover:underline font-medium">Reset filters</a>
+      <h3 class="text-base font-bold text-slate-800">{{ _('No results found') }}</h3>
+      <p class="text-sm text-slate-500 mt-1.5">{{ _('Try adjusting your search terms or date range.') }}</p>
+      <a href="/archive" class="mt-4 inline-block text-sm text-blue-600 hover:underline font-medium">{{ _('Reset filters') }}</a>
     </div>
     {% endif %}
 
@@ -184,9 +184,9 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
       </svg>
     </div>
-    <h3 class="text-base font-bold text-slate-800">Search the Archive</h3>
+    <h3 class="text-base font-bold text-slate-800">{{ _('Search the Archive') }}</h3>
     <p class="text-sm text-slate-500 mt-2 max-w-sm mx-auto">
-      Enter a keyword or filter above and click <strong>Search</strong> to find fax records.
+      {{ _('Enter a keyword or filter above and click Search to find fax records.') }}
     </p>
   </div>
   {% endif %}

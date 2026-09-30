@@ -20,8 +20,8 @@
           </svg>
         </div>
         <div>
-          <h1 class="text-sm font-bold text-slate-900 tracking-tight">Assign Company Name</h1>
-          <p class="text-[11px] text-slate-500">Associate document with registered enterprise contact</p>
+          <h1 class="text-sm font-bold text-slate-900 tracking-tight">{{ _('Assign Company Name') }}</h1>
+          <p class="text-[11px] text-slate-500">{{ _('Associate document with registered enterprise contact') }}</p>
         </div>
       </div>
       <button type="button" onclick="window.close()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition">
@@ -34,12 +34,12 @@
     <!-- Modal Form (Strict W32 Sequence Contract) -->
     <form action="/assign" method="post" class="p-6 space-y-4 text-xs">
       <div>
-        <label for="regexp" class="block font-semibold text-slate-700 text-xs mb-1.5">Search Company Name</label>
+        <label for="regexp" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Search Company Name') }}</label>
         <input type="text" name="regexp" id="regexp" placeholder="Type company name to filter..." class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" />
       </div>
 
       <div>
-        <label for="myselect" class="block font-semibold text-slate-700 text-xs mb-1.5">Select Contact Record</label>
+        <label for="myselect" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Select Contact Record') }}</label>
         <select name="myselect" id="myselect" size="5" class="w-full border border-slate-300 rounded-lg p-2 bg-slate-50/50 text-slate-900 font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition">
           {% for c in companies %}
             <option value="{{ c.id }}" class="py-1 px-2 hover:bg-sky-50 rounded">{{ c.name }}</option>
@@ -53,10 +53,10 @@
       <!-- Action Buttons (Strict Sequence: Cancel -> Save) -->
       <div class="pt-4 border-t border-slate-100 flex items-center justify-end space-x-2.5">
         <button type="button" onclick="window.close()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-semibold text-xs transition">
-          Cancel
+          {{ _('Cancel') }}
         </button>
         <button type="submit" class="px-5 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold text-xs shadow-2xs transition">
-          Save
+          {{ _('Save') }}
         </button>
       </div>
     </form>

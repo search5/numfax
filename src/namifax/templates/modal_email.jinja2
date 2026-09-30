@@ -20,8 +20,8 @@
           </svg>
         </div>
         <div>
-          <h1 class="text-sm font-bold text-slate-900 tracking-tight">Send Fax via Email</h1>
-          <p class="text-[11px] text-slate-500">Dispatch PDF document attachment to email recipients</p>
+          <h1 class="text-sm font-bold text-slate-900 tracking-tight">{{ _('Send Fax via Email') }}</h1>
+          <p class="text-[11px] text-slate-500">{{ _('Dispatch PDF document attachment to email recipients') }}</p>
         </div>
       </div>
       <button type="button" onclick="window.close()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition">
@@ -34,17 +34,17 @@
     <!-- Modal Form (Strict W31 Sequence Contract) -->
     <form action="/email" method="post" class="p-6 space-y-4 text-xs">
       <div>
-        <label for="emails" class="block font-semibold text-slate-700 text-xs mb-1.5">Recipients *</label>
+        <label for="emails" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Recipients') }} *</label>
         <textarea name="emails" id="emails" rows="3" required class="w-full border border-slate-300 rounded-lg p-3 bg-slate-50/50 text-slate-900 font-mono text-[11px] focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="recipient@example.com (comma separated)">{{ emails }}</textarea>
       </div>
 
       <div>
-        <label for="subject" class="block font-semibold text-slate-700 text-xs mb-1.5">Subject</label>
+        <label for="subject" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Subject') }}</label>
         <input type="text" name="subject" id="subject" value="{{ subject }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="NamiFAX Transmission Document" />
       </div>
 
       <div>
-        <label for="msg" class="block font-semibold text-slate-700 text-xs mb-1.5">Message</label>
+        <label for="msg" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Message') }}</label>
         <textarea name="msg" id="msg" rows="3" class="w-full border border-slate-300 rounded-lg p-3 bg-slate-50/50 text-slate-900 text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="Please find the attached facsimile document.">{{ msg }}</textarea>
       </div>
 
@@ -54,10 +54,10 @@
       <!-- Action Buttons (Strict Sequence: Cancel -> Send) -->
       <div class="pt-4 border-t border-slate-100 flex items-center justify-end space-x-2.5">
         <button type="button" onclick="window.close()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-semibold text-xs transition">
-          Cancel
+          {{ _('Cancel') }}
         </button>
         <button type="submit" class="px-5 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold text-xs shadow-2xs transition">
-          Send
+          {{ _('Send') }}
         </button>
       </div>
     </form>

@@ -31,6 +31,14 @@ def create_app(global_config=None, **settings):
             config.add_translation_dirs("namifax:locale")
             config.set_locale_negotiator(custom_locale_negotiator)
 
+            # Initialize DB tables and seed data
+            try:
+                from namifax.db.engine import get_default_engine
+                from namifax.db.schema import init_database_tables
+                init_database_tables(get_default_engine())
+            except Exception:
+                pass
+
             # Include Jinja2 and SQLAlchemy models
             config.include("pyramid_jinja2")
             config.include(".models")
