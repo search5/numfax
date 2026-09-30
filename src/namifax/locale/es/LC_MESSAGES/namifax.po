@@ -1,9 +1,9 @@
-# English translations for NamiFAX Enterprise
+# Español (Spanish) translations for NamiFAX Enterprise
 msgid ""
 msgstr ""
 "Project-Id-Version: NamiFAX 4.0.0
 "
-"Language: en
+"Language: es
 "
 "MIME-Version: 1.0
 "
@@ -13,28 +13,28 @@ msgstr ""
 "
 
 msgid "Inbox"
-msgstr "Inbox"
+msgstr "Entrada"
 
 msgid "Send Fax"
-msgstr "Send Fax"
+msgstr "Enviar Fax"
 
 msgid "Outbox"
-msgstr "Outbox"
+msgstr "Salida"
 
 msgid "Archive"
-msgstr "Archive"
+msgstr "Archivo"
 
 msgid "Contacts"
-msgstr "Contacts"
+msgstr "Contactos"
 
 msgid "Address Book"
 msgstr "Address Book"
 
 msgid "Settings"
-msgstr "Settings"
+msgstr "Configuración"
 
 msgid "Logout"
-msgstr "Logout"
+msgstr "Salir"
 
 msgid "Admin"
 msgstr "Admin"
@@ -49,16 +49,16 @@ msgid "Sign in"
 msgstr "Sign in"
 
 msgid "Username"
-msgstr "Username"
+msgstr "nombre de usuario"
 
 msgid "Password"
-msgstr "Password"
+msgstr "contraseña"
 
 msgid "Forgot password?"
 msgstr "Forgot password?"
 
 msgid "View"
-msgstr "View"
+msgstr "Ver Fax"
 
 msgid "PDF"
 msgstr "PDF"
@@ -67,28 +67,28 @@ msgid "Reply"
 msgstr "Reply"
 
 msgid "Delete"
-msgstr "Delete"
+msgstr "Borrar"
 
 msgid "Rotate"
 msgstr "Rotate"
 
 msgid "Search"
-msgstr "Search"
+msgstr "Buscar"
 
 msgid "Reset"
 msgstr "Reset"
 
 msgid "Cancel"
-msgstr "Cancel"
+msgstr "Cancelar"
 
 msgid "Save"
-msgstr "Save"
+msgstr "Guardar"
 
 msgid "Send"
-msgstr "Send"
+msgstr "Enviar"
 
 msgid "Edit"
-msgstr "Edit"
+msgstr "Editar"
 
 msgid "Retry"
 msgstr "Retry"
@@ -97,10 +97,10 @@ msgid "Destination Number"
 msgstr "Destination Number"
 
 msgid "Attention To"
-msgstr "Attention To"
+msgstr "Persona destino"
 
 msgid "Company"
-msgstr "Company"
+msgstr "Compañía"
 
 msgid "Subject / Regarding"
 msgstr "Subject / Regarding"
@@ -109,7 +109,7 @@ msgid "Cover Page"
 msgstr "Cover Page"
 
 msgid "Priority"
-msgstr "Priority"
+msgstr "Prioridad"
 
 msgid "Normal"
 msgstr "Normal"
@@ -121,7 +121,7 @@ msgid "Low"
 msgstr "Low"
 
 msgid "User Accounts"
-msgstr "User Accounts"
+msgstr "Usuarios"
 
 msgid "Fax Modems"
 msgstr "Fax Modems"
@@ -130,7 +130,7 @@ msgid "DID Routing"
 msgstr "DID Routing"
 
 msgid "Fax Categories"
-msgstr "Fax Categories"
+msgstr "Categorías de fax visibles"
 
 msgid "Cover Pages"
 msgstr "Cover Pages"
@@ -145,4 +145,4 @@ msgid "System Audit Logs"
 msgstr "System Audit Logs"
 
 msgid "System Functions"
-msgstr "System Functions"
+msgstr "Funciones del Sistema"

@@ -1,19 +1,149 @@
-# Translations template for PROJECT.
-# Copyright (C) 2026 ORGANIZATION
-# This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
-#
-#, fuzzy
+# NamiFAX Master Template
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-09-30 11:06+0900\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.18.0\n"
+"Project-Id-Version: NamiFAX 4.0.0
+"
+"Report-Msgid-Bugs-To: support@namifax.local
+"
+"MIME-Version: 1.0
+"
+"Content-Type: text/plain; charset=utf-8
+"
+"Content-Transfer-Encoding: 8bit
+"
+
+msgid "Inbox"
+msgstr ""
+
+msgid "Send Fax"
+msgstr ""
+
+msgid "Outbox"
+msgstr ""
+
+msgid "Archive"
+msgstr ""
+
+msgid "Contacts"
+msgstr ""
+
+msgid "Address Book"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Logout"
+msgstr ""
+
+msgid "Admin"
+msgstr ""
+
+msgid "User Portal"
+msgstr ""
+
+msgid "Dashboard"
+msgstr ""
+
+msgid "Sign in"
+msgstr ""
+
+msgid "Username"
+msgstr ""
+
+msgid "Password"
+msgstr ""
+
+msgid "Forgot password?"
+msgstr ""
+
+msgid "View"
+msgstr ""
+
+msgid "PDF"
+msgstr ""
+
+msgid "Reply"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Rotate"
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+msgid "Reset"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Send"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Retry"
+msgstr ""
+
+msgid "Destination Number"
+msgstr ""
+
+msgid "Attention To"
+msgstr ""
+
+msgid "Company"
+msgstr ""
+
+msgid "Subject / Regarding"
+msgstr ""
+
+msgid "Cover Page"
+msgstr ""
+
+msgid "Priority"
+msgstr ""
+
+msgid "Normal"
+msgstr ""
+
+msgid "High"
+msgstr ""
+
+msgid "Low"
+msgstr ""
+
+msgid "User Accounts"
+msgstr ""
+
+msgid "Fax Modems"
+msgstr ""
+
+msgid "DID Routing"
+msgstr ""
+
+msgid "Fax Categories"
+msgstr ""
+
+msgid "Cover Pages"
+msgstr ""
+
+msgid "Barcode Routing"
+msgstr ""
+
+msgid "Blacklist (DynConf)"
+msgstr ""
+
+msgid "System Audit Logs"
+msgstr ""
+
+msgid "System Functions"
+msgstr ""
 

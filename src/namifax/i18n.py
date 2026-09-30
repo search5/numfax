@@ -36,8 +36,38 @@ DEFAULT_DOMAIN = "namifax"
 # Standard translation string factory using pyramid.i18n.TranslationStringFactory
 _ = TranslationStringFactory(DEFAULT_DOMAIN)
 
-# Supported language codes
-SUPPORTED_LOCALES = ("en", "ko", "ja", "de", "fr", "es", "it", "zh")
+# Supported language codes (English primary, plus Korean and all 22 legacy AvantFAX languages)
+SUPPORTED_LOCALES = (
+    "en", "ko", "ja", "de", "fr", "es", "it",
+    "zh_CN", "zh_TW", "ru", "nl", "pt_BR", "pt_PT",
+    "pl", "ar", "tr", "sv", "no", "hu", "el", "cs", "ro", "bg", "sr"
+)
+
+# Legacy language code alias normalizer
+LEGACY_LOCALE_ALIASES = {
+    "zh": "zh_CN",
+    "zh-cn": "zh_CN",
+    "zh-tw": "zh_TW",
+    "pt-br": "pt_BR",
+    "pt-pt": "pt_PT",
+    "cz": "cs",
+    "rs": "sr",
+}
+
+
+def normalize_locale(code: str | None) -> str | None:
+    """Normalize input locale code against standard list and legacy aliases."""
+    if not code:
+        return None
+    c = code.strip().replace("-", "_")
+    if code in LEGACY_LOCALE_ALIASES:
+        return LEGACY_LOCALE_ALIASES[code]
+    if c in LEGACY_LOCALE_ALIASES:
+        return LEGACY_LOCALE_ALIASES[c]
+    for loc in SUPPORTED_LOCALES:
+        if loc.lower() == code.lower() or loc.lower() == c.lower():
+            return loc
+    return None
 
 
 def custom_locale_negotiator(request: Any) -> str | None:
@@ -52,28 +82,28 @@ def custom_locale_negotiator(request: Any) -> str | None:
     """
     # 1. Query parameter (_LOCALE_ or lang)
     if hasattr(request, "params"):
-        param_lang = request.params.get("_LOCALE_") or request.params.get("lang")
-        if param_lang and param_lang in SUPPORTED_LOCALES:
+        param_lang = normalize_locale(request.params.get("_LOCALE_") or request.params.get("lang"))
+        if param_lang:
             return param_lang
 
     # 2. Cookie (_LOCALE_)
     if hasattr(request, "cookies"):
-        cookie_lang = request.cookies.get("_LOCALE_")
-        if cookie_lang and cookie_lang in SUPPORTED_LOCALES:
+        cookie_lang = normalize_locale(request.cookies.get("_LOCALE_"))
+        if cookie_lang:
             return cookie_lang
 
     # 3. Authenticated user preference
     user = getattr(request, "current_user", None)
     if user:
-        user_lang = getattr(user, "language", None)
-        if user_lang and user_lang in SUPPORTED_LOCALES:
+        user_lang = normalize_locale(getattr(user, "language", None))
+        if user_lang:
             return user_lang
 
     # 4. Session preference
     session = getattr(request, "session", None)
     if session and hasattr(session, "get"):
-        session_lang = session.get("language")
-        if session_lang and session_lang in SUPPORTED_LOCALES:
+        session_lang = normalize_locale(session.get("language"))
+        if session_lang:
             return session_lang
 
     # 5. Return None to let Pyramid use pyramid.default_locale_name

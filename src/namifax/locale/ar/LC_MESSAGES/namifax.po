@@ -1,9 +1,9 @@
-# English translations for NamiFAX Enterprise
+# العربية (Arabic) translations for NamiFAX Enterprise
 msgid ""
 msgstr ""
 "Project-Id-Version: NamiFAX 4.0.0
 "
-"Language: en
+"Language: ar
 "
 "MIME-Version: 1.0
 "
@@ -13,28 +13,28 @@ msgstr ""
 "
 
 msgid "Inbox"
-msgstr "Inbox"
+msgstr "الوارد"
 
 msgid "Send Fax"
-msgstr "Send Fax"
+msgstr "إرسال فاكس"
 
 msgid "Outbox"
-msgstr "Outbox"
+msgstr "الخارج"
 
 msgid "Archive"
-msgstr "Archive"
+msgstr "ارشيف"
 
 msgid "Contacts"
-msgstr "Contacts"
+msgstr "يتصل بـ"
 
 msgid "Address Book"
 msgstr "Address Book"
 
 msgid "Settings"
-msgstr "Settings"
+msgstr "إعدادات"
 
 msgid "Logout"
-msgstr "Logout"
+msgstr "خروج"
 
 msgid "Admin"
 msgstr "Admin"
@@ -43,22 +43,22 @@ msgid "User Portal"
 msgstr "User Portal"
 
 msgid "Dashboard"
-msgstr "Dashboard"
+msgstr "لوحة القيادة"
 
 msgid "Sign in"
 msgstr "Sign in"
 
 msgid "Username"
-msgstr "Username"
+msgstr "اسم المستخدم"
 
 msgid "Password"
-msgstr "Password"
+msgstr "كلمة السر"
 
 msgid "Forgot password?"
 msgstr "Forgot password?"
 
 msgid "View"
-msgstr "View"
+msgstr "استعرض الفاكس"
 
 msgid "PDF"
 msgstr "PDF"
@@ -67,28 +67,28 @@ msgid "Reply"
 msgstr "Reply"
 
 msgid "Delete"
-msgstr "Delete"
+msgstr "ازالة"
 
 msgid "Rotate"
 msgstr "Rotate"
 
 msgid "Search"
-msgstr "Search"
+msgstr "بحث"
 
 msgid "Reset"
 msgstr "Reset"
 
 msgid "Cancel"
-msgstr "Cancel"
+msgstr "الغاء"
 
 msgid "Save"
-msgstr "Save"
+msgstr "حفظ"
 
 msgid "Send"
-msgstr "Send"
+msgstr "ارسال"
 
 msgid "Edit"
-msgstr "Edit"
+msgstr "تحرير"
 
 msgid "Retry"
 msgstr "Retry"
@@ -97,10 +97,10 @@ msgid "Destination Number"
 msgstr "Destination Number"
 
 msgid "Attention To"
-msgstr "Attention To"
+msgstr "الى شخص"
 
 msgid "Company"
-msgstr "Company"
+msgstr "شركة"
 
 msgid "Subject / Regarding"
 msgstr "Subject / Regarding"
@@ -109,7 +109,7 @@ msgid "Cover Page"
 msgstr "Cover Page"
 
 msgid "Priority"
-msgstr "Priority"
+msgstr "الأولوية"
 
 msgid "Normal"
 msgstr "Normal"
@@ -121,7 +121,7 @@ msgid "Low"
 msgstr "Low"
 
 msgid "User Accounts"
-msgstr "User Accounts"
+msgstr "المستخدمين"
 
 msgid "Fax Modems"
 msgstr "Fax Modems"
@@ -130,7 +130,7 @@ msgid "DID Routing"
 msgstr "DID Routing"
 
 msgid "Fax Categories"
-msgstr "Fax Categories"
+msgstr "عرض فئات الفاكس"
 
 msgid "Cover Pages"
 msgstr "Cover Pages"
@@ -145,4 +145,4 @@ msgid "System Audit Logs"
 msgstr "System Audit Logs"
 
 msgid "System Functions"
-msgstr "System Functions"
+msgstr "وظائف النظام"

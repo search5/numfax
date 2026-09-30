@@ -13,7 +13,7 @@ from pyramid.i18n import (
 )
 
 from namifax.cli.i18n import run_i18n
-from namifax.i18n import _, custom_locale_negotiator, SUPPORTED_LOCALES
+from namifax.i18n import _, custom_locale_negotiator, normalize_locale, SUPPORTED_LOCALES
 
 
 class DummyUser:
@@ -32,6 +32,21 @@ class DummyRequest:
 def test_supported_locales():
     assert "en" in SUPPORTED_LOCALES
     assert "ko" in SUPPORTED_LOCALES
+    assert "ja" in SUPPORTED_LOCALES
+    assert "de" in SUPPORTED_LOCALES
+    assert "fr" in SUPPORTED_LOCALES
+    assert "es" in SUPPORTED_LOCALES
+    assert len(SUPPORTED_LOCALES) == 24
+
+
+def test_locale_normalization():
+    assert normalize_locale("zh") == "zh_CN"
+    assert normalize_locale("zh-tw") == "zh_TW"
+    assert normalize_locale("pt-br") == "pt_BR"
+    assert normalize_locale("cz") == "cs"
+    assert normalize_locale("rs") == "sr"
+    assert normalize_locale("KO") == "ko"
+    assert normalize_locale("en") == "en"
 
 
 def test_locale_negotiator_priority():
@@ -59,7 +74,7 @@ def test_locale_negotiator_priority():
     assert custom_locale_negotiator(req4) is None
 
 
-def test_translation_korean_and_english():
+def test_translation_multilingual():
     config = testing.setUp(settings={
         "pyramid.default_locale_name": "en",
         "jinja2.i18n.domain": "namifax",
@@ -68,23 +83,39 @@ def test_translation_korean_and_english():
         config.add_translation_dirs("namifax:locale")
         config.set_locale_negotiator(custom_locale_negotiator)
 
-        # Korean request via pyramid.i18n.get_localizer
-        req_ko = testing.DummyRequest(params={"_LOCALE_": "ko"})
-        localizer_ko = get_localizer(req_ko)
-        assert localizer_ko.translate(_("Inbox")) == "받은 팩스함"
-        assert localizer_ko.translate(_("Send Fax")) == "팩스 보내기"
-        assert localizer_ko.translate(_("Archive")) == "보관함"
-
-        # English request (default)
+        # 1. English (Default)
         req_en = testing.DummyRequest()
-        localizer_en = get_localizer(req_en)
-        assert localizer_en.translate(_("Inbox")) == "Inbox"
-        assert localizer_en.translate(_("Send Fax")) == "Send Fax"
-        assert localizer_en.translate(_("Archive")) == "Archive"
+        loc_en = get_localizer(req_en)
+        assert loc_en.translate(_("Inbox")) == "Inbox"
+        assert loc_en.translate(_("Send Fax")) == "Send Fax"
+        assert loc_en.translate(_("Archive")) == "Archive"
 
-        # Test negotiate_locale_name
-        assert negotiate_locale_name(req_ko) == "ko"
-        assert negotiate_locale_name(req_en) == "en"
+        # 2. Korean
+        req_ko = testing.DummyRequest(params={"_LOCALE_": "ko"})
+        loc_ko = get_localizer(req_ko)
+        assert loc_ko.translate(_("Inbox")) == "받은 팩스함"
+        assert loc_ko.translate(_("Send Fax")) == "팩스 보내기"
+        assert loc_ko.translate(_("Archive")) == "보관함"
+
+        # 3. Japanese (from legacy ja.php)
+        req_ja = testing.DummyRequest(params={"_LOCALE_": "ja"})
+        loc_ja = get_localizer(req_ja)
+        assert loc_ja.translate(_("Inbox")) == "受信"
+        assert loc_ja.translate(_("Send Fax")) == "FAXの送信"
+        assert loc_ja.translate(_("Archive")) == "送信履歴"
+
+        # 4. German (from legacy de.php)
+        req_de = testing.DummyRequest(params={"_LOCALE_": "de"})
+        loc_de = get_localizer(req_de)
+        assert loc_de.translate(_("Inbox")) == "Eingang"
+        assert loc_de.translate(_("Send Fax")) == "Fax senden"
+        assert loc_de.translate(_("Archive")) == "Archiv"
+
+        # 5. French (from legacy fr.php)
+        req_fr = testing.DummyRequest(params={"_LOCALE_": "fr"})
+        loc_fr = get_localizer(req_fr)
+        assert "Réception" in loc_fr.translate(_("Inbox"))
+        assert "Archives" in loc_fr.translate(_("Archive"))
 
     finally:
         testing.tearDown()

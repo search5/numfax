@@ -1,9 +1,9 @@
-# English translations for NamiFAX Enterprise
+# Български (Bulgarian) translations for NamiFAX Enterprise
 msgid ""
 msgstr ""
 "Project-Id-Version: NamiFAX 4.0.0
 "
-"Language: en
+"Language: bg
 "
 "MIME-Version: 1.0
 "
@@ -13,28 +13,28 @@ msgstr ""
 "
 
 msgid "Inbox"
-msgstr "Inbox"
+msgstr "Входящи"
 
 msgid "Send Fax"
-msgstr "Send Fax"
+msgstr "Изпрати"
 
 msgid "Outbox"
-msgstr "Outbox"
+msgstr "Изходящи"
 
 msgid "Archive"
-msgstr "Archive"
+msgstr "Архив"
 
 msgid "Contacts"
-msgstr "Contacts"
+msgstr "Контакти"
 
 msgid "Address Book"
 msgstr "Address Book"
 
 msgid "Settings"
-msgstr "Settings"
+msgstr "Настройки"
 
 msgid "Logout"
-msgstr "Logout"
+msgstr "Изход"
 
 msgid "Admin"
 msgstr "Admin"
@@ -43,22 +43,22 @@ msgid "User Portal"
 msgstr "User Portal"
 
 msgid "Dashboard"
-msgstr "Dashboard"
+msgstr "Информация"
 
 msgid "Sign in"
 msgstr "Sign in"
 
 msgid "Username"
-msgstr "Username"
+msgstr "Потребителско Име"
 
 msgid "Password"
-msgstr "Password"
+msgstr "Парола"
 
 msgid "Forgot password?"
 msgstr "Forgot password?"
 
 msgid "View"
-msgstr "View"
+msgstr "Преглед на Факса"
 
 msgid "PDF"
 msgstr "PDF"
@@ -67,28 +67,28 @@ msgid "Reply"
 msgstr "Reply"
 
 msgid "Delete"
-msgstr "Delete"
+msgstr "Изтрий"
 
 msgid "Rotate"
 msgstr "Rotate"
 
 msgid "Search"
-msgstr "Search"
+msgstr "Търси"
 
 msgid "Reset"
 msgstr "Reset"
 
 msgid "Cancel"
-msgstr "Cancel"
+msgstr "Отказ"
 
 msgid "Save"
-msgstr "Save"
+msgstr "Запази"
 
 msgid "Send"
-msgstr "Send"
+msgstr "Изпрати"
 
 msgid "Edit"
-msgstr "Edit"
+msgstr "Редактирай"
 
 msgid "Retry"
 msgstr "Retry"
@@ -97,10 +97,10 @@ msgid "Destination Number"
 msgstr "Destination Number"
 
 msgid "Attention To"
-msgstr "Attention To"
+msgstr "До служител"
 
 msgid "Company"
-msgstr "Company"
+msgstr "Фирма"
 
 msgid "Subject / Regarding"
 msgstr "Subject / Regarding"
@@ -109,7 +109,7 @@ msgid "Cover Page"
 msgstr "Cover Page"
 
 msgid "Priority"
-msgstr "Priority"
+msgstr "Приоритет"
 
 msgid "Normal"
 msgstr "Normal"
@@ -121,7 +121,7 @@ msgid "Low"
 msgstr "Low"
 
 msgid "User Accounts"
-msgstr "User Accounts"
+msgstr "Потребители"
 
 msgid "Fax Modems"
 msgstr "Fax Modems"
@@ -130,7 +130,7 @@ msgid "DID Routing"
 msgstr "DID Routing"
 
 msgid "Fax Categories"
-msgstr "Fax Categories"
+msgstr "Достъп до факс-категории"
 
 msgid "Cover Pages"
 msgstr "Cover Pages"
@@ -145,4 +145,4 @@ msgid "System Audit Logs"
 msgstr "System Audit Logs"
 
 msgid "System Functions"
-msgstr "System Functions"
+msgstr "Системни Функции"

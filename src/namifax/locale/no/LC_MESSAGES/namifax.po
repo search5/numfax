@@ -1,9 +1,9 @@
-# English translations for NamiFAX Enterprise
+# Norsk (Norwegian) translations for NamiFAX Enterprise
 msgid ""
 msgstr ""
 "Project-Id-Version: NamiFAX 4.0.0
 "
-"Language: en
+"Language: no
 "
 "MIME-Version: 1.0
 "
@@ -13,28 +13,28 @@ msgstr ""
 "
 
 msgid "Inbox"
-msgstr "Inbox"
+msgstr "Innboks"
 
 msgid "Send Fax"
-msgstr "Send Fax"
+msgstr "Send faks"
 
 msgid "Outbox"
-msgstr "Outbox"
+msgstr "Utboks"
 
 msgid "Archive"
-msgstr "Archive"
+msgstr "Arkiv"
 
 msgid "Contacts"
-msgstr "Contacts"
+msgstr "Kontakter"
 
 msgid "Address Book"
 msgstr "Address Book"
 
 msgid "Settings"
-msgstr "Settings"
+msgstr "Innstillinger"
 
 msgid "Logout"
-msgstr "Logout"
+msgstr "Logg ut"
 
 msgid "Admin"
 msgstr "Admin"
@@ -49,16 +49,16 @@ msgid "Sign in"
 msgstr "Sign in"
 
 msgid "Username"
-msgstr "Username"
+msgstr "Brukernavn"
 
 msgid "Password"
-msgstr "Password"
+msgstr "Passord"
 
 msgid "Forgot password?"
 msgstr "Forgot password?"
 
 msgid "View"
-msgstr "View"
+msgstr "Se på faks"
 
 msgid "PDF"
 msgstr "PDF"
@@ -67,28 +67,28 @@ msgid "Reply"
 msgstr "Reply"
 
 msgid "Delete"
-msgstr "Delete"
+msgstr "Slette"
 
 msgid "Rotate"
 msgstr "Rotate"
 
 msgid "Search"
-msgstr "Search"
+msgstr "Søk"
 
 msgid "Reset"
 msgstr "Reset"
 
 msgid "Cancel"
-msgstr "Cancel"
+msgstr "Kansellere"
 
 msgid "Save"
-msgstr "Save"
+msgstr "Lagre"
 
 msgid "Send"
 msgstr "Send"
 
 msgid "Edit"
-msgstr "Edit"
+msgstr "Redigere"
 
 msgid "Retry"
 msgstr "Retry"
@@ -97,7 +97,7 @@ msgid "Destination Number"
 msgstr "Destination Number"
 
 msgid "Attention To"
-msgstr "Attention To"
+msgstr "To person"
 
 msgid "Company"
 msgstr "Company"
@@ -121,7 +121,7 @@ msgid "Low"
 msgstr "Low"
 
 msgid "User Accounts"
-msgstr "User Accounts"
+msgstr "Brukere"
 
 msgid "Fax Modems"
 msgstr "Fax Modems"
@@ -130,7 +130,7 @@ msgid "DID Routing"
 msgstr "DID Routing"
 
 msgid "Fax Categories"
-msgstr "Fax Categories"
+msgstr "Synlige fakskategorier"
 
 msgid "Cover Pages"
 msgstr "Cover Pages"
@@ -145,4 +145,4 @@ msgid "System Audit Logs"
 msgstr "System Audit Logs"
 
 msgid "System Functions"
-msgstr "System Functions"
+msgstr "Systemfunksjoner"

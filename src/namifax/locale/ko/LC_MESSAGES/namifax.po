@@ -1,22 +1,17 @@
-# Korean translations for NamiFAX Enterprise.
-# Copyright (C) 2026 iFAX Solutions & NamiFAX
-#
+# 한국어 (Korean) translations for NamiFAX Enterprise
 msgid ""
 msgstr ""
-"Project-Id-Version: NamiFAX 4.0.0\n"
-"Report-Msgid-Bugs-To: support@namifax.local\n"
-"POT-Creation-Date: 2026-09-30 11:06+0900\n"
-"PO-Revision-Date: 2026-09-30 11:06+0900\n"
-"Last-Translator: NamiFAX Architect <admin@namifax.local>\n"
-"Language: ko\n"
-"Language-Team: Korean <ko@namifax.local>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.18.0\n"
+"Project-Id-Version: NamiFAX 4.0.0
+"
+"Language: ko
+"
+"MIME-Version: 1.0
+"
+"Content-Type: text/plain; charset=utf-8
+"
+"Content-Transfer-Encoding: 8bit
+"
 
-# Navigation
 msgid "Inbox"
 msgstr "받은 팩스함"
 
@@ -47,9 +42,26 @@ msgstr "관리자"
 msgid "User Portal"
 msgstr "사용자 포털"
 
-# Actions
+msgid "Dashboard"
+msgstr "대시보드"
+
+msgid "Sign in"
+msgstr "로그인"
+
+msgid "Username"
+msgstr "사용자 이름"
+
+msgid "Password"
+msgstr "비밀번호"
+
+msgid "Forgot password?"
+msgstr "비밀번호를 잊으셨나요?"
+
 msgid "View"
 msgstr "보기"
+
+msgid "PDF"
+msgstr "PDF"
 
 msgid "Reply"
 msgstr "답신"
@@ -75,7 +87,12 @@ msgstr "저장"
 msgid "Send"
 msgstr "전송"
 
-# Fields
+msgid "Edit"
+msgstr "편집"
+
+msgid "Retry"
+msgstr "재시도"
+
 msgid "Destination Number"
 msgstr "수신 팩스 번호"
 
@@ -102,10 +119,6 @@ msgstr "높음"
 
 msgid "Low"
 msgstr "낮음"
-
-# Admin navigation
-msgid "Dashboard"
-msgstr "대시보드"
 
 msgid "User Accounts"
 msgstr "사용자 계정"

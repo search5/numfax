@@ -110,8 +110,29 @@
           <label for="language" class="block font-semibold text-slate-700 text-xs mb-1.5">Display Language</label>
           <select name="language" id="language" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition">
             <option value="en" {% if user_profile.language == 'en' %}selected{% endif %}>English (US)</option>
-            <option value="ko" {% if user_profile.language == 'ko' %}selected{% endif %}>Korean (한국어)</option>
-            <option value="es" {% if user_profile.language == 'es' %}selected{% endif %}>Spanish (Español)</option>
+            <option value="ko" {% if user_profile.language == 'ko' %}selected{% endif %}>한국어 (Korean)</option>
+            <option value="ja" {% if user_profile.language == 'ja' %}selected{% endif %}>日本語 (Japanese)</option>
+            <option value="zh_CN" {% if user_profile.language in ('zh_CN', 'zh') %}selected{% endif %}>简体中文 (Simplified Chinese)</option>
+            <option value="zh_TW" {% if user_profile.language in ('zh_TW', 'zh-tw') %}selected{% endif %}>繁體中文 (Traditional Chinese)</option>
+            <option value="de" {% if user_profile.language == 'de' %}selected{% endif %}>Deutsch (German)</option>
+            <option value="fr" {% if user_profile.language == 'fr' %}selected{% endif %}>Français (French)</option>
+            <option value="es" {% if user_profile.language == 'es' %}selected{% endif %}>Español (Spanish)</option>
+            <option value="it" {% if user_profile.language == 'it' %}selected{% endif %}>Italiano (Italian)</option>
+            <option value="ru" {% if user_profile.language == 'ru' %}selected{% endif %}>Русский (Russian)</option>
+            <option value="nl" {% if user_profile.language == 'nl' %}selected{% endif %}>Nederlands (Dutch)</option>
+            <option value="pt_BR" {% if user_profile.language in ('pt_BR', 'pt-br') %}selected{% endif %}>Português do Brasil</option>
+            <option value="pt_PT" {% if user_profile.language in ('pt_PT', 'pt-pt') %}selected{% endif %}>Português Europeu</option>
+            <option value="pl" {% if user_profile.language == 'pl' %}selected{% endif %}>Polski (Polish)</option>
+            <option value="ar" {% if user_profile.language == 'ar' %}selected{% endif %}>العربية (Arabic)</option>
+            <option value="tr" {% if user_profile.language == 'tr' %}selected{% endif %}>Türkçe (Turkish)</option>
+            <option value="sv" {% if user_profile.language == 'sv' %}selected{% endif %}>Svenska (Swedish)</option>
+            <option value="no" {% if user_profile.language == 'no' %}selected{% endif %}>Norsk (Norwegian)</option>
+            <option value="hu" {% if user_profile.language == 'hu' %}selected{% endif %}>Magyar (Hungarian)</option>
+            <option value="el" {% if user_profile.language == 'el' %}selected{% endif %}>Ελληνικά (Greek)</option>
+            <option value="cs" {% if user_profile.language in ('cs', 'cz') %}selected{% endif %}>Čeština (Czech)</option>
+            <option value="ro" {% if user_profile.language == 'ro' %}selected{% endif %}>Română (Romanian)</option>
+            <option value="bg" {% if user_profile.language == 'bg' %}selected{% endif %}>Български (Bulgarian)</option>
+            <option value="sr" {% if user_profile.language in ('sr', 'rs') %}selected{% endif %}>Srpski (Serbian)</option>
           </select>
         </div>
 
