@@ -21,6 +21,7 @@ dependencies = [
     "pyotp>=2.10.0",
     "webauthn>=3.0.1",
     "defusedxml>=0.7.1",
+    "pytesseract>=0.3.13",
 ]
 
 [project.scripts]

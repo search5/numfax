@@ -161,6 +161,11 @@ def run_faxrcvd(argv: Sequence[str] | None = None) -> int:
     if inbox.create(faxpath, faxnumid, company_fax, modemdev, pages, f"{day} {hour}", didr_id):
         faxid = inbox.get_fid()
         avantfaxlog(f"faxrcvd> Inserted {faxpath} from {company_name} to Inbox", echo=False)
+        try:
+            from namifax.services.ocr import OcrService
+            OcrService().index_fax(fax_file=faxname, tiff_path=faxfile, fax_id=faxid)
+        except Exception:
+            pass
 
     # Routing Priorities: DID/Modem -> Fax2Email -> Barcode
     printer = PRINTERNAME

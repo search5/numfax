@@ -277,20 +277,21 @@ flowchart LR
     PhaseA --> PhaseB --> PhaseC
 ```
 
-### Milestone Phase A: 핵심 인프라 & 스토리지 안정화 (단기)
-1. **팩스 수신 시 PDF 자동 변환 엔진 실체화**: LibTIFF + Pillow 이중화 파이프라인 완성.
-2. **관리자 웹 기반 외부 SMTP 서버 설정**: UI 구현 및 실시간 메일 진단 도구 탑재.
-3. **수신 TIFF 자동 정리 정책**: APScheduler 연동 및 PDF/S3 변환 완료 후 디스크 회수 로직.
+### Milestone Phase A: 핵심 인프라 & 스토리지 안정화 (완료)
+1. **팩스 수신 시 PDF 자동 변환 엔진 실체화** [완료]: LibTIFF + Pillow 이중화 파이프라인 완성.
+2. **관리자 웹 기반 외부 SMTP 서버 설정** [완료]: UI 구현 및 실시간 메일 진단 도구 탑재 (Spec 39).
+3. **수신 TIFF 자동 정리 정책** [완료]: APScheduler/CLI 연동 및 PDF/S3 변환 완료 후 디스크 회수 로직 (Spec 40).
 
-### Milestone Phase B: 클라우드 스토리지 & 하드웨어 확장 (중기)
-1. **네트워크 프린터 추가 및 인쇄 엔진**: RAW 9100 / IPP / LPD 소켓 직접 제어 UI.
-2. **팩스 커버 업로드 및 썸네일 관리 스튜디오**: 파일 업로드, 렌더링 미리보기, 변수 태깅.
-3. **S3 Compatible Object Storage 연동**: MinIO / AWS S3 동기화 및 Presigned URL 뷰어.
+### Milestone Phase B: 클라우드 스토리지 & 하드웨어 확장 (완료)
+1. **네트워크 프린터 추가 및 인쇄 엔진** [완료]: RAW 9100 / IPP / LPD 소켓 직접 제어 UI (Spec 42).
+2. **팩스 커버 업로드 및 썸네일 관리 스튜디오** [완료]: 파일 업로드, 렌더링 미리보기, 변수 태깅 (Spec 44).
+3. **S3 Compatible Object Storage 연동** [완료]: MinIO / AWS S3 동기화 및 Presigned URL 뷰어 (Spec 41).
 
-### Milestone Phase C: 차세대 보안 인증 체계 구축 (장기)
-1. **TOTP 2FA**: QR 코드 발급, 6자리 챌린지 검증, 비상 복구 코드.
-2. **WebAuthn Passkeys**: Touch ID / YubiKey 등록 및 패스워드리스 인증.
-3. **엔터프라이즈 SSO**: Microsoft Entra ID / Okta / Keycloak / ADFS 등 SAML 2.0 IdP 프로바이더 연동.
+### Milestone Phase C: 차세대 보안 인증 체계 구축 (완료)
+1. **TOTP 2FA** [완료]: QR 코드 발급, 6자리 챌린지 검증, 비상 복구 코드 (Spec 43).
+2. **WebAuthn Passkeys** [완료]: Touch ID / YubiKey 등록 및 패스워드리스 인증 (Spec 45).
+3. **엔터프라이즈 SSO** [완료]: Microsoft Entra ID / Okta / Keycloak / ADFS 등 SAML 2.0 IdP 프로바이더 연동 (Spec 46).
+4. **OCR 전문 검색 엔진** [완료]: Tesseract OCR 기반 본문 텍스트 자동 추출 및 인덱싱 (Spec 47).
 
 ---
 
