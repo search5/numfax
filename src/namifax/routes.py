@@ -81,3 +81,11 @@ def includeme(config):
     # vCard Contact Upload routes
     config.add_route("upload_contacts", "/upload/contacts")
     config.add_route("upload_faxcontacts", "/upload/faxcontacts")
+
+    # WebAuthn / Passkeys routes
+    config.add_route("api_webauthn_register_options", "/api/webauthn/register/options")
+    config.add_route("api_webauthn_register_verify", "/api/webauthn/register/verify")
+    config.add_route("api_webauthn_auth_options", "/api/webauthn/auth/options")
+    config.add_route("api_webauthn_auth_verify", "/api/webauthn/auth/verify")
+    config.add_route("api_webauthn_credentials", "/api/webauthn/credentials")
+    config.add_route("api_webauthn_credentials_delete", "/api/webauthn/credentials/delete")

@@ -19,6 +19,7 @@ dependencies = [
     "pillow>=12.3.0",
     "boto3>=1.43.105",
     "pyotp>=2.10.0",
+    "webauthn>=3.0.1",
 ]
 
 [project.scripts]
