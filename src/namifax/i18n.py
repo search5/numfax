@@ -1,17 +1,40 @@
 """NamiFAX Internationalization (i18n) and Localization (l10n) module.
 
-Following official Pyramid 2.1 Internationalization documentation:
+Standardized on the official `pyramid.i18n` package API:
 https://docs.pylonsproject.org/projects/pyramid/en/2.1-branch/narr/i18n.html
 """
 
 from __future__ import annotations
 
 from typing import Any
-from pyramid.i18n import TranslationStringFactory
 
-# TranslationStringFactory for the application's unique translation domain
-# Conventionally assigned to '_' for message extraction tools
-_ = TranslationStringFactory("namifax")
+# Re-export core pyramid.i18n interfaces as the single standard
+from pyramid.i18n import (
+    TranslationString,
+    TranslationStringFactory,
+    default_locale_negotiator,
+    get_localizer,
+    make_localizer,
+    negotiate_locale_name,
+)
+
+__all__ = [
+    "_",
+    "TranslationString",
+    "TranslationStringFactory",
+    "get_localizer",
+    "make_localizer",
+    "negotiate_locale_name",
+    "default_locale_negotiator",
+    "custom_locale_negotiator",
+    "SUPPORTED_LOCALES",
+    "DEFAULT_DOMAIN",
+]
+
+DEFAULT_DOMAIN = "namifax"
+
+# Standard translation string factory using pyramid.i18n.TranslationStringFactory
+_ = TranslationStringFactory(DEFAULT_DOMAIN)
 
 # Supported language codes
 SUPPORTED_LOCALES = ("en", "ko", "ja", "de", "fr", "es", "it", "zh")

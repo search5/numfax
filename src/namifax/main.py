@@ -52,6 +52,7 @@ Available commands:
   import-users       Import user accounts from tab-delimited text
   import-blacklist   Import blacklist rules from text file
   reroute            Reroute modem or DID routing notification email
+  i18n               Manage translation catalogs (extract, compile, update, init)
 
 Run 'namifax <command> --help' for details on a specific command.
 """
@@ -187,6 +188,10 @@ def main(argv: list[str] | None = None) -> int:
     elif cmd == "reroute":
         from avantfax.cli import reroute
         return reroute.main(sub_args)
+
+    elif cmd == "i18n":
+        from namifax.cli.i18n import run_i18n
+        return run_i18n(sub_args)
 
     else:
         print(f"Unknown command: {cmd}\n")

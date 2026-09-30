@@ -1,11 +1,18 @@
-"""Unit tests for NamiFAX Babel/gettext i18n localization system.
+"""Unit tests for NamiFAX pyramid.i18n localization system and CLI.
 
-Following Pyramid 2.1 i18n testing documentation.
+Following Pyramid 2.1 i18n documentation:
+https://docs.pylonsproject.org/projects/pyramid/en/2.1-branch/narr/i18n.html
 """
 
 from pyramid import testing
-from pyramid.i18n import TranslationStringFactory, get_localizer
+from pyramid.i18n import (
+    TranslationString,
+    TranslationStringFactory,
+    get_localizer,
+    negotiate_locale_name,
+)
 
+from namifax.cli.i18n import run_i18n
 from namifax.i18n import _, custom_locale_negotiator, SUPPORTED_LOCALES
 
 
@@ -61,7 +68,7 @@ def test_translation_korean_and_english():
         config.add_translation_dirs("namifax:locale")
         config.set_locale_negotiator(custom_locale_negotiator)
 
-        # Korean request
+        # Korean request via pyramid.i18n.get_localizer
         req_ko = testing.DummyRequest(params={"_LOCALE_": "ko"})
         localizer_ko = get_localizer(req_ko)
         assert localizer_ko.translate(_("Inbox")) == "받은 팩스함"
@@ -75,5 +82,15 @@ def test_translation_korean_and_english():
         assert localizer_en.translate(_("Send Fax")) == "Send Fax"
         assert localizer_en.translate(_("Archive")) == "Archive"
 
+        # Test negotiate_locale_name
+        assert negotiate_locale_name(req_ko) == "ko"
+        assert negotiate_locale_name(req_en) == "en"
+
     finally:
         testing.tearDown()
+
+
+def test_i18n_cli_compile():
+    # Test namifax i18n compile CLI command
+    ret = run_i18n(["compile"])
+    assert ret == 0
