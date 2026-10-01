@@ -9,10 +9,10 @@ from pyramid.view import view_config
 
 from namifax.services.distro import DistributionList
 
-def get_all_distrolists() -> list[dict[str, Any]]:
+def get_all_distrolists(db: Any = None) -> list[dict[str, Any]]:
     """Retrieve distribution lists directly from database."""
     try:
-        dl = DistributionList()
+        dl = DistributionList(db=db)
         rows = dl.get_distrolists()
         if rows:
             result = []
@@ -45,13 +45,13 @@ def distrolist_view(request):
     # Handle deletion
     if request.params.get("delete") and selected_id:
         try:
-            dl = DistributionList()
+            dl = DistributionList(db=request.db)
             dl.delete_list(int(selected_id))
         except Exception:
             pass
         return HTTPFound(location=request.route_url("distrolist"))
 
-    distrolists = get_all_distrolists()
+    distrolists = get_all_distrolists(request.db)
     selected_list = None
     if selected_id:
         selected_list = next((d for d in distrolists if str(d["dl_id"]) == str(selected_id)), None)
@@ -76,7 +76,7 @@ def distrolist_edit_view(request):
     if request.method == "POST":
         if request.params.get("delete") and dl_id:
             try:
-                dl = DistributionList()
+                dl = DistributionList(db=request.db)
                 dl.delete_list(int(dl_id))
             except Exception:
                 pass
@@ -87,7 +87,7 @@ def distrolist_edit_view(request):
         if dl_id:
             # Update existing list
             try:
-                dl = DistributionList()
+                dl = DistributionList(db=request.db)
                 if dl.load_list(int(dl_id)) and listname:
                     dl.set_listname(listname)
             except Exception:
@@ -97,7 +97,7 @@ def distrolist_edit_view(request):
             # Create new list
             new_id = None
             try:
-                dl = DistributionList()
+                dl = DistributionList(db=request.db)
                 if dl.create(listname):
                     new_id = dl.get_dl_id()
             except Exception:
@@ -106,7 +106,7 @@ def distrolist_edit_view(request):
             target_loc = f"{request.route_url('distrolist')}?dl_id={new_id}" if new_id else request.route_url("distrolist")
             return HTTPFound(location=target_loc)
 
-    distrolists = get_all_distrolists()
+    distrolists = get_all_distrolists(request.db)
     selected_list = None
     if dl_id:
         selected_list = next((d for d in distrolists if str(d.get("dl_id")) == str(dl_id)), None)
