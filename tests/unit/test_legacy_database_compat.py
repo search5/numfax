@@ -265,3 +265,24 @@ def test_the_address_book_edit_page_edits_legacy_companies_and_numbers(adopted):
         assert s.execute(select(AddressBook.company).where(AddressBook.abook_id == 2)).scalar() == "Legacy Corporation"
         numbers = list(s.execute(select(AddressBookFAX).where(AddressBookFAX.abook_id == 2).order_by(AddressBookFAX.abookfax_id)).scalars())
         assert [(n.faxnumber, n.to_city, n.to_address) for n in numbers] == [("5550001", "Busan", "2 Harbor Rd"), ("5550009", "Daegu", "")]
+
+
+def test_fax_to_email_settings_are_per_number_on_a_legacy_database(adopted):
+    import re
+
+    import webtest
+    from sqlalchemy import select
+
+    from namifax import create_app
+    from namifax.models import AddressBookFAX
+
+    client = webtest.TestApp(create_app(**{"sqlalchemy.url": adopted.url}), extra_environ={"HTTP_HOST": "example.com"})
+    first = client.post("/login", {"username": "admin", "password": "password", "_submit_check": "1"})
+    client.post("/pwdexpired", {"oldpwd": "password", "newpwd": "A-different-pass-9", "conpwd": "A-different-pass-9"})
+    page = client.get("/admin/fax2email?abook_id=2")
+    row_id = re.search(r'name="abookfax_id" value="(\d+)"', page.text).group(1)
+    client.post("/admin/fax2email", {"_submit_check": "1", "save": "1", "abook_id": "2", "company": "Legacy Corp",
+                                     "abookfax_id": [row_id], "email": ["fax@legacy.test"], "printer": ["lp7"], "faxcatid": ["1"]})
+    with Session(adopted.engine) as s:
+        number = s.execute(select(AddressBookFAX).where(AddressBookFAX.abookfax_id == int(row_id))).scalar_one()
+        assert (number.email, number.printer, number.faxcatid, number.to_person) == ("fax@legacy.test", "lp7", 1, "Kim")

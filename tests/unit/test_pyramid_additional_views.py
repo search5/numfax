@@ -56,44 +56,6 @@ def test_setcompany_view(dummy_request):
         assert res.status_code == 302
 
 
-def test_emailbook_list_view(dummy_request):
-    """Verify emailbook list queries contacts from AFAddressBook."""
-    with patch("namifax.views.addressbook.AFAddressBook") as mock_ab_cls:
-        inst_ab = MagicMock()
-        inst_ab.get_contacts.return_value = {1: '"Jane Doe" <jane@example.com>'}
-        mock_ab_cls.return_value = inst_ab
-
-        res = emailbook_list_view(dummy_request)
-        assert res.get("title") == "- NamiFAX - Email Address Book"
-        assert len(res.get("contacts")) >= 1
-
-
-def test_emailbook_edit_save_post(dummy_request):
-    """Verify saving contact in emailbook edit form."""
-    dummy_request.method = "POST"
-    dummy_request.params = {"contact_name": "Test User", "contact_email": "test@example.com", "save": "1"}
-    with patch("namifax.views.addressbook.AFAddressBook") as mock_ab_cls:
-        inst_ab = MagicMock()
-        mock_ab_cls.return_value = inst_ab
-
-        res = emailbook_edit_view(dummy_request)
-        inst_ab.create_contact.assert_called_with("Test User", "test@example.com")
-        assert res.status_code == 302
-
-
-def test_emailbook_edit_delete_post(dummy_request):
-    """Verify deleting contact in emailbook edit form."""
-    dummy_request.method = "POST"
-    dummy_request.params = {"abookemail_id": "5", "delete": "1"}
-    with patch("namifax.views.addressbook.AFAddressBook") as mock_ab_cls:
-        inst_ab = MagicMock()
-        mock_ab_cls.return_value = inst_ab
-
-        res = emailbook_edit_view(dummy_request)
-        inst_ab.remove_contact.assert_called_with(5)
-        assert res.status_code == 302
-
-
 def test_ajax_deletefaxes_post(dummy_request):
     """Verify batch fax delete via AJAX."""
     dummy_request.method = "POST"

@@ -12,7 +12,7 @@ from namifax.services.modem import FaxModem
 from namifax.views.admin import get_all_admin_modems
 
 
-@view_config(route_name="ajax_modemstatus")
+@view_config(route_name="ajax_modemstatus", permission="view")
 def ajax_modem_status(request):
     """Real-time modem status poller matching legacy ajaxmodemstatus.php."""
     modems = get_all_admin_modems(request.dbsession)
@@ -42,7 +42,7 @@ def ajax_modem_status(request):
     return Response(xml_content, content_type="text/xml")
 
 
-@view_config(route_name="ajax_inbox")
+@view_config(route_name="ajax_inbox", permission="view")
 def ajax_inbox_count(request):
     """Unread inbox count poller matching legacy ajaxinbox.php."""
     arc = ArchiveIn(db=request.dbsession)
@@ -54,7 +54,7 @@ def ajax_inbox_count(request):
     return Response(str(count), content_type="text/plain")
 
 
-@view_config(route_name="ajax_book")
+@view_config(route_name="ajax_book", permission="view")
 def ajax_addressbook_suggest(request):
     """Address book auto-suggest matching legacy ajaxbook.php."""
     q = (request.params.get("q") or request.GET.get("q") or "").strip()
@@ -84,7 +84,7 @@ def ajax_addressbook_suggest(request):
     return Response(xml_content, content_type="text/xml")
 
 
-@view_config(route_name="ajax_emailbook")
+@view_config(route_name="ajax_emailbook", permission="view")
 def ajax_emailbook_suggest(request):
     """Email address auto-suggest matching legacy ajaxemailbook.php."""
     q = (request.params.get("q") or request.GET.get("q") or "").strip().lower()
@@ -110,7 +110,7 @@ def ajax_emailbook_suggest(request):
     return Response(xml_content, content_type="text/xml")
 
 
-@view_config(route_name="ajax_prefillto")
+@view_config(route_name="ajax_prefillto", permission="view")
 def ajax_addressbook_prefill(request):
     """Address book contact info prefill matching legacy ajaxprefillto.php."""
     fnid = request.GET.get("fnid", "").strip()
@@ -156,7 +156,7 @@ def ajax_addressbook_prefill(request):
     return Response(xml_content, content_type="text/xml")
 
 
-@view_config(route_name="ajax_dlist")
+@view_config(route_name="ajax_dlist", permission="view")
 def ajax_distrolist_faxes(request):
     """Distribution list fax numbers matching legacy ajaxdlist.php."""
     dl_id = request.GET.get("dl_id", "").strip()
@@ -174,7 +174,7 @@ def ajax_distrolist_faxes(request):
     return Response(faxes_str, content_type="text/plain")
 
 
-@view_config(route_name="ajax_archivefax", request_method="POST")
+@view_config(route_name="ajax_archivefax", request_method="POST", permission="view")
 def ajax_archive_fax(request):
     """Archive fax endpoint matching legacy ajaxarchivefax.php."""
     fid = request.params.get("fid") or request.params.get("fids")
@@ -189,7 +189,7 @@ def ajax_archive_fax(request):
     return Response("", status_code=200)
 
 
-@view_config(route_name="ajax_faxalter")
+@view_config(route_name="ajax_faxalter", permission="view")
 def ajax_faxalter(request):
     """Fax queue alteration dialog matching legacy faxalter.php."""
     identity = request.identity or {"username": "admin", "uid": 1, "is_admin": True}
@@ -250,7 +250,7 @@ def ajax_faxalter(request):
     return Response(html, content_type="text/html")
 
 
-@view_config(route_name="ajax_deletefaxes")
+@view_config(route_name="ajax_deletefaxes", permission="view")
 def ajax_deletefaxes_view(request):
     """Batch delete faxes dialog and action matching legacy ajaxdeletefaxes.php."""
     fids = request.params.get("fids", "")
@@ -285,7 +285,7 @@ def ajax_deletefaxes_view(request):
     return Response(html, content_type="text/html")
 
 
-@view_config(route_name="ajax_archivebook")
+@view_config(route_name="ajax_archivebook", permission="view")
 def ajax_archivebook_view(request):
     """Address book company auto-suggest matching legacy ajax/archivebook.php."""
     q = (request.params.get("q") or request.GET.get("q") or "").strip()

@@ -695,117 +695,89 @@ def admin_dynconf_view(request):
 
 @view_config(route_name="admin_fax2email", renderer="namifax:templates/admin_fax2email.jinja2", permission="admin")
 def admin_fax2email_view(request):
-    """Admin fax to email forwarding configuration."""
-    identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
+    """Admin > Fax to Email: forwarding address, printer and category for each fax number of a company.
+
+    Port of the original admin/fax2email.php + fax2email_edit.php. Companies and numbers are created in the address
+    book; this page only sets how the faxes received on a number are routed.
+    """
+    import re as _re
+
+    from namifax.common.validators import is_valid_email
     from namifax.services.addressbook import AFAddressBook
     from namifax.services.categories import FaxPDFCategory
+
+    identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
     ab = AFAddressBook(db=request.dbsession)
-    fc = FaxPDFCategory(db=request.dbsession)
     message = None
     error = None
 
-    c_id_param = request.params.get("c_id") or request.params.get("abook_id")
-    selected_id = int(c_id_param) if c_id_param and str(c_id_param).isdigit() else None
+    params = request.POST if request.method == "POST" else request.params
+    raw_id = params.get("abook_id") or params.get("c_id") or params.get("id")
+    selected_id = int(raw_id) if raw_id and str(raw_id).isdigit() else None
 
-    if request.method == "POST":
-        c_id = request.params.get("c_id") or request.params.get("abook_id")
-        cid = int(c_id) if c_id and str(c_id).isdigit() else selected_id
+    def bad_address(value: str) -> bool:
+        parts = [p.strip() for p in _re.split(r"[;,]", value) if p.strip()]
+        return any(not is_valid_email(p) for p in parts)
 
-        if request.params.get("delete") and cid:
-            if ab.delete_cid(cid):
-                message = "Fax to Email forwarding rule removed"
+    if request.method == "POST" and selected_id:
+        if not ab.loadbycid(selected_id):
+            error = _("The company does not exist.")
+            selected_id = None
+        elif params.get("delete"):
+            if ab.delete_company(selected_id):
+                message = _("The company and its fax numbers were deleted.")
                 selected_id = None
             else:
-                error = ab.get_error() or "Failed to remove rule"
-        elif cid and (request.params.get("save") or not request.params.get("create")):
-            company = request.params.get("company", "").strip()
-            email = request.params.get("email", "").strip()
-            printer = request.params.get("printer", "").strip()
-            faxcatid = request.params.get("faxcatid")
-            catid = int(faxcatid) if faxcatid and str(faxcatid).isdigit() else None
-
-            if ab.loadbycid(cid):
-                if company:
-                    ab.set_company(company)
-                faxnums = ab.get_faxnums()
-                if faxnums:
-                    for fn in faxnums:
-                        if ab.loadbyfaxnumid(fn.get("abookfax_id")):
-                            ab.save_settings({"email": email, "printer": printer, "faxcatid": catid})
-                else:
-                    if ab.create_faxnumid(company):
-                        ab.save_settings({"email": email, "printer": printer, "faxcatid": catid})
-                message = "Fax to Email settings saved"
-            else:
-                error = ab.get_error() or "Company not found"
-        elif request.params.get("create") or not cid:
-            company = request.params.get("company", "").strip()
-            email = request.params.get("email", "").strip()
-            printer = request.params.get("printer", "").strip()
-            if company:
-                if ab.create(company):
-                    if ab.create_faxnumid(company):
-                        ab.save_settings({"email": email, "printer": printer})
-                    message = "Fax to Email settings saved"
+                error = ab.get_error()
+        else:
+            company = params.get("company", "").strip()
+            own = {int(n["abookfax_id"]): n for n in ab.get_faxnums()}
+            ids = params.getall("abookfax_id")
+            columns = {key: params.getall(key) for key in ("email", "printer", "faxcatid")}
+            changes = []
+            for i, raw in enumerate(ids):
+                if not raw.isdigit() or int(raw) not in own:
+                    continue                                   # not a number of this company: never touched
+                current = own[int(raw)]
+                email = (columns["email"][i] if i < len(columns["email"]) else "").strip()
+                printer = (columns["printer"][i] if i < len(columns["printer"]) else "").strip()
+                cat = (columns["faxcatid"][i] if i < len(columns["faxcatid"]) else "").strip()
+                if email != (current.get("email") or "") and bad_address(email):
+                    error = _("Please enter a valid e-mail address.") + f" ({email})"
+                    break
+                changes.append((int(raw), {"email": email, "printer": printer, "faxcatid": int(cat) if cat.isdigit() else None}))
+            if not company and not error:
+                error = _("Please enter a company name")
+            if not error:
+                if ab.set_company(company):
+                    for number_id, data in changes:
+                        if ab.loadbyfaxnumid(number_id):
+                            ab.save_settings(data)
+                    message = _("Fax to Email settings saved")
                 else:
                     error = ab.get_error()
-            else:
-                error = "Company name is required"
 
-    try:
-        companies = ab.get_companies()
-    except Exception:
-        companies = []
-
-    fax2emails = []
-    if companies:
-        for c in companies:
-            cid_val = c.get("ab_id") or c.get("abook_id")
-            ab_temp = AFAddressBook(db=request.dbsession)
-            ab_temp.loadbycid(cid_val)
-            fns = ab_temp.get_faxnums()
-            email_val = fns[0].get("email", "") if fns else ""
-            printer_val = fns[0].get("printer", "") if fns else ""
-            fax2emails.append({
-                "abook_id": cid_val,
-                "c_id": cid_val,
-                "company": c.get("company"),
-                "email": email_val,
-                "printer": printer_val,
-            })
+    numbers_by_company = ab.numbers_by_company()
+    companies = []
+    for c in ab.get_companies(with_reserved=True):
+        own = numbers_by_company.get(c.get("abook_id"), [])
+        companies.append({"abook_id": c.get("abook_id"), "c_id": c.get("abook_id"), "company": c.get("company"),
+                          "numbers": len(own),
+                          "email": next((n.get("email") for n in own if n.get("email")), "") or "",
+                          "printer": next((n.get("printer") for n in own if n.get("printer")), "") or ""})
 
     selected_company = None
-    if selected_id:
-        try:
-            if ab.loadbycid(selected_id):
-                fns = ab.get_faxnums()
-                email_val = fns[0].get("email", "") if fns else ""
-                printer_val = fns[0].get("printer", "") if fns else ""
-                cat_val = fns[0].get("faxcatid") if fns else None
-                selected_company = {
-                    "abook_id": selected_id,
-                    "c_id": selected_id,
-                    "company": ab.get_company(),
-                    "email": email_val,
-                    "printer": printer_val,
-                    "faxcatid": cat_val,
-                }
-        except Exception:
-            pass
-        if not selected_company:
-            selected_company = next((f for f in fax2emails if f.get("c_id") == selected_id), None)
+    if selected_id and ab.loadbycid(selected_id):
+        selected_company = {"abook_id": selected_id, "c_id": selected_id, "company": ab.get_company(),
+                            "numbers": ab.get_faxnums()}
 
-    try:
-        categories = fc.get_categories() or []
-    except Exception:
-        categories = []
-
+    categories = FaxPDFCategory(db=request.dbsession).get_categories() or []
     return {
         "title": "NamiFAX - Admin - Fax to Email",
         "current_user": identity,
         "active_tab": "admin",
         "active_admin": "fax2email",
-        "fax2emails": fax2emails,
+        "fax2emails": companies,
         "selected_company": selected_company,
         "categories": categories,
         "message": message,

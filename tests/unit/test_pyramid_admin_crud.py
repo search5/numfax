@@ -339,64 +339,6 @@ def test_admin_dynconf_post_delete(dummy_request):
         assert "removed" in res["message"]
 
 
-def test_admin_fax2email_get_selected(dummy_request):
-    """Verify loading selected company forwarding rule for editing."""
-    dummy_request.params = {"c_id": "1"}
-    with patch("namifax.services.addressbook.AFAddressBook") as mock_cls:
-        inst = MagicMock()
-        inst.loadbycid.return_value = True
-        inst.get_company.return_value = "Acme Corp"
-        inst.get_faxnums.return_value = [{"abookfax_id": 10, "email": "fax@acme.com", "printer": "lp1", "faxcatid": 1}]
-        inst.get_companies.return_value = [{"abook_id": 1, "company": "Acme Corp"}]
-        mock_cls.return_value = inst
-        res = admin_fax2email_view(dummy_request)
-        assert res["selected_company"] is not None
-        assert res["selected_company"]["company"] == "Acme Corp"
-        assert res["selected_company"]["email"] == "fax@acme.com"
-
-
-def test_admin_fax2email_post_save_edit(dummy_request):
-    """Verify updating company forwarding settings via POST save."""
-    dummy_request.method = "POST"
-    dummy_request.params = {
-        "save": "1",
-        "c_id": "1",
-        "company": "Acme Updated",
-        "email": "newfax@acme.com",
-        "printer": "lp2",
-        "_submit_check": "1",
-    }
-    with patch("namifax.services.addressbook.AFAddressBook") as mock_cls:
-        inst = MagicMock()
-        inst.loadbycid.return_value = True
-        inst.loadbyfaxnumid.return_value = True
-        inst.get_faxnums.return_value = [{"abookfax_id": 10}]
-        mock_cls.return_value = inst
-        res = admin_fax2email_view(dummy_request)
-        inst.loadbycid.assert_called_with(1)
-        inst.set_company.assert_called_with("Acme Updated")
-        assert res["message"] is not None
-        assert "saved" in res["message"]
-
-
-def test_admin_fax2email_post_delete(dummy_request):
-    """Verify deleting company forwarding rule via POST delete."""
-    dummy_request.method = "POST"
-    dummy_request.params = {
-        "delete": "1",
-        "c_id": "999",
-        "_submit_check": "1",
-    }
-    with patch("namifax.services.addressbook.AFAddressBook") as mock_cls:
-        inst = MagicMock()
-        inst.delete_cid.return_value = True
-        mock_cls.return_value = inst
-        res = admin_fax2email_view(dummy_request)
-        inst.delete_cid.assert_called_with(999)
-        assert res["message"] is not None
-        assert "removed" in res["message"]
-
-
 def test_admin_users_get_selected(dummy_request):
     """Verify loading selected user account for editing."""
     dummy_request.params = {"uid": "1"}
@@ -430,3 +372,5 @@ def test_distrolist_edit_post_delete(dummy_request):
     res = distrolist_edit_view(dummy_request)
     assert res.status_code == 302
 
+
+# Fax to Email (per fax number settings, deleting, validation) is tested with real data in test_admin_fax2email.py

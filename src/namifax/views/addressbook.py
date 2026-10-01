@@ -226,89 +226,75 @@ def addressbook_edit_view(request):
     return saved(cid)
 
 
+# --- the e-mail book ---------------------------------------------------------------------------------------------------
+
 @view_config(route_name="emailbook", renderer="namifax:templates/emailbook.jinja2", permission="view")
 def emailbook_list_view(request):
-    """Display email contacts list directly from database."""
+    """The e-mail contacts, filtered by the search box (name or address)."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
+    query = request.params.get("q", "").strip().lower()
     ab = AFAddressBook(db=request.dbsession)
+    companies = {c["abook_id"]: c.get("company") or "" for c in ab.get_companies(with_reserved=True)}
     contacts = []
-    try:
-        raw = ab.get_contacts()
-        if raw:
-            for eid, cstr in raw.items():
-                name_part = cstr.split("<")[0].replace('"', '').strip() if "<" in cstr else cstr
-                email_part = cstr.split("<")[1].replace(">", "").strip() if "<" in cstr else cstr
-                contacts.append({"id": eid, "name": name_part, "email": email_part})
-    except Exception:
-        pass
+    for row in ab.addressbookemail.select(order_by="contact_name"):
+        name, email = row.get("contact_name") or "", row.get("contact_email") or ""
+        if query and query not in name.lower() and query not in email.lower():
+            continue
+        contacts.append({"id": row.get("abookemail_id"), "name": name, "email": email,
+                         "company": companies.get(row.get("abook_id"), "")})
+    return {"title": "- NamiFAX - Email Address Book", "current_user": identity, "active_tab": "addressbook",
+            "contacts": contacts, "query": query}
 
-    return {
-        "title": "- NamiFAX - Email Address Book",
-        "current_user": identity,
-        "active_tab": "addressbook",
-        "contacts": contacts,
-    }
+
+def _contact_id(params) -> Optional[int]:
+    for key in ("abookemail_id", "email_id"):
+        value = params.get(key)
+        if value and str(value).isdigit():
+            return int(value)
+    return None
+
+
+def _contact_page(request, contact: dict, *, error=None, message=None) -> dict:
+    identity = request.identity or {}
+    return {"title": "NamiFAX - Email Book", "current_user": identity, "active_tab": "addressbook",
+            "contact": contact, "error": error, "message": message,
+            "can_del": bool(identity.get("superuser"))}          # only a superuser may delete, like the original
 
 
 @view_config(route_name="emailbook_edit", renderer="namifax:templates/emailbook_edit.jinja2", permission="view")
 def emailbook_edit_view(request):
-    """Display and handle email contact add / edit form directly with database."""
-    identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    ab = AFAddressBook(db=request.dbsession)
+    """Add, change or delete an e-mail contact (the original emailbook_edit.php)."""
+    book = AFAddressBook(db=request.dbsession)
+    identity = request.identity or {}
 
-    if request.method == "POST":
-        params = request.params
-        contact_name = params.get("contact_name", "").strip()
-        contact_email = params.get("contact_email", "").strip()
-        company = params.get("company", "").strip()
-        eid = params.get("email_id") or params.get("abookemail_id")
+    def contact_of(loaded: AFAddressBook) -> dict:
+        return {"id": loaded.email_array.get("abookemail_id"), "name": loaded.get_contact_name() or "",
+                "email": loaded.get_contact_email() or ""}
 
-        if params.get("delete") and eid:
-            try:
-                ab.remove_contact(int(eid))
-            except Exception:
-                pass
+    if request.method != "POST":
+        cid = _contact_id(request.params)
+        if cid and book.load_contact_by_id(cid):
+            message = _("Contact saved.") if request.params.get("saved") else None
+            return _contact_page(request, contact_of(book), message=message)
+        return _contact_page(request, {"id": None, "name": "", "email": ""})
+
+    post = request.POST
+    name, email = post.get("contact_name", "").strip(), post.get("contact_email", "").strip()
+    cid = _contact_id(post)
+
+    if cid:
+        if not book.load_contact_by_id(cid):
             return HTTPFound(location=request.route_url("emailbook"))
-
-        if eid:
-            try:
-                eid_val = int(eid)
-                from namifax.db.repository import MDBOData
-                repo = MDBOData("AddressBookEmail", db=request.dbsession)
-                repo.data.set_id(eid_val)
-                repo.update_entry({"contact_name": contact_name, "contact_email": contact_email})
-            except Exception:
-                pass
+        if post.get("delete"):
+            if not identity.get("superuser"):
+                return _contact_page(request, contact_of(book), error=_("You are not allowed to delete contacts."))
+            book.remove_contact(cid)
             return HTTPFound(location=request.route_url("emailbook"))
-
-        if contact_name and contact_email:
-            try:
-                ab.create_contact(contact_name, contact_email)
-            except Exception:
-                pass
-            return HTTPFound(location=request.route_url("emailbook"))
-
-    contact_id = request.params.get("email_id") or request.params.get("abookemail_id")
-    contact = {"id": "", "name": "", "email": "", "company": ""}
-    if contact_id:
-        try:
-            from namifax.db.repository import MDBOData
-            repo = MDBOData("AddressBookEmail", db=request.dbsession)
-            cid_int = int(contact_id)
-            rec = repo.find({"abookemail_id": cid_int}) or repo.find({"email_id": cid_int})
-            if rec:
-                contact = {
-                    "id": rec.get("abookemail_id") or rec.get("email_id") or cid_int,
-                    "name": rec.get("contact_name") or rec.get("to_person") or "",
-                    "email": rec.get("contact_email") or rec.get("email") or "",
-                    "company": "",
-                }
-        except Exception:
-            pass
-
-    return {
-        "title": "NamiFAX - Email Book",
-        "current_user": identity,
-        "active_tab": "addressbook",
-        "contact": contact,
-    }
+        if not book.update_contact(name, email):
+            return _contact_page(request, {"id": cid, "name": name, "email": email}, error=book.get_error())
+        target = cid
+    else:
+        if not book.create_contact(name, email):
+            return _contact_page(request, {"id": None, "name": name, "email": email}, error=book.get_error())
+        target = book.email_array.get("abookemail_id")
+    return HTTPFound(location=request.route_url("emailbook_edit", _query={"abookemail_id": target, "saved": "1"}))

@@ -9,7 +9,7 @@ from namifax.services.categories import FaxPDFCategory
 from namifax.services.distro import DistributionList
 
 
-@view_config(route_name="popup_distrolist_helper")
+@view_config(route_name="popup_distrolist_helper", permission="view")
 def popup_distrolist_helper(request):
     """Distribution list contact multi-select helper popup matching distrolist_helper.php."""
     dl_id = request.params.get("dl_id", "1")
@@ -69,7 +69,7 @@ def popup_distrolist_helper(request):
     return Response(html_content, content_type="text/html")
 
 
-@view_config(route_name="popup_distro_contacts")
+@view_config(route_name="popup_distro_contacts", permission="view")
 def popup_distro_contacts(request):
     """Distro contacts selector popup matching distrocontacts.php."""
     dl = DistributionList(db=request.dbsession)
@@ -114,7 +114,7 @@ def popup_distro_contacts(request):
     return Response(html_content, content_type="text/html")
 
 
-@view_config(route_name="popup_fax_contacts")
+@view_config(route_name="popup_fax_contacts", permission="view")
 def popup_fax_contacts(request):
     """Fax contacts selector popup matching faxcontacts.php."""
     ab = AFAddressBook(db=request.dbsession)
@@ -161,7 +161,7 @@ def popup_fax_contacts(request):
     return Response(html_content, content_type="text/html")
 
 
-@view_config(route_name="popup_email_contacts")
+@view_config(route_name="popup_email_contacts", permission="view")
 def popup_email_contacts(request):
     """Email contacts selector popup matching emailcontacts.php."""
     ab = AFAddressBook(db=request.dbsession)
@@ -204,7 +204,7 @@ def popup_email_contacts(request):
     return Response(html_content, content_type="text/html")
 
 
-@view_config(route_name="upload_contacts")
+@view_config(route_name="upload_contacts", permission="view")
 def upload_email_contacts(request):
     """Upload vCard to import email contacts matching upload_contacts.php."""
     numcontacts = 0
@@ -249,7 +249,7 @@ def upload_email_contacts(request):
     return Response(html, content_type="text/html")
 
 
-@view_config(route_name="upload_faxcontacts")
+@view_config(route_name="upload_faxcontacts", permission="view")
 def upload_fax_contacts(request):
     """Upload vCard to import fax contacts matching upload_faxcontacts.php."""
     numcontacts = 0

@@ -18,25 +18,23 @@ class _Request(testing.DummyRequest):
 
 @pytest.mark.parametrize(
     "method,params",
-    [("GET", {"email_id": "1"}), ("POST", {"email_id": "1", "contact_name": "n", "contact_email": "a@x.test"})],
+    [("GET", {"abookemail_id": "1"}), ("POST", {"abookemail_id": "1", "contact_name": "n", "contact_email": "a@x.test"})],
     ids=["emailbook_edit-GET", "emailbook_edit-POST-update"],
 )
-def test_emailbook_edit_builds_repository_with_request_db(method, params):
+def test_emailbook_edit_builds_the_address_book_with_the_request_session(method, params):
     req = _Request()
     req.db = object()
     req.dbsession = object()
     req.method = method
     req.params = params
+    req.POST = params
     req.route_url = MagicMock(return_value="/x")
-    cls = MagicMock(name="MDBOData")
-    with patch("namifax.db.repository.MDBOData", cls), \
-            patch.object(ab_mod, "AFAddressBook", MagicMock()), contextlib.suppress(Exception):
+    cls = MagicMock(name="AFAddressBook")
+    with patch.object(ab_mod, "AFAddressBook", cls), contextlib.suppress(Exception):
         ab_mod.emailbook_edit_view(req)
 
-    assert cls.call_args_list, "MDBOData was never built"
-    for call in cls.call_args_list:
-        passed = call.kwargs.get("db", call.args[1] if len(call.args) > 1 else None)
-        assert passed is req.dbsession
+    assert cls.call_args_list, "AFAddressBook was never built"
+    assert all(call.kwargs.get("db") is req.dbsession for call in cls.call_args_list)
 
 
 def test_saml_provisioning_builds_account_with_service_db():

@@ -32,6 +32,12 @@
     </div>
   </div>
 
+  <form action="/emailbook" method="get" class="flex items-center gap-2 text-xs">
+    <label for="q" class="font-semibold text-slate-700">{{ _('Search') }}:</label>
+    <input type="text" name="q" id="q" value="{{ query or '' }}" class="border border-slate-300 rounded-lg px-3 py-1.5 bg-white text-slate-900 w-64" />
+    <button type="submit" class="px-3 py-1.5 bg-white hover:bg-slate-50 border border-slate-300 rounded-lg font-semibold text-slate-700">{{ _('Search') }}</button>
+  </form>
+
   <!-- Contacts Table Card -->
   <div class="bg-white border border-slate-200/90 rounded-xl shadow-xs overflow-hidden">
     <div class="px-5 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
