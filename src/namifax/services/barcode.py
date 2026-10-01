@@ -20,7 +20,7 @@ class BarcodeRouting:
 
     def __init__(
         self,
-        db: DatabaseEngine | None = None,
+        db: Any = None,
         engine: DatabaseEngine | None = None,
         repo: MDBOData | None = None,
         lang: dict[str, str] | None = None,
@@ -97,11 +97,8 @@ class BarcodeRouting:
 
     def get_routes(self) -> list[int] | None:
         """Return array of all route IDs configured, prefixed with 0 (legacy convention)."""
-        routes = self.barcoderoute.query(
-            "SELECT barcode_id FROM BarcodeRoute ORDER BY alias",
-            reduce_single=False,
-        )
-        if isinstance(routes, list) and len(routes) > 0:
+        routes = self.barcoderoute.select(columns=["barcode_id"], order_by="alias")
+        if routes:
             return [0] + [r["barcode_id"] for r in routes if "barcode_id" in r]
 
         self.error = self.lang.get("BARCODEROUTE_NO_ROUTES", "No barcode routes configured")
@@ -109,13 +106,7 @@ class BarcodeRouting:
 
     def list_all(self) -> list[dict[str, Any]]:
         """Return all barcode routes ordered by alias."""
-        res = self.barcoderoute.query("SELECT * FROM BarcodeRoute ORDER BY alias", reduce_single=False)
-        if isinstance(res, list):
-            for r in res:
-                if "barcode_id" not in r or r["barcode_id"] is None:
-                    r["barcode_id"] = r.get("bcr_id")
-            return res
-        return []
+        return self.barcoderoute.select(order_by="alias")
 
     def reset_list(self) -> None:
         """Reset internal cursor for list traversal."""
@@ -125,8 +116,7 @@ class BarcodeRouting:
     def list_routes_step(self) -> tuple[int, str, str] | None:
         """Step-by-step cursor emulation for legacy list_routes(&$barcode_id, &$alias, &$barcode)."""
         if not self._queried:
-            results = self.barcoderoute.query("SELECT * FROM BarcodeRoute ORDER BY alias", reduce_single=False)
-            self._list_results = list(results) if isinstance(results, list) else []
+            self._list_results = self.barcoderoute.select(order_by="alias")
             self._queried = True
 
         if self._list_results:
@@ -153,7 +143,7 @@ class BarcodeRouting:
             self.barcode = data.get("barcode")
             self.contact = data.get("contact")
             self.printer = data.get("printer")
-            self.barcode_id = data.get("barcode_id") or data.get("bcr_id")
+            self.barcode_id = data.get("barcode_id")
             self.faxcatid = data.get("faxcatid")
             self.error = None
             return True
@@ -169,15 +159,13 @@ class BarcodeRouting:
             return False
 
         data = self.barcoderoute.find({"barcode_id": barcode_id})
-        if not data:
-            data = self.barcoderoute.find({"bcr_id": barcode_id})
 
         if data and isinstance(data, dict):
             self.alias = data.get("alias")
             self.barcode = data.get("barcode")
             self.contact = data.get("contact")
             self.printer = data.get("printer")
-            self.barcode_id = data.get("barcode_id") or data.get("bcr_id")
+            self.barcode_id = data.get("barcode_id")
             self.faxcatid = data.get("faxcatid")
             self.error = None
             return True

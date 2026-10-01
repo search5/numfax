@@ -77,7 +77,7 @@ def admin_dashboard_view(request):
     """Admin Dashboard and server overview."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
     users = get_all_admin_users(request.db)
-    modems = get_all_admin_modems(request.db)
+    modems = get_all_admin_modems(request.dbsession)
 
     if "Authorization" in request.headers or "application/json" in request.headers.get("Accept", ""):
         from pyramid.response import Response
@@ -162,7 +162,7 @@ def admin_users_view(request):
         if not selected_user and str(uid) == "1" and users:
             selected_user = users[0]
 
-    did = DIDRouting(db=request.db)
+    did = DIDRouting(db=request.dbsession)
     try:
         did_routes = did.list_all()
     except Exception:
@@ -182,7 +182,7 @@ def admin_users_view(request):
         "users": users,
         "selected_user": selected_user or {"name": "", "username": "", "email": "", "is_admin": False, "superuser": False, "can_del": False, "any_modem": True},
         "did_routes": did_routes,
-        "modem_devices": get_all_admin_modems(request.db),
+        "modem_devices": get_all_admin_modems(request.dbsession),
         "categories": categories,
     }
 
@@ -204,7 +204,7 @@ def admin_modems_view(request):
             if devid:
                 try:
                     from namifax.services.modem import FaxModem
-                    svc = FaxModem(db=request.db)
+                    svc = FaxModem(db=request.dbsession)
                     svc.delete_device(int(devid))
                 except Exception:
                     pass
@@ -213,7 +213,7 @@ def admin_modems_view(request):
         if device and alias:
             try:
                 from namifax.services.modem import FaxModem
-                svc = FaxModem(db=request.db)
+                svc = FaxModem(db=request.dbsession)
                 if devid and svc.loadbyid(int(devid)):
                     svc.set_alias(alias)
                     svc.set_contact(contact)
@@ -233,7 +233,7 @@ def admin_modems_view(request):
 
             return HTTPFound(location=request.route_url("admin_modems"))
 
-    modems = get_all_admin_modems(request.db)
+    modems = get_all_admin_modems(request.dbsession)
     devid = request.params.get("devid")
     device_param = request.params.get("device")
     selected_modem = None
@@ -257,7 +257,7 @@ def admin_modems_view(request):
 def admin_routing_did_view(request):
     """Admin DID inbound routing configuration and full CRUD management."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    did = DIDRouting(db=request.db)
+    did = DIDRouting(db=request.dbsession)
     fc = FaxPDFCategory(db=request.dbsession)
     message = None
     error = None
@@ -546,7 +546,7 @@ def admin_categories_view(request):
 def admin_barcodes_view(request):
     """Admin configure barcode routing and CRUD."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    bc = BarcodeRouting(db=request.db)
+    bc = BarcodeRouting(db=request.dbsession)
     message = None
     error = None
 
@@ -675,7 +675,7 @@ def admin_dynconf_view(request):
 
     try:
         from namifax.services.modem import FaxModem
-        fm = FaxModem(db=request.db)
+        fm = FaxModem(db=request.dbsession)
         modems = fm.get_modems() or ["ttyS0"]
     except Exception:
         modems = ["ttyS0"]

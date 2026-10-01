@@ -70,29 +70,48 @@ def test_import_blacklist_usage_does_not_open_db():
 
 # --- reroute --------------------------------------------------------------------
 
-def test_reroute_updates_modem_contact_in_injected_db(seeded_db, monkeypatch):
+def test_reroute_updates_modem_contact_through_a_session(app, dbengine, monkeypatch):
+    from sqlalchemy.orm import Session
+
+    from namifax.cli import reroute
+    from namifax.services.modem import FaxModem
+
+    monkeypatch.delenv("ENABLE_DID_ROUTING", raising=False)
+    with Session(dbengine) as session:
+        device = FaxModem(db=session).list_all()[0]["device"]
+    assert reroute.main([device, "new@x.test"]) == 0
+    with Session(dbengine) as session:
+        modem = FaxModem(db=session)
+        assert modem.load_device(device) and modem.contact == "new@x.test"
+
+
+def test_reroute_updates_a_did_route_when_did_routing_is_enabled(app, dbengine, monkeypatch):
+    from sqlalchemy.orm import Session
+
+    from namifax.cli import reroute
+    from namifax.services.did import DIDRouting
+
+    monkeypatch.setenv("ENABLE_DID_ROUTING", "1")
+    with Session(dbengine) as session:
+        route = DIDRouting(db=session).list_all()[0]["routecode"]
+    assert reroute.main([route, "did@x.test"]) == 0
+    with Session(dbengine) as session:
+        did = DIDRouting(db=session)
+        assert did.load_route(route) and did.contact == "did@x.test"
+
+
+def test_reroute_unknown_device_returns_error(app, monkeypatch, capsys):
     from namifax.cli import reroute
 
     monkeypatch.delenv("ENABLE_DID_ROUTING", raising=False)
-    seeded_db.query("SELECT device, contact FROM Modems LIMIT 1")
-    modem = seeded_db.get_records()[0]
-    assert reroute.main([modem["device"], "new@x.test"], db=seeded_db) == 0
-    seeded_db.query(f"SELECT contact FROM Modems WHERE device = {seeded_db.quote(modem['device'])}")
-    assert seeded_db.get_records() == [{"contact": "new@x.test"}]
-
-
-def test_reroute_unknown_device_returns_error(seeded_db, monkeypatch, capsys):
-    from namifax.cli import reroute
-
-    monkeypatch.delenv("ENABLE_DID_ROUTING", raising=False)
-    assert reroute.main(["ttyNOPE", "a@x.test"], db=seeded_db) == 1
+    assert reroute.main(["ttyNOPE", "a@x.test"]) == 1
     assert "Error loading device" in capsys.readouterr().out
 
 
 def test_reroute_usage_does_not_open_db():
     from namifax.cli import reroute
 
-    with patch.object(reroute, "cli_db", side_effect=AssertionError("must not open DB")):
+    with patch.object(reroute, "cli_session", side_effect=AssertionError("must not open DB")):
         assert reroute.main(["only-one"]) == 0
 
 

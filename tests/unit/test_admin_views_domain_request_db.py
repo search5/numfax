@@ -60,13 +60,16 @@ def test_view_builds_domain_objects_with_request_db(name, method, params):
 
     for target, cls in zip(dict.fromkeys(SERVICE_TARGETS), classes):
         # ORM-backed services take the request session, the others the legacy request.db
-        expected = req.dbsession if target.endswith(("FaxPDFCategory", ".Covers", ".DynamicConfig")) else req.db
+        expected = req.dbsession if target.endswith(("FaxPDFCategory", ".Covers", ".DynamicConfig", ".FaxModem", ".DIDRouting", ".BarcodeRouting")) else req.db
         for call in cls.call_args_list:
             assert call.kwargs.get("db") is expected, f"{name}: {target} built with the wrong database"
     for hname, helper in helpers.items():
         for call in helper.call_args_list:
             if hname == "get_all_syslogs":  # ORM-backed: takes the request session
                 assert call.kwargs.get("session") is req.dbsession, f"{name}: {hname} called without request.dbsession"
+                continue
+            if hname == "get_all_admin_modems":  # modems are ORM-backed too
+                assert call.args[0] is req.dbsession, f"{name}: {hname} called without request.dbsession"
                 continue
             passed = call.kwargs.get("db", call.args[0] if call.args else None)
             assert passed is req.db, f"{name}: {hname} called without request.db"

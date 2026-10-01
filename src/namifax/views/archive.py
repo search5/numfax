@@ -70,5 +70,5 @@ def archive_view(request):
         "date_to": date_to_q,
         "results": results,
         "categories": categories,
-        "modem_list": get_all_admin_modems(request.db),
+        "modem_list": get_all_admin_modems(request.dbsession),
     }

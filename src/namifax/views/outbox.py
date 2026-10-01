@@ -37,7 +37,7 @@ def outbox_view(request):
     except Exception:
         failed_jobs = []
 
-    modem_list = get_all_admin_modems(request.db)
+    modem_list = get_all_admin_modems(request.dbsession)
 
     return {
         "title": "- NamiFAX - Outbox",

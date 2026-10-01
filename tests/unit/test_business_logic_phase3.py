@@ -53,9 +53,10 @@ class MockRequest(testing.DummyRequest):
 
 
 @pytest.fixture
-def dummy_request(memory_db):
+def dummy_request(memory_db, dbsession):
     request = MockRequest()
     request.db = memory_db
+    request.dbsession = dbsession
     request.identity = {
         "uid": 1,
         "username": "admin",

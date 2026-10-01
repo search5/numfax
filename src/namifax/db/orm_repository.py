@@ -232,6 +232,10 @@ class OrmRepository:
         names = columns or list(self._attr)
         stmt = sa.select(*[self._column(n) for n in names])
         order_col = self._column(order_by) if order_by else self._pk_col
+        if order_col.nullable:
+            # SQLite and MySQL sort NULL first when ascending, PostgreSQL last: make it the same everywhere
+            null_rank = sa.case((order_col.is_(None), 1 if descending else 0), else_=0 if descending else 1)
+            stmt = stmt.order_by(null_rank)
         stmt = stmt.order_by(order_col.desc() if descending else order_col.asc(), self._pk_col)
         return [dict(zip(names, row)) for row in self.session.execute(stmt)]
 

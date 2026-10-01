@@ -940,7 +940,9 @@ Pyramid cookiecutter starter(2.1-branch, jinja2 + sqlalchemy)를 임시 디렉�
 | 2 | `FaxCategory` | `[ORM]` | 0005 | `FaxPDFCategory`는 `Session`과 레거시 `DatabaseEngine` 모두 받음. 웹 뷰(admin, archive, helpers)는 `request.dbsession` |
 | 2 | `CoverPages` | `[ORM]` | 0006 | `Covers`는 `Session`/`DatabaseEngine` 모두. 웹 뷰(admin, sendfax)는 `request.dbsession` |
 | 2 | `DynConf` | `[ORM]` | 0007 | `DynamicConfig` 서비스. 웹 뷰는 `request.dbsession`, CLI(`dynconf`, `import_blacklist`)는 `cli_session(ensure_schema=True)`. 쌍둥이 테이블 `DynamicConfig`는 SQL 사용처가 없어 생성/동기화/시드를 제거(기존 DB의 잔여 테이블은 건드리지 않음) |
-| 2 | `BarcodeRoute`, `DIDRoute`, `Modems` | `[LEGACY]` | - | 다음. `faxrcvd`가 세 서비스와 레거시 `ArchiveIn`을 한 실행에서 함께 쓰므로 CLI용 공유 연결 유닛(`cli_unit`)이 먼저 필요(SQLite는 쓰기 연결이 둘이면 잠김) |
+| 2 | `Modems` | `[ORM]` | 0008 | `FaxModem`(`faxstat` 상태 파싱은 DB와 무관). 웹 뷰·`get_all_admin_modems`는 `request.dbsession`, `reroute`는 `cli_session`, `faxrcvd`는 `cli_unit` |
+| 2 | `DIDRoute` | `[ORM]` | 0009 | `DIDRouting` |
+| 2 | `BarcodeRoute` | `[ORM]` | 0010 | `BarcodeRouting`. 포트가 만든 중복 컬럼 `bcr_id`는 모델과 서비스에서 제거(구조 백필이 기존 SQLite DB의 NULL `barcode_id`를 `bcr_id`로 채움) |
 | 3 | `UserAccount`, `UserPasswords`, `UserTOTP`, `AddressBook*`, `DistroList`, `UserWebAuthnCredentials`, `FaxOCR` | `[LEGACY]` | - | `AddressBook` `ab_id`/`abook_id` 불일치를 모델화하며 정리 |
 | 4 | `FaxArchive` 외 | `[LEGACY]` | - | |
 
@@ -1012,3 +1014,14 @@ Pyramid cookiecutter starter(2.1-branch, jinja2 + sqlalchemy)를 임시 디렉�
 - 모든 `INSERT OR REPLACE`는 `INSERT OR IGNORE`, 모든 `else:` 복구 UPDATE와 데모 마이그레이션 UPDATE는 제거.
 - 구조용 백필(`abook_id`, `barcode_id`, `archstamp` 등 NULL 채우기)은 `_backfill_alias_columns`로 모아 마이그레이션 직후와 시드 직후에 실행해, 새 DB가 첫 시작에서 완전하게 만들어진다(이전에는 두 번째 시작에서야 채워졌음).
 - `[관찰]` 새 SQLite DB는 여전히 `admin`/`password` 기본 관리자를 만든다(레거시 설치와 같은 동작이지만 레거시는 `wasreset=TRUE`로 첫 로그인에서 변경을 강제했다). 운영 배포에서는 기본 계정을 만들지 않거나 변경을 강제하는 장치가 필요하다 `[NEEDS_CLARIFICATION]`.
+
+### 14.10 CLI에서 레거시와 ORM을 한 실행에서 섞기: `cli_unit`
+**문제**: `faxrcvd`는 ORM 서비스(모뎀, DID, 바코드)와 레거시 서비스(`ArchiveIn`, `AFAddressBook`)를 한 실행에서 함께 쓴다. 쓰기 연결이 둘이면 SQLite에서 서로를 잠근다(한쪽의 미커밋 쓰기가 다른 쪽을 막음). 실제로 `avantfaxlog()`가 별도 세션을 열어 로그가 조용히 사라지는 것을 테스트가 잡았다.
+
+**해결**
+- `provider.cli_unit()`: 레거시 `DatabaseEngine`(managed)과 ORM `Session`이 **한 연결·한 트랜잭션**을 공유한다(웹의 `request.db` + `request.dbsession`과 같은 모델). 양쪽이 서로의 미커밋 쓰기를 보고, 블록이 정상 종료되면 커밋, 예외면 전체 롤백. SQLite는 스키마도 보장한다.
+- `provider.active_session()`: 실행 중인 `cli_session()`/`cli_unit()`의 세션(ContextVar). `avantfaxlog()`와 `send_mail()`(SMTP 설정 조회)은 명시된 세션이 없으면 이것을 먼저 쓰고, 없을 때만 짧은 세션을 따로 연다.
+- 선택 기준: ORM 서비스만 쓰는 CLI는 `cli_session()`, 레거시만 쓰는 CLI는 `cli_db()`, 둘을 섞으면 `cli_unit()`.
+
+### 14.11 NULL 정렬 규칙
+SQLite·MySQL은 오름차순에서 NULL을 먼저, PostgreSQL은 나중에 둔다. `OrmRepository.select`는 NULL 가능 컬럼 정렬 시 `CASE`로 NULL을 오름차순에서 먼저/내림차순에서 나중에 고정한다(서버 3종 테스트). 문자열 정렬 자체(한글과 영문 혼합)는 DB collation이 정하므로 서비스 계약에 포함하지 않는다.

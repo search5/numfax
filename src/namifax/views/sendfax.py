@@ -92,7 +92,7 @@ def dispatch_sendfax(
 def sendfax_view(request):
     """Render send fax form or process submission."""
     identity = request.identity or {"username": "admin", "is_admin": True}
-    modem_list = get_all_admin_modems(request.db)
+    modem_list = get_all_admin_modems(request.dbsession)
 
     covers_svc = Covers(db=request.dbsession)
     cover_names = covers_svc.get_covers() or []

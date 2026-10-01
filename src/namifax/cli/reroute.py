@@ -10,7 +10,7 @@ import sys
 
 from typing import Any
 
-from namifax.db.provider import cli_db
+from namifax.db.provider import cli_session
 from namifax.services.did import DIDRouting
 from namifax.services.modem import FaxModem
 
@@ -25,7 +25,7 @@ def main(args=None, *, db: Any = None):
 
     if db is not None:
         return _reroute(args[0], args[1], db)
-    with cli_db() as opened:
+    with cli_session(ensure_schema=True) as opened:
         return _reroute(args[0], args[1], opened)
 
 

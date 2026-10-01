@@ -171,8 +171,10 @@ def avantfaxlog(text: str, echo: bool = False, session: Any = None) -> None:
     except Exception:
         pass
     try:
+        from namifax.db.provider import active_session
         from namifax.services.syslog import SysLogService
 
+        session = session if session is not None else active_session()
         if session is not None:
             SysLogService(session).add(text)
         else:
@@ -281,8 +283,10 @@ def _active_mailer(session: Any = None) -> Any:
     through a short-lived session on the configured database. Any problem reading them falls back
     to the local MTA, so a mail is still attempted (never silently kept in memory).
     """
+    from namifax.db.provider import active_session
     from namifax.services.mailer import MailerService
 
+    session = session if session is not None else active_session()
     if session is not None:
         return MailerService.get_active_mailer(session)
     try:

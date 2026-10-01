@@ -72,7 +72,7 @@ class FaxModem:
 
     def __init__(
         self,
-        db: DatabaseEngine | None = None,
+        db: Any = None,
         engine: DatabaseEngine | None = None,
         repo: MDBOData | None = None,
         faxstat_cmd: str = "faxstat",
@@ -160,8 +160,8 @@ class FaxModem:
 
     def get_modems(self) -> list[str] | None:
         """Return list of all configured modem device names ordered by alias."""
-        modems = self.modems.query("SELECT device FROM Modems ORDER BY alias", reduce_single=False)
-        if isinstance(modems, list) and len(modems) > 0:
+        modems = self.modems.select(columns=["device"], order_by="alias")
+        if modems:
             return [m["device"] for m in modems if "device" in m]
 
         self.error = self.lang.get("NO_MODEMS_CONFIGURED", "No modems configured")
@@ -169,8 +169,7 @@ class FaxModem:
 
     def list_all(self) -> list[dict[str, Any]]:
         """Return all modem records ordered by device."""
-        res = self.modems.query("SELECT * FROM Modems ORDER BY device", reduce_single=False)
-        return res if isinstance(res, list) else []
+        return self.modems.select(order_by="device")
 
     def reset_list(self) -> None:
         """Reset internal cursor for list traversal."""
@@ -180,8 +179,7 @@ class FaxModem:
     def list_modems_step(self) -> tuple[int, str, str] | None:
         """Step-by-step cursor emulation for legacy list_modems(&$devid, &$alias, &$device)."""
         if not self._queried:
-            results = self.modems.query("SELECT * FROM Modems ORDER BY device", reduce_single=False)
-            self._list_results = list(results) if isinstance(results, list) else []
+            self._list_results = self.modems.select(order_by="device")
             self._queried = True
 
         if self._list_results:

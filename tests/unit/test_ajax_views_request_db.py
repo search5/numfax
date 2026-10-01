@@ -29,6 +29,7 @@ def test_view_builds_domain_objects_with_request_db(name, method, params):
     req = testing.DummyRequest()
     req.session = {"user_id": 1, "username": "admin", "is_admin": True, "superuser": True}
     req.db = object()
+    req.dbsession = object()
     req.method = method
     req.params = params
 
@@ -39,9 +40,10 @@ def test_view_builds_domain_objects_with_request_db(name, method, params):
             contextlib.suppress(Exception):
         getattr(ajax_mod, name)(req)
 
-    calls = [c for m in mocks.values() for c in m.call_args_list]
-    calls += list(modems.call_args_list)
-    assert calls, f"{name} built no domain objects"
-    for call in calls:
-        passed = call.kwargs.get("db", call.args[0] if call.args else None)
-        assert passed is req.db, f"{name}: built without request.db"
+    assert any(m.call_args_list for m in mocks.values()) or modems.call_args_list, f"{name} built no domain objects"
+    for cls_name, mock in mocks.items():
+        expected = req.dbsession if cls_name == "FaxModem" else req.db   # modems are ORM-backed
+        for call in mock.call_args_list:
+            assert call.kwargs.get("db") is expected, f"{name}: {cls_name} built with the wrong database"
+    for call in modems.call_args_list:
+        assert call.args[0] is req.dbsession, f"{name}: modem helper called without request.dbsession"

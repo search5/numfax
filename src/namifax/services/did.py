@@ -20,7 +20,7 @@ class DIDRouting:
 
     def __init__(
         self,
-        db: DatabaseEngine | None = None,
+        db: Any = None,
         engine: DatabaseEngine | None = None,
         repo: MDBOData | None = None,
         lang: dict[str, str] | None = None,
@@ -98,11 +98,8 @@ class DIDRouting:
 
     def get_routes(self) -> list[int] | None:
         """Return array of all route IDs configured, prefixed with 0 (legacy convention)."""
-        routes = self.didroute.query(
-            "SELECT didr_id FROM DIDRoute ORDER BY alias",
-            reduce_single=False,
-        )
-        if isinstance(routes, list) and len(routes) > 0:
+        routes = self.didroute.select(columns=["didr_id"], order_by="alias")
+        if routes:
             return [0] + [r["didr_id"] for r in routes if "didr_id" in r]
 
         self.error = self.lang.get("DIDROUTE_NO_ROUTES", "No DID routes configured")
@@ -110,8 +107,7 @@ class DIDRouting:
 
     def list_all(self) -> list[dict[str, Any]]:
         """Return all DID routes ordered by alias."""
-        res = self.didroute.query("SELECT * FROM DIDRoute ORDER BY alias", reduce_single=False)
-        return res if isinstance(res, list) else []
+        return self.didroute.select(order_by="alias")
 
     def reset_list(self) -> None:
         """Reset internal cursor for list traversal."""
@@ -121,8 +117,7 @@ class DIDRouting:
     def list_routes_step(self) -> tuple[int, str, str] | None:
         """Step-by-step cursor emulation for legacy list_routes(&$didr_id, &$alias, &$routecode)."""
         if not self._queried:
-            results = self.didroute.query("SELECT * FROM DIDRoute ORDER BY alias", reduce_single=False)
-            self._list_results = list(results) if isinstance(results, list) else []
+            self._list_results = self.didroute.select(order_by="alias")
             self._queried = True
 
         if self._list_results:

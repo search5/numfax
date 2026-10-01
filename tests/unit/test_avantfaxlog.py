@@ -108,3 +108,54 @@ def test_a_cli_hook_leaves_a_trace_in_the_admin_log(app, dbengine, tmp_path):
 
     with Session(dbengine) as session:
         assert any("not found" in r["logtext"] for r in _rows(session, kw="gone.tif"))
+
+
+# --- inside a running command-line unit ----------------------------------------------------------
+
+def test_logging_inside_a_unit_uses_the_units_connection(tmp_path):
+    """A second writing connection would be locked out by the unit's pending write on SQLite."""
+    from sqlalchemy import text
+
+    from namifax.common.helpers import avantfaxlog
+    from namifax.db.provider import cli_unit
+    from namifax.services.syslog import SysLogService
+
+    env = {"DATABASE_URL": f"sqlite:///{tmp_path / 'u.db'}"}
+    with cli_unit(environ=env) as unit:
+        unit.session.execute(text("INSERT INTO SystemConfig (key, value) VALUES ('pending', 'write')"))
+        avantfaxlog("logged inside the unit")
+        assert [r["logtext"] for r in SysLogService(unit.session).search(kw="inside the unit")] == ["logged inside the unit"]
+    with Session(__import__("sqlalchemy").create_engine(env["DATABASE_URL"])) as session:
+        assert [r["logtext"] for r in _rows(session, kw="inside the unit")] == ["logged inside the unit"]
+
+
+def test_the_unit_is_forgotten_when_it_ends(tmp_path):
+    from namifax.db.provider import active_session, cli_session, cli_unit
+
+    env = {"DATABASE_URL": f"sqlite:///{tmp_path / 'u.db'}"}
+    assert active_session() is None
+    with cli_unit(environ=env) as unit:
+        assert active_session() is unit.session
+    assert active_session() is None
+    with cli_session(environ=env) as session:
+        assert active_session() is session
+    assert active_session() is None
+
+
+def test_send_mail_inside_a_unit_reads_the_gateway_through_the_units_session(tmp_path):
+    from unittest.mock import patch
+
+    from sqlalchemy import text
+
+    from namifax.common.helpers import send_mail
+    from namifax.db.provider import cli_unit
+    from namifax.services.mailer import MailerService
+    from namifax.services.smtp_settings import SmtpSettingsService
+
+    env = {"DATABASE_URL": f"sqlite:///{tmp_path / 'u.db'}"}
+    with cli_unit(environ=env) as unit:
+        SmtpSettingsService(unit.session).save_settings({"smtp_host": "uncommitted.gateway.test", "smtp_port": 2525})
+        with patch.object(MailerService, "sendmail", autospec=True, return_value=True) as sendmail:
+            send_mail("a@x.test", "hook@corp.test", "S", "B")
+        # the settings were not committed yet: only the unit's own session can see them
+        assert sendmail.call_args.args[0].smtp_server == "uncommitted.gateway.test"

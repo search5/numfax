@@ -57,7 +57,7 @@ def inbox_view(request):
     if "Authorization" in request.headers or "application/json" in request.headers.get("Accept", ""):
         return Response(json_body={"items": faxes, "total_count": len(faxes)}, content_type="application/json")
 
-    modem_list = get_all_admin_modems(request.db)
+    modem_list = get_all_admin_modems(request.dbsession)
 
     return {
         "title": "- NamiFAX - Inbox",

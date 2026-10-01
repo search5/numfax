@@ -80,7 +80,8 @@ def test_archive_view_uses_request_db():
     with patch.object(archive_mod, "FaxPDFArchive", arc), patch.object(archive_mod, "FaxPDFCategory", cat), \
             patch.object(archive_mod, "get_all_admin_modems", modems), contextlib.suppress(Exception):
         archive_mod.archive_view(req)
-    _assert_all_db(_calls(arc, modems), req, "archive_view")
+    _assert_all_db(_calls(arc), req, "archive_view")
+    assert modems.call_args.args[0] is req.dbsession  # modems are ORM-backed
     assert cat.call_args.kwargs.get("db") is req.dbsession  # ORM-backed: the request session
     assert arc.call_args_list and modems.call_args_list
 
@@ -93,7 +94,7 @@ def test_sendfax_view_uses_request_db():
     with patch.object(sendfax_mod, "Covers", covers), patch.object(sendfax_mod, "get_all_admin_modems", modems), \
             contextlib.suppress(Exception):
         sendfax_mod.sendfax_view(req)
-    _assert_all_db(_calls(modems), req, "sendfax_view")
+    assert modems.call_args.args[0] is req.dbsession  # modems are ORM-backed
     assert covers.call_args.kwargs.get("db") is req.dbsession  # ORM-backed: the request session
     assert covers.call_args_list and modems.call_args_list
 
@@ -104,4 +105,4 @@ def test_outbox_view_passes_request_db_to_modem_helper():
     with patch.object(outbox_mod, "FaxQueue", MagicMock()), patch.object(outbox_mod, "get_all_admin_modems", modems), \
             contextlib.suppress(Exception):
         outbox_mod.outbox_view(req)
-    _assert_all_db(_calls(modems), req, "outbox_view")
+    assert modems.call_args.args[0] is req.dbsession  # modems are ORM-backed

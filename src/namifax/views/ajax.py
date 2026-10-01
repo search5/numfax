@@ -15,10 +15,10 @@ from namifax.views.admin import get_all_admin_modems
 @view_config(route_name="ajax_modemstatus")
 def ajax_modem_status(request):
     """Real-time modem status poller matching legacy ajaxmodemstatus.php."""
-    modems = get_all_admin_modems(request.db)
+    modems = get_all_admin_modems(request.dbsession)
     rows_xml = []
     try:
-        fm = FaxModem(db=request.db)
+        fm = FaxModem(db=request.dbsession)
         for m in modems:
             dev = m.get("device", "ttyS0")
             status_info = m.get("status", "Idle")

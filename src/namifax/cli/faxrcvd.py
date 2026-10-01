@@ -32,7 +32,7 @@ from namifax.common.helpers import (
     static_preview,
     tiff2pdf,
 )
-from namifax.db.provider import cli_db
+from namifax.db.provider import cli_unit
 from namifax.services.addressbook import AFAddressBook
 from namifax.services.archive_in import ArchiveIn
 from namifax.services.barcode import BarcodeRouting
@@ -56,21 +56,26 @@ LANG = {
 }
 
 
-def run_faxrcvd(argv: Sequence[str] | None = None, *, db: Any = None) -> int:
-    """Execute HylaFAX inbound fax received handler."""
+def run_faxrcvd(argv: Sequence[str] | None = None, *, db: Any = None, session: Any = None) -> int:
+    """Execute HylaFAX inbound fax received handler.
+
+    ``db`` is the legacy engine (address book, archive, OCR) and ``session`` the ORM session (modems,
+    DID and barcode routes). Without them one shared unit is opened on the configured database; a
+    single object passed as ``db`` serves both roles (useful with mocks).
+    """
     args = list(argv) if argv is not None else list(sys.argv)
 
     if len(args) < 3:
         print("Usage: faxrcvd.php file devID commID error-msg [CIDNumber] [CIDName] [DIDnum]")
         return 0
 
-    if db is not None:
-        return _process_faxrcvd(args, db)
-    with cli_db() as opened:
-        return _process_faxrcvd(args, opened)
+    if db is not None or session is not None:
+        return _process_faxrcvd(args, db if db is not None else session, session if session is not None else db)
+    with cli_unit() as unit:
+        return _process_faxrcvd(args, unit.db, unit.session)
 
 
-def _process_faxrcvd(args: list[str], db: Any) -> int:
+def _process_faxrcvd(args: list[str], db: Any, session: Any) -> int:
     """Process one received fax using the given database engine."""
 
     tiff_file = args[1]
@@ -82,7 +87,7 @@ def _process_faxrcvd(args: list[str], db: Any) -> int:
     did_num = args[7] if len(args) >= 8 else None
 
     # Check / configure modem
-    modem = FaxModem(db=db)
+    modem = FaxModem(db=session)
     if not modem.load_device(modemdev):
         avantfaxlog(f"faxrcvd> Found unconfigured modem: {modemdev}. Configuring...", echo=False)
         modem.create(modemdev, modemdev, None)
@@ -157,7 +162,7 @@ def _process_faxrcvd(args: list[str], db: Any) -> int:
 
     # DID Routing
     didr_id = 0
-    didr = DIDRouting(db=db)
+    didr = DIDRouting(db=session)
     if ENABLE_DID_ROUTING and did_num:
         if didr.load_route(did_num):
             didr_id = didr.get_didr_id()
@@ -223,7 +228,7 @@ def _process_faxrcvd(args: list[str], db: Any) -> int:
     bcode_val = bardecode(faxfile)
     if bcode_val:
         inbox.set_note(bcode_val, None, None)
-        barcode = BarcodeRouting(db=db)
+        barcode = BarcodeRouting(db=session)
         if barcode.load_route(bcode_val):
             if barcode.get_faxcatid():
                 faxcatid = barcode.get_faxcatid()

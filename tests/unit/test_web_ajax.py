@@ -17,9 +17,10 @@ from namifax.views.ajax import (
 
 
 @pytest.fixture
-def dummy_request(seeded_db):
+def dummy_request(seeded_db, dbsession):
     request = testing.DummyRequest()
     request.db = seeded_db
+    request.dbsession = dbsession
     request.session = {"user_id": 1, "username": "admin", "is_admin": True, "superuser": True}
     return request
 
