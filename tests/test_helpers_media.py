@@ -72,7 +72,7 @@ def test_static_preview_generates_thumbnails(sample_multipage_tiff):
         assert os.path.getsize(thumb_path) > 50
 
         # Verify preview files
-        prev0 = os.path.join(tmpdir, "preview0.png")
+        prev0 = os.path.join(tmpdir, "page0.png")
         assert os.path.exists(prev0)
         assert os.path.getsize(prev0) > 50
 

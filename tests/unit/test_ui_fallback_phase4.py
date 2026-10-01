@@ -105,8 +105,8 @@ class TestUIFallbackPhase4(unittest.TestCase):
 
     @patch("namifax.views.inbox.ArchiveIn")
     @patch("namifax.views.inbox.AFAddressBook")
-    def test_viewfax_view_empty_or_nonexistent_returns_empty_metadata(self, mock_ab_cls, mock_arc_cls):
-        """Verify that viewfax does not inject hardcoded '2026-09-29 10:00:00' or 'ttyS0' when not loaded."""
+    def test_viewfax_view_nonexistent_goes_back_to_the_inbox(self, mock_ab_cls, mock_arc_cls):
+        """A fax that cannot be loaded gives no made-up metadata: the visitor is sent back to the inbox."""
         mock_arc = MagicMock()
         mock_arc.load_fax.return_value = False
         mock_arc_cls.return_value = mock_arc
@@ -114,13 +114,10 @@ class TestUIFallbackPhase4(unittest.TestCase):
         req = MockRequest()
         req.params = {"fid": "999"}
         req.identity = {"username": "admin", "is_admin": True}
+        req.route_url = MagicMock(return_value="/inbox")
 
         res = viewfax_view(req)
-        self.assertEqual(res.get("archstamp"), "")
-        self.assertEqual(res.get("modemdev"), "")
-        self.assertEqual(res.get("company"), "")
-        self.assertNotEqual(res.get("archstamp"), "2026-09-29 10:00:00")
-        self.assertNotEqual(res.get("modemdev"), "ttyS0")
+        self.assertEqual(res.status_code, 302)
 
     def test_viewfax_template_renders_hyphen_when_metadata_missing(self):
         """Verify viewfax.jinja2 renders '-' placeholder instead of Acme Global or hardcoded timestamps."""

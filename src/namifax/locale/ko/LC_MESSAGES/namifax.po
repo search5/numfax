@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: kMIME-Version: 1.Content-Type: text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:06+0900\n"
+"POT-Creation-Date: 2026-10-02 00:12+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ko\n"
@@ -1257,6 +1257,12 @@ msgstr "미리보기"
 msgid "Sender"
 msgstr "발신자"
 
+msgid "Page"
+msgstr "페이지"
+
+msgid "of"
+msgstr "/"
+
 msgid "This number belongs to several companies. Which one is it?"
 msgstr "이 번호는 여러 회사에 등록되어 있습니다. 어느 회사입니까?"
 
@@ -1282,7 +1288,7 @@ msgid "Rotate"
 msgstr "회전"
 
 msgid "Download TIFF"
-msgstr "TIFF 다운로드"
+msgstr "TIFF 내려받기"
 
 msgid "0 FAXES"
 msgstr "0건의 팩스"
@@ -1803,65 +1809,17 @@ msgstr "완료"
 msgid "Back to settings"
 msgstr "환경설정으로 돌아가기"
 
-msgid "Fax Viewer"
-msgstr "팩스 뷰어"
-
-msgid "Page 1 of"
-msgstr "페이지: 1 /"
-
-msgid "FROM:"
-msgstr "발신:"
-
-msgid "DATE:"
-msgstr "수신일시:"
-
-msgid "DEVICE:"
-msgstr "장치:"
+msgid "Previous fax"
+msgstr "이전 팩스"
 
 msgid "Prev"
 msgstr "이전"
 
-msgid "PDF"
-msgstr "PDF"
+msgid "Next fax"
+msgstr "다음 팩스"
 
-msgid "TIFF"
-msgstr "TIFF"
-
-msgid "Total"
-msgstr "전체"
-
-msgid "Page"
-msgstr "페이지"
-
-msgid "Incoming Transmission"
-msgstr "수신 팩스 전송"
-
-msgid "FACSIMILE TRANSMISSION"
-msgstr "팩스 전송 내역"
-
-msgid "Date Received:"
-msgstr "수신 일시:"
-
-msgid "Originating Station:"
-msgstr "발신 국선 ID:"
-
-msgid "PORT"
-msgstr "포트"
-
-msgid "High-Resolution Raster Preview"
-msgstr "고해상도 래스터 미리보기"
-
-msgid "Device Line:"
-msgstr "장치 회선:"
-
-msgid "Download Original Document"
-msgstr "원본 문서 다운로드"
-
-msgid "NamiFAX Enterprise Facsimile Engine"
-msgstr "NamiFAX 엔터프라이즈 팩스 엔진"
-
-msgid "Archive ID:"
-msgstr "보관 ID:"
+msgid "Rotate fax"
+msgstr "팩스 회전"
 
 #, python-format
 msgid "Invalid fax number: %(number)s"
@@ -2279,4 +2237,58 @@ msgstr "비밀번호가 올바르지 않습니다."
 
 #~ msgid "of"
 #~ msgstr "/"
+
+#~ msgid "Fax Viewer"
+#~ msgstr "팩스 뷰어"
+
+#~ msgid "Page 1 of"
+#~ msgstr "페이지: 1 /"
+
+#~ msgid "FROM:"
+#~ msgstr "발신:"
+
+#~ msgid "DATE:"
+#~ msgstr "수신일시:"
+
+#~ msgid "DEVICE:"
+#~ msgstr "장치:"
+
+#~ msgid "PDF"
+#~ msgstr "PDF"
+
+#~ msgid "TIFF"
+#~ msgstr "TIFF"
+
+#~ msgid "Total"
+#~ msgstr "전체"
+
+#~ msgid "Incoming Transmission"
+#~ msgstr "수신 팩스 전송"
+
+#~ msgid "FACSIMILE TRANSMISSION"
+#~ msgstr "팩스 전송 내역"
+
+#~ msgid "Date Received:"
+#~ msgstr "수신 일시:"
+
+#~ msgid "Originating Station:"
+#~ msgstr "발신 국선 ID:"
+
+#~ msgid "PORT"
+#~ msgstr "포트"
+
+#~ msgid "High-Resolution Raster Preview"
+#~ msgstr "고해상도 래스터 미리보기"
+
+#~ msgid "Device Line:"
+#~ msgstr "장치 회선:"
+
+#~ msgid "Download Original Document"
+#~ msgstr "원본 문서 다운로드"
+
+#~ msgid "NamiFAX Enterprise Facsimile Engine"
+#~ msgstr "NamiFAX 엔터프라이즈 팩스 엔진"
+
+#~ msgid "Archive ID:"
+#~ msgstr "보관 ID:"
 

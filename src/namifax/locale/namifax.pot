@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:06+0900\n"
+"POT-Creation-Date: 2026-10-02 00:12+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1310,6 +1310,12 @@ msgstr ""
 msgid "Sender"
 msgstr ""
 
+msgid "Page"
+msgstr ""
+
+msgid "of"
+msgstr ""
+
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
@@ -1888,64 +1894,16 @@ msgstr ""
 msgid "Back to settings"
 msgstr ""
 
-msgid "Fax Viewer"
-msgstr ""
-
-msgid "Page 1 of"
-msgstr ""
-
-msgid "FROM:"
-msgstr ""
-
-msgid "DATE:"
-msgstr ""
-
-msgid "DEVICE:"
+msgid "Previous fax"
 msgstr ""
 
 msgid "Prev"
 msgstr ""
 
-msgid "PDF"
+msgid "Next fax"
 msgstr ""
 
-msgid "TIFF"
-msgstr ""
-
-msgid "Total"
-msgstr ""
-
-msgid "Page"
-msgstr ""
-
-msgid "Incoming Transmission"
-msgstr ""
-
-msgid "FACSIMILE TRANSMISSION"
-msgstr ""
-
-msgid "Date Received:"
-msgstr ""
-
-msgid "Originating Station:"
-msgstr ""
-
-msgid "PORT"
-msgstr ""
-
-msgid "High-Resolution Raster Preview"
-msgstr ""
-
-msgid "Device Line:"
-msgstr ""
-
-msgid "Download Original Document"
-msgstr ""
-
-msgid "NamiFAX Enterprise Facsimile Engine"
-msgstr ""
-
-msgid "Archive ID:"
+msgid "Rotate fax"
 msgstr ""
 
 #, python-format

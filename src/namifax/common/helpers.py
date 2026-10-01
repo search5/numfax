@@ -436,30 +436,13 @@ def tiff2pdf(tiff_file: str, pdf: str) -> bool:
 
 
 def static_preview(path: str, pages: int = 1) -> bool:
-    """Generate thumbnail previews for received fax pages matching legacy static_preview."""
+    """Make the page images (``page<N>.png``) and the thumbnail of a received fax, as the original's static_preview does."""
+    from namifax.services.fax_images import render_previews
+
     if not path or not os.path.exists(path):
         return False
-
-    thumbfile = os.path.join(path, "thumb.png")
-    tiffile = os.path.join(path, "fax.tif")
-
-    if not os.path.exists(tiffile):
-        return False
-
     try:
-        with Image.open(tiffile) as img:
-            n_frames = getattr(img, "n_frames", 1)
-            for i in range(n_frames):
-                img.seek(i)
-                prev_path = os.path.join(path, f"preview{i}.png")
-                page_img = img.convert("L")
-                page_img.save(prev_path, format="PNG")
-
-                if i == 0:
-                    thumb_img = page_img.copy()
-                    thumb_img.thumbnail((160, 220))
-                    thumb_img.save(thumbfile, format="PNG")
-        return True
+        return render_previews(path) > 0
     except Exception:
         return False
 

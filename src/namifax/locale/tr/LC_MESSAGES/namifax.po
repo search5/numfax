@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: tMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:06+0900\n"
+"POT-Creation-Date: 2026-10-02 00:12+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: tr\n"
@@ -1414,6 +1414,12 @@ msgstr "Faksı Görüntüle"
 msgid "Sender"
 msgstr "Sender"
 
+msgid "Page"
+msgstr "Sayfa"
+
+msgid "of"
+msgstr ""
+
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
@@ -2042,67 +2048,17 @@ msgstr ""
 msgid "Back to settings"
 msgstr ""
 
-msgid "Fax Viewer"
-msgstr "Faks Görüntüleyici"
-
-msgid "Page 1 of"
-msgstr "Sayfa 1 /"
-
-msgid "FROM:"
-msgstr "KİMDEN:"
-
-msgid "DATE:"
-msgstr "TARİH:"
-
-msgid "DEVICE:"
-msgstr "CİHAZ:"
+msgid "Previous fax"
+msgstr ""
 
 msgid "Prev"
 msgstr "Önceki"
 
-msgid "PDF"
-msgstr "PDF"
+msgid "Next fax"
+msgstr ""
 
-msgid "TIFF"
-msgstr "TIFF"
-
-msgid "Total"
-msgstr "Toplam"
-
-msgid "Page"
-msgstr "Sayfa"
-
-msgid "Incoming Transmission"
-msgstr "Gelen İletim"
-
-msgid "FACSIMILE TRANSMISSION"
-msgstr "FAKS İLETİMİ"
-
-msgid "Date Received:"
-msgstr "Alınma Tarihi:"
-
-msgid "Originating Station:"
-msgstr "Kaynak İstasyon:"
-
-#, fuzzy
-msgid "PORT"
-msgstr "Priority"
-
-msgid "High-Resolution Raster Preview"
-msgstr "Yüksek Çözünürlüklü Raster Önizleme"
-
-msgid "Device Line:"
-msgstr "Cihaz Hattı:"
-
-msgid "Download Original Document"
-msgstr "Orijinal Belgeyi İndir"
-
-msgid "NamiFAX Enterprise Facsimile Engine"
-msgstr "NamiFAX Kurumsal Faks Motoru"
-
-#, fuzzy
-msgid "Archive ID:"
-msgstr "Arşiv"
+msgid "Rotate fax"
+msgstr ""
 
 #, python-format
 msgid "Invalid fax number: %(number)s"
@@ -2530,4 +2486,58 @@ msgstr ""
 
 #~ msgid "of"
 #~ msgstr "ile"
+
+#~ msgid "Fax Viewer"
+#~ msgstr "Faks Görüntüleyici"
+
+#~ msgid "Page 1 of"
+#~ msgstr "Sayfa 1 /"
+
+#~ msgid "FROM:"
+#~ msgstr "KİMDEN:"
+
+#~ msgid "DATE:"
+#~ msgstr "TARİH:"
+
+#~ msgid "DEVICE:"
+#~ msgstr "CİHAZ:"
+
+#~ msgid "PDF"
+#~ msgstr "PDF"
+
+#~ msgid "TIFF"
+#~ msgstr "TIFF"
+
+#~ msgid "Total"
+#~ msgstr "Toplam"
+
+#~ msgid "Incoming Transmission"
+#~ msgstr "Gelen İletim"
+
+#~ msgid "FACSIMILE TRANSMISSION"
+#~ msgstr "FAKS İLETİMİ"
+
+#~ msgid "Date Received:"
+#~ msgstr "Alınma Tarihi:"
+
+#~ msgid "Originating Station:"
+#~ msgstr "Kaynak İstasyon:"
+
+#~ msgid "PORT"
+#~ msgstr "Priority"
+
+#~ msgid "High-Resolution Raster Preview"
+#~ msgstr "Yüksek Çözünürlüklü Raster Önizleme"
+
+#~ msgid "Device Line:"
+#~ msgstr "Cihaz Hattı:"
+
+#~ msgid "Download Original Document"
+#~ msgstr "Orijinal Belgeyi İndir"
+
+#~ msgid "NamiFAX Enterprise Facsimile Engine"
+#~ msgstr "NamiFAX Kurumsal Faks Motoru"
+
+#~ msgid "Archive ID:"
+#~ msgstr "Arşiv"
 

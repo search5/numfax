@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: hMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:06+0900\n"
+"POT-Creation-Date: 2026-10-02 00:12+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hu\n"
@@ -1416,6 +1416,12 @@ msgstr "Fax megtekintése"
 msgid "Sender"
 msgstr "Sender"
 
+msgid "Page"
+msgstr "Oldal"
+
+msgid "of"
+msgstr ""
+
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
@@ -2042,67 +2048,17 @@ msgstr ""
 msgid "Back to settings"
 msgstr ""
 
-msgid "Fax Viewer"
-msgstr "Faxmegjelenítő"
-
-msgid "Page 1 of"
-msgstr "1. oldal /"
-
-msgid "FROM:"
-msgstr "FELADÓ:"
-
-msgid "DATE:"
-msgstr "DÁTUM:"
-
-msgid "DEVICE:"
-msgstr "ESZKÖZ:"
+msgid "Previous fax"
+msgstr ""
 
 msgid "Prev"
 msgstr "Előző"
 
-msgid "PDF"
-msgstr "PDF"
+msgid "Next fax"
+msgstr ""
 
-msgid "TIFF"
-msgstr "TIFF"
-
-msgid "Total"
-msgstr "Összesen"
-
-msgid "Page"
-msgstr "Oldal"
-
-msgid "Incoming Transmission"
-msgstr "Bejövő átvitel"
-
-msgid "FACSIMILE TRANSMISSION"
-msgstr "FAXÁTVITEL"
-
-msgid "Date Received:"
-msgstr "Fogadás dátuma:"
-
-msgid "Originating Station:"
-msgstr "Küldő állomás:"
-
-#, fuzzy
-msgid "PORT"
-msgstr "Priority"
-
-msgid "High-Resolution Raster Preview"
-msgstr "Nagy felbontású raszteres előnézet"
-
-msgid "Device Line:"
-msgstr "Eszközvonala:"
-
-msgid "Download Original Document"
-msgstr "Eredeti dokumentum letöltése"
-
-msgid "NamiFAX Enterprise Facsimile Engine"
-msgstr "NamiFAX vállalati faxmotor"
-
-#, fuzzy
-msgid "Archive ID:"
-msgstr "Archívum"
+msgid "Rotate fax"
+msgstr ""
 
 #, python-format
 msgid "Invalid fax number: %(number)s"
@@ -2532,4 +2488,58 @@ msgstr ""
 
 #~ msgid "of"
 #~ msgstr "of"
+
+#~ msgid "Fax Viewer"
+#~ msgstr "Faxmegjelenítő"
+
+#~ msgid "Page 1 of"
+#~ msgstr "1. oldal /"
+
+#~ msgid "FROM:"
+#~ msgstr "FELADÓ:"
+
+#~ msgid "DATE:"
+#~ msgstr "DÁTUM:"
+
+#~ msgid "DEVICE:"
+#~ msgstr "ESZKÖZ:"
+
+#~ msgid "PDF"
+#~ msgstr "PDF"
+
+#~ msgid "TIFF"
+#~ msgstr "TIFF"
+
+#~ msgid "Total"
+#~ msgstr "Összesen"
+
+#~ msgid "Incoming Transmission"
+#~ msgstr "Bejövő átvitel"
+
+#~ msgid "FACSIMILE TRANSMISSION"
+#~ msgstr "FAXÁTVITEL"
+
+#~ msgid "Date Received:"
+#~ msgstr "Fogadás dátuma:"
+
+#~ msgid "Originating Station:"
+#~ msgstr "Küldő állomás:"
+
+#~ msgid "PORT"
+#~ msgstr "Priority"
+
+#~ msgid "High-Resolution Raster Preview"
+#~ msgstr "Nagy felbontású raszteres előnézet"
+
+#~ msgid "Device Line:"
+#~ msgstr "Eszközvonala:"
+
+#~ msgid "Download Original Document"
+#~ msgstr "Eredeti dokumentum letöltése"
+
+#~ msgid "NamiFAX Enterprise Facsimile Engine"
+#~ msgstr "NamiFAX vállalati faxmotor"
+
+#~ msgid "Archive ID:"
+#~ msgstr "Archívum"
 

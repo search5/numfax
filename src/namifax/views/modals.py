@@ -217,12 +217,18 @@ def modal_delete_view(request):
                 status = "deleted"
         except (ValueError, TypeError):
             pass
+        following = (request.params.get("next") or "").strip()            # from the viewer: on to the next fax
+        if status == "deleted" and following:
+            if following.isdigit():
+                return HTTPFound(location=request.route_url("viewfax", _query={"fid": following}))
+            return HTTPFound(location=request.route_url("inbox"))
 
     return {
         "title": "- NamiFAX - Delete Fax",
         "current_user": identity,
         "fid": fid,
         "status": status,
+        "next": (request.params.get("next") or "").strip(),
     }
 
 

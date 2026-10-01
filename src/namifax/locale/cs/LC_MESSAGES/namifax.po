@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: cMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:06+0900\n"
+"POT-Creation-Date: 2026-10-02 00:12+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cs\n"
@@ -1411,6 +1411,12 @@ msgstr "Prohlížet Fax"
 msgid "Sender"
 msgstr "Sender"
 
+msgid "Page"
+msgstr "Stránka"
+
+msgid "of"
+msgstr ""
+
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
@@ -2034,67 +2040,17 @@ msgstr ""
 msgid "Back to settings"
 msgstr ""
 
-msgid "Fax Viewer"
-msgstr "Prohlížeč faxů"
-
-msgid "Page 1 of"
-msgstr "Stránka 1 z"
-
-msgid "FROM:"
-msgstr "OD:"
-
-msgid "DATE:"
-msgstr "DATUM:"
-
-msgid "DEVICE:"
-msgstr "ZAŘÍZENÍ:"
+msgid "Previous fax"
+msgstr ""
 
 msgid "Prev"
 msgstr "Předchozí"
 
-msgid "PDF"
-msgstr "PDF"
+msgid "Next fax"
+msgstr ""
 
-msgid "TIFF"
-msgstr "TIFF"
-
-msgid "Total"
-msgstr "Celkem"
-
-msgid "Page"
-msgstr "Stránka"
-
-msgid "Incoming Transmission"
-msgstr "Příchozí přenos"
-
-msgid "FACSIMILE TRANSMISSION"
-msgstr "FAXOVÝ PŘENOS"
-
-msgid "Date Received:"
-msgstr "Datum přijetí:"
-
-msgid "Originating Station:"
-msgstr "Odesílající stanice:"
-
-#, fuzzy
-msgid "PORT"
-msgstr "Priority"
-
-msgid "High-Resolution Raster Preview"
-msgstr "Rastrový náhled ve vysokém rozlišení"
-
-msgid "Device Line:"
-msgstr "Linka zařízení:"
-
-msgid "Download Original Document"
-msgstr "Stáhnout původní dokument"
-
-msgid "NamiFAX Enterprise Facsimile Engine"
-msgstr "NamiFAX Enterprise Facsimile Engine"
-
-#, fuzzy
-msgid "Archive ID:"
-msgstr "Archiv"
+msgid "Rotate fax"
+msgstr ""
 
 #, python-format
 msgid "Invalid fax number: %(number)s"
@@ -2521,4 +2477,58 @@ msgstr ""
 
 #~ msgid "of"
 #~ msgstr "z"
+
+#~ msgid "Fax Viewer"
+#~ msgstr "Prohlížeč faxů"
+
+#~ msgid "Page 1 of"
+#~ msgstr "Stránka 1 z"
+
+#~ msgid "FROM:"
+#~ msgstr "OD:"
+
+#~ msgid "DATE:"
+#~ msgstr "DATUM:"
+
+#~ msgid "DEVICE:"
+#~ msgstr "ZAŘÍZENÍ:"
+
+#~ msgid "PDF"
+#~ msgstr "PDF"
+
+#~ msgid "TIFF"
+#~ msgstr "TIFF"
+
+#~ msgid "Total"
+#~ msgstr "Celkem"
+
+#~ msgid "Incoming Transmission"
+#~ msgstr "Příchozí přenos"
+
+#~ msgid "FACSIMILE TRANSMISSION"
+#~ msgstr "FAXOVÝ PŘENOS"
+
+#~ msgid "Date Received:"
+#~ msgstr "Datum přijetí:"
+
+#~ msgid "Originating Station:"
+#~ msgstr "Odesílající stanice:"
+
+#~ msgid "PORT"
+#~ msgstr "Priority"
+
+#~ msgid "High-Resolution Raster Preview"
+#~ msgstr "Rastrový náhled ve vysokém rozlišení"
+
+#~ msgid "Device Line:"
+#~ msgstr "Linka zařízení:"
+
+#~ msgid "Download Original Document"
+#~ msgstr "Stáhnout původní dokument"
+
+#~ msgid "NamiFAX Enterprise Facsimile Engine"
+#~ msgstr "NamiFAX Enterprise Facsimile Engine"
+
+#~ msgid "Archive ID:"
+#~ msgstr "Archiv"
 

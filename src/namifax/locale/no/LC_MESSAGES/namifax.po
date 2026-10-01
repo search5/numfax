@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: nMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:06+0900\n"
+"POT-Creation-Date: 2026-10-02 00:12+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: no\n"
@@ -1409,6 +1409,12 @@ msgstr "Se på faks"
 msgid "Sender"
 msgstr "Sender"
 
+msgid "Page"
+msgstr "Side"
+
+msgid "of"
+msgstr ""
+
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
@@ -2033,67 +2039,17 @@ msgstr ""
 msgid "Back to settings"
 msgstr ""
 
-msgid "Fax Viewer"
-msgstr "Faksviser"
-
-msgid "Page 1 of"
-msgstr "Side 1 av"
-
-msgid "FROM:"
-msgstr "FRA:"
-
-msgid "DATE:"
-msgstr "DATO:"
-
-msgid "DEVICE:"
-msgstr "ENHET:"
+msgid "Previous fax"
+msgstr ""
 
 msgid "Prev"
 msgstr "Forrige"
 
-msgid "PDF"
-msgstr "PDF"
+msgid "Next fax"
+msgstr ""
 
-msgid "TIFF"
-msgstr "TIFF"
-
-msgid "Total"
-msgstr "Totalt"
-
-msgid "Page"
-msgstr "Side"
-
-msgid "Incoming Transmission"
-msgstr "Innkommende overføring"
-
-msgid "FACSIMILE TRANSMISSION"
-msgstr "FAKSOVERFØRING"
-
-msgid "Date Received:"
-msgstr "Mottatt dato:"
-
-msgid "Originating Station:"
-msgstr "Avsenderstasjon:"
-
-#, fuzzy
-msgid "PORT"
-msgstr "Priority"
-
-msgid "High-Resolution Raster Preview"
-msgstr "Høyoppløselig rasterforhåndsvisning"
-
-msgid "Device Line:"
-msgstr "Enhetslinje:"
-
-msgid "Download Original Document"
-msgstr "Last ned originaldokument"
-
-msgid "NamiFAX Enterprise Facsimile Engine"
-msgstr "NamiFAX Enterprise Facsimile Engine"
-
-#, fuzzy
-msgid "Archive ID:"
-msgstr "Arkiv"
+msgid "Rotate fax"
+msgstr ""
 
 #, python-format
 msgid "Invalid fax number: %(number)s"
@@ -2520,4 +2476,58 @@ msgstr ""
 
 #~ msgid "of"
 #~ msgstr "av"
+
+#~ msgid "Fax Viewer"
+#~ msgstr "Faksviser"
+
+#~ msgid "Page 1 of"
+#~ msgstr "Side 1 av"
+
+#~ msgid "FROM:"
+#~ msgstr "FRA:"
+
+#~ msgid "DATE:"
+#~ msgstr "DATO:"
+
+#~ msgid "DEVICE:"
+#~ msgstr "ENHET:"
+
+#~ msgid "PDF"
+#~ msgstr "PDF"
+
+#~ msgid "TIFF"
+#~ msgstr "TIFF"
+
+#~ msgid "Total"
+#~ msgstr "Totalt"
+
+#~ msgid "Incoming Transmission"
+#~ msgstr "Innkommende overføring"
+
+#~ msgid "FACSIMILE TRANSMISSION"
+#~ msgstr "FAKSOVERFØRING"
+
+#~ msgid "Date Received:"
+#~ msgstr "Mottatt dato:"
+
+#~ msgid "Originating Station:"
+#~ msgstr "Avsenderstasjon:"
+
+#~ msgid "PORT"
+#~ msgstr "Priority"
+
+#~ msgid "High-Resolution Raster Preview"
+#~ msgstr "Høyoppløselig rasterforhåndsvisning"
+
+#~ msgid "Device Line:"
+#~ msgstr "Enhetslinje:"
+
+#~ msgid "Download Original Document"
+#~ msgstr "Last ned originaldokument"
+
+#~ msgid "NamiFAX Enterprise Facsimile Engine"
+#~ msgstr "NamiFAX Enterprise Facsimile Engine"
+
+#~ msgid "Archive ID:"
+#~ msgstr "Arkiv"
 

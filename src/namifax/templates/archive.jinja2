@@ -98,6 +98,7 @@
         <thead>
           <tr class="border-b border-slate-100 bg-slate-50/80">
             <th class="py-3 px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">#</th>
+            <th class="py-3 px-2"></th>
             <th class="py-3 px-3"></th>
             <th class="py-3 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">{{ _('Company') }}</th>
             <th class="py-3 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">{{ _('Description') }}</th>
@@ -112,6 +113,7 @@
           {% for r in rows %}
           <tr class="hover:bg-slate-50 transition-colors" id="faxid_{{ r.id }}">
             <td class="archive-results py-3 px-3 text-sm text-slate-500">{{ start_number + loop.index0 }}</td>
+            <td class="py-3 px-2"><img src="/faxes/thumbnail/{{ r.id }}" alt="" loading="lazy" class="w-10 h-14 object-cover border border-slate-200 rounded" /></td>
             <td class="py-3 px-3 whitespace-nowrap text-xs">
               <a href="/faxes/download/{{ r.id }}?format=pdf" class="px-1.5 py-1 rounded border border-slate-200 text-slate-700 hover:bg-slate-50" title="{{ _('Download PDF') }}">PDF</a>
               <a href="/refax?fid={{ r.id }}" class="px-1.5 py-1 rounded border border-slate-200 text-slate-700 hover:bg-slate-50" title="{{ _('Reply to fax') }}">{{ _('Re-send') }}</a>

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: fMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:06+0900\n"
+"POT-Creation-Date: 2026-10-02 00:12+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -1430,6 +1430,12 @@ msgstr "Voir le Fax"
 msgid "Sender"
 msgstr "Emetteur"
 
+msgid "Page"
+msgstr "Page"
+
+msgid "of"
+msgstr ""
+
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
@@ -2063,67 +2069,17 @@ msgstr ""
 msgid "Back to settings"
 msgstr ""
 
-msgid "Fax Viewer"
-msgstr "Visionneuse de fax"
-
-msgid "Page 1 of"
-msgstr "Page 1 sur"
-
-msgid "FROM:"
-msgstr "DE :"
-
-msgid "DATE:"
-msgstr "DATE :"
-
-msgid "DEVICE:"
-msgstr "PÉRIPHÉRIQUE :"
+msgid "Previous fax"
+msgstr ""
 
 msgid "Prev"
 msgstr "Préc"
 
-msgid "PDF"
-msgstr "PDF"
+msgid "Next fax"
+msgstr ""
 
-msgid "TIFF"
-msgstr "TIFF"
-
-msgid "Total"
-msgstr "Total"
-
-msgid "Page"
-msgstr "Page"
-
-msgid "Incoming Transmission"
-msgstr "Transmission entrante"
-
-msgid "FACSIMILE TRANSMISSION"
-msgstr "TRANSMISSION PAR TÉLÉCOPIE"
-
-msgid "Date Received:"
-msgstr "Date de réception :"
-
-msgid "Originating Station:"
-msgstr "Station d'origine :"
-
-#, fuzzy
-msgid "PORT"
-msgstr "Priorité"
-
-msgid "High-Resolution Raster Preview"
-msgstr "Aperçu matriciel haute résolution"
-
-msgid "Device Line:"
-msgstr "Ligne de périphérique :"
-
-msgid "Download Original Document"
-msgstr "Télécharger le document original"
-
-msgid "NamiFAX Enterprise Facsimile Engine"
-msgstr "NamiFAX Enterprise Facsimile Engine"
-
-#, fuzzy
-msgid "Archive ID:"
-msgstr "Archives "
+msgid "Rotate fax"
+msgstr ""
 
 #, python-format
 msgid "Invalid fax number: %(number)s"
@@ -2556,4 +2512,58 @@ msgstr ""
 
 #~ msgid "of"
 #~ msgstr "de"
+
+#~ msgid "Fax Viewer"
+#~ msgstr "Visionneuse de fax"
+
+#~ msgid "Page 1 of"
+#~ msgstr "Page 1 sur"
+
+#~ msgid "FROM:"
+#~ msgstr "DE :"
+
+#~ msgid "DATE:"
+#~ msgstr "DATE :"
+
+#~ msgid "DEVICE:"
+#~ msgstr "PÉRIPHÉRIQUE :"
+
+#~ msgid "PDF"
+#~ msgstr "PDF"
+
+#~ msgid "TIFF"
+#~ msgstr "TIFF"
+
+#~ msgid "Total"
+#~ msgstr "Total"
+
+#~ msgid "Incoming Transmission"
+#~ msgstr "Transmission entrante"
+
+#~ msgid "FACSIMILE TRANSMISSION"
+#~ msgstr "TRANSMISSION PAR TÉLÉCOPIE"
+
+#~ msgid "Date Received:"
+#~ msgstr "Date de réception :"
+
+#~ msgid "Originating Station:"
+#~ msgstr "Station d'origine :"
+
+#~ msgid "PORT"
+#~ msgstr "Priorité"
+
+#~ msgid "High-Resolution Raster Preview"
+#~ msgstr "Aperçu matriciel haute résolution"
+
+#~ msgid "Device Line:"
+#~ msgstr "Ligne de périphérique :"
+
+#~ msgid "Download Original Document"
+#~ msgstr "Télécharger le document original"
+
+#~ msgid "NamiFAX Enterprise Facsimile Engine"
+#~ msgstr "NamiFAX Enterprise Facsimile Engine"
+
+#~ msgid "Archive ID:"
+#~ msgstr "Archives "
 

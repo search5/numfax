@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: sMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:06+0900\n"
+"POT-Creation-Date: 2026-10-02 00:12+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sr\n"
@@ -1410,6 +1410,12 @@ msgstr "Pogledaj Fax"
 msgid "Sender"
 msgstr "Pošiljaoc"
 
+msgid "Page"
+msgstr "Strana"
+
+msgid "of"
+msgstr ""
+
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
@@ -2035,67 +2041,17 @@ msgstr ""
 msgid "Back to settings"
 msgstr ""
 
-msgid "Fax Viewer"
-msgstr "Pregledač faksa"
-
-msgid "Page 1 of"
-msgstr "Stranica 1 od"
-
-msgid "FROM:"
-msgstr "OD:"
-
-msgid "DATE:"
-msgstr "DATUM:"
-
-msgid "DEVICE:"
-msgstr "UREĐAJ:"
+msgid "Previous fax"
+msgstr ""
 
 msgid "Prev"
 msgstr "Prethodna"
 
-msgid "PDF"
-msgstr "PDF"
+msgid "Next fax"
+msgstr ""
 
-msgid "TIFF"
-msgstr "TIFF"
-
-msgid "Total"
-msgstr "Ukupno"
-
-msgid "Page"
-msgstr "Strana"
-
-msgid "Incoming Transmission"
-msgstr "Dolazni prenos"
-
-msgid "FACSIMILE TRANSMISSION"
-msgstr "FAKS PRENOS"
-
-msgid "Date Received:"
-msgstr "Datum prijema:"
-
-msgid "Originating Station:"
-msgstr "Predajna stanica:"
-
-#, fuzzy
-msgid "PORT"
-msgstr "Prioritet"
-
-msgid "High-Resolution Raster Preview"
-msgstr "Rasterski pregled visoke rezolucije"
-
-msgid "Device Line:"
-msgstr "Linija uređaja:"
-
-msgid "Download Original Document"
-msgstr "Preuzmi originalni dokument"
-
-msgid "NamiFAX Enterprise Facsimile Engine"
-msgstr "NamiFAX Enterprise Facsimile Engine"
-
-#, fuzzy
-msgid "Archive ID:"
-msgstr "Arhiviraj"
+msgid "Rotate fax"
+msgstr ""
 
 #, python-format
 msgid "Invalid fax number: %(number)s"
@@ -2523,4 +2479,58 @@ msgstr ""
 
 #~ msgid "of"
 #~ msgstr "od"
+
+#~ msgid "Fax Viewer"
+#~ msgstr "Pregledač faksa"
+
+#~ msgid "Page 1 of"
+#~ msgstr "Stranica 1 od"
+
+#~ msgid "FROM:"
+#~ msgstr "OD:"
+
+#~ msgid "DATE:"
+#~ msgstr "DATUM:"
+
+#~ msgid "DEVICE:"
+#~ msgstr "UREĐAJ:"
+
+#~ msgid "PDF"
+#~ msgstr "PDF"
+
+#~ msgid "TIFF"
+#~ msgstr "TIFF"
+
+#~ msgid "Total"
+#~ msgstr "Ukupno"
+
+#~ msgid "Incoming Transmission"
+#~ msgstr "Dolazni prenos"
+
+#~ msgid "FACSIMILE TRANSMISSION"
+#~ msgstr "FAKS PRENOS"
+
+#~ msgid "Date Received:"
+#~ msgstr "Datum prijema:"
+
+#~ msgid "Originating Station:"
+#~ msgstr "Predajna stanica:"
+
+#~ msgid "PORT"
+#~ msgstr "Prioritet"
+
+#~ msgid "High-Resolution Raster Preview"
+#~ msgstr "Rasterski pregled visoke rezolucije"
+
+#~ msgid "Device Line:"
+#~ msgstr "Linija uređaja:"
+
+#~ msgid "Download Original Document"
+#~ msgstr "Preuzmi originalni dokument"
+
+#~ msgid "NamiFAX Enterprise Facsimile Engine"
+#~ msgstr "NamiFAX Enterprise Facsimile Engine"
+
+#~ msgid "Archive ID:"
+#~ msgstr "Arhiviraj"
 

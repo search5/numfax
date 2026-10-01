@@ -192,6 +192,9 @@ def _done(request):
     """What follows a batch action: an empty answer for script callers, the inbox for a page."""
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
         return Response("", status_code=200)
+    following = str(request.params.get("next") or "").strip()              # the viewer goes on to the next fax
+    if following.isdigit():
+        return HTTPFound(location=request.route_url("viewfax", _query={"fid": following}))
     return HTTPFound(location=request.route_url("inbox"))
 
 

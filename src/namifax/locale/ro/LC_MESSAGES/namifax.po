@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: rMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:06+0900\n"
+"POT-Creation-Date: 2026-10-02 00:12+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ro\n"
@@ -1429,6 +1429,12 @@ msgstr "Vizualizare Fax"
 msgid "Sender"
 msgstr "Sender"
 
+msgid "Page"
+msgstr "Pagina"
+
+msgid "of"
+msgstr ""
+
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
@@ -2061,67 +2067,17 @@ msgstr ""
 msgid "Back to settings"
 msgstr ""
 
-msgid "Fax Viewer"
-msgstr "Vizualizator fax"
-
-msgid "Page 1 of"
-msgstr "Pagina 1 din"
-
-msgid "FROM:"
-msgstr "DE LA:"
-
-msgid "DATE:"
-msgstr "DATA:"
-
-msgid "DEVICE:"
-msgstr "DISPOZITIV:"
+msgid "Previous fax"
+msgstr ""
 
 msgid "Prev"
 msgstr "Prec"
 
-msgid "PDF"
-msgstr "PDF"
+msgid "Next fax"
+msgstr ""
 
-msgid "TIFF"
-msgstr "TIFF"
-
-msgid "Total"
-msgstr "Total"
-
-msgid "Page"
-msgstr "Pagina"
-
-msgid "Incoming Transmission"
-msgstr "Transmisie primită"
-
-msgid "FACSIMILE TRANSMISSION"
-msgstr "TRANSMISIE FAX"
-
-msgid "Date Received:"
-msgstr "Data primirii:"
-
-msgid "Originating Station:"
-msgstr "Stație de origine:"
-
-#, fuzzy
-msgid "PORT"
-msgstr "Priority"
-
-msgid "High-Resolution Raster Preview"
-msgstr "Previzualizare raster de înaltă rezoluție"
-
-msgid "Device Line:"
-msgstr "Linie dispozitiv:"
-
-msgid "Download Original Document"
-msgstr "Descărcare document original"
-
-msgid "NamiFAX Enterprise Facsimile Engine"
-msgstr "Motor de fax enterprise NamiFAX"
-
-#, fuzzy
-msgid "Archive ID:"
-msgstr "Arhiva"
+msgid "Rotate fax"
+msgstr ""
 
 #, python-format
 msgid "Invalid fax number: %(number)s"
@@ -2555,4 +2511,58 @@ msgstr ""
 
 #~ msgid "of"
 #~ msgstr "din"
+
+#~ msgid "Fax Viewer"
+#~ msgstr "Vizualizator fax"
+
+#~ msgid "Page 1 of"
+#~ msgstr "Pagina 1 din"
+
+#~ msgid "FROM:"
+#~ msgstr "DE LA:"
+
+#~ msgid "DATE:"
+#~ msgstr "DATA:"
+
+#~ msgid "DEVICE:"
+#~ msgstr "DISPOZITIV:"
+
+#~ msgid "PDF"
+#~ msgstr "PDF"
+
+#~ msgid "TIFF"
+#~ msgstr "TIFF"
+
+#~ msgid "Total"
+#~ msgstr "Total"
+
+#~ msgid "Incoming Transmission"
+#~ msgstr "Transmisie primită"
+
+#~ msgid "FACSIMILE TRANSMISSION"
+#~ msgstr "TRANSMISIE FAX"
+
+#~ msgid "Date Received:"
+#~ msgstr "Data primirii:"
+
+#~ msgid "Originating Station:"
+#~ msgstr "Stație de origine:"
+
+#~ msgid "PORT"
+#~ msgstr "Priority"
+
+#~ msgid "High-Resolution Raster Preview"
+#~ msgstr "Previzualizare raster de înaltă rezoluție"
+
+#~ msgid "Device Line:"
+#~ msgstr "Linie dispozitiv:"
+
+#~ msgid "Download Original Document"
+#~ msgstr "Descărcare document original"
+
+#~ msgid "NamiFAX Enterprise Facsimile Engine"
+#~ msgstr "Motor de fax enterprise NamiFAX"
+
+#~ msgid "Archive ID:"
+#~ msgstr "Arhiva"
 

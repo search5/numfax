@@ -144,46 +144,42 @@ def inbox_view(request):
 
 @view_config(route_name="viewfax", renderer="namifax:templates/viewfax.jinja2", permission="view")
 def viewfax_view(request):
-    """Render fax preview dialog."""
+    """The fax viewer (the original viewfax.php): the page images, the previous and next fax, and the fax's actions.
+
+    A fax that is not (or no longer) in the inbox, does not exist or is not the user's goes back to the inbox.
+    """
     identity = request.identity or {"username": "admin", "is_admin": True}
-    fid = request.params.get("fid", "1")
-    pages = 1
-    archstamp = ""
-    modemdev = ""
-    company = ""
+    fid = (request.params.get("fid") or "").strip()
+    def back():
+        return HTTPFound(location=request.route_url("inbox"))
 
-    try:
-        arc = ArchiveIn(db=request.dbsession)
-        if fid.isdigit() and load_fax(request, arc, fid, action="viewfax"):
-            pages = arc.get_pages() or 1
-            archstamp = arc.get_archstamp() or ""
-            modemdev = arc.get_modemdev() or ""
-            if arc.get_companyid():
-                try:
-                    ab = AFAddressBook(db=request.dbsession)
-                    if ab.loadbycid(arc.get_companyid()):
-                        company = ab.get_company()
-                except Exception:
-                    pass
-            if not company and arc.get_faxnumid():
-                try:
-                    ab = AFAddressBook(db=request.dbsession)
-                    if ab.loadbyfaxnumid(arc.get_faxnumid()):
-                        company = ab.get_company()
-                except Exception:
-                    pass
-    except Exception:
-        pass
+    if not fid.isdigit():
+        return back()
 
+    access = fax_access(request)
+    arc = ArchiveIn(db=request.dbsession)
+    arc.viewable_devices(access.devices, access.categories, access.did_routing)
+    if not load_fax(request, arc, fid, action="viewfax") or not arc.get_inbox():
+        return back()
+
+    who = _sender(AFAddressBook(db=request.dbsession),
+                  {"companyid": arc.get_companyid(), "faxnumid": arc.get_faxnumid(), "origfaxnum": arc.get_origfaxnum()})
+    prev_fid, next_fid = arc.get_fid_prev(), arc.get_fid_next()
+    pages = arc.get_pages() or 1
     return {
         "title": "NamiFAX - View Fax",
         "current_user": identity,
         "active_tab": "inbox",
         "fid": fid,
         "pages": pages,
-        "archstamp": archstamp,
-        "modemdev": modemdev,
-        "company": company,
+        "archstamp": arc.get_archstamp() or "",
+        "modemdev": arc.get_modemdev() or "",
+        "company": who["company"] if who["company"] != RESERVED_FAX_NUM else "",
+        "origfaxnum": arc.get_origfaxnum() or "",
+        "assign": who["assign"], "cid": who["cid"], "choices": who["choices"],
+        "prev_fid": prev_fid, "next_fid": next_fid,
+        "after": next_fid or prev_fid or -1,                     # where to go once this fax is archived or deleted
+        "can_del": bool(access.can_del or access.superuser),
         "csrf_token": request.session.get_csrf_token(),
     }
 

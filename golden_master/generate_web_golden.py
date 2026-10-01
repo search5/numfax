@@ -196,7 +196,7 @@ SCENARIOS = [
             "status_code": 200,
             "title": "AvantFAX - View Fax",
             "required_links": ["/faxes/download/1", "/faxes/rotate/1"],
-            "required_text": ["Fax Viewer", "Page 1 of"]
+            "required_text": ["FaxID", "Pages"]
         },
         "html_content": """<!DOCTYPE html>
 <html>

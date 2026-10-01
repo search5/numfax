@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: eMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:06+0900\n"
+"POT-Creation-Date: 2026-10-02 00:12+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: el\n"
@@ -1422,6 +1422,12 @@ msgstr "Προβολή φαξ"
 msgid "Sender"
 msgstr "Sender"
 
+msgid "Page"
+msgstr "Σελίδα"
+
+msgid "of"
+msgstr ""
+
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
@@ -2053,67 +2059,17 @@ msgstr ""
 msgid "Back to settings"
 msgstr ""
 
-msgid "Fax Viewer"
-msgstr "Πρόγραμμα προβολής φαξ"
-
-msgid "Page 1 of"
-msgstr "Σελίδα 1 από"
-
-msgid "FROM:"
-msgstr "ΑΠΟ:"
-
-msgid "DATE:"
-msgstr "ΗΜΕΡΟΜΗΝΙΑ:"
-
-msgid "DEVICE:"
-msgstr "ΣΥΣΚΕΥΗ:"
+msgid "Previous fax"
+msgstr ""
 
 msgid "Prev"
 msgstr "Προηγ."
 
-msgid "PDF"
-msgstr "PDF"
+msgid "Next fax"
+msgstr ""
 
-msgid "TIFF"
-msgstr "TIFF"
-
-msgid "Total"
-msgstr "Σύνολο"
-
-msgid "Page"
-msgstr "Σελίδα"
-
-msgid "Incoming Transmission"
-msgstr "Εισερχόμενη μετάδοση"
-
-msgid "FACSIMILE TRANSMISSION"
-msgstr "ΜΕΤΑΔΟΣΗ ΦΑΞ"
-
-msgid "Date Received:"
-msgstr "Ημερομηνία λήψης:"
-
-msgid "Originating Station:"
-msgstr "Σταθμός προέλευσης:"
-
-#, fuzzy
-msgid "PORT"
-msgstr "Priority"
-
-msgid "High-Resolution Raster Preview"
-msgstr "Προεπισκόπηση ψηφιογραφικής ανάλυσης υψηλής ευκρίνειας"
-
-msgid "Device Line:"
-msgstr "Γραμμή συσκευής:"
-
-msgid "Download Original Document"
-msgstr "Λήψη αρχικού εγγράφου"
-
-msgid "NamiFAX Enterprise Facsimile Engine"
-msgstr "Εταιρική μηχανή τηλεομοιοτυπίας (φαξ) NamiFAX"
-
-#, fuzzy
-msgid "Archive ID:"
-msgstr "Αρχείο"
+msgid "Rotate fax"
+msgstr ""
 
 #, python-format
 msgid "Invalid fax number: %(number)s"
@@ -2545,4 +2501,58 @@ msgstr ""
 
 #~ msgid "of"
 #~ msgstr "από"
+
+#~ msgid "Fax Viewer"
+#~ msgstr "Πρόγραμμα προβολής φαξ"
+
+#~ msgid "Page 1 of"
+#~ msgstr "Σελίδα 1 από"
+
+#~ msgid "FROM:"
+#~ msgstr "ΑΠΟ:"
+
+#~ msgid "DATE:"
+#~ msgstr "ΗΜΕΡΟΜΗΝΙΑ:"
+
+#~ msgid "DEVICE:"
+#~ msgstr "ΣΥΣΚΕΥΗ:"
+
+#~ msgid "PDF"
+#~ msgstr "PDF"
+
+#~ msgid "TIFF"
+#~ msgstr "TIFF"
+
+#~ msgid "Total"
+#~ msgstr "Σύνολο"
+
+#~ msgid "Incoming Transmission"
+#~ msgstr "Εισερχόμενη μετάδοση"
+
+#~ msgid "FACSIMILE TRANSMISSION"
+#~ msgstr "ΜΕΤΑΔΟΣΗ ΦΑΞ"
+
+#~ msgid "Date Received:"
+#~ msgstr "Ημερομηνία λήψης:"
+
+#~ msgid "Originating Station:"
+#~ msgstr "Σταθμός προέλευσης:"
+
+#~ msgid "PORT"
+#~ msgstr "Priority"
+
+#~ msgid "High-Resolution Raster Preview"
+#~ msgstr "Προεπισκόπηση ψηφιογραφικής ανάλυσης υψηλής ευκρίνειας"
+
+#~ msgid "Device Line:"
+#~ msgstr "Γραμμή συσκευής:"
+
+#~ msgid "Download Original Document"
+#~ msgstr "Λήψη αρχικού εγγράφου"
+
+#~ msgid "NamiFAX Enterprise Facsimile Engine"
+#~ msgstr "Εταιρική μηχανή τηλεομοιοτυπίας (φαξ) NamiFAX"
+
+#~ msgid "Archive ID:"
+#~ msgstr "Αρχείο"
 

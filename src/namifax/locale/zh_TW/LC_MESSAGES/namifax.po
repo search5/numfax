@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: zh_TMIME-Version: 1.Content-"
 "Type: text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:06+0900\n"
+"POT-Creation-Date: 2026-10-02 00:12+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_TW\n"
@@ -1374,6 +1374,12 @@ msgstr "檢視傳真"
 msgid "Sender"
 msgstr "Sender"
 
+msgid "Page"
+msgstr "頁碼"
+
+msgid "of"
+msgstr ""
+
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
@@ -1974,67 +1980,17 @@ msgstr ""
 msgid "Back to settings"
 msgstr ""
 
-msgid "Fax Viewer"
-msgstr "傳真檢視器"
-
-msgid "Page 1 of"
-msgstr "第 1 頁，共"
-
-msgid "FROM:"
-msgstr "寄件者:"
-
-msgid "DATE:"
-msgstr "日期:"
-
-msgid "DEVICE:"
-msgstr "裝置:"
+msgid "Previous fax"
+msgstr ""
 
 msgid "Prev"
 msgstr "上一頁"
 
-msgid "PDF"
-msgstr "PDF"
+msgid "Next fax"
+msgstr ""
 
-msgid "TIFF"
-msgstr "TIFF"
-
-msgid "Total"
-msgstr "總計"
-
-msgid "Page"
-msgstr "頁碼"
-
-msgid "Incoming Transmission"
-msgstr "傳入傳輸"
-
-msgid "FACSIMILE TRANSMISSION"
-msgstr "傳真傳輸"
-
-msgid "Date Received:"
-msgstr "接收日期:"
-
-msgid "Originating Station:"
-msgstr "發起台站:"
-
-#, fuzzy
-msgid "PORT"
-msgstr "Priority"
-
-msgid "High-Resolution Raster Preview"
-msgstr "高解析度光柵預覽"
-
-msgid "Device Line:"
-msgstr "裝置線路:"
-
-msgid "Download Original Document"
-msgstr "下載原始文件"
-
-msgid "NamiFAX Enterprise Facsimile Engine"
-msgstr "NamiFAX 企業級傳真引擎"
-
-#, fuzzy
-msgid "Archive ID:"
-msgstr "檔案櫃"
+msgid "Rotate fax"
+msgstr ""
 
 #, python-format
 msgid "Invalid fax number: %(number)s"
@@ -2447,4 +2403,58 @@ msgstr ""
 
 #~ msgid "of"
 #~ msgstr "/"
+
+#~ msgid "Fax Viewer"
+#~ msgstr "傳真檢視器"
+
+#~ msgid "Page 1 of"
+#~ msgstr "第 1 頁，共"
+
+#~ msgid "FROM:"
+#~ msgstr "寄件者:"
+
+#~ msgid "DATE:"
+#~ msgstr "日期:"
+
+#~ msgid "DEVICE:"
+#~ msgstr "裝置:"
+
+#~ msgid "PDF"
+#~ msgstr "PDF"
+
+#~ msgid "TIFF"
+#~ msgstr "TIFF"
+
+#~ msgid "Total"
+#~ msgstr "總計"
+
+#~ msgid "Incoming Transmission"
+#~ msgstr "傳入傳輸"
+
+#~ msgid "FACSIMILE TRANSMISSION"
+#~ msgstr "傳真傳輸"
+
+#~ msgid "Date Received:"
+#~ msgstr "接收日期:"
+
+#~ msgid "Originating Station:"
+#~ msgstr "發起台站:"
+
+#~ msgid "PORT"
+#~ msgstr "Priority"
+
+#~ msgid "High-Resolution Raster Preview"
+#~ msgstr "高解析度光柵預覽"
+
+#~ msgid "Device Line:"
+#~ msgstr "裝置線路:"
+
+#~ msgid "Download Original Document"
+#~ msgstr "下載原始文件"
+
+#~ msgid "NamiFAX Enterprise Facsimile Engine"
+#~ msgstr "NamiFAX 企業級傳真引擎"
+
+#~ msgid "Archive ID:"
+#~ msgstr "檔案櫃"
 

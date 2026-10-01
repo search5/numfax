@@ -28,6 +28,7 @@
     <!-- Modal Form (Strict W34 Sequence Contract) -->
     <form action="/delete" method="post" class="p-6 pt-3 space-y-4 text-xs">
       <input type="hidden" name="fid" value="{{ fid }}" />
+      {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
       <input type="hidden" name="_submit_check" value="1" />
 
       <!-- Action Buttons (Strict Sequence: Cancel -> Delete) -->

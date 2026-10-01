@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: aMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:06+0900\n"
+"POT-Creation-Date: 2026-10-02 00:12+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -1402,6 +1402,12 @@ msgstr "استعرض الفاكس"
 msgid "Sender"
 msgstr "Sender"
 
+msgid "Page"
+msgstr "صفحة"
+
+msgid "of"
+msgstr ""
+
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
@@ -2021,67 +2027,17 @@ msgstr ""
 msgid "Back to settings"
 msgstr ""
 
-msgid "Fax Viewer"
-msgstr "عارض الفاكس"
-
-msgid "Page 1 of"
-msgstr "الصفحة 1 من"
-
-msgid "FROM:"
-msgstr "من:"
-
-msgid "DATE:"
-msgstr "التاريخ:"
-
-msgid "DEVICE:"
-msgstr "الجهاز:"
+msgid "Previous fax"
+msgstr ""
 
 msgid "Prev"
 msgstr "السابق"
 
-msgid "PDF"
-msgstr "PDF"
+msgid "Next fax"
+msgstr ""
 
-msgid "TIFF"
-msgstr "TIFF"
-
-msgid "Total"
-msgstr "الإجمالي"
-
-msgid "Page"
-msgstr "صفحة"
-
-msgid "Incoming Transmission"
-msgstr "إرسال وارد"
-
-msgid "FACSIMILE TRANSMISSION"
-msgstr "إرسال الفاكس"
-
-msgid "Date Received:"
-msgstr "تاريخ الاستلام:"
-
-msgid "Originating Station:"
-msgstr "محطة الإرسال:"
-
-#, fuzzy
-msgid "PORT"
-msgstr "الأولوية"
-
-msgid "High-Resolution Raster Preview"
-msgstr "معاينة نقطية عالية الدقة"
-
-msgid "Device Line:"
-msgstr "خط الجهاز:"
-
-msgid "Download Original Document"
-msgstr "تنزيل المستند الأصلي"
-
-msgid "NamiFAX Enterprise Facsimile Engine"
-msgstr "محرك الفاكس المؤسسي NamiFAX"
-
-#, fuzzy
-msgid "Archive ID:"
-msgstr "ارشيف"
+msgid "Rotate fax"
+msgstr ""
 
 #, python-format
 msgid "Invalid fax number: %(number)s"
@@ -2506,4 +2462,58 @@ msgstr ""
 
 #~ msgid "of"
 #~ msgstr "من"
+
+#~ msgid "Fax Viewer"
+#~ msgstr "عارض الفاكس"
+
+#~ msgid "Page 1 of"
+#~ msgstr "الصفحة 1 من"
+
+#~ msgid "FROM:"
+#~ msgstr "من:"
+
+#~ msgid "DATE:"
+#~ msgstr "التاريخ:"
+
+#~ msgid "DEVICE:"
+#~ msgstr "الجهاز:"
+
+#~ msgid "PDF"
+#~ msgstr "PDF"
+
+#~ msgid "TIFF"
+#~ msgstr "TIFF"
+
+#~ msgid "Total"
+#~ msgstr "الإجمالي"
+
+#~ msgid "Incoming Transmission"
+#~ msgstr "إرسال وارد"
+
+#~ msgid "FACSIMILE TRANSMISSION"
+#~ msgstr "إرسال الفاكس"
+
+#~ msgid "Date Received:"
+#~ msgstr "تاريخ الاستلام:"
+
+#~ msgid "Originating Station:"
+#~ msgstr "محطة الإرسال:"
+
+#~ msgid "PORT"
+#~ msgstr "الأولوية"
+
+#~ msgid "High-Resolution Raster Preview"
+#~ msgstr "معاينة نقطية عالية الدقة"
+
+#~ msgid "Device Line:"
+#~ msgstr "خط الجهاز:"
+
+#~ msgid "Download Original Document"
+#~ msgstr "تنزيل المستند الأصلي"
+
+#~ msgid "NamiFAX Enterprise Facsimile Engine"
+#~ msgstr "محرك الفاكس المؤسسي NamiFAX"
+
+#~ msgid "Archive ID:"
+#~ msgstr "ارشيف"
 

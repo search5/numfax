@@ -19,6 +19,8 @@ def includeme(config):
     config.add_route("inbox", "/inbox")
     config.add_route("viewfax", "/viewfax")
     config.add_route("fax_download", "/faxes/download/{fid}")
+    config.add_route("fax_image", "/faxes/image/{fid}/{page}")
+    config.add_route("fax_thumbnail", "/faxes/thumbnail/{fid}")
     config.add_route("fax_rotate", "/faxes/rotate/{fid}")
     config.add_route("sendfax", "/sendfax")
     config.add_route("outbox", "/outbox")

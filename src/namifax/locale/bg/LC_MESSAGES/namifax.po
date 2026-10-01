@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: bMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:06+0900\n"
+"POT-Creation-Date: 2026-10-02 00:12+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: bg\n"
@@ -1418,6 +1418,12 @@ msgstr "Преглед на Факса"
 msgid "Sender"
 msgstr "Изпращач"
 
+msgid "Page"
+msgstr "Страница"
+
+msgid "of"
+msgstr ""
+
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
@@ -2048,67 +2054,17 @@ msgstr ""
 msgid "Back to settings"
 msgstr ""
 
-msgid "Fax Viewer"
-msgstr "Преглед на факс"
-
-msgid "Page 1 of"
-msgstr "Страница 1 от"
-
-msgid "FROM:"
-msgstr "ОТ:"
-
-msgid "DATE:"
-msgstr "ДАТА:"
-
-msgid "DEVICE:"
-msgstr "УСТРОЙСТВО:"
+msgid "Previous fax"
+msgstr ""
 
 msgid "Prev"
 msgstr "Предишна"
 
-msgid "PDF"
-msgstr "PDF"
+msgid "Next fax"
+msgstr ""
 
-msgid "TIFF"
-msgstr "TIFF"
-
-msgid "Total"
-msgstr "Общо"
-
-msgid "Page"
-msgstr "Страница"
-
-msgid "Incoming Transmission"
-msgstr "Входящо предаване"
-
-msgid "FACSIMILE TRANSMISSION"
-msgstr "ФАКСИМИЛНО ПРЕДАВАНЕ"
-
-msgid "Date Received:"
-msgstr "Дата на получаване:"
-
-msgid "Originating Station:"
-msgstr "Изпращаща станция:"
-
-#, fuzzy
-msgid "PORT"
-msgstr "Приоритет"
-
-msgid "High-Resolution Raster Preview"
-msgstr "Растерен предварителен преглед с висока разделителна способност"
-
-msgid "Device Line:"
-msgstr "Линия на устройството:"
-
-msgid "Download Original Document"
-msgstr "Изтегляне на оригиналния документ"
-
-msgid "NamiFAX Enterprise Facsimile Engine"
-msgstr "NamiFAX Enterprise Facsimile Engine"
-
-#, fuzzy
-msgid "Archive ID:"
-msgstr "Архив"
+msgid "Rotate fax"
+msgstr ""
 
 #, python-format
 msgid "Invalid fax number: %(number)s"
@@ -2539,4 +2495,58 @@ msgstr ""
 
 #~ msgid "of"
 #~ msgstr "от"
+
+#~ msgid "Fax Viewer"
+#~ msgstr "Преглед на факс"
+
+#~ msgid "Page 1 of"
+#~ msgstr "Страница 1 от"
+
+#~ msgid "FROM:"
+#~ msgstr "ОТ:"
+
+#~ msgid "DATE:"
+#~ msgstr "ДАТА:"
+
+#~ msgid "DEVICE:"
+#~ msgstr "УСТРОЙСТВО:"
+
+#~ msgid "PDF"
+#~ msgstr "PDF"
+
+#~ msgid "TIFF"
+#~ msgstr "TIFF"
+
+#~ msgid "Total"
+#~ msgstr "Общо"
+
+#~ msgid "Incoming Transmission"
+#~ msgstr "Входящо предаване"
+
+#~ msgid "FACSIMILE TRANSMISSION"
+#~ msgstr "ФАКСИМИЛНО ПРЕДАВАНЕ"
+
+#~ msgid "Date Received:"
+#~ msgstr "Дата на получаване:"
+
+#~ msgid "Originating Station:"
+#~ msgstr "Изпращаща станция:"
+
+#~ msgid "PORT"
+#~ msgstr "Приоритет"
+
+#~ msgid "High-Resolution Raster Preview"
+#~ msgstr "Растерен предварителен преглед с висока разделителна способност"
+
+#~ msgid "Device Line:"
+#~ msgstr "Линия на устройството:"
+
+#~ msgid "Download Original Document"
+#~ msgstr "Изтегляне на оригиналния документ"
+
+#~ msgid "NamiFAX Enterprise Facsimile Engine"
+#~ msgstr "NamiFAX Enterprise Facsimile Engine"
+
+#~ msgid "Archive ID:"
+#~ msgstr "Архив"
 
