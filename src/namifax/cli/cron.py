@@ -6,18 +6,20 @@ Handles daily maintenance tasks including temporary directory cleanup and fax re
 
 from __future__ import annotations
 
+import contextlib
 import getopt
 import os
 import shutil
 import sys
 import time
-from typing import Sequence
+from typing import Any, Sequence
 
 # Ensure src directory is on sys.path
 SRC_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 if SRC_DIR not in sys.path:
     sys.path.insert(0, SRC_DIR)
 
+from namifax.db.provider import cli_db
 from namifax.services.archive_base import FaxPDFArchive
 from namifax.services.archive_in import ArchiveIn
 
@@ -47,9 +49,32 @@ def run_cron(
     archive_in: ArchiveIn | None = None,
     archive_base: FaxPDFArchive | None = None,
     tmp_dir: str | None = None,
+    *,
+    db: Any = None,
 ) -> int:
-    """Execute cron tasks based on command line options."""
+    """Execute cron tasks based on command line options.
+
+    The database is opened lazily, only when a task that needs it runs.
+    """
     args = list(argv[1:]) if argv is not None else list(sys.argv[1:])
+    stack = contextlib.ExitStack()
+    with stack:
+        return _run_cron(args, stack, db, archive_in, archive_base, tmp_dir)
+
+
+def _run_cron(
+    args: list[str],
+    stack: contextlib.ExitStack,
+    db: Any,
+    archive_in: ArchiveIn | None,
+    archive_base: FaxPDFArchive | None,
+    tmp_dir: str | None,
+) -> int:
+    def get_db() -> Any:
+        nonlocal db
+        if db is None:
+            db = stack.enter_context(cli_db())
+        return db
 
     try:
         opts, _ = getopt.getopt(args, "i:t:d:p:")
@@ -75,12 +100,12 @@ def run_cron(
 
     # 1. Prune old faxes from Inbox
     if recdays is not None:
-        inbox_svc = archive_in or ArchiveIn()
+        inbox_svc = archive_in or ArchiveIn(db=get_db())
         inbox_svc.prune_inbox(recdays)
 
     # 2. Delete faxes from Inbox/Archive
     if deldays is not None:
-        arch_svc = archive_base or FaxPDFArchive()
+        arch_svc = archive_base or FaxPDFArchive(db=get_db())
         arch_svc.prune_archive(deldays)
 
     # 3. Clean temporary directory
@@ -105,7 +130,7 @@ def run_cron(
         try:
             purgelifedays = int(opt_dict["-p"])
             from namifax.services.storage_lifecycle import StorageLifecycleService
-            lifecycle = StorageLifecycleService()
+            lifecycle = StorageLifecycleService(db=get_db())
             lifecycle.purge_local_tiffs(days_old=purgelifedays)
         except ValueError:
             pass
