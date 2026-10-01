@@ -39,7 +39,7 @@ def outbox_view(request):
     identity = request.identity or {"username": "admin", "is_admin": True}
     access = fax_access(request)
     fq = FaxQueue(auto_process=False, db=request.dbsession)
-    flash_message = None
+    flash_message = next(iter(request.session.pop_flash("fax")), None)       # what the Send Fax page left for us
 
     # Killing changes the queue, so it only happens for a POST that carries this session's CSRF token. (The original
     # used a plain link, which any other web page could have made a signed-in user follow.)

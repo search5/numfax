@@ -143,7 +143,7 @@
             </svg>
           </div>
           <p class="text-sm font-semibold text-slate-700 group-hover:text-blue-700 transition-colors" id="file-label">{{ _('Click to select a file') }}</p>
-          <p class="text-xs text-slate-400 mt-1">{{ _('Supported: PDF, TIFF, PostScript, TXT · Max 10 MB') }}</p>
+          <p class="text-xs text-slate-400 mt-1">{{ _('Supported: PDF, TIFF, PostScript, TXT') }} · {{ _('Max') }} {{ max_upload }}</p>
           <input type="file" name="file" id="file" multiple class="sr-only" accept=".pdf,.tif,.tiff,.ps,.txt" />
         </label>
         <p class="text-xs text-slate-400 mt-2">
@@ -181,22 +181,16 @@
           </select>
         </div>
 
+        {% if lines|length > 1 %}
         <div>
-          <label for="modem" class="block text-sm font-semibold text-slate-800 mb-1">
-            {{ _('Send via Line') }}
-            <span class="text-xs font-normal text-slate-400">— {{ _('Auto-select recommended') }}</span>
-          </label>
+          <label for="modem" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('Send via Line') }}</label>
           <select name="modem" id="modem"
-                  class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white
-                         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm">
-            <option value="">{{ _('Any Available Line (Auto)') }}</option>
-            {% for m in modem_list %}
-            <option value="{{ m.device }}" {% if form_data.modem == m.device %}selected{% endif %}>
-              Line {{ loop.index }} — {{ m.alias or m.device }} [{{ m.status or 'IDLE' }}]
-            </option>
-            {% endfor %}
+                  class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm">
+            {% for device, label in lines %}<option value="{{ device }}" {% if form_data.modem == device %}selected{% endif %}>{{ label }}</option>{% endfor %}
           </select>
         </div>
+        {% elif lines %}<input type="hidden" name="modem" value="{{ lines[0][0] }}" />
+        {% else %}<p class="text-sm text-rose-600">{{ _('No modems configured') }}</p>{% endif %}
 
         <div class="sm:col-span-2">
           <label for="comments" class="block text-sm font-semibold text-slate-800 mb-1">
@@ -224,6 +218,7 @@
       </summary>
 
       <div class="border-t border-slate-100 p-5 grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {% if superuser %}
         <div>
           <label for="priority" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('Priority') }}</label>
           <select name="priority" id="priority"
@@ -232,6 +227,7 @@
             {% for p in priority_list %}<option value="{{ p }}" {% if (form_data.priority or '*') == p %}selected{% endif %}>{{ '' if p == '*' else p }}</option>{% endfor %}
           </select>
         </div>
+        {% endif %}
 
         <div>
           <label for="numtries" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('Max Retries') }}</label>
@@ -263,10 +259,12 @@
           </div>
         </div>
 
+        {% if superuser %}
         <div>
           <label for="user_tsi" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('TSI ID') }}</label>
           <input type="text" name="user_tsi" id="user_tsi" value="{{ form_data.user_tsi if form_data.user_tsi is defined and form_data.user_tsi is not none else default_tsi }}" class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
         </div>
+        {% endif %}
 
         <div class="flex items-end pb-1">
           <label class="inline-flex items-center gap-2 cursor-pointer">

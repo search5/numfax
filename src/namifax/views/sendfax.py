@@ -17,9 +17,12 @@ from pyramid.view import view_config
 from namifax.services.addressbook import RESERVED_FAX_NUM, AFAddressBook
 from namifax.services.archive_in import ArchiveIn
 from namifax.services.covers import Covers
+from namifax.i18n import _
+from namifax.services import upload_check
+from namifax.services.modem import FaxModem
 from namifax.services.sendfax_command import NothingToSend, Sender, SendRequest, build_plan
 from namifax.services.user_account import AFUserAccount
-from namifax.views.fax_rights import load_fax
+from namifax.views.fax_rights import fax_access, load_fax
 from namifax.views.admin import get_all_admin_modems
 
 
@@ -121,6 +124,19 @@ def _covers(request, account: dict[str, Any]) -> tuple[list[tuple[str, str]], st
     return options, chosen or (options[0][0] if options else "")
 
 
+def _lines(request, account: dict[str, Any]) -> list[tuple[str, str]]:
+    """The choices of the Line drop-down: 'any line' (empty value) only with the any_modem right, then the user's own lines
+    (every configured one for a superuser)."""
+    access = fax_access(request)
+    modems = FaxModem(db=request.dbsession)
+    devices = (modems.get_modems() if access.superuser else access.modems) or []
+    choices = [("", str(_("Any Available Line (Auto)")))] if account.get("any_modem") else []
+    for device in devices:
+        if modems.load_device(device):
+            choices.append((device, modems.get_alias() or device))
+    return choices
+
+
 def _send_request(params, files: list[str]) -> SendRequest:
     def text(name: str) -> str:
         return (params.get(name) or "").strip()
@@ -141,6 +157,9 @@ def sendfax_view(request):
     identity = request.identity or {"username": "admin", "is_admin": True}
     sender, account = _account(request)
     cover_list, default_cover = _covers(request, account)
+    access = fax_access(request)
+    superuser = bool(access.superuser)
+    lines = _lines(request, account)
 
     def page(form_data, error=None, original_fid=None):
         return {
@@ -149,7 +168,8 @@ def sendfax_view(request):
             "default_cover": default_cover, "original_fid": original_fid,
             "priority_list": ["*"] + [str(n) for n in range(0, 255, 10)],
             "hours": [f"{n:02d}" for n in range(24)], "minutes": [f"{n:02d}" for n in range(60)],
-            "default_tsi": account.get("user_tsi") or "",
+            "default_tsi": account.get("user_tsi") or "", "lines": lines, "superuser": superuser,
+            "max_upload": upload_check.max_label(),
         }
 
     # "Reply to fax": the fax being answered must exist and the user must have the right to it, else the plain page
@@ -166,19 +186,50 @@ def sendfax_view(request):
         return page(form, original_fid=original_fid)
 
     params = request.params
+    if not lines:
+        return page(params, str(_("No modems configured")), original_fid)
     if not (params.get("faxnumber") or params.get("destinations") or "").strip():
         return page(params, "Fax number is required", original_fid)
 
+    modem = (params.get("modem") or "").strip()
+    devices = [d for d, _label in lines if d]
+    if modem and modem not in devices:
+        return page(params, str(_("You may not use this line.")), original_fid)
+    if not modem and not any(d == "" for d, _label in lines):
+        modem = devices[0]                                      # no 'any line' right: the first (usually only) line
+
     files: list[str] = [original.get_pdfpath()] if original is not None and original.get_pdfpath() else []
     uploaded: list[str] = []
+    problem = None
     for item in request.POST.getall("file"):
         if hasattr(item, "file") and getattr(item, "filename", ""):
+            head = item.file.read(upload_check.HEAD)
+            item.file.seek(0, os.SEEK_END)
+            size = item.file.tell()
+            item.file.seek(0)
+            problem = upload_check.check(head, size)
+            if problem:
+                problem = f"{_(problem)} ({item.filename})"
+                break
             dest_path = os.path.join(tempfile.gettempdir(), f"sendfax_{uuid.uuid4().hex[:8]}_{os.path.basename(item.filename)}")
             with open(dest_path, "wb") as out:
                 shutil.copyfileobj(item.file, out)
             uploaded.append(dest_path)
+    if problem:
+        for path in uploaded:
+            try:
+                os.remove(path)
+            except OSError:
+                pass
+        return page(params, problem, original_fid)
+
+    send = _send_request(params, files + uploaded)
+    send.modem = modem or None
+    if not superuser:                                           # priority and TSI belong to superusers
+        send.priority = "*"
+        send.tsi = str(account.get("user_tsi") or "")
     try:
-        result = dispatch_sendfax(_send_request(params, files + uploaded), sender)
+        result = dispatch_sendfax(send, sender)
     finally:
         for path in uploaded:
             try:
@@ -187,4 +238,7 @@ def sendfax_view(request):
                 pass
     if not result.get("success"):
         return page(params, result.get("error", "Failed to dispatch fax"), original_fid)
+    request.session.flash(
+        str(_("Your fax has been successfully queued to be faxed.")) + (f" ({_('Job')} {result['jobid']})" if result.get("jobid") else ""),
+        "fax")
     return HTTPFound(location=request.route_url("outbox"))
