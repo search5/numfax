@@ -4,5 +4,8 @@
   "route": "/ajax/archivefax",
   "method": "POST",
   "expected_status": 200,
-  "implemented": true
+  "implemented": true,
+  "headers": {
+    "X-Requested-With": "XMLHttpRequest"
+  }
 }

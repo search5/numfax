@@ -6,6 +6,7 @@ import re
 
 import pytest
 import webtest
+from bs4 import BeautifulSoup
 from sqlalchemy import select
 
 from namifax.models import AddressBook, AddressBookFAX, FaxArchive, FaxCategory
@@ -284,3 +285,23 @@ def test_the_reserved_entry_is_not_listed(client, dbsession):
     dbsession.add(AddressBookFAX(abook_id=reserved.abook_id, faxnumber="XXXXXXX"))
     dbsession.flush()
     assert "XXXXXXX" not in client.get("/addressbook").text
+
+
+# --- small fixes found by the audit -------------------------------------------------------------------------------------------
+
+def test_an_existing_company_can_be_saved_without_adding_a_number(client, dbsession):
+    """The 'new fax number' field is only required for a new company (the original: if ($new_faxnum))."""
+    company = dbsession.execute(select(AddressBook)).scalars().first()
+    soup = BeautifulSoup(client.get(f"/addressbook/edit?abook_id={company.abook_id}").text, "html.parser")
+    assert soup.find("input", {"name": "new_faxnum"}).has_attr("required") is False
+    soup = BeautifulSoup(client.get("/addressbook/edit").text, "html.parser")
+    assert soup.find("input", {"name": "faxnumber"}) is not None or soup.find("input", {"name": "new_faxnum"}).has_attr("required")
+
+
+def test_the_list_search_accepts_the_parameter_the_inbox_and_archive_links_use(client, dbsession):
+    dbsession.add_all([AddressBook(company="Zebra Holdings"), AddressBook(company="Quokka Ltd")])
+    dbsession.flush()
+    page = client.get("/addressbook?search=zebra")
+    assert "Zebra Holdings" in page.text and "Quokka Ltd" not in page.text
+    page = client.get("/addressbook?q=quokka")
+    assert "Quokka Ltd" in page.text and "Zebra Holdings" not in page.text

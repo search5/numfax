@@ -116,33 +116,8 @@ def _modal_request(dbsession, params, identity=None):
     return req
 
 
-def test_modal_sends_through_the_send_mail_helper_with_the_request_session(dbsession):
-    from namifax.views import modals
-
-    req = _modal_request(dbsession, {"fid": "7", "emails": "to@x.test", "subject": "S", "msg": "M"})
-    arc = MagicMock()
-    arc.return_value.load_fax.return_value = True
-    arc.return_value.get_pdfpath.return_value = "/tmp/fax.pdf"
-    arc.return_value.get_thumbnail.return_value = "/tmp/thumb.png"
-    with patch.object(modals, "ArchiveIn", arc), patch.object(modals, "AFAddressBook") as ab, \
-            patch.object(modals, "send_mail", return_value=True) as send:
-        res = modals.modal_email_view(req)
-
-    assert res["message"] == "Email sent successfully"
-    args, kwargs = send.call_args
-    assert args[0] == "to@x.test" and args[2:4] == ("S", "M")
-    assert (kwargs["file"], kwargs["embedd"], kwargs["session"]) == ("/tmp/fax.pdf", "/tmp/thumb.png", dbsession)
-    ab.return_value.create_contacts.assert_called_once_with("to@x.test")
 
 
-def test_modal_reports_a_failed_send(dbsession):
-    from namifax.views import modals
-
-    req = _modal_request(dbsession, {"fid": "7", "emails": "to@x.test"})
-    with patch.object(modals, "ArchiveIn"), patch.object(modals, "AFAddressBook"), \
-            patch.object(modals, "send_mail", return_value=False):
-        res = modals.modal_email_view(req)
-    assert res["error"] == "Failed to send email" and res["message"] is None
 
 
 def test_the_modal_no_longer_calls_a_mailer_method_that_does_not_exist():

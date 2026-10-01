@@ -126,7 +126,7 @@ def _verify_all_scenarios(target_scenario: str | None = None) -> int:
             headers = meta.get("headers", {})
 
             if method == "GET":
-                res = test_client.get(route, headers=headers, expect_errors=True)
+                res = test_client.get(route, params=meta.get("params"), headers=headers, expect_errors=True)
             elif method == "POST":
                 # Prepare mock post data
                 post_data = {"_submit_check": "1"}

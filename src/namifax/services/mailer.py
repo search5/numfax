@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import mimetypes
 import os
+import re
 import smtplib
+import uuid
 from email.message import EmailMessage
 from pathlib import Path
 from typing import Any, Sequence
@@ -43,6 +45,24 @@ class MailerService:
         self._current_subject: str = "NamiFAX Notification"
         self._attachments: list[dict[str, Any]] = []
         self._embedded_images: list[dict[str, Any]] = []
+        self._cc: list[str] = []
+        self._bcc: list[str] = []
+        self._spooled_envelopes: list[list[str]] = []
+
+    @staticmethod
+    def _addresses(value: str | Sequence[str] | None) -> list[str]:
+        if not value:
+            return []
+        parts = re.split(r"[;,]", value) if isinstance(value, str) else list(value)
+        return [p.strip() for p in parts if p and p.strip()]
+
+    def set_cc(self, addresses: str | Sequence[str] | None) -> None:
+        """Copy the message to these addresses (they are listed in the headers)."""
+        self._cc = self._addresses(addresses)
+
+    def set_bcc(self, addresses: str | Sequence[str] | None) -> None:
+        """Send the message to these addresses without listing them in the headers."""
+        self._bcc = self._addresses(addresses)
 
     @classmethod
     def get_active_mailer(cls, session: Any = None) -> MailerService:
@@ -88,7 +108,8 @@ class MailerService:
 
         msg = EmailMessage()
         msg["Subject"] = self._current_subject
-        msg["From"] = f"NamiFAX <{self.admin_email}>"
+        # a sender may be "Name <address>" already; a bare address gets the product name
+        msg["From"] = self.admin_email if "<" in self.admin_email else f"NamiFAX <{self.admin_email}>"
 
         # Plaintext body with signature
         full_text = text
@@ -134,7 +155,7 @@ class MailerService:
             self.last_error = f"Image file not found: {path}"
             return False
 
-        cid = cid or path.name
+        cid = cid or f"{uuid.uuid4().hex}@namifax"
         content_type, _ = mimetypes.guess_type(str(path))
         main_type, sub_type = (content_type or "image/jpeg").split("/", 1)
 
@@ -163,6 +184,22 @@ class MailerService:
             del self._current_message["To"]
         self._current_message["To"] = ", ".join(recipients)
 
+        if self._cc:
+            if "Cc" in self._current_message:
+                del self._current_message["Cc"]
+            self._current_message["Cc"] = ", ".join(self._cc)
+        envelope = recipients + self._cc + self._bcc
+
+        # Inline pictures (the fax thumbnail): shown at the end of the HTML part
+        if self._embedded_images:
+            html = self._current_message.get_body(("html",))
+            if html is not None:
+                tags = "".join(f'<br /><img src="cid:{img["cid"]}" alt="" />' for img in self._embedded_images)
+                body = html.get_content().replace("</body>", f"{tags}</body>", 1)
+                html.set_content(body, subtype="html")
+                for img in self._embedded_images:
+                    html.add_related(img["data"], maintype=img["maintype"], subtype=img["subtype"], cid=f"<{img['cid']}>")
+
         # Attach files
         for att in self._attachments:
             self._current_message.add_attachment(
@@ -175,6 +212,7 @@ class MailerService:
         # Spool mode for unit testing and offline development
         if self.spool_mode or not self.smtp_server:
             self._spooled_messages.append(self._current_message)
+            self._spooled_envelopes.append(envelope)
             return True
 
         # SMTP dispatch
@@ -190,7 +228,7 @@ class MailerService:
                     client.starttls()
                 if self.smtp_user and self.smtp_password:
                     client.login(self.smtp_user, self.smtp_password)
-                client.send_message(self._current_message)
+                client.send_message(self._current_message, to_addrs=envelope)
             return True
         except Exception as exc:
             self.last_error = str(exc)

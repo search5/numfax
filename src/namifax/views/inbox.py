@@ -99,6 +99,7 @@ def inbox_view(request):
         "num_inbox": len(faxes),
         "modem_list": modem_list,
         "csrf_token": request.session.get_csrf_token(),
+        "can_del": bool(fax_access(request).can_del or fax_access(request).superuser),
     }
 
 

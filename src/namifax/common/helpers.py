@@ -332,7 +332,7 @@ def send_mail(
         mailer.admin_email = from_addr
     mailer.set_message(text, subject=subject)
     if file and os.path.exists(file):
-        mailer.attach_file(file, filename=altname)
+        mailer.attach_file(file, alt_name=altname)
     if embedd and os.path.exists(embedd):
         mailer.embed_image(embedd)
     if cc:
@@ -341,7 +341,10 @@ def send_mail(
         mailer.set_bcc(bcc)
 
     recipients = split_emails(to) if isinstance(to, str) else list(to)
-    return mailer.sendmail(recipients)
+    if mailer.sendmail(recipients):
+        return True
+    avantfaxlog(f"send_mail> MAIL ERROR: {mailer.get_error()}", session=session)
+    return False
 
 
 def convert2pdf(path: str, convertfiles: Sequence[str]) -> bool:

@@ -47,7 +47,7 @@ def get_all_companies(db: Any = None) -> list[dict[str, Any]]:
 def addressbook_list_view(request):
     """Display address book companies list with search and '+ New Company' action."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    query = request.params.get("q", "").strip().lower()
+    query = (request.params.get("q") or request.params.get("search") or "").strip().lower()
 
     companies = get_all_companies(request.dbsession)
     if query:

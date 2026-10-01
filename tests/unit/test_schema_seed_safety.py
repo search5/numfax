@@ -81,12 +81,16 @@ def test_no_demo_data_is_added_to_a_database_that_already_has_users():
     engine.disconnect()
 
 
-def test_default_cover_pages_and_categories_are_still_provided_when_those_tables_are_empty():
+def test_the_original_default_cover_pages_are_provided_and_no_categories_are_made_up():
+    """The original ships three cover pages (files that exist in the install) and no categories."""
     engine = empty_session()
     engine.query("INSERT INTO UserAccount (uid, name, username, password, email) VALUES (1, 'x', 'u', 'p', 'u@x.test')")
     engine.upgrade_schema()
     engine.query("SELECT file FROM CoverPages ORDER BY file")
-    assert [r["file"] for r in engine.get_records()] == ["standard.ps", "urgent.ps"]
-    engine.query("SELECT name FROM FaxCategory ORDER BY name")
-    assert [r["name"] for r in engine.get_records()] == ["General", "Invoices", "Legal"]
+    assert [r["file"] for r in engine.get_records()] == ["cover-letter.ps", "cover.ps", "coverpage.html"]
+    engine.query("SELECT name FROM FaxCategory")
+    assert engine.get_records() == []
+    from pathlib import Path
+    images = Path(__file__).resolve().parents[2] / "src" / "namifax" / "static" / "images"
+    assert all((images / name).exists() for name in ("cover.ps", "cover-letter.ps", "coverpage.html"))
     engine.disconnect()

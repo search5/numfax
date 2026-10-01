@@ -12,7 +12,7 @@ import pytest
 import webtest
 from sqlalchemy import select
 
-from namifax.models import AddressBook, AddressBookFAX, FaxArchive
+from namifax.models import AddressBook, AddressBookFAX, FaxArchive, FaxCategory
 
 
 @pytest.fixture
@@ -57,8 +57,11 @@ def test_the_list_links_to_each_company(client, company):
     assert "Omega Corp" in page.text and f"abook_id={row.abook_id}" in page.text
 
 
-def test_the_selected_company_shows_every_number_with_its_own_settings(client, company):
+def test_the_selected_company_shows_every_number_with_its_own_settings(client, company, dbsession):
     row, numbers = company
+    category = FaxCategory(name="Memo")
+    dbsession.add(category)
+    dbsession.flush()
     page = client.get(f"/admin/fax2email?abook_id={row.abook_id}")
     assert 'value="Omega Corp"' in page.text
     assert page.text.count('name="abookfax_id"') == 2
@@ -66,7 +69,7 @@ def test_the_selected_company_shows_every_number_with_its_own_settings(client, c
     for number in ("0255501", "0255502", "old1@omega.test", "lp1"):
         assert number in page.text
     assert 'name="save"' in page.text and 'name="delete"' in page.text and 'name="create"' not in page.text
-    assert re.search(r'<option value="1"[^>]*>General</option>', page.text)             # every category can be chosen
+    assert re.search(rf'<option value="{category.catid}"[^>]*>Memo</option>', page.text)     # every category can be chosen
 
 
 def test_the_old_company_id_parameter_still_works(client, company):

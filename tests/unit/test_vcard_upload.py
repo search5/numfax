@@ -110,7 +110,8 @@ def test_ajax_inbox_count_view(dummy_request):
 def test_ajax_archive_fax_view(dummy_request):
     """Verify real ArchiveIn call to move fax from inbox to archive."""
     dummy_request.params = {"fid": "42"}
-    with patch("namifax.views.ajax.ArchiveIn") as mock_arc_cls:
+    dummy_request.headers["X-Requested-With"] = "XMLHttpRequest"
+    with patch("namifax.views.ajax.ArchiveIn") as mock_arc_cls, patch("namifax.views.ajax.load_fax", return_value=True):
         inst_arc = MagicMock()
         inst_arc.set_archivebox.return_value = True
         mock_arc_cls.return_value = inst_arc

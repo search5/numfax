@@ -178,16 +178,31 @@ def ajax_distrolist_faxes(request):
     return Response(faxes_str, content_type="text/plain")
 
 
+def _fids(request) -> list[int]:
+    """The fax numbers a request names: checkboxes (``fids=1&fids=2``) and/or the original's ``fids=1,2``."""
+    def all_of(name):
+        getall = getattr(request.params, "getall", None)            # (a plain dict has no getall)
+        return getall(name) if getall else ([request.params[name]] if name in request.params else [])
+
+    values = all_of("fids") + all_of("fid")
+    return [int(v) for raw in values for v in str(raw).split(",") if v.strip().isdigit()]
+
+
+def _done(request):
+    """What follows a batch action: an empty answer for script callers, the inbox for a page."""
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        return Response("", status_code=200)
+    return HTTPFound(location=request.route_url("inbox"))
+
+
 @view_config(route_name="ajax_archivefax", request_method="POST", permission="view")
 def ajax_archive_fax(request):
-    """Archive fax endpoint matching legacy ajaxarchivefax.php."""
-    fid = request.params.get("fid") or request.params.get("fids")
-    if fid:
-        arc = ArchiveIn(db=request.dbsession)
-        for item in str(fid).split(","):
-            if item.strip() and load_fax(request, arc, item.strip(), action="ajaxarchivefax"):
-                arc.set_archivebox(int(item.strip()))
-    return Response("", status_code=200)
+    """Archive faxes (the original ajaxarchivefax.php): only those the user may use."""
+    arc = ArchiveIn(db=request.dbsession)
+    for fid in _fids(request):
+        if load_fax(request, arc, fid, action="ajaxarchivefax"):
+            arc.set_archivebox(fid)
+    return _done(request)
 
 
 @view_config(route_name="ajax_faxalter", renderer="namifax:templates/faxalter.jinja2", permission="view")
@@ -256,39 +271,20 @@ def ajax_faxalter(request):
     return HTTPFound(location=request.route_url("outbox"))
 
 
-@view_config(route_name="ajax_deletefaxes", permission="view")
+@view_config(route_name="ajax_deletefaxes", renderer="namifax:templates/batch_delete.jinja2", permission="view")
 def ajax_deletefaxes_view(request):
-    """Batch delete faxes dialog and action matching legacy ajaxdeletefaxes.php."""
-    fids = request.params.get("fids", "")
+    """Delete faxes after asking (the original ajaxdeletefaxes.php): only those the user may delete."""
     access = fax_access(request)
     if not (access.can_del or access.superuser):
         raise HTTPForbidden("You may not delete faxes.")
+    fids = _fids(request)
     if request.method == "POST":
-        if fids:
-            arc = ArchiveIn(db=request.dbsession)
-            for fid in fids.split(","):
-                if fid.strip() and load_fax(request, arc, fid.strip(), action="ajaxdeletefaxes", delete=True):
-                    arc.delete_fax()
-        return Response("", status_code=200)
-
-    html = f"""<!DOCTYPE html>
-<html>
-<head><title>Delete</title></head>
-<body class="bg-slate-50 p-4 text-xs">
-  <div class="max-w-sm mx-auto bg-white p-4 rounded border border-slate-300 text-center">
-    <p class="font-semibold text-slate-700 mb-4">Delete selected faxes?</p>
-    <form action="/ajax/deletefaxes" method="post">
-      <input type="hidden" name="fids" value="{fids}" />
-      <input type="hidden" name="_submit_check" value="1" />
-      <div class="flex justify-center space-x-2">
-        <button type="button" onclick="window.close()" class="px-3 py-1 bg-slate-200 text-slate-700 rounded">Cancel</button>
-        <button type="submit" class="px-4 py-1 bg-rose-700 text-white rounded">Delete</button>
-      </div>
-    </form>
-  </div>
-</body>
-</html>"""
-    return Response(html, content_type="text/html")
+        arc = ArchiveIn(db=request.dbsession)
+        for fid in fids:
+            if load_fax(request, arc, fid, action="ajaxdeletefaxes", delete=True):
+                arc.delete_fax()
+        return _done(request)
+    return {"title": "- NamiFAX - Delete Faxes", "fids": fids}
 
 
 @view_config(route_name="ajax_archivebook", permission="view")

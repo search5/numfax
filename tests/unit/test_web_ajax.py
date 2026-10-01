@@ -1,6 +1,6 @@
 """Unit tests for NamiFAX asynchronous AJAX API views matching specs/web/24-ajax-api.md."""
 
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 from pyramid import testing
 import pytest
 
@@ -86,8 +86,10 @@ def test_ajax_distrolist_faxes(dummy_request):
 
 def test_ajax_archive_fax(dummy_request):
     """Verify 200 OK response for archiving faxes."""
-    dummy_request.POST["fids"] = "1,2"
-    res = ajax_archive_fax(dummy_request)
+    dummy_request.params = {"fids": "1,2"}
+    dummy_request.headers["X-Requested-With"] = "XMLHttpRequest"
+    with patch("namifax.views.ajax.load_fax", return_value=False):
+        res = ajax_archive_fax(dummy_request)
     assert res.status_code == 200
 
 

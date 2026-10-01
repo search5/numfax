@@ -10,113 +10,129 @@ from namifax.i18n import _
 from namifax.services.addressbook import AFAddressBook
 from namifax.services.archive_in import ArchiveIn
 from namifax.services.faxqueue import FaxQueue
-from namifax.common.helpers import send_mail
+import os
+
+from namifax.common.helpers import send_mail, split_emails
+from namifax.common.validators import is_valid_email
+from namifax.services.categories import FaxPDFCategory
+from namifax.services.user_account import AFUserAccount
 from namifax.views.fax_rights import fax_access, load_fax
+
+
+def _company_name(request, fax) -> str:
+    """What the fax is called in a mail: its company, else the number it came from (the original's company_name)."""
+    book = AFAddressBook(db=request.dbsession)
+    if fax.get_faxnumid() and book.loadbyfaxnumid(fax.get_faxnumid()):
+        return book.get_company() or ""
+    if fax.get_companyid() and book.loadbycid(fax.get_companyid()):
+        return book.get_company() or ""
+    return fax.get_origfaxnum() or ""
+
+
+def _categories_for(request, access) -> dict:
+    """The categories the user may put a fax in: all for a superuser, otherwise those on their account."""
+    cats = FaxPDFCategory(db=request.dbsession)
+    if access.superuser:
+        return {str(c["catid"]): c["name"] for c in cats.get_categories() or []}
+    return {str(c): cats.get_name(int(c)) for c in access.faxcats if str(c).isdigit() and cats.get_name(int(c))}
 
 
 @view_config(route_name="modal_email", renderer="namifax:templates/modal_email.jinja2", permission="view")
 def modal_email_view(request):
-    """Render send fax via email modal dialog and handle email dispatch."""
-    identity = request.identity or {"username": "admin", "uid": 1, "is_admin": True}
-    fid = request.params.get("fid", "1")
-    emails = request.params.get("emails", "")
-    subject = request.params.get("subject", f"Forwarded Fax Document #{fid}")
-    msg = request.params.get("msg", "Please find attached the requested facsimile transmission.")
-    message = None
-    error = None
+    """E-mail a fax as a PDF (the original email.php).
 
-    if request.method == "POST":
-        emails = request.params.get("emails", "").strip()
-        subject = request.params.get("subject", "").strip() or f"Forwarded Fax Document #{fid}"
-        msg = request.params.get("msg", "").strip()
+    The fax must exist and the user must have the right to it, else the user is sent to the inbox. After a successful
+    mail the new addresses go into the e-mail book, and an inbox fax can be given a category and archived.
+    """
+    params = request.POST if request.method == "POST" else request.params
+    fid = (params.get("fid") or "").strip()
+    arc = ArchiveIn(db=request.dbsession)
+    if not fid.isdigit() or not load_fax(request, arc, fid, action="email"):
+        return HTTPFound(location=request.route_url("inbox"))
 
-        if emails:
-            arc = ArchiveIn(db=request.dbsession)
-            pdf_path = None
-            thumb_path = None
-            try:
-                if load_fax(request, arc, fid, action="email"):
-                    pdf_path = arc.get_pdfpath()
-                    thumb_path = arc.get_thumbnail()
-            except (ValueError, TypeError):
-                pass
+    access = fax_access(request)
+    account = AFUserAccount(db=request.dbsession)
+    account.load_username(access.username)
+    name, email = account.get_name() or access.username, (account.dbdata.get("email") or "")
+    company = _company_name(request, arc)
+    default_name = f"fax-{company}.pdf".replace(":", "").replace(" ", "-")
+    in_inbox = bool(arc.get_inbox())
+    categories = _categories_for(request, access) if in_inbox else {}
 
-            sent = send_mail(
-                emails,
-                identity.get("email"),
-                subject,
-                msg,
-                file=pdf_path,
-                altname=request.params.get("filename") or None,
-                embedd=thumb_path,
-                session=request.dbsession,
-            )
-            if sent:
-                ab = AFAddressBook(db=request.dbsession)
-                ab.create_contacts(emails)
-                message = "Email sent successfully"
-            else:
-                error = "Failed to send email"
-
-    return {
-        "title": "- NamiFAX - Send Fax via Email",
-        "current_user": identity,
+    values = {
         "fid": fid,
-        "emails": emails,
-        "subject": subject,
-        "msg": msg,
-        "message": message,
-        "error": error,
+        "emails": params.get("emails", ""), "cc_emails": params.get("cc_emails", ""), "bcc_emails": params.get("bcc_emails", ""),
+        "subject": params.get("subject", company)[:45], "filename": params.get("filename", default_name),
+        "msg": params.get("msg", "\n\n\n" + (account.dbdata.get("email_sig") or "")),
+        "category": params.get("category", ""), "archive": request.method != "POST" or bool(params.get("archive")),
+        "url": params.get("url") or request.headers.get("Referer") or request.route_url("inbox"),
     }
+
+    def page(error=None, message=None):
+        return {"title": "- NamiFAX - Send Fax via Email", "values": values, "error": error, "message": message,
+                "from_display": f"{name} <{email}>", "categories": categories, "in_inbox": in_inbox}
+
+    if request.method != "POST":
+        return page()
+
+    recipients = split_emails(values["emails"])
+    wrong = [r for r in recipients if not is_valid_email(r)] + \
+            [r for r in split_emails(values["cc_emails"]) + split_emails(values["bcc_emails"]) if not is_valid_email(r)]
+    if not recipients or wrong:
+        return page(_("Please enter a valid e-mail address.") + (": " + ", ".join(wrong) if wrong else ""))
+    pdf = arc.get_pdfpath()
+    if not pdf or not os.path.exists(pdf):
+        return page(_("The fax document was not found."))
+
+    sent = send_mail(values["emails"], f'"{name}" <{email}>', values["subject"], values["msg"], file=pdf,
+                     altname=values["filename"] or None, embedd=arc.get_thumbnail(), cc=values["cc_emails"] or None,
+                     bcc=values["bcc_emails"] or None, session=request.dbsession)
+    if not sent:
+        return page(_("Failed to send email"))
+
+    AFAddressBook(db=request.dbsession).create_contacts(values["emails"])
+    if in_inbox and values["category"] in categories:
+        arc.set_category(int(values["category"]), account.get_uid() or 0)
+    if in_inbox and values["archive"]:
+        arc.set_archivebox(int(fid))
+    return page(message=_("Email sent successfully"))
 
 
 @view_config(route_name="modal_assign", renderer="namifax:templates/modal_assign.jinja2", permission="view")
 def modal_assign_view(request):
-    """Render assign company name dialog and persist company mapping."""
+    """Name a company that is only its number, or fold it into another one (the original assign.php).
+
+    Typing a name renames the company; choosing another company moves this one's numbers and faxes to it and removes
+    this one. An unknown company goes back to the inbox, like the original.
+    """
     identity = request.identity or {"username": "admin", "uid": 1, "is_admin": True}
-    fid = request.params.get("fid", "1")
-    abook_id = request.params.get("abook_id", "1")
-    message = None
-
+    raw = request.params.get("abook_id") or request.params.get("cid") or ""
     ab = AFAddressBook(db=request.dbsession)
+    if not raw.isdigit() or not ab.loadbycid(int(raw)):
+        return HTTPFound(location=request.route_url("inbox"))
+    cid = int(raw)
+    message = error = None
+
     if request.method == "POST":
-        myselect = request.params.get("myselect")
-        regexp = request.params.get("regexp", "").strip()
-        arc = ArchiveIn(db=request.dbsession)
-
-        if myselect:
-            try:
-                target_cid = int(myselect)
-                src_cid = int(abook_id) if abook_id else 1
-                if ab.loadbycid(src_cid):
-                    oldcid = ab.get_companyid()
-                    if ab.reassign(target_cid):
-                        arc.reassign(oldcid, target_cid)
-                        message = "Company reassigned successfully"
-            except (ValueError, TypeError):
-                pass
+        myselect = (request.POST.get("myselect") or "").strip()
+        regexp = (request.POST.get("regexp") or "").strip()
+        if myselect.isdigit() and int(myselect) != cid:
+            old = ab.get_companyid()
+            if ab.reassign(int(myselect)):
+                ArchiveIn(db=request.dbsession).reassign(old, int(myselect))
+                return HTTPFound(location=request.route_url("inbox"))
+            error = ab.get_error()
         elif regexp:
-            ab.set_company(regexp)
-            message = "Company updated successfully"
+            if ab.set_company(regexp):
+                return HTTPFound(location=request.route_url("inbox"))
+            error = ab.get_error()
+        else:
+            error = _("Please enter a company name")
 
-    company_records = []
-    try:
-        raw_cos = ab.get_companies() or []
-        for r in raw_cos:
-            cid = r.get("ab_id") or r.get("abook_id") or r.get("id")
-            cname = r.get("company") or r.get("company_name") or r.get("name")
-            if cid and cname:
-                company_records.append({"id": cid, "name": cname})
-    except Exception:
-        pass
-
-    return {
-        "title": "- NamiFAX - Assign Company",
-        "current_user": identity,
-        "fid": fid,
-        "companies": company_records,
-        "message": message,
-    }
+    companies = [{"id": c.get("abook_id"), "name": c.get("company")}
+                 for c in ab.get_companies() or [] if c.get("company") and c.get("abook_id") != cid]
+    return {"title": "- NamiFAX - Assign Company", "current_user": identity, "abook_id": cid,
+            "company": ab.get_company(), "companies": companies, "message": message, "error": error}
 
 
 @view_config(route_name="assignx", renderer="namifax:templates/assignx.jinja2", permission="view")

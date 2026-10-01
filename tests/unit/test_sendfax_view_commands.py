@@ -94,8 +94,6 @@ def test_a_plain_send_uses_the_defaults(client, hylafax):
 
 
 def test_a_cover_page_alone_is_made_by_faxcover_and_sent(client, hylafax, dbsession, tmp_path):
-    dbsession.add(CoverPages(title="Generic A4", file="cover.ps"))
-    dbsession.flush()
     res = client.post("/sendfax", {"_submit_check": "1", "faxnumber": "5550100", "coverpage": "1", "whichcover": "cover.ps",
                                    "to_person": "Bob", "comments": "Please read"})
     assert res.status_int == 302
@@ -126,8 +124,6 @@ def test_a_failing_sendfax_is_reported_on_the_page(client, hylafax, tmp_path):
 # --- the form -----------------------------------------------------------------------------------------------------------------
 
 def test_the_form_offers_the_covers_of_the_cover_table(client, dbsession):
-    dbsession.add(CoverPages(title="Generic A4", file="cover.ps"))
-    dbsession.flush()
     page = client.get("/sendfax")
     assert 'value="cover.ps"' in page.text and "Generic A4" in page.text and 'value="confidential"' not in page.text
 

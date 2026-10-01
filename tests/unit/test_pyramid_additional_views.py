@@ -61,7 +61,8 @@ def test_ajax_deletefaxes_post(dummy_request, as_superuser):
     """Verify batch fax delete via AJAX."""
     dummy_request.method = "POST"
     dummy_request.params = {"fids": "10,20,30"}
-    with patch("namifax.views.ajax.ArchiveIn") as mock_arc_cls:
+    dummy_request.headers["X-Requested-With"] = "XMLHttpRequest"
+    with patch("namifax.views.ajax.ArchiveIn") as mock_arc_cls, patch("namifax.views.ajax.load_fax", return_value=True):
         inst_arc = MagicMock()
         mock_arc_cls.return_value = inst_arc
 

@@ -27,11 +27,11 @@ def _count(session: Session, model) -> int:
 
 
 def seed_default_records(session: Session) -> None:
-    """Default fax categories and cover pages, only while their table is empty."""
-    if _count(session, FaxCategory) == 0:
-        session.add_all([FaxCategory(name=n) for n in ("General", "Invoices", "Legal")])
+    """The original's three cover pages (their files ship in static/images), only while the table is empty."""
     if _count(session, CoverPages) == 0:
-        session.add_all([CoverPages(title="standard", file="standard.ps"), CoverPages(title="urgent", file="urgent.ps")])
+        session.add_all([CoverPages(title="Generic A4", file="cover.ps"),
+                         CoverPages(title="Generic Letter", file="cover-letter.ps"),
+                         CoverPages(title="Generic HTML", file="coverpage.html")])
     session.flush()
 
 
@@ -61,6 +61,10 @@ def seed_demo_records(session: Session) -> None:
                         email="operator@namifax.local", superuser=False, is_admin=False, can_del=False,
                         any_modem=True, acc_enabled=True, last_login="2026-09-29 09:00:00"),
         ])
+
+    if _count(session, FaxCategory) == 0:
+        for cid, name in ((1, "General"), (2, "Invoices"), (3, "Legal")):
+            _add_missing(session, FaxCategory, cid, name=name)
 
     if _count(session, Modems) < 2:
         _add_missing(session, Modems, 1, device="ttyS0", alias="Sales Inbound", contact="sales@avantfax.local", printer="lp1")

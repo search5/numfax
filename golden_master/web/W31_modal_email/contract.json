@@ -11,12 +11,40 @@
           "type": "textarea"
         },
         {
+          "name": "cc_emails",
+          "type": "textarea"
+        },
+        {
+          "name": "bcc_emails",
+          "type": "textarea"
+        },
+        {
           "name": "subject",
+          "type": "text"
+        },
+        {
+          "name": "filename",
           "type": "text"
         },
         {
           "name": "msg",
           "type": "textarea"
+        },
+        {
+          "name": "category",
+          "type": "select"
+        },
+        {
+          "name": "archive",
+          "type": "checkbox"
+        },
+        {
+          "name": "fid",
+          "type": "hidden"
+        },
+        {
+          "name": "url",
+          "type": "hidden"
         },
         {
           "name": "_submit_check",
@@ -39,8 +67,8 @@
         "index": 0,
         "action": "/email",
         "method": "POST",
-        "inputs_count": 5,
-        "buttons_count": 2,
+        "inputs_count": 11,
+        "buttons_count": 1,
         "field_sequence": [
           {
             "name": "emails",
@@ -50,10 +78,31 @@
             "required": true
           },
           {
+            "name": "cc_emails",
+            "tag": "textarea",
+            "type": "textarea",
+            "id": "cc_emails",
+            "required": false
+          },
+          {
+            "name": "bcc_emails",
+            "tag": "textarea",
+            "type": "textarea",
+            "id": "bcc_emails",
+            "required": false
+          },
+          {
             "name": "subject",
             "tag": "input",
             "type": "text",
             "id": "subject",
+            "required": false
+          },
+          {
+            "name": "filename",
+            "tag": "input",
+            "type": "text",
+            "id": "filename",
             "required": false
           },
           {
@@ -64,7 +113,28 @@
             "required": false
           },
           {
+            "name": "category",
+            "tag": "select",
+            "type": "select",
+            "id": "category",
+            "required": false
+          },
+          {
+            "name": "archive",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "archive",
+            "required": false
+          },
+          {
             "name": "fid",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "url",
             "tag": "input",
             "type": "hidden",
             "id": "",
@@ -79,12 +149,6 @@
           }
         ],
         "button_sequence": [
-          {
-            "tag": "button",
-            "type": "button",
-            "name": "",
-            "text": "Cancel"
-          },
           {
             "tag": "button",
             "type": "submit",

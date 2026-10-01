@@ -46,6 +46,7 @@ def create_app(global_config=None, **settings):
         ensure_schema(config.registry["dbengine"], settings)
 
         config.include(".routes")
+        config.add_tween("namifax.origin_guard.origin_guard_factory")
 
         # Scan views for @view_config decorators
         config.scan(".views")

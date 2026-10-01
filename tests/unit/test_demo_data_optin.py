@@ -24,7 +24,7 @@ def test_a_new_sqlite_database_has_no_users_or_samples_by_default(tmp_path, no_d
     engine = create_sa_engine(f"sqlite:///{tmp_path / 'a.db'}")
     ensure_schema(engine)
     assert [_count(engine, t) for t in ("UserAccount", "AddressBook", "FaxArchive", "Modems", "DIDRoute", "SysLog")] == [0] * 6
-    assert (_count(engine, "FaxCategory"), _count(engine, "CoverPages")) == (3, 2)        # the defaults are always there
+    assert (_count(engine, "FaxCategory"), _count(engine, "CoverPages")) == (0, 3)        # the original's three cover pages
     engine.dispose()
 
 

@@ -118,7 +118,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label for="new_faxnum" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Fax Number') }} *</label>
-          <input type="text" name="new_faxnum" id="new_faxnum" value="{{ values.new_faxnum or '' }}" required class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 font-mono text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" />
+          <input type="text" name="new_faxnum" id="new_faxnum" value="{{ values.new_faxnum or '' }}" {% if not company.id %}required{% endif %} class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 font-mono text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" />
         </div>
         <div>
           <label for="new_desc" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Description') }}</label>

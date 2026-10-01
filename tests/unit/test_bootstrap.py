@@ -90,11 +90,11 @@ def test_server_database_gets_the_schema_and_default_records_only(server_db_url)
             from namifax.models import CoverPages, FaxCategory, UserAccount
 
             count = lambda m: s.execute(sa.select(sa.func.count()).select_from(m)).scalar()   # noqa: E731
-            assert (count(FaxCategory), count(CoverPages)) == (3, 2)
+            assert (count(FaxCategory), count(CoverPages)) == (0, 3)
             assert count(UserAccount) == 0                  # no demo accounts with a well-known password
         ensure_schema(engine)                               # a second start changes nothing
         with Session(engine) as s:
-            assert s.execute(sa.select(sa.func.count()).select_from(FaxCategory)).scalar() == 3
+            assert s.execute(sa.select(sa.func.count()).select_from(FaxCategory)).scalar() == 0
     finally:
         engine.dispose()
 

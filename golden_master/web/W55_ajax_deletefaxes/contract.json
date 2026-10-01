@@ -28,9 +28,16 @@
         "index": 0,
         "action": "/ajax/deletefaxes",
         "method": "POST",
-        "inputs_count": 2,
-        "buttons_count": 2,
+        "inputs_count": 3,
+        "buttons_count": 1,
         "field_sequence": [
+          {
+            "name": "fids",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
           {
             "name": "fids",
             "tag": "input",
@@ -47,12 +54,6 @@
           }
         ],
         "button_sequence": [
-          {
-            "tag": "button",
-            "type": "button",
-            "name": "",
-            "text": "Cancel"
-          },
           {
             "tag": "button",
             "type": "submit",
