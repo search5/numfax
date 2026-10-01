@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from typing import Any, Dict, List, Optional
-from namifax.db.engine import DatabaseEngine
+from namifax.db.engine import DatabaseEngine, resolve_db
 
 
 SUPPORTED_COVER_EXTENSIONS = {".ps", ".pdf", ".html", ".jinja2"}
@@ -27,7 +27,7 @@ class CoverStudioService:
         db: Optional[DatabaseEngine] = None,
         covers_dir: Optional[str] = None,
     ) -> None:
-        self.db = db or DatabaseEngine()
+        self.db = resolve_db(db, "CoverStudioService")
         self.covers_dir = covers_dir or os.environ.get(
             "AVANTFAX_COVERS_DIR", "/var/spool/hylafax/covers"
         )

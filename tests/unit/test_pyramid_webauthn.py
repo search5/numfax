@@ -11,12 +11,14 @@ from namifax.views.webauthn import (
 
 def test_webauthn_register_options_view_unauthenticated():
     req = DummyRequest()
+    req.db = MagicMock()
     req.session = {}
     res = webauthn_register_options_view(req)
     assert res.status_code == 401
 
 def test_webauthn_register_options_view_success():
     req = DummyRequest()
+    req.db = MagicMock()
     req.session = {"username": "admin"}
     with patch("namifax.views.webauthn.AFUserAccount") as mock_user_cls:
         mock_user = MagicMock()
@@ -40,6 +42,7 @@ def test_webauthn_register_options_view_success():
 
 def test_webauthn_auth_options_view():
     req = DummyRequest()
+    req.db = MagicMock()
     req.session = {}
     with patch("namifax.views.webauthn.WebAuthnService") as mock_svc_cls:
         mock_svc = MagicMock()
@@ -56,6 +59,7 @@ def test_webauthn_auth_options_view():
 
 def test_webauthn_list_and_delete_credentials_views():
     req = DummyRequest()
+    req.db = MagicMock()
     req.session = {"username": "admin"}
     with patch("namifax.views.webauthn.AFUserAccount") as mock_user_cls:
         mock_user = MagicMock()

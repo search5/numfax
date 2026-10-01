@@ -2,14 +2,14 @@ import secrets
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 import pyotp
-from avantfax.db.engine import DatabaseEngine
+from namifax.db.engine import DatabaseEngine, resolve_db
 
 
 class TotpService:
     """RFC 6238 Time-based One-Time Password (TOTP) two-factor authentication service."""
 
     def __init__(self, db: Optional[DatabaseEngine] = None) -> None:
-        self.db = db or DatabaseEngine()
+        self.db = resolve_db(db, "TotpService")
 
     @staticmethod
     def generate_secret() -> str:

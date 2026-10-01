@@ -18,7 +18,7 @@ from webauthn.helpers.structs import (
     UserVerificationRequirement,
 )
 
-from avantfax.db.engine import DatabaseEngine
+from namifax.db.engine import DatabaseEngine, resolve_db
 
 @dataclass
 class WebAuthnCredential:
@@ -39,12 +39,14 @@ class WebAuthnService:
         rp_id: str = "localhost",
         rp_name: str = "NamiFAX Enterprise",
         origin: str = "http://localhost:8000",
+        db: DatabaseEngine | None = None,
     ) -> None:
         self.rp_id = rp_id
         self.rp_name = rp_name
         self.origin = origin
-        self.db = DatabaseEngine()
-        self._ensure_table_exists()
+        self.db = resolve_db(db, "WebAuthnService")
+        if db is not None:
+            self._ensure_table_exists()
 
     def _ensure_table_exists(self) -> None:
         create_sql = """

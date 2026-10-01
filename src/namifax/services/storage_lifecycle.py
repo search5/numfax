@@ -4,7 +4,7 @@ import time
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Any, Dict, Optional
-from namifax.db.engine import DatabaseEngine
+from namifax.db.engine import DatabaseEngine, resolve_db
 
 
 @dataclass
@@ -24,7 +24,7 @@ class StorageLifecycleService:
         storage_provider: Optional[Any] = None,
         archive_dir: Optional[str] = None,
     ) -> None:
-        self.db = db or DatabaseEngine()
+        self.db = resolve_db(db, "StorageLifecycleService")
         self.storage_provider = storage_provider
         self.archive_dir = archive_dir or os.environ.get(
             "NAMIFAX_ARCHIVE_DIR", "/var/spool/hylafax/archive"

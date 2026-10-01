@@ -11,7 +11,7 @@ from typing import Any
 
 import defusedxml.ElementTree as ET
 
-from avantfax.db.engine import DatabaseEngine
+from namifax.db.engine import DatabaseEngine, resolve_db
 from namifax.services.user_account import AFUserAccount
 
 @dataclass
@@ -29,9 +29,9 @@ class SAMLSettings:
 class SAMLService:
     """Enterprise SAML 2.0 Service Provider implementation."""
 
-    def __init__(self, settings: SAMLSettings | None = None) -> None:
+    def __init__(self, settings: SAMLSettings | None = None, db: DatabaseEngine | None = None) -> None:
         self.settings = settings or SAMLSettings()
-        self.db = DatabaseEngine()
+        self.db = resolve_db(db, "SAMLService")
 
     def generate_sp_metadata(self) -> str:
         """Generate SP metadata XML."""

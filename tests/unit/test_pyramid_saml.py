@@ -12,6 +12,7 @@ from namifax.views.saml import (
 
 def test_saml_metadata_view():
     req = DummyRequest()
+    req.db = MagicMock()
     with patch("namifax.views.saml.SAMLService") as mock_svc_cls:
         mock_svc = MagicMock()
         mock_svc.generate_sp_metadata.return_value = "<md:EntityDescriptor/>"
@@ -24,6 +25,7 @@ def test_saml_metadata_view():
 
 def test_saml_login_view():
     req = DummyRequest()
+    req.db = MagicMock()
     with patch("namifax.views.saml.SAMLService") as mock_svc_cls:
         mock_svc = MagicMock()
         mock_svc.create_authn_request.return_value = {
@@ -37,6 +39,7 @@ def test_saml_login_view():
 
 def test_saml_acs_view_success():
     req = DummyRequest(post={"SAMLResponse": "fake_b64_response", "RelayState": "/inbox"})
+    req.db = MagicMock()
     req.session = {}
     with patch("namifax.views.saml.SAMLService") as mock_svc_cls:
         mock_svc = MagicMock()
@@ -59,6 +62,7 @@ def test_saml_acs_view_success():
 
 def test_saml_sls_view():
     req = DummyRequest()
+    req.db = MagicMock()
     req.session = {"username": "alice", "uid": 5}
     res = saml_sls_view(req)
     assert isinstance(res, HTTPFound)

@@ -257,6 +257,28 @@ class DatabaseEngine:
             raise
 
 
+class MissingDatabase:
+    """Placeholder bound when a service is built without a DatabaseEngine (spec 48).
+
+    Any attribute access raises, so a forgotten injection fails loudly on first use
+    instead of silently running queries against an unconnected engine.
+    """
+
+    def __init__(self, owner: str = "service") -> None:
+        self._owner = owner
+
+    def __getattr__(self, name: str) -> Any:
+        raise RuntimeError(
+            f"{self._owner}: no database engine injected (pass db=request.db); "
+            f"cannot access '{name}'"
+        )
+
+
+def resolve_db(db: "DatabaseEngine | None", owner: str) -> Any:
+    """Return the injected engine, or a loud MissingDatabase placeholder."""
+    return db if db is not None else MissingDatabase(owner)
+
+
 _DEFAULT_ENGINE: DatabaseEngine | None = None
 
 

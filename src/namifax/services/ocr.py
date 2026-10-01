@@ -5,15 +5,16 @@ from typing import Any
 from PIL import Image
 import pytesseract
 
-from namifax.db.engine import DatabaseEngine
+from namifax.db.engine import DatabaseEngine, resolve_db
 
 class OcrService:
     """Enterprise Fax OCR Text Extraction & Full-Text Search service."""
 
-    def __init__(self, lang: str = "eng") -> None:
+    def __init__(self, lang: str = "eng", db: DatabaseEngine | None = None) -> None:
         self.lang = lang
-        self.db = DatabaseEngine()
-        self._ensure_table_exists()
+        self.db = resolve_db(db, "OcrService")
+        if db is not None:
+            self._ensure_table_exists()
 
     def _ensure_table_exists(self) -> None:
         create_sql = """

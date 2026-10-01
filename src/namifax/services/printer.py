@@ -3,7 +3,7 @@ import re
 import socket
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
-from namifax.db.engine import DatabaseEngine
+from namifax.db.engine import DatabaseEngine, resolve_db
 
 
 @dataclass
@@ -21,7 +21,7 @@ class NetworkPrinterService:
     """Manages physical network printers and direct socket printing dispatch."""
 
     def __init__(self, db: Optional[DatabaseEngine] = None) -> None:
-        self.db = db or DatabaseEngine()
+        self.db = resolve_db(db, "NetworkPrinterService")
 
     def list_printers(self) -> List[NetworkPrinter]:
         res = self.db.query("SELECT id, name, protocol, host, port, queue_name, description FROM NetworkPrinters ORDER BY id ASC")

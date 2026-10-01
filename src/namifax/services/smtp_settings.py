@@ -5,7 +5,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from email.message import EmailMessage
 from typing import Any, Dict, List, Optional
-from namifax.db.engine import DatabaseEngine
+from namifax.db.engine import DatabaseEngine, resolve_db
 
 
 @dataclass
@@ -34,7 +34,7 @@ class SmtpSettingsService:
     """Manages enterprise SMTP gateway configuration and connectivity diagnostics."""
 
     def __init__(self, db: Optional[DatabaseEngine] = None) -> None:
-        self.db = db or DatabaseEngine()
+        self.db = resolve_db(db, "SmtpSettingsService")
 
     def get_settings(self) -> SmtpConfig:
         res = self.db.query(

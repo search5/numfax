@@ -15,7 +15,7 @@ def _get_saml_service(request: Request) -> SAMLService:
         sp_acs_url=f"{base_url}/auth/saml/acs",
         sp_sls_url=f"{base_url}/auth/saml/sls",
     )
-    return SAMLService(settings)
+    return SAMLService(settings, db=request.db)
 
 @view_config(route_name="saml_metadata")
 def saml_metadata_view(request: Request) -> Response:

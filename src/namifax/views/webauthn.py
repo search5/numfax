@@ -31,7 +31,7 @@ def _get_current_user(request: Request) -> AFUserAccount | None:
 def _get_webauthn_service(request: Request) -> WebAuthnService:
     host = request.host.split(":")[0] if request.host else "localhost"
     origin = f"{request.scheme}://{request.host}" if hasattr(request, "scheme") and request.host else "http://localhost:8000"
-    return WebAuthnService(rp_id=host, rp_name="NamiFAX Enterprise", origin=origin)
+    return WebAuthnService(rp_id=host, rp_name="NamiFAX Enterprise", origin=origin, db=request.db)
 
 @view_config(route_name="api_webauthn_register_options", renderer="json")
 def webauthn_register_options_view(request: Request) -> Response:
