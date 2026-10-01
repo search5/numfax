@@ -222,10 +222,11 @@ def test_faxqueue_shows_the_users_display_name(dbsession):
     fq.queue = [{"owner": "henry", "mailaddr": ""}, {"owner": "faxmail", "mailaddr": "henry@corp.test"},
                 {"owner": "stranger", "mailaddr": ""}, {"owner": "faxmail", "mailaddr": "x@y.test"}]
     assert [e["user"] for e in fq.get_queue()] == ["Henry Person", "Henry Person", "stranger", "x@y.test"]
-    assert [e["user"] for e in fq.list_owner("henry")] == ["Henry Person"]
+    # his own job and the one mailed in his name (owner faxmail, his address), like the original's list_owner
+    assert [e["user"] for e in fq.list_owner("henry")] == ["Henry Person", "Henry Person"]
 
 
-def test_faxqueue_callers_pass_the_request_session():
+def test_faxqueue_callers_pass_the_request_session(as_superuser):
     import contextlib
     from unittest.mock import MagicMock
 
@@ -237,6 +238,6 @@ def test_faxqueue_callers_pass_the_request_session():
     set_identity(req, {"username": "admin", "uid": 1, "is_admin": True, "superuser": True})
     req.db, req.dbsession = object(), object()
     req.route_url = MagicMock(return_value="/x")
-    with patch.object(outbox_mod, "FaxQueue") as cls, contextlib.suppress(Exception):
+    with patch.object(outbox_mod, "FaxQueue") as cls, patch.object(outbox_mod, "AFAddressBook"), contextlib.suppress(Exception):
         outbox_mod.outbox_view(req)
     assert cls.call_args.kwargs.get("db") is req.dbsession

@@ -99,10 +99,10 @@ def test_sendfax_view_uses_request_db():
     assert covers.call_args_list and modems.call_args_list
 
 
-def test_outbox_view_passes_request_db_to_modem_helper():
+def test_outbox_view_passes_request_db_to_modem_helper(as_superuser):
     req = _request()
     modems = MagicMock(return_value=[])
     with patch.object(outbox_mod, "FaxQueue", MagicMock()), patch.object(outbox_mod, "get_all_admin_modems", modems), \
-            contextlib.suppress(Exception):
+            patch.object(outbox_mod, "AFAddressBook", MagicMock()), contextlib.suppress(Exception):
         outbox_mod.outbox_view(req)
     assert modems.call_args.args[0] is req.dbsession  # modems are ORM-backed

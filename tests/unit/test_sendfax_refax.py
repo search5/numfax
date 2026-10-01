@@ -111,7 +111,7 @@ def test_a_plain_send_still_works_without_refax(world, sent):
 def test_the_outbox_retry_link_does_not_use_the_fax_reply_parameter(testapp):
     from namifax.services.faxqueue import FaxQueue  # noqa: F401
     template = open("src/namifax/templates/outbox.jinja2", encoding="utf-8").read()
-    assert "refax=" not in template and "/ajax/faxalter?jid={{ fj.jobid }}" in template
+    assert "refax=" not in template and "/ajax/faxalter?jid={{ j.jid }}&r=1&owner={{ j.owner|urlencode }}" in template
 
 
 def test_the_job_dialog_carries_the_job_it_was_opened_for(world):

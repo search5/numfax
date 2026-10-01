@@ -56,5 +56,6 @@ def test_ajax_faxalter_builds_queue_with_request_db(as_superuser):
         _assert_queue_built_with_db(ajax_mod, ajax_mod.ajax_faxalter, _request("POST", {"jid": "1", "priority": "100"}))
 
 
-def test_outbox_builds_queue_with_request_db():
-    _assert_queue_built_with_db(outbox_mod, outbox_mod.outbox_view, _request())
+def test_outbox_builds_queue_with_request_db(as_superuser):
+    with patch.object(outbox_mod, "AFAddressBook", MagicMock()):
+        _assert_queue_built_with_db(outbox_mod, outbox_mod.outbox_view, _request())

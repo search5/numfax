@@ -273,25 +273,30 @@ def test_faxrcvd_ocr_index_logic(tmp_path):
 # ---------------------------------------------------------------------------
 # AUDIT-17: outbox_view and FaxQueue killjob Branching
 # ---------------------------------------------------------------------------
-def test_outbox_view_killjob_success(dummy_request):
-    """Verify outbox_view sets success flash message when fq.killjob succeeds."""
+def _queue_with_job(jid, owner, killed):
+    fq_inst = MagicMock()
+    fq_inst.get_queue.return_value = [{"jid": jid, "owner": owner, "number": "5550100"}]
+    fq_inst.list_owner.return_value = [{"jid": jid, "owner": owner, "number": "5550100"}]
+    fq_inst.killjob.return_value = killed
+    return fq_inst
+
+
+def test_outbox_view_killjob_success(dummy_request, as_superuser):
+    """Verify outbox_view sets success flash message when fq.killjob succeeds (for a job the user may see)."""
     dummy_request.params = {"kill": "105"}
-    with patch("namifax.views.outbox.FaxQueue") as mock_fq_cls:
-        fq_inst = MagicMock()
-        fq_inst.killjob.return_value = True
-        mock_fq_cls.return_value = fq_inst
+    with patch("namifax.views.outbox.FaxQueue") as mock_fq_cls, patch("namifax.views.outbox.AFAddressBook"):
+        fq_inst = mock_fq_cls.return_value = _queue_with_job("105", "bob", True)
 
         res = outbox_view(dummy_request)
         assert res["flash_message"] == "Job #105 successfully killed"
+        fq_inst.killjob.assert_called_once_with("bob", 105)         # in the name of the job's owner
 
 
-def test_outbox_view_killjob_failure(dummy_request):
+def test_outbox_view_killjob_failure(dummy_request, as_superuser):
     """Verify outbox_view sets failure flash message when fq.killjob fails."""
     dummy_request.params = {"kill": "106"}
-    with patch("namifax.views.outbox.FaxQueue") as mock_fq_cls:
-        fq_inst = MagicMock()
-        fq_inst.killjob.return_value = False
-        mock_fq_cls.return_value = fq_inst
+    with patch("namifax.views.outbox.FaxQueue") as mock_fq_cls, patch("namifax.views.outbox.AFAddressBook"):
+        mock_fq_cls.return_value = _queue_with_job("106", "bob", False)
 
         res = outbox_view(dummy_request)
         assert res["flash_message"] == "Failed to kill job #106"

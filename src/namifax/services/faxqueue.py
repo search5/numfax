@@ -62,8 +62,8 @@ class FaxQueue:
         faxdoneq_cmd: str = "faxstat -d",
         faxrm_cmd: str = "faxrm",
         faxalter_cmd: str = "faxalter",
-        faxmail_user: str = "faxmail",
-        www_user: str = "www-data",
+        faxmail_user: Optional[str] = None,
+        www_user: Optional[str] = None,
         auto_process: bool = True,
         db: Any = None,
     ) -> None:
@@ -73,8 +73,9 @@ class FaxQueue:
         self.faxdoneq_cmd = faxdoneq_cmd
         self.faxrm_cmd = faxrm_cmd
         self.faxalter_cmd = faxalter_cmd
-        self.faxmail_user = faxmail_user
-        self.www_user = www_user
+        # the users whose jobs are matched to a person by mail address (the original's $FAXMAILUSER and $WWWUSER)
+        self.faxmail_user = faxmail_user or os.environ.get("FAXMAILUSER", "faxmail")
+        self.www_user = www_user or os.environ.get("WWWUSER", "www-data")
 
         self.queue: List[Dict[str, Any]] = []
 

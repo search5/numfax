@@ -383,6 +383,10 @@ class AFUserAccount:
     def name(self) -> Optional[str]:
         return self.dbdata.get("name")
 
+    @property
+    def username(self) -> Optional[str]:
+        return self.dbdata.get("username")
+
     def load_username(self, username: str) -> bool:
         if not username:
             self.error = "No username"

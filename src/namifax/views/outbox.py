@@ -1,43 +1,53 @@
-"""NamiFAX Outbox View."""
+"""NamiFAX Outbox View (the original outbox.php)."""
 
 from __future__ import annotations
 
 from pyramid.view import view_config
 
+from namifax.i18n import _
+from namifax.services.addressbook import AFAddressBook
 from namifax.services.faxqueue import FaxQueue
 from namifax.views.admin import get_all_admin_modems
+from namifax.views.fax_rights import fax_access
+
+
+def _visible(queue: FaxQueue, access) -> list[dict]:
+    """A superuser sees every job; anybody else only their own and those sent for them by mail."""
+    return queue.get_queue() if access.superuser else queue.list_owner(access.username)
+
+
+def _with_companies(request, jobs: list[dict]) -> list[dict]:
+    """Name the company of each job's number (the number itself when the address book does not know it)."""
+    book = AFAddressBook(db=request.dbsession)
+    rows = []
+    for job in jobs:
+        row = dict(job, company=job.get("number", ""))
+        try:
+            found, _multiple = book.loadbyfaxnum(job.get("number", ""))
+            if found and book.get_company():
+                row["company"] = book.get_company()
+        except Exception:
+            pass
+        rows.append(row)
+    return rows
 
 
 @view_config(route_name="outbox", renderer="namifax:templates/outbox.jinja2", permission="view")
 def outbox_view(request):
-    """Render outbox transmission queue and handle job deletion."""
+    """The fax queue: waiting and sending jobs, and failed ones, each with its own modify/kill buttons."""
     identity = request.identity or {"username": "admin", "is_admin": True}
+    access = fax_access(request)
+    fq = FaxQueue(auto_process=False, db=request.dbsession)
     flash_message = None
 
-    fq = FaxQueue(auto_process=False, db=request.dbsession)
+    kill = (request.params.get("kill") or "").strip()
+    if kill:
+        flash_message = _kill(fq, access, kill)
 
-    kill_jid = request.params.get("kill")
-    if kill_jid:
-        try:
-            success = fq.killjob(kill_jid)
-            if success:
-                flash_message = f"Job #{kill_jid} successfully killed"
-            else:
-                flash_message = f"Failed to kill job #{kill_jid}"
-        except Exception:
-            flash_message = f"Failed to kill job #{kill_jid}"
-
-    try:
-        jobs = fq.process_queue()
-    except Exception:
-        jobs = []
-
-    try:
-        failed_jobs = fq.process_failed_queue()
-    except Exception:
-        failed_jobs = []
-
-    modem_list = get_all_admin_modems(request.dbsession)
+    fq.process_queue()
+    jobs = _with_companies(request, _visible(fq, access))
+    fq.process_failed_queue()
+    failed_jobs = _with_companies(request, _visible(fq, access))
 
     return {
         "title": "- NamiFAX - Outbox",
@@ -46,6 +56,21 @@ def outbox_view(request):
         "jobs": jobs,
         "failed_jobs": failed_jobs,
         "num_outbox": len(jobs),
+        "queue_count": len(jobs) + len(failed_jobs),
         "flash_message": flash_message,
-        "modem_list": modem_list,
+        "modem_list": get_all_admin_modems(request.dbsession),
     }
+
+
+def _kill(fq: FaxQueue, access, jid: str) -> str:
+    """Remove a job, but only one the user may see (waiting, else failed), in the name of the job's owner."""
+    if not (jid.isdigit() and len(jid) <= 8):
+        return _("Invalid job number.")
+    for load in (fq.process_queue, fq.process_failed_queue):
+        load()
+        job = next((j for j in _visible(fq, access) if j.get("jid") == jid), None)
+        if job:
+            if fq.killjob(job.get("owner", ""), int(jid)):
+                return f"Job #{jid} successfully killed"
+            return f"Failed to kill job #{jid}"
+    return f"Job #{jid} was not found in your queue"

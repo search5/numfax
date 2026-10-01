@@ -153,4 +153,4 @@ def test_without_a_login_nothing_is_altered(queue, testapp):
 
 def test_the_failed_job_list_links_each_job_with_its_owner():
     template = open("src/namifax/templates/outbox.jinja2", encoding="utf-8").read()
-    assert "/ajax/faxalter?jid={{ fj.jobid }}&r=1&owner={{ fj.owner" in template
+    assert "/ajax/faxalter?jid={{ j.jid }}&r=1&owner={{ j.owner" in template
