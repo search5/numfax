@@ -27,7 +27,7 @@ def modal_email_view(request):
         msg = request.params.get("msg", "").strip()
 
         if emails:
-            arc = ArchiveIn()
+            arc = ArchiveIn(db=request.db)
             pdf_path = None
             thumb_path = None
             try:
@@ -46,7 +46,7 @@ def modal_email_view(request):
                 thumbnail=thumb_path,
             )
             if sent:
-                ab = AFAddressBook()
+                ab = AFAddressBook(db=request.db)
                 ab.create_contacts(emails)
                 message = "Email sent successfully"
             else:
@@ -72,11 +72,11 @@ def modal_assign_view(request):
     abook_id = request.params.get("abook_id", "1")
     message = None
 
-    ab = AFAddressBook()
+    ab = AFAddressBook(db=request.db)
     if request.method == "POST":
         myselect = request.params.get("myselect")
         regexp = request.params.get("regexp", "").strip()
-        arc = ArchiveIn()
+        arc = ArchiveIn(db=request.db)
 
         if myselect:
             try:
@@ -123,7 +123,7 @@ def modal_note_view(request):
 
     if request.method == "POST":
         desc = request.params.get("description", "").strip()
-        arc = ArchiveIn()
+        arc = ArchiveIn(db=request.db)
         try:
             if fid and arc.load_fax(int(fid)):
                 arc.set_note(description=desc, category=None, userid=identity.get("uid", 1))
@@ -148,7 +148,7 @@ def modal_delete_view(request):
     status = None
 
     if request.method == "POST":
-        arc = ArchiveIn()
+        arc = ArchiveIn(db=request.db)
         try:
             if fid and arc.delete_fax(int(fid)):
                 status = "deleted"
@@ -209,14 +209,14 @@ def modal_txreport_view(request):
     date_val = ""
     pages_val = 0
 
-    arc = ArchiveIn()
+    arc = ArchiveIn(db=request.db)
     try:
         if fid and str(fid).isdigit() and arc.load_fax(int(fid)):
             date_val = arc.get_archstamp() or ""
             pages_val = arc.get_pages() or 0
             cid = arc.get_companyid()
             if cid:
-                ab = AFAddressBook()
+                ab = AFAddressBook(db=request.db)
                 if ab.loadbycid(cid):
                     company = ab.get_company() or ""
             elif arc.get_origfaxnum():

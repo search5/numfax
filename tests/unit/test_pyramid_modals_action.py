@@ -17,6 +17,7 @@ from namifax.views.modals import (
 def dummy_request():
     request = testing.DummyRequest()
     request.__dict__["identity"] = {"username": "admin", "uid": 1, "is_admin": True, "superuser": True}
+    request.db = MagicMock()
     return request
 
 

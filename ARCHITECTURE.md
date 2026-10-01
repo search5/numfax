@@ -807,7 +807,8 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 | 1 | `db/provider.py`, `DatabaseEngine.from_connection`, `create_app`, `request.db` | `[COMPLETE]` | `tests/unit/test_db_injection.py` 11개, 전체 413 통과 |
 | 2 | `views/admin.py` smtp/printers/storage/saml 4개 뷰: `DatabaseEngine()` 폴백 및 `db_engine` 우회 제거, `request.db` 직접 사용 | `[COMPLETE]` | `tests/unit/test_admin_views_request_db.py` 9개, 전체 422 통과 |
 | V1 | `views/inbox.py` 5개 뷰 + 공유 헬퍼 `get_all_admin_modems(db)`: `ArchiveIn/AFAddressBook(db=request.db)` | `[COMPLETE]` | `tests/unit/test_inbox_views_request_db.py` 6개, 전체 447 통과 |
-| V2~ | 나머지 웹 뷰를 모듈 단위로 `request.db` 주입: `modals`(8), `ajax`(7), `admin`(9), `helpers`(5), `addressbook`(5), `webauthn`(3), `archive`/`auth`/`settings`/`outbox`/`sendfax`, `security.py`, `web/views/*` | `[PENDING]` | 호출처를 모두 바꾸기 전에 폴백을 제거하면 뷰 약 70곳이 깨지므로 폴백 제거는 맨 마지막 |
+| V2 | `views/modals.py` 6개 뷰: `ArchiveIn/AFAddressBook(db=request.db)` 8곳 | `[COMPLETE]` | `tests/unit/test_modals_views_request_db.py` 6개, 전체 453 통과. `FaxQueue()`는 내부에서 `AFUserAccount()`를 만들어 C 단계에서 처리 |
+| V3~ | 나머지 웹 뷰를 모듈 단위로 `request.db` 주입: `ajax`(7), `admin`(9), `helpers`(5), `addressbook`(5), `webauthn`(3), `archive`/`auth`/`settings`/`outbox`/`sendfax`, `security.py`, `web/views/*` | `[PENDING]` | 호출처를 모두 바꾸기 전에 폴백을 제거하면 뷰 약 70곳이 깨지므로 폴백 제거는 맨 마지막 |
 | C1~ | CLI별 `cli_db()`(provider.py) 컨텍스트로 엔진 생성 후 명시 주입: `faxrcvd`(4), `notify`(3), `cron`(2), `phb`, `dynconf`, `user`, `faxcover`, `services/faxqueue` | `[PENDING]` | CLI는 request가 없으므로 `request.db` 사용 불가. 웹과 동일한 `resolve_database_url` 규칙 사용 |
 | F | `Repository`의 `get_default_engine()` 폴백을 `resolve_db`로 교체, `get_default_engine` shim화/삭제, `bridge_cli._GLOBAL_ENGINE` 정리, 테스트 격리 픽스처 | `[PENDING]` | 보관해 둔 `test_repository_db_injection.py`(전역 엔진 미생성 검증)를 이 루프에서 복원 |
 
