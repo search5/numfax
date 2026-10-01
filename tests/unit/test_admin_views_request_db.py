@@ -44,7 +44,11 @@ def test_view_runs_on_real_app_request_db(view, app_env):
     env, _ = app_env
     request = env["request"]
     request.session = dict(ADMIN_SESSION)
-    res = view(request)
+    request.tm.begin()  # the pyramid_tm tween does this before the view runs
+    try:
+        res = view(request)
+    finally:
+        request.tm.abort()
     assert isinstance(res, dict)
     assert res["active_tab"] == "admin"
 

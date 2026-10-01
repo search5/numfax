@@ -44,8 +44,17 @@ namifax-phb = "namifax.main:phb_main"
 [project.entry-points."paste.app_factory"]
 main = "namifax:main"
 
+[project.optional-dependencies]
+postgresql = [
+    "psycopg[binary]>=3.2",
+]
+mysql = [
+    "pymysql>=1.1",
+]
+
 [dependency-groups]
 dev = [
+    "psycopg[binary]>=3.2",
     "pytest>=8.0.0",
     "pytest-cov>=4.0.0",
     "webtest>=3.0.0",
@@ -57,5 +66,8 @@ build-backend = "uv_build"
 
 [tool.pytest.ini_options]
 addopts = "--strict-markers"
+markers = [
+    "postgres: runs against a throw-away PostgreSQL database; needs NAMIFAX_TEST_PG_URL (skipped otherwise)",
+]
 testpaths = ["tests"]
 pythonpath = [".", "src"]

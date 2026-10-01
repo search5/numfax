@@ -884,7 +884,7 @@ Pyramid cookiecutter starter(2.1-branch, jinja2 + sqlalchemy)를 임시 디렉�
 | B0-3 | `src/namifax/alembic/{env.py,script.py.mako,versions/}` + ini의 `[alembic] script_location = namifax:alembic`. `env.py`는 앱과 같은 `resolve_database_url`로 DB를 정하고 `Base.metadata`를 대상으로 함 | `[COMPLETE]` | `tests/unit/test_alembic_wiring.py` 6개, 실제 `alembic -c development.ini current/heads` 확인 |
 | B0-4 | starter 스타일 픽스처 `dbengine`, `app`, `tm`(doomed), `dbsession`, `testapp`, `app_request`, `dummy_request`, `dummy_config` (테스트별 격리 DB에 바인딩) | `[COMPLETE]` | `tests/unit/test_orm_fixtures.py` 6개 |
 | B0-5 | `request.db`가 `pyramid_tm` tween 아래(`environ["tm.active"]`)에서는 `request.dbsession`의 커넥션·트랜잭션을 공유(`DatabaseEngine.from_connection(..., managed=True, on_change=mark_changed)`). tween 밖(스크립트, `prepare`)에서는 기존처럼 독립 커넥션 + 쓰기마다 commit | `[COMPLETE]` | `tests/unit/test_request_db_shared_session.py` 11개(실제 tween, 롤백, E2E 로그인+SMTP 저장), 전체 597 통과 |
-| B0-6 | 가장 작은 모듈의 ORM 모델 + `request.dbsession` 파일럿 | `[PENDING]` | 운영 DB 확정: SQLite, MySQL, MariaDB, PostgreSQL 모두 지원 필요 → 14.2 |
+| B0-6 | 파일럿 `SystemConfig`: ORM 모델 + `SystemConfigService` + storage/saml 뷰를 `request.dbsession`으로 전환 + Alembic 베이스라인 `0001` | `[COMPLETE]` | `tests/unit/test_system_config.py` 15개, `test_system_config_migration.py` 5개(PostgreSQL 1개는 선택 실행), 전체 624 통과 → 14.3 |
 
 ### 14.1 B0에서 확정된 계약
 - **zope.sqlalchemy는 변경이 감지된 세션만 커밋한다.** ORM flush는 자동으로 변경을 표시하지만 `session.execute(text(...))` 같은 raw SQL은 `zope.sqlalchemy.mark_changed(session)`를 호출하지 않으면 요청 끝에 **롤백**된다. 그래서 `request.db`(raw 커서)의 모든 성공한 쓰기는 `on_change`로 `mark_changed`를 호출한다.
@@ -901,3 +901,28 @@ Pyramid cookiecutter starter(2.1-branch, jinja2 + sqlalchemy)를 임시 디렉�
 - 결론: DB 이식성은 모델(SQLAlchemy 타입, 바인딩 파라미터, `merge`/upsert, `func.now()`)과 Alembic 마이그레이션으로만 확보할 수 있다. 따라서 B 트랙은 선택이 아니라 다중 DB 지원의 **전제 조건**이다. 모델이 없는 테이블이 남아 있는 동안 비 SQLite DB는 지원되지 않는다.
 - 파일럿 후보: `SystemConfig`(key/value). `views/admin.py`의 storage/saml 뷰가 `INSERT OR REPLACE`(SQLite 전용)로 쓰고 있어, ORM `merge`로 바꾸면 이식성 결함 1건이 실제로 해소된다.
 - 모델 작성 규칙: 방언 중립 타입만 사용(`String(n)`, `Integer`, `Text`, `DateTime`), `mysql_length` 등 방언 옵션은 `with_variant`/조건부로만, 예약어 컬럼(`key` 등)은 SQLAlchemy 인용에 맡김, Alembic 마이그레이션은 `op.create_table`/`batch_alter_table`로 방언 중립 작성.
+
+### 14.3 파일럿 `SystemConfig` 결과와 B 트랙 전환 절차
+**변경**
+- `models/systemconfig.py`: `SystemConfig`(`key` String(255) PK, `value` Text). 테이블명은 레거시 철자 그대로 유지한다(MySQL/MariaDB 리눅스는 테이블명 대소문자를 구분하므로 남아 있는 raw SQL이 계속 통해야 한다).
+- `services/system_config.py`: `SystemConfigService(session).get/set`. 쓰기는 `Session.merge`(이식 가능한 upsert)이고 값은 바인딩 파라미터라 `quote()`가 필요 없다.
+- `views/admin.py` storage/saml 뷰: `INSERT OR REPLACE`, 뷰 안의 `CREATE TABLE IF NOT EXISTS`, 문자열 조립 SQL 제거 → `request.dbsession` 사용. 이식성 결함 2곳 해소.
+- `alembic/versions/20261001_0001_system_config.py`: 테이블이 없을 때만 생성(레거시 SQLite 초기화가 이미 만든 DB와 공존), 다운그레이드는 삭제.
+- 의존성: 선택 extras `postgresql`(psycopg), `mysql`(pymysql), dev 그룹에 psycopg. pytest 마커 `postgres`.
+
+**검증 매트릭스**
+| DB | 방법 | 결과 |
+| :--- | :--- | :--- |
+| SQLite | 자동 테스트(모델, 서비스, 뷰, E2E 로그인+저장, 마이그레이션 신규/레거시/다운그레이드) | 통과 |
+| PostgreSQL | `NAMIFAX_TEST_PG_URL=postgresql+psycopg://user:pw@host:port/postgres pytest -m postgres` (테스트가 임시 DB를 만들고 삭제) — Alembic 베이스라인, ORM upsert, 역슬래시 원문 보존 | 통과 |
+| MySQL / MariaDB | `CreateTable` DDL 컴파일(예약어 `key` 백틱 인용, `VARCHAR(255)`) + 모든 `String`에 길이가 있는지 전체 메타데이터 검사 | 통과(서버 실행은 미검증) |
+
+**모듈을 ORM으로 전환하는 절차 (이 파일럿에서 확정)**
+1. 모델 작성: 방언 중립 타입, `String`에는 항상 길이, 테이블명은 레거시 철자 유지.
+2. 서비스는 `Session`을 주입받아 `select`/`merge`/`add`만 사용(문자열 SQL, `quote()`, `INSERT OR REPLACE` 금지).
+3. 뷰는 `request.dbsession` 사용. 한 요청에서 `request.db`와 섞여도 같은 트랜잭션이다(B0-5).
+4. Alembic 리비전: `inspect(op.get_bind()).has_table(...)`로 멱등하게 작성(레거시 SQLite 스키마와 공존).
+5. 테스트: SQLite 자동 + PostgreSQL 선택 + 방언 DDL 컴파일.
+6. 뷰 테스트는 `dbsession`/`tm` 픽스처를 쓰거나, 요청 헬퍼에서 `request.tm.begin()`을 호출한다(tween이 하는 일).
+
+**남은 한계**: `create_app` 시작 시 레거시 `init_database_tables`(SQLite DDL)가 실행되므로, 모든 테이블이 모델과 마이그레이션으로 옮겨지기 전에는 비 SQLite DB로 앱이 기동되지 않는다. 모델화된 모듈은 PostgreSQL에서도 서비스·마이그레이션 수준으로 동작한다.

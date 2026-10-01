@@ -1046,20 +1046,12 @@ def admin_storage_view(request):
     if not is_admin:
         raise HTTPForbidden(_("Access denied. Superadmin permission required."))
 
-    db = request.db
-
     from namifax.services.cloud_storage import StorageConfig, CloudStorageManager
     from namifax.services.storage_lifecycle import StorageLifecyclePolicy, StorageLifecycleService
+    from namifax.services.system_config import SystemConfigService
 
-    db.query("CREATE TABLE IF NOT EXISTS SystemConfig (key TEXT PRIMARY KEY, value TEXT)")
-
-    def get_cfg(k: str, default: str = "") -> str:
-        res = db.query(f"SELECT value FROM SystemConfig WHERE key = {db.quote(k)}")
-        recs = db.get_records() if res.executed else []
-        return recs[0]["value"] if recs and "value" in recs[0] else default
-
-    def set_cfg(k: str, v: str) -> None:
-        db.query(f"INSERT OR REPLACE INTO SystemConfig (key, value) VALUES ({db.quote(k)}, {db.quote(v)})")
+    config_store = SystemConfigService(request.dbsession)
+    get_cfg, set_cfg = config_store.get, config_store.set
 
     message = None
     error = None
@@ -1162,19 +1154,11 @@ def admin_saml_view(request):
     if not is_admin:
         raise HTTPForbidden(_("Access denied. Superadmin permission required."))
 
-    db = request.db
-
     from namifax.services.saml import SAMLSettings, SAMLService
+    from namifax.services.system_config import SystemConfigService
 
-    db.query("CREATE TABLE IF NOT EXISTS SystemConfig (key TEXT PRIMARY KEY, value TEXT)")
-
-    def get_cfg(k: str, default: str = "") -> str:
-        res = db.query(f"SELECT value FROM SystemConfig WHERE key = {db.quote(k)}")
-        recs = db.get_records() if res.executed else []
-        return recs[0]["value"] if recs and "value" in recs[0] else default
-
-    def set_cfg(k: str, v: str) -> None:
-        db.query(f"INSERT OR REPLACE INTO SystemConfig (key, value) VALUES ({db.quote(k)}, {db.quote(v)})")
+    config_store = SystemConfigService(request.dbsession)
+    get_cfg, set_cfg = config_store.get, config_store.set
 
     message = None
     error = None
