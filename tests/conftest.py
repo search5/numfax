@@ -266,9 +266,20 @@ def legacy_db(request, monkeypatch):
 def as_superuser(monkeypatch):
     """Views check the signed-in user's fax rights in the database; this makes them see a superuser.
 
-    For tests that call a view directly with a stand-in request (there is no login behind it).
+    For tests that call a view directly with a stand-in request (there is no login behind it). Like a real superuser the
+    inbox is limited to the modems and DID routes that are set up (read from the request's session when it is a real one).
     """
+    from namifax.services.did import DIDRouting
     from namifax.services.fax_access import FaxAccess
+    from namifax.services.modem import FaxModem
 
-    monkeypatch.setattr(FaxAccess, "for_request",
-                        classmethod(lambda cls, request: cls(uid=1, username="admin", superuser=True, can_del=True)))
+    def superuser(cls, request):
+        modems, routes = [], []
+        try:
+            modems = FaxModem(db=request.dbsession).get_modems() or []
+            routes = DIDRouting(db=request.dbsession).get_routes() or []
+        except Exception:
+            pass                                               # a stand-in session with no database behind it
+        return cls(uid=1, username="admin", superuser=True, can_del=True, configured_modems=modems, configured_routes=routes)
+
+    monkeypatch.setattr(FaxAccess, "for_request", classmethod(superuser))

@@ -88,7 +88,8 @@ def test_inbox_matches_the_original(world, user):
     assert inbox.get_num_faxes(access.devices, access.categories, access.did_routing) == len(INBOX[user])
 
 
-def test_a_superuser_sees_every_inbox_fax(world):
+def test_a_superuser_sees_the_inbox_faxes_of_the_configured_modems(world):
+    _configure(world, modems=["ttyS0", "ttyS1"])
     access = FaxAccess.for_request(_Request(world, "root"))
     rows = ArchiveIn(db=world).list_inbox(devices=access.devices, faxcats=access.categories)
     assert [r["fid"] for r in rows] == [7, 6, 5]
@@ -136,7 +137,73 @@ def test_archive_search_with_did_routing_matches_the_original(did_world, user, s
 
 @pytest.mark.parametrize("user", sorted(DID_INBOX))
 def test_inbox_with_did_routing_matches_the_original(did_world, user):
+    _configure(did_world, routes=[1, 2])
     access = FaxAccess.for_request(_Request(did_world, user))
     inbox = ArchiveIn(db=did_world)
     rows = inbox.list_inbox(devices=access.devices, faxcats=access.categories, enable_did_routing=access.did_routing)
     assert [r["fid"] for r in rows] == DID_INBOX[user]
+
+
+# --- the superuser's inbox: only the configured modems / DID routes ----------------------------------------------------------
+# Recorded from the original (FaxModem::get_modems(), DIDRouting::get_routes() -> list_inbox). A superuser is not "everything":
+# faxes on a modem that is no longer configured, or on no modem at all, are listed for nobody. With DID routing the routes are
+# the configured ones plus 0 (not routed).
+
+def _inbox_ids(session, user="root"):
+    access = FaxAccess.for_request(_Request(session, user))
+    rows = ArchiveIn(db=session).list_inbox(devices=access.devices, faxcats=access.categories,
+                                            enable_did_routing=access.did_routing)
+    return [r["fid"] for r in rows]
+
+
+def _configure(session, modems=(), routes=()):
+    """Exactly these modems and DID routes are set up (the test database starts with demo ones)."""
+    from namifax.models import DIDRoute, Modems
+
+    session.execute(Modems.__table__.delete())
+    session.execute(DIDRoute.__table__.delete())
+    session.add_all([Modems(device=d, alias=d) for d in modems])
+    session.add_all([DIDRoute(didr_id=r, routecode=str(r * 100), alias=f"r{r}") for r in routes])
+    session.flush()
+
+
+def _root(session):
+    svc = AFUserAccount(db=session)
+    assert svc.create({"username": "root", "password": "Secret123!", "email": "root@x.test", "name": "root",
+                       "last_login": "2026-01-01 10:00:00", "acc_enabled": 1, "superuser": 1}), svc.error
+
+
+def _inbox_fax(session, fid, modem, route=0):
+    session.add(FaxArchive(fid=fid, faxpath=f"/f/{fid}", pages=1, inbox=1, archstamp="2026-03-01 10:00:00",
+                           modemdev=modem, didr_id=route, userid=0))
+
+
+def test_a_superuser_sees_only_faxes_of_configured_modems(dbsession):
+    dbsession.execute(FaxArchive.__table__.delete())
+    _root(dbsession)
+    _configure(dbsession, modems=["ttyS0", "ttyS1"])
+    for fid, modem in ((5, "ttyS0"), (6, "ttyS1"), (7, "ttyS9"), (8, None)):         # ttyS9 is not configured, 8 has no modem
+        _inbox_fax(dbsession, fid, modem)
+    dbsession.flush()
+    assert _inbox_ids(dbsession) == [6, 5]
+
+
+def test_a_superuser_sees_no_inbox_fax_when_no_modem_is_configured(dbsession):
+    dbsession.execute(FaxArchive.__table__.delete())
+    _root(dbsession)
+    _configure(dbsession)
+    for fid, modem in ((5, "ttyS0"), (8, None)):
+        _inbox_fax(dbsession, fid, modem)
+    dbsession.flush()
+    assert _inbox_ids(dbsession) == []
+
+
+def test_a_superuser_with_did_routing_sees_the_configured_routes_and_route_zero(dbsession, monkeypatch):
+    monkeypatch.setenv("ENABLE_DID_ROUTING", "1")
+    dbsession.execute(FaxArchive.__table__.delete())
+    _root(dbsession)
+    _configure(dbsession, routes=[1, 2])
+    for fid, modem, route in ((5, "ttyS0", 1), (6, "ttyS1", 2), (7, "ttyS9", 0), (8, None, 0), (9, "ttyS0", 3)):
+        _inbox_fax(dbsession, fid, modem, route)
+    dbsession.flush()
+    assert _inbox_ids(dbsession) == [8, 7, 6, 5]

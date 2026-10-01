@@ -189,19 +189,29 @@ class AFUserAccount:
         return False
 
     def reset_password(self, email: str) -> Tuple[bool, Optional[str]]:
+        """Give the account with this e-mail address a new random password that must be changed at the next login.
+
+        Returns ``(True, the new password)``; the caller mails it, and calls ``undo_reset`` if that fails. The address is
+        matched ignoring case, and an account that was removed is not found. Several accounts with one address: the oldest.
+        """
+        from sqlalchemy import func, select
+
+        from namifax.models import UserAccount
+
+        email = (email or "").strip()
         if not email:
             self.error = "No email provided"
             return False, None
 
-        rec = self.useraccount.find({"email": email})
-        if not rec:
-            self.error = "Email address not found"
+        rows = self.db.execute(select(UserAccount).where(func.lower(UserAccount.email) == email.lower())
+                               .order_by(UserAccount.uid)).scalars().all()
+        found = next((r for r in rows if not r.deleted), None)
+        if found is None:
+            self.error = "Sorry, no corresponding user was found."
             return False, None
 
-        if isinstance(rec, list):
-            rec = rec[0]
-
-        self.load(rec["uid"])
+        self.load(found.uid)
+        self._before_reset = (self.dbdata.get("password"), self.dbdata.get("wasreset"))
         new_pwd = genpasswd()
         self.dbdata["password"] = md5_hash(new_pwd)
         self.dbdata["wasreset"] = 1
@@ -209,8 +219,16 @@ class AFUserAccount:
         if self.useraccount.update_entry(self.dbdata):
             return True, new_pwd
 
-        self.error = "Error updating reset password"
+        self.error = f"Error resetting password for {found.username}"
         return False, None
+
+    def undo_reset(self) -> bool:
+        """Put back the password the account had before ``reset_password`` (the new one could not be delivered)."""
+        before = getattr(self, "_before_reset", None)
+        if not before or not self.uid:
+            return False
+        self.dbdata["password"], self.dbdata["wasreset"] = before
+        return bool(self.useraccount.update_entry(self.dbdata))
 
     def set_newpassword(self, oldpwd: str, newpwd: str) -> bool:
         if not self.uid:

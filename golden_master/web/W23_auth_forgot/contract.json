@@ -7,7 +7,7 @@
       "action": "/forgot",
       "inputs": [
         {
-          "name": "username",
+          "name": "email",
           "type": "text"
         },
         {
@@ -21,7 +21,7 @@
   ],
   "required_text": [
     "Lost Password",
-    "Reset Password"
+    "Send Password"
   ],
   "form_structure": {
     "total_forms": 1,
@@ -34,10 +34,10 @@
         "buttons_count": 1,
         "field_sequence": [
           {
-            "name": "username",
+            "name": "email",
             "tag": "input",
             "type": "text",
-            "id": "username",
+            "id": "email",
             "required": true
           },
           {
@@ -53,7 +53,7 @@
             "tag": "button",
             "type": "submit",
             "name": "",
-            "text": "Reset Password"
+            "text": "Send Password"
           }
         ]
       }

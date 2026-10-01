@@ -11,6 +11,8 @@ import os
 from dataclasses import dataclass, field
 from typing import Any, List, Optional
 
+from namifax.services.did import DIDRouting
+from namifax.services.modem import FaxModem
 from namifax.services.user_account import AFUserAccount
 
 
@@ -27,6 +29,10 @@ class FaxAccess:
     modems: List[str] = field(default_factory=list)
     routes: List[str] = field(default_factory=list)
     faxcats: List[str] = field(default_factory=list)
+    # what a superuser's inbox is limited to: the modems and DID routes that are set up (the original's get_modems() /
+    # get_routes()); faxes of a modem that was removed, or of none, are listed for nobody
+    configured_modems: List[str] = field(default_factory=list)
+    configured_routes: List[Any] = field(default_factory=list)
 
     @classmethod
     def for_request(cls, request: Any) -> "FaxAccess":
@@ -37,14 +43,17 @@ class FaxAccess:
         if not username or not account.load_username(username):
             return cls(username=username)
         data = account.dbdata
+        superuser = bool(data.get("superuser"))
         return cls(
             uid=account.get_uid(),
             username=username,
-            superuser=bool(data.get("superuser")),
+            superuser=superuser,
             can_del=bool(data.get("can_del")),
             modems=account.get_modemdevs(),
             routes=account.get_didrouting(),
             faxcats=account.get_faxcats(),
+            configured_modems=(FaxModem(db=request.dbsession).get_modems() or []) if superuser else [],
+            configured_routes=(DIDRouting(db=request.dbsession).get_routes() or []) if superuser else [],
         )
 
     # --- what to pass to the listing and counting functions -------------------------------------------------------------
@@ -55,9 +64,9 @@ class FaxAccess:
 
     @property
     def devices(self) -> Optional[List[str]]:
-        """Modems (or DID routes) the inbox is limited to; ``None`` for no limit."""
+        """Modems (or DID routes) the inbox is limited to."""
         if self.superuser:
-            return None
+            return self.configured_routes if self.did_routing else self.configured_modems
         return self.routes if self.did_routing else self.modems
 
     @property

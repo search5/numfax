@@ -44,17 +44,23 @@
       </div>
     {% endif %}
 
+    {% if done %}
+    <div class="mb-6 p-3.5 bg-emerald-950/80 border border-emerald-700/80 text-emerald-200 rounded-m3-lg text-xs leading-relaxed">
+      {{ _('Your password will be sent to the given e-mail address.') }}<br /><br />
+      {{ _('Once you have received your new password you can login in and change it.') }}
+    </div>
+    <a href="/login" class="inline-block px-6 py-2.5 bg-m3-dark-primary hover:brightness-110 text-m3-dark-on-primary rounded-m3-full font-bold text-xs shadow-m3-1 transition">{{ _('Login') }}</a>
+    {% else %}
     <p class="text-xs text-m3-dark-on-surface-variant mb-6 leading-relaxed">
-      {{ _('Please enter your registered username or email address below. Password reset instructions will be dispatched to your account email address.') }}
+      {{ _('Please enter your e-mail address then click on the Send Password button. You will receive a new password shortly. Use this new password to access the site.') }}
     </p>
 
-    <!-- Strict Form Contract -->
     <form action="/forgot" method="post" class="space-y-5 text-xs">
       <div>
-        <label for="username" class="block text-xs font-semibold text-m3-dark-on-surface mb-1.5">
-          {{ _('Username or Email Address') }} *
+        <label for="email" class="block text-xs font-semibold text-m3-dark-on-surface mb-1.5">
+          {{ _('E-mail address') }} *
         </label>
-        <input type="text" name="username" id="username" required class="w-full bg-m3-dark-surface-container-low border border-m3-dark-outline-variant rounded-m3-sm px-3.5 py-2 text-xs text-m3-dark-on-surface focus:outline-none focus:ring-2 focus:ring-m3-dark-primary focus:border-m3-dark-primary transition shadow-inner font-mono" placeholder="admin or username@example.com" />
+        <input type="text" name="email" id="email" required maxlength="100" autofocus class="w-full bg-m3-dark-surface-container-low border border-m3-dark-outline-variant rounded-m3-sm px-3.5 py-2 text-xs text-m3-dark-on-surface focus:outline-none focus:ring-2 focus:ring-m3-dark-primary focus:border-m3-dark-primary transition shadow-inner font-mono" placeholder="username@example.com" />
       </div>
 
       <input type="hidden" name="_submit_check" value="1" />
@@ -62,10 +68,11 @@
       <div class="pt-2 flex items-center justify-between">
         <a href="/login" class="text-xs text-m3-dark-on-surface-variant hover:text-m3-dark-on-surface transition">{{ _('Cancel') }}</a>
         <button type="submit" class="px-6 py-2.5 bg-m3-dark-primary hover:brightness-110 text-m3-dark-on-primary rounded-m3-full font-bold text-xs shadow-m3-1 transition">
-          {{ _('Reset Password') }}
+          {{ _('Send Password') }}
         </button>
       </div>
     </form>
+    {% endif %}
 
   </div>
 

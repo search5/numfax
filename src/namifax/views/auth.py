@@ -6,6 +6,8 @@ from pyramid.httpexceptions import HTTPFound
 from pyramid.security import forget, remember
 from pyramid.view import view_config
 
+from namifax.common.helpers import avantfaxlog, get_admin_email, send_mail
+from namifax.common.validators import is_valid_email
 from namifax.services.user_account import AFUserAccount
 from namifax.services.totp import TotpService
 from namifax.i18n import _
@@ -139,31 +141,46 @@ def login_totp_view(request):
     }
 
 
+def _forgot_page(error=None, done=False):
+    return {"title": "- NamiFAX - Lost Password", "message": None, "error": error, "done": done}
+
+
 @view_config(route_name="forgot", renderer="namifax:templates/forgot.jinja2", request_method="GET", permission="public")
 def forgot_get_view(request):
     """Render lost password recovery page."""
-    return {
-        "title": "- NamiFAX - Lost Password",
-        "message": None,
-        "error": None,
-    }
+    return _forgot_page()
 
 
 @view_config(route_name="forgot", renderer="namifax:templates/forgot.jinja2", request_method="POST", permission="public")
 def forgot_post_view(request):
-    """Process password reset request."""
-    username = (request.params.get("username") or request.params.get("email") or "").strip()
-    if not username:
-        return {
-            "title": "- NamiFAX - Lost Password",
-            "message": None,
-            "error": "Please enter a valid username or email address.",
-        }
-    return {
-        "title": "- NamiFAX - Lost Password",
-        "message": f"If an account matches '{username}', password reset instructions have been dispatched.",
-        "error": None,
-    }
+    """The original forgot.php: a new temporary password is mailed to the account with that address.
+
+    Like the original it says when no account has the address. Unlike the original the new password is not written to
+    the log, and when the mail cannot be sent the old password stays valid (the original left the account locked out).
+    """
+    email = (request.POST.get("email") or "").strip()
+    if not is_valid_email(email):
+        return _forgot_page(_("Please enter a valid e-mail address."))
+
+    ip = request.remote_addr or ""
+    user = AFUserAccount(db=request.dbsession)
+    ok, new_password = user.reset_password(email)
+    if not ok:
+        avantfaxlog(f"forgot> Attempt to reset password for email '{email}' from IP: {ip}", session=request.dbsession)
+        return _forgot_page(_(user.get_error()) if user.get_error() == "Sorry, no corresponding user was found."
+                            else user.get_error())
+
+    username = user.get_username()
+    avantfaxlog(f"forgot> reset password for {username} <{email}> from IP: {ip}", session=request.dbsession)
+    body = str(_(
+        "The user account %(user)s has this email associated with it.  A web user from %(ip)s has just requested that a "
+        "new password be sent.\n\nYour New Password is: %(password)s\n\nIf this was an error just login with your new "
+        "password and then change your password to what you would like it to be."
+    )) % {"user": username, "ip": ip, "password": new_password}
+    if send_mail(email, get_admin_email(), "password reset", body, session=request.dbsession):
+        return _forgot_page(done=True)
+    user.undo_reset()
+    return _forgot_page(_("Email failed to send"))
 
 
 def _pwd_page(error=None):
