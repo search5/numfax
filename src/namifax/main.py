@@ -23,6 +23,7 @@ if SRC_DIR not in sys.path:
 import argparse
 
 from namifax.cli.cron import run_cron
+from namifax.db.provider import cli_db
 from namifax.cli.dynconf import run_dynconf
 from namifax.cli.faxcover import run_faxcover
 from namifax.cli.faxrcvd import run_faxrcvd
@@ -67,10 +68,9 @@ def serve_main(argv: list[str] | None = None) -> int:
     host = args.host
     port = args.port
 
-    # Ensure DB tables exist
-    from namifax.db.engine import get_default_engine
-    from namifax.db.schema import init_database_tables
-    init_database_tables(get_default_engine())
+    # Ensure DB tables exist (same URL resolution as the web app, no global engine)
+    with cli_db():
+        pass
 
     # Start in-process APScheduler if enabled
     enable_internal_sched = os.environ.get("NAMIFAX_ENABLE_SCHEDULER", "1") in ("1", "true", "True")
@@ -82,7 +82,8 @@ def serve_main(argv: list[str] | None = None) -> int:
     try:
         from namifax import create_app as make_app
         app = make_app()
-    except Exception:
+    except Exception as exc:
+        print(f"[!] Pyramid app failed to start ({exc!r}); falling back to the legacy JSON app.", file=sys.stderr)
         app = create_app()
 
     print(f"[*] Starting NamiFAX Web Service on http://{host}:{port} ...")

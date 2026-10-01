@@ -824,8 +824,9 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 | C2 | `cli/notify.py`: `run_notify(argv, *, db=None)` — usage/qfile 부재 시 DB 미오픈, `AFAddressBook/AFUserAccount/ArchiveOut(db=db)` | `[COMPLETE]` | `tests/unit/test_cli_notify_db.py` 3개 |
 | C3 | `cli/cron.py`: `run_cron(..., *, db=None)` — 필요한 작업(-i/-d/-p)이 있을 때만 지연 오픈, 한 번 열어 공유 | `[COMPLETE]` | `tests/unit/test_cli_cron_db.py` 4개 |
 | C4 | `cli/dynconf.py`, `phb.py`, `user.py`, `faxcover.py`: 동일 패턴. `faxcover`는 연결 없는 `DatabaseEngine()`과 존재하지 않는 `reduce_single` 인자 때문에 발신자 조회가 항상 조용히 실패하던 결함을 `query()`+`get_records()`로 수정 | `[COMPLETE]` | `tests/unit/test_cli_misc_db.py` 9개, 전체 544 통과 |
-| C5~ | `main.py` `serve_main`의 `get_default_engine()`, `db/bridge_cli.py` `_GLOBAL_ENGINE`/`FaxQueue`, 나머지 `get_default_engine` 참조 정리 | `[PENDING]` | |
-| F | `Repository`의 `get_default_engine()` 폴백을 `resolve_db`로 교체, `get_default_engine` shim화/삭제, `bridge_cli._GLOBAL_ENGINE` 정리, 테스트 격리 픽스처 | `[PENDING]` | 보관해 둔 `test_repository_db_injection.py`(전역 엔진 미생성 검증)를 이 루프에서 복원 |
+| C5 | `main.py` `serve_main`: `get_default_engine()` 제거 → `cli_db()`로 스키마 보장, Pyramid 앱 생성 실패를 stderr에 기록한 뒤 폴백 | `[COMPLETE]` | `tests/unit/test_serve_main_db.py` 2개, 전체 546 통과 |
+| C6 | `ocr-import`, `create-thumbnails`, `import-users`, `reroute` 등 `namifax` 명령이 호출하는 `avantfax.cli.*` — `namifax.cli`에 대응 모듈이 없음 | `[NEEDS_CLARIFICATION]` | 13.3 참조 |
+| F | `Repository` 폴백 제거 및 `get_default_engine` 삭제는 13.2(web/*)·13.3(avantfax 복사본) 결정 이후 | `[BLOCKED]` | 현재 `get_default_engine`을 쓰는 곳: `db/repository.py`(namifax·avantfax), `namifax.web.*`, `avantfax.*` 전체 |
 
 ### 13.1 루프 3에서 발견된 기존 결함 (미해결, 별도 처리 필요)
 - `[NEEDS_CLARIFICATION]` `services/ocr.py`(`FaxOCR`), `services/webauthn.py`(`UserWebAuthnCredentials`)의 `CREATE TABLE`이 MySQL 전용 DDL(`AUTO_INCREMENT`, `INDEX`, `ENGINE=InnoDB`)이고 `db/schema.py`에도 없다. SQLite에서는 `try/except: pass`로 가려진 채 테이블이 생성되지 않는다. 운영 DB가 MySQL/SQLite 중 무엇인지 확정 후 `schema.py`로 이관 필요.
@@ -837,3 +838,10 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 - **테스트 공백**: 테스트는 `avantfax.web.*`(src/avantfax 사본)만 대상이며 `namifax.web.views.*`에는 테스트가 없다. 두 트리는 쿠키명 등 치환 흔적만 다른 사본이다.
 - **주의**: `serve_main`이 Pyramid 앱 생성 실패를 로그 없이 삼키고 JSON 앱으로 대체한다. 루프 1 이후 DB 초기화 오류가 예외로 전파되므로, 장애가 조용히 JSON 앱으로 바뀔 수 있다.
 - `[NEEDS_CLARIFICATION]` 폴백 앱을 유지할지(→ `AvantFaxApp(db=...)` 주입 필요) 제거할지(→ Dead Code 프로토콜로 '제거된 로직' 기록, `SessionManager`는 이전) 결정 필요. 결정 전까지 V 루프에서 제외.
+
+### 13.3 `src/avantfax/*` 복사본 패키지 (발견: 테스트가 복사본을 검증함)
+- `src/avantfax`(56개 .py)는 `src/namifax`의 이름 치환 복사본이며 이후 서로 갈라졌다(`cli/faxrcvd`, `notify`, `cron`, `db/engine` 등은 약 50~64줄 차이, `services/did` 등은 치환만 다름).
+- **테스트 91개 파일 중 48개가 `avantfax.*`를 임포트한다.** 배포 패키지(`pyproject` name=`namifax`)가 아니라 복사본을 검증하는 테스트가 많다. 예: `test_cli_faxrcvd.py`, `test_cli_cron.py`, `test_cli_faxcover.py`, `test_cli_dynconf.py`는 `avantfax.cli.*` 대상이다. Spec 48 루프의 `namifax` 변경은 신규 `*_db.py` 테스트로만 검증된다.
+- `namifax` 명령 `ocr-import`, `create-thumbnails`, `import-users`, `import-blacklist`, `reroute`는 `namifax.cli`에 대응 모듈이 없어 `avantfax.cli.*`를 직접 호출한다(`main.py:174-190`). 이 모듈들은 `FaxPDFArchive()`, `AFUserAccount()`, `FaxModem()`을 `db` 없이 만든다.
+- `avantfax.db.engine.get_default_engine`은 `namifax`의 것을 위임 호출하는 shim이라, `namifax`의 전역 엔진을 지우면 `avantfax.*`가 전부 깨진다.
+- `[NEEDS_CLARIFICATION]` `avantfax` 복사본을 제거(테스트를 `namifax`로 이전, 누락된 5개 CLI를 `namifax.cli`로 이식)할지, 유지할지 결정 필요.
