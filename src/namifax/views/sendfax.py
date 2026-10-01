@@ -12,7 +12,10 @@ from typing import Any
 from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
 
+from namifax.services.addressbook import RESERVED_FAX_NUM, AFAddressBook
+from namifax.services.archive_in import ArchiveIn
 from namifax.services.covers import Covers
+from namifax.views.fax_rights import load_fax
 from namifax.views.admin import get_all_admin_modems
 
 
@@ -88,6 +91,16 @@ def dispatch_sendfax(
     }
 
 
+def _sender_number(request, fax: ArchiveIn) -> str:
+    """The number to answer: the address book's number for the fax, else the number it came from (blank if unusable)."""
+    number = None
+    book = AFAddressBook(db=request.dbsession)
+    if fax.get_faxnumid() and book.loadbyfaxnumid(fax.get_faxnumid()):
+        number = book.get_faxnumber()
+    number = number or fax.get_origfaxnum() or ""
+    return number if any(c.isdigit() for c in number) and number != RESERVED_FAX_NUM else ""
+
+
 @view_config(route_name="sendfax", renderer="namifax:templates/sendfax.jinja2", permission="send_fax")
 def sendfax_view(request):
     """Render send fax form or process submission."""
@@ -96,6 +109,14 @@ def sendfax_view(request):
 
     covers_svc = Covers(db=request.dbsession)
     cover_names = covers_svc.get_covers() or []
+
+    # "Reply to fax": the fax being answered must exist and the user must have the right to it, else the plain page
+    original = None
+    refax = request.params.get("refax")
+    if refax:
+        original = ArchiveIn(db=request.dbsession)
+        if not load_fax(request, original, refax, action="refax"):
+            return HTTPFound(location=request.route_url("sendfax"))
 
     if request.method == "POST":
         params = request.params
@@ -109,12 +130,13 @@ def sendfax_view(request):
                 "active_tab": "sendfax",
                 "error": "Fax number is required",
                 "form_data": params,
+                "original_fid": original.get_fid() if original is not None else None,
                 "modem_list": modem_list,
                 "cover_names": cover_names,
             }
 
         # Process uploaded files
-        uploaded_files: list[str] = []
+        uploaded_files: list[str] = [original.get_pdfpath()] if original is not None and original.get_pdfpath() else []
         file_item = request.POST.get("file")
         if file_item is not None and hasattr(file_item, "file") and hasattr(file_item, "filename") and file_item.filename:
             temp_dir = tempfile.gettempdir()
@@ -154,6 +176,7 @@ def sendfax_view(request):
                 "active_tab": "sendfax",
                 "error": dispatch_res.get("error", "Failed to dispatch fax"),
                 "form_data": params,
+                "original_fid": original.get_fid() if original is not None else None,
                 "modem_list": modem_list,
                 "cover_names": cover_names,
             }
@@ -166,7 +189,8 @@ def sendfax_view(request):
         "current_user": identity,
         "active_tab": "sendfax",
         "error": None,
-        "form_data": {},
+        "form_data": {"faxnumber": _sender_number(request, original)} if original is not None else {},
+        "original_fid": original.get_fid() if original is not None else None,
         "modem_list": modem_list,
         "cover_names": cover_names,
     }

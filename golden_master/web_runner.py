@@ -6,9 +6,13 @@ rendered responses against recorded Golden Master contracts (status, forms, text
 """
 
 import argparse
+import contextlib
 import json
+import os
 import re
+import shutil
 import sys
+import tempfile
 from pathlib import Path
 from bs4 import BeautifulSoup
 from webtest import TestApp
@@ -26,8 +30,54 @@ def normalize_text(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
 
+@contextlib.contextmanager
+def isolated_database():
+    """A new throw-away SQLite database with the demo data, for the duration of the block.
+
+    (Without this the golden master tools used the working tree's namifax.db, whose layout and contents depend on what a
+    developer last ran, so scenarios failed or passed by accident.)
+    """
+    folder = tempfile.mkdtemp(prefix="namifax-golden-")
+    wanted = {"DATABASE_URL": f"sqlite:///{folder}/golden.db", "NAMIFAX_DB_PATH": f"{folder}/golden.db",
+              "NAMIFAX_DEMO_DATA": "1", "NAMIFAX_SECRET_KEY": os.environ.get("NAMIFAX_SECRET_KEY") or "golden-master-run"}
+    saved = {key: os.environ.get(key) for key in (*wanted, "AFDB_URL")}
+    os.environ.update(wanted)
+    os.environ.pop("AFDB_URL", None)
+    try:
+        yield
+    finally:
+        for key, value in saved.items():
+            if value is None:
+                os.environ.pop(key, None)
+            else:
+                os.environ[key] = value
+        shutil.rmtree(folder, ignore_errors=True)
+
+
+def _client_with_pending_password_change() -> TestApp:
+    """A browser that has just signed in with an account that must choose a new password (it is sent to /pwdexpired)."""
+    from sqlalchemy.orm import Session
+
+    from namifax.services.user_account import AFUserAccount
+
+    application = make_app({})
+    with Session(application.registry["dbengine"]) as session:
+        account = AFUserAccount(db=session)
+        assert account.create({"username": "mustchange", "password": "Secret123!", "email": "must@change.test",
+                               "name": "Must Change"}), account.get_error()      # never signed in: has to change it
+        session.commit()
+    client = TestApp(application)
+    client.post("/login", {"username": "mustchange", "password": "Secret123!", "_submit_check": "1"})
+    return client
+
+
 def run_web_verification(target_scenario: str | None = None) -> int:
-    """Execute differential check for all web scenarios."""
+    """Execute differential check for all web scenarios (on an isolated database)."""
+    with isolated_database():
+        return _verify_all_scenarios(target_scenario)
+
+
+def _verify_all_scenarios(target_scenario: str | None = None) -> int:
     if not GOLDEN_WEB_DIR.exists():
         print(f"[-] Web Golden Master dir {GOLDEN_WEB_DIR} does not exist.")
         return 1
@@ -65,6 +115,8 @@ def run_web_verification(target_scenario: str | None = None) -> int:
             if s_id.startswith("W01_") or not meta.get("authenticated", True):
                 # Clean client for unauthenticated tests
                 test_client = TestApp(make_app({}))
+            if meta.get("setup") == "pwd_change_pending":
+                test_client = _client_with_pending_password_change()
 
             headers = meta.get("headers", {})
 
@@ -109,12 +161,15 @@ def run_web_verification(target_scenario: str | None = None) -> int:
                 # 4. Form and Input Contract Check
                 soup = BeautifulSoup(res.text, "html.parser")
                 if "forms" in contract:
-                    for f_spec in contract["forms"]:
+                    for position, f_spec in enumerate(contract["forms"]):
                         forms = soup.find_all("form")
                         if not forms:
                             errors.append("Expected <form> tag, but none found in rendered HTML")
                             break
-                        matched_form = forms[0]
+                        if position >= len(forms):
+                            errors.append(f"Expected form at index {position}, but only {len(forms)} forms exist")
+                            break
+                        matched_form = forms[position]       # the n-th spec describes the n-th form of the page
                         if "inputs" in f_spec:
                             for inp in f_spec["inputs"]:
                                 name = inp["name"]

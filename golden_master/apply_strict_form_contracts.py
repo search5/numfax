@@ -77,7 +77,7 @@ DYNAMIC_STATE_DEFS = {
     "W62_admin_fax2email_edit": {
         "delete_mapping": {
             "trigger_selector": "button[name='delete']",
-            "affected_inputs": ["c_id"]
+            "affected_inputs": ["abook_id"]
         }
     },
     "W63_admin_category_edit": {
@@ -89,7 +89,7 @@ DYNAMIC_STATE_DEFS = {
     "W65_addressbook_edit_selected": {
         "delete_company": {
             "trigger_selector": "button[name='delete']",
-            "affected_inputs": ["company_id"]
+            "affected_inputs": ["abook_id"]
         }
     },
     "W66_distrolist_edit_selected": {
@@ -101,7 +101,7 @@ DYNAMIC_STATE_DEFS = {
     "W67_emailbook_edit_selected": {
         "delete_contact": {
             "trigger_selector": "button[name='delete']",
-            "affected_inputs": ["email_id"]
+            "affected_inputs": ["abookemail_id"]
         }
     }
 }

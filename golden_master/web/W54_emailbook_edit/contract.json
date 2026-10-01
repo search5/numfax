@@ -4,6 +4,22 @@
   "forms": [
     {
       "method": "post",
+      "action": "/upload/contacts",
+      "inputs": [
+        {
+          "name": "upload",
+          "type": "file"
+        },
+        {
+          "name": "_submit_check",
+          "type": "hidden",
+          "value": "1"
+        }
+      ],
+      "submit_button": true
+    },
+    {
+      "method": "post",
       "action": "/emailbook/edit",
       "inputs": [
         {
@@ -12,7 +28,7 @@
         },
         {
           "name": "contact_email",
-          "type": "text"
+          "type": "email"
         },
         {
           "name": "_submit_check",
@@ -29,47 +45,19 @@
     "Email"
   ],
   "form_structure": {
-    "total_forms": 1,
+    "total_forms": 2,
     "forms": [
       {
         "index": 0,
-        "action": "/emailbook/edit",
+        "action": "/upload/contacts",
         "method": "POST",
-        "inputs_count": 6,
-        "buttons_count": 2,
+        "inputs_count": 2,
+        "buttons_count": 1,
         "field_sequence": [
           {
-            "name": "company",
+            "name": "upload",
             "tag": "input",
-            "type": "text",
-            "id": "company",
-            "required": false
-          },
-          {
-            "name": "contact_name",
-            "tag": "input",
-            "type": "text",
-            "id": "contact_name",
-            "required": true
-          },
-          {
-            "name": "contact_email",
-            "tag": "input",
-            "type": "email",
-            "id": "contact_email",
-            "required": true
-          },
-          {
-            "name": "email_id",
-            "tag": "input",
-            "type": "hidden",
-            "id": "",
-            "required": false
-          },
-          {
-            "name": "abookemail_id",
-            "tag": "input",
-            "type": "hidden",
+            "type": "file",
             "id": "",
             "required": false
           },
@@ -85,13 +73,45 @@
           {
             "tag": "button",
             "type": "submit",
-            "name": "delete",
-            "text": "Delete"
+            "name": "",
+            "text": "Upload"
+          }
+        ]
+      },
+      {
+        "index": 1,
+        "action": "/emailbook/edit",
+        "method": "POST",
+        "inputs_count": 3,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "contact_name",
+            "tag": "input",
+            "type": "text",
+            "id": "contact_name",
+            "required": true
           },
+          {
+            "name": "contact_email",
+            "tag": "input",
+            "type": "email",
+            "id": "contact_email",
+            "required": true
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
           {
             "tag": "button",
             "type": "submit",
-            "name": "save",
+            "name": "create",
             "text": "Save"
           }
         ]

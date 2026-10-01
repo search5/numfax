@@ -207,7 +207,8 @@ def ajax_faxalter(request):
                 pass
         return Response("", status_code=200)
 
-    html = """<!DOCTYPE html>
+    jid = html.escape(request.params.get("jid", ""), quote=True)
+    page = f"""<!DOCTYPE html>
 <html>
 <head><title>- NamiFAX - Modify Fax Job</title></head>
 <body class="bg-slate-50 text-slate-800 p-6">
@@ -238,7 +239,7 @@ def ajax_faxalter(request):
         <input type="checkbox" name="sendtime" id="sendtime" value="1" class="rounded border-slate-300" />
         <label for="sendtime" class="text-sm">Schedule Send Time</label>
       </div>
-      <input type="hidden" name="jid" value="1" />
+      <input type="hidden" name="jid" value="{jid}" />
       <input type="hidden" name="_submit_check" value="1" />
       <div class="pt-4 flex justify-end space-x-2">
         <button type="submit" class="px-4 py-2 bg-sky-800 text-white rounded text-sm font-medium hover:bg-sky-700">Save</button>
@@ -247,7 +248,7 @@ def ajax_faxalter(request):
   </div>
 </body>
 </html>"""
-    return Response(html, content_type="text/html")
+    return Response(page, content_type="text/html")
 
 
 @view_config(route_name="ajax_deletefaxes", permission="view")

@@ -204,37 +204,44 @@ def popup_email_contacts(request):
     return Response(html_content, content_type="text/html")
 
 
-@view_config(route_name="upload_contacts", permission="view")
-def upload_email_contacts(request):
-    """Upload vCard to import email contacts matching upload_contacts.php."""
-    numcontacts = 0
-    if request.method == "POST":
-        upload_file = request.POST.get("upload")
-        if upload_file is not None and hasattr(upload_file, "file"):
-            content = upload_file.file.read()
-            lines = content.decode("utf-8", errors="ignore").splitlines() if isinstance(content, bytes) else str(content).splitlines()
+def _vcard_lines(request) -> tuple[list[str] | None, str | None]:
+    """The lines of the uploaded vCard file, or ``(None, error)``; ``(None, None)`` when no file was sent."""
+    upload = request.POST.get("upload")
+    if upload is None or not hasattr(upload, "file"):
+        return None, None
+    content = upload.file.read()
+    text = content.decode("utf-8", errors="replace") if isinstance(content, bytes) else str(content)
+    if not text.strip():
+        return None, None
+    if "BEGIN:VCARD" not in text.upper():
+        return None, "vCard file problem: this does not look like a vCard (.vcf) file"
+    return [line.strip() for line in text.splitlines()], None
 
-            ab = AFAddressBook(db=request.dbsession)
-            current_name = None
-            for line in lines:
-                line = line.strip()
-                if line.startswith("FN:"):
-                    current_name = line.split(":", 1)[1].strip()
-                elif "EMAIL" in line and ":" in line:
-                    email = line.split(":", 1)[1].strip()
-                    if current_name and email:
-                        if ab.create_contact(current_name, email):
-                            numcontacts += 1
 
-    html = f"""<!DOCTYPE html>
+def _vcard_value(line: str) -> str:
+    return line.split(":", 1)[1].strip()
+
+
+def _is_card_start(line: str) -> bool:
+    return line.upper().startswith("BEGIN:VCARD")
+
+
+def _upload_page(title: str, intro: str, action: str, message: str | None, error: str | None, extra_field: str = "") -> Response:
+    notice = ""
+    if error:
+        notice = f'<div class="mb-4 p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded text-sm">{html.escape(error)}</div>'
+    elif message:
+        notice = f'<div class="mb-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded text-sm">{html.escape(message)}</div>'
+    page = f"""<!DOCTYPE html>
 <html>
-<head><title>- NamiFAX - Upload Email Contacts</title></head>
+<head><title>- NamiFAX - {html.escape(title)}</title></head>
 <body class="bg-slate-50 text-slate-800 p-6">
   <div class="max-w-md mx-auto bg-white p-6 rounded shadow border border-slate-200">
     <h1 class="text-xl font-bold mb-4 text-sky-900">Upload Contacts</h1>
-    <p class="text-sm text-slate-600 mb-4">Select a vCard (.vcf) file to import email contacts.</p>
-    <form action="/upload/contacts" method="post" enctype="multipart/form-data" class="space-y-4">
-      <div>
+    {notice}
+    <p class="text-sm text-slate-600 mb-4">{html.escape(intro)}</p>
+    <form action="{action}" method="post" enctype="multipart/form-data" class="space-y-4">
+{extra_field}      <div>
         <label class="block text-sm font-semibold mb-1">vCard file:</label>
         <input type="file" name="upload" class="w-full border border-slate-300 rounded p-1 text-sm" />
       </div>
@@ -246,89 +253,89 @@ def upload_email_contacts(request):
   </div>
 </body>
 </html>"""
-    return Response(html, content_type="text/html")
+    return Response(page, content_type="text/html")
+
+
+@view_config(route_name="upload_contacts", permission="view")
+def upload_email_contacts(request):
+    """Upload a vCard to import e-mail contacts (the original upload_contacts.php).
+
+    Every address line of a card that has a name is added to the e-mail book; the page says how many were new.
+    """
+    message = error = None
+    if request.method == "POST":
+        lines, error = _vcard_lines(request)
+        count = 0
+        if lines:
+            book = AFAddressBook(db=request.dbsession)
+            name = None
+            for line in lines:
+                if _is_card_start(line):
+                    name = None                                  # a card without a name must not reuse the previous one's
+                elif "FN:" in line:
+                    name = _vcard_value(line)
+                elif "EMAIL" in line and ":" in line and ("EMAIL;" in line or line.upper().startswith("EMAIL:")):
+                    email = _vcard_value(line)
+                    if name and email and book.create_contact(name, email):
+                        count += 1
+        if not error:
+            message = f"Successfully uploaded {count} contacts"
+    return _upload_page("Upload Email Contacts", "Select a vCard (.vcf) file to import email contacts.",
+                        "/upload/contacts", message, error)
 
 
 @view_config(route_name="upload_faxcontacts", permission="view")
 def upload_fax_contacts(request):
-    """Upload vCard to import fax contacts matching upload_faxcontacts.php."""
-    numcontacts = 0
+    """Upload a vCard to import fax contacts (the original upload_faxcontacts.php).
+
+    Each FAX line makes a company (the card's organisation, else its person) with that number, the person and the chosen
+    category. E-mail lines go to the e-mail book and are not counted. Like the original, once an organisation has been
+    used for a company it is not used again, so a following number or card falls back to its person's name.
+    """
+    message = error = None
     if request.method == "POST":
-        upload_file = request.POST.get("upload")
         catid = request.POST.get("catid")
-        try:
-            catid_int = int(catid) if catid else None
-        except (ValueError, TypeError):
-            catid_int = None
-
-        if upload_file is not None and hasattr(upload_file, "file"):
-            content = upload_file.file.read()
-            lines = content.decode("utf-8", errors="ignore").splitlines() if isinstance(content, bytes) else str(content).splitlines()
-
-            ab = AFAddressBook(db=request.dbsession)
-            current_name = None
-            current_org = None
-            current_work = None
+        catid_int = int(catid) if catid and str(catid).isdigit() else None
+        lines, error = _vcard_lines(request)
+        count = 0
+        if lines:
+            book = AFAddressBook(db=request.dbsession)
+            name = org = None
             for line in lines:
-                line = line.strip()
-                if line.startswith("FN:"):
-                    current_name = line.split(":", 1)[1].strip()
-                elif line.startswith("ORG:"):
-                    current_org = line.split(":", 1)[1].replace(";", "").strip()
-                elif "FAX:" in line or ("TEL" in line and "FAX" in line and ":" in line):
-                    fax_num = line.split(":", 1)[1].replace(";", "").strip()
-                    org_name = current_org or current_name or "Unknown"
-                    if ab.create(org_name):
-                        numcontacts += 1
-                        if ab.create_faxnumid(fax_num):
-                            ab.save_settings({
-                                "description": None,
-                                "faxcatid": catid_int,
-                                "to_person": current_name,
-                                "to_location": None,
-                                "to_voicenumber": current_work,
-                            })
-                elif "EMAIL" in line and ":" in line:
-                    email = line.split(":", 1)[1].strip()
-                    if current_name and email:
-                        ab.create_contact(current_name, email)
+                if _is_card_start(line):
+                    name = org = None
+                elif "FN:" in line:
+                    name = _vcard_value(line)
+                elif line.upper().startswith("ORG:"):
+                    org = _vcard_value(line).replace(";", "").strip()
+                elif "EMAIL;" in line or line.upper().startswith("EMAIL:"):
+                    email = _vcard_value(line)
+                    if name and email:
+                        book.create_contact(name, email)
+                elif "FAX:" in line or ("TEL" in line.upper() and "FAX" in line.upper() and ":" in line):
+                    number = _vcard_value(line).replace(";", "").strip()
+                    org = org or name
+                    if org and number and book.create(org):
+                        org = None
+                        count += 1
+                        if book.create_faxnumid(number):
+                            book.save_settings({"description": None, "faxcatid": catid_int, "to_person": name,
+                                                "to_location": None, "to_voicenumber": None})
+        if not error:
+            message = f"Successfully uploaded {count} contacts"
 
     category_options = []
     try:
-        cats = FaxPDFCategory(db=request.dbsession).get_categories() or []
-        for cat in cats:
-            cid = cat.get("catid")
-            cname = html.escape(str(cat.get("name", "")))
-            category_options.append(f'          <option value="{cid}">{cname}</option>')
+        for cat in FaxPDFCategory(db=request.dbsession).get_categories() or []:
+            category_options.append(f'          <option value="{cat.get("catid")}">{html.escape(str(cat.get("name", "")))}</option>')
     except Exception:
         pass
-
-    cat_content = "\n".join(category_options)
-
-    html_content = f"""<!DOCTYPE html>
-<html>
-<head><title>- NamiFAX - Upload Fax Contacts</title></head>
-<body class="bg-slate-50 text-slate-800 p-6">
-  <div class="max-w-md mx-auto bg-white p-6 rounded shadow border border-slate-200">
-    <h1 class="text-xl font-bold mb-4 text-sky-900">Upload Contacts</h1>
-    <p class="text-sm text-slate-600 mb-4">Select a vCard (.vcf) file to import fax contacts into address book.</p>
-    <form action="/upload/faxcontacts" method="post" enctype="multipart/form-data" class="space-y-4">
-      <div>
+    field = ('''      <div>
         <label class="block text-sm font-semibold mb-1">Category:</label>
         <select name="catid" class="w-full border border-slate-300 rounded px-2 py-1.5 text-sm">
-{cat_content}
+''' + "\n".join(category_options) + '''
         </select>
       </div>
-      <div>
-        <label class="block text-sm font-semibold mb-1">vCard file:</label>
-        <input type="file" name="upload" class="w-full border border-slate-300 rounded p-1 text-sm" />
-      </div>
-      <input type="hidden" name="_submit_check" value="1" />
-      <div class="pt-2 flex justify-end">
-        <button type="submit" class="px-4 py-2 bg-sky-800 text-white rounded text-sm font-medium hover:bg-sky-700">Upload</button>
-      </div>
-    </form>
-  </div>
-</body>
-</html>"""
-    return Response(html_content, content_type="text/html")
+''')
+    return _upload_page("Upload Fax Contacts", "Select a vCard (.vcf) file to import fax contacts into address book.",
+                        "/upload/faxcontacts", message, error, field)

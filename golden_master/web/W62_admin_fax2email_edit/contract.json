@@ -4,14 +4,36 @@
   "forms": [
     {
       "method": "post",
+      "action": "/admin/fax2email",
       "inputs": [
         {
-          "name": "c_id",
+          "name": "_submit_check",
+          "type": "hidden",
+          "value": "1"
+        },
+        {
+          "name": "abook_id",
           "type": "hidden"
         },
         {
-          "name": "_submit_check",
+          "name": "company",
+          "type": "text"
+        },
+        {
+          "name": "abookfax_id",
           "type": "hidden"
+        },
+        {
+          "name": "email",
+          "type": "text"
+        },
+        {
+          "name": "printer",
+          "type": "text"
+        },
+        {
+          "name": "faxcatid",
+          "type": "select"
         }
       ],
       "submit_button": true
@@ -29,18 +51,11 @@
         "index": 0,
         "action": "/admin/fax2email",
         "method": "POST",
-        "inputs_count": 6,
+        "inputs_count": 8,
         "buttons_count": 2,
         "field_sequence": [
           {
             "name": "_submit_check",
-            "tag": "input",
-            "type": "hidden",
-            "id": "",
-            "required": false
-          },
-          {
-            "name": "c_id",
             "tag": "input",
             "type": "hidden",
             "id": "",
@@ -61,17 +76,38 @@
             "required": true
           },
           {
+            "name": "abookfax_id",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "",
+            "tag": "input",
+            "type": "text",
+            "id": "",
+            "required": false
+          },
+          {
             "name": "email",
             "tag": "input",
             "type": "text",
-            "id": "email",
-            "required": true
+            "id": "",
+            "required": false
           },
           {
             "name": "printer",
             "tag": "input",
             "type": "text",
-            "id": "printer",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "faxcatid",
+            "tag": "select",
+            "type": "select",
+            "id": "",
             "required": false
           }
         ],
@@ -96,7 +132,7 @@
     "delete_mapping": {
       "trigger_selector": "button[name='delete']",
       "affected_inputs": [
-        "c_id"
+        "abook_id"
       ]
     }
   }

@@ -51,7 +51,8 @@ def test_creating_a_contact_never_touches_the_existing_ones(client, dbsession):
 def test_filling_in_the_real_new_contact_form_creates_a_new_contact(client, dbsession):
     """Submit the page's own form (hidden fields included), as a browser does."""
     before = _contacts(dbsession)
-    form = client.get("/emailbook/edit").forms[0]
+    page = client.get("/emailbook/edit")
+    form = next(f for f in page.forms.values() if "contact_name" in f.fields)      # the upload form comes first
     form["contact_name"], form["contact_email"] = "Brand New", "brand@new.test"
     res = form.submit("create")
     assert res.status_int == 302

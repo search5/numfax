@@ -3,42 +3,127 @@
   "forms": [
     {
       "method": "post",
-      "action": "/addressbook/edit",
+      "action": "/upload/faxcontacts",
       "inputs": [
         {
-          "name": "company",
-          "type": "text",
-          "required": true
+          "name": "catid",
+          "type": "select"
         },
         {
-          "name": "faxnumber",
-          "type": "text"
-        },
-        {
-          "name": "email",
-          "type": "text"
+          "name": "upload",
+          "type": "file"
         },
         {
           "name": "_submit_check",
           "type": "hidden",
           "value": "1"
         }
-      ]
+      ],
+      "submit_button": true
+    },
+    {
+      "method": "post",
+      "action": "/addressbook/edit",
+      "inputs": [
+        {
+          "name": "_submit_check",
+          "type": "hidden",
+          "value": "1"
+        },
+        {
+          "name": "company",
+          "type": "text"
+        },
+        {
+          "name": "new_faxnum",
+          "type": "text"
+        },
+        {
+          "name": "new_desc",
+          "type": "text"
+        },
+        {
+          "name": "newfaxcatid",
+          "type": "select"
+        },
+        {
+          "name": "new_to_person",
+          "type": "text"
+        },
+        {
+          "name": "new_to_location",
+          "type": "text"
+        },
+        {
+          "name": "new_to_voicenumber",
+          "type": "text"
+        },
+        {
+          "name": "new_to_address",
+          "type": "text"
+        },
+        {
+          "name": "new_to_zip",
+          "type": "text"
+        },
+        {
+          "name": "new_to_city",
+          "type": "text"
+        }
+      ],
+      "submit_button": true
     }
   ],
   "required_text": [
     "Company Name",
-    "Fax Number",
-    "Email"
+    "Fax Number"
   ],
   "form_structure": {
-    "total_forms": 1,
+    "total_forms": 2,
     "forms": [
       {
         "index": 0,
+        "action": "/upload/faxcontacts",
+        "method": "POST",
+        "inputs_count": 3,
+        "buttons_count": 1,
+        "field_sequence": [
+          {
+            "name": "catid",
+            "tag": "select",
+            "type": "select",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "upload",
+            "tag": "input",
+            "type": "file",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "_submit_check",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          }
+        ],
+        "button_sequence": [
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "",
+            "text": "Upload"
+          }
+        ]
+      },
+      {
+        "index": 1,
         "action": "/addressbook/edit",
         "method": "POST",
-        "inputs_count": 10,
+        "inputs_count": 11,
         "buttons_count": 1,
         "field_sequence": [
           {
@@ -56,59 +141,66 @@
             "required": true
           },
           {
-            "name": "faxnumber",
+            "name": "new_faxnum",
             "tag": "input",
             "type": "text",
-            "id": "faxnumber",
-            "required": false
+            "id": "new_faxnum",
+            "required": true
           },
           {
-            "name": "email",
-            "tag": "input",
-            "type": "email",
-            "id": "email",
-            "required": false
-          },
-          {
-            "name": "to_person",
+            "name": "new_desc",
             "tag": "input",
             "type": "text",
-            "id": "to_person",
+            "id": "new_desc",
             "required": false
           },
           {
-            "name": "to_voicenumber",
-            "tag": "input",
-            "type": "text",
-            "id": "to_voicenumber",
-            "required": false
-          },
-          {
-            "name": "to_address",
-            "tag": "input",
-            "type": "text",
-            "id": "to_address",
-            "required": false
-          },
-          {
-            "name": "to_city",
-            "tag": "input",
-            "type": "text",
-            "id": "to_city",
-            "required": false
-          },
-          {
-            "name": "category",
+            "name": "newfaxcatid",
             "tag": "select",
             "type": "select",
-            "id": "category",
+            "id": "",
             "required": false
           },
           {
-            "name": "description",
+            "name": "new_to_person",
             "tag": "input",
             "type": "text",
-            "id": "description",
+            "id": "new_to_person",
+            "required": false
+          },
+          {
+            "name": "new_to_location",
+            "tag": "input",
+            "type": "text",
+            "id": "new_to_location",
+            "required": false
+          },
+          {
+            "name": "new_to_voicenumber",
+            "tag": "input",
+            "type": "text",
+            "id": "new_to_voicenumber",
+            "required": false
+          },
+          {
+            "name": "new_to_address",
+            "tag": "input",
+            "type": "text",
+            "id": "new_to_address",
+            "required": false
+          },
+          {
+            "name": "new_to_zip",
+            "tag": "input",
+            "type": "text",
+            "id": "new_to_zip",
+            "required": false
+          },
+          {
+            "name": "new_to_city",
+            "tag": "input",
+            "type": "text",
+            "id": "new_to_city",
             "required": false
           }
         ],
@@ -116,7 +208,7 @@
           {
             "tag": "button",
             "type": "submit",
-            "name": "save",
+            "name": "create",
             "text": "Save"
           }
         ]

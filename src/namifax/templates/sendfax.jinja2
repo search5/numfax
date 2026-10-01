@@ -234,6 +234,13 @@
     </details>
 
     <input type="hidden" name="_submit_check" value="1" />
+    {% if original_fid %}
+    <input type="hidden" name="refax" value="{{ original_fid }}" />
+    <p class="text-xs text-slate-500">
+      {{ _('The original fax is sent along.') }}
+      <a href="/faxes/download/{{ original_fid }}?format=pdf" target="_blank" class="text-blue-600 hover:underline">{{ _('Download PDF') }}</a>
+    </p>
+    {% endif %}
 
     <!-- Submit -->
     <div class="flex items-center justify-between pt-1">

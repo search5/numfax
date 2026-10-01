@@ -136,7 +136,7 @@
             <td class="py-3.5 px-4 font-mono text-sm text-slate-700">{{ fj.destination }}</td>
             <td class="py-3.5 px-4 text-sm text-red-700 font-medium">{{ fj.status or 'Busy — max retries exceeded' }}</td>
             <td class="py-3.5 px-4 text-right">
-              <a href="/sendfax?refax={{ fj.jobid }}"
+              <a href="/ajax/faxalter?jid={{ fj.jobid }}&r=1"
                  class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-200 text-blue-700 rounded-lg text-xs font-semibold transition-colors">
                 {{ _('Retry') }}
               </a>

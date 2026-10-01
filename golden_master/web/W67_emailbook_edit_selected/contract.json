@@ -4,17 +4,24 @@
   "forms": [
     {
       "method": "post",
+      "action": "/emailbook/edit",
       "inputs": [
         {
-          "name": "company"
+          "name": "contact_name",
+          "type": "text"
         },
         {
-          "name": "email_id",
+          "name": "contact_email",
+          "type": "email"
+        },
+        {
+          "name": "abookemail_id",
           "type": "hidden"
         },
         {
           "name": "_submit_check",
-          "type": "hidden"
+          "type": "hidden",
+          "value": "1"
         }
       ],
       "submit_button": true
@@ -32,16 +39,9 @@
         "index": 0,
         "action": "/emailbook/edit",
         "method": "POST",
-        "inputs_count": 6,
+        "inputs_count": 4,
         "buttons_count": 2,
         "field_sequence": [
-          {
-            "name": "company",
-            "tag": "input",
-            "type": "text",
-            "id": "company",
-            "required": false
-          },
           {
             "name": "contact_name",
             "tag": "input",
@@ -55,13 +55,6 @@
             "type": "email",
             "id": "contact_email",
             "required": true
-          },
-          {
-            "name": "email_id",
-            "tag": "input",
-            "type": "hidden",
-            "id": "",
-            "required": false
           },
           {
             "name": "abookemail_id",
@@ -99,7 +92,7 @@
     "delete_contact": {
       "trigger_selector": "button[name='delete']",
       "affected_inputs": [
-        "email_id"
+        "abookemail_id"
       ]
     }
   }
