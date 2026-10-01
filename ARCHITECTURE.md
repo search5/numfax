@@ -936,7 +936,7 @@ Pyramid cookiecutter starter(2.1-branch, jinja2 + sqlalchemy)를 임시 디렉�
 | 1 | `SystemConfig` | `[ORM]` | 0001 | 파일럿. storage/saml 뷰 |
 | 1 | `SystemSettings` | `[ORM]` | 0002 | SMTP 단일 행(id=1). `SmtpSettingsService(Session)`, `MailerService.from_settings(session)`. 참고: `common/helpers.send_mail`은 DB의 SMTP 설정을 쓰지 않고 `MailerService`를 직접 만든다(저장한 설정이 실제 발송에 반영되지 않음) |
 | 1 | `NetworkPrinters` | `[ORM]` | 0003 | `NetworkPrinterService(Session)`, 자동 증가 PK는 방언별 DDL로 생성. `delete_printer`는 삭제된 행이 있었는지를 반환(이전에는 항상 True). `process_inbound_print_job`의 미사용 `db` 인자는 유지 |
-| 1 | `SysLog` | `[ORM]` | 0004 | `SysLogService(Session).search`. `logdate`는 ISO 텍스트 `String(32)`로 유지(날짜 접두어 `LIKE`가 PostgreSQL의 timestamp에서는 불가). 키워드는 모든 DB에서 대소문자 무시 부분 일치이고 `%`/`_`는 리터럴(이전에는 와일드카드). 조회 오류를 삼키지 않음(이전에는 `except Exception`으로 빈 목록). 관찰: `avantfaxlog()`는 OS syslog에만 쓰고 이 테이블에는 쓰지 않아, 관리자 로그 화면은 시드 2행만 보여 준다 |
+| 1 | `SysLog` | `[ORM]` | 0004 | `SysLogService(Session).search`. `logdate`는 ISO 텍스트 `String(32)`로 유지(날짜 접두어 `LIKE`가 PostgreSQL의 timestamp에서는 불가). 키워드는 모든 DB에서 대소문자 무시 부분 일치이고 `%`/`_`는 리터럴(이전에는 와일드카드). 조회 오류를 삼키지 않음(이전에는 `except Exception`으로 빈 목록). 관찰: `avantfaxlog()`가 이 테이블에 쓰지 않던 포팅 회귀는 14.7에서 수정 |
 | 2 | `Modems`, `DIDRoute`, `BarcodeRoute`, `FaxCategory`, `CoverPages`, `DynConf`(+`DynamicConfig` 정리) | `[LEGACY]` | - | |
 | 3 | `UserAccount`, `UserPasswords`, `UserTOTP`, `AddressBook*`, `DistroList`, `UserWebAuthnCredentials`, `FaxOCR` | `[LEGACY]` | - | `AddressBook` `ab_id`/`abook_id` 불일치를 모델화하며 정리 |
 | 4 | `FaxArchive` 외 | `[LEGACY]` | - | |
@@ -966,3 +966,10 @@ Pyramid cookiecutter starter(2.1-branch, jinja2 + sqlalchemy)를 임시 디렉�
 - 검증: 실제 소켓 SMTP 서버(테스트 내 가짜 서버)가 DB에 저장한 호스트·포트로 메시지를 받는 E2E 테스트(`test_active_mailer.py`).
 - `[관찰]` `MailerService()`의 서버 없음 모드는 발송하지 않고 `True`를 반환한다. 호출자가 성공으로 오인할 수 있어 별도 정리를 권장한다(스풀 전용 모드는 `spool_mode=True`로 명시하는 편이 안전).
 - `[관찰]` 레거시 `create_tables.sql`의 `SysLog`는 PK `syslogid`, 포트의 SQLite 스키마와 모델은 `log_id`다. 레거시 MySQL DB를 그대로 이어받는 시나리오가 필요한지 `[NEEDS_CLARIFICATION]`. (`AddressBook`의 `ab_id`/`abook_id`와 같은 종류의 이름 불일치)
+
+### 14.7 기능 결함 수정: `avantfaxlog()`가 `SysLog` 테이블에 기록하지 않던 문제 (P2)
+- 레거시 원본(`includes/functions.php`): `avantfaxlog()`는 `MDBOData('SysLog')->new_entry(['logtext' => $text])`로 테이블에 기록했다. 포팅본은 OS syslog에만 써서 관리자 "System Logs" 화면에는 시드 2행만 보였다(포팅 회귀).
+- 수정: `SysLogService.add(logtext, logdate=None)`(날짜는 `YYYY-MM-DD HH:MM:SS` 로컬 시각)과 `avantfaxlog(text, echo=False, session=None)`. OS syslog 기록은 유지하고 DB 기록을 복원했다. 웹은 요청 세션을 넘기고, 훅 프로세스(`faxrcvd`, `notify`, `cron` 등 호출처 19곳)는 호출처를 바꾸지 않고 `cli_session()`으로 짧은 세션을 열어 기록한다.
+- 로깅은 호출자를 실패시키지 않는다: DB가 없거나 INSERT가 실패해도 예외를 삼킨다.
+- 검증: 세션/CLI/DB 불가/INSERT 실패 케이스, `faxrcvd` 훅이 남긴 줄이 관리자 로그가 읽는 테이블에 저장되는지, 서버 3종에서 `add`와 검색 왕복.
+- `[관찰]` 호출 한 번마다 엔진·연결을 새로 만든다(훅당 최대 19회). 현재 규모에서는 무시할 수준이지만, 필요해지면 프로세스 단위로 엔진을 재사용하도록 최적화할 수 있다.

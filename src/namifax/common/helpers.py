@@ -154,8 +154,13 @@ def fupload_error_code(code: int) -> str:
     return UPLOAD_ERRORS.get(code, "Unknown upload error")
 
 
-def avantfaxlog(text: str, echo: bool = False) -> None:
-    """Write log entry to syslog or stderr."""
+def avantfaxlog(text: str, echo: bool = False, session: Any = None) -> None:
+    """Record an event in the SysLog table (as the legacy avantfaxlog does) and in the OS syslog.
+
+    Web code passes the request session. Hook processes pass nothing, so the entry is written
+    through a short-lived session on the configured database. Logging never raises: a database
+    problem must not break the caller.
+    """
     msg = f"AvantFAX: {text}"
     if echo:
         print(msg)
@@ -163,6 +168,18 @@ def avantfaxlog(text: str, echo: bool = False) -> None:
         syslog.openlog("AvantFAX", syslog.LOG_PID, syslog.LOG_LOCAL0)
         syslog.syslog(syslog.LOG_INFO, text)
         syslog.closelog()
+    except Exception:
+        pass
+    try:
+        from namifax.services.syslog import SysLogService
+
+        if session is not None:
+            SysLogService(session).add(text)
+        else:
+            from namifax.db.provider import cli_session
+
+            with cli_session() as own_session:
+                SysLogService(own_session).add(text)
     except Exception:
         pass
 

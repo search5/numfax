@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Optional
 
 from sqlalchemy import func, select
@@ -26,6 +27,12 @@ class SysLogService:
         if self.session is None:
             raise RuntimeError("SysLogService: no database session injected (pass request.dbsession)")
         return self.session
+
+    def add(self, logtext: str, logdate: Optional[str] = None) -> None:
+        """Record an event ('YYYY-MM-DD HH:MM:SS' local time unless a date is given)."""
+        session = self._require_session()
+        session.add(SysLog(logdate=logdate or datetime.now().strftime("%Y-%m-%d %H:%M:%S"), logtext=logtext))
+        session.flush()
 
     @staticmethod
     def _date_prefix(day: str, month: str, year: str) -> str:

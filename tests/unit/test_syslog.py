@@ -187,7 +187,12 @@ def test_server_database_search(monkeypatch, server_db_url, alembic_cfg):
             assert [r["logtext"] for r in svc.search(kw="ünï")] == ["한글 ünï 'q' \\x"]
             assert len(svc.search(year="2026", month="10", day="1")) == 2
             assert svc.search(kw="' OR '1'='1") == []
+            svc.add("added via the service \\ 'q' 한글", logdate="2026-10-02 08:00:00")
+            session.commit()
+        with Session(engine) as session:
+            svc = SysLogService(session)
+            assert svc.search()[0] == {"logdate": "2026-10-02 08:00:00", "logtext": "added via the service \\ 'q' 한글"}
             count = session.execute(sa.select(sa.func.count()).select_from(SysLog)).scalar()
-            assert count == 3
+            assert count == 4
     finally:
         engine.dispose()
