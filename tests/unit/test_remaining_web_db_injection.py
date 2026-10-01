@@ -24,6 +24,7 @@ class _Request(testing.DummyRequest):
 def test_emailbook_edit_builds_repository_with_request_db(method, params):
     req = _Request()
     req.db = object()
+    req.dbsession = object()
     req.method = method
     req.params = params
     req.route_url = MagicMock(return_value="/x")
@@ -35,7 +36,7 @@ def test_emailbook_edit_builds_repository_with_request_db(method, params):
     assert cls.call_args_list, "MDBOData was never built"
     for call in cls.call_args_list:
         passed = call.kwargs.get("db", call.args[1] if len(call.args) > 1 else None)
-        assert passed is req.db
+        assert passed is req.dbsession
 
 
 def test_saml_provisioning_builds_account_with_service_db():

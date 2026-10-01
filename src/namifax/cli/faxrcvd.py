@@ -148,7 +148,7 @@ def _process_faxrcvd(args: list[str], db: Any, session: Any) -> int:
     static_preview(faxpath, pages)
 
     # AddressBook
-    addressbook = AFAddressBook(db=db)
+    addressbook = AFAddressBook(db=session)
     faxnumid = 0
     if addressbook.loadbyfaxnum(company_fax):
         faxnumid = addressbook.get_faxnumid()

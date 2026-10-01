@@ -36,31 +36,42 @@ def _run(tmp_path, **kwargs):
     return code, classes
 
 
-def test_injected_db_reaches_every_domain_object(tmp_path, monkeypatch):
-    db = object()
-    code, classes = _run(tmp_path, db=db)
+def test_each_service_gets_the_kind_of_database_it_uses(tmp_path):
+    """The address book is ORM-backed (session); the account and the archive still use the legacy engine."""
+    db, session = object(), object()
+    code, classes = _run(tmp_path, db=db, session=session)
     assert code == 0
-    for name, cls in classes.items():
-        assert cls.call_args_list, f"{name} not built"
-        for call in cls.call_args_list:
-            assert call.kwargs.get("db") is db, name
+    for name, expected in (("AFAddressBook", session), ("AFUserAccount", db), ("ArchiveOut", db)):
+        assert classes[name].call_args_list, f"{name} not built"
+        assert all(c.kwargs.get("db") is expected for c in classes[name].call_args_list), name
 
 
-def test_without_injected_db_opens_cli_db_once(tmp_path):
-    opened, calls = object(), []
+def test_a_single_injected_database_serves_both_roles(tmp_path):
+    shared = object()
+    code, classes = _run(tmp_path, db=shared)
+    assert code == 0
+    assert classes["AFAddressBook"].call_args.kwargs.get("db") is shared
+
+
+def test_without_injection_one_shared_unit_is_opened(tmp_path):
+    from types import SimpleNamespace
+
+    unit = SimpleNamespace(db=object(), session=object())
+    calls = []
 
     @contextmanager
-    def fake_cli_db(*a, **k):
+    def fake_cli_unit(*a, **k):
         calls.append(1)
-        yield opened
+        yield unit
 
-    with patch.object(mod, "cli_db", fake_cli_db):
+    with patch.object(mod, "cli_unit", fake_cli_unit):
         code, classes = _run(tmp_path)
     assert code == 0 and calls == [1]
-    assert classes["AFUserAccount"].call_args.kwargs.get("db") is opened
+    assert classes["AFAddressBook"].call_args.kwargs.get("db") is unit.session
+    assert classes["AFUserAccount"].call_args.kwargs.get("db") is unit.db
 
 
 def test_usage_and_missing_qfile_do_not_open_a_database(tmp_path):
-    with patch.object(mod, "cli_db", side_effect=AssertionError("must not open DB")):
+    with patch.object(mod, "cli_unit", side_effect=AssertionError("must not open DB")):
         assert mod.run_notify(["notify.py"]) == 0
         assert mod.run_notify(["notify.py", str(tmp_path / "nope"), "done"]) == 0

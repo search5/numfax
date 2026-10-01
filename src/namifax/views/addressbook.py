@@ -44,7 +44,7 @@ def addressbook_list_view(request):
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
     query = request.params.get("q", "").strip().lower()
 
-    companies = get_all_companies(request.db)
+    companies = get_all_companies(request.dbsession)
     if query:
         companies = [c for c in companies if query in c["company"].lower() or query in c.get("faxnumber", "")]
 
@@ -68,7 +68,7 @@ def addressbook_edit_view(request):
 
         if params.get("delete") and cid:
             try:
-                ab = AFAddressBook(db=request.db)
+                ab = AFAddressBook(db=request.dbsession)
                 ab.delete_cid(int(cid))
             except Exception:
                 pass
@@ -80,7 +80,7 @@ def addressbook_edit_view(request):
 
         if company_name:
             try:
-                ab = AFAddressBook(db=request.db)
+                ab = AFAddressBook(db=request.dbsession)
                 if cid:
                     if ab.loadbycid(int(cid)):
                         ab.set_company(company_name)
@@ -95,7 +95,7 @@ def addressbook_edit_view(request):
 
             return HTTPFound(location=request.route_url("addressbook"))
 
-    companies = get_all_companies(request.db)
+    companies = get_all_companies(request.dbsession)
     company_id = request.params.get("company_id") or request.params.get("id")
     company = None
     if company_id:
@@ -113,7 +113,7 @@ def addressbook_edit_view(request):
 def emailbook_list_view(request):
     """Display email contacts list directly from database."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    ab = AFAddressBook(db=request.db)
+    ab = AFAddressBook(db=request.dbsession)
     contacts = []
     try:
         raw = ab.get_contacts()
@@ -137,7 +137,7 @@ def emailbook_list_view(request):
 def emailbook_edit_view(request):
     """Display and handle email contact add / edit form directly with database."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    ab = AFAddressBook(db=request.db)
+    ab = AFAddressBook(db=request.dbsession)
 
     if request.method == "POST":
         params = request.params
@@ -157,7 +157,7 @@ def emailbook_edit_view(request):
             try:
                 eid_val = int(eid)
                 from namifax.db.repository import MDBOData
-                repo = MDBOData("AddressBookEmail", db=request.db)
+                repo = MDBOData("AddressBookEmail", db=request.dbsession)
                 repo.data.set_id(eid_val)
                 repo.update_entry({"contact_name": contact_name, "contact_email": contact_email})
             except Exception:
@@ -176,7 +176,7 @@ def emailbook_edit_view(request):
     if contact_id:
         try:
             from namifax.db.repository import MDBOData
-            repo = MDBOData("AddressBookEmail", db=request.db)
+            repo = MDBOData("AddressBookEmail", db=request.dbsession)
             cid_int = int(contact_id)
             rec = repo.find({"abookemail_id": cid_int}) or repo.find({"email_id": cid_int})
             if rec:

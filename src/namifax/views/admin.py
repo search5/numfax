@@ -699,7 +699,7 @@ def admin_fax2email_view(request):
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
     from namifax.services.addressbook import AFAddressBook
     from namifax.services.categories import FaxPDFCategory
-    ab = AFAddressBook(db=request.db)
+    ab = AFAddressBook(db=request.dbsession)
     fc = FaxPDFCategory(db=request.dbsession)
     message = None
     error = None
@@ -761,7 +761,7 @@ def admin_fax2email_view(request):
     if companies:
         for c in companies:
             cid_val = c.get("ab_id") or c.get("abook_id")
-            ab_temp = AFAddressBook(db=request.db)
+            ab_temp = AFAddressBook(db=request.dbsession)
             ab_temp.loadbycid(cid_val)
             fns = ab_temp.get_faxnums()
             email_val = fns[0].get("email", "") if fns else ""

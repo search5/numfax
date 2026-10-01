@@ -202,14 +202,11 @@ def phone_lookup(number: str, db: Optional[DatabaseEngine] = None) -> Optional[D
     from namifax.services.addressbook import AFAddressBook
 
     ab = AFAddressBook(db=db)
-    res = ab.addressbookfax.query(
-        f"SELECT * FROM AddressBookFAX WHERE faxnumber = {ab.addressbookfax.quote(cleaned)}",
-        reduce_single=True,
-    )
+    res = ab.addressbookfax.find({"faxnumber": cleaned}, reduce_single=False)
     if not res:
         return None
 
-    row = res[0] if isinstance(res, list) else res
+    row = res[0]
     cid = row.get("abook_id")
     if cid:
         ab.loadbycid(cid)

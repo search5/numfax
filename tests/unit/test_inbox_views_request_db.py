@@ -16,6 +16,7 @@ from namifax.views import inbox as inbox_mod
 def _request(**kw):
     req = testing.DummyRequest(**kw)
     req.db = object()
+    req.dbsession = object()
     return req
 
 
@@ -41,9 +42,9 @@ def test_view_builds_domain_objects_with_request_db(name, kwargs, attrs):
         getattr(inbox_mod, name)(req)
 
     assert arc_cls.called, f"{name} did not build ArchiveIn"
-    for cls in (arc_cls, ab_cls):
+    for cls, expected in ((arc_cls, req.db), (ab_cls, req.dbsession)):   # the address book is ORM-backed
         for call in cls.call_args_list:
-            assert call.kwargs.get("db") is req.db, f"{name}: {cls._mock_name} built without request.db"
+            assert call.kwargs.get("db") is expected, f"{name}: {cls._mock_name} built with the wrong database"
 
 
 def test_inbox_view_lists_rows_from_the_app_database_not_the_global_one(tmp_path):

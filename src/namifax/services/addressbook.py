@@ -26,11 +26,15 @@ def clean_faxnum(faxnum: str | None) -> str:
 
 
 class AFAddressBook:
-    """Unified service for companies, fax number routing, and email contacts."""
+    """Unified service for companies, fax number routing, and email contacts.
+
+    ``db`` is a SQLAlchemy ``Session`` (portable across SQLite, MySQL, MariaDB and PostgreSQL) or the legacy
+    ``DatabaseEngine``.
+    """
 
     def __init__(
         self,
-        db: DatabaseEngine | None = None,
+        db: Any = None,
         engine: DatabaseEngine | None = None,
         lang: dict[str, str] | None = None,
     ) -> None:
@@ -95,9 +99,7 @@ class AFAddressBook:
 
     def get_companies(self, with_reserved: bool = False) -> list[dict[str, Any]]:
         """Return all companies ordered by company name."""
-        sql = "SELECT * FROM AddressBook ORDER BY company"
-        res = self.addressbook.query(sql, reduce_single=False)
-        return res if isinstance(res, list) else []
+        return self.addressbook.select(order_by="company")
 
     def search_companies(self, query: str) -> list[dict[str, Any]]:
         """Search companies matching query string."""
@@ -144,11 +146,8 @@ class AFAddressBook:
         """Check if loaded company has email configured for fax2email routing."""
         if not self.abook_id:
             return False
-        res = self.addressbookfax.query(
-            f"SELECT email FROM AddressBookFAX WHERE abook_id = {self.abook_id} AND email IS NOT NULL AND email != ''",
-            reduce_single=False,
-        )
-        return bool(res)
+        rows = self.addressbookfax.find({"abook_id": self.abook_id}, reduce_single=False)
+        return any(r.get("email") for r in (rows if isinstance(rows, list) else []))
 
     def get_company(self) -> str | None:
         """Return loaded company name, auto-loading if needed."""
@@ -195,10 +194,8 @@ class AFAddressBook:
         if not cid:
             self.error = "No abook_id sent"
             return False
-        if self.db:
-            res = self.db.query("DELETE FROM AddressBookFAX WHERE abook_id = :cid", params={"cid": cid})
-            return bool(res.executed)
-        return False
+        self.addressbookfax.delete_where({"abook_id": cid})
+        return True
 
     def delete_faxnumid(self, abookfax_id: int | None) -> bool:
         """Delete specific fax number record."""
@@ -264,17 +261,11 @@ class AFAddressBook:
             self.error = "Invalid cid"
             return False
 
-        if self.db:
-            self.db.query(
-                "UPDATE AddressBookFAX SET abook_id = :newcid WHERE abook_id = :oldcid",
-                params={"newcid": newcid, "oldcid": self.abook_id},
-            )
-            old_cid = self.abook_id
-            self.abook_id = newcid
-            self.company = None
-            return self.delete_cid(old_cid)
-
-        return False
+        self.addressbookfax.update_where({"abook_id": self.abook_id}, {"abook_id": newcid})
+        old_cid = self.abook_id
+        self.abook_id = newcid
+        self.company = None
+        return self.delete_cid(old_cid)
 
     def save_settings(self, data: dict[str, Any]) -> bool:
         """Save attributes for the loaded fax number."""
@@ -407,9 +398,9 @@ class AFAddressBook:
 
     def get_contacts(self) -> dict[int, str]:
         """Return mapping of abookemail_id -> formatted contact string."""
-        res = self.addressbookemail.query("SELECT * FROM AddressBookEmail ORDER BY contact_name", reduce_single=False)
+        res = self.addressbookemail.select(order_by="contact_name")
         contacts: dict[int, str] = {}
-        if isinstance(res, list):
+        if res:
             for row in res:
                 eid = row.get("abookemail_id")
                 cname = row.get("contact_name")
@@ -421,8 +412,7 @@ class AFAddressBook:
     def make_contact_list_step(self) -> tuple[int, str, str] | None:
         """Step-by-step cursor emulation for contact list."""
         if not self._contact_queried:
-            res = self.addressbookemail.query("SELECT * FROM AddressBookEmail ORDER BY contact_name", reduce_single=False)
-            self._contact_results = list(res) if isinstance(res, list) else []
+            self._contact_results = self.addressbookemail.select(order_by="contact_name")
             self._contact_queried = True
 
         if self._contact_results:

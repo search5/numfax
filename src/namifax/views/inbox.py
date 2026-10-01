@@ -28,7 +28,7 @@ def inbox_view(request):
 
         rows = arc.list_inbox(devices=devices)
         if rows:
-            ab = AFAddressBook(db=request.db)
+            ab = AFAddressBook(db=request.dbsession)
             for r in rows:
                 fid = r.get("fid")
                 cname = None
@@ -88,14 +88,14 @@ def viewfax_view(request):
             modemdev = arc.get_modemdev() or ""
             if arc.get_companyid():
                 try:
-                    ab = AFAddressBook(db=request.db)
+                    ab = AFAddressBook(db=request.dbsession)
                     if ab.loadbycid(arc.get_companyid()):
                         company = ab.get_company()
                 except Exception:
                     pass
             if not company and arc.get_faxnumid():
                 try:
-                    ab = AFAddressBook(db=request.db)
+                    ab = AFAddressBook(db=request.dbsession)
                     if ab.loadbyfaxnumid(arc.get_faxnumid()):
                         company = ab.get_company()
                 except Exception:
@@ -167,7 +167,7 @@ def setcompany_view(request):
 
     if fid and faxnumid:
         arc = ArchiveIn(db=request.db)
-        ab = AFAddressBook(db=request.db)
+        ab = AFAddressBook(db=request.dbsession)
         try:
             if arc.load_fax(int(fid)):
                 arc.set_faxnumid(int(faxnumid))

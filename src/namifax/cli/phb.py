@@ -16,7 +16,7 @@ SRC_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 if SRC_DIR not in sys.path:
     sys.path.insert(0, SRC_DIR)
 
-from namifax.db.provider import cli_db
+from namifax.db.provider import cli_session
 from namifax.services.addressbook import AFAddressBook
 
 DEFAULT_PHONEBOOK_PATH = os.environ.get("PHONEBOOK", "/var/spool/hylafax/etc/phonebook")
@@ -58,7 +58,7 @@ def run_phb(argv: Sequence[str] | None = None, addressbook: AFAddressBook | None
     elif db is not None:
         content = generate_phonebook_content(AFAddressBook(db=db))
     else:
-        with cli_db() as opened:
+        with cli_session(ensure_schema=True) as opened:
             content = generate_phonebook_content(AFAddressBook(db=opened))
 
     out_path = os.path.abspath(args.output)

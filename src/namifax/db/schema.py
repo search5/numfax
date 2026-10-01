@@ -93,7 +93,7 @@ SCHEMA_STATEMENTS = [
         lastmod_user INTEGER
     );""",
     """CREATE TABLE IF NOT EXISTS AddressBook (
-        ab_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        abook_id INTEGER PRIMARY KEY AUTOINCREMENT,
         company TEXT,
         description TEXT,
         faxtype TEXT,
@@ -108,23 +108,23 @@ SCHEMA_STATEMENTS = [
     );""",
     """CREATE TABLE IF NOT EXISTS AddressBookFAX (
         abookfax_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        fax_id INTEGER,
         abook_id INTEGER,
-        ab_id INTEGER,
-        faxnumber TEXT,
+        faxnumber TEXT NOT NULL,
+        email TEXT,
+        description TEXT,
         to_person TEXT,
-        default_num INTEGER DEFAULT 0
+        to_location TEXT,
+        to_voicenumber TEXT,
+        faxcatid INTEGER,
+        faxfrom INTEGER DEFAULT 0,
+        faxto INTEGER DEFAULT 0,
+        printer TEXT
     );""",
     """CREATE TABLE IF NOT EXISTS AddressBookEmail (
         abookemail_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        email_id INTEGER,
         abook_id INTEGER,
-        ab_id INTEGER,
         contact_name TEXT,
-        to_person TEXT,
-        contact_email TEXT,
-        email TEXT,
-        default_email INTEGER DEFAULT 0
+        contact_email TEXT NOT NULL
     );""",
     """CREATE TABLE IF NOT EXISTS AddressBookDistro (
         dl_id INTEGER,
@@ -207,6 +207,7 @@ def init_database_tables(db: DatabaseEngine) -> bool:
         if not res.executed:
             return False
     _rename_user_passwords_columns(db)
+    _migrate_address_book_keys(db)
     _apply_schema_migrations(db)
     _backfill_alias_columns(db)
     seed_database_if_empty(db)
@@ -220,13 +221,50 @@ def _backfill_alias_columns(db: DatabaseEngine) -> None:
     Structural only: it touches NULL values and nothing else. It runs after the migrations and again
     after seeding, so rows created by the seed are complete on the very first start.
     """
-    db.query("UPDATE AddressBookEmail SET contact_name = to_person WHERE contact_name IS NULL")
-    db.query("UPDATE AddressBookEmail SET contact_email = email WHERE contact_email IS NULL")
-    db.query("UPDATE AddressBookEmail SET abookemail_id = email_id WHERE abookemail_id IS NULL")
-    db.query("UPDATE AddressBookEmail SET abook_id = ab_id WHERE abook_id IS NULL")
-    db.query("UPDATE AddressBook SET abook_id = ab_id WHERE abook_id IS NULL")
     db.query("UPDATE BarcodeRoute SET barcode_id = bcr_id WHERE barcode_id IS NULL AND bcr_id IS NOT NULL")
     db.query("UPDATE FaxArchive SET archstamp = archivetime WHERE archstamp IS NULL AND archivetime IS NOT NULL")
+
+
+def _has_column(db: DatabaseEngine, table: str, column: str) -> bool:
+    db.query(f"SELECT 1 AS present FROM pragma_table_info('{table}') WHERE name = '{column}'")
+    return bool(db.get_records())
+
+
+def _primary_key_columns(db: DatabaseEngine, table: str) -> list[str]:
+    db.query(f"SELECT name FROM pragma_table_info('{table}') WHERE pk = 1")
+    return [r["name"] for r in db.get_records()]
+
+
+_ADDRESS_BOOK_COLUMNS = ["company", "description", "faxtype", "faxnum", "phonenum", "email", "address", "city",
+                         "state", "zip", "country"]
+
+
+def _migrate_address_book_keys(db: DatabaseEngine) -> None:
+    """Older port versions made ab_id the key of AddressBook while the code (and the legacy schema) use
+    abook_id, so a new company could not be found by id until the next start filled a copy of it.
+
+    Rebuild AddressBook with abook_id as the key, keeping every id (so the links from the fax numbers and
+    e-mail contacts stay valid), and fill the link columns of the two child tables from their old copies.
+    """
+    if _primary_key_columns(db, "AddressBook") == ["ab_id"]:
+        db.query("SELECT name FROM pragma_table_info('AddressBook')")
+        old = {r["name"] for r in db.get_records()}
+        selects = ["COALESCE(abook_id, ab_id)" if "abook_id" in old else "ab_id"] + [
+            c if c in old else "NULL" for c in _ADDRESS_BOOK_COLUMNS]
+        db.query("DROP TABLE IF EXISTS AddressBook_rebuild")
+        db.query("CREATE TABLE AddressBook_rebuild (abook_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                 + ", ".join(f"{c} TEXT" for c in _ADDRESS_BOOK_COLUMNS) + ")")
+        db.query("INSERT INTO AddressBook_rebuild (abook_id, " + ", ".join(_ADDRESS_BOOK_COLUMNS) + ") SELECT "
+                 + ", ".join(selects) + " FROM AddressBook")
+        db.query("DROP TABLE AddressBook")
+        db.query("ALTER TABLE AddressBook_rebuild RENAME TO AddressBook")
+    for table in ("AddressBookFAX", "AddressBookEmail"):
+        if _has_column(db, table, "ab_id"):
+            db.query(f"UPDATE {table} SET abook_id = ab_id WHERE abook_id IS NULL AND ab_id IS NOT NULL")
+    if _has_column(db, "AddressBookEmail", "to_person"):
+        db.query("UPDATE AddressBookEmail SET contact_name = to_person WHERE contact_name IS NULL")
+    if _has_column(db, "AddressBookEmail", "email"):
+        db.query("UPDATE AddressBookEmail SET contact_email = email WHERE contact_email IS NULL")
 
 
 def _rename_user_passwords_columns(db: DatabaseEngine) -> None:
@@ -265,12 +303,6 @@ def _apply_schema_migrations(db: DatabaseEngine) -> None:
         except Exception:
             pass
 
-    # 3-1. AddressBook abook_id column
-    try:
-        db.query("ALTER TABLE AddressBook ADD COLUMN abook_id INTEGER")
-    except Exception:
-        pass
-
     # 3-2. AddressBookFAX columns
     for col in ['email TEXT', 'printer TEXT', 'faxcatid INTEGER', 'description TEXT', 'faxfrom INTEGER DEFAULT 0', 'faxto INTEGER DEFAULT 0']:
         try:
@@ -287,10 +319,6 @@ def _apply_schema_migrations(db: DatabaseEngine) -> None:
     # 3-4. DynConf (the port once kept an unused twin table "DynamicConfig"; it is no longer created)
     db.query("CREATE TABLE IF NOT EXISTS DynConf (dynconf_id INTEGER PRIMARY KEY AUTOINCREMENT, device TEXT, callid TEXT NOT NULL)")
 
-    # 4. AddressBookFAX view
-    db.query("SELECT name FROM sqlite_master WHERE name='AddressBookFAX'")
-    if not db.get_records():
-        db.query("CREATE VIEW AddressBookFAX AS SELECT fax_id AS abookfax_id, ab_id AS abook_id, * FROM AddressBookFax")
 
     # 5. FaxArchive legacy columns
     fax_archive_cols = [
@@ -401,15 +429,15 @@ def _seed_demo_records(db: DatabaseEngine) -> None:
             "INSERT INTO AddressBook (company, faxnum, phonenum, email, address, city, state, zip) "
             "VALUES ('Acme Corp', '1234567', '555-0100', 'info@acmeglobal.com', '100 Enterprise Way', 'Metropolis', 'CA', '90210')"
         )
-        res_ins = db.query("SELECT ab_id FROM AddressBook WHERE company = 'Acme Corp'")
-        acme_id = db.get_records()[0].get("ab_id") if db.get_records() else 1
+        res_ins = db.query("SELECT abook_id FROM AddressBook WHERE company = 'Acme Corp'")
+        acme_id = db.get_records()[0].get("abook_id") if db.get_records() else 1
         db.query(
-            f"INSERT OR IGNORE INTO AddressBookFAX (abookfax_id, fax_id, abook_id, ab_id, faxnumber, to_person, default_num, email, printer) "
-            f"VALUES (1, 1, {acme_id}, {acme_id}, '1234567', 'Acme Main', 1, 'faxes@acme.com', 'OfficePrinter')"
+            f"INSERT OR IGNORE INTO AddressBookFAX (abookfax_id, abook_id, faxnumber, to_person, email, printer) "
+            f"VALUES (1, {acme_id}, '1234567', 'Acme Main', 'faxes@acme.com', 'OfficePrinter')"
         )
         db.query(
-            f"INSERT OR IGNORE INTO AddressBookEmail (abookemail_id, email_id, abook_id, ab_id, contact_name, to_person, contact_email, email, default_email) "
-            f"VALUES (1, 1, {acme_id}, {acme_id}, 'Jane Doe', 'Jane Doe', 'jane@example.com', 'jane@example.com', 1)"
+            f"INSERT OR IGNORE INTO AddressBookEmail (abookemail_id, abook_id, contact_name, contact_email) "
+            f"VALUES (1, {acme_id}, 'Jane Doe', 'jane@example.com')"
         )
 
     res = db.query("SELECT COUNT(*) as cnt FROM AddressBook WHERE company = 'Initech Corp'")
@@ -418,15 +446,15 @@ def _seed_demo_records(db: DatabaseEngine) -> None:
             "INSERT INTO AddressBook (company, faxnum, phonenum, email, address, city, state, zip) "
             "VALUES ('Initech Corp', '9876543', '555-0200', 'contact@initech.com', '200 Tech Park', 'Silicon Valley', 'CA', '94025')"
         )
-        res_ins = db.query("SELECT ab_id FROM AddressBook WHERE company = 'Initech Corp'")
-        initech_id = db.get_records()[0].get("ab_id") if db.get_records() else 2
+        res_ins = db.query("SELECT abook_id FROM AddressBook WHERE company = 'Initech Corp'")
+        initech_id = db.get_records()[0].get("abook_id") if db.get_records() else 2
         db.query(
-            f"INSERT OR IGNORE INTO AddressBookFAX (abookfax_id, fax_id, abook_id, ab_id, faxnumber, to_person, default_num, email, printer) "
-            f"VALUES (2, 2, {initech_id}, {initech_id}, '9876543', 'Initech Main', 1, 'faxes@cyberdyne.com', 'MainLaser')"
+            f"INSERT OR IGNORE INTO AddressBookFAX (abookfax_id, abook_id, faxnumber, to_person, email, printer) "
+            f"VALUES (2, {initech_id}, '9876543', 'Initech Main', 'faxes@cyberdyne.com', 'MainLaser')"
         )
         db.query(
-            f"INSERT OR IGNORE INTO AddressBookEmail (abookemail_id, email_id, abook_id, ab_id, contact_name, to_person, contact_email, email, default_email) "
-            f"VALUES (2, 2, {initech_id}, {initech_id}, 'John Smith', 'John Smith', 'user@example.com', 'user@example.com', 1)"
+            f"INSERT OR IGNORE INTO AddressBookEmail (abookemail_id, abook_id, contact_name, contact_email) "
+            f"VALUES (2, {initech_id}, 'John Smith', 'user@example.com')"
         )
 
     # 8. DistroList

@@ -236,6 +236,24 @@ class OrmRepository:
         self.session.expire_all()
         return int(result.rowcount or 0)
 
+    def update_where(self, conditions: dict[str, Any], values: dict[str, Any]) -> int:
+        """Set ``values`` on every row matching all conditions; returns how many. No conditions updates nothing."""
+        if not conditions or not values:
+            return 0
+        clauses = []
+        for key, value in conditions.items():
+            column = self._column(key)
+            if value is None:
+                return 0                      # SQL "= NULL" never matches
+            try:
+                clauses.append(column == _coerce(column, value))
+            except ValueError:
+                return 0
+        assignments = {k: _coerce(self._column(k), v) for k, v in values.items() if k in self._attr}
+        result = self.session.execute(sa.update(self._table).where(sa.and_(*clauses)).values(**assignments))
+        self.session.expire_all()
+        return int(result.rowcount or 0)
+
     def search_text(self, column: str, text: str, order_by: Optional[str] = None) -> list[dict[str, Any]]:
         """Rows whose ``column`` contains the words of ``text`` in order (case-insensitive, wildcards literal)."""
         from namifax.db.textsearch import ESCAPE_CHAR, like_pattern

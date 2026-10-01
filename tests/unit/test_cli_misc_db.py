@@ -52,7 +52,7 @@ def test_phb_injected_db(tmp_path):
 
 def test_phb_opens_cli_db(tmp_path):
     opened, calls = object(), []
-    with patch.object(phb_mod, "cli_db", _fake_cli_db(opened, calls)), \
+    with patch.object(phb_mod, "cli_session", _fake_cli_db(opened, calls)), \
             patch.object(phb_mod, "AFAddressBook") as cls, \
             patch.object(phb_mod, "generate_phonebook_content", return_value="x"):
         phb_mod.run_phb(["phb", "-o", str(tmp_path / "pb")])

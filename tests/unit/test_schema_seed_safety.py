@@ -36,7 +36,7 @@ def _as_edited_production_data(db):
         "UPDATE UserAccount SET password = 'e5768ace40674f0a98b2a1f2dd14e563' WHERE username = 'admin'",  # gitleaks:allow
         "UPDATE DIDRoute SET alias = 'My trunk' WHERE didr_id = 1",
         "UPDATE BarcodeRoute SET barcode_id = 7, barcode = 'REAL-7' WHERE barcode_id = 1",
-        "UPDATE AddressBook SET company = 'Real Co Ltd' WHERE ab_id = 1",
+        "UPDATE AddressBook SET company = 'Real Co Ltd' WHERE abook_id = 1",
         "UPDATE DistroList SET listname = 'Board' WHERE dl_id = 1",
         "DELETE FROM Modems WHERE devid = 2",
         "UPDATE Modems SET alias = 'Real modem', device = 'ttyUSB0' WHERE devid = 1",

@@ -28,6 +28,7 @@ def test_view_builds_domain_objects_with_request_db(name, method, params):
     req = testing.DummyRequest()
     req.__dict__["identity"] = {"username": "admin", "uid": 1, "is_admin": True, "superuser": True}
     req.db = object()
+    req.dbsession = object()
     req.method = method
     req.params = params
     req.route_url = MagicMock(return_value="/x")
@@ -39,7 +40,7 @@ def test_view_builds_domain_objects_with_request_db(name, method, params):
 
     assert cls.call_args_list, f"{name} built no AFAddressBook"
     for call in cls.call_args_list:
-        assert call.kwargs.get("db") is req.db, f"{name}: built without request.db"
+        assert call.kwargs.get("db") is req.dbsession, f"{name}: built without request.dbsession"
 
 
 def test_get_all_companies_uses_given_db():

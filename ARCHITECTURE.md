@@ -943,7 +943,10 @@ Pyramid cookiecutter starter(2.1-branch, jinja2 + sqlalchemy)를 임시 디렉�
 | 2 | `Modems` | `[ORM]` | 0008 | `FaxModem`(`faxstat` 상태 파싱은 DB와 무관). 웹 뷰·`get_all_admin_modems`는 `request.dbsession`, `reroute`는 `cli_session`, `faxrcvd`는 `cli_unit` |
 | 2 | `DIDRoute` | `[ORM]` | 0009 | `DIDRouting` |
 | 2 | `BarcodeRoute` | `[ORM]` | 0010 | `BarcodeRouting`. 포트가 만든 중복 컬럼 `bcr_id`는 모델과 서비스에서 제거(구조 백필이 기존 SQLite DB의 NULL `barcode_id`를 `bcr_id`로 채움) |
-| 3 | `UserAccount`, `UserPasswords`, `UserTOTP`, `AddressBook*`, `DistroList`, `UserWebAuthnCredentials`, `FaxOCR` | `[LEGACY]` | - | `AddressBook` `ab_id`/`abook_id` 불일치를 모델화하며 정리 |
+| 3 | `DistroList` | `[ORM]` | 0011 | `DistributionList`. `lastmod_date`(레거시 `TIMESTAMP` 자동 갱신)를 ORM이 삽입·수정 시 채움 |
+| 3 | `UserPasswords` | `[ORM]` | 0012 | 레거시 컬럼(`upid`, `pwdhash`)으로 정정. 비밀번호 이력이 처음으로 동작(14.12) |
+| 3 | `AddressBook`, `AddressBookFAX`, `AddressBookEmail` | `[ORM]` | 0013~0015 | 레거시 기본키(`abook_id`, `abookfax_id`, `abookemail_id`). 포트의 중복 컬럼 제거. 웹 뷰·`faxrcvd`·`notify`·`phb` 전환 |
+| 3 | `UserAccount`, `UserTOTP`, `UserWebAuthnCredentials`, `FaxOCR` | `[LEGACY]` | - | 3d. 인증 경로 |
 | 4 | `FaxArchive` 외 | `[LEGACY]` | - | |
 
 **공통 규칙 (이번 라운드에서 재확인)**
@@ -1025,3 +1028,16 @@ Pyramid cookiecutter starter(2.1-branch, jinja2 + sqlalchemy)를 임시 디렉�
 
 ### 14.11 NULL 정렬 규칙
 SQLite·MySQL은 오름차순에서 NULL을 먼저, PostgreSQL은 나중에 둔다. `OrmRepository.select`는 NULL 가능 컬럼 정렬 시 `CASE`로 NULL을 오름차순에서 먼저/내림차순에서 나중에 고정한다(서버 3종 테스트). 문자열 정렬 자체(한글과 영문 혼합)는 DB collation이 정하므로 서비스 계약에 포함하지 않는다.
+
+### 14.12 그룹 3 진행 중 발견·수정한 결함
+| 결함 | 근거 | 수정 |
+| :--- | :--- | :--- |
+| **주소록 검색 SQL 인젝션** (보안) | `search_companies`가 `LIKE '%<입력>%'`를 SQL에 끼워 넣음. `x'OR(1=1)--`가 주소록 전체를 반환, `UNION`으로 다른 테이블(`UserAccount` 해시) 열람 가능. 웹 자동완성(`ajax_book`)이 호출 | 양쪽 저장소의 `search_text`(패턴을 인용, 대소문자 무시, 여러 단어는 순서대로, `%`/`_`는 리터럴, `ESCAPE '!'`). 별도 보안 커밋 `3beddd3` |
+| **비밀번호 이력 미작동** | `AFUserPasswords`가 `{uid, pwdhash}`를 쓰는데 포트 테이블은 `pwd_id/password/date`라 `no such column: pwdhash`. 재사용 차단이 한 번도 적용되지 않음 | 레거시 컬럼으로 모델화. 새 SQLite는 레거시 DDL, 기존 SQLite는 `RENAME COLUMN`으로 제자리 변경(행 보존) |
+| **새 주소록 회사를 서버 재시작 전까지 ID로 조회 불가** | 서비스는 `abook_id`를 키로 쓰지만 포트 테이블의 키는 `ab_id`였고 `abook_id`는 다음 시작 때 백필됨 | `abook_id`를 실제 기본키로: 새 DB는 레거시 구조, 기존 DB는 `AddressBook`을 ID와 연결을 보존하며 재구성 후 자식 테이블 링크 백필 |
+
+**주소록 스키마 정리**: 포트가 만든 중복 컬럼(`ab_id`, `fax_id`, `email_id`, `default_num`, `default_email`, 주소록 이메일의 `to_person`/`email`)은 새 DB에서 만들지 않고 모델에서도 제외했다. 기존 DB의 잔여 컬럼은 건드리지 않는다. `AddressBook`의 확장 컬럼(`faxnum`, `phonenum`, `address` 등)은 레거시에는 없고 시드만 채우지만 웹 자동완성 라벨이 `faxnum`을 읽으므로 유지했다. 죽은 코드였던 `AddressBookFAX` 뷰 생성 블록(항상 건너뛰어짐)은 제거했다. 추가한 인덱스: `AddressBookFAX.abook_id`, `.faxnumber`, `AddressBookEmail.contact_email`.
+
+**저장소 계층에 추가된 공통 메서드**: `delete_where`, `update_where`, `search_text`(두 구현 모두). 호출자는 조건이 비어 있거나 `None`이면 아무 행도 건드리지 않는 안전한 동작을 기대할 수 있다.
+
+**남은 raw SQL**: `services/archive_base.py:210`의 `FaxArchive` 검색은 `AddressBookFAX`를 `LEFT JOIN`하는 긴 문자열 SQL이다. PostgreSQL에서는 인용되지 않은 혼합 대소문자 테이블명 때문에 실패하므로 그룹 4(`FaxArchive`)에서 함께 변환한다.

@@ -23,9 +23,21 @@ class TestDummyRemovalPhase2(unittest.TestCase):
         self.db = DatabaseEngine()
         self.db.connect_sqlite(":memory:")
         init_database_tables(self.db)
+        # an ORM session on a second, equally seeded in-memory database (for the ORM-backed address book)
+        from sqlalchemy.orm import Session
+
+        from namifax.db.provider import create_sa_engine, open_db
+
+        self.sa_engine = create_sa_engine("sqlite://")
+        boot = open_db(self.sa_engine)
+        init_database_tables(boot)
+        boot.disconnect()
+        self.session = Session(self.sa_engine)
 
     def tearDown(self):
         testing.tearDown()
+        self.session.close()
+        self.sa_engine.dispose()
         self.db.disconnect()
         if os.path.exists(self.test_dir):
             shutil.rmtree(self.test_dir)
@@ -118,6 +130,7 @@ class TestDummyRemovalPhase2(unittest.TestCase):
         """Verify ajax_archivebook returns empty <response></response> without hardcoded Acme Corp."""
         req = testing.DummyRequest()
         req.db = self.db
+        req.dbsession = self.session
         req.params = {"q": "NonExistentCompanyXYZ"}
 
         res = ajax_archivebook_view(req)
@@ -130,6 +143,7 @@ class TestDummyRemovalPhase2(unittest.TestCase):
         """Verify ajax_archivebook returns actual matched company from database."""
         req = testing.DummyRequest()
         req.db = self.db
+        req.dbsession = self.session
         req.params = {"q": "Acme"}
 
         res = ajax_archivebook_view(req)

@@ -42,7 +42,7 @@ def test_view_builds_domain_objects_with_request_db(name, method, params):
 
     assert any(m.call_args_list for m in mocks.values()) or modems.call_args_list, f"{name} built no domain objects"
     for cls_name, mock in mocks.items():
-        expected = req.dbsession if cls_name in ("FaxModem", "DistributionList") else req.db   # modems are ORM-backed
+        expected = req.dbsession if cls_name in ("FaxModem", "DistributionList", "AFAddressBook") else req.db   # modems are ORM-backed
         for call in mock.call_args_list:
             assert call.kwargs.get("db") is expected, f"{name}: {cls_name} built with the wrong database"
     for call in modems.call_args_list:

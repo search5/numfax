@@ -31,9 +31,10 @@ def test_each_service_gets_the_kind_of_database_it_uses(tmp_path):
     for name in ("FaxModem", "DIDRouting"):
         assert classes[name].call_args_list, f"{name} not built"
         assert all(c.kwargs.get("db") is session for c in classes[name].call_args_list), name
-    for name in ("AFAddressBook", "ArchiveIn"):
-        assert classes[name].call_args_list, f"{name} not built"
-        assert all(c.kwargs.get("db") is db for c in classes[name].call_args_list), name
+    assert classes["AFAddressBook"].call_args_list and all(
+        c.kwargs.get("db") is session for c in classes["AFAddressBook"].call_args_list)
+    assert classes["ArchiveIn"].call_args_list and all(
+        c.kwargs.get("db") is db for c in classes["ArchiveIn"].call_args_list)
     assert ocr.call_args.kwargs.get("db") is db
 
 

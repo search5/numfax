@@ -13,7 +13,7 @@ from namifax.services.distro import DistributionList
 def popup_distrolist_helper(request):
     """Distribution list contact multi-select helper popup matching distrolist_helper.php."""
     dl_id = request.params.get("dl_id", "1")
-    ab = AFAddressBook(db=request.db)
+    ab = AFAddressBook(db=request.dbsession)
     dl = DistributionList(db=request.dbsession)
 
     if request.method == "POST":
@@ -117,7 +117,7 @@ def popup_distro_contacts(request):
 @view_config(route_name="popup_fax_contacts")
 def popup_fax_contacts(request):
     """Fax contacts selector popup matching faxcontacts.php."""
-    ab = AFAddressBook(db=request.db)
+    ab = AFAddressBook(db=request.dbsession)
     options_html = []
 
     try:
@@ -164,7 +164,7 @@ def popup_fax_contacts(request):
 @view_config(route_name="popup_email_contacts")
 def popup_email_contacts(request):
     """Email contacts selector popup matching emailcontacts.php."""
-    ab = AFAddressBook(db=request.db)
+    ab = AFAddressBook(db=request.dbsession)
     options_html = []
 
     try:
@@ -214,7 +214,7 @@ def upload_email_contacts(request):
             content = upload_file.file.read()
             lines = content.decode("utf-8", errors="ignore").splitlines() if isinstance(content, bytes) else str(content).splitlines()
 
-            ab = AFAddressBook(db=request.db)
+            ab = AFAddressBook(db=request.dbsession)
             current_name = None
             for line in lines:
                 line = line.strip()
@@ -265,7 +265,7 @@ def upload_fax_contacts(request):
             content = upload_file.file.read()
             lines = content.decode("utf-8", errors="ignore").splitlines() if isinstance(content, bytes) else str(content).splitlines()
 
-            ab = AFAddressBook(db=request.db)
+            ab = AFAddressBook(db=request.dbsession)
             current_name = None
             current_org = None
             current_work = None

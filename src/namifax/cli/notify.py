@@ -28,7 +28,7 @@ from namifax.common.helpers import (
     pdf_preview,
     send_mail,
 )
-from namifax.db.provider import cli_db
+from namifax.db.provider import cli_unit
 from namifax.services.addressbook import AFAddressBook
 from namifax.services.archive_out import ArchiveOut
 from namifax.services.user_account import AFUserAccount
@@ -61,8 +61,13 @@ LANG = {
 }
 
 
-def run_notify(argv: Sequence[str] | None = None, *, db: Any = None) -> int:
-    """Execute HylaFAX notification handler."""
+def run_notify(argv: Sequence[str] | None = None, *, db: Any = None, session: Any = None) -> int:
+    """Execute HylaFAX notification handler.
+
+    ``db`` is the legacy engine (user account, outbound archive) and ``session`` the ORM session (address
+    book). Without them one shared unit is opened on the configured database; a single object passed as
+    ``db`` serves both roles (useful with mocks).
+    """
     args = list(argv) if argv is not None else list(sys.argv)
 
     if len(args) < 3:
@@ -73,14 +78,14 @@ def run_notify(argv: Sequence[str] | None = None, *, db: Any = None) -> int:
         print(f"{args[1]} doesn't exist")
         return 0
 
-    if db is not None:
-        return _process_notify(args, db)
-    with cli_db() as opened:
-        return _process_notify(args, opened)
+    if db is not None or session is not None:
+        return _process_notify(args, db if db is not None else session, session if session is not None else db)
+    with cli_unit() as unit:
+        return _process_notify(args, unit.db, unit.session)
 
 
-def _process_notify(args: list[str], db: Any) -> int:
-    """Process one HylaFAX notification using the given database engine."""
+def _process_notify(args: list[str], db: Any, session: Any) -> int:
+    """Process one HylaFAX notification: ``db`` is the legacy engine, ``session`` the ORM session."""
     qfile = args[1]
     why = args[2]
     jobtime = args[3] if len(args) >= 4 else None
@@ -166,7 +171,7 @@ def _process_notify(args: list[str], db: Any) -> int:
         to_company = external
 
     # AddressBook lookup & creation
-    addressbook = AFAddressBook(db=db)
+    addressbook = AFAddressBook(db=session)
     cid = 0
     if addressbook.loadbyfaxnum(external):
         # Multiple companies check

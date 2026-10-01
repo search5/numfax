@@ -48,7 +48,7 @@ def modal_email_view(request):
                 session=request.dbsession,
             )
             if sent:
-                ab = AFAddressBook(db=request.db)
+                ab = AFAddressBook(db=request.dbsession)
                 ab.create_contacts(emails)
                 message = "Email sent successfully"
             else:
@@ -74,7 +74,7 @@ def modal_assign_view(request):
     abook_id = request.params.get("abook_id", "1")
     message = None
 
-    ab = AFAddressBook(db=request.db)
+    ab = AFAddressBook(db=request.dbsession)
     if request.method == "POST":
         myselect = request.params.get("myselect")
         regexp = request.params.get("regexp", "").strip()
@@ -218,7 +218,7 @@ def modal_txreport_view(request):
             pages_val = arc.get_pages() or 0
             cid = arc.get_companyid()
             if cid:
-                ab = AFAddressBook(db=request.db)
+                ab = AFAddressBook(db=request.dbsession)
                 if ab.loadbycid(cid):
                     company = ab.get_company() or ""
             elif arc.get_origfaxnum():

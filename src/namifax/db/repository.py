@@ -130,6 +130,16 @@ class Repository(Generic[T]):
         res = self._db.query(f"DELETE FROM {self.data.get_table_name()} WHERE {where}")
         return int(self._db.affected_rows) if res.executed else 0
 
+    def update_where(self, conditions: dict[str, Any], values: dict[str, Any]) -> int:
+        """Set ``values`` on every row matching all conditions; returns how many. No conditions updates nothing."""
+        if not conditions or not values or any(v is None for v in conditions.values()):
+            return 0
+        qb = QueryBuilder(self._db)
+        assignments = ", ".join(f"{col} = {qb.quote(val)}" for col, val in values.items())
+        where = SQL_AND.join(f"{col} = {qb.quote(val)}" for col, val in conditions.items())
+        res = self._db.query(f"UPDATE {self.data.get_table_name()} SET {assignments} WHERE {where}")
+        return int(self._db.affected_rows) if res.executed else 0
+
     def search_text(self, column: str, text: str, order_by: str | None = None) -> list[dict[str, Any]]:
         """Rows whose ``column`` contains the words of ``text`` in order (case-insensitive, wildcards literal)."""
         import re
