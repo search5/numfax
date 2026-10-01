@@ -32,7 +32,7 @@ from namifax.common.helpers import (
     static_preview,
     tiff2pdf,
 )
-from namifax.db.provider import cli_unit
+from namifax.db.provider import cli_session
 from namifax.services.addressbook import AFAddressBook
 from namifax.services.archive_in import ArchiveIn
 from namifax.services.barcode import BarcodeRouting
@@ -56,12 +56,11 @@ LANG = {
 }
 
 
-def run_faxrcvd(argv: Sequence[str] | None = None, *, db: Any = None, session: Any = None) -> int:
+def run_faxrcvd(argv: Sequence[str] | None = None, *, session: Any = None) -> int:
     """Execute HylaFAX inbound fax received handler.
 
-    ``db`` is the legacy engine (address book, archive, OCR) and ``session`` the ORM session (modems,
-    DID and barcode routes). Without them one shared unit is opened on the configured database; a
-    single object passed as ``db`` serves both roles (useful with mocks).
+    Everything runs in one ORM ``session``: the one passed in, or else one opened on the configured
+    database (committed when the hook finishes, rolled back on error).
     """
     args = list(argv) if argv is not None else list(sys.argv)
 
@@ -69,14 +68,14 @@ def run_faxrcvd(argv: Sequence[str] | None = None, *, db: Any = None, session: A
         print("Usage: faxrcvd.php file devID commID error-msg [CIDNumber] [CIDName] [DIDnum]")
         return 0
 
-    if db is not None or session is not None:
-        return _process_faxrcvd(args, db if db is not None else session, session if session is not None else db)
-    with cli_unit() as unit:
-        return _process_faxrcvd(args, unit.db, unit.session)
+    if session is not None:
+        return _process_faxrcvd(args, session)
+    with cli_session(ensure_schema=True) as opened:
+        return _process_faxrcvd(args, opened)
 
 
-def _process_faxrcvd(args: list[str], db: Any, session: Any) -> int:
-    """Process one received fax using the given database engine."""
+def _process_faxrcvd(args: list[str], session: Any) -> int:
+    """Process one received fax using the given database session."""
 
     tiff_file = args[1]
     modemdev = args[2]

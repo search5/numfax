@@ -4,7 +4,6 @@ import re
 import subprocess
 from typing import Any
 
-from namifax.db.engine import DatabaseEngine
 from namifax.db.repository import MDBOData
 
 DEFAULT_LANG = {
@@ -73,7 +72,7 @@ class FaxModem:
     def __init__(
         self,
         db: Any = None,
-        engine: DatabaseEngine | None = None,
+        engine: Any = None,
         repo: MDBOData | None = None,
         faxstat_cmd: str = "faxstat",
         lang: dict[str, str] | None = None,

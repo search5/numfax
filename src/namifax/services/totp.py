@@ -18,7 +18,7 @@ class TotpService:
     """RFC 6238 Time-based One-Time Password (TOTP) two-factor authentication service."""
 
     def __init__(self, db: Any = None) -> None:
-        from namifax.db.engine import resolve_db
+        from namifax.db.missing import resolve_db
 
         self.db = db if not hasattr(db, "execute") else db   # a Session is used as is
         if db is None:
@@ -103,15 +103,11 @@ class TotpService:
     def _count_attempt(self, uid: int) -> int:
         """Reserve one attempt (atomic increment, so parallel guesses cannot all see the old count)."""
         from sqlalchemy import func, update
-        from sqlalchemy.orm import Session
 
         from namifax.models.usertotp import UserTOTP
 
-        if isinstance(self.db, Session):
-            self.db.execute(update(UserTOTP).where(UserTOTP.uid == int(uid)).values(
-                failed_attempts=func.coalesce(UserTOTP.failed_attempts, 0) + 1))
-        else:
-            self.db.query(f"UPDATE UserTOTP SET failed_attempts = COALESCE(failed_attempts, 0) + 1 WHERE uid = {int(uid)}")
+        self.db.execute(update(UserTOTP).where(UserTOTP.uid == int(uid)).values(
+            failed_attempts=func.coalesce(UserTOTP.failed_attempts, 0) + 1))
         row = self._row(uid)
         return int((row or {}).get("failed_attempts") or 0)
 

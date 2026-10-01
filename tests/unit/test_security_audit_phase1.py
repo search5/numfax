@@ -4,8 +4,7 @@ from unittest.mock import patch, MagicMock
 from pyramid import testing
 from pyramid.httpexceptions import HTTPFound
 
-from namifax.db.engine import DatabaseEngine
-from namifax.db.schema import init_database_tables
+from sqlsession import bare_session, empty_session, seeded_session
 from namifax.services.user_account import AFUserAccount, md5_hash
 from namifax.services.faxqueue import FaxQueue
 from namifax.views.auth import login_post_view
@@ -229,12 +228,10 @@ class TestSecurityAuditPhase1(unittest.TestCase):
                 f"File {rel_path} still imports DatabaseEngine from avantfax.db.engine!",
             )
 
-        # Dynamic import test
-        from namifax.services.cover_studio import DatabaseEngine as CoverEngine
-        from namifax.db.engine import DatabaseEngine as MainEngine
-
-        # OcrService is ORM-backed now and no longer touches the legacy engine at all
-        self.assertIs(CoverEngine, MainEngine)
+        # the services are ORM-backed now: none of them imports the (removed) legacy engine
+        for rel_path in files_to_check:
+            with open(os.path.abspath(rel_path), "r", encoding="utf-8") as f:
+                self.assertNotIn("namifax.db.engine", f.read(), rel_path)
 
 
 if __name__ == "__main__":

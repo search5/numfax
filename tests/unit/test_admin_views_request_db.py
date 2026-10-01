@@ -31,15 +31,6 @@ def app_env(tmp_path):
 
 
 @pytest.mark.parametrize("view", VIEWS, ids=lambda v: v.__name__)
-def test_view_without_request_db_fails_loudly(view):
-    """request.db 가 없으면 연결 없는 DatabaseEngine() 으로 조용히 진행하지 않는다."""
-    req = testing.DummyRequest()
-    req.session.update(ADMIN_SESSION)
-    with pytest.raises(AttributeError):
-        view(req)
-
-
-@pytest.mark.parametrize("view", VIEWS, ids=lambda v: v.__name__)
 def test_view_runs_on_real_app_request_db(view, app_env):
     env, _ = app_env
     request = env["request"]

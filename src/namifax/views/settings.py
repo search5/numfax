@@ -14,7 +14,6 @@ def settings_view(request):
     message = None
     error = None
 
-    db = request.db
     user_account = AFUserAccount(db=request.dbsession)
     user_loaded = False
 

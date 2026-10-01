@@ -4,9 +4,8 @@ Revision ID: 0001
 Revises:
 Create Date: 2026-10-01
 
-Baseline for the ORM-managed tables. SQLite databases created by the legacy schema code
-(``namifax.db.schema.init_database_tables``) already have this table, so the upgrade only creates
-it when it is missing. Other databases get it from this migration.
+Baseline for the ORM-managed tables. SQLite databases created by earlier versions of the port may already
+have this table, so the upgrade only creates it when it is missing. Other databases get it from this migration.
 """
 from alembic import op
 import sqlalchemy as sa

@@ -5,8 +5,7 @@ import time
 import unittest
 from datetime import datetime, timedelta
 from unittest.mock import MagicMock
-from namifax.db.engine import DatabaseEngine
-from src.namifax.db.schema import init_database_tables
+from sqlsession import empty_session, seeded_session
 from src.namifax.services.storage_lifecycle import (
     StorageLifecyclePolicy,
     StorageLifecycleService,
@@ -19,9 +18,7 @@ class TestStorageLifecycleService(unittest.TestCase):
         self.archive_dir = os.path.join(self.temp_dir, "archive")
         os.makedirs(self.archive_dir, exist_ok=True)
 
-        self.db = DatabaseEngine()
-        self.db.connect_sqlite(":memory:")
-        init_database_tables(self.db)
+        self.db = seeded_session()
 
         self.mock_remote = MagicMock()
         self.service = StorageLifecycleService(

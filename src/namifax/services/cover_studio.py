@@ -1,7 +1,10 @@
 import os
 from pathlib import Path
 from typing import Any, Dict, List, Optional
-from namifax.db.engine import DatabaseEngine, resolve_db
+from sqlalchemy import select
+
+from namifax.db.missing import resolve_db
+from namifax.models.coverpages import CoverPages
 
 
 SUPPORTED_COVER_EXTENSIONS = {".ps", ".pdf", ".html", ".jinja2"}
@@ -24,7 +27,7 @@ class CoverStudioService:
 
     def __init__(
         self,
-        db: Optional[DatabaseEngine] = None,
+        db: Any = None,
         covers_dir: Optional[str] = None,
     ) -> None:
         self.db = resolve_db(db, "CoverStudioService")
@@ -63,12 +66,10 @@ class CoverStudioService:
             }
 
         # Register in CoverPages table
-        sql = (
-            f"INSERT INTO CoverPages (title, file) "
-            f"VALUES ({self.db.quote(title)}, {self.db.quote(safe_filename)})"
-        )
-        self.db.query(sql)
-        cover_id = self.db.get_insert_id()
+        page = CoverPages(title=title, file=safe_filename)
+        self.db.add(page)
+        self.db.flush()
+        cover_id = page.cover_id
 
         return {
             "success": True,
@@ -78,12 +79,7 @@ class CoverStudioService:
         }
 
     def render_template(self, cover_id: int, context: Dict[str, Any]) -> bytes:
-        res = self.db.query(f"SELECT file FROM CoverPages WHERE cover_id = {int(cover_id)}")
-        records = self.db.get_records() if res.executed else []
-        if not records:
-            return b""
-
-        filename = records[0].get("file")
+        filename = self.db.execute(select(CoverPages.file).where(CoverPages.cover_id == int(cover_id))).scalars().first()
         if not filename:
             return b""
 

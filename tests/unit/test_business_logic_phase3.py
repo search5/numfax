@@ -19,8 +19,7 @@ import pytest
 from PIL import Image
 
 from linked_db import close_linked, linked_db
-from namifax.db.engine import DatabaseEngine
-from namifax.db.schema import init_database_tables
+from sqlsession import bare_session, empty_session, seeded_session
 from namifax.services.user_account import AFUserAccount
 from namifax.views.settings import settings_view
 from namifax.common.helpers import ocr_faxcontent, bardecode
@@ -259,7 +258,7 @@ def test_faxrcvd_ocr_index_logic(tmp_path):
         mock_in.return_value = inbox_inst
 
         # Run faxrcvd CLI function
-        code = run_faxrcvd(["faxrcvd.py", tiff_path, "ttyS0", "comm01", "none"], db=MagicMock())
+        code = run_faxrcvd(["faxrcvd.py", tiff_path, "ttyS0", "comm01", "none"], session=MagicMock())
         assert code == 0
 
         # Verify index_fax was called with fax_file='fax.tif', tiff_path containing fax.tif, and fax_id=99

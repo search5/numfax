@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import Any
 
-from namifax.db.engine import DatabaseEngine
 from namifax.db.repository import MDBOData
 
 DEFAULT_LANG = {
@@ -17,7 +16,7 @@ class DynamicConfig:
     def __init__(
         self,
         db: Any = None,
-        engine: DatabaseEngine | None = None,
+        engine: Any = None,
         repo: MDBOData | None = None,
         lang: dict[str, str] | None = None,
     ) -> None:

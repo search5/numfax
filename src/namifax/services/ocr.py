@@ -9,7 +9,7 @@ from datetime import datetime
 
 from sqlalchemy import func, select
 
-from namifax.db.engine import resolve_db
+from namifax.db.missing import resolve_db
 from namifax.db.textsearch import ESCAPE_CHAR, like_pattern
 from namifax.models.faxocr import FaxOCR
 

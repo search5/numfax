@@ -6,7 +6,6 @@ import subprocess
 from datetime import datetime, timedelta
 from typing import Any
 
-from namifax.db.engine import DatabaseEngine
 from namifax.services.archive_base import FaxPDFArchive, PREVIMG, PREVIMGSFX, THUMBNAIL, TIFFNAME
 
 
@@ -15,7 +14,7 @@ class ArchiveIn(FaxPDFArchive):
 
     def __init__(
         self,
-        db: DatabaseEngine | None = None,
+        db: Any = None,
         installdir: str = "",
     ) -> None:
         super().__init__(db=db, installdir=installdir)

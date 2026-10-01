@@ -13,12 +13,10 @@ def _url(tmp_path, name="s.db"):
 
 
 def test_session_uses_the_configured_database_and_commits_on_success(tmp_path):
-    from namifax.db.provider import cli_db, cli_session
+    from namifax.db.provider import cli_session
 
     env = _url(tmp_path)
-    with cli_db(environ=env):  # creates the schema
-        pass
-    with cli_session(environ=env) as session:
+    with cli_session(environ=env, ensure_schema=True) as session:  # creates the schema
         session.execute(text("INSERT INTO SystemConfig (key, value) VALUES ('cs', 'committed')"))
 
     con = sqlite3.connect(tmp_path / "s.db")
@@ -29,10 +27,10 @@ def test_session_uses_the_configured_database_and_commits_on_success(tmp_path):
 
 
 def test_session_rolls_back_on_error(tmp_path):
-    from namifax.db.provider import cli_db, cli_session
+    from namifax.db.provider import cli_session
 
     env = _url(tmp_path)
-    with cli_db(environ=env):
+    with cli_session(environ=env, ensure_schema=True):
         pass
     with pytest.raises(RuntimeError):
         with cli_session(environ=env) as session:

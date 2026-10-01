@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import Any
 
-from namifax.db.engine import DatabaseEngine
 from namifax.db.repository import MDBOData
 
 DEFAULT_LANG = {
@@ -16,13 +15,13 @@ DEFAULT_LANG = {
 class Covers:
     """Service class for managing AvantFAX cover pages (CoverPages table).
 
-    ``db`` is a SQLAlchemy ``Session`` (portable across databases) or the legacy ``DatabaseEngine``.
+    ``db`` is a SQLAlchemy ``Session`` (portable across databases) or the legacy ``Any``.
     """
 
     def __init__(
         self,
         db: Any = None,
-        engine: DatabaseEngine | None = None,
+        engine: Any = None,
         repo: MDBOData | None = None,
         lang: dict[str, str] | None = None,
     ) -> None:

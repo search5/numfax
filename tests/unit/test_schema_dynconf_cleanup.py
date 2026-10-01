@@ -4,15 +4,13 @@ from __future__ import annotations
 
 import pytest
 
-from namifax.db.engine import DatabaseEngine
-from namifax.db.schema import init_database_tables
+from sqlsession import bare_session, empty_session, seeded_session
 
 
 @pytest.fixture
 def db():
-    engine = DatabaseEngine()
-    assert engine.connect_sqlite(":memory:")
-    assert init_database_tables(engine)
+    engine = bare_session()
+    engine.upgrade_schema()
     yield engine
     engine.disconnect()
 
@@ -35,7 +33,7 @@ def test_a_fresh_database_gets_the_demo_rule(db):
 def test_restarting_does_not_overwrite_an_edited_rule(db):
     db.query("UPDATE DynConf SET callid = '5551234', device = 'ttyS9' WHERE dynconf_id = 1")
     db.query("INSERT INTO DynConf (callid, device) VALUES ('5559999', NULL)")
-    assert init_database_tables(db)  # what happens on every application start
+    db.upgrade_schema()  # what happens on every application start
     db.query("SELECT dynconf_id, callid, device FROM DynConf ORDER BY dynconf_id")
     assert db.get_records() == [
         {"dynconf_id": 1, "callid": "5551234", "device": "ttyS9"},
@@ -45,5 +43,5 @@ def test_restarting_does_not_overwrite_an_edited_rule(db):
 
 def test_an_existing_twin_table_from_an_older_install_is_left_alone(db):
     db.query("CREATE TABLE DynamicConfig (dynconf_id INTEGER PRIMARY KEY AUTOINCREMENT, device TEXT, callid TEXT NOT NULL)")
-    assert init_database_tables(db)
+    db.upgrade_schema()
     assert "DynamicConfig" in _tables(db)  # harmless leftover: never dropped behind the administrator's back

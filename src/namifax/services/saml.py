@@ -12,7 +12,7 @@ from typing import Any
 
 import defusedxml.ElementTree as ET
 
-from namifax.db.engine import DatabaseEngine, resolve_db
+from namifax.db.missing import resolve_db
 from namifax.services.user_account import AFUserAccount
 
 @dataclass

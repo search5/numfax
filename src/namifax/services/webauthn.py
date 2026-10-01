@@ -20,7 +20,7 @@ from webauthn.helpers.structs import (
 
 from sqlalchemy import delete, select, update
 
-from namifax.db.engine import resolve_db
+from namifax.db.missing import resolve_db
 from namifax.models.userwebauthn import UserWebAuthnCredentials
 
 @dataclass

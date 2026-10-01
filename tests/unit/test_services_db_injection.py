@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import pytest
+from sqlalchemy.orm import Session
 from pyramid import testing
 
-from namifax.db.engine import DatabaseEngine
+from sqlsession import bare_session, empty_session, seeded_session
 from namifax.services.cover_studio import CoverStudioService
 from namifax.services.ocr import OcrService
 from namifax.services.saml import SAMLService
@@ -25,8 +26,7 @@ SERVICES = [
 
 @pytest.fixture
 def db():
-    engine = DatabaseEngine()
-    assert engine.connect_sqlite(":memory:")
+    engine = bare_session()
     return engine
 
 
@@ -39,7 +39,7 @@ def test_service_uses_injected_db(cls, db):
 @pytest.mark.parametrize("cls", SERVICES, ids=lambda c: c.__name__)
 def test_service_without_db_fails_loudly_on_first_use(cls):
     svc = cls()
-    assert not isinstance(svc.db, DatabaseEngine)
+    assert not isinstance(svc.db, Session)
     with pytest.raises(RuntimeError, match="database"):
         svc.db.query("SELECT 1")
 

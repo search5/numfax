@@ -11,7 +11,7 @@ from sqlalchemy.dialects.mysql.mariadb import MariaDBDialect
 from sqlalchemy.orm import Session
 from sqlalchemy.schema import CreateTable
 
-from namifax.db.engine import DatabaseEngine
+from sqlsession import bare_session, empty_session, seeded_session
 
 DIALECTS = [sqlite.dialect(), mysql.dialect(), MariaDBDialect(), postgresql.dialect()]
 IDS = ["sqlite", "mysql", "mariadb", "postgresql"]
@@ -67,9 +67,8 @@ def test_a_new_sqlite_database_has_the_legacy_keys_and_no_duplicate_columns(seed
 
 def _port_v1_layout(db):
     """The layout older port versions created (ab_id was the real key, abook_id was filled at the next start)."""
-    from namifax.db.schema import init_database_tables
 
-    init_database_tables(db)
+    db.upgrade_schema()
     for t in ("AddressBook", "AddressBookFAX", "AddressBookEmail"):
         db.query(f"DROP TABLE {t}")
     db.query("CREATE TABLE AddressBook (ab_id INTEGER PRIMARY KEY AUTOINCREMENT, company TEXT, description TEXT, "
@@ -89,12 +88,10 @@ def _port_v1_layout(db):
 
 
 def test_an_old_port_database_is_rebuilt_keeping_ids_and_links():
-    from namifax.db.schema import init_database_tables
 
-    db = DatabaseEngine()
-    assert db.connect_sqlite(":memory:")
+    db = bare_session()
     _port_v1_layout(db)
-    assert init_database_tables(db)
+    db.upgrade_schema()
 
     assert _pk(db, "AddressBook") == ["abook_id"] and "ab_id" not in _cols(db, "AddressBook")
     db.query("SELECT abook_id, company, faxnum FROM AddressBook ORDER BY abook_id")
@@ -111,15 +108,13 @@ def test_an_old_port_database_is_rebuilt_keeping_ids_and_links():
 
 
 def test_rebuilding_twice_changes_nothing():
-    from namifax.db.schema import init_database_tables
 
-    db = DatabaseEngine()
-    assert db.connect_sqlite(":memory:")
+    db = bare_session()
     _port_v1_layout(db)
-    init_database_tables(db)
+    db.upgrade_schema()
     db.query("SELECT * FROM AddressBook ORDER BY abook_id")
     first = db.get_records()
-    assert init_database_tables(db)
+    db.upgrade_schema()
     db.query("SELECT * FROM AddressBook ORDER BY abook_id")
     assert db.get_records() == first
 

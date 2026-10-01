@@ -4,63 +4,15 @@ import unittest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from namifax.db.engine import DatabaseEngine
+from sqlsession import empty_session, seeded_session
 from namifax.services.user_account import AFUserAccount, UserAccountService
 from namifax.services.user_passwords import AFUserPasswords
 
 
 class TestAFUserAccount(unittest.TestCase):
     def setUp(self):
-        self.engine = DatabaseEngine()
-        self.engine.connect_sqlite(":memory:")
+        self.engine = empty_session()
 
-        self.engine.query(
-            """
-            CREATE TABLE UserAccount (
-                uid INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT,
-                username TEXT,
-                password TEXT,
-                email TEXT,
-                email_sig TEXT,
-                user_tsi TEXT,
-                from_company TEXT,
-                from_location TEXT,
-                from_voicenumber TEXT,
-                from_faxnumber TEXT,
-                coverpage_id INTEGER,
-                audiofile TEXT,
-                faxperpageinbox INTEGER,
-                faxperpagearchive INTEGER,
-                superuser INTEGER DEFAULT 0,
-                can_del INTEGER DEFAULT 0,
-                last_mod TEXT,
-                last_login TEXT,
-                last_ip TEXT,
-                language TEXT DEFAULT 'en',
-                modemdevs TEXT,
-                didrouting TEXT,
-                faxcats TEXT,
-                pwdexpire TEXT,
-                pwdcycle INTEGER DEFAULT 0,
-                pwd_reuse INTEGER DEFAULT 0,
-                is_admin INTEGER DEFAULT 0,
-                wasreset INTEGER DEFAULT 0,
-                acc_enabled INTEGER DEFAULT 1,
-                deleted INTEGER DEFAULT 0,
-                any_modem INTEGER DEFAULT 0
-            );
-            """
-        )
-        self.engine.query(
-            """
-            CREATE TABLE UserPasswords (
-                upid INTEGER PRIMARY KEY AUTOINCREMENT,
-                uid INTEGER NOT NULL,
-                pwdhash TEXT NOT NULL
-            );
-            """
-        )
 
         self.passwords_svc = AFUserPasswords(db=self.engine)
         self.user_svc = AFUserAccount(db=self.engine, user_passwords=self.passwords_svc)

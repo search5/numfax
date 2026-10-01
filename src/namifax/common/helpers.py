@@ -14,7 +14,6 @@ from typing import Any, Dict, List, Optional, Sequence
 
 from PIL import Image
 
-from namifax.db.engine import DatabaseEngine
 
 DEFAULT_ADMIN_EMAIL = "admin@localhost"
 
@@ -191,7 +190,7 @@ def get_admin_email() -> str:
     return os.environ.get("ADMIN_EMAIL", DEFAULT_ADMIN_EMAIL)
 
 
-def phone_lookup(number: str, db: Optional[DatabaseEngine] = None) -> Optional[Dict[str, Any]]:
+def phone_lookup(number: str, db: Any = None) -> Optional[Dict[str, Any]]:
     """Look up address book company and contact details by phone/fax number."""
     if not number:
         return None
@@ -218,7 +217,7 @@ def get_company_details(
     abookfax_id: Optional[int] = None,
     orig_faxnum: Optional[str] = None,
     companyid: Optional[int] = None,
-    db: Optional[DatabaseEngine] = None,
+    db: Any = None,
 ) -> Dict[str, Any]:
     """Retrieve combined company and fax information."""
     from namifax.services.addressbook import AFAddressBook

@@ -1,12 +1,15 @@
-"""B track, group 4: FaxArchive. The ORM path must answer exactly like the legacy SQL path.
+"""B track, group 4: FaxArchive searched through the ORM.
 
-The same rows are loaded into a legacy engine and into a session; a matrix of search criteria is then run
-against both and the results compared. The same matrix runs on the real servers in the serverdb test.
+The answers to a matrix of search criteria were recorded from the original SQL implementation before it was
+removed (``data/fax_archive_search_golden.json``); the ORM queries must keep giving exactly those answers. The
+same matrix runs on the real servers in the serverdb test.
 """
 
 from __future__ import annotations
 
 import itertools
+import json
+from pathlib import Path
 
 import alembic.command
 import pytest
@@ -16,8 +19,6 @@ from sqlalchemy.dialects import mysql, postgresql, sqlite
 from sqlalchemy.orm import Session
 from sqlalchemy.schema import CreateTable
 
-from namifax.db.engine import DatabaseEngine
-from namifax.db.schema import init_database_tables
 
 LEGACY_COLUMNS = {"fid", "faxnumid", "companyid", "faxpath", "pages", "faxcatid", "didr_id", "description",
                   "lastoperation", "lastmoduser", "lastmoddate", "archstamp", "modemdev", "userid", "origfaxnum",
@@ -64,17 +65,6 @@ ROWS = [
 FAX_NUMBERS = [(1, 10), (2, 11), (3, 10)]          # abookfax_id, abook_id
 
 
-def _load_legacy(db):
-    for t in ("FaxArchive", "AddressBookFAX"):
-        db.query(f"DELETE FROM {t}")
-    for r in ROWS:
-        cols = ", ".join(r)
-        vals = ", ".join(db.quote(v) for v in r.values())
-        assert db.query(f"INSERT INTO FaxArchive ({cols}) VALUES ({vals})").executed
-    for fid, ab in FAX_NUMBERS:
-        assert db.query(f"INSERT INTO AddressBookFAX (abookfax_id, abook_id, faxnumber) VALUES ({fid}, {ab}, '5{fid}')").executed
-
-
 def _load_session(session):
     from namifax.models import AddressBookFAX, FaxArchive
 
@@ -86,30 +76,23 @@ def _load_session(session):
 
 
 @pytest.fixture
-def legacy():
-    db = DatabaseEngine()
-    assert db.connect_sqlite(":memory:")
-    init_database_tables(db)
-    _load_legacy(db)
-    yield db
-    db.disconnect()
-
-
-@pytest.fixture
 def orm(dbsession):
     _load_session(dbsession)
     return dbsession
 
 
-@pytest.fixture(params=["orm", "legacy"])
-def backend(request):
-    return request.getfixturevalue(request.param)
+@pytest.fixture
+def backend(orm):
+    return orm
 
 
 def _archive(db):
     from namifax.services.archive_base import FaxPDFArchive
 
     return FaxPDFArchive(db=db)
+
+
+GOLDEN = json.loads((Path(__file__).parent / "data" / "fax_archive_search_golden.json").read_text())
 
 
 def _search(db, **criteria):
@@ -156,9 +139,13 @@ def _ids(c):
     return ",".join(f"{k}={v}" for k, v in c.items())
 
 
-@pytest.mark.parametrize("case", CASES, ids=[_ids(c) for c in CASES])
-def test_both_paths_answer_alike(case, legacy, orm):
-    assert _search(orm, **BASE, **case) == _search(legacy, **BASE, **case)
+def test_the_recorded_matrix_is_the_one_in_this_file():
+    assert [g["case"] for g in GOLDEN["search"]] == CASES
+
+
+@pytest.mark.parametrize("golden", GOLDEN["search"], ids=[_ids(g["case"]) for g in GOLDEN["search"]])
+def test_search_gives_the_recorded_answer(golden, orm):
+    assert _search(orm, **BASE, **golden["case"]) == (golden["numrows"], golden["fids"])
 
 
 def test_search_sanity_so_the_matrix_is_not_vacuous(orm):
@@ -168,10 +155,14 @@ def test_search_sanity_so_the_matrix_is_not_vacuous(orm):
 
 
 @pytest.mark.parametrize("pageindex,expected", [(0, [12, 11, 10]), (1, [9, 8, 7]), (2, [6, 5]), (9, [6, 5]), (-3, [12, 11, 10])])
-def test_paging_matches(pageindex, expected, legacy, orm):
+def test_paging(pageindex, expected, orm):
     kw = dict(sentrecvd="*", superuser=True, pagelimit=3, pageindex=pageindex)
-    n, fids = _search(orm, **kw)
-    assert (n, fids) == _search(legacy, **kw) == (8, expected)
+    assert _search(orm, **kw) == (8, expected)
+
+
+@pytest.mark.parametrize("golden", GOLDEN["paging"], ids=["page-1", "page-out-of-range"])
+def test_recorded_paging_answers(golden, orm):
+    assert _search(orm, **golden["case"]) == (golden["numrows"], golden["fids"])
 
 
 def test_user_search_without_a_user_or_routes_does_not_crash(orm):
@@ -189,18 +180,13 @@ def test_keyword_wildcards_are_literal(orm):
 
 # --- the inbox ---------------------------------------------------------------------------------------------
 
-@pytest.mark.parametrize("args", [
-    dict(devices=None), dict(devices=["ttyS0"]), dict(devices=["ttyS0", "ttyS1"], faxcats=[1]),
-    dict(devices=[], faxcats=None), dict(devices=[1], enable_did_routing=True), dict(devices=["ttyS1"], faxcats=[]),
-    dict(devices=None, faxcats=[2]),
-])
-def test_inbox_count_and_list_match(args, legacy, orm):
-    for method in ("get_num_faxes",):
-        assert getattr(_archive(orm), method)(**args) == getattr(_archive(legacy), method)(**args)
-    for order in (False, True):
-        a = [r["fid"] for r in _archive(orm).list_inbox(index=0, limit=10, order_by_modem=order, **args)]
-        b = [r["fid"] for r in _archive(legacy).list_inbox(index=0, limit=10, order_by_modem=order, **args)]
-        assert a == b
+@pytest.mark.parametrize("golden", GOLDEN["inbox"], ids=[str(g["args"]) for g in GOLDEN["inbox"]])
+def test_inbox_count_and_list_give_the_recorded_answers(golden, orm):
+    args = golden["args"]
+    assert _archive(orm).get_num_faxes(**args) == golden["count"]
+    for order, key in ((False, "list"), (True, "list_modem")):
+        rows = _archive(orm).list_inbox(index=0, limit=10, order_by_modem=order, **args)
+        assert [r["fid"] for r in rows] == golden[key]
 
 
 def test_inbox_paging_and_dates(backend):
@@ -285,7 +271,7 @@ def test_inbox_to_archive_helpers(backend):
 # --- real servers --------------------------------------------------------------------------------------------
 
 @pytest.mark.serverdb
-def test_server_matrix_matches_sqlite(monkeypatch, server_db_url, alembic_cfg, legacy):
+def test_server_matrix_matches_the_recorded_answers(monkeypatch, server_db_url, alembic_cfg):
     from namifax.models import FaxArchive
 
     monkeypatch.setenv("DATABASE_URL", server_db_url)
@@ -294,15 +280,15 @@ def test_server_matrix_matches_sqlite(monkeypatch, server_db_url, alembic_cfg, l
     try:
         with Session(engine) as s:
             _load_session(s)
-            for case in CASES:
-                assert _search(s, **BASE, **case) == _search(legacy, **BASE, **case), case
-            for kw in (dict(sentrecvd="*", superuser=True, pagelimit=3, pageindex=1),
-                       dict(sentrecvd="*", superuser=True, pagelimit=3, pageindex=9)):
-                assert _search(s, **kw) == _search(legacy, **kw), kw
-            for args in (dict(devices=["ttyS0"]), dict(devices=["ttyS0", "ttyS1"], faxcats=[1]), dict(devices=None, faxcats=[2])):
-                assert _archive(s).get_num_faxes(**args) == _archive(legacy).get_num_faxes(**args)
-                assert [r["fid"] for r in _archive(s).list_inbox(limit=10, **args)] == \
-                    [r["fid"] for r in _archive(legacy).list_inbox(limit=10, **args)]
+            for g in GOLDEN["search"] + GOLDEN["paging"]:
+                crit = {**BASE, **g["case"]} if g in GOLDEN["search"] else g["case"]
+                assert _search(s, **crit) == (g["numrows"], g["fids"]), g["case"]
+            for g in GOLDEN["inbox"]:
+                args = g["args"]
+                assert _archive(s).get_num_faxes(**args) == g["count"]
+                for order, key in ((False, "list"), (True, "list_modem")):
+                    rows = _archive(s).list_inbox(index=0, limit=10, order_by_modem=order, **args)
+                    assert [r["fid"] for r in rows] == g[key], args
             if engine.dialect.name == "postgresql":      # rows with explicit ids do not advance the sequence
                 s.execute(text("SELECT setval(pg_get_serial_sequence('\"FaxArchive\"', 'fid'), 12)"))
             arc = _archive(s)

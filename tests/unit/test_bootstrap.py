@@ -49,7 +49,10 @@ def test_sqlite_creates_every_table_and_the_demo_data(tmp_path):
 def test_a_failure_to_initialise_is_loud(tmp_path, monkeypatch):
     from namifax.db import bootstrap
 
-    monkeypatch.setattr("namifax.db.schema.init_database_tables", lambda db: False)
+    def boom(engine):
+        raise sa.exc.OperationalError("CREATE TABLE", {}, Exception("disk is full"))
+
+    monkeypatch.setattr(bootstrap, "upgrade_to_head", boom)
     engine = create_sa_engine(f"sqlite:///{tmp_path / 'b.db'}")
     with pytest.raises(RuntimeError, match="initialisation failed"):
         bootstrap.ensure_schema(engine)

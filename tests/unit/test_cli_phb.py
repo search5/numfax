@@ -6,49 +6,13 @@ import unittest
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
 from namifax.cli.phb import generate_phonebook_content, run_phb
-from namifax.db.engine import DatabaseEngine
+from sqlsession import empty_session, seeded_session
 from namifax.services.addressbook import AFAddressBook
 
 
 class TestCliPhb(unittest.TestCase):
     def setUp(self):
-        self.engine = DatabaseEngine()
-        self.engine.connect_sqlite(":memory:")
-        self.engine.query(
-            """
-            CREATE TABLE AddressBook (
-                abook_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                company TEXT NOT NULL
-            );
-            """
-        )
-        self.engine.query(
-            """
-            CREATE TABLE AddressBookFAX (
-                abookfax_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                abook_id INTEGER NOT NULL,
-                faxnumber TEXT NOT NULL,
-                description TEXT,
-                to_person TEXT,
-                to_location TEXT,
-                to_voicenumber TEXT,
-                faxcatid INTEGER,
-                faxfrom INTEGER DEFAULT 0,
-                faxto INTEGER DEFAULT 0,
-                printer TEXT
-            );
-            """
-        )
-        self.engine.query(
-            """
-            CREATE TABLE AddressBookEmail (
-                abookemail_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                abook_id INTEGER NOT NULL,
-                contact_name TEXT,
-                contact_email TEXT NOT NULL
-            );
-            """
-        )
+        self.engine = empty_session()
         self.abook = AFAddressBook(db=self.engine)
 
     def tearDown(self):

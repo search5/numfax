@@ -25,7 +25,10 @@ from namifax.common.helpers import (
     invalid_email,
     rem_nl,
 )
-from namifax.db.provider import cli_db
+from sqlalchemy import select
+
+from namifax.db.provider import cli_session
+from namifax.models.useraccount import UserAccount
 
 USAGE = (
     "Usage: faxcover [-t to] [-c comments] [-p #pages] [-l to-location] [-m maxcomments] [-z maxlencomments] "
@@ -61,31 +64,29 @@ def process_template(template_path: str, match: str, values: Dict[str, Any]) -> 
     return lines
 
 
-def _first_row(db: Any, sql: str) -> Dict[str, Any] | None:
-    """Run a SELECT and return the first record, or None."""
-    if db.query(sql).executed:
-        records = db.get_records()
-        if records:
-            return records[0]
-    return None
+def _first_row(db: Any, columns: list, **where: Any) -> Dict[str, Any] | None:
+    """The first UserAccount row matching ``where``, as a dict, or None."""
+    row = db.execute(select(*columns).filter_by(**where).limit(1)).first()
+    return dict(row._mapping) if row else None
 
 
 def _resolve_sender(db: Any, from_name: str, from_email: str | None) -> tuple[str, str | None]:
     """Resolve sender display name / email from UserAccount (legacy faxcover.php lookup)."""
+    name, email, username = UserAccount.name, UserAccount.email, UserAccount.username
     if from_email:
-        row = _first_row(db, f"SELECT name FROM UserAccount WHERE email = {db.quote(from_email)}")
+        row = _first_row(db, [name], email=from_email)
         if row:
             return row.get("name", from_name), from_email
         if not invalid_email(from_name):
-            row2 = _first_row(db, f"SELECT name FROM UserAccount WHERE email = {db.quote(from_name)}")
+            row2 = _first_row(db, [name], email=from_name)
             if row2:
                 return row2.get("name", from_name), from_name
         return from_name, from_email
 
-    row = _first_row(db, f"SELECT email FROM UserAccount WHERE name = {db.quote(from_name)}")
+    row = _first_row(db, [email], name=from_name)
     if row:
         return from_name, row.get("email", from_email)
-    row_u = _first_row(db, f"SELECT name, email FROM UserAccount WHERE username = {db.quote(from_name)}")
+    row_u = _first_row(db, [name, email], username=from_name)
     if row_u:
         return row_u.get("name", from_name), row_u.get("email", from_email)
     return from_name, from_email
@@ -118,7 +119,7 @@ def run_faxcover(argv: Sequence[str] | None = None, *, db: Any = None) -> int:
         if db is not None:
             from_name, from_email = _resolve_sender(db, from_name, from_email)
         else:
-            with cli_db() as opened:
+            with cli_session(ensure_schema=True) as opened:
                 from_name, from_email = _resolve_sender(opened, from_name, from_email)
     except Exception:
         pass

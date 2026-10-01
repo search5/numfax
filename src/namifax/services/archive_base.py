@@ -1,10 +1,7 @@
-import math
 import os
 import re
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
-
-from sqlalchemy.orm import Session
 
 from namifax.db.repository import MDBOData
 from namifax.services import archive_orm
@@ -34,7 +31,6 @@ class FaxPDFArchive:
         date_format: str = DEFAULT_ARCHIVE_DATE_FORMAT,
     ) -> None:
         self.db = db
-        self._orm = isinstance(db, Session)     # a session: portable ORM queries; else the legacy SQL
         self._route_filters: List[Any] = []
         self.installdir = installdir
         self.date_format = date_format
@@ -52,7 +48,6 @@ class FaxPDFArchive:
         self.error: Optional[str] = None
 
         self.archive_results: Optional[List[Dict[str, Any]]] = None
-        self.sqlroutes: str = ""
 
     def get_error(self) -> Optional[str]:
         return self.error
@@ -111,42 +106,8 @@ class FaxPDFArchive:
         faxcats: Optional[List[Any]] = None,
         enable_did_routing: bool = False,
     ) -> None:
-        if self._orm:
-            self._route_filters = archive_orm.inbox_filters(devices, faxcats, enable_did_routing)
-            return
-        myroutes = []
-        mycategories = []
-
-        if isinstance(devices, list):
-            for dev in devices:
-                if dev == "" or dev is None:
-                    continue
-                qdev = self.faxarchive.quote(str(dev))
-                if enable_did_routing:
-                    myroutes.append(f"didr_id = {qdev}")
-                else:
-                    myroutes.append(f"modemdev = {qdev}")
-
-        if devices is None:
-            self.sqlroutes = ""
-        elif myroutes:
-            self.sqlroutes = " AND (" + " OR ".join(myroutes) + ")"
-        else:
-            self.sqlroutes = " AND modemdev = '' "
-
-        if isinstance(faxcats, list):
-            for cat in faxcats:
-                if cat is None:
-                    continue
-                qcat = self.faxarchive.quote(cat)
-                mycategories.append(f"faxcatid = {qcat}")
-
-            mycategories.append("(faxcatid is null or faxcatid = '')")
-
-            if mycategories:
-                self.sqlroutes += " AND (" + " OR ".join(mycategories) + ")"
-            else:
-                self.sqlroutes += " AND faxcatid = '' "
+        """Remember which inbox faxes the user may see (their modems/DID routes and fax categories)."""
+        self._route_filters = archive_orm.inbox_filters(devices, faxcats, enable_did_routing)
 
     def get_num_faxes(
         self,
@@ -155,11 +116,7 @@ class FaxPDFArchive:
         enable_did_routing: bool = False,
     ) -> int:
         self.viewable_devices(devices, faxcats, enable_did_routing)
-        if self._orm:
-            return archive_orm.count_inbox(self.db, self._route_filters)
-        query = f"SELECT fid FROM FaxArchive WHERE inbox = 1 {self.sqlroutes}"
-        results = self.faxarchive.query(query, reduce_single=False)
-        return len(results) if isinstance(results, list) else 0
+        return archive_orm.count_inbox(self.db, self._route_filters)
 
     def get_fid_prev(self) -> Optional[int]:
         if "fid" not in self.dbdata:
@@ -195,179 +152,12 @@ class FaxPDFArchive:
 
     def _inbox_fids(self) -> List[Dict[str, Any]]:
         """Visible inbox fids, newest first, as ``[{"fid": n}]``."""
-        if self._orm:
-            return [{"fid": f} for f in archive_orm.inbox_fids(self.db, self._route_filters)]
-        results = self.faxarchive.query(
-            f"SELECT fid FROM FaxArchive WHERE inbox = 1 {self.sqlroutes} ORDER BY fid DESC", reduce_single=False)
-        return results if isinstance(results, list) else []
+        return [{"fid": f} for f in archive_orm.inbox_fids(self.db, self._route_filters)]
 
     def search_archive(self, criteria: Dict[str, Any]) -> int:
-        if self._orm:
-            numrows, self.archive_results = archive_orm.search(self.db, criteria)
-            return numrows
-        enable_did_routing = criteria.get("enable_did_routing", False)
-        restricted_user_mode = criteria.get("restricted_user_mode", False)
-        superuser = criteria.get("superuser", False)
-
-        start_date = criteria.get("start_date")
-        end_date = criteria.get("end_date")
-        keywords = criteria.get("keywords")
-        companyid = criteria.get("companyid")
-        sentrecvd = criteria.get("sentrecvd")
-        category = criteria.get("category")
-        faxid = criteria.get("faxid")
-        userid = criteria.get("userid")
-        categories = criteria.get("categories")
-        modemdevs = criteria.get("modemdevs")
-        didroutes = criteria.get("didroutes")
-        pagelimit = criteria.get("pagelimit", 25)
-        pageindex = criteria.get("pageindex", 0)
-
-        query = (
-            "SELECT FaxArchive.fid FROM FaxArchive "
-            "LEFT JOIN AddressBookFAX ON (FaxArchive.faxnumid = AddressBookFAX.abookfax_id) "
-            "WHERE inbox = 0 "
-        )
-
-        query_didroutes = self._prepare_routes_clause("didr_id", didroutes)
-        query_categories = self._prepare_routes_clause("FaxArchive.faxcatid", categories)
-        query_modemdevs = self._prepare_routes_clause("modemdev", modemdevs)
-        query_category = self.faxarchive.quote(category) if category else None
-        query_userid = self.faxarchive.quote(userid) if userid else None
-
-        if query_didroutes == "didr_id = ''":
-            query_didroutes = "didr_id = 'X'"
-
-        if sentrecvd == "s":
-            if userid:
-                query += f" AND userid = {query_userid} "
-            else:
-                query += " AND userid is not null "
-            query += " AND modemdev is null "
-
-        elif sentrecvd == "r":
-            if enable_did_routing:
-                if not superuser:
-                    if category:
-                        if query_didroutes:
-                            query += f" AND ({query_didroutes})"
-                    else:
-                        if query_didroutes and query_categories:
-                            op = "AND" if restricted_user_mode else "OR"
-                            query += (
-                                f" AND ((({query_didroutes}) {op} ({query_categories})) "
-                                f"OR (({query_didroutes}) AND FaxArchive.faxcatid is null))"
-                            )
-                        elif not query_didroutes and query_categories:
-                            query += f" AND ({query_categories})"
-                        elif query_didroutes and not query_categories:
-                            query += f" AND ({query_didroutes})"
-                else:
-                    query += " AND modemdev is not null "
-            else:
-                if not superuser:
-                    if category:
-                        if query_modemdevs:
-                            query += f" AND ({query_modemdevs})"
-                    else:
-                        if query_modemdevs and query_categories:
-                            op = "AND" if restricted_user_mode else "OR"
-                            query += (
-                                f" AND ((({query_modemdevs}) {op} ({query_categories})) "
-                                f"OR (({query_modemdevs}) AND FaxArchive.faxcatid is null))"
-                            )
-                        elif not query_modemdevs and query_categories:
-                            query += f" AND ({query_categories})"
-                        elif query_modemdevs and not query_categories:
-                            query += f" AND ({query_modemdevs})"
-                else:
-                    query += " AND modemdev is not null "
-
-            if category:
-                query += f" AND FaxArchive.faxcatid = {query_category} "
-            query += " AND (userid = 0 OR userid is null) "
-
-        elif sentrecvd == "*":
-            target_routes = query_didroutes if enable_did_routing else query_modemdevs
-            if not superuser:
-                if category:
-                    if target_routes:
-                        query += f" AND ({target_routes} OR userid = {query_userid})"
-                else:
-                    if target_routes and query_categories:
-                        op = "AND" if restricted_user_mode else "OR"
-                        query += (
-                            f" AND ((({target_routes}) {op} ({query_categories})) "
-                            f"OR (({target_routes}) AND FaxArchive.faxcatid is null) OR userid = {query_userid})"
-                        )
-                    elif not target_routes and query_categories:
-                        query += f" AND ({query_categories} OR userid = {query_userid})"
-                    elif target_routes and not query_categories:
-                        query += f" AND ({target_routes} OR userid = {query_userid})"
-            else:
-                if userid:
-                    query += f" AND userid = {query_userid} "
-
-            if category:
-                query += f" AND FaxArchive.faxcatid = {query_category} "
-
-        else:
-            target_routes = query_didroutes if enable_did_routing else query_modemdevs
-            if not superuser:
-                query += f" AND ({target_routes} OR userid = {query_userid}) "
-            else:
-                if userid:
-                    query += f" AND userid = {query_userid} "
-
-        if start_date and end_date:
-            qs = self.faxarchive.quote(str(start_date))
-            qe = self.faxarchive.quote(str(end_date))
-            query += f" AND (archstamp > {qs} AND archstamp < {qe}) "
-        elif start_date:
-            qs = self.faxarchive.quote(f"{start_date}%")
-            query += f" AND archstamp LIKE {qs} "
-
-        if faxid:
-            query += f" AND FaxArchive.fid = {self.faxarchive.quote(faxid)}"
-
-        if keywords:
-            kw = str(keywords).strip().replace(" ", "%")
-            qkw = self.faxarchive.quote(f"%{kw}%")
-            query += (
-                f" AND (FaxArchive.description LIKE {qkw} "
-                f" OR FaxArchive.faxcontent LIKE {qkw}) "
-            )
-
-        if companyid:
-            qcid = self.faxarchive.quote(companyid)
-            query += f" AND (AddressBookFAX.abook_id = {qcid} OR FaxArchive.companyid = {qcid}) "
-
-        query += " ORDER BY fid DESC"
-
-        all_rows = self.faxarchive.query(query, reduce_single=False)
-        numrows = len(all_rows) if isinstance(all_rows, list) else 0
-
-        numpages = math.ceil(numrows / pagelimit) if numrows > pagelimit else 0
-        if pageindex > (numpages - 1):
-            pageindex = max(0, numpages - 1)
-        if pageindex < 0:
-            pageindex = 0
-
-        offset = pageindex * pagelimit
-        query += f" LIMIT {offset}, {pagelimit}"
-
-        self.archive_results = self.faxarchive.query(query, reduce_single=False)
+        """Search the archive; the page of ids is read with ``next_archive_entry``. Returns the number of matches."""
+        numrows, self.archive_results = archive_orm.search(self.db, criteria)
         return numrows
-
-    def _prepare_routes_clause(self, col: str, items: Any) -> Optional[str]:
-        if items is None:
-            return None
-        if not isinstance(items, list):
-            items = [items]
-        if not items:
-            return None
-        clauses = [f"{col} = {self.faxarchive.quote(x)}" for x in items if x is not None]
-        return " OR ".join(clauses) if clauses else None
 
     def next_archive_entry(self) -> Optional[int]:
         if isinstance(self.archive_results, list) and self.archive_results:
@@ -386,16 +176,11 @@ class FaxPDFArchive:
         order_by_modem: bool = False,
     ) -> List[Dict[str, Any]]:
         self.viewable_devices(devices, faxcats, enable_did_routing)
-        order_by = "modemdev, fid DESC" if order_by_modem else "fid DESC"
         if index < 0:
             index = 0
         offset = index * limit
 
-        if self._orm:
-            rows = archive_orm.list_inbox(self.db, self._route_filters, offset, limit, order_by_modem)
-        else:
-            query = f"SELECT FaxArchive.* FROM FaxArchive WHERE inbox = 1 {self.sqlroutes} ORDER BY {order_by} LIMIT {offset}, {limit}"
-            rows = self.faxarchive.query(query, reduce_single=False)
+        rows = archive_orm.list_inbox(self.db, self._route_filters, offset, limit, order_by_modem)
         if not isinstance(rows, list):
             return []
 
@@ -522,11 +307,7 @@ class FaxPDFArchive:
         return count
 
     def _fids_older_than(self, cutoff: str, inbox: Optional[int] = None) -> List[int]:
-        if self._orm:
-            return archive_orm.fids_older_than(self.db, cutoff, inbox)
-        where = f"archstamp < {self.faxarchive.quote(cutoff)}" + (f" AND inbox = {int(inbox)}" if inbox is not None else "")
-        results = self.faxarchive.query(f"SELECT fid FROM FaxArchive WHERE {where}", reduce_single=False)
-        return [r.get("fid") for r in results] if isinstance(results, list) else []
+        return archive_orm.fids_older_than(self.db, cutoff, inbox)
 
     def set_faxnumid(self, id: int) -> bool:
         if "fid" not in self.dbdata:

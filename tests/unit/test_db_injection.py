@@ -1,13 +1,9 @@
-"""Spec 48: DB engine provisioning and request.db bridge."""
+"""Spec 48: database provisioning (URL resolution, engine, isolation between apps)."""
 
 from __future__ import annotations
 
-import sqlite3
-
 import pytest
 from pyramid.scripting import prepare
-
-from namifax.db.engine import DatabaseEngine
 
 
 # --- 2.1 resolve_database_url -------------------------------------------------
@@ -55,26 +51,7 @@ def test_memory_engine_shares_one_database_across_connections():
     assert c2.driver_connection.execute("SELECT a FROM t").fetchall() == [(1,)]
 
 
-# --- 2.3 DatabaseEngine.from_connection --------------------------------------
-
-def test_from_connection_returns_dict_records_without_row_factory():
-    raw = sqlite3.connect(":memory:")  # row_factory 기본(tuple)
-    db = DatabaseEngine.from_connection(raw)
-    assert db.query("CREATE TABLE t (id INTEGER PRIMARY KEY, name TEXT)").executed
-    assert db.query("INSERT INTO t (name) VALUES (?)", ["a"]).executed
-    assert db.query("SELECT id, name FROM t").executed
-    assert db.get_records() == [{"id": 1, "name": "a"}]
-
-
-def test_from_connection_disconnect_closes_wrapped_connection():
-    raw = sqlite3.connect(":memory:")
-    db = DatabaseEngine.from_connection(raw)
-    db.disconnect()
-    with pytest.raises(sqlite3.ProgrammingError):
-        raw.execute("SELECT 1")
-
-
-# --- 2.4 / 2.5 create_app + request.db ---------------------------------------
+# --- 2.4 create_app -----------------------------------------------------------
 
 def _make_app(db_file):
     from namifax import create_app
@@ -83,35 +60,29 @@ def _make_app(db_file):
 
 
 def test_registry_holds_engine_and_tables_are_initialised(tmp_path):
+    import sqlalchemy as sa
+
     app = _make_app(tmp_path / "a.db")
-    assert app.registry["dbengine"] is not None
-    env = prepare(registry=app.registry)
-    db = env["request"].db
-    assert db.query("SELECT COUNT(*) AS n FROM sqlite_master WHERE name='UserAccount'").executed
-    assert db.get_records()[0]["n"] == 1
-    env["closer"]()
+    engine = app.registry["dbengine"]
+    assert engine is not None
+    assert "UserAccount" in sa.inspect(engine).get_table_names()
 
 
 def test_two_apps_with_different_urls_are_isolated(tmp_path):
+    import sqlalchemy as sa
+
     app1 = _make_app(tmp_path / "one.db")
     app2 = _make_app(tmp_path / "two.db")
-
-    e1 = prepare(registry=app1.registry)
-    e1["request"].db.query("CREATE TABLE probe (v INTEGER)")
-    e1["request"].db.query("INSERT INTO probe VALUES (1)")
-
-    e2 = prepare(registry=app2.registry)
-    res = e2["request"].db.query("SELECT * FROM probe")
-    assert not res.executed  # app2 에는 probe 테이블이 없다
-    e1["closer"]()
-    e2["closer"]()
+    with app1.registry["dbengine"].begin() as conn:
+        conn.execute(sa.text("CREATE TABLE probe (v INTEGER)"))
+    assert "probe" in sa.inspect(app1.registry["dbengine"]).get_table_names()
+    assert "probe" not in sa.inspect(app2.registry["dbengine"]).get_table_names()   # app2 has no such table
 
 
-def test_request_db_is_reified_and_released_on_finish(tmp_path):
+def test_request_has_no_legacy_db_attribute(tmp_path):
     app = _make_app(tmp_path / "a.db")
     env = prepare(registry=app.registry)
-    request = env["request"]
-    assert request.db is request.db
-    db = request.db
-    env["closer"]()
-    assert db._conn is None  # disconnect() 로 풀에 반환됨
+    try:
+        assert not hasattr(env["request"], "db")
+    finally:
+        env["closer"]()

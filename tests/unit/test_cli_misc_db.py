@@ -62,27 +62,25 @@ def test_phb_opens_cli_db(tmp_path):
 # --- createuser -----------------------------------------------------------------
 
 def test_createuser_creates_account_in_injected_db(seeded_db):
-    code = user_mod.run_createuser(["-u", "carol", "-p", "Secret123!", "-e", "c@x.test", "-n", "Carol"], db=seeded_db)
+    code = user_mod.run_createuser(["-u", "carol", "-p", "Secret123!", "-e", "c@x.test", "-n", "Carol"], session=seeded_db)
     assert code == 0
     seeded_db.query("SELECT username FROM UserAccount WHERE username = 'carol'")
     assert seeded_db.get_records() == [{"username": "carol"}]
 
 
-def test_createuser_opens_one_shared_unit():
-    from types import SimpleNamespace
-
-    from linked_db import close_linked, linked_db
+def test_createuser_opens_one_cli_session():
+    from sqlsession import seeded_session
 
     calls = []
-    db, session = linked_db()
+    session = seeded_session()
     try:
-        with patch.object(user_mod, "cli_unit", _fake_cli_db(SimpleNamespace(db=db, session=session), calls)):
+        with patch.object(user_mod, "cli_session", _fake_cli_db(session, calls)):
             assert user_mod.run_createuser(["-u", "dave", "-p", "Secret123!", "-e", "d@x.test"]) == 0
         assert calls == [1]
-        db.query("SELECT username, is_admin FROM UserAccount WHERE username = 'dave'")
-        assert db.get_records() == [{"username": "dave", "is_admin": 1}]
+        session.query("SELECT username, is_admin FROM UserAccount WHERE username = 'dave'")
+        assert session.get_records() == [{"username": "dave", "is_admin": 1}]
     finally:
-        close_linked(db, session)
+        session.disconnect()
 
 
 # --- faxcover -------------------------------------------------------------------
@@ -108,9 +106,9 @@ def test_faxcover_resolves_sender_name_from_email_in_injected_db(tmp_path, seede
     assert values["from"] == "System Administrator"
 
 
-def test_faxcover_opens_cli_db_only_when_required_args_present(tmp_path, seeded_db):
+def test_faxcover_opens_a_cli_session_only_when_required_args_present(tmp_path, seeded_db):
     calls = []
-    with patch.object(faxcover_mod, "cli_db", _fake_cli_db(seeded_db, calls)):
+    with patch.object(faxcover_mod, "cli_session", _fake_cli_db(seeded_db, calls)):
         _cover(tmp_path, ["-f", "operator", "-n", "555"])
         assert calls == [1]
         assert faxcover_mod.run_faxcover(["faxcover"]) == 0

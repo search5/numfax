@@ -4,55 +4,15 @@ import unittest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from namifax.db.engine import DatabaseEngine
+from sqlsession import empty_session, seeded_session
 from namifax.services.addressbook import AFAddressBook, AddressBookService, clean_faxnum
 
 
 class TestAFAddressBook(unittest.TestCase):
     def setUp(self):
-        self.engine = DatabaseEngine()
-        self.engine.connect_sqlite(":memory:")
+        self.engine = empty_session()
 
         # Create AddressBook, AddressBookFAX, AddressBookEmail tables
-        self.engine.query(
-            """
-            CREATE TABLE AddressBook (
-                abook_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                company TEXT NOT NULL
-            );
-            """
-        )
-        self.engine.query(
-            """
-            CREATE TABLE AddressBookFAX (
-                abookfax_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                abook_id INTEGER NOT NULL,
-                faxnumber TEXT NOT NULL,
-                email TEXT,
-                description TEXT,
-                to_person TEXT,
-                to_address TEXT,
-                to_zip TEXT,
-                to_city TEXT,
-                to_location TEXT,
-                to_voicenumber TEXT,
-                faxcatid INTEGER,
-                printer TEXT,
-                faxfrom INTEGER DEFAULT 0,
-                faxto INTEGER DEFAULT 0
-            );
-            """
-        )
-        self.engine.query(
-            """
-            CREATE TABLE AddressBookEmail (
-                abookemail_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                abook_id INTEGER,
-                contact_name TEXT NOT NULL,
-                contact_email TEXT NOT NULL
-            );
-            """
-        )
         self.service = AFAddressBook(db=self.engine)
 
     def tearDown(self):

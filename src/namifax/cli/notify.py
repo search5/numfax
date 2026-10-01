@@ -28,7 +28,7 @@ from namifax.common.helpers import (
     pdf_preview,
     send_mail,
 )
-from namifax.db.provider import cli_unit
+from namifax.db.provider import cli_session
 from namifax.services.addressbook import AFAddressBook
 from namifax.services.archive_out import ArchiveOut
 from namifax.services.user_account import AFUserAccount
@@ -61,12 +61,10 @@ LANG = {
 }
 
 
-def run_notify(argv: Sequence[str] | None = None, *, db: Any = None, session: Any = None) -> int:
+def run_notify(argv: Sequence[str] | None = None, *, session: Any = None) -> int:
     """Execute HylaFAX notification handler.
 
-    ``db`` is the legacy engine (user account, outbound archive) and ``session`` the ORM session (address
-    book). Without them one shared unit is opened on the configured database; a single object passed as
-    ``db`` serves both roles (useful with mocks).
+    Everything runs in one ORM ``session``: the one passed in, or else one opened on the configured database.
     """
     args = list(argv) if argv is not None else list(sys.argv)
 
@@ -78,14 +76,14 @@ def run_notify(argv: Sequence[str] | None = None, *, db: Any = None, session: An
         print(f"{args[1]} doesn't exist")
         return 0
 
-    if db is not None or session is not None:
-        return _process_notify(args, db if db is not None else session, session if session is not None else db)
-    with cli_unit() as unit:
-        return _process_notify(args, unit.db, unit.session)
+    if session is not None:
+        return _process_notify(args, session)
+    with cli_session(ensure_schema=True) as opened:
+        return _process_notify(args, opened)
 
 
-def _process_notify(args: list[str], db: Any, session: Any) -> int:
-    """Process one HylaFAX notification: ``db`` is the legacy engine, ``session`` the ORM session."""
+def _process_notify(args: list[str], session: Any) -> int:
+    """Process one HylaFAX notification with the given ORM session."""
     qfile = args[1]
     why = args[2]
     jobtime = args[3] if len(args) >= 4 else None

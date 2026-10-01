@@ -4,26 +4,14 @@ import unittest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from namifax.db.engine import DatabaseEngine
+from sqlsession import empty_session, seeded_session
 from namifax.services.distro import DistributionList, DistributionListService
 
 
 class TestDistributionList(unittest.TestCase):
     def setUp(self):
-        self.engine = DatabaseEngine()
-        self.engine.connect_sqlite(":memory:")
+        self.engine = empty_session()
 
-        self.engine.query(
-            """
-            CREATE TABLE DistroList (
-                dl_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                listname TEXT NOT NULL,
-                listdata TEXT,
-                lastmod_date TEXT,
-                lastmod_user INTEGER
-            );
-            """
-        )
         self.service = DistributionList(db=self.engine)
 
     def tearDown(self):

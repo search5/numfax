@@ -67,13 +67,3 @@ def test_settings_view_builds_account_and_totp_with_request_db():
     user_cls, totp_cls = _run(settings_mod.settings_view, req)
     _assert_db(user_cls, req, attr="dbsession")  # the account is ORM-backed
     _assert_db(totp_cls, req, positional=True, attr="dbsession")
-
-
-@pytest.mark.parametrize("view", [auth_mod.login_post_view, settings_mod.settings_view])
-def test_views_without_request_db_fail_loudly(view):
-    req = _request("POST", {"username": "admin", "password": "pw"})
-    del req.__dict__["db"]
-    with patch.object(auth_mod, "AFUserAccount", MagicMock()), \
-            patch.object(settings_mod, "AFUserAccount", MagicMock()), \
-            pytest.raises(AttributeError):
-        view(req)

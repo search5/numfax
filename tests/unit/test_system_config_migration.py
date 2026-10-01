@@ -27,15 +27,17 @@ def test_upgrade_creates_the_table_on_an_empty_database(tmp_path, monkeypatch, a
 
 
 def test_upgrade_is_a_noop_for_a_table_the_legacy_schema_already_created(tmp_path, monkeypatch, alembic_cfg):
-    from namifax.db.engine import DatabaseEngine
-    from namifax.db.schema import init_database_tables
+    from sqlsession import bare_session, empty_session, seeded_session
 
     db_file = tmp_path / "legacy.db"
-    legacy = DatabaseEngine()
-    assert legacy.connect_sqlite(str(db_file))
-    init_database_tables(legacy)
-    legacy.query("INSERT INTO SystemConfig (key, value) VALUES ('keep', 'me')")
-    legacy.disconnect()
+    from namifax.db.bootstrap import ensure_schema
+    from namifax.db.provider import create_sa_engine
+
+    legacy = create_sa_engine(f"sqlite:///{db_file}")
+    ensure_schema(legacy)                  # the start-up path creates the table (and fills the demo data)
+    with legacy.begin() as conn:
+        conn.execute(sa.text("INSERT INTO SystemConfig (key, value) VALUES ('keep', 'me')"))
+    legacy.dispose()
 
     monkeypatch.setenv("DATABASE_URL", f"sqlite:///{db_file}")
     alembic.command.upgrade(alembic_cfg, "head")

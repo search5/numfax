@@ -18,19 +18,16 @@ from pyramid.scripting import prepare
 from pyramid.testing import DummyRequest, testConfig
 
 from namifax import create_app, models
-from namifax.db.engine import DatabaseEngine
 from namifax.db.provider import create_sa_engine, resolve_database_url
-from namifax.db.schema import init_database_tables
+from sqlsession import seeded_session
 
 
 @pytest.fixture
 def seeded_db():
-    """Isolated in-memory DatabaseEngine with schema and seed data (no global DB)."""
-    engine = DatabaseEngine()
-    assert engine.connect_sqlite(":memory:")
-    init_database_tables(engine)
-    yield engine
-    engine.disconnect()
+    """Isolated in-memory SqlSession (a real Session) with schema and seed data."""
+    session = seeded_session()
+    yield session
+    session.disconnect()
 
 
 @pytest.fixture(autouse=True)

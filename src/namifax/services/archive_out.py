@@ -1,9 +1,8 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Optional
+from typing import Any, Optional
 
-from namifax.db.engine import DatabaseEngine
 from namifax.services.archive_base import clean_faxnum, FaxPDFArchive
 
 
@@ -12,7 +11,7 @@ class ArchiveOut(FaxPDFArchive):
 
     def __init__(
         self,
-        db: DatabaseEngine | None = None,
+        db: Any = None,
         installdir: str = "",
     ) -> None:
         super().__init__(db=db, installdir=installdir)

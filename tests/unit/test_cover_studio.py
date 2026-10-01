@@ -2,8 +2,7 @@ import os
 import shutil
 import tempfile
 import unittest
-from namifax.db.engine import DatabaseEngine
-from src.namifax.db.schema import init_database_tables
+from sqlsession import empty_session, seeded_session
 from src.namifax.services.cover_studio import CoverStudioService
 
 
@@ -13,9 +12,7 @@ class TestCoverStudio(unittest.TestCase):
         self.covers_dir = os.path.join(self.temp_dir, "covers")
         os.makedirs(self.covers_dir, exist_ok=True)
 
-        self.db = DatabaseEngine()
-        self.db.connect_sqlite(":memory:")
-        init_database_tables(self.db)
+        self.db = seeded_session()
         self.service = CoverStudioService(db=self.db, covers_dir=self.covers_dir)
 
     def tearDown(self):

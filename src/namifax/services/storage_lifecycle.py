@@ -4,7 +4,7 @@ import time
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Any, Dict, Optional
-from namifax.db.engine import resolve_db
+from namifax.db.missing import resolve_db
 
 
 @dataclass

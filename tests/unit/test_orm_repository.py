@@ -25,13 +25,6 @@ def test_repository_with_a_session_is_orm_backed(dbsession):
     assert isinstance(MDBOData("FaxCategory", db=dbsession), OrmRepository)
 
 
-def test_repository_with_a_database_engine_is_unchanged(seeded_db):
-    from namifax.db.orm_repository import OrmRepository
-    from namifax.db.repository import Repository
-
-    assert not isinstance(Repository("FaxCategory", db=seeded_db), OrmRepository)
-
-
 def test_unknown_table_without_an_orm_model_is_reported(dbsession):
     from namifax.db.repository import Repository
 
@@ -65,7 +58,7 @@ def test_find_reduces_a_single_match_to_a_dict_but_not_a_list(repo):
 def test_find_with_or_logic_limit_and_offset(repo):
     for name in ("a", "b", "c", "d"):
         repo.new_entry({"name": name})
-    from namifax.db.query import SQL_OR
+    from namifax.db.orm_repository import SQL_OR
 
     assert {r["name"] for r in repo.find({"name": "a", "catid": 999}, query_logic=SQL_OR, reduce_single=False)} == {"a"}
     page = repo.find(limit=2, offset=1, reduce_single=False)
@@ -175,7 +168,7 @@ def test_server_database_repository_behaviour(monkeypatch, server_db_url, alembi
     import alembic.command
     from sqlalchemy.orm import Session
 
-    from namifax.db.query import SQL_OR
+    from namifax.db.orm_repository import SQL_OR
     from namifax.db.repository import Repository
 
     monkeypatch.setenv("DATABASE_URL", server_db_url)
@@ -240,8 +233,3 @@ def test_search_text_is_case_insensitive_ordered_and_literal_on_both_backends(db
         assert names("' OR 1=1 --") == [] and names("x\\' OR 1=1") == []
 
 
-def test_search_text_rejects_unsafe_column_names_on_the_legacy_repository(seeded_db):
-    from namifax.db.repository import Repository
-
-    with pytest.raises(ValueError):
-        Repository("FaxCategory", db=seeded_db).search_text("name; DROP TABLE FaxCategory", "x")

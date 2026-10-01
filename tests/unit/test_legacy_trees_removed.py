@@ -28,11 +28,7 @@ def test_batch_tools_live_in_namifax_cli(name):
 def test_serve_main_does_not_fall_back_when_pyramid_app_fails(monkeypatch, capsys):
     monkeypatch.setenv("NAMIFAX_ENABLE_SCHEDULER", "0")
 
-    @contextmanager
-    def fake_cli_db(*a, **k):
-        yield object()
-
-    with patch.object(main_mod, "cli_db", fake_cli_db), \
+    with patch.object(main_mod, "ensure_schema", lambda engine: None), \
             patch.object(main_mod, "make_server") as make_server, \
             patch("namifax.create_app", MagicMock(side_effect=RuntimeError("db is down"))):
         code = main_mod.serve_main(["--port", "0"])

@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import Any
 
-from namifax.db.engine import DatabaseEngine
 from namifax.db.repository import MDBOData
 
 DEFAULT_LANG = {
@@ -15,13 +14,13 @@ class FaxPDFCategory:
     """Service class for managing fax categories (FaxCategory table).
 
     ``db`` is a SQLAlchemy ``Session`` (portable across SQLite, MySQL, MariaDB and PostgreSQL) or the
-    legacy ``DatabaseEngine`` (still used by the FFI bridge).
+    legacy ``Any`` (still used by the FFI bridge).
     """
 
     def __init__(
         self,
         db: Any = None,
-        engine: DatabaseEngine | None = None,
+        engine: Any = None,
         repo: MDBOData | None = None,
         lang: dict[str, str] | None = None,
     ) -> None:

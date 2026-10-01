@@ -4,7 +4,6 @@ import re
 from typing import Any
 
 from namifax.common.validators import is_valid_email
-from namifax.db.engine import DatabaseEngine
 from namifax.db.repository import MDBOData
 
 DEFAULT_LANG = {
@@ -29,13 +28,13 @@ class AFAddressBook:
     """Unified service for companies, fax number routing, and email contacts.
 
     ``db`` is a SQLAlchemy ``Session`` (portable across SQLite, MySQL, MariaDB and PostgreSQL) or the legacy
-    ``DatabaseEngine``.
+    ``Any``.
     """
 
     def __init__(
         self,
         db: Any = None,
-        engine: DatabaseEngine | None = None,
+        engine: Any = None,
         lang: dict[str, str] | None = None,
     ) -> None:
         self.db = db or engine

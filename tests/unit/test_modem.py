@@ -4,27 +4,14 @@ import unittest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from namifax.db.engine import DatabaseEngine
+from sqlsession import empty_session, seeded_session
 from namifax.services.modem import FaxModem, FaxModemService, parse_faxstat_output
 
 
 class TestFaxModem(unittest.TestCase):
     def setUp(self):
-        self.engine = DatabaseEngine()
-        self.engine.connect_sqlite(":memory:")
+        self.engine = empty_session()
 
-        self.engine.query(
-            """
-            CREATE TABLE Modems (
-                devid INTEGER PRIMARY KEY AUTOINCREMENT,
-                device TEXT NOT NULL,
-                alias TEXT NOT NULL,
-                contact TEXT,
-                printer TEXT,
-                faxcatid INTEGER
-            );
-            """
-        )
         self.service = FaxModem(db=self.engine)
 
     def tearDown(self):

@@ -6,7 +6,7 @@ methods the services already use (``find``, ``new_entry``, ``update_entry``, ``d
 are bound parameters and the table, types and quoting are right for SQLite, MySQL, MariaDB and
 PostgreSQL.
 
-Behaviour kept from the legacy ``QueryBuilder`` so callers do not change:
+Behaviour kept from the original PHP/SQL implementation so callers do not change:
 
 * ``find`` compares with equality only; comparing with ``None`` matches nothing (SQL ``= NULL``).
 * values are loosely typed: ``"5"`` matches an integer column (PostgreSQL would not convert it).
@@ -30,7 +30,7 @@ SQL_OR = " OR "
 
 
 def resolve_model(name_or_class: Any) -> type:
-    """Find the mapped class for a table name, class name or legacy entity class."""
+    """Find the mapped class for a table name, class name or class."""
     import namifax.models  # noqa: F401  (registers every model)
     from namifax.models.meta import Base
 
@@ -66,7 +66,7 @@ def _coerce(column: sa.Column, value: Any) -> Any:
 
 
 class OrmRecord:
-    """The record an ``OrmRepository`` currently points at (the legacy ``MDBObject`` role)."""
+    """The record an ``OrmRepository`` currently points at (the role of the original PHP ``MDBObject``)."""
 
     def __init__(self, model: type) -> None:
         self._table = sa.inspect(model).local_table

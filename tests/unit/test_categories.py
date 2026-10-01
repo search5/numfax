@@ -4,23 +4,14 @@ import unittest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from namifax.db.engine import DatabaseEngine
+from sqlsession import empty_session, seeded_session
 from namifax.services.categories import FaxPDFCategory, CategoryService
 
 
 class TestFaxPDFCategory(unittest.TestCase):
     def setUp(self):
-        self.engine = DatabaseEngine()
-        self.engine.connect_sqlite(":memory:")
+        self.engine = empty_session()
 
-        self.engine.query(
-            """
-            CREATE TABLE FaxCategory (
-                catid INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL
-            );
-            """
-        )
         self.service = FaxPDFCategory(db=self.engine)
 
     def tearDown(self):

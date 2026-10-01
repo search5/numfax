@@ -1,25 +1,18 @@
-"""A legacy ``DatabaseEngine`` and an ORM ``Session`` over ONE seeded in-memory database.
+"""Kept for the tests that were written for a legacy engine and a session over one database.
 
-Several tests build data through the legacy engine and then drive code that now reads it through the
-session (or the reverse). A static pool gives both the same connection, so each sees the other's writes.
+Both are the same ``SqlSession`` now: one object, one connection, one set of data.
 """
 
 from __future__ import annotations
 
-from sqlalchemy.orm import Session
-
-from namifax.db.provider import create_sa_engine, open_db
-from namifax.db.schema import init_database_tables
+from sqlsession import seeded_session
 
 
 def linked_db():
-    """Return ``(db, session)``; close the session, then the db, when done."""
-    engine = create_sa_engine("sqlite://")
-    db = open_db(engine)
-    assert init_database_tables(db)
-    return db, Session(engine)
+    """Return ``(db, session)``; both names refer to the same session."""
+    session = seeded_session()
+    return session, session
 
 
 def close_linked(db, session) -> None:
-    session.close()
-    db.disconnect()
+    session.disconnect()

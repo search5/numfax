@@ -3,7 +3,6 @@ from __future__ import annotations
 from typing import Any
 
 from namifax.auth.password import PasswordManager
-from namifax.db.engine import DatabaseEngine
 from namifax.db.repository import MDBOData
 
 
@@ -13,7 +12,7 @@ class AFUserPasswords:
     def __init__(
         self,
         db: Any = None,
-        engine: DatabaseEngine | None = None,
+        engine: Any = None,
         repo: MDBOData | None = None,
     ) -> None:
         self.db = db or engine

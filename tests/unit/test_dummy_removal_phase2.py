@@ -8,8 +8,7 @@ from pyramid import testing
 from pyramid.httpexceptions import HTTPNotFound
 
 from namifax.common.helpers import convert2pdf, pdf_preview, static_preview, tiff2pdf
-from namifax.db.engine import DatabaseEngine
-from namifax.db.schema import init_database_tables
+from sqlsession import bare_session, empty_session, seeded_session
 from namifax.views.ajax import ajax_archivebook_view
 from namifax.views.inbox import fax_download_view
 
@@ -20,24 +19,11 @@ class TestDummyRemovalPhase2(unittest.TestCase):
     def setUp(self):
         self.config = testing.setUp()
         self.test_dir = tempfile.mkdtemp()
-        self.db = DatabaseEngine()
-        self.db.connect_sqlite(":memory:")
-        init_database_tables(self.db)
-        # an ORM session on a second, equally seeded in-memory database (for the ORM-backed address book)
-        from sqlalchemy.orm import Session
-
-        from namifax.db.provider import create_sa_engine, open_db
-
-        self.sa_engine = create_sa_engine("sqlite://")
-        boot = open_db(self.sa_engine)
-        init_database_tables(boot)
-        boot.disconnect()
-        self.session = Session(self.sa_engine)
+        self.db = seeded_session()
+        self.session = self.db
 
     def tearDown(self):
         testing.tearDown()
-        self.session.close()
-        self.sa_engine.dispose()
         self.db.disconnect()
         if os.path.exists(self.test_dir):
             shutil.rmtree(self.test_dir)

@@ -6,7 +6,6 @@ import string
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional, Tuple
 
-from namifax.db.engine import DatabaseEngine
 from namifax.db.repository import MDBOData
 from namifax.services.user_passwords import AFUserPasswords
 
@@ -28,7 +27,7 @@ class AFUserAccount:
     """Core User Account Domain Service managing user profiles, authentication, authorization, and password policies.
 
     ``db`` is a SQLAlchemy ``Session`` (portable across SQLite, MySQL, MariaDB and PostgreSQL) or the legacy
-    ``DatabaseEngine``.
+    ``Any``.
     """
 
     def __init__(

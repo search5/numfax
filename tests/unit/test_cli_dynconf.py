@@ -7,23 +7,13 @@ from unittest.mock import patch
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
 from namifax.cli.dynconf import run_dynconf, strip_sipinfo
-from namifax.db.engine import DatabaseEngine
+from sqlsession import empty_session, seeded_session
 from namifax.services.dynconf import DynamicConfig
 
 
 class TestCliDynconf(unittest.TestCase):
     def setUp(self):
-        self.engine = DatabaseEngine()
-        self.engine.connect_sqlite(":memory:")
-        self.engine.query(
-            """
-            CREATE TABLE DynConf (
-                dynconf_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                device TEXT,
-                callid TEXT NOT NULL
-            );
-            """
-        )
+        self.engine = empty_session()
         self.dc = DynamicConfig(db=self.engine)
 
     def tearDown(self):

@@ -1,41 +1,38 @@
 """Create or update the schema when the application (or a command) starts.
 
-* SQLite keeps the long-standing path: ``init_database_tables`` creates the legacy tables, migrates
-  databases written by older versions of the port and, in a brand-new database, adds the demo data.
-* MySQL, MariaDB and PostgreSQL get their tables from the Alembic revisions (``upgrade head``) and
-  only the default fax categories and cover pages. No demo accounts are created there: a database
-  that serves real users must not start with a well-known password. The first administrator is made
-  with ``namifax createuser``.
+* SQLite: tables left by older versions of the port are first brought to the current layout
+  (``sqlite_upgrade``), then the Alembic revisions create whatever is missing. A brand-new SQLite database also
+  gets the demo data (development and the test suites).
+* MySQL, MariaDB and PostgreSQL: the Alembic revisions (``upgrade head``) and only the default fax categories and
+  cover pages. No demo accounts are created there: a database that serves real users must not start with a
+  well-known password. The first administrator is made with ``namifax createuser``.
 """
 
 from __future__ import annotations
 
-from sqlalchemy import func, select
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session
 
 
 def ensure_schema(engine: Engine) -> None:
     """Bring the database behind ``engine`` up to date; safe to call on every start."""
-    if engine.dialect.name == "sqlite":
-        _init_sqlite(engine)
-        return
-    upgrade_to_head(engine)
-    with Session(engine) as session:
-        seed_default_records(session)
-        session.commit()
-
-
-def _init_sqlite(engine: Engine) -> None:
-    from namifax.db.provider import open_db
-    from namifax.db.schema import init_database_tables
-
-    boot = open_db(engine)
     try:
-        if not init_database_tables(boot):
-            raise RuntimeError(f"Database initialisation failed: {boot.get_error()}")
-    finally:
-        boot.disconnect()
+        if engine.dialect.name == "sqlite":
+            from namifax.db.sqlite_upgrade import upgrade_existing_sqlite
+
+            with engine.begin() as connection:
+                upgrade_existing_sqlite(connection)
+        upgrade_to_head(engine)
+        with Session(engine) as session:
+            from namifax.db import seed
+
+            if engine.dialect.name == "sqlite":
+                seed.seed_if_empty(session)
+            else:
+                seed.seed_default_records(session)
+            session.commit()
+    except Exception as exc:
+        raise RuntimeError(f"Database initialisation failed: {exc}") from exc
 
 
 def upgrade_to_head(engine: Engine) -> None:
@@ -51,11 +48,7 @@ def upgrade_to_head(engine: Engine) -> None:
 
 
 def seed_default_records(session: Session) -> None:
-    """Default fax categories and cover pages, only while their table is empty."""
-    from namifax.models import CoverPages, FaxCategory
+    """Kept for callers that only want the default records."""
+    from namifax.db import seed
 
-    if session.execute(select(func.count()).select_from(FaxCategory)).scalar_one() == 0:
-        session.add_all([FaxCategory(name=n) for n in ("General", "Invoices", "Legal")])
-    if session.execute(select(func.count()).select_from(CoverPages)).scalar_one() == 0:
-        session.add_all([CoverPages(title="standard", file="standard.ps"), CoverPages(title="urgent", file="urgent.ps")])
-    session.flush()
+    seed.seed_default_records(session)

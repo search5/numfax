@@ -8,8 +8,6 @@ from sqlalchemy.orm import configure_mappers, sessionmaker
 
 from namifax.models.meta import Base  # noqa: F401
 
-# Ensure all entities are registered to Base
-from namifax.models import entities  # noqa: F401
 from namifax.models.syslog import SysLog  # noqa: F401
 from namifax.models.systemconfig import SystemConfig  # noqa: F401
 from namifax.models.addressbook import AddressBook, AddressBookEmail, AddressBookFAX  # noqa: F401
@@ -83,35 +81,6 @@ def includeme(config):
     config.registry["dbengine"] = engine
     session_factory = get_session_factory(engine)
     config.registry["dbsession_factory"] = session_factory
-
-    def db(request):
-        """Legacy-compatible DatabaseEngine for this request.
-
-        Under the ``pyramid_tm`` tween it shares the connection and transaction of
-        ``request.dbsession``: raw writes commit or roll back together with the ORM session, and
-        every write marks the session as changed (zope.sqlalchemy ignores raw SQL otherwise).
-        Outside the tween (scripts, ``prepare``) it uses its own pooled connection and commits
-        each write.
-        """
-        from namifax.db.engine import DatabaseEngine
-        from namifax.db.provider import open_db
-
-        if request.environ.get("tm.active"):
-            session = request.dbsession
-            shared = DatabaseEngine.from_connection(
-                session.connection().connection,
-                managed=True,
-                on_change=lambda: zope.sqlalchemy.mark_changed(session),
-                dialect=request.registry["dbengine"].dialect.name,
-            )
-            request.add_finished_callback(lambda req: shared.disconnect())
-            return shared
-
-        legacy = open_db(request.registry["dbengine"])
-        request.add_finished_callback(lambda req: legacy.disconnect())
-        return legacy
-
-    config.add_request_method(db, "db", reify=True)
 
     # make request.dbsession available for use in Pyramid
     def dbsession(request):

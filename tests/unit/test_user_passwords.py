@@ -11,7 +11,7 @@ from sqlalchemy.dialects.mysql.mariadb import MariaDBDialect
 from sqlalchemy.orm import Session
 from sqlalchemy.schema import CreateTable
 
-from namifax.db.engine import DatabaseEngine
+from sqlsession import bare_session, empty_session, seeded_session
 
 
 def test_model_maps_the_legacy_table():
@@ -45,17 +45,15 @@ def test_a_new_sqlite_database_has_the_legacy_columns(seeded_db):
 
 
 def test_a_table_created_by_an_older_port_version_is_renamed_in_place_keeping_its_rows():
-    from namifax.db.schema import init_database_tables
 
-    db = DatabaseEngine()
-    assert db.connect_sqlite(":memory:")
-    init_database_tables(db)
+    db = bare_session()
+    db.upgrade_schema()
     db.query("DROP TABLE UserPasswords")
     db.query("CREATE TABLE UserPasswords (pwd_id INTEGER PRIMARY KEY AUTOINCREMENT, uid INTEGER NOT NULL, "
              "password TEXT NOT NULL, date TEXT)")
     db.query("INSERT INTO UserPasswords (uid, password, date) VALUES (7, 'abc123', '2026-01-01')")
 
-    assert init_database_tables(db)
+    db.upgrade_schema()
     assert _columns(db, "UserPasswords")[:3] == ["upid", "uid", "pwdhash"]
     db.query("SELECT upid, uid, pwdhash FROM UserPasswords")
     assert db.get_records() == [{"upid": 1, "uid": 7, "pwdhash": "abc123"}]

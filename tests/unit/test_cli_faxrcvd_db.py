@@ -23,49 +23,34 @@ def _run(tmp_path, **kwargs):
     return code, classes, ocr
 
 
-def test_each_service_gets_the_kind_of_database_it_uses(tmp_path):
-    """Modems, DID routes, the address book, the archive and OCR are ORM-backed (session)."""
-    db, session = object(), object()
-    code, classes, ocr = _run(tmp_path, db=db, session=session)
+def test_every_service_gets_the_one_session(tmp_path):
+    """Modems, DID routes, the address book, the archive and OCR all run in the same ORM session."""
+    session = object()
+    code, classes, ocr = _run(tmp_path, session=session)
     assert code == 0
-    for name in ("FaxModem", "DIDRouting"):
+    for name in ("FaxModem", "DIDRouting", "AFAddressBook", "ArchiveIn"):
         assert classes[name].call_args_list, f"{name} not built"
         assert all(c.kwargs.get("db") is session for c in classes[name].call_args_list), name
-    assert classes["AFAddressBook"].call_args_list and all(
-        c.kwargs.get("db") is session for c in classes["AFAddressBook"].call_args_list)
-    assert classes["ArchiveIn"].call_args_list and all(
-        c.kwargs.get("db") is session for c in classes["ArchiveIn"].call_args_list)   # the archive is ORM-backed
-    assert ocr.call_args.kwargs.get("db") is session   # the OCR index is ORM-backed
+    assert ocr.call_args.kwargs.get("db") is session
 
 
-def test_a_single_injected_database_serves_both_roles(tmp_path):
-    shared = object()
-    code, classes, _ = _run(tmp_path, db=shared)
-    assert code == 0
-    assert classes["FaxModem"].call_args.kwargs.get("db") is shared
-    assert classes["ArchiveIn"].call_args.kwargs.get("db") is shared
-
-
-def test_without_injection_one_shared_unit_is_opened(tmp_path):
-    from types import SimpleNamespace
-
-    unit = SimpleNamespace(db=object(), session=object())
-    calls = []
+def test_without_injection_one_cli_session_is_opened(tmp_path):
+    session, calls = object(), []
 
     @contextmanager
-    def fake_cli_unit(*a, **k):
+    def fake_cli_session(*a, **k):
         calls.append(1)
-        yield unit
+        yield session
 
-    with patch.object(mod, "cli_unit", fake_cli_unit):
+    with patch.object(mod, "cli_session", fake_cli_session):
         code, classes, _ = _run(tmp_path)
     assert code == 0 and calls == [1]
-    assert classes["FaxModem"].call_args.kwargs.get("db") is unit.session
-    assert classes["ArchiveIn"].call_args.kwargs.get("db") is unit.session
+    assert classes["FaxModem"].call_args.kwargs.get("db") is session
+    assert classes["ArchiveIn"].call_args.kwargs.get("db") is session
 
 
 def test_usage_does_not_open_a_database():
-    with patch.object(mod, "cli_unit", side_effect=AssertionError("must not open DB for usage")):
+    with patch.object(mod, "cli_session", side_effect=AssertionError("must not open DB for usage")):
         assert mod.run_faxrcvd(["faxrcvd.py"]) == 0
 
 

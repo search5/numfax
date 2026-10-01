@@ -8,15 +8,13 @@ from __future__ import annotations
 
 import pytest
 
-from namifax.db.engine import DatabaseEngine
-from namifax.db.schema import init_database_tables
+from sqlsession import bare_session, empty_session, seeded_session
 
 
 @pytest.fixture
 def db():
-    engine = DatabaseEngine()
-    assert engine.connect_sqlite(":memory:")
-    assert init_database_tables(engine)
+    engine = bare_session()
+    engine.upgrade_schema()
     yield engine
     engine.disconnect()
 
@@ -47,7 +45,7 @@ def _as_edited_production_data(db):
         "UPDATE DynConf SET callid = '5551234' WHERE dynconf_id = 1",
         "DELETE FROM FaxArchive WHERE fid = 2",
         # an archived fax from an unknown sender: no company, no fax number link, no modem
-        "UPDATE FaxArchive SET inbox = 0, companyid = NULL, company = NULL, faxnumid = NULL, modemdev = NULL, "
+        "UPDATE FaxArchive SET inbox = 0, companyid = NULL, faxnumid = NULL, modemdev = NULL, "
         "description = 'Real fax' WHERE fid = 1",
     ]:
         assert db.query(sql).executed, sql
@@ -56,30 +54,25 @@ def _as_edited_production_data(db):
 def test_restarting_changes_nothing_in_a_database_with_real_data(db):
     _as_edited_production_data(db)
     before = _snapshot(db)
-    assert init_database_tables(db)  # what happens on every application start
+    db.upgrade_schema()  # what happens on every application start
     assert _snapshot(db) == before
 
 
 def test_restarting_a_fresh_database_is_idempotent(db):
     before = _snapshot(db)
-    assert init_database_tables(db)
+    db.upgrade_schema()
     assert _snapshot(db) == before
 
 
 def test_no_demo_data_is_added_to_a_database_that_already_has_users():
     """`namifax createuser` first, then the server starts: the inbox must not fill with demo faxes."""
-    engine = DatabaseEngine()
-    assert engine.connect_sqlite(":memory:")
-    from namifax.db.schema import SCHEMA_STATEMENTS
-
-    for stmt in SCHEMA_STATEMENTS:
-        assert engine.query(stmt).executed
+    engine = empty_session()          # the tables exist, no rows
     assert engine.query(
         "INSERT INTO UserAccount (uid, name, username, password, email, superuser, is_admin, can_del, any_modem, acc_enabled) "
         "VALUES (1, 'Real Admin', 'realadmin', 'e5768ace40674f0a98b2a1f2dd14e563', 'real@corp.test', 1, 1, 1, 1, 1)"  # gitleaks:allow
     ).executed
 
-    assert init_database_tables(engine)
+    engine.upgrade_schema()
     for table in ("AddressBook", "DistroList", "FaxArchive", "Modems", "DIDRoute", "BarcodeRoute", "DynConf", "SysLog"):
         engine.query(f"SELECT COUNT(*) AS n FROM {table}")
         assert engine.get_records()[0]["n"] == 0, f"demo rows were added to {table}"
@@ -89,14 +82,9 @@ def test_no_demo_data_is_added_to_a_database_that_already_has_users():
 
 
 def test_default_cover_pages_and_categories_are_still_provided_when_those_tables_are_empty():
-    engine = DatabaseEngine()
-    assert engine.connect_sqlite(":memory:")
-    from namifax.db.schema import SCHEMA_STATEMENTS
-
-    for stmt in SCHEMA_STATEMENTS:
-        engine.query(stmt)
+    engine = empty_session()
     engine.query("INSERT INTO UserAccount (uid, name, username, password, email) VALUES (1, 'x', 'u', 'p', 'u@x.test')")
-    assert init_database_tables(engine)
+    engine.upgrade_schema()
     engine.query("SELECT file FROM CoverPages ORDER BY file")
     assert [r["file"] for r in engine.get_records()] == ["standard.ps", "urgent.ps"]
     engine.query("SELECT name FROM FaxCategory ORDER BY name")

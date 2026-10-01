@@ -1154,3 +1154,28 @@ SQLite·MySQL은 오름차순에서 NULL을 먼저, PostgreSQL은 나중에 둔�
 * **운영 절차**: ① 키 생성 `python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"` → ② `NAMIFAX_SECRET_KEY`로 설정 → ③ `namifax encrypt-secrets`. 키를 잃으면 암호화된 값은 복구할 수 없으므로 안전한 곳에 보관한다.
 
 **남은 항목**: TOTP 복구 코드는 일회용 평문 값으로 저장된다(해시 저장으로 바꿀 수 있음). 현재 TOTP 등록(`enable_totp`)을 호출하는 화면·엔드포인트가 없어 사용자가 직접 2FA를 켤 방법이 없다(서비스와 로그인 단계만 존재).
+
+### 14.21 레거시 `DatabaseEngine` 제거 — 최종 상태 (전부 ORM)
+13~14.20은 전환 과정의 기록이다. 그 과정에서 쓰이던 아래 구성요소는 **모두 제거**되었다.
+
+| 제거된 것 | 대체 |
+| :--- | :--- |
+| `db/engine.py` (`DatabaseEngine`, 문자열 SQL, `quote()`), `db/query.py`(`QueryBuilder`), `db/base.py`(`MDBObject`), `models/entities.py` | SQLAlchemy 세션 + 모델. 테이블 접근은 `db/repository.py`의 `Repository`/`MDBOData`(= `OrmRepository`) |
+| `request.db`, `cli_db()`, `cli_unit()`/`CliUnit`, `open_db()` | `request.dbsession`, `cli_session()` (한 연결·한 트랜잭션, 정상 종료 시 커밋) |
+| `db/schema.py` (SQLite DDL, 마이그레이션, 시드를 한 파일에서 raw SQL로) | ① 테이블 생성: Alembic(모든 DB 동일), ② 이전 버전 SQLite 보정: `db/sqlite_upgrade.py`, ③ 기본·데모 데이터: `db/seed.py`(ORM). 진입점은 `db/bootstrap.ensure_schema()` |
+| 서비스의 이중 경로(`isinstance(db, Session)` 분기, 아카이브의 레거시 SQL, TOTP의 raw SQL 증가) | ORM 한 경로 |
+| `CoverStudioService`, `faxcover` CLI의 raw SQL | ORM 조회·삽입 |
+
+**남은 `db/` 패키지**: `provider`(URL 해석, 엔진 생성, `cli_session`), `bootstrap`, `sqlite_upgrade`, `seed`, `repository`/`orm_repository`, `missing`(주입을 잊었을 때 첫 사용에서 크게 실패하는 자리표시), `textsearch`.
+
+**시작 순서** (`ensure_schema`): ① SQLite만: 이미 있는 옛 테이블 이름 변경(`DIDRouting`→`DIDRoute`, `FaxPDFCategory`→`FaxCategory`), `UserPasswords` 컬럼 이름, 주소록 키 재구성, 누락 컬럼 추가, 별칭 컬럼 채움, 텍스트 불리언 정리 → ② `alembic upgrade head`(없는 테이블만 생성) → ③ 시드(SQLite는 기본+새 DB에 한해 데모, 서버는 기본만). 실패하면 `RuntimeError("Database initialisation failed: …")`로 즉시 중단한다.
+* 이전에는 시작 때 레거시 DDL이 먼저 모든 테이블을 만들어서 `DIDRouting`→`DIDRoute` 이름 변경이 실제로는 한 번도 실행되지 않았다(빈 `DIDRoute`가 이미 생겨 있었음). 순서를 바꿔 이름 변경이 동작한다.
+
+**제거된 로직(Dead Code Removal Protocol)**
+* 포트가 임의로 만들던 `FaxArchive.company` 컬럼과 그 시드(`company='Acme Corp'`), 읽기 폴백(`r.get("company")`).
+* 호환용 뷰 `DIDRouting`, `FaxPDFCategory`(참조하는 코드가 없었다).
+* 새 SQLite 데이터베이스가 만들던 포트 전용 컬럼(`FaxArchive.faxnum/cid_name/...`)과 중복 컬럼. 이제 새 DB는 모델과 Alembic이 정의한 구조만 갖는다(이전 DB의 잔여 컬럼은 건드리지 않음).
+
+**테스트 구조**: `tests/sqlsession.py`의 `SqlSession`은 실제 `Session`에 테스트 설정·검증용 raw SQL 편의(`query`, `get_records`, `get_insert_id`, `quote`)를 더한 **테스트 전용** 클래스다(`seeded_session()`, `empty_session()`, `bare_session()`). 아카이브 검색의 기대 답은 레거시 SQL 구현에서 제거 전에 기록한 골든 데이터(`tests/unit/data/fax_archive_search_golden.json`)이며 ORM과 3개 서버 DB가 같은 답을 내는지 계속 검사한다.
+
+**결과**: 프로덕션 코드에 raw SQL 문자열 조립 경로가 없다(`seed`/`sqlite_upgrade`의 고정 SQL 제외). SQLite, MySQL, MariaDB, PostgreSQL이 같은 코드 경로와 같은 Alembic 리비전으로 동작한다.

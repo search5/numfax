@@ -1,15 +1,12 @@
 import unittest
 import pyotp
-from namifax.db.engine import DatabaseEngine
-from src.namifax.db.schema import init_database_tables
+from sqlsession import empty_session, seeded_session
 from src.namifax.services.totp import TotpService
 
 
 class TestTotpService(unittest.TestCase):
     def setUp(self):
-        self.db = DatabaseEngine()
-        self.db.connect_sqlite(":memory:")
-        init_database_tables(self.db)
+        self.db = seeded_session()
         self.service = TotpService(self.db)
 
         # Create sample user

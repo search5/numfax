@@ -36,20 +36,6 @@ def test_ddl_compiles_for_every_supported_database(dialect):
 
 # --- the legacy repository gets the same ordered listing as the ORM one ---------------------
 
-def test_legacy_repository_select_orders_rows(seeded_db):
-    from namifax.db.repository import Repository
-
-    seeded_db.query("DELETE FROM FaxCategory")
-    repo = Repository("FaxCategory", db=seeded_db)
-    for name in ("b", "c", "a"):
-        repo.new_entry({"name": name})
-    assert [r["name"] for r in repo.select(order_by="name")] == ["a", "b", "c"]
-    assert [r["name"] for r in repo.select(order_by="name", descending=True)] == ["c", "b", "a"]
-    assert repo.select(columns=["name"], order_by="name")[0] == {"name": "a"}
-    with pytest.raises(ValueError):
-        repo.select(order_by="name; DROP TABLE FaxCategory")
-
-
 # --- service on both backends ----------------------------------------------------------------
 
 @pytest.fixture(params=["session", "engine"])

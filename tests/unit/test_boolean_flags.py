@@ -4,32 +4,20 @@ from __future__ import annotations
 
 import pytest
 import sqlalchemy as sa
-from sqlalchemy.orm import Session
 
-from namifax.db.engine import DatabaseEngine
-from namifax.db.schema import init_database_tables
+from sqlsession import bare_session, empty_session, seeded_session
 
 FLAGS = ("superuser", "can_del", "pwd_reuse", "is_admin", "wasreset", "acc_enabled", "deleted", "any_modem")
 
 
-# --- the legacy engine writes real numbers ---------------------------------------------------------
+# --- the service writes real numbers ------------------------------------------------------------------
 
-@pytest.mark.parametrize("dialect", ["sqlite", "mysql", "mariadb"])
-def test_quote_writes_booleans_as_numbers(dialect):
-    import sqlite3
-
-    db = DatabaseEngine.from_connection(sqlite3.connect(":memory:"), dialect=dialect)
-    assert db.quote(True) == "1" and db.quote(False) == "0"
-    assert db.quote(1) == "'1'" or db.quote(1) == "1"      # integers keep their existing rendering
-    assert db.quote("False") == "'False'"                  # real text is still text
-
-
-def test_an_account_created_through_the_legacy_engine_stores_integers(seeded_db):
+def test_an_account_created_through_the_service_stores_integers(seeded_db):
     from namifax.services.user_account import AFUserAccount
 
-    assert AFUserAccount(db=seeded_db).create({"username": "viaengine", "password": "Secret123!", "email": "e@x.test"})
+    assert AFUserAccount(db=seeded_db).create({"username": "viaservice", "password": "Secret123!", "email": "e@x.test"})
     columns = ", ".join(f"typeof({f}) AS t_{f}, {f}" for f in FLAGS)
-    seeded_db.query(f"SELECT {columns} FROM UserAccount WHERE username = 'viaengine'")
+    seeded_db.query(f"SELECT {columns} FROM UserAccount WHERE username = 'viaservice'")
     row = seeded_db.get_records()[0]
     for flag in FLAGS:
         assert row[f"t_{flag}"] == "integer", f"{flag} was stored as {row[f't_{flag}']}"
@@ -48,11 +36,10 @@ def _text_flag_account(db, username="legacytext"):
 
 
 def test_text_flags_are_normalised_by_the_schema_initialisation():
-    db = DatabaseEngine()
-    assert db.connect_sqlite(":memory:")
-    init_database_tables(db)
+    db = bare_session()
+    db.upgrade_schema()
     _text_flag_account(db)
-    assert init_database_tables(db)
+    db.upgrade_schema()
     db.query("SELECT superuser, can_del, pwd_reuse, any_modem, is_admin, wasreset, acc_enabled, deleted, "
              "typeof(superuser) AS t FROM UserAccount WHERE username = 'legacytext'")
     row = db.get_records()[0]
@@ -61,14 +48,13 @@ def test_text_flags_are_normalised_by_the_schema_initialisation():
 
 
 def test_normalising_twice_changes_nothing():
-    db = DatabaseEngine()
-    assert db.connect_sqlite(":memory:")
-    init_database_tables(db)
+    db = bare_session()
+    db.upgrade_schema()
     _text_flag_account(db)
-    init_database_tables(db)
+    db.upgrade_schema()
     db.query("SELECT * FROM UserAccount ORDER BY uid")
     first = db.get_records()
-    init_database_tables(db)
+    db.upgrade_schema()
     db.query("SELECT * FROM UserAccount ORDER BY uid")
     assert db.get_records() == first
 
@@ -76,19 +62,16 @@ def test_normalising_twice_changes_nothing():
 # --- the ORM reads text flags correctly even if some writer still produces them --------------------
 
 def test_the_orm_never_reads_the_text_false_as_true():
-    from namifax.db.provider import create_sa_engine, open_db
     from namifax.models import UserAccount
 
-    engine = create_sa_engine("sqlite://")
-    boot = open_db(engine)
-    init_database_tables(boot)
-    _text_flag_account(boot)
-    boot.query("UPDATE UserAccount SET superuser = 'False'")      # undo the repair: simulate a stray writer
-    boot.disconnect()
-    with Session(engine) as session:
-        user = session.execute(sa.select(UserAccount).where(UserAccount.username == "legacytext")).scalar_one()
-        assert user.superuser is False and user.can_del is False and user.any_modem is False
-        assert user.is_admin is True and user.acc_enabled is True
+    db = bare_session()
+    db.upgrade_schema()
+    _text_flag_account(db)
+    db.query("UPDATE UserAccount SET superuser = 'False'")      # undo the repair: simulate a stray writer
+    user = db.execute(sa.select(UserAccount).where(UserAccount.username == "legacytext")).scalar_one()
+    assert user.superuser is False and user.can_del is False and user.any_modem is False
+    assert user.is_admin is True and user.acc_enabled is True
+    db.disconnect()
 
 
 @pytest.mark.parametrize("raw,expected", [

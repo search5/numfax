@@ -23,7 +23,8 @@ if SRC_DIR not in sys.path:
 import argparse
 
 from namifax.cli.cron import run_cron
-from namifax.db.provider import cli_db
+from namifax.db.bootstrap import ensure_schema
+from namifax.db.provider import create_sa_engine, resolve_database_url
 from namifax.cli.dynconf import run_dynconf
 from namifax.cli.faxcover import run_faxcover
 from namifax.cli.faxrcvd import run_faxrcvd
@@ -69,8 +70,11 @@ def serve_main(argv: list[str] | None = None) -> int:
     port = args.port
 
     # Ensure DB tables exist (same URL resolution as the web app, no global engine)
-    with cli_db():
-        pass
+    engine = create_sa_engine(resolve_database_url({}, os.environ))
+    try:
+        ensure_schema(engine)
+    finally:
+        engine.dispose()
 
     # Start in-process APScheduler if enabled
     enable_internal_sched = os.environ.get("NAMIFAX_ENABLE_SCHEDULER", "1") in ("1", "true", "True")

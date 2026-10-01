@@ -6,46 +6,13 @@ import unittest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from namifax.db.engine import DatabaseEngine
+from sqlsession import empty_session, seeded_session
 from namifax.services.archive_out import ArchiveOut
 
 
 class TestArchiveOut(unittest.TestCase):
     def setUp(self):
-        self.engine = DatabaseEngine()
-        self.engine.connect_sqlite(":memory:")
-        self.engine.query(
-            """
-            CREATE TABLE FaxArchive (
-                fid INTEGER PRIMARY KEY AUTOINCREMENT,
-                faxnumid INTEGER,
-                companyid INTEGER,
-                faxpath TEXT,
-                pages INTEGER,
-                faxcatid INTEGER,
-                didr_id INTEGER,
-                description TEXT,
-                lastoperation TEXT,
-                lastmoduser INTEGER,
-                lastmoddate TEXT,
-                archstamp TEXT,
-                modemdev TEXT,
-                userid INTEGER,
-                origfaxnum TEXT,
-                inbox INTEGER DEFAULT 0,
-                faxcontent TEXT
-            );
-            """
-        )
-        self.engine.query(
-            """
-            CREATE TABLE AddressBookFAX (
-                abookfax_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                abook_id INTEGER,
-                faxnumber TEXT
-            );
-            """
-        )
+        self.engine = empty_session()
         self.temp_dir = tempfile.mkdtemp()
         self.archive_out = ArchiveOut(db=self.engine, installdir=self.temp_dir)
 
