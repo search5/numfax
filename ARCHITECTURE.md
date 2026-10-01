@@ -849,3 +849,10 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 ### 13.4 P2 관찰 사항
 - `DynConf`와 `DynamicConfig` 두 테이블이 스키마에 공존하며 초기화 시 한 번 단방향 동기화된다(`schema.py:270-275`). 서비스(`DynamicConfig` 서비스, `import_blacklist`)는 `DynConf`만 쓰므로 `DynamicConfig` 테이블에 직접 넣은 행은 서비스에 보이지 않는다. 정리 대상.
 - `namifax.main`이 모듈 이름이자 `namifax/__init__.py`의 `main = create_app` 함수 이름이다. `from namifax import main`의 결과는 임포트 순서에 따라 달라진다(paste 진입점 `main = "namifax:main"` 때문). 테스트는 `importlib.import_module("namifax.main")`을 사용한다.
+
+### 13.5 P3 (테스트를 배포 패키지로 전환) 결과와 관찰
+- `avantfax` 대상 테스트 41개 파일의 임포트·패치 경로를 `namifax`로 전환했다(웹 핸들러 테스트 6개 파일은 P4에서 `web/*`와 함께 삭제하므로 제외). 전환 후 실패는 3건뿐이었고 모두 `namifax`가 의도적으로 개선된 쪽이었다: 메일러 발신자명 `NamiFAX`, `FaxQueue.killjob/faxalter`의 셸 문자열 → `subprocess.run` 인자 리스트(+`FAXUSER` 환경변수), `faxcover`의 DB 주입. 테스트를 배포 코드 동작에 맞췄다.
+- `tests/conftest.py`에 autouse `isolated_database` 픽스처 추가: 테스트마다 `DATABASE_URL`/`NAMIFAX_DB_PATH`를 tmp 파일로 지정하고 전역 엔진을 초기화한다. 전환된 CLI 테스트가 작업 트리의 `namifax.db`를 변경하던 문제(R4F-13/F5-09)를 근본적으로 막는다.
+- 격리로 드러난 숨은 의존: (1) `create_thumbnails` "빈 아카이브" 테스트는 연결 없는 엔진 덕에 우연히 통과했다 → 빈 DB를 명시 주입. (2) 새 DB에서는 시드 순서 때문에 데모 팩스(`fid=1`)가 `Acme Corp`에 연결되지 않았다(주소록 시드가 팩스 시드보다 뒤). 기존 전역 DB는 두 번째 초기화에서야 채워졌다 → `seed_database_if_empty` 끝에서 멱등 재연결(`tests/unit/test_schema_seed_first_run.py`).
+- `[관찰]` `AddressBook`의 기본키는 `ab_id`인데 코드와 시드는 `abook_id` 컬럼을 참조하고 시드 행에서 `NULL`이다. 인박스의 `companyid` 연결이 시드에서는 항상 비어 있다. 정리 대상.
+- `[관찰]` `seed_database_if_empty`는 작업 디렉터리 상대 경로(`faxes/2026/09/29/...`)에 샘플 PDF/TIFF를 쓴다. 초기화할 때마다 cwd에 파일이 생긴다.

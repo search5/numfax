@@ -4,9 +4,9 @@ import unittest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from avantfax.db.engine import DatabaseEngine
-from avantfax.services.user_account import AFUserAccount, UserAccountService
-from avantfax.services.user_passwords import AFUserPasswords
+from namifax.db.engine import DatabaseEngine
+from namifax.services.user_account import AFUserAccount, UserAccountService
+from namifax.services.user_passwords import AFUserPasswords
 
 
 class TestAFUserAccount(unittest.TestCase):

@@ -1,11 +1,11 @@
 import os
 import sys
 import unittest
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from avantfax.services.faxqueue import FaxQueue, parse_queue_output, SENDQ_KEYS, DONEQ_KEYS
+from namifax.services.faxqueue import FaxQueue, parse_queue_output, SENDQ_KEYS, DONEQ_KEYS
 
 MOCK_SENDQ = """HylaFAX scheduler on myhost: Running
 Modem ttyS0 (123-4567): Running and idle
@@ -72,16 +72,23 @@ class TestFaxQueue(unittest.TestCase):
 
     def test_killjob_and_faxalter(self):
         fq = FaxQueue(auto_process=False)
-        fq.shell_exec = MagicMock(return_value="Job 101 removed")
+        ok = MagicMock(returncode=0)
 
-        self.assertTrue(fq.killjob("admin", 101))
-        fq.shell_exec.assert_called()
+        # Commands run as argument lists with FAXUSER in the environment (no shell string, no injection)
+        with patch("namifax.services.faxqueue.subprocess.run", return_value=ok) as run:
+            self.assertTrue(fq.killjob("admin", 101))
+            args, kwargs = run.call_args
+            self.assertEqual(args[0], ["faxrm", "101"])
+            self.assertEqual(kwargs["env"]["FAXUSER"], "admin")
+            self.assertNotIn("shell", kwargs)
 
         # Test faxalter
-        fq.shell_exec.reset_mock()
-        ops = {"priority": 100, "tries": 5, "resubmit": True}
-        self.assertTrue(fq.faxalter("bob", 102, ops))
-        self.assertEqual(fq.shell_exec.call_count, 2)  # faxalter + killjob for resubmit
+        with patch("namifax.services.faxqueue.subprocess.run", return_value=ok) as run:
+            ops = {"priority": 100, "tries": 5, "resubmit": True}
+            self.assertTrue(fq.faxalter("bob", 102, ops))
+            self.assertEqual(run.call_count, 2)  # faxalter + killjob for resubmit
+            self.assertEqual(run.call_args_list[0].args[0][0], "faxalter")
+            self.assertEqual(run.call_args_list[0].args[0][-1], "102")
 
 
 if __name__ == "__main__":

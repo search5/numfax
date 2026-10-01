@@ -4,8 +4,8 @@ import unittest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from avantfax.db.engine import DatabaseEngine
-from avantfax.services.barcode import BarcodeRouting, BarcodeRoutingService
+from namifax.db.engine import DatabaseEngine
+from namifax.services.barcode import BarcodeRouting, BarcodeRoutingService
 
 
 class TestBarcodeRouting(unittest.TestCase):

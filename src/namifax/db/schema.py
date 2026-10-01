@@ -475,6 +475,14 @@ def seed_database_if_empty(db: DatabaseEngine) -> None:
         )
 
     # Ensure valid fixture files exist on disk for fid=1
+    # Link the demo inbox fax to the demo company once both rows exist. On a brand-new database
+    # the address book is seeded after the fax, so the link made earlier found no company.
+    db.query(
+        "UPDATE FaxArchive SET companyid = (SELECT abook_id FROM AddressBook WHERE company LIKE 'Acme%' LIMIT 1) "
+        "WHERE fid = 1 AND companyid IS NULL"
+    )
+    db.query("UPDATE FaxArchive SET company = 'Acme Corp' WHERE fid = 1 AND company IS NULL")
+
     fax1_dir = os.path.join("faxes", "2026", "09", "29", "fax001")
     os.makedirs(fax1_dir, exist_ok=True)
     pdf_path = os.path.join(fax1_dir, "fax.pdf")

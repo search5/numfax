@@ -7,7 +7,7 @@ import unittest
 # Ensure src is in python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from avantfax.db.engine import DatabaseEngine, SQL_ALL, SQL_NONE
+from namifax.db.engine import DatabaseEngine, SQL_ALL, SQL_NONE
 
 
 class TestDatabaseEngine(unittest.TestCase):

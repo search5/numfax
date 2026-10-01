@@ -8,7 +8,7 @@ from pathlib import Path
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from avantfax.common.upload import (
+from namifax.common.upload import (
     FU_INVALIDMIME,
     FU_NO_FILE,
     FU_OVER_SIZE,

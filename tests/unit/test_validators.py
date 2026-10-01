@@ -6,7 +6,7 @@ import unittest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from avantfax.common.validators import (
+from namifax.common.validators import (
     FR_ARRAY,
     FR_DATE,
     FR_EMAIL,

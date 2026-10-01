@@ -2,7 +2,7 @@ import os
 import shutil
 import tempfile
 import unittest
-from avantfax.db.engine import DatabaseEngine
+from namifax.db.engine import DatabaseEngine
 from src.namifax.db.schema import init_database_tables
 from src.namifax.services.cover_studio import CoverStudioService
 

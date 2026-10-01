@@ -5,9 +5,9 @@ import unittest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from avantfax.cli.phb import generate_phonebook_content, run_phb
-from avantfax.db.engine import DatabaseEngine
-from avantfax.services.addressbook import AFAddressBook
+from namifax.cli.phb import generate_phonebook_content, run_phb
+from namifax.db.engine import DatabaseEngine
+from namifax.services.addressbook import AFAddressBook
 
 
 class TestCliPhb(unittest.TestCase):

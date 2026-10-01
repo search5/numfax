@@ -11,7 +11,7 @@ from unittest.mock import MagicMock, patch
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from avantfax.cli.faxrcvd import run_faxrcvd
+from namifax.cli.faxrcvd import run_faxrcvd
 
 
 class TestCLIFaxrcvd(unittest.TestCase):
@@ -33,7 +33,7 @@ class TestCLIFaxrcvd(unittest.TestCase):
 
     def test_nonexistent_file(self):
         f = io.StringIO()
-        with redirect_stdout(f), patch("avantfax.cli.faxrcvd.FaxModem"):
+        with redirect_stdout(f), patch("namifax.cli.faxrcvd.FaxModem"):
             code = run_faxrcvd(["faxrcvd.py", "/tmp/nonexistent_fax_9999.tif", "ttyS0", "comm01", "none"])
         self.assertEqual(code, 0)
         self.assertEqual(f.getvalue(), "")
@@ -46,13 +46,13 @@ class TestCLIFaxrcvd(unittest.TestCase):
         try:
             f = io.StringIO()
             with redirect_stdout(f), \
-                 patch("avantfax.cli.faxrcvd.FaxModem") as mock_modem, \
-                 patch("avantfax.cli.faxrcvd.AFAddressBook") as mock_ab, \
-                 patch("avantfax.cli.faxrcvd.ArchiveIn") as mock_in, \
-                 patch("avantfax.cli.faxrcvd.send_mail") as mock_send, \
-                 patch("avantfax.cli.faxrcvd.faxinfo") as mock_finfo, \
-                 patch("avantfax.cli.faxrcvd.tiff2pdf"), \
-                 patch("avantfax.cli.faxrcvd.static_preview"):
+                 patch("namifax.cli.faxrcvd.FaxModem") as mock_modem, \
+                 patch("namifax.cli.faxrcvd.AFAddressBook") as mock_ab, \
+                 patch("namifax.cli.faxrcvd.ArchiveIn") as mock_in, \
+                 patch("namifax.cli.faxrcvd.send_mail") as mock_send, \
+                 patch("namifax.cli.faxrcvd.faxinfo") as mock_finfo, \
+                 patch("namifax.cli.faxrcvd.tiff2pdf"), \
+                 patch("namifax.cli.faxrcvd.static_preview"):
 
                 # Mock modem
                 m_inst = MagicMock()

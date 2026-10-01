@@ -10,7 +10,7 @@ from unittest.mock import MagicMock, patch
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from avantfax.main import USAGE, main
+from namifax.main import USAGE, main
 
 
 class TestMainCLI(unittest.TestCase):
@@ -31,7 +31,7 @@ class TestMainCLI(unittest.TestCase):
         self.assertIn("Unknown command: foobar", f.getvalue())
 
     def test_subcommand_dispatch_dynconf(self):
-        with patch("avantfax.main.run_dynconf", return_value=0) as mock_dc:
+        with patch("namifax.main.run_dynconf", return_value=0) as mock_dc:
             code = main(["dynconf", "ttyS0", "12345"])
             self.assertEqual(code, 0)
             mock_dc.assert_called_once()

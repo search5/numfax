@@ -5,7 +5,7 @@ import time
 import unittest
 from datetime import datetime, timedelta
 from unittest.mock import MagicMock
-from avantfax.db.engine import DatabaseEngine
+from namifax.db.engine import DatabaseEngine
 from src.namifax.db.schema import init_database_tables
 from src.namifax.services.storage_lifecycle import (
     StorageLifecyclePolicy,

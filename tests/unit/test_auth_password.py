@@ -7,7 +7,7 @@ from unittest.mock import patch, MagicMock
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from avantfax.auth.password import (
+from namifax.auth.password import (
     PasswordManager,
     PWAuthBackend,
     STATUS_BAD_PASSWORD,

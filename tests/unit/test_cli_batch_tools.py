@@ -5,11 +5,11 @@ from pathlib import Path
 from unittest.mock import MagicMock, patch
 import pytest
 
-from avantfax.cli.import_users import main as import_users_main
-from avantfax.cli.import_blacklist import main as import_blacklist_main
-from avantfax.cli.reroute import main as reroute_main
-from avantfax.cli.ocr_import import main as ocr_import_main
-from avantfax.cli.create_thumbnails import main as create_thumbnails_main
+from namifax.cli.import_users import main as import_users_main
+from namifax.cli.import_blacklist import main as import_blacklist_main
+from namifax.cli.reroute import main as reroute_main
+from namifax.cli.ocr_import import main as ocr_import_main
+from namifax.cli.create_thumbnails import main as create_thumbnails_main
 
 
 def test_import_users_with_file(tmp_path, capsys):
@@ -17,7 +17,7 @@ def test_import_users_with_file(tmp_path, capsys):
     users_file = tmp_path / "users.txt"
     users_file.write_text("John Doe\tjohndoe\tpass123\tjohn@example.com\nJane Roe\tjaneroe\tpass456\tjane@example.com\n")
 
-    with patch("avantfax.cli.import_users.AFUserAccount") as mock_user_cls:
+    with patch("namifax.cli.import_users.AFUserAccount") as mock_user_cls:
         inst = MagicMock()
         inst.create.return_value = True
         mock_user_cls.return_value = inst
@@ -35,7 +35,7 @@ def test_import_blacklist_with_file(tmp_path, capsys):
     bl_file = tmp_path / "blacklist.txt"
     bl_file.write_text("01011112222\n01033334444\n")
 
-    with patch("avantfax.cli.import_blacklist.DynamicConfig") as mock_dc_cls:
+    with patch("namifax.cli.import_blacklist.DynamicConfig") as mock_dc_cls:
         inst = MagicMock()
         inst.create.return_value = True
         mock_dc_cls.return_value = inst
@@ -50,7 +50,7 @@ def test_import_blacklist_with_file(tmp_path, capsys):
 
 def test_reroute_modem(capsys):
     """Verify reroute updates contact on FaxModem."""
-    with patch("avantfax.cli.reroute.FaxModem") as mock_modem_cls:
+    with patch("namifax.cli.reroute.FaxModem") as mock_modem_cls:
         inst = MagicMock()
         inst.load_device.return_value = True
         inst.set_contact.return_value = True
@@ -64,8 +64,8 @@ def test_reroute_modem(capsys):
 
 def test_ocr_import_enabled(capsys):
     """Verify ocr_import iterates archive and executes OCR when enabled."""
-    with patch("avantfax.cli.ocr_import.ENABLE_OCR_SUPPORT", True), \
-         patch("avantfax.cli.ocr_import.FaxPDFArchive") as mock_arc_cls:
+    with patch("namifax.cli.ocr_import.ENABLE_OCR_SUPPORT", True), \
+         patch("namifax.cli.ocr_import.FaxPDFArchive") as mock_arc_cls:
         inst = MagicMock()
         inst.search_archive.return_value = 1
         inst.next_archive_entry.side_effect = [42, None]
@@ -73,7 +73,7 @@ def test_ocr_import_enabled(capsys):
         inst.get_tiffpath.return_value = "/tmp/fax.tif"
         mock_arc_cls.return_value = inst
 
-        with patch("avantfax.cli.ocr_import.ocr_faxcontent", return_value="Invoice #12345"):
+        with patch("namifax.cli.ocr_import.ocr_faxcontent", return_value="Invoice #12345"):
             res = ocr_import_main([])
             assert res == 0
             captured = capsys.readouterr()
@@ -82,8 +82,8 @@ def test_ocr_import_enabled(capsys):
 
 def test_create_thumbnails_execution(capsys):
     """Verify create_thumbnails searches archive and runs preview creation."""
-    with patch("avantfax.cli.create_thumbnails.FaxPDFArchive") as mock_arc_cls, \
-         patch("avantfax.cli.create_thumbnails.pdf_preview") as mock_preview, \
+    with patch("namifax.cli.create_thumbnails.FaxPDFArchive") as mock_arc_cls, \
+         patch("namifax.cli.create_thumbnails.pdf_preview") as mock_preview, \
          patch("os.path.isfile", return_value=False):
         inst = MagicMock()
         inst.search_archive.return_value = 1

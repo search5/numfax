@@ -6,8 +6,8 @@ import unittest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from avantfax.db.engine import DatabaseEngine
-from avantfax.db.query import QueryBuilder, SQL_AND, SQL_OR
+from namifax.db.engine import DatabaseEngine
+from namifax.db.query import QueryBuilder, SQL_AND, SQL_OR
 
 
 class TestQueryBuilder(unittest.TestCase):

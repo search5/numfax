@@ -4,7 +4,7 @@ import unittest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from avantfax.common.helpers import (
+from namifax.common.helpers import (
     clean_faxnum,
     fupload_error_code,
     get_company_details,
@@ -17,8 +17,8 @@ from avantfax.common.helpers import (
     strip_sipinfo,
     unaccent,
 )
-from avantfax.db.engine import DatabaseEngine
-from avantfax.services.addressbook import AFAddressBook
+from namifax.db.engine import DatabaseEngine
+from namifax.services.addressbook import AFAddressBook
 
 
 class TestCommonHelpers(unittest.TestCase):

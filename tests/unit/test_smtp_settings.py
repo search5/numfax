@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import MagicMock, patch
-from avantfax.db.engine import DatabaseEngine
+from namifax.db.engine import DatabaseEngine
 from src.namifax.db.schema import init_database_tables
 from src.namifax.services.smtp_settings import SmtpSettingsService, SmtpConfig, SmtpTestResult
 from src.namifax.services.mailer import MailerService

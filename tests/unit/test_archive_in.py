@@ -7,8 +7,8 @@ from datetime import datetime, timedelta
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from avantfax.db.engine import DatabaseEngine
-from avantfax.services.archive_in import ArchiveIn
+from namifax.db.engine import DatabaseEngine
+from namifax.services.archive_in import ArchiveIn
 
 
 class TestArchiveIn(unittest.TestCase):

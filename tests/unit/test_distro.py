@@ -4,8 +4,8 @@ import unittest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from avantfax.db.engine import DatabaseEngine
-from avantfax.services.distro import DistributionList, DistributionListService
+from namifax.db.engine import DatabaseEngine
+from namifax.services.distro import DistributionList, DistributionListService
 
 
 class TestDistributionList(unittest.TestCase):

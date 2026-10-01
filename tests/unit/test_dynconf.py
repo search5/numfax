@@ -4,8 +4,8 @@ import unittest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from avantfax.db.engine import DatabaseEngine
-from avantfax.services.dynconf import DynamicConfig, DynamicConfigService
+from namifax.db.engine import DatabaseEngine
+from namifax.services.dynconf import DynamicConfig, DynamicConfigService
 
 
 class TestDynamicConfig(unittest.TestCase):

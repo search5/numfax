@@ -10,7 +10,7 @@ from unittest.mock import MagicMock, patch
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from avantfax.cli.faxcover import USAGE, run_faxcover
+from namifax.cli.faxcover import USAGE, run_faxcover
 
 
 class TestCLIFaxcover(unittest.TestCase):
@@ -39,14 +39,13 @@ class TestCLIFaxcover(unittest.TestCase):
 
     def test_valid_options_render(self):
         f = io.StringIO()
-        with redirect_stdout(f), \
-             patch("avantfax.cli.faxcover.DatabaseEngine") as mock_db:
-            # Mock DB to avoid real connection
+        with redirect_stdout(f):
+            # Inject a DB with no matching user so no real database is opened
             db_inst = MagicMock()
-            db_inst.query.return_value = []
-            mock_db.return_value = db_inst
+            db_inst.query.return_value.executed = True
+            db_inst.get_records.return_value = []
 
-            code = run_faxcover(["faxcover.py", "-f", "Sender", "-n", "123456", "-r", "Subject"])
+            code = run_faxcover(["faxcover.py", "-f", "Sender", "-n", "123456", "-r", "Subject"], db=db_inst)
             self.assertEqual(code, 0)
 
 

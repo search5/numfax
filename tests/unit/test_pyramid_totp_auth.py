@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 from pyramid import testing
 from pyramid.httpexceptions import HTTPFound
-from avantfax.db.engine import DatabaseEngine
+from namifax.db.engine import DatabaseEngine
 from namifax.db.schema import init_database_tables
 from namifax.services.totp import TotpService
 from namifax.views.auth import login_post_view, login_totp_view

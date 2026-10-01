@@ -6,9 +6,9 @@ import unittest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from avantfax.db.engine import DatabaseEngine
-from avantfax.db.repository import MDBOData, Repository
-from avantfax.models.entities import UserAccount
+from namifax.db.engine import DatabaseEngine
+from namifax.db.repository import MDBOData, Repository
+from namifax.models.entities import UserAccount
 
 
 class TestRepository(unittest.TestCase):

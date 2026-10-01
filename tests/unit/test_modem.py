@@ -4,8 +4,8 @@ import unittest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from avantfax.db.engine import DatabaseEngine
-from avantfax.services.modem import FaxModem, FaxModemService, parse_faxstat_output
+from namifax.db.engine import DatabaseEngine
+from namifax.services.modem import FaxModem, FaxModemService, parse_faxstat_output
 
 
 class TestFaxModem(unittest.TestCase):

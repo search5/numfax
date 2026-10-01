@@ -11,7 +11,7 @@ from unittest.mock import MagicMock, patch
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from avantfax.cli.notify import run_notify
+from namifax.cli.notify import run_notify
 
 
 class TestCLINotify(unittest.TestCase):
@@ -56,12 +56,12 @@ class TestCLINotify(unittest.TestCase):
         try:
             f = io.StringIO()
             with redirect_stdout(f), \
-                 patch("avantfax.cli.notify.AFAddressBook") as mock_ab, \
-                 patch("avantfax.cli.notify.AFUserAccount") as mock_user, \
-                 patch("avantfax.cli.notify.ArchiveOut") as mock_out, \
-                 patch("avantfax.cli.notify.send_mail") as mock_send, \
-                 patch("avantfax.cli.notify.convert2pdf", return_value=True), \
-                 patch("avantfax.cli.notify.pdf_preview"):
+                 patch("namifax.cli.notify.AFAddressBook") as mock_ab, \
+                 patch("namifax.cli.notify.AFUserAccount") as mock_user, \
+                 patch("namifax.cli.notify.ArchiveOut") as mock_out, \
+                 patch("namifax.cli.notify.send_mail") as mock_send, \
+                 patch("namifax.cli.notify.convert2pdf", return_value=True), \
+                 patch("namifax.cli.notify.pdf_preview"):
                 
                 # Mock address book
                 ab_inst = MagicMock()

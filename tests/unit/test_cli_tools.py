@@ -5,7 +5,7 @@ import sys
 from unittest.mock import patch
 import pytest
 
-from avantfax.cli import (
+from namifax.cli import (
     ocr_import,
     create_thumbnails,
     import_users,
@@ -23,11 +23,12 @@ def test_ocr_import_disabled_exit():
     assert "You must enable ENABLE_OCR_SUPPORT in local_config.php first" in captured.getvalue()
 
 
-def test_create_thumbnails_empty_archive():
+def test_create_thumbnails_empty_archive(seeded_db):
     """Verify create_thumbnails handles empty archive and reports Done."""
+    seeded_db.query("DELETE FROM FaxArchive")
     captured = io.StringIO()
     with patch("sys.stdout", captured):
-        code = create_thumbnails.main([])
+        code = create_thumbnails.main([], db=seeded_db)
     assert code == 0
     assert "No faxes found" in captured.getvalue()
     assert "Done" in captured.getvalue()

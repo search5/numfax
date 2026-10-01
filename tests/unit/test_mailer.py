@@ -9,7 +9,7 @@ from unittest.mock import patch, MagicMock
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
-from avantfax.services.mailer import MailerService
+from namifax.services.mailer import MailerService
 
 
 class TestMailerService(unittest.TestCase):
@@ -45,7 +45,7 @@ class TestMailerService(unittest.TestCase):
         msg = spooled[0]
 
         self.assertEqual(msg["To"], "user@example.com")
-        self.assertEqual(msg["From"], "AvantFAX <faxadmin@test.com>")
+        self.assertEqual(msg["From"], "NamiFAX <faxadmin@test.com>")
         self.assertEqual(msg["Subject"], "New Fax")
 
         # Verify multipart content
