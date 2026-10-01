@@ -55,6 +55,7 @@ mysql = [
 [dependency-groups]
 dev = [
     "psycopg[binary]>=3.2",
+    "pymysql>=1.1",
     "pytest>=8.0.0",
     "pytest-cov>=4.0.0",
     "webtest>=3.0.0",
@@ -67,7 +68,7 @@ build-backend = "uv_build"
 [tool.pytest.ini_options]
 addopts = "--strict-markers"
 markers = [
-    "postgres: runs against a throw-away PostgreSQL database; needs NAMIFAX_TEST_PG_URL (skipped otherwise)",
+    "serverdb: runs against a throw-away database on a real PostgreSQL, MySQL or MariaDB server (see tests/conftest.py; skipped when the server URL is not configured)",
 ]
 testpaths = ["tests"]
 pythonpath = [".", "src"]

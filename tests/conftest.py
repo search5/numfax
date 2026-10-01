@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import os
+import uuid
 
 import pytest
+import sqlalchemy as sa
 import transaction
 import webtest
 from pyramid.scripting import prepare
@@ -111,3 +113,39 @@ def dummy_config(dummy_request):
     """A dummy Configurator for ``dummy_request``, with the threadlocals pushed."""
     with testConfig(request=dummy_request) as config:
         yield config
+
+
+# --- real database servers (opt-in) --------------------------------------------------------
+# Each test using ``server_db_url`` runs once per configured server on a throw-away database:
+#   NAMIFAX_TEST_PG_URL      postgresql+psycopg://user:pw@host:port/postgres
+#   NAMIFAX_TEST_MYSQL_URL   mysql+pymysql://user:pw@host:port/
+#   NAMIFAX_TEST_MARIADB_URL mariadb+pymysql://user:pw@host:port/
+SERVER_DB_ENV = {
+    "postgresql": "NAMIFAX_TEST_PG_URL",
+    "mysql": "NAMIFAX_TEST_MYSQL_URL",
+    "mariadb": "NAMIFAX_TEST_MARIADB_URL",
+}
+
+
+@pytest.fixture(params=list(SERVER_DB_ENV), ids=list(SERVER_DB_ENV))
+def server_db_url(request):
+    """URL of a freshly created, empty database on a real server (skipped when not configured)."""
+    env_name = SERVER_DB_ENV[request.param]
+    base = os.environ.get(env_name)
+    if not base:
+        pytest.skip(f"{env_name} not set")
+    name = f"nami_test_{uuid.uuid4().hex[:8]}"
+    admin = sa.create_engine(base, isolation_level="AUTOCOMMIT")
+    with admin.connect() as conn:
+        if request.param == "postgresql":
+            conn.execute(sa.text(f'CREATE DATABASE "{name}"'))
+        else:
+            conn.execute(sa.text(f"CREATE DATABASE `{name}` CHARACTER SET utf8mb4"))
+    url = sa.engine.make_url(base).set(database=name).render_as_string(hide_password=False)
+    yield url
+    with admin.connect() as conn:
+        if request.param == "postgresql":
+            conn.execute(sa.text(f'DROP DATABASE IF EXISTS "{name}" WITH (FORCE)'))
+        else:
+            conn.execute(sa.text(f"DROP DATABASE IF EXISTS `{name}`"))
+    admin.dispose()

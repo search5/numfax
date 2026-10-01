@@ -614,6 +614,7 @@ postgresql = [
 [package.dev-dependencies]
 dev = [
     { name = "psycopg", extra = ["binary"] },
+    { name = "pymysql" },
     { name = "pytest" },
     { name = "pytest-cov" },
     { name = "webtest" },
@@ -648,6 +649,7 @@ provides-extras = ["postgresql", "mysql"]
 [package.metadata.requires-dev]
 dev = [
     { name = "psycopg", extras = ["binary"], specifier = ">=3.2" },
+    { name = "pymysql", specifier = ">=1.1" },
     { name = "pytest", specifier = ">=8.0.0" },
     { name = "pytest-cov", specifier = ">=4.0.0" },
     { name = "webtest", specifier = ">=3.0.0" },

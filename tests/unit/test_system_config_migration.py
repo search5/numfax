@@ -2,11 +2,9 @@
 
 from __future__ import annotations
 
-import os
 import re
 import shutil
 import sqlite3
-import uuid
 from pathlib import Path
 
 import alembic.command
@@ -84,47 +82,35 @@ def test_there_is_exactly_one_head_revision(tmp_path):
     assert len(ScriptDirectory.from_config(_cfg(tmp_path)).get_heads()) == 1
 
 
-# --- PostgreSQL (optional): NAMIFAX_TEST_PG_URL=postgresql+psycopg://user:pw@host:port/postgres ----
+# --- real servers (optional): PostgreSQL, MySQL and MariaDB, see tests/conftest.py ---------------
 
-@pytest.fixture
-def pg_url():
-    base = os.environ.get("NAMIFAX_TEST_PG_URL")
-    if not base:
-        pytest.skip("NAMIFAX_TEST_PG_URL not set")
-    admin = sa.create_engine(base, isolation_level="AUTOCOMMIT")
-    name = f"nami_test_{uuid.uuid4().hex[:8]}"
-    with admin.connect() as conn:
-        conn.execute(sa.text(f'CREATE DATABASE "{name}"'))
-    url = sa.engine.make_url(base).set(database=name)
-    yield url.render_as_string(hide_password=False)
-    with admin.connect() as conn:
-        conn.execute(sa.text(f'DROP DATABASE IF EXISTS "{name}" WITH (FORCE)'))
-    admin.dispose()
-
-
-@pytest.mark.postgres
-def test_postgresql_baseline_and_orm_upsert(tmp_path, monkeypatch, pg_url):
+@pytest.mark.serverdb
+def test_server_database_baseline_and_orm_upsert(tmp_path, monkeypatch, server_db_url):
     from sqlalchemy.orm import Session
 
+    from namifax.models import SystemConfig
     from namifax.services.system_config import SystemConfigService
 
-    monkeypatch.setenv("DATABASE_URL", pg_url)
+    monkeypatch.setenv("DATABASE_URL", server_db_url)
     alembic.command.upgrade(_cfg(tmp_path), "head")
 
-    engine = sa.create_engine(pg_url)
+    engine = sa.create_engine(server_db_url)
     try:
         cols = _columns(engine, "SystemConfig")
-        assert str(cols["key"]["type"]) == "VARCHAR(255)" and str(cols["value"]["type"]) == "TEXT"
+        assert str(cols["key"]["type"]) == "VARCHAR(255)" and str(cols["value"]["type"]).startswith("TEXT")
         with Session(engine) as session:
             svc = SystemConfigService(session)
             svc.set("k", "one")
             svc.set("k", "two")
             svc.set("tricky", "x\\' OR 1=1 --")
+            svc.set("unicode", "한글 ünï")
             session.commit()
         with Session(engine) as session:
             svc = SystemConfigService(session)
             assert svc.get("k") == "two"
             assert svc.get("tricky") == "x\\' OR 1=1 --"
-            assert session.execute(sa.text('SELECT COUNT(*) FROM "SystemConfig"')).scalar() == 2
+            assert svc.get("unicode") == "한글 ünï"
+            count = session.execute(sa.select(sa.func.count()).select_from(SystemConfig)).scalar()
+            assert count == 3
     finally:
         engine.dispose()
