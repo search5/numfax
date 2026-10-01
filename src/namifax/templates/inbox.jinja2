@@ -77,6 +77,11 @@
         </thead>
         <tbody class="divide-y divide-slate-100">
           {% for fax in faxes %}
+          {% if list_by_line and (loop.first or fax.line != loop.previtem.line) %}
+          <tr data-line-heading class="bg-slate-50">
+            <th colspan="6" class="py-2 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-left">{{ fax.line or _('Unknown') }}</th>
+          </tr>
+          {% endif %}
           <tr class="hover:bg-blue-50/30 transition-colors group" id="faxid_{{ fax.id }}">
 
             <td class="py-4 px-4 align-middle">

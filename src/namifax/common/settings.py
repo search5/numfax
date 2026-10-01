@@ -23,6 +23,25 @@ def number(name: str, default: int) -> int:
     return int(raw) if raw.isdigit() else default
 
 
+def restricted_user_mode() -> bool:
+    """``RESTRICTED_USER_MODE``: an archive search needs the user's line (or DID route) AND category, not either one."""
+    return flag("RESTRICTED_USER_MODE", False)
+
+
+def inbox_list_modem() -> bool:
+    """``INBOX_LIST_MODEM``: list the inbox line by line (modem order, newest first inside a line) instead of by date."""
+    return flag("INBOX_LIST_MODEM", False)
+
+
+def show_all_contacts() -> bool:
+    """``SHOW_ALL_CONTACTS`` (on by default): off, a contact lookup needs a search of at least two characters."""
+    return flag("SHOW_ALL_CONTACTS", True)
+
+
+def contact_lookup_allowed(query: str) -> bool:
+    return show_all_contacts() or len(query or "") > 1
+
+
 def hylaspool() -> str:
     return text("HYLASPOOL", "/var/spool/hylafax").rstrip("/") or "/"
 

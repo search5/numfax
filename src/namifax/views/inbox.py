@@ -138,7 +138,7 @@ def inbox_view(request):
         total = arc.get_num_faxes(devices=access.devices, faxcats=access.categories, enable_did_routing=access.did_routing)
         index, pages = page_index(request, total, limit)
         rows = arc.list_inbox(devices=access.devices, index=index, limit=limit, faxcats=access.categories,
-                              enable_did_routing=access.did_routing)
+                              enable_did_routing=access.did_routing, order_by_modem=settings.inbox_list_modem())
         if rows:
             ab = AFAddressBook(db=request.dbsession)
             names = _line_names(request, rows)
@@ -156,6 +156,7 @@ def inbox_view(request):
         "current_user": identity,
         "active_tab": "inbox",
         "faxes": faxes,
+        "list_by_line": settings.inbox_list_modem(),
         "total_faxes": total,
         "num_inbox": total,
         "pages": pages,

@@ -6,6 +6,7 @@ from pyramid.httpexceptions import HTTPFound
 from pyramid.response import Response
 from pyramid.view import view_config
 
+from namifax.common import settings
 from namifax.i18n import _
 from namifax.services.addressbook import AFAddressBook
 from namifax.services.categories import FaxPDFCategory
@@ -37,9 +38,8 @@ def popup_distrolist_helper(request):
             error = dl.get_error()
 
     query = (request.params.get("regexp") or "").strip()
-    show_all = os.environ.get("SHOW_ALL_CONTACTS", "0") in ("1", "true", "True")
     options = []
-    if query or show_all:
+    if settings.contact_lookup_allowed(query):
         book = AFAddressBook(db=request.dbsession)
         numbers = book.numbers_by_company()
         for company in (book.search_companies(query) if query else book.get_companies()):
@@ -83,9 +83,10 @@ def popup_fax_contacts(request):
     """Pick fax numbers of the address book (faxcontacts.php), shown as "Company - number"."""
     query = (request.params.get("regexp") or "").strip()
     book = AFAddressBook(db=request.dbsession)
-    numbers = book.numbers_by_company() if query else {}
+    allowed = settings.contact_lookup_allowed(query)
+    numbers = book.numbers_by_company() if allowed else {}
     options = []
-    for company in (book.search_companies(query) if query else []):
+    for company in ((book.search_companies(query) if query else book.get_companies()) if allowed else []):
         for number in numbers.get(company.get("abook_id"), []):
             options.append((number["faxnumber"], f"{company.get('company')} - {number['faxnumber']}", number.get("abookfax_id")))
     return _picker(request, title="- NamiFAX - Fax Contacts", heading=str(_("Fax Contacts")), action="/helper/faxcontacts",

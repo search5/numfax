@@ -6,6 +6,7 @@ from pyramid.httpexceptions import HTTPFound, HTTPForbidden
 from pyramid.response import Response
 from pyramid.view import view_config
 
+from namifax.common import settings
 from namifax.i18n import _
 from namifax.services.addressbook import AFAddressBook
 from namifax.services.archive_in import ArchiveIn
@@ -105,7 +106,7 @@ def ajax_addressbook_suggest(request):
     rows_xml = []
 
     try:
-        companies = ab.search_companies(q) if q else ab.get_companies()
+        companies = [] if not settings.contact_lookup_allowed(q) else (ab.search_companies(q) if q else ab.get_companies())
         if companies:
             for c in companies:
                 cid = c.get("ab_id") or c.get("abook_id") or 1
@@ -336,7 +337,7 @@ def ajax_archivebook_view(request):
     rows_xml = []
 
     try:
-        companies = ab.search_companies(q) if q else ab.get_companies()
+        companies = [] if not settings.contact_lookup_allowed(q) else (ab.search_companies(q) if q else ab.get_companies())
         if companies:
             for c in companies:
                 cid = c.get("ab_id") or c.get("abook_id") or 1

@@ -11,6 +11,7 @@ import os
 from dataclasses import dataclass, field
 from typing import Any, List, Optional
 
+from namifax.common import settings
 from namifax.services.did import DIDRouting
 from namifax.services.modem import FaxModem
 from namifax.services.user_account import AFUserAccount
@@ -80,7 +81,8 @@ class FaxAccess:
     def search_rights(self) -> dict:
         """The viewing rights part of the archive search criteria."""
         return {"superuser": self.superuser, "modemdevs": self.modems, "didroutes": self.routes,
-                "categories": self.faxcats, "enable_did_routing": self.did_routing}
+                "categories": self.faxcats, "enable_did_routing": self.did_routing,
+                "restricted_user_mode": settings.restricted_user_mode()}
 
     # --- single faxes -----------------------------------------------------------------------------------------------------------
 
