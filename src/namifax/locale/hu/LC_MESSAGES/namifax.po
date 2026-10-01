@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: hMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:21+0900\n"
+"POT-Creation-Date: 2026-10-02 00:42+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hu\n"
@@ -183,6 +183,9 @@ msgstr "Felhasználók"
 
 msgid "Backend Core"
 msgstr "Háttérrendszer mag"
+
+msgid "unknown"
+msgstr ""
 
 msgid "Scheduler"
 msgstr "Ütemező"
@@ -1506,8 +1509,14 @@ msgstr ""
 "Töltse le a faxokat PDF-ként, archiválja őket későbbre, vagy keressen az "
 "összes rekordban az Archívumban."
 
+msgid "new fax"
+msgstr ""
+
 msgid "Outbox"
 msgstr "Kimenő"
+
+msgid "lines"
+msgstr ""
 
 msgid "Settings"
 msgstr "Beállítások"
@@ -2270,6 +2279,9 @@ msgid "Only sent faxes"
 msgstr ""
 
 msgid "Only received faxes"
+msgstr ""
+
+msgid "Account is disabled"
 msgstr ""
 
 #, python-format

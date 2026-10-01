@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:21+0900\n"
+"POT-Creation-Date: 2026-10-02 00:42+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -166,6 +166,9 @@ msgid "Active accounts"
 msgstr ""
 
 msgid "Backend Core"
+msgstr ""
+
+msgid "unknown"
 msgstr ""
 
 msgid "Scheduler"
@@ -1391,7 +1394,13 @@ msgid ""
 "the Archive."
 msgstr ""
 
+msgid "new fax"
+msgstr ""
+
 msgid "Outbox"
+msgstr ""
+
+msgid "lines"
 msgstr ""
 
 msgid "Settings"
@@ -2117,6 +2126,9 @@ msgid "Only sent faxes"
 msgstr ""
 
 msgid "Only received faxes"
+msgstr ""
+
+msgid "Account is disabled"
 msgstr ""
 
 #, python-format

@@ -1,6 +1,7 @@
 """NamiFAX asynchronous AJAX API views matching legacy ajax/*.php."""
 
 import html
+import os
 from pyramid.httpexceptions import HTTPFound, HTTPForbidden
 from pyramid.response import Response
 from pyramid.view import view_config
@@ -43,6 +44,42 @@ def ajax_modem_status(request):
     return Response(xml_content, content_type="text/xml")
 
 
+def audio_dir() -> str:
+    return os.environ.get("AVANTFAX_AUDIO_DIR") or os.path.join(os.path.dirname(os.path.dirname(__file__)), "audio")
+
+
+def _user_sound(request) -> str:
+    """The file name of the user's new-fax sound when it exists, else an empty string."""
+    from sqlalchemy import select
+
+    from namifax.models import UserAccount
+
+    who = request.identity or {}
+    uid = who.get("user_id") or who.get("uid")
+    if not uid:
+        return ""
+    chosen = request.dbsession.execute(select(UserAccount.audiofile).where(UserAccount.uid == uid)).scalar()
+    name = os.path.basename(chosen or "")
+    return name if name and os.path.isfile(os.path.join(audio_dir(), name)) else ""
+
+
+@view_config(route_name="audio", permission="view")
+def audio_view(request):
+    """A sound file for the new-fax notification (only plain files of the sound folder)."""
+    import mimetypes
+
+    from pyramid.httpexceptions import HTTPNotFound
+    from pyramid.response import FileResponse
+
+    name = request.matchdict.get("name", "")
+    if name != os.path.basename(name) or name.startswith("."):
+        raise HTTPNotFound()
+    path = os.path.join(audio_dir(), name)
+    if not os.path.isfile(path):
+        raise HTTPNotFound()
+    return FileResponse(path, request=request, content_type=mimetypes.guess_type(name)[0] or "audio/wav")
+
+
 @view_config(route_name="ajax_inbox", permission="view")
 def ajax_inbox_count(request):
     """Unread inbox count poller matching legacy ajaxinbox.php."""
@@ -53,7 +90,11 @@ def ajax_inbox_count(request):
         count = arc.get_num_faxes(access.devices, access.categories, access.did_routing) or 0
     except Exception:
         count = 0
-    return Response(str(count), content_type="text/plain")
+    answer = str(count)
+    sound = _user_sound(request)
+    if sound:
+        answer += f"|{sound}"                                      # the original appends the user's sound file to the count
+    return Response(answer, content_type="text/plain")
 
 
 @view_config(route_name="ajax_book", permission="view")

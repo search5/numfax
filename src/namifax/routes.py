@@ -68,6 +68,7 @@ def includeme(config):
     # Asynchronous AJAX routes
     config.add_route("ajax_modemstatus", "/ajax/modemstatus")
     config.add_route("ajax_inbox", "/ajax/inbox")
+    config.add_route("audio", "/audio/{name}")
     config.add_route("ajax_book", "/ajax/book")
     config.add_route("ajax_emailbook", "/ajax/emailbook")
     config.add_route("ajax_prefillto", "/ajax/prefillto")

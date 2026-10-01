@@ -42,6 +42,11 @@ def ensure_schema(engine: Engine, settings: Optional[Mapping[str, Any]] = None) 
         tables = sa.inspect(engine).get_table_names()
         fresh = "UserAccount" not in tables
         if not fresh and _at_head(engine, tables):
+            if engine.dialect.name == "sqlite":                       # tables of an older port version are still fixed in place
+                from namifax.db.sqlite_upgrade import upgrade_existing_sqlite
+
+                with engine.begin() as connection:
+                    upgrade_existing_sqlite(connection)
             return                                                    # nothing to migrate (the hooks call this on every fax)
         if engine.dialect.name == "sqlite":
             from namifax.db.sqlite_upgrade import upgrade_existing_sqlite

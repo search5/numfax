@@ -48,6 +48,7 @@ def create_app(global_config=None, **settings):
         def add_switches(event):
             event["did_routing_enabled"] = _did_routing_enabled()
             event["barcode_enabled"] = barcode_enabled()
+            _add_page_counters(event)
 
         config.add_subscriber(add_switches, BeforeRender)
 
@@ -62,6 +63,26 @@ def create_app(global_config=None, **settings):
         config.scan(".views")
 
         return config.make_wsgi_app()
+
+
+def _add_page_counters(event) -> None:
+    """The unread count and the user's modems for the header of every page (the inbox page already brings its own count)."""
+    request = event.get("request")
+    if request is None or not getattr(request, "identity", None):
+        return
+    try:
+        from namifax.views.fax_rights import fax_access
+
+        access = fax_access(request)
+        if event.get("num_inbox") is None:
+            from namifax.services.archive_in import ArchiveIn
+
+            count = ArchiveIn(db=request.dbsession).get_num_faxes(access.devices, access.categories, access.did_routing)
+            event["num_inbox"] = count or None
+        if event.get("modem_devices") is None:
+            event["modem_devices"] = list((access.configured_modems if access.superuser else access.modems) or [])
+    except Exception:
+        pass
 
 
 def _session_factory(settings):

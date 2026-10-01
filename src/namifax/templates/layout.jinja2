@@ -20,7 +20,7 @@
   </style>
   {% block extra_head %}{% endblock %}
 </head>
-<body class="min-h-full flex flex-col text-slate-900 font-sans antialiased bg-slate-50">
+<body data-inbox-poll="30" data-modem-poll="20" data-new-fax="{{ _('new fax') }}" class="min-h-full flex flex-col text-slate-900 font-sans antialiased bg-slate-50">
 
   {% if current_user %}
   <!-- ───────────── Header ───────────── -->
@@ -54,7 +54,7 @@
                     {% if active_tab == tab %}text-blue-700 bg-blue-50{% else %}text-slate-600 hover:text-slate-900 hover:bg-slate-100{% endif %}">
             <span>{{ label }}</span>
             {% if badge %}
-              <span class="px-1.5 py-0.5 rounded-full text-xs font-bold
+              <span {% if tab == 'inbox' %}data-inbox-count{% endif %} class="px-1.5 py-0.5 rounded-full text-xs font-bold
                     {% if tab == 'outbox' %}bg-amber-500 text-white{% else %}bg-blue-600 text-white{% endif %}">
                 {{ badge }}
               </span>
@@ -80,9 +80,10 @@
 
           <!-- Fax line status -->
           <div class="has-tooltip hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-medium
-               {% if modem_list %}bg-emerald-50 border border-emerald-200 text-emerald-700{% else %}bg-slate-100 border border-slate-200 text-slate-500{% endif %}">
-            <span class="w-2 h-2 rounded-full {% if modem_list %}bg-emerald-500 animate-pulse{% else %}bg-slate-400{% endif %}"></span>
-            <span>{% if modem_list %}{{ modem_list|length }} Line{{ 's' if modem_list|length > 1 else '' }} Ready{% else %}Standby{% endif %}</span>
+               {% if modem_list or modem_devices %}bg-emerald-50 border border-emerald-200 text-emerald-700{% else %}bg-slate-100 border border-slate-200 text-slate-500{% endif %}"
+               data-modems="{{ (modem_devices or [])|join(',') }}" data-lines="{{ _('lines') }}">
+            <span class="w-2 h-2 rounded-full {% if modem_list or modem_devices %}bg-emerald-500 animate-pulse{% else %}bg-slate-400{% endif %}"></span>
+            <span data-modem-summary>{% if modem_list %}{{ modem_list|length }} Line{{ 's' if modem_list|length > 1 else '' }} Ready{% elif modem_devices %}{{ modem_devices|length }} Line{{ 's' if modem_devices|length > 1 else '' }}{% else %}Standby{% endif %}</span>
             <span class="tooltip-text">Fax line status</span>
           </div>
 
@@ -157,6 +158,7 @@
     </div>
   </footer>
 
+  <script src="/static/js/notify.js" defer></script>
   {% block extra_scripts %}{% endblock %}
 </body>
 </html>

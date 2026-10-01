@@ -56,7 +56,9 @@ def _languages() -> list[tuple[str, str]]:
 
 
 def _audio_files() -> list[str]:
-    folder = os.environ.get("AVANTFAX_AUDIO_DIR") or os.path.join(os.path.dirname(os.path.dirname(__file__)), "static", "audio")
+    from namifax.views.ajax import audio_dir
+
+    folder = audio_dir()
     return sorted(os.path.basename(f) for ext in ("ogg", "wav", "mp3") for f in glob.glob(os.path.join(folder, f"*.{ext}")))
 
 

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: pMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:21+0900\n"
+"POT-Creation-Date: 2026-10-02 00:42+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: pl\n"
@@ -186,6 +186,9 @@ msgstr "Użytkownicy"
 
 msgid "Backend Core"
 msgstr "Rdzeń backendu"
+
+msgid "unknown"
+msgstr ""
 
 msgid "Scheduler"
 msgstr "Harmonogram"
@@ -1513,8 +1516,14 @@ msgstr ""
 "Pobieraj faksy jako pliki PDF, archiwizuj je na później lub przeszukuj "
 "wszystkie rekordy w Archiwum."
 
+msgid "new fax"
+msgstr ""
+
 msgid "Outbox"
 msgstr "Wychodzące"
+
+msgid "lines"
+msgstr ""
 
 msgid "Settings"
 msgstr "Ustawienia"
@@ -2275,6 +2284,9 @@ msgid "Only sent faxes"
 msgstr ""
 
 msgid "Only received faxes"
+msgstr ""
+
+msgid "Account is disabled"
 msgstr ""
 
 #, python-format
