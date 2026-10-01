@@ -7,6 +7,20 @@ resolution-markers = [
 ]
 
 [[package]]
+name = "alembic"
+version = "1.20.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "mako" },
+    { name = "sqlalchemy" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ed/aa/02910bdb8e2f1444f6654d5b296cd827d126f82209050ee7b1000f92ac4b/alembic-1.20.0.tar.gz", hash = "sha256:db505480647bc60386c5369402f4a57a506b7539c9e9ef5e270d45cbbe4939bf", size = 2093272, upload-time = "2026-09-11T19:09:11.126Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/3f/27/78a89b55b0904d222183164e079b4ca56208e94eff1d35ad1f1ad5be9b06/alembic-1.20.0-py3-none-any.whl", hash = "sha256:77eb101048d95f982c0353e9233404889dcd7a6fc244c107836c0e2fc9cf7d9d", size = 268719, upload-time = "2026-09-11T19:09:12.88Z" },
+]
+
+[[package]]
 name = "annotated-types"
 version = "0.8.0"
 source = { registry = "https://pypi.org/simple" }
@@ -478,6 +492,18 @@ wheels = [
 ]
 
 [[package]]
+name = "mako"
+version = "1.4.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "markupsafe" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5a/09/e07c4b5579a79f4b16f8d4f29f6c54514ac787c4ad506b8c4f28a0e6b0bf/mako-1.4.3.tar.gz", hash = "sha256:cd6537fe88d5fec315c55c2f8529bc4ce7a9a352ad7db3eeaa6a66e2dd4ec37a", size = 412799, upload-time = "2026-09-22T20:54:31.509Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6d/a0/053d6af3e8f871e0073b4a36732d9e65be77a72e5434c31b94f6af78a6bb/mako-1.4.3-py3-none-any.whl", hash = "sha256:723296007c870bfd6b3f0c3230dba7198096e5269297ebf5e4eff9e7ffa39d4f", size = 80164, upload-time = "2026-09-22T20:54:33.128Z" },
+]
+
+[[package]]
 name = "markupsafe"
 version = "3.0.3"
 source = { registry = "https://pypi.org/simple" }
@@ -556,6 +582,7 @@ name = "namifax"
 version = "4.0.0"
 source = { editable = "." }
 dependencies = [
+    { name = "alembic" },
     { name = "apscheduler" },
     { name = "babel" },
     { name = "boto3" },
@@ -566,10 +593,14 @@ dependencies = [
     { name = "pyotp" },
     { name = "pyramid" },
     { name = "pyramid-jinja2" },
+    { name = "pyramid-retry" },
+    { name = "pyramid-tm" },
     { name = "pytesseract" },
     { name = "sqlalchemy" },
+    { name = "transaction" },
     { name = "waitress" },
     { name = "webauthn" },
+    { name = "zope-sqlalchemy" },
 ]
 
 [package.dev-dependencies]
@@ -581,6 +612,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "alembic", specifier = ">=1.20.0" },
     { name = "apscheduler", specifier = ">=3.10.0" },
     { name = "babel", specifier = ">=2.18.0" },
     { name = "boto3", specifier = ">=1.43.105" },
@@ -591,10 +623,14 @@ requires-dist = [
     { name = "pyotp", specifier = ">=2.10.0" },
     { name = "pyramid", specifier = ">=2.0" },
     { name = "pyramid-jinja2", specifier = ">=2.10.0" },
+    { name = "pyramid-retry", specifier = ">=2.1.1" },
+    { name = "pyramid-tm", specifier = ">=2.6" },
     { name = "pytesseract", specifier = ">=0.3.13" },
     { name = "sqlalchemy", specifier = ">=2.0.0" },
+    { name = "transaction", specifier = ">=5.1" },
     { name = "waitress", specifier = ">=3.0.0" },
     { name = "webauthn", specifier = ">=3.0.1" },
+    { name = "zope-sqlalchemy", specifier = ">=4.1" },
 ]
 
 [package.metadata.requires-dev]
@@ -952,6 +988,32 @@ wheels = [
 ]
 
 [[package]]
+name = "pyramid-retry"
+version = "2.1.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pyramid" },
+    { name = "zope-interface" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/bf/02/2a084e7bc8ca3c50b67c6a6d58598c5771d93399e9ff2aadf6aa29c1adcc/pyramid_retry-2.1.1.tar.gz", hash = "sha256:baa8276ae68babad09e5f2f94efc4f7421f3b8fb526151df522052f8cd3ec0c9", size = 23266, upload-time = "2020-03-21T21:01:06.9Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b7/a7/b04390f36dcd0b117e023e4f980d6173da893b3c27f8b12ecd5dcc6fdb95/pyramid_retry-2.1.1-py2.py3-none-any.whl", hash = "sha256:b5129a60eb9d7409234ea52839006426d2ae887b4a1f0530c75ec336cabf2476", size = 6641, upload-time = "2020-03-21T21:01:05.701Z" },
+]
+
+[[package]]
+name = "pyramid-tm"
+version = "2.6"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pyramid" },
+    { name = "transaction" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/cf/b3/d6db704d25fc7b03d96a753fcc7e63f4ea2f93aedeb7c072472744d33267/pyramid_tm-2.6.tar.gz", hash = "sha256:8148d2191285280c9a0c23e6df1018b3514b4cef02115b872dd0350a4d78709c", size = 40028, upload-time = "2024-11-14T07:30:54.256Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/68/78/77ac3fbfb73339bd09f4c33a6d79947ad58c5d4d8062fbdbc2be1ddcac57/pyramid_tm-2.6-py3-none-any.whl", hash = "sha256:665a4ee1d6f41f0c7ffa5e54d9b01d70cd3e8e5bd76277529acbdd6b6bd6fe9e", size = 10792, upload-time = "2024-11-14T07:30:52.428Z" },
+]
+
+[[package]]
 name = "pytesseract"
 version = "0.3.13"
 source = { registry = "https://pypi.org/simple" }
@@ -1182,6 +1244,18 @@ wheels = [
 ]
 
 [[package]]
+name = "transaction"
+version = "5.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "zope-interface" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/0e/d9/df20286b7d3073d1b26e5267ffc43fc07e90550b7d2d71d2cc7c1ca8852a/transaction-5.1.tar.gz", hash = "sha256:f6ca8639a3e54f6991de0d9c0983a7cd91acb21a825cb544c168269be956bd41", size = 70013, upload-time = "2026-03-17T07:47:00.54Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/53/c4/6fc6a256e4873fdc1daf34fb6a6ff4d7f9dac49505a7004f5cac3a485cfc/transaction-5.1-py3-none-any.whl", hash = "sha256:05aa77c4543cec8b541565ad8b304857490878605ed727851bc5a531b9060789", size = 46386, upload-time = "2026-03-17T07:46:59.05Z" },
+]
+
+[[package]]
 name = "translationstring"
 version = "1.4"
 source = { registry = "https://pypi.org/simple" }
@@ -1353,4 +1427,19 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/a2/54/4df4bb0b1aace2298386375ab2fb752378683b558d2db713e25c40a3e96a/zope_interface-8.6-cp314-cp314t-manylinux1_x86_64.manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_5_x86_64.whl", hash = "sha256:27e6de8e593736210d2a9f1bbf766a5653aa4819c184f864ab9d1f8bd3590a60", size = 300898, upload-time = "2026-08-20T11:18:02.224Z" },
     { url = "https://files.pythonhosted.org/packages/08/9c/0c8c80c1eeb62ac0c3ed1f51ad8cdd6da9373c53247c659c49f0ea29f742/zope_interface-8.6-cp314-cp314t-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:66ab8c5d8820aa378968c16b7a3cb051aca342eafa649c9a363182f572d75ccb", size = 304684, upload-time = "2026-08-20T11:18:04.105Z" },
     { url = "https://files.pythonhosted.org/packages/54/69/3afc11a58b9ea814fdfb9297a8c36d10871c1f0cc06d42c106282109b952/zope_interface-8.6-cp314-cp314t-win_amd64.whl", hash = "sha256:fcc86414ee0e6b77416de81b8dead5900719b3f71b7875d8d1f87ae4e166a11f", size = 215500, upload-time = "2026-08-20T11:18:06.259Z" },
+]
+
+[[package]]
+name = "zope-sqlalchemy"
+version = "4.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "packaging" },
+    { name = "sqlalchemy" },
+    { name = "transaction" },
+    { name = "zope-interface" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/09/e8/e5e230fa409e25a46ead006b534bd32190d4b30312b9a2876f16ef32da9e/zope_sqlalchemy-4.1.tar.gz", hash = "sha256:1912525fa0b2b6ff0c3cab46aab59fed45302d4de4e4b03e0d11386e770f4531", size = 33740, upload-time = "2025-11-25T07:02:40.401Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/18/dc/12744f04b291537e874732631b292b1bc782a9233f231180edc38adc25eb/zope_sqlalchemy-4.1-py3-none-any.whl", hash = "sha256:24c18895af4b962c0b214d84fbdf548df4ac504c9eb437b30d9bff25af0ae072", size = 22998, upload-time = "2025-11-25T07:02:38.783Z" },
 ]
