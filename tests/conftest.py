@@ -2,9 +2,13 @@
 
 from __future__ import annotations
 
+import re
+import shutil
 import os
 import uuid
+from pathlib import Path
 
+import alembic.config
 import pytest
 import sqlalchemy as sa
 import transaction
@@ -149,3 +153,21 @@ def server_db_url(request):
         else:
             conn.execute(sa.text(f"DROP DATABASE IF EXISTS `{name}`"))
     admin.dispose()
+
+
+# --- Alembic ------------------------------------------------------------------------------
+
+@pytest.fixture
+def alembic_cfg(tmp_path):
+    """Alembic Config using a private copy of the migration environment.
+
+    The target database is resolved as in the application: ``DATABASE_URL`` from the environment
+    (tests set it with ``monkeypatch``) unless the ini file provides ``sqlalchemy.url``.
+    """
+    root = Path(__file__).resolve().parents[1]
+    scripts = tmp_path / "alembic"
+    shutil.copytree(root / "src" / "namifax" / "alembic", scripts)
+    ini = re.sub(r"(?m)^script_location\s*=.*$", f"script_location = {scripts}", (root / "development.ini").read_text())
+    ini_path = tmp_path / "alembic-test.ini"
+    ini_path.write_text(ini)
+    return alembic.config.Config(str(ini_path))

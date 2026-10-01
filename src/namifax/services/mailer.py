@@ -45,12 +45,13 @@ class MailerService:
         self._embedded_images: list[dict[str, Any]] = []
 
     @classmethod
-    def from_settings(cls, engine: Any = None) -> MailerService:
-        if engine is None:
+    def from_settings(cls, session: Any = None) -> MailerService:
+        """Build a mailer from the saved SMTP settings (ORM session); defaults without a session."""
+        if session is None:
             return cls()
         try:
             from namifax.services.smtp_settings import SmtpSettingsService
-            service = SmtpSettingsService(engine)
+            service = SmtpSettingsService(session)
             cfg = service.get_settings()
             use_ssl = (cfg.smtp_security == "SSL")
             use_tls = (cfg.smtp_security == "STARTTLS")

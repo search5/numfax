@@ -1,17 +1,24 @@
 import unittest
 from unittest.mock import MagicMock, patch
-from namifax.db.engine import DatabaseEngine
-from src.namifax.db.schema import init_database_tables
-from src.namifax.services.smtp_settings import SmtpSettingsService, SmtpConfig, SmtpTestResult
-from src.namifax.services.mailer import MailerService
+from sqlalchemy.orm import Session
+
+import namifax.models  # noqa: F401  (registers every model)
+from namifax.db.provider import create_sa_engine
+from namifax.models.meta import Base
+from namifax.services.smtp_settings import SmtpSettingsService, SmtpConfig, SmtpTestResult
+from namifax.services.mailer import MailerService
 
 
 class TestSmtpSettingsService(unittest.TestCase):
     def setUp(self):
-        self.db = DatabaseEngine()
-        self.db.connect_sqlite(":memory:")
-        init_database_tables(self.db)
-        self.service = SmtpSettingsService(self.db)
+        self.engine = create_sa_engine("sqlite://")
+        Base.metadata.create_all(self.engine)
+        self.session = Session(self.engine)
+        self.service = SmtpSettingsService(self.session)
+
+    def tearDown(self):
+        self.session.close()
+        self.engine.dispose()
 
     def test_default_settings(self):
         config = self.service.get_settings()
@@ -98,7 +105,7 @@ class TestSmtpSettingsService(unittest.TestCase):
         }
         self.service.save_settings(new_data)
 
-        mailer = MailerService.from_settings(self.db)
+        mailer = MailerService.from_settings(self.session)
         self.assertEqual(mailer.smtp_server, "mail.corporate.com")
         self.assertEqual(mailer.smtp_port, 465)
         self.assertTrue(mailer.use_ssl)

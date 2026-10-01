@@ -201,7 +201,6 @@ class TestSecurityAuditPhase1(unittest.TestCase):
             "src/namifax/services/storage_lifecycle.py",
             "src/namifax/services/cover_studio.py",
             "src/namifax/services/printer.py",
-            "src/namifax/services/smtp_settings.py",
             "src/namifax/views/admin.py",
         ]
 
@@ -221,14 +220,12 @@ class TestSecurityAuditPhase1(unittest.TestCase):
         from namifax.services.storage_lifecycle import DatabaseEngine as StorageEngine
         from namifax.services.cover_studio import DatabaseEngine as CoverEngine
         from namifax.services.printer import DatabaseEngine as PrinterEngine
-        from namifax.services.smtp_settings import DatabaseEngine as SmtpEngine
         from namifax.db.engine import DatabaseEngine as MainEngine
 
         self.assertIs(OcrEngine, MainEngine)
         self.assertIs(StorageEngine, MainEngine)
         self.assertIs(CoverEngine, MainEngine)
         self.assertIs(PrinterEngine, MainEngine)
-        self.assertIs(SmtpEngine, MainEngine)
 
 
 if __name__ == "__main__":

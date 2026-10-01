@@ -64,7 +64,9 @@ def test_smtp_save_persists_into_app_database_file(app_env):
     env = prepare(registry=env["registry"], request=post_req)
     request = env["request"]
     request.session = dict(ADMIN_SESSION)
+    request.tm.begin()  # the pyramid_tm tween begins and commits the request transaction
     admin_smtp_view(request)
+    request.tm.commit()
 
     con = sqlite3.connect(db_file)
     try:

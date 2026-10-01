@@ -902,10 +902,8 @@ def admin_smtp_view(request):
     if not is_admin:
         raise HTTPForbidden(_("Access denied. Superadmin permission required."))
 
-    db = request.db
-
     from namifax.services.smtp_settings import SmtpSettingsService, SmtpConfig
-    service = SmtpSettingsService(db)
+    service = SmtpSettingsService(request.dbsession)
 
     message = None
     error = None

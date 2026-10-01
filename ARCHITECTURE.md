@@ -926,3 +926,23 @@ Pyramid cookiecutter starter(2.1-branch, jinja2 + sqlalchemy)를 임시 디렉�
 6. 뷰 테스트는 `dbsession`/`tm` 픽스처를 쓰거나, 요청 헬퍼에서 `request.tm.begin()`을 호출한다(tween이 하는 일).
 
 **남은 한계**: `create_app` 시작 시 레거시 `init_database_tables`(SQLite DDL)가 실행되므로, 모든 테이블이 모델과 마이그레이션으로 옮겨지기 전에는 비 SQLite DB로 앱이 기동되지 않는다. 모델화된 모듈은 PostgreSQL에서도 서비스·마이그레이션 수준으로 동작한다.
+
+### 14.4 ORM 모델화 진행표 (테이블 단위)
+상태: `[LEGACY]` raw SQL(`DatabaseEngine`) / `[ORM]` 모델 + `Session` 서비스 + Alembic 리비전 + 서버 DB 검증 완료.
+검증 서버: SQLite(자동), PostgreSQL 16·MySQL 8.4·MariaDB 11.8(`pytest -m serverdb`, 환경변수는 `tests/conftest.py` 참조).
+
+| 그룹 | 테이블 | 상태 | 리비전 | 비고 |
+| :--- | :--- | :---: | :---: | :--- |
+| 1 | `SystemConfig` | `[ORM]` | 0001 | 파일럿. storage/saml 뷰 |
+| 1 | `SystemSettings` | `[ORM]` | 0002 | SMTP 단일 행(id=1). `SmtpSettingsService(Session)`, `MailerService.from_settings(session)`. 참고: `common/helpers.send_mail`은 DB의 SMTP 설정을 쓰지 않고 `MailerService`를 직접 만든다(저장한 설정이 실제 발송에 반영되지 않음) |
+| 1 | `NetworkPrinters` | `[LEGACY]` | - | 다음 |
+| 1 | `SysLog` | `[LEGACY]` | - | |
+| 2 | `Modems`, `DIDRoute`, `BarcodeRoute`, `FaxCategory`, `CoverPages`, `DynConf`(+`DynamicConfig` 정리) | `[LEGACY]` | - | |
+| 3 | `UserAccount`, `UserPasswords`, `UserTOTP`, `AddressBook*`, `DistroList`, `UserWebAuthnCredentials`, `FaxOCR` | `[LEGACY]` | - | `AddressBook` `ab_id`/`abook_id` 불일치를 모델화하며 정리 |
+| 4 | `FaxArchive` 외 | `[LEGACY]` | - | |
+
+**공통 규칙 (이번 라운드에서 재확인)**
+- 서버 DB 테스트에서 raw SQL을 쓰면 PostgreSQL에서 혼합 대소문자 테이블명이 실패한다. 서버 테스트는 모델 기반 쿼리(`select(func.count()).select_from(Model)`)를 쓴다.
+- `tests/conftest.py`: `alembic_cfg`(개인 사본 Alembic 설정), `server_db_url`(서버별 임시 DB), `dbsession`/`tm`/`app_request` 픽스처.
+- `tests/unit/test_migrations_match_models.py`가 마이그레이션 결과와 모델의 불일치를 모든 서버에서 잡는다. 모델을 추가할 때는 리비전을 함께 추가해야 통과한다.
+- 모듈을 ORM으로 옮기면 `DatabaseEngine`을 임포트하던 감사 테스트(`test_security_audit_phase1::test_audit_18`)의 대상 목록에서 그 모듈을 뺀다.

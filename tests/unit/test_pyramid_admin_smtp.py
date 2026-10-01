@@ -2,27 +2,32 @@ import unittest
 from unittest.mock import patch, MagicMock
 from pyramid import testing
 from pyramid.httpexceptions import HTTPForbidden, HTTPFound
-from namifax.db.engine import DatabaseEngine
-from src.namifax.db.schema import init_database_tables
-from src.namifax.views.admin import admin_smtp_view
+from sqlalchemy.orm import Session
+
+import namifax.models  # noqa: F401  (registers every model)
+from namifax.db.provider import create_sa_engine
+from namifax.models.meta import Base
+from namifax.views.admin import admin_smtp_view
 
 
 class TestAdminSmtpView(unittest.TestCase):
     def setUp(self):
         self.config = testing.setUp()
-        self.db = DatabaseEngine()
-        self.db.connect_sqlite(":memory:")
-        init_database_tables(self.db)
+        self.engine = create_sa_engine("sqlite://")
+        Base.metadata.create_all(self.engine)
+        self.session = Session(self.engine)
 
     def tearDown(self):
         testing.tearDown()
+        self.session.close()
+        self.engine.dispose()
 
     def test_permission_denied_for_non_admin(self):
         req = testing.DummyRequest()
         req.session["user_id"] = 2
         req.session["is_admin"] = False
         req.session["is_superadmin"] = False
-        req.db = self.db
+        req.dbsession = self.session
 
         with self.assertRaises(HTTPForbidden):
             admin_smtp_view(req)
@@ -32,7 +37,7 @@ class TestAdminSmtpView(unittest.TestCase):
         req.session["user_id"] = 1
         req.session["is_admin"] = True
         req.session["is_superadmin"] = True
-        req.db = self.db
+        req.dbsession = self.session
         req.method = "GET"
 
         res = admin_smtp_view(req)
@@ -55,7 +60,7 @@ class TestAdminSmtpView(unittest.TestCase):
         })
         req.session["user_id"] = 1
         req.session["is_superadmin"] = True
-        req.db = self.db
+        req.dbsession = self.session
         req.method = "POST"
 
         res = admin_smtp_view(req)
@@ -79,7 +84,7 @@ class TestAdminSmtpView(unittest.TestCase):
         })
         req.session["user_id"] = 1
         req.session["is_superadmin"] = True
-        req.db = self.db
+        req.dbsession = self.session
         req.method = "POST"
 
         res = admin_smtp_view(req)

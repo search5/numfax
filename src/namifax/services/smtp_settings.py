@@ -5,7 +5,9 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from email.message import EmailMessage
 from typing import Any, Dict, List, Optional
-from namifax.db.engine import DatabaseEngine, resolve_db
+from sqlalchemy.orm import Session
+
+from namifax.models.systemsettings import SystemSettings
 
 
 @dataclass
@@ -31,38 +33,43 @@ class SmtpTestResult:
 
 
 class SmtpSettingsService:
-    """Manages enterprise SMTP gateway configuration and connectivity diagnostics."""
+    """Manages enterprise SMTP gateway configuration and connectivity diagnostics.
 
-    def __init__(self, db: Optional[DatabaseEngine] = None) -> None:
-        self.db = resolve_db(db, "SmtpSettingsService")
+    Reads and writes the single ``SystemSettings`` row (id = 1) through an ORM session, so the
+    same code runs on SQLite, MySQL, MariaDB and PostgreSQL.
+    """
+
+    ROW_ID = 1
+
+    def __init__(self, session: Optional[Session] = None) -> None:
+        self.session = session
+
+    def _require_session(self) -> Session:
+        if self.session is None:
+            raise RuntimeError("SmtpSettingsService: no database session injected (pass request.dbsession)")
+        return self.session
 
     def get_settings(self) -> SmtpConfig:
-        res = self.db.query(
-            "SELECT smtp_host, smtp_port, smtp_security, smtp_auth, "
-            "smtp_username, smtp_password, from_email, from_name, "
-            "email_sig_text, email_sig_html, updated_at "
-            "FROM SystemSettings WHERE id = 1"
-        )
-        records = self.db.get_records()
-        if not records:
+        row = self._require_session().get(SystemSettings, self.ROW_ID)
+        if row is None:
             return SmtpConfig()
 
-        row = records[0]
         return SmtpConfig(
-            smtp_host=row.get("smtp_host") or "localhost",
-            smtp_port=int(row.get("smtp_port") or 25),
-            smtp_security=row.get("smtp_security") or "NONE",
-            smtp_auth=bool(row.get("smtp_auth")),
-            smtp_username=row.get("smtp_username"),
-            smtp_password=row.get("smtp_password"),
-            from_email=row.get("from_email") or "root@localhost",
-            from_name=row.get("from_name") or "NamiFAX",
-            email_sig_text=row.get("email_sig_text") or "",
-            email_sig_html=row.get("email_sig_html") or "",
-            updated_at=row.get("updated_at"),
+            smtp_host=row.smtp_host or "localhost",
+            smtp_port=int(row.smtp_port or 25),
+            smtp_security=row.smtp_security or "NONE",
+            smtp_auth=bool(row.smtp_auth),
+            smtp_username=row.smtp_username,
+            smtp_password=row.smtp_password,
+            from_email=row.from_email or "root@localhost",
+            from_name=row.from_name or "NamiFAX",
+            email_sig_text=row.email_sig_text or "",
+            email_sig_html=row.email_sig_html or "",
+            updated_at=row.updated_at,
         )
 
     def save_settings(self, data: Dict[str, Any]) -> bool:
+        session = self._require_session()
         port = int(data.get("smtp_port", 25))
         if port < 1 or port > 65535:
             raise ValueError(f"Invalid SMTP port: {port}. Port must be between 1 and 65535.")
@@ -78,45 +85,24 @@ class SmtpSettingsService:
         elif isinstance(auth_val, (int, bool)):
             auth = bool(auth_val)
 
-        host = str(data.get("smtp_host", "localhost")).strip()
-        username = data.get("smtp_username") or ""
-        password = data.get("smtp_password") or ""
-        from_email = str(data.get("from_email", "root@localhost")).strip()
-        from_name = str(data.get("from_name", "NamiFAX")).strip()
-        sig_text = data.get("email_sig_text", "") or ""
-        sig_html = data.get("email_sig_html", "") or ""
-        now_str = datetime.now().isoformat()
+        row = session.get(SystemSettings, self.ROW_ID)
+        if row is None:
+            row = SystemSettings(id=self.ROW_ID)
+            session.add(row)
 
-        # Check existing
-        self.db.query("SELECT id FROM SystemSettings WHERE id = 1")
-        if self.db.get_records():
-            sql = (
-                f"UPDATE SystemSettings SET "
-                f"smtp_host = {self.db.quote(host)}, "
-                f"smtp_port = {port}, "
-                f"smtp_security = {self.db.quote(security)}, "
-                f"smtp_auth = {1 if auth else 0}, "
-                f"smtp_username = {self.db.quote(username)}, "
-                f"smtp_password = {self.db.quote(password)}, "
-                f"from_email = {self.db.quote(from_email)}, "
-                f"from_name = {self.db.quote(from_name)}, "
-                f"email_sig_text = {self.db.quote(sig_text)}, "
-                f"email_sig_html = {self.db.quote(sig_html)}, "
-                f"updated_at = {self.db.quote(now_str)} "
-                f"WHERE id = 1"
-            )
-        else:
-            sql = (
-                f"INSERT INTO SystemSettings (id, smtp_host, smtp_port, smtp_security, smtp_auth, "
-                f"smtp_username, smtp_password, from_email, from_name, email_sig_text, email_sig_html, updated_at) "
-                f"VALUES (1, {self.db.quote(host)}, {port}, {self.db.quote(security)}, "
-                f"{1 if auth else 0}, {self.db.quote(username)}, {self.db.quote(password)}, "
-                f"{self.db.quote(from_email)}, {self.db.quote(from_name)}, "
-                f"{self.db.quote(sig_text)}, {self.db.quote(sig_html)}, "
-                f"{self.db.quote(now_str)})"
-            )
-        res = self.db.query(sql)
-        return res.executed
+        row.smtp_host = str(data.get("smtp_host", "localhost")).strip()
+        row.smtp_port = port
+        row.smtp_security = security
+        row.smtp_auth = auth
+        row.smtp_username = data.get("smtp_username") or ""
+        row.smtp_password = data.get("smtp_password") or ""
+        row.from_email = str(data.get("from_email", "root@localhost")).strip()
+        row.from_name = str(data.get("from_name", "NamiFAX")).strip()
+        row.email_sig_text = data.get("email_sig_text", "") or ""
+        row.email_sig_html = data.get("email_sig_html", "") or ""
+        row.updated_at = datetime.now().isoformat()
+        session.flush()
+        return True
 
     def test_connection(self, target_email: str, config: Optional[SmtpConfig] = None) -> SmtpTestResult:
         if config is None:
