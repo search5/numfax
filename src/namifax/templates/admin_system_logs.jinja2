@@ -23,7 +23,7 @@
     <form action="/admin/system_logs" method="get" class="flex flex-wrap items-center gap-2 text-xs">
       <div class="flex items-center space-x-1.5">
         <label for="kw" class="font-semibold text-slate-300">{{ _('Keywords:') }}</label>
-        <input type="text" name="kw" id="kw" value="{{ kw or '' }}" placeholder="Search text..." class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 font-mono transition" />
+        <input type="text" name="kw" id="kw" value="{{ kw or '' }}" placeholder="{{ _('Search text...') }}" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 font-mono transition" />
       </div>
 
       <div class="flex items-center space-x-1">

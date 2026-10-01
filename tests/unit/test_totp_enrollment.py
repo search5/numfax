@@ -132,7 +132,6 @@ def test_after_enabling_the_next_login_needs_a_code(testapp, dbsession):
     _login(testapp)
     _, done = _enable(testapp)
     codes = _codes(done)
-    testapp.get("/logout", expect_errors=True)
     second = type(testapp)(testapp.app, extra_environ=testapp.extra_environ)
     step = second.post("/login", {"username": "admin", "password": "password", "_submit_check": "1"})
     assert step.headers["Location"].endswith("/login/totp")

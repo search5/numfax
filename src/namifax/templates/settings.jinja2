@@ -87,7 +87,7 @@
 
         <div class="md:col-span-2">
           <label for="user_tsi" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Transmitting Station ID (TSI)') }}</label>
-          <input type="text" name="user_tsi" id="user_tsi" value="{{ user_profile.user_tsi or '' }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 font-mono bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="e.g. +1 555 123 4567" />
+          <input type="text" name="user_tsi" id="user_tsi" value="{{ user_profile.user_tsi or '' }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 font-mono bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="{{ _('e.g. +1 555 123 4567') }}" />
           <p class="text-[11px] text-slate-400 mt-1">{{ _('Header identifier imprinted on top of transmitted fax pages.') }}</p>
         </div>
       </div>
@@ -164,17 +164,17 @@
       
       <div>
         <label for="old_password" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Current Password') }}</label>
-        <input type="password" name="old_password" id="old_password" class="w-full md:w-80 border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="Enter current password to verify" />
+        <input type="password" name="old_password" id="old_password" class="w-full md:w-80 border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="{{ _('Enter current password to verify') }}" />
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label for="new_password" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('New Password') }}</label>
-          <input type="password" name="new_password" id="new_password" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="Enter secure new password" />
+          <input type="password" name="new_password" id="new_password" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="{{ _('Enter secure new password') }}" />
         </div>
         <div>
           <label for="confirm_password" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Confirm New Password') }}</label>
-          <input type="password" name="confirm_password" id="confirm_password" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="Re-type new password" />
+          <input type="password" name="confirm_password" id="confirm_password" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="{{ _('Re-type new password') }}" />
         </div>
       </div>
     </div>

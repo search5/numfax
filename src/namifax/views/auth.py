@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from pyramid.csrf import check_csrf_token
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import forget, remember
 from pyramid.view import view_config
@@ -223,9 +224,15 @@ def pwdexpired_post_view(request):
     return _finish_login(request, pending["uid"], pending["username"])
 
 
-@view_config(route_name="logout", permission="public")
+@view_config(route_name="logout", renderer="namifax:templates/logout.jinja2", permission="public")
 def logout_view(request):
-    """Log out user, clear cookie and redirect to login."""
-    headers = forget(request)
-    return HTTPFound(location=request.route_url("login"), headers=headers)
+    """Sign out: a POST with the session's CSRF token clears the login cookie and goes to the login page.
+
+    A plain link (the original's logout.php) could be followed by any other web page, which would sign the user out
+    against their will. A GET therefore only asks "Sign out?" and offers the button.
+    """
+    if request.method == "POST":
+        check_csrf_token(request)
+        return HTTPFound(location=request.route_url("login"), headers=forget(request))
+    return {"title": "- NamiFAX - Sign out", "csrf_token": request.session.get_csrf_token()}
 

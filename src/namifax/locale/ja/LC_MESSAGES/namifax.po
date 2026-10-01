@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: jMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 18:15+0900\n"
+"POT-Creation-Date: 2026-10-01 21:10+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -20,6 +20,9 @@ msgstr "電子メールアドレス"
 
 msgid "Save frequently used fax numbers for quick access when sending."
 msgstr "送信時にすばやくアクセスできるよう、頻繁に使用するFAX番号を保存します。"
+
+msgid "Company or fax number..."
+msgstr ""
 
 msgid "Search"
 msgstr "検索"
@@ -89,6 +92,9 @@ msgstr "会社名"
 #, fuzzy
 msgid "Company Name"
 msgstr "会社名"
+
+msgid "e.g. Acme Corporation"
+msgstr ""
 
 msgid "Clear the number to remove it."
 msgstr ""
@@ -299,6 +305,9 @@ msgstr "FAXカテゴリを閲覧"
 msgid "Category Name"
 msgstr "カテゴリ名"
 
+msgid "e.g. Invoices, Contracts"
+msgstr ""
+
 #, fuzzy
 msgid "Configure Cover Pages"
 msgstr "Cover Pages"
@@ -327,6 +336,9 @@ msgstr "タイトル"
 
 msgid "File"
 msgstr "ファイル"
+
+msgid "e.g. custom.ps"
+msgstr ""
 
 msgid "Cover Template Studio: Dynamic Tag References"
 msgstr ""
@@ -365,6 +377,9 @@ msgstr "発信者番号ルールを追加"
 
 msgid "Caller ID"
 msgstr "発信者番号"
+
+msgid "e.g. 5550199 or pattern"
+msgstr ""
 
 msgid "Modem Device"
 msgstr "モデムデバイス"
@@ -510,6 +525,12 @@ msgstr "Fax Modems"
 msgid "Configure Modems Device"
 msgstr "モデムデバイスを設定"
 
+msgid "e.g. ttyS0"
+msgstr ""
+
+msgid "e.g. Main Inbound Line"
+msgstr ""
+
 msgid "Reset"
 msgstr "Reset"
 
@@ -535,6 +556,9 @@ msgstr ""
 msgid "Printer Name"
 msgstr ""
 
+msgid "e.g. Office HP LaserJet"
+msgstr ""
+
 msgid "Protocol"
 msgstr ""
 
@@ -546,6 +570,9 @@ msgid "Port"
 msgstr "優先度"
 
 msgid "Queue Name (Optional)"
+msgstr ""
+
+msgid "2nd Floor Accounting Printer"
 msgstr ""
 
 msgid "Register Printer"
@@ -591,6 +618,12 @@ msgstr "操作"
 
 msgid "Configure Routing Rule"
 msgstr "ルーティングルールを設定"
+
+msgid "e.g. 1000"
+msgstr ""
+
+msgid "e.g. Sales Direct Line"
+msgstr ""
 
 msgid "-- None --"
 msgstr "-- なし --"
@@ -712,7 +745,13 @@ msgstr "メールアドレス"
 msgid "From Display Name"
 msgstr "会社名"
 
+msgid "NamiFAX Corporate Dispatcher"
+msgstr ""
+
 msgid "Email Signature (Plaintext)"
+msgstr ""
+
+msgid "Sent automatically by NamiFAX Gateway."
 msgstr ""
 
 #, fuzzy
@@ -852,6 +891,9 @@ msgstr "監査ログおよびHylaFAXサーバーの運用イベントトレー�
 msgid "Keywords:"
 msgstr "キーワード:"
 
+msgid "Search text..."
+msgstr ""
+
 msgid "Date:"
 msgstr "日付:"
 
@@ -943,6 +985,9 @@ msgstr "すべてのレコードを検索するにはフィルターを空のま
 msgid "Keyword"
 msgstr "キーワード"
 
+msgid "Company, number, notes..."
+msgstr ""
+
 #, fuzzy
 msgid "All Categories"
 msgstr "FAXカテゴリを閲覧"
@@ -978,6 +1023,9 @@ msgstr "送信のみ"
 #, fuzzy
 msgid "Fax ID"
 msgstr "Fax Modems"
+
+msgid "e.g. 104"
+msgstr ""
 
 #, fuzzy
 msgid "Results"
@@ -1041,6 +1089,9 @@ msgstr "新規配信リストを作成"
 msgid "List Name"
 msgstr "リスト名"
 
+msgid "e.g. Executive Sales Team"
+msgstr ""
+
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "グループメンバー (連絡先およびFAX番号)"
 
@@ -1053,6 +1104,9 @@ msgstr "削除"
 
 msgid "No contacts assigned to this list yet."
 msgstr "このリストに割り当てられた連絡先はまだありません。"
+
+msgid "Add contact name or fax number..."
+msgstr ""
 
 msgid "Add Member"
 msgstr "メンバーを追加"
@@ -1078,6 +1132,9 @@ msgstr "リスト一覧に戻る"
 
 msgid "Distribution List Profile"
 msgstr "配信リストのプロファイル"
+
+msgid "e.g. Finance Operations"
+msgstr ""
 
 msgid "Enrolled Members"
 msgstr "登録済みメンバー"
@@ -1131,6 +1188,42 @@ msgstr "メールアドレス帳に戻る"
 
 msgid "Contact Profile Details"
 msgstr "連絡先プロファイル詳細"
+
+msgid "John Doe"
+msgstr ""
+
+msgid "Modify Fax Job"
+msgstr ""
+
+msgid "New Destination"
+msgstr ""
+
+msgid "Priority"
+msgstr "優先度"
+
+msgid "Modem / Device"
+msgstr ""
+
+msgid "Number of tries"
+msgstr ""
+
+msgid "Expire after"
+msgstr ""
+
+msgid "Now"
+msgstr ""
+
+msgid "Minutes"
+msgstr ""
+
+msgid "Hours"
+msgstr ""
+
+msgid "Days"
+msgstr ""
+
+msgid "Schedule Send Time"
+msgstr ""
 
 #, fuzzy
 msgid "Lost Password"
@@ -1198,6 +1291,9 @@ msgstr "FAXの閲覧"
 #, fuzzy
 msgid "Received"
 msgstr "送信履歴"
+
+msgid "This number belongs to several companies. Which one is it?"
+msgstr ""
 
 msgid "Reply"
 msgstr "FAXの返信"
@@ -1277,10 +1373,16 @@ msgstr "続行するには認証情報を入力してください。"
 msgid "System Online"
 msgstr "システム機能"
 
+msgid "Enter your username"
+msgstr ""
+
 msgid "Forgot password?"
 msgstr ""
 "電子メールアドレスを入力して、パスワードの送信 "
 "ボタンをクリックしてください。入力の電子メールアドレスに、新しいパスワードが送信されます。そして、新しいパスワードでログインしてください。"
+
+msgid "Enter your password"
+msgstr ""
 
 msgid "Contact your system administrator if you need an account."
 msgstr "アカウントが必要な場合は、システム管理者にお問い合わせください。"
@@ -1306,7 +1408,13 @@ msgstr ""
 msgid "Authentication Code"
 msgstr "氏名"
 
+msgid "123456 or 8-char backup code"
+msgstr ""
+
 msgid "Verify & Log In"
+msgstr ""
+
+msgid "Sign out?"
 msgstr ""
 
 msgid "Assign Company Name"
@@ -1317,6 +1425,9 @@ msgstr "ドキュメントを登録済みの企業連絡先に関連付けます
 
 msgid "Search Company Name"
 msgstr "会社名を検索"
+
+msgid "Type company name to filter..."
+msgstr ""
 
 msgid "Select Contact Record"
 msgstr "連絡先レコードを選択"
@@ -1341,11 +1452,20 @@ msgstr "PDFドキュメント添付ファイルをメール受信者に配信し
 msgid "Recipients"
 msgstr "宛先"
 
+msgid "recipient@example.com (comma separated)"
+msgstr ""
+
 msgid "Subject"
 msgstr "タイトル"
 
+msgid "NamiFAX Transmission Document"
+msgstr ""
+
 msgid "Message"
 msgstr "メッセージ"
+
+msgid "Please find the attached facsimile document."
+msgstr ""
 
 msgid "Send"
 msgstr "送信"
@@ -1356,20 +1476,8 @@ msgstr "内部管理用メモまたはコメントを追加します"
 msgid "Note / Description"
 msgstr "メモ / 説明"
 
-msgid "Reply to Fax"
-msgstr "FAXの返信"
-
-msgid "Dispatch quick reply transmission to originating sender"
-msgstr "元の発信者にクイック返信を送信します"
-
-msgid "Destination Number"
-msgstr "FAX番号"
-
-msgid "Regarding (Subject)"
-msgstr "件名 (Subject)"
-
-msgid "Comments"
-msgstr "コメント"
+msgid "Enter transaction note or dispatch comments..."
+msgstr ""
 
 msgid "Transmission Report"
 msgstr "送信レポート"
@@ -1413,12 +1521,32 @@ msgstr "件のジョブが進行中"
 msgid "Job ID"
 msgstr "ジョブID"
 
-#, fuzzy
-msgid "Destination"
-msgstr "FAX番号"
+msgid "User"
+msgstr ""
 
-msgid "Queued"
-msgstr "キュー登録日時"
+msgid "Dials"
+msgstr ""
+
+msgid "TTS"
+msgstr ""
+
+msgid "Modify"
+msgstr ""
+
+msgid "Kill job"
+msgstr ""
+
+msgid "Kill"
+msgstr ""
+
+msgid "Failed Transmissions"
+msgstr "送信失敗一覧"
+
+msgid "Review the number or retry below."
+msgstr "番号を確認するか、以下で再試行してください。"
+
+msgid "Retry"
+msgstr "Retry"
 
 msgid "No jobs in queue"
 msgstr "キュー内のジョブはありません"
@@ -1431,18 +1559,6 @@ msgstr "送信待ちのFAXはありません。FAXを送信すると、ここに
 #, fuzzy
 msgid "Send a Fax"
 msgstr "FAXの送信"
-
-msgid "Failed Transmissions"
-msgstr "送信失敗一覧"
-
-msgid "Review the number or retry below."
-msgstr "番号を確認するか、以下で再試行してください。"
-
-msgid "Reason"
-msgstr "理由"
-
-msgid "Retry"
-msgstr "Retry"
 
 #, fuzzy
 msgid "Password Expired"
@@ -1462,14 +1578,23 @@ msgstr "パスワードの有効期限が切れているか、続行する前に
 msgid "Old Password"
 msgstr "今までのパスワード"
 
+msgid "Current credentials"
+msgstr ""
+
 msgid "New Password"
 msgstr "新しいパスワード"
+
+msgid "New secure passphrase"
+msgstr ""
 
 #, fuzzy
 msgid "Confirm New Password"
 msgstr ""
 "電子メールアドレスを入力して、パスワードの送信 "
 "ボタンをクリックしてください。入力の電子メールアドレスに、新しいパスワードが送信されます。そして、新しいパスワードでログインしてください。"
+
+msgid "Re-type new passphrase"
+msgstr ""
 
 #, fuzzy
 msgid "Update Password"
@@ -1485,8 +1610,14 @@ msgstr "FAX番号"
 msgid "Enter the fax number and recipient details."
 msgstr "FAX番号と宛先の詳細を入力してください。"
 
-msgid "To send to multiple recipients at once, separate numbers with a comma."
-msgstr "複数の宛先に一度に送信する場合は、番号をカンマで区切ります。"
+msgid "Destination Number"
+msgstr "FAX番号"
+
+msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
+msgstr ""
+
+msgid "To send to multiple recipients at once, separate numbers with a semicolon."
+msgstr ""
 
 msgid "Saved contacts are available in the"
 msgstr "保存された連絡先は次から選択できます:"
@@ -1496,6 +1627,9 @@ msgstr "氏名"
 
 msgid "optional"
 msgstr "任意"
+
+msgid "e.g. Jane Doe"
+msgstr ""
 
 msgid "Voice Number"
 msgstr ""
@@ -1508,6 +1642,9 @@ msgstr ""
 
 msgid "Subject / Regarding"
 msgstr "タイトル"
+
+msgid "e.g. Purchase Order #4921"
+msgstr ""
 
 msgid "Document Attachment"
 msgstr "添付ドキュメント"
@@ -1556,14 +1693,14 @@ msgstr "利用可能な任意の回線 (自動)"
 msgid "Cover Comments"
 msgstr "Cover Pages"
 
+msgid "Notes or message to print on the cover sheet..."
+msgstr ""
+
 msgid "Advanced Options"
 msgstr "詳細オプション"
 
 msgid "Priority, retries, notifications"
 msgstr "優先度、再試行回数、通知設定"
-
-msgid "Priority"
-msgstr "優先度"
 
 #, fuzzy
 msgid "Max Retries"
@@ -1571,21 +1708,6 @@ msgstr "FAXカテゴリを閲覧"
 
 msgid "Retries automatically on busy signal."
 msgstr "話し中の場合は自動的に再試行します。"
-
-msgid "Expire after"
-msgstr ""
-
-msgid "Minutes"
-msgstr ""
-
-msgid "Hours"
-msgstr ""
-
-msgid "Days"
-msgstr ""
-
-msgid "Schedule Send Time"
-msgstr ""
 
 msgid "TSI ID"
 msgstr ""
@@ -1630,6 +1752,9 @@ msgstr "FAX番号"
 msgid "Transmitting Station ID (TSI)"
 msgstr "発信局識別ID (TSI)"
 
+msgid "e.g. +1 555 123 4567"
+msgstr ""
+
 msgid "Header identifier imprinted on top of transmitted fax pages."
 msgstr "送信されたFAXページの上部に印字されるヘッダー識別子です。"
 
@@ -1658,6 +1783,15 @@ msgid "Current Password"
 msgstr ""
 "電子メールアドレスを入力して、パスワードの送信 "
 "ボタンをクリックしてください。入力の電子メールアドレスに、新しいパスワードが送信されます。そして、新しいパスワードでログインしてください。"
+
+msgid "Enter current password to verify"
+msgstr ""
+
+msgid "Enter secure new password"
+msgstr ""
+
+msgid "Re-type new password"
+msgstr ""
 
 #, fuzzy
 msgid "Update Settings"
@@ -1894,6 +2028,9 @@ msgstr ""
 msgid "SAML 2.0 configuration saved successfully."
 msgstr ""
 
+msgid "Please enter a valid number."
+msgstr ""
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr ""
@@ -1913,6 +2050,12 @@ msgid ""
 msgstr ""
 
 msgid "Email failed to send"
+msgstr ""
+
+msgid "Your session has expired. Reload the page and try again."
+msgstr ""
+
+msgid "Invalid job number."
 msgstr ""
 
 msgid "The code is not valid."
@@ -1992,4 +2135,28 @@ msgstr ""
 
 #~ msgid "High (Urgent)"
 #~ msgstr "高 (至急)"
+
+#~ msgid "Reply to Fax"
+#~ msgstr "FAXの返信"
+
+#~ msgid "Dispatch quick reply transmission to originating sender"
+#~ msgstr "元の発信者にクイック返信を送信します"
+
+#~ msgid "Regarding (Subject)"
+#~ msgstr "件名 (Subject)"
+
+#~ msgid "Comments"
+#~ msgstr "コメント"
+
+#~ msgid "Destination"
+#~ msgstr "FAX番号"
+
+#~ msgid "Queued"
+#~ msgstr "キュー登録日時"
+
+#~ msgid "Reason"
+#~ msgstr "理由"
+
+#~ msgid "To send to multiple recipients at once, separate numbers with a comma."
+#~ msgstr "複数の宛先に一度に送信する場合は、番号をカンマで区切ります。"
 

@@ -16,7 +16,7 @@
     <div class="flex items-center gap-2">
       <form action="/addressbook" method="get" class="flex items-center gap-2">
         <input type="text" name="q" value="{{ query or '' }}"
-               placeholder="Company or fax number..."
+               placeholder="{{ _('Company or fax number...') }}"
                class="border border-slate-300 rounded-lg pl-4 pr-4 py-2 text-sm text-slate-900 bg-white
                       focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm w-52" />
         <button type="submit"

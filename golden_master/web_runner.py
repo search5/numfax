@@ -71,6 +71,11 @@ def _client_with_pending_password_change() -> TestApp:
     return client
 
 
+def _page_forms(soup):
+    """The forms of the page itself: the sign-out button every signed-in page carries in its header is not one of them."""
+    return [f for f in soup.find_all("form") if f.get("action") != "/logout"]
+
+
 def run_web_verification(target_scenario: str | None = None) -> int:
     """Execute differential check for all web scenarios (on an isolated database)."""
     with isolated_database():
@@ -169,7 +174,7 @@ def _verify_all_scenarios(target_scenario: str | None = None) -> int:
                 soup = BeautifulSoup(res.text, "html.parser")
                 if "forms" in contract:
                     for position, f_spec in enumerate(contract["forms"]):
-                        forms = soup.find_all("form")
+                        forms = _page_forms(soup)
                         if not forms:
                             errors.append("Expected <form> tag, but none found in rendered HTML")
                             break
@@ -187,7 +192,7 @@ def _verify_all_scenarios(target_scenario: str | None = None) -> int:
                 # 4-1. Strict Form Structure & Exact Element Count Check
                 if "form_structure" in contract:
                     f_struct = contract["form_structure"]
-                    forms = soup.find_all("form")
+                    forms = _page_forms(soup)
                     exp_total_forms = f_struct.get("total_forms")
                     if exp_total_forms is not None and len(forms) != exp_total_forms:
                         errors.append(f"Exact form count mismatch: expected {exp_total_forms}, found {len(forms)}")

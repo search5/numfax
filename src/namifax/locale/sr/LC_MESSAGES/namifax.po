@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: sMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 18:15+0900\n"
+"POT-Creation-Date: 2026-10-01 21:10+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sr\n"
@@ -21,6 +21,9 @@ msgstr "E-mail adrese"
 
 msgid "Save frequently used fax numbers for quick access when sending."
 msgstr "Sačuvajte često korišćene brojeve faksa za brz pristup prilikom slanja."
+
+msgid "Company or fax number..."
+msgstr ""
 
 msgid "Search"
 msgstr "Pretraga"
@@ -92,6 +95,9 @@ msgstr "Kompanija"
 #, fuzzy
 msgid "Company Name"
 msgstr "Kompanija"
+
+msgid "e.g. Acme Corporation"
+msgstr ""
 
 msgid "Clear the number to remove it."
 msgstr ""
@@ -308,6 +314,9 @@ msgstr "Vidljive faks kategorije"
 msgid "Category Name"
 msgstr "Ime kategorije"
 
+msgid "e.g. Invoices, Contracts"
+msgstr ""
+
 #, fuzzy
 msgid "Configure Cover Pages"
 msgstr "Cover Pages"
@@ -336,6 +345,9 @@ msgstr "Naslov"
 
 msgid "File"
 msgstr "Datoteka"
+
+msgid "e.g. custom.ps"
+msgstr ""
 
 msgid "Cover Template Studio: Dynamic Tag References"
 msgstr ""
@@ -376,6 +388,9 @@ msgstr "Dodaj pravilo za Caller ID"
 
 msgid "Caller ID"
 msgstr "Caller ID"
+
+msgid "e.g. 5550199 or pattern"
+msgstr ""
 
 msgid "Modem Device"
 msgstr "Modemski uređaj"
@@ -525,6 +540,12 @@ msgstr "Fax Modems"
 msgid "Configure Modems Device"
 msgstr "Podešavanje modemskog uređaja"
 
+msgid "e.g. ttyS0"
+msgstr ""
+
+msgid "e.g. Main Inbound Line"
+msgstr ""
+
 msgid "Reset"
 msgstr "Reset"
 
@@ -553,6 +574,9 @@ msgstr ""
 msgid "Printer Name"
 msgstr ""
 
+msgid "e.g. Office HP LaserJet"
+msgstr ""
+
 msgid "Protocol"
 msgstr ""
 
@@ -564,6 +588,9 @@ msgid "Port"
 msgstr "Prioritet"
 
 msgid "Queue Name (Optional)"
+msgstr ""
+
+msgid "2nd Floor Accounting Printer"
 msgstr ""
 
 msgid "Register Printer"
@@ -611,6 +638,12 @@ msgstr "Akcija"
 
 msgid "Configure Routing Rule"
 msgstr "Podesi pravilo usmeravanja"
+
+msgid "e.g. 1000"
+msgstr ""
+
+msgid "e.g. Sales Direct Line"
+msgstr ""
 
 msgid "-- None --"
 msgstr "-- Nijedan --"
@@ -733,7 +766,13 @@ msgstr "E-mail adresa"
 msgid "From Display Name"
 msgstr "Kompanija"
 
+msgid "NamiFAX Corporate Dispatcher"
+msgstr ""
+
 msgid "Email Signature (Plaintext)"
+msgstr ""
+
+msgid "Sent automatically by NamiFAX Gateway."
 msgstr ""
 
 #, fuzzy
@@ -880,6 +919,9 @@ msgstr "Revizorski zapisi i operativni događaji HylaFAX servera"
 msgid "Keywords:"
 msgstr "Ključne reči:"
 
+msgid "Search text..."
+msgstr ""
+
 msgid "Date:"
 msgstr "Datum:"
 
@@ -975,6 +1017,9 @@ msgstr ""
 msgid "Keyword"
 msgstr "Ključna reč"
 
+msgid "Company, number, notes..."
+msgstr ""
+
 #, fuzzy
 msgid "All Categories"
 msgstr "Vidljive faks kategorije"
@@ -1010,6 +1055,9 @@ msgstr "Samo poslati"
 #, fuzzy
 msgid "Fax ID"
 msgstr "Fax Modems"
+
+msgid "e.g. 104"
+msgstr ""
 
 #, fuzzy
 msgid "Results"
@@ -1075,6 +1123,9 @@ msgstr "Kreiraj novu distributivnu listu"
 msgid "List Name"
 msgstr "Lista imena"
 
+msgid "e.g. Executive Sales Team"
+msgstr ""
+
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "Članovi grupe (Kontakti i brojevi faksa)"
 
@@ -1087,6 +1138,9 @@ msgstr "Ukloni"
 
 msgid "No contacts assigned to this list yet."
 msgstr "Još uvek nema kontakata dodeljenih ovoj listi."
+
+msgid "Add contact name or fax number..."
+msgstr ""
 
 msgid "Add Member"
 msgstr "Dodaj člana"
@@ -1112,6 +1166,9 @@ msgstr "Nazad na liste"
 
 msgid "Distribution List Profile"
 msgstr "Profil distributivne liste"
+
+msgid "e.g. Finance Operations"
+msgstr ""
 
 msgid "Enrolled Members"
 msgstr "Učlanjeni kontakti"
@@ -1167,6 +1224,42 @@ msgstr "Nazad na E-mail adresar"
 
 msgid "Contact Profile Details"
 msgstr "Detalji profila kontakta"
+
+msgid "John Doe"
+msgstr ""
+
+msgid "Modify Fax Job"
+msgstr ""
+
+msgid "New Destination"
+msgstr ""
+
+msgid "Priority"
+msgstr "Prioritet"
+
+msgid "Modem / Device"
+msgstr ""
+
+msgid "Number of tries"
+msgstr ""
+
+msgid "Expire after"
+msgstr ""
+
+msgid "Now"
+msgstr ""
+
+msgid "Minutes"
+msgstr ""
+
+msgid "Hours"
+msgstr ""
+
+msgid "Days"
+msgstr ""
+
+msgid "Schedule Send Time"
+msgstr ""
 
 #, fuzzy
 msgid "Lost Password"
@@ -1234,6 +1327,9 @@ msgstr "Pogledaj Fax"
 #, fuzzy
 msgid "Received"
 msgstr "Arhiviraj"
+
+msgid "This number belongs to several companies. Which one is it?"
+msgstr ""
 
 msgid "Reply"
 msgstr "Odgovori na FAX"
@@ -1321,11 +1417,17 @@ msgstr "Unesite vaše pristupne podatke da biste nastavili."
 msgid "System Online"
 msgstr "Sistemske funkcije"
 
+msgid "Enter your username"
+msgstr ""
+
 msgid "Forgot password?"
 msgstr ""
 "Molimo unesite Vašu e-mail adresu, a potom kliknite na dugme Pošalji "
 "lozinku.Primićete uskoro novu lozinku.Iskoristite novu lozinku za pristup"
 " sajtu."
+
+msgid "Enter your password"
+msgstr ""
 
 msgid "Contact your system administrator if you need an account."
 msgstr "Obratite se administratoru sistema ako vam je potreban nalog."
@@ -1351,7 +1453,13 @@ msgstr ""
 msgid "Authentication Code"
 msgstr "Za lice"
 
+msgid "123456 or 8-char backup code"
+msgstr ""
+
 msgid "Verify & Log In"
+msgstr ""
+
+msgid "Sign out?"
 msgstr ""
 
 msgid "Assign Company Name"
@@ -1362,6 +1470,9 @@ msgstr "Poveži dokument sa registrovanim poslovnim kontaktom"
 
 msgid "Search Company Name"
 msgstr "Pretraži naziv kompanije"
+
+msgid "Type company name to filter..."
+msgstr ""
 
 msgid "Select Contact Record"
 msgstr "Izaberi zapis kontakta"
@@ -1386,11 +1497,20 @@ msgstr "Pošaljite priloženi PDF dokument primaocima e-pošte"
 msgid "Recipients"
 msgstr "Primaoci"
 
+msgid "recipient@example.com (comma separated)"
+msgstr ""
+
 msgid "Subject"
 msgstr "Predmet"
 
+msgid "NamiFAX Transmission Document"
+msgstr ""
+
 msgid "Message"
 msgstr "Poruka"
+
+msgid "Please find the attached facsimile document."
+msgstr ""
 
 msgid "Send"
 msgstr "Pošalji"
@@ -1401,20 +1521,8 @@ msgstr "Dodaj internu administrativnu belešku ili komentar"
 msgid "Note / Description"
 msgstr "Beleška / Opis"
 
-msgid "Reply to Fax"
-msgstr "Odgovori na FAX"
-
-msgid "Dispatch quick reply transmission to originating sender"
-msgstr "Pošaljite brzi odgovor pošiljaocu"
-
-msgid "Destination Number"
-msgstr "Broij faksa"
-
-msgid "Regarding (Subject)"
-msgstr "Povodom (Predmet)"
-
-msgid "Comments"
-msgstr "Komentari"
+msgid "Enter transaction note or dispatch comments..."
+msgstr ""
 
 msgid "Transmission Report"
 msgstr "Izveštaj o prenosu"
@@ -1460,12 +1568,32 @@ msgstr "zadatak u toku"
 msgid "Job ID"
 msgstr "ID zadatka"
 
-#, fuzzy
-msgid "Destination"
-msgstr "Broij faksa"
+msgid "User"
+msgstr ""
 
-msgid "Queued"
-msgstr "U redu"
+msgid "Dials"
+msgstr ""
+
+msgid "TTS"
+msgstr ""
+
+msgid "Modify"
+msgstr ""
+
+msgid "Kill job"
+msgstr ""
+
+msgid "Kill"
+msgstr ""
+
+msgid "Failed Transmissions"
+msgstr "Neuspeli prenosi"
+
+msgid "Review the number or retry below."
+msgstr "Proverite broj ili pokušajte ponovo ispod."
+
+msgid "Retry"
+msgstr "Retry"
 
 msgid "No jobs in queue"
 msgstr "Nema zadataka u redu"
@@ -1480,18 +1608,6 @@ msgstr ""
 #, fuzzy
 msgid "Send a Fax"
 msgstr "Pošalji Fax"
-
-msgid "Failed Transmissions"
-msgstr "Neuspeli prenosi"
-
-msgid "Review the number or retry below."
-msgstr "Proverite broj ili pokušajte ponovo ispod."
-
-msgid "Reason"
-msgstr "Razlog"
-
-msgid "Retry"
-msgstr "Retry"
 
 #, fuzzy
 msgid "Password Expired"
@@ -1513,8 +1629,14 @@ msgstr ""
 msgid "Old Password"
 msgstr "Stara lozinka"
 
+msgid "Current credentials"
+msgstr ""
+
 msgid "New Password"
 msgstr "Nova lozinka"
+
+msgid "New secure passphrase"
+msgstr ""
 
 #, fuzzy
 msgid "Confirm New Password"
@@ -1522,6 +1644,9 @@ msgstr ""
 "Molimo unesite Vašu e-mail adresu, a potom kliknite na dugme Pošalji "
 "lozinku.Primićete uskoro novu lozinku.Iskoristite novu lozinku za pristup"
 " sajtu."
+
+msgid "Re-type new passphrase"
+msgstr ""
 
 #, fuzzy
 msgid "Update Password"
@@ -1537,8 +1662,14 @@ msgstr "Broij faksa"
 msgid "Enter the fax number and recipient details."
 msgstr "Unesite broj faksa i podatke o primaocu."
 
-msgid "To send to multiple recipients at once, separate numbers with a comma."
-msgstr "Da biste poslali na više primalaca odjednom, razdvojite brojeve zarezom."
+msgid "Destination Number"
+msgstr "Broij faksa"
+
+msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
+msgstr ""
+
+msgid "To send to multiple recipients at once, separate numbers with a semicolon."
+msgstr ""
 
 msgid "Saved contacts are available in the"
 msgstr "Sačuvani kontakti su dostupni u"
@@ -1548,6 +1679,9 @@ msgstr "Za lice"
 
 msgid "optional"
 msgstr "opciono"
+
+msgid "e.g. Jane Doe"
+msgstr ""
 
 msgid "Voice Number"
 msgstr ""
@@ -1560,6 +1694,9 @@ msgstr ""
 
 msgid "Subject / Regarding"
 msgstr "Predmet"
+
+msgid "e.g. Purchase Order #4921"
+msgstr ""
 
 msgid "Document Attachment"
 msgstr "Prilog dokumenta"
@@ -1610,14 +1747,14 @@ msgstr "Bilo koja dostupna linija (Automatski)"
 msgid "Cover Comments"
 msgstr "Cover Pages"
 
+msgid "Notes or message to print on the cover sheet..."
+msgstr ""
+
 msgid "Advanced Options"
 msgstr "Napredne opcije"
 
 msgid "Priority, retries, notifications"
 msgstr "Prioritet, ponovni pokušaji, obaveštenja"
-
-msgid "Priority"
-msgstr "Prioritet"
 
 #, fuzzy
 msgid "Max Retries"
@@ -1625,21 +1762,6 @@ msgstr "Vidljive faks kategorije"
 
 msgid "Retries automatically on busy signal."
 msgstr "Automatski ponovni pokušaj na signal zauzeća."
-
-msgid "Expire after"
-msgstr ""
-
-msgid "Minutes"
-msgstr ""
-
-msgid "Hours"
-msgstr ""
-
-msgid "Days"
-msgstr ""
-
-msgid "Schedule Send Time"
-msgstr ""
 
 msgid "TSI ID"
 msgstr ""
@@ -1684,6 +1806,9 @@ msgstr "Broij faksa"
 msgid "Transmitting Station ID (TSI)"
 msgstr "Identifikator predajne stanice (TSI)"
 
+msgid "e.g. +1 555 123 4567"
+msgstr ""
+
 msgid "Header identifier imprinted on top of transmitted fax pages."
 msgstr "Identifikator u zaglavlju utisnut na vrhu poslatih stranica faksa."
 
@@ -1713,6 +1838,15 @@ msgstr ""
 "Molimo unesite Vašu e-mail adresu, a potom kliknite na dugme Pošalji "
 "lozinku.Primićete uskoro novu lozinku.Iskoristite novu lozinku za pristup"
 " sajtu."
+
+msgid "Enter current password to verify"
+msgstr ""
+
+msgid "Enter secure new password"
+msgstr ""
+
+msgid "Re-type new password"
+msgstr ""
 
 #, fuzzy
 msgid "Update Settings"
@@ -1949,6 +2083,9 @@ msgstr ""
 msgid "SAML 2.0 configuration saved successfully."
 msgstr ""
 
+msgid "Please enter a valid number."
+msgstr ""
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr ""
@@ -1968,6 +2105,12 @@ msgid ""
 msgstr ""
 
 msgid "Email failed to send"
+msgstr ""
+
+msgid "Your session has expired. Reload the page and try again."
+msgstr ""
+
+msgid "Invalid job number."
 msgstr ""
 
 msgid "The code is not valid."
@@ -2055,4 +2198,30 @@ msgstr ""
 
 #~ msgid "High (Urgent)"
 #~ msgstr "Visok (Hitno)"
+
+#~ msgid "Reply to Fax"
+#~ msgstr "Odgovori na FAX"
+
+#~ msgid "Dispatch quick reply transmission to originating sender"
+#~ msgstr "Pošaljite brzi odgovor pošiljaocu"
+
+#~ msgid "Regarding (Subject)"
+#~ msgstr "Povodom (Predmet)"
+
+#~ msgid "Comments"
+#~ msgstr "Komentari"
+
+#~ msgid "Destination"
+#~ msgstr "Broij faksa"
+
+#~ msgid "Queued"
+#~ msgstr "U redu"
+
+#~ msgid "Reason"
+#~ msgstr "Razlog"
+
+#~ msgid "To send to multiple recipients at once, separate numbers with a comma."
+#~ msgstr ""
+#~ "Da biste poslali na više primalaca "
+#~ "odjednom, razdvojite brojeve zarezom."
 

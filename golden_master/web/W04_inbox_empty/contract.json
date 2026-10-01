@@ -7,13 +7,13 @@
     "/archive",
     "/outbox",
     "/addressbook",
-    "/settings",
-    "/logout"
+    "/settings"
   ],
   "required_text": [
     "0 FAXES",
     "Inbox",
     "MODEM",
-    "IDLE"
+    "IDLE",
+    "Logout"
   ]
 }

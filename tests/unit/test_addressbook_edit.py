@@ -192,7 +192,6 @@ def test_a_category_the_user_may_not_use_is_not_changed(client, dbsession):
     operator.dbdata["faxcats"] = "1"                                  # may only use category 1
     operator.update()
     dbsession.flush()
-    client.get("/logout", expect_errors=True)
     other = webtest.TestApp(client.app, extra_environ=client.extra_environ)
     other.post("/login", {"username": "operator", "password": "password", "_submit_check": "1"})
     page = other.get(f"/addressbook/edit?abook_id={company.abook_id}")

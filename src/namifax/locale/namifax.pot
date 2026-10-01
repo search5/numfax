@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NamiFAX VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 18:15+0900\n"
+"POT-Creation-Date: 2026-10-01 21:10+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,6 +21,9 @@ msgid "Address Book"
 msgstr ""
 
 msgid "Save frequently used fax numbers for quick access when sending."
+msgstr ""
+
+msgid "Company or fax number..."
 msgstr ""
 
 msgid "Search"
@@ -83,6 +86,9 @@ msgid "Company"
 msgstr ""
 
 msgid "Company Name"
+msgstr ""
+
+msgid "e.g. Acme Corporation"
 msgstr ""
 
 msgid "Clear the number to remove it."
@@ -274,6 +280,9 @@ msgstr ""
 msgid "Category Name"
 msgstr ""
 
+msgid "e.g. Invoices, Contracts"
+msgstr ""
+
 msgid "Configure Cover Pages"
 msgstr ""
 
@@ -296,6 +305,9 @@ msgid "Title"
 msgstr ""
 
 msgid "File"
+msgstr ""
+
+msgid "e.g. custom.ps"
 msgstr ""
 
 msgid "Cover Template Studio: Dynamic Tag References"
@@ -334,6 +346,9 @@ msgid "Add Caller ID Rule"
 msgstr ""
 
 msgid "Caller ID"
+msgstr ""
+
+msgid "e.g. 5550199 or pattern"
 msgstr ""
 
 msgid "Modem Device"
@@ -474,6 +489,12 @@ msgstr ""
 msgid "Configure Modems Device"
 msgstr ""
 
+msgid "e.g. ttyS0"
+msgstr ""
+
+msgid "e.g. Main Inbound Line"
+msgstr ""
+
 msgid "Reset"
 msgstr ""
 
@@ -498,6 +519,9 @@ msgstr ""
 msgid "Printer Name"
 msgstr ""
 
+msgid "e.g. Office HP LaserJet"
+msgstr ""
+
 msgid "Protocol"
 msgstr ""
 
@@ -508,6 +532,9 @@ msgid "Port"
 msgstr ""
 
 msgid "Queue Name (Optional)"
+msgstr ""
+
+msgid "2nd Floor Accounting Printer"
 msgstr ""
 
 msgid "Register Printer"
@@ -549,6 +576,12 @@ msgid "Action"
 msgstr ""
 
 msgid "Configure Routing Rule"
+msgstr ""
+
+msgid "e.g. 1000"
+msgstr ""
+
+msgid "e.g. Sales Direct Line"
 msgstr ""
 
 msgid "-- None --"
@@ -665,7 +698,13 @@ msgstr ""
 msgid "From Display Name"
 msgstr ""
 
+msgid "NamiFAX Corporate Dispatcher"
+msgstr ""
+
 msgid "Email Signature (Plaintext)"
+msgstr ""
+
+msgid "Sent automatically by NamiFAX Gateway."
 msgstr ""
 
 msgid "Last updated"
@@ -801,6 +840,9 @@ msgstr ""
 msgid "Keywords:"
 msgstr ""
 
+msgid "Search text..."
+msgstr ""
+
 msgid "Date:"
 msgstr ""
 
@@ -887,6 +929,9 @@ msgstr ""
 msgid "Keyword"
 msgstr ""
 
+msgid "Company, number, notes..."
+msgstr ""
+
 msgid "All Categories"
 msgstr ""
 
@@ -915,6 +960,9 @@ msgid "Sent only"
 msgstr ""
 
 msgid "Fax ID"
+msgstr ""
+
+msgid "e.g. 104"
 msgstr ""
 
 msgid "Results"
@@ -977,6 +1025,9 @@ msgstr ""
 msgid "List Name"
 msgstr ""
 
+msgid "e.g. Executive Sales Team"
+msgstr ""
+
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr ""
 
@@ -987,6 +1038,9 @@ msgid "Remove"
 msgstr ""
 
 msgid "No contacts assigned to this list yet."
+msgstr ""
+
+msgid "Add contact name or fax number..."
 msgstr ""
 
 msgid "Add Member"
@@ -1011,6 +1065,9 @@ msgid "Back to Lists"
 msgstr ""
 
 msgid "Distribution List Profile"
+msgstr ""
+
+msgid "e.g. Finance Operations"
 msgstr ""
 
 msgid "Enrolled Members"
@@ -1061,6 +1118,42 @@ msgid "Back to Email Book"
 msgstr ""
 
 msgid "Contact Profile Details"
+msgstr ""
+
+msgid "John Doe"
+msgstr ""
+
+msgid "Modify Fax Job"
+msgstr ""
+
+msgid "New Destination"
+msgstr ""
+
+msgid "Priority"
+msgstr ""
+
+msgid "Modem / Device"
+msgstr ""
+
+msgid "Number of tries"
+msgstr ""
+
+msgid "Expire after"
+msgstr ""
+
+msgid "Now"
+msgstr ""
+
+msgid "Minutes"
+msgstr ""
+
+msgid "Hours"
+msgstr ""
+
+msgid "Days"
+msgstr ""
+
+msgid "Schedule Send Time"
 msgstr ""
 
 msgid "Lost Password"
@@ -1124,6 +1217,9 @@ msgid "Preview"
 msgstr ""
 
 msgid "Received"
+msgstr ""
+
+msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
 msgid "Reply"
@@ -1201,7 +1297,13 @@ msgstr ""
 msgid "System Online"
 msgstr ""
 
+msgid "Enter your username"
+msgstr ""
+
 msgid "Forgot password?"
+msgstr ""
+
+msgid "Enter your password"
 msgstr ""
 
 msgid "Contact your system administrator if you need an account."
@@ -1227,7 +1329,13 @@ msgstr ""
 msgid "Authentication Code"
 msgstr ""
 
+msgid "123456 or 8-char backup code"
+msgstr ""
+
 msgid "Verify & Log In"
+msgstr ""
+
+msgid "Sign out?"
 msgstr ""
 
 msgid "Assign Company Name"
@@ -1237,6 +1345,9 @@ msgid "Associate document with registered enterprise contact"
 msgstr ""
 
 msgid "Search Company Name"
+msgstr ""
+
+msgid "Type company name to filter..."
 msgstr ""
 
 msgid "Select Contact Record"
@@ -1260,10 +1371,19 @@ msgstr ""
 msgid "Recipients"
 msgstr ""
 
+msgid "recipient@example.com (comma separated)"
+msgstr ""
+
 msgid "Subject"
 msgstr ""
 
+msgid "NamiFAX Transmission Document"
+msgstr ""
+
 msgid "Message"
+msgstr ""
+
+msgid "Please find the attached facsimile document."
 msgstr ""
 
 msgid "Send"
@@ -1275,19 +1395,7 @@ msgstr ""
 msgid "Note / Description"
 msgstr ""
 
-msgid "Reply to Fax"
-msgstr ""
-
-msgid "Dispatch quick reply transmission to originating sender"
-msgstr ""
-
-msgid "Destination Number"
-msgstr ""
-
-msgid "Regarding (Subject)"
-msgstr ""
-
-msgid "Comments"
+msgid "Enter transaction note or dispatch comments..."
 msgstr ""
 
 msgid "Transmission Report"
@@ -1331,10 +1439,31 @@ msgstr ""
 msgid "Job ID"
 msgstr ""
 
-msgid "Destination"
+msgid "User"
 msgstr ""
 
-msgid "Queued"
+msgid "Dials"
+msgstr ""
+
+msgid "TTS"
+msgstr ""
+
+msgid "Modify"
+msgstr ""
+
+msgid "Kill job"
+msgstr ""
+
+msgid "Kill"
+msgstr ""
+
+msgid "Failed Transmissions"
+msgstr ""
+
+msgid "Review the number or retry below."
+msgstr ""
+
+msgid "Retry"
 msgstr ""
 
 msgid "No jobs in queue"
@@ -1346,18 +1475,6 @@ msgid ""
 msgstr ""
 
 msgid "Send a Fax"
-msgstr ""
-
-msgid "Failed Transmissions"
-msgstr ""
-
-msgid "Review the number or retry below."
-msgstr ""
-
-msgid "Reason"
-msgstr ""
-
-msgid "Retry"
 msgstr ""
 
 msgid "Password Expired"
@@ -1377,10 +1494,19 @@ msgstr ""
 msgid "Old Password"
 msgstr ""
 
+msgid "Current credentials"
+msgstr ""
+
 msgid "New Password"
 msgstr ""
 
+msgid "New secure passphrase"
+msgstr ""
+
 msgid "Confirm New Password"
+msgstr ""
+
+msgid "Re-type new passphrase"
 msgstr ""
 
 msgid "Update Password"
@@ -1395,7 +1521,13 @@ msgstr ""
 msgid "Enter the fax number and recipient details."
 msgstr ""
 
-msgid "To send to multiple recipients at once, separate numbers with a comma."
+msgid "Destination Number"
+msgstr ""
+
+msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
+msgstr ""
+
+msgid "To send to multiple recipients at once, separate numbers with a semicolon."
 msgstr ""
 
 msgid "Saved contacts are available in the"
@@ -1405,6 +1537,9 @@ msgid "Attention To"
 msgstr ""
 
 msgid "optional"
+msgstr ""
+
+msgid "e.g. Jane Doe"
 msgstr ""
 
 msgid "Voice Number"
@@ -1417,6 +1552,9 @@ msgid "Zip"
 msgstr ""
 
 msgid "Subject / Regarding"
+msgstr ""
+
+msgid "e.g. Purchase Order #4921"
 msgstr ""
 
 msgid "Document Attachment"
@@ -1463,34 +1601,19 @@ msgstr ""
 msgid "Cover Comments"
 msgstr ""
 
+msgid "Notes or message to print on the cover sheet..."
+msgstr ""
+
 msgid "Advanced Options"
 msgstr ""
 
 msgid "Priority, retries, notifications"
 msgstr ""
 
-msgid "Priority"
-msgstr ""
-
 msgid "Max Retries"
 msgstr ""
 
 msgid "Retries automatically on busy signal."
-msgstr ""
-
-msgid "Expire after"
-msgstr ""
-
-msgid "Minutes"
-msgstr ""
-
-msgid "Hours"
-msgstr ""
-
-msgid "Days"
-msgstr ""
-
-msgid "Schedule Send Time"
 msgstr ""
 
 msgid "TSI ID"
@@ -1534,6 +1657,9 @@ msgstr ""
 msgid "Transmitting Station ID (TSI)"
 msgstr ""
 
+msgid "e.g. +1 555 123 4567"
+msgstr ""
+
 msgid "Header identifier imprinted on top of transmitted fax pages."
 msgstr ""
 
@@ -1556,6 +1682,15 @@ msgid "Change Password"
 msgstr ""
 
 msgid "Current Password"
+msgstr ""
+
+msgid "Enter current password to verify"
+msgstr ""
+
+msgid "Enter secure new password"
+msgstr ""
+
+msgid "Re-type new password"
 msgstr ""
 
 msgid "Update Settings"
@@ -1790,6 +1925,9 @@ msgstr ""
 msgid "SAML 2.0 configuration saved successfully."
 msgstr ""
 
+msgid "Please enter a valid number."
+msgstr ""
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr ""
@@ -1809,6 +1947,12 @@ msgid ""
 msgstr ""
 
 msgid "Email failed to send"
+msgstr ""
+
+msgid "Your session has expired. Reload the page and try again."
+msgstr ""
+
+msgid "Invalid job number."
 msgstr ""
 
 msgid "The code is not valid."

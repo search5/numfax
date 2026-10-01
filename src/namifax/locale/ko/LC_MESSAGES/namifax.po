@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: kMIME-Version: 1.Content-Type: text/plain; charset=utf-Content-Transfer-"
 "Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 18:15+0900\n"
+"POT-Creation-Date: 2026-10-01 21:10+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ko\n"
@@ -20,6 +20,9 @@ msgstr "주소록"
 
 msgid "Save frequently used fax numbers for quick access when sending."
 msgstr "자주 사용하는 팩스 번호를 저장하여 전송 시 빠르게 선택하세요."
+
+msgid "Company or fax number..."
+msgstr "회사 또는 팩스 번호..."
 
 msgid "Search"
 msgstr "검색"
@@ -80,6 +83,9 @@ msgstr "회사"
 
 msgid "Company Name"
 msgstr "회사명"
+
+msgid "e.g. Acme Corporation"
+msgstr "예: ㈜에이스상사"
 
 msgid "Clear the number to remove it."
 msgstr "번호를 지우면 삭제됩니다."
@@ -264,6 +270,9 @@ msgstr "카테고리 추가"
 msgid "Category Name"
 msgstr "카테고리명"
 
+msgid "e.g. Invoices, Contracts"
+msgstr "예: 청구서, 계약서"
+
 msgid "Configure Cover Pages"
 msgstr "표지 템플릿 설정"
 
@@ -287,6 +296,9 @@ msgstr "제목"
 
 msgid "File"
 msgstr "파일"
+
+msgid "e.g. custom.ps"
+msgstr "예: custom.ps"
 
 msgid "Cover Template Studio: Dynamic Tag References"
 msgstr "표지 템플릿 스튜디오: 동적 태그 레퍼런스"
@@ -322,6 +334,9 @@ msgstr "발신자 차단 규칙 추가"
 
 msgid "Caller ID"
 msgstr "발신자 번호"
+
+msgid "e.g. 5550199 or pattern"
+msgstr "예: 5550199 또는 패턴"
 
 msgid "Modem Device"
 msgstr "모뎀 장치"
@@ -455,6 +470,12 @@ msgstr "모뎀 편집"
 msgid "Configure Modems Device"
 msgstr "모뎀 장치 설정"
 
+msgid "e.g. ttyS0"
+msgstr "예: ttyS0"
+
+msgid "e.g. Main Inbound Line"
+msgstr "예: 대표 수신 회선"
+
 msgid "Reset"
 msgstr "초기화"
 
@@ -478,6 +499,9 @@ msgstr "네트워크 프린터 추가"
 msgid "Printer Name"
 msgstr "프린터 이름"
 
+msgid "e.g. Office HP LaserJet"
+msgstr "예: 사무실 HP 레이저젯"
+
 msgid "Protocol"
 msgstr "프로토콜"
 
@@ -489,6 +513,9 @@ msgstr "포트"
 
 msgid "Queue Name (Optional)"
 msgstr "큐 이름 (선택)"
+
+msgid "2nd Floor Accounting Printer"
+msgstr "2층 경리팀 프린터"
 
 msgid "Register Printer"
 msgstr "프린터 등록"
@@ -528,6 +555,12 @@ msgstr "작업"
 
 msgid "Configure Routing Rule"
 msgstr "라우팅 규칙 설정"
+
+msgid "e.g. 1000"
+msgstr "예: 1000"
+
+msgid "e.g. Sales Direct Line"
+msgstr "예: 영업 직통 회선"
 
 msgid "-- None --"
 msgstr "-- 없음 --"
@@ -636,8 +669,14 @@ msgstr "발신자 이메일 주소"
 msgid "From Display Name"
 msgstr "발신자 표시 이름"
 
+msgid "NamiFAX Corporate Dispatcher"
+msgstr "NamiFAX 팩스 발송 담당"
+
 msgid "Email Signature (Plaintext)"
 msgstr "이메일 서명 (일반 텍스트)"
+
+msgid "Sent automatically by NamiFAX Gateway."
+msgstr "NamiFAX 게이트웨이에서 자동으로 보낸 메일입니다."
 
 msgid "Last updated"
 msgstr "최근 업데이트"
@@ -764,6 +803,9 @@ msgstr "감사 로그 및 HylaFAX 서버 운영 이벤트 추적 내역"
 msgid "Keywords:"
 msgstr "키워드:"
 
+msgid "Search text..."
+msgstr "검색어..."
+
 msgid "Date:"
 msgstr "날짜:"
 
@@ -848,6 +890,9 @@ msgstr "필터를 비워두면 전체 기록을 검색합니다. 조건을 추�
 msgid "Keyword"
 msgstr "키워드"
 
+msgid "Company, number, notes..."
+msgstr "회사, 번호, 메모..."
+
 msgid "All Categories"
 msgstr "모든 카테고리"
 
@@ -877,6 +922,9 @@ msgstr "발신 팩스만"
 
 msgid "Fax ID"
 msgstr "팩스 ID"
+
+msgid "e.g. 104"
+msgstr "예: 104"
 
 msgid "Results"
 msgstr "검색 결과"
@@ -938,6 +986,9 @@ msgstr "새 배포 그룹 생성"
 msgid "List Name"
 msgstr "그룹명"
 
+msgid "e.g. Executive Sales Team"
+msgstr "예: 영업 임원 그룹"
+
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "그룹 구성원 (연락처 및 팩스 번호)"
 
@@ -949,6 +1000,9 @@ msgstr "삭제"
 
 msgid "No contacts assigned to this list yet."
 msgstr "아직 이 그룹에 지정된 연락처가 없습니다."
+
+msgid "Add contact name or fax number..."
+msgstr "연락처 이름이나 팩스 번호를 추가..."
 
 msgid "Add Member"
 msgstr "구성원 추가"
@@ -973,6 +1027,9 @@ msgstr "그룹 목록으로 돌아가기"
 
 msgid "Distribution List Profile"
 msgstr "배포 그룹 프로필"
+
+msgid "e.g. Finance Operations"
+msgstr "예: 재무 운영팀"
 
 msgid "Enrolled Members"
 msgstr "등록된 구성원"
@@ -1021,6 +1078,42 @@ msgstr "이메일 주소록으로 돌아가기"
 
 msgid "Contact Profile Details"
 msgstr "연락처 프로필 세부정보"
+
+msgid "John Doe"
+msgstr "홍길동"
+
+msgid "Modify Fax Job"
+msgstr "팩스 작업 수정"
+
+msgid "New Destination"
+msgstr "새 수신처"
+
+msgid "Priority"
+msgstr "우선순위"
+
+msgid "Modem / Device"
+msgstr "모뎀 / 장치"
+
+msgid "Number of tries"
+msgstr "시도 횟수"
+
+msgid "Expire after"
+msgstr "만료 시간"
+
+msgid "Now"
+msgstr "지금"
+
+msgid "Minutes"
+msgstr "분"
+
+msgid "Hours"
+msgstr "시간"
+
+msgid "Days"
+msgstr "일"
+
+msgid "Schedule Send Time"
+msgstr "전송 시각 예약"
 
 msgid "Lost Password"
 msgstr "비밀번호 찾기"
@@ -1083,6 +1176,9 @@ msgstr "미리보기"
 
 msgid "Received"
 msgstr "수신일시"
+
+msgid "This number belongs to several companies. Which one is it?"
+msgstr "이 번호는 여러 회사에 등록되어 있습니다. 어느 회사입니까?"
 
 msgid "Reply"
 msgstr "회신"
@@ -1153,8 +1249,14 @@ msgstr "계속하려면 자격 증명을 입력하세요."
 msgid "System Online"
 msgstr "시스템 온라인"
 
+msgid "Enter your username"
+msgstr "사용자 이름을 입력하십시오"
+
 msgid "Forgot password?"
 msgstr "비밀번호를 잊으셨습니까?"
+
+msgid "Enter your password"
+msgstr "비밀번호를 입력하십시오"
 
 msgid "Contact your system administrator if you need an account."
 msgstr "계정이 필요하시면 시스템 관리자에게 문의하세요."
@@ -1177,8 +1279,14 @@ msgstr "인증 앱의 6자리 인증 코드 또는 비상 복구 코드를 입�
 msgid "Authentication Code"
 msgstr "인증 코드"
 
+msgid "123456 or 8-char backup code"
+msgstr "6자리 코드 또는 8자리 백업 코드"
+
 msgid "Verify & Log In"
 msgstr "확인 및 로그인"
+
+msgid "Sign out?"
+msgstr "로그아웃하시겠습니까?"
 
 msgid "Assign Company Name"
 msgstr "회사명 지정"
@@ -1188,6 +1296,9 @@ msgstr "문서를 등록된 기업 연락처와 연결합니다."
 
 msgid "Search Company Name"
 msgstr "회사명 검색"
+
+msgid "Type company name to filter..."
+msgstr "회사 이름을 입력해 찾으십시오..."
 
 msgid "Select Contact Record"
 msgstr "연락처 선택"
@@ -1210,11 +1321,20 @@ msgstr "PDF 문서 첨부 파일을 이메일 수신자에게 발송합니다."
 msgid "Recipients"
 msgstr "수신자"
 
+msgid "recipient@example.com (comma separated)"
+msgstr "recipient@example.com (쉼표로 구분)"
+
 msgid "Subject"
 msgstr "제목"
 
+msgid "NamiFAX Transmission Document"
+msgstr "NamiFAX 전송 문서"
+
 msgid "Message"
 msgstr "내용"
+
+msgid "Please find the attached facsimile document."
+msgstr "첨부된 팩스 문서를 확인해 주십시오."
 
 msgid "Send"
 msgstr "전송"
@@ -1225,20 +1345,8 @@ msgstr "내부 관리 메모 또는 코멘트를 추가합니다."
 msgid "Note / Description"
 msgstr "메모 / 설명"
 
-msgid "Reply to Fax"
-msgstr "팩스에 회신"
-
-msgid "Dispatch quick reply transmission to originating sender"
-msgstr "발신자에게 빠른 회신 팩스를 발송합니다."
-
-msgid "Destination Number"
-msgstr "수신 팩스 번호"
-
-msgid "Regarding (Subject)"
-msgstr "용건 (제목)"
-
-msgid "Comments"
-msgstr "전달 내용"
+msgid "Enter transaction note or dispatch comments..."
+msgstr "처리 메모나 발송 의견을 입력하십시오..."
 
 msgid "Transmission Report"
 msgstr "전송 보고서"
@@ -1281,11 +1389,32 @@ msgstr "건의 작업 진행 중"
 msgid "Job ID"
 msgstr "작업 ID"
 
-msgid "Destination"
-msgstr "수신처"
+msgid "User"
+msgstr "사용자"
 
-msgid "Queued"
-msgstr "대기 등록 일시"
+msgid "Dials"
+msgstr "시도 횟수"
+
+msgid "TTS"
+msgstr "전송 예정"
+
+msgid "Modify"
+msgstr "수정"
+
+msgid "Kill job"
+msgstr "작업 삭제"
+
+msgid "Kill"
+msgstr "삭제"
+
+msgid "Failed Transmissions"
+msgstr "전송 실패 내역"
+
+msgid "Review the number or retry below."
+msgstr "번호를 확인하거나 아래에서 재시도하세요."
+
+msgid "Retry"
+msgstr "재시도"
 
 msgid "No jobs in queue"
 msgstr "대기 중인 작업 없음"
@@ -1295,18 +1424,6 @@ msgstr "전송 대기 중인 팩스가 없습니다. 팩스를 보내면 진행 
 
 msgid "Send a Fax"
 msgstr "팩스 보내기"
-
-msgid "Failed Transmissions"
-msgstr "전송 실패 내역"
-
-msgid "Review the number or retry below."
-msgstr "번호를 확인하거나 아래에서 재시도하세요."
-
-msgid "Reason"
-msgstr "사유"
-
-msgid "Retry"
-msgstr "재시도"
 
 msgid "Password Expired"
 msgstr "비밀번호 만료"
@@ -1325,10 +1442,19 @@ msgstr "비밀번호가 만료되었거나 계속 진행하기 전에 변경해�
 msgid "Old Password"
 msgstr "기존 비밀번호"
 
+msgid "Current credentials"
+msgstr "현재 비밀번호"
+
 msgid "New Password"
 msgstr "새 비밀번호"
 
+msgid "New secure passphrase"
+msgstr "새 비밀번호"
+
 msgid "Confirm New Password"
+msgstr "새 비밀번호 확인"
+
+msgid "Re-type new passphrase"
 msgstr "새 비밀번호 확인"
 
 msgid "Update Password"
@@ -1343,8 +1469,14 @@ msgstr "수신처 및 수신자 정보"
 msgid "Enter the fax number and recipient details."
 msgstr "팩스 번호 및 수신자 정보를 입력하세요."
 
-msgid "To send to multiple recipients at once, separate numbers with a comma."
-msgstr "여러 수신자에게 동시에 보내려면 번호를 쉼표로 구분하세요."
+msgid "Destination Number"
+msgstr "수신 팩스 번호"
+
+msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
+msgstr "예: +82-2-555-0199  —  여러 번호는 세미콜론(;)으로 구분"
+
+msgid "To send to multiple recipients at once, separate numbers with a semicolon."
+msgstr "여러 수신자에게 동시에 보내려면 번호를 세미콜론(;)으로 구분하십시오."
 
 msgid "Saved contacts are available in the"
 msgstr "저장된 연락처는 다음에서 선택할 수 있습니다:"
@@ -1354,6 +1486,9 @@ msgstr "수신자명"
 
 msgid "optional"
 msgstr "선택 사항"
+
+msgid "e.g. Jane Doe"
+msgstr "예: 김영희"
 
 msgid "Voice Number"
 msgstr "전화번호"
@@ -1366,6 +1501,9 @@ msgstr "우편번호"
 
 msgid "Subject / Regarding"
 msgstr "제목 / 용건"
+
+msgid "e.g. Purchase Order #4921"
+msgstr "예: 발주서 #4921"
 
 msgid "Document Attachment"
 msgstr "문서 첨부"
@@ -1409,35 +1547,20 @@ msgstr "사용 가능한 모든 회선 (자동)"
 msgid "Cover Comments"
 msgstr "표지 전달 내용"
 
+msgid "Notes or message to print on the cover sheet..."
+msgstr "표지에 인쇄할 메모나 전달 내용..."
+
 msgid "Advanced Options"
 msgstr "고급 옵션"
 
 msgid "Priority, retries, notifications"
 msgstr "우선순위, 재시도 횟수, 알림 설정"
 
-msgid "Priority"
-msgstr "우선순위"
-
 msgid "Max Retries"
 msgstr "최대 재시도 횟수"
 
 msgid "Retries automatically on busy signal."
 msgstr "통화 중일 경우 자동으로 재시도합니다."
-
-msgid "Expire after"
-msgstr "만료 시간"
-
-msgid "Minutes"
-msgstr "분"
-
-msgid "Hours"
-msgstr "시간"
-
-msgid "Days"
-msgstr "일"
-
-msgid "Schedule Send Time"
-msgstr "전송 시각 예약"
 
 msgid "TSI ID"
 msgstr "TSI ID"
@@ -1478,6 +1601,9 @@ msgstr "직통 팩스 번호"
 msgid "Transmitting Station ID (TSI)"
 msgstr "발신 팩스 식별자 (TSI)"
 
+msgid "e.g. +1 555 123 4567"
+msgstr "예: +82 2 555 4567"
+
 msgid "Header identifier imprinted on top of transmitted fax pages."
 msgstr "전송되는 팩스 페이지 상단에 인쇄되는 헤더 식별자입니다."
 
@@ -1501,6 +1627,15 @@ msgstr "비밀번호 변경"
 
 msgid "Current Password"
 msgstr "현재 비밀번호"
+
+msgid "Enter current password to verify"
+msgstr "확인을 위해 현재 비밀번호를 입력하십시오"
+
+msgid "Enter secure new password"
+msgstr "새 비밀번호를 입력하십시오"
+
+msgid "Re-type new password"
+msgstr "새 비밀번호를 다시 입력하십시오"
 
 msgid "Update Settings"
 msgstr "설정 업데이트"
@@ -1722,6 +1857,9 @@ msgstr "클라우드 저장소 설정을 저장했습니다."
 msgid "SAML 2.0 configuration saved successfully."
 msgstr "SAML 2.0 설정을 저장했습니다."
 
+msgid "Please enter a valid number."
+msgstr "올바른 숫자를 입력하십시오."
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr "실패 횟수가 너무 많습니다. %(minutes)d분 뒤에 다시 시도하십시오."
@@ -1746,6 +1884,12 @@ msgstr ""
 
 msgid "Email failed to send"
 msgstr "이메일을 보내지 못했습니다"
+
+msgid "Your session has expired. Reload the page and try again."
+msgstr "세션이 만료되었습니다. 페이지를 새로 고친 뒤 다시 시도하십시오."
+
+msgid "Invalid job number."
+msgstr "작업 번호가 올바르지 않습니다."
 
 msgid "The code is not valid."
 msgstr "코드가 올바르지 않습니다."
@@ -1821,4 +1965,28 @@ msgstr "비밀번호가 올바르지 않습니다."
 
 #~ msgid "High (Urgent)"
 #~ msgstr "높음 (긴급)"
+
+#~ msgid "Reply to Fax"
+#~ msgstr "팩스에 회신"
+
+#~ msgid "Dispatch quick reply transmission to originating sender"
+#~ msgstr "발신자에게 빠른 회신 팩스를 발송합니다."
+
+#~ msgid "Regarding (Subject)"
+#~ msgstr "용건 (제목)"
+
+#~ msgid "Comments"
+#~ msgstr "전달 내용"
+
+#~ msgid "Destination"
+#~ msgstr "수신처"
+
+#~ msgid "Queued"
+#~ msgstr "대기 등록 일시"
+
+#~ msgid "Reason"
+#~ msgstr "사유"
+
+#~ msgid "To send to multiple recipients at once, separate numbers with a comma."
+#~ msgstr "여러 수신자에게 동시에 보내려면 번호를 쉼표로 구분하세요."
 

@@ -35,7 +35,7 @@
     <form action="/note" method="post" class="p-6 space-y-4 text-xs">
       <div>
         <label for="description" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Note / Description') }} *</label>
-        <textarea name="description" id="description" rows="4" required class="w-full border border-slate-300 rounded-lg p-3 bg-slate-50/50 text-slate-900 text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="Enter transaction note or dispatch comments...">{{ description }}</textarea>
+        <textarea name="description" id="description" rows="4" required class="w-full border border-slate-300 rounded-lg p-3 bg-slate-50/50 text-slate-900 text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="{{ _('Enter transaction note or dispatch comments...') }}">{{ description }}</textarea>
       </div>
 
       <input type="hidden" name="fid" value="{{ fid }}" />

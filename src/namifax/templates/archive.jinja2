@@ -32,7 +32,7 @@
         <div>
           <label for="search" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('Keyword') }}</label>
           <input type="text" name="search" id="search" value="{{ search or '' }}"
-                 placeholder="Company, number, notes..."
+                 placeholder="{{ _('Company, number, notes...') }}"
                  class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white
                         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
         </div>
@@ -80,7 +80,7 @@
         <div>
           <label for="faxid" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('Fax ID') }}</label>
           <input type="text" name="faxid" id="faxid" value="{{ faxid or '' }}"
-                 placeholder="e.g. 104"
+                 placeholder="{{ _('e.g. 104') }}"
                  class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm font-mono text-slate-900 bg-white
                         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
         </div>

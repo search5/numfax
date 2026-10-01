@@ -56,11 +56,11 @@
           <input type="text" name="faxnumber" id="faxnumber"
                  value="{{ form_data.faxnumber or form_data.destinations or '' }}"
                  required autofocus
-                 placeholder="e.g. +1-555-0199  —  separate multiple numbers with semicolons"
+                 placeholder="{{ _('e.g. +1-555-0199  —  separate multiple numbers with semicolons') }}"
                  class="w-full border border-slate-300 rounded-lg px-4 py-3 text-sm font-mono text-slate-900 bg-white
                         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
           <p class="text-xs text-slate-400 mt-1.5">
-            💡 {{ _('To send to multiple recipients at once, separate numbers with a comma.') }}
+            💡 {{ _('To send to multiple recipients at once, separate numbers with a semicolon.') }}
             {{ _('Saved contacts are available in the') }} <a href="/addressbook" class="text-blue-600 hover:underline">{{ _('Address Book') }}</a>.
           </p>
         </div>
@@ -72,7 +72,7 @@
             </label>
             <input type="text" name="to_person" id="to_person"
                    value="{{ form_data.to_person or '' }}"
-                   placeholder="e.g. Jane Doe"
+                   placeholder="{{ _('e.g. Jane Doe') }}"
                    class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white
                           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
           </div>
@@ -82,7 +82,7 @@
             </label>
             <input type="text" name="to_company" id="to_company"
                    value="{{ form_data.to_company or '' }}"
-                   placeholder="e.g. Acme Corporation"
+                   placeholder="{{ _('e.g. Acme Corporation') }}"
                    class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white
                           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
           </div>
@@ -117,7 +117,7 @@
           </label>
           <input type="text" name="regarding" id="regarding"
                  value="{{ form_data.regarding or '' }}"
-                 placeholder="e.g. Purchase Order #4921"
+                 placeholder="{{ _('e.g. Purchase Order #4921') }}"
                  class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white
                         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
         </div>
@@ -203,7 +203,7 @@
             {{ _('Cover Comments') }} <span class="text-xs font-normal text-slate-400">{{ _('optional') }}</span>
           </label>
           <textarea name="comments" id="comments" rows="3"
-                    placeholder="Notes or message to print on the cover sheet..."
+                    placeholder="{{ _('Notes or message to print on the cover sheet...') }}"
                     class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white
                            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm resize-none">{{ form_data.comments or '' }}</textarea>
         </div>

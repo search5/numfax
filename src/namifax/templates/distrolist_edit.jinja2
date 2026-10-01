@@ -43,7 +43,7 @@
 
       <div>
         <label for="listname" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('List Name') }} *</label>
-        <input type="text" name="listname" id="listname" required value="{{ selected_list.listname if selected_list else '' }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="e.g. Finance Operations" />
+        <input type="text" name="listname" id="listname" required value="{{ selected_list.listname if selected_list else '' }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="{{ _('e.g. Finance Operations') }}" />
       </div>
 
       {% if selected_list %}

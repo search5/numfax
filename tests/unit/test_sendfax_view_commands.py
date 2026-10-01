@@ -140,6 +140,7 @@ def test_the_form_has_the_original_scheduling_and_recipient_fields(client):
 
 
 def test_the_priority_list_is_the_original_one(client):
-    form = client.get("/sendfax").forms[0]
+    page = client.get("/sendfax")
+    form = next(f for f in page.forms.values() if "priority" in f.fields)         # (the first form is the header's sign-out)
     values = [v for v, _, _ in form["priority"].options]
     assert values == ["*"] + [str(n) for n in range(0, 255, 10)]

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: rMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 18:15+0900\n"
+"POT-Creation-Date: 2026-10-01 21:10+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ro\n"
@@ -23,6 +23,9 @@ msgid "Save frequently used fax numbers for quick access when sending."
 msgstr ""
 "Salvați numerele de fax utilizate frecvent pentru acces rapid la "
 "trimitere."
+
+msgid "Company or fax number..."
+msgstr ""
 
 msgid "Search"
 msgstr "Cauta"
@@ -94,6 +97,9 @@ msgstr "Firma"
 #, fuzzy
 msgid "Company Name"
 msgstr "Firma"
+
+msgid "e.g. Acme Corporation"
+msgstr ""
 
 msgid "Clear the number to remove it."
 msgstr ""
@@ -310,6 +316,9 @@ msgstr "Categorii fax vizualizabile"
 msgid "Category Name"
 msgstr "Nume Categorie"
 
+msgid "e.g. Invoices, Contracts"
+msgstr ""
+
 #, fuzzy
 msgid "Configure Cover Pages"
 msgstr "Cover Pages"
@@ -340,6 +349,9 @@ msgstr "Titlu"
 
 msgid "File"
 msgstr "Fișier"
+
+msgid "e.g. custom.ps"
+msgstr ""
 
 msgid "Cover Template Studio: Dynamic Tag References"
 msgstr ""
@@ -380,6 +392,9 @@ msgstr "Adăugare regulă Caller ID"
 
 msgid "Caller ID"
 msgstr "Caller ID"
+
+msgid "e.g. 5550199 or pattern"
+msgstr ""
 
 msgid "Modem Device"
 msgstr "Dispositivo modem"
@@ -529,6 +544,12 @@ msgstr "Fax Modems"
 msgid "Configure Modems Device"
 msgstr "Configurare dispozitiv modem"
 
+msgid "e.g. ttyS0"
+msgstr ""
+
+msgid "e.g. Main Inbound Line"
+msgstr ""
+
 msgid "Reset"
 msgstr "Reset"
 
@@ -557,6 +578,9 @@ msgstr ""
 msgid "Printer Name"
 msgstr ""
 
+msgid "e.g. Office HP LaserJet"
+msgstr ""
+
 msgid "Protocol"
 msgstr ""
 
@@ -568,6 +592,9 @@ msgid "Port"
 msgstr "Priority"
 
 msgid "Queue Name (Optional)"
+msgstr ""
+
+msgid "2nd Floor Accounting Printer"
 msgstr ""
 
 msgid "Register Printer"
@@ -615,6 +642,12 @@ msgstr "Acțiune"
 
 msgid "Configure Routing Rule"
 msgstr "Configurare regulă de rutare"
+
+msgid "e.g. 1000"
+msgstr ""
+
+msgid "e.g. Sales Direct Line"
+msgstr ""
 
 msgid "-- None --"
 msgstr "-- Niciunul --"
@@ -737,7 +770,13 @@ msgstr "Adresă de e-mail"
 msgid "From Display Name"
 msgstr "Firma"
 
+msgid "NamiFAX Corporate Dispatcher"
+msgstr ""
+
 msgid "Email Signature (Plaintext)"
+msgstr ""
+
+msgid "Sent automatically by NamiFAX Gateway."
 msgstr ""
 
 #, fuzzy
@@ -889,6 +928,9 @@ msgstr ""
 msgid "Keywords:"
 msgstr "Cuvinte cheie:"
 
+msgid "Search text..."
+msgstr ""
+
 msgid "Date:"
 msgstr "Dată:"
 
@@ -986,6 +1028,9 @@ msgstr ""
 msgid "Keyword"
 msgstr "Keyword"
 
+msgid "Company, number, notes..."
+msgstr ""
+
 #, fuzzy
 msgid "All Categories"
 msgstr "Categorii fax vizualizabile"
@@ -1021,6 +1066,9 @@ msgstr "Doar trimise"
 #, fuzzy
 msgid "Fax ID"
 msgstr "Fax Modems"
+
+msgid "e.g. 104"
+msgstr ""
 
 #, fuzzy
 msgid "Results"
@@ -1088,6 +1136,9 @@ msgstr "Creare listă nouă de distribuție"
 msgid "List Name"
 msgstr "List name"
 
+msgid "e.g. Executive Sales Team"
+msgstr ""
+
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "Membri grup (Contacte și numere de fax)"
 
@@ -1100,6 +1151,9 @@ msgstr "Eliminare"
 
 msgid "No contacts assigned to this list yet."
 msgstr "Niciun contact alocat acestei liste încă."
+
+msgid "Add contact name or fax number..."
+msgstr ""
 
 msgid "Add Member"
 msgstr "Adăugare membru"
@@ -1127,6 +1181,9 @@ msgstr "Înapoi la liste"
 
 msgid "Distribution List Profile"
 msgstr "Profil listă de distribuție"
+
+msgid "e.g. Finance Operations"
+msgstr ""
 
 msgid "Enrolled Members"
 msgstr "Membri înscriși"
@@ -1186,6 +1243,42 @@ msgstr "Înapoi la Agenda de e-mail"
 
 msgid "Contact Profile Details"
 msgstr "Detalii profil contact"
+
+msgid "John Doe"
+msgstr ""
+
+msgid "Modify Fax Job"
+msgstr ""
+
+msgid "New Destination"
+msgstr ""
+
+msgid "Priority"
+msgstr "Priority"
+
+msgid "Modem / Device"
+msgstr ""
+
+msgid "Number of tries"
+msgstr ""
+
+msgid "Expire after"
+msgstr ""
+
+msgid "Now"
+msgstr ""
+
+msgid "Minutes"
+msgstr ""
+
+msgid "Hours"
+msgstr ""
+
+msgid "Days"
+msgstr ""
+
+msgid "Schedule Send Time"
+msgstr ""
 
 #, fuzzy
 msgid "Lost Password"
@@ -1253,6 +1346,9 @@ msgstr "Vizualizare Fax"
 #, fuzzy
 msgid "Received"
 msgstr "Arhiva"
+
+msgid "This number belongs to several companies. Which one is it?"
+msgstr ""
 
 msgid "Reply"
 msgstr "Reply to FAX"
@@ -1340,11 +1436,17 @@ msgstr "Introduceți acreditările pentru a continua."
 msgid "System Online"
 msgstr "Functii de sistem"
 
+msgid "Enter your username"
+msgstr ""
+
 msgid "Forgot password?"
 msgstr ""
 "Va rog sa introduceti adresa de mail si apoi sa apasati pe butonul "
 "Trimite Parola.Veti primi o parola noua in scurt timp.  Folositi aceasta "
 "parola pentru a accesa situl."
+
+msgid "Enter your password"
+msgstr ""
 
 msgid "Contact your system administrator if you need an account."
 msgstr "Contactați administratorul de sistem dacă aveți nevoie de un cont."
@@ -1370,7 +1472,13 @@ msgstr ""
 msgid "Authentication Code"
 msgstr "In atentia d-lui (d-nei)"
 
+msgid "123456 or 8-char backup code"
+msgstr ""
+
 msgid "Verify & Log In"
+msgstr ""
+
+msgid "Sign out?"
 msgstr ""
 
 msgid "Assign Company Name"
@@ -1381,6 +1489,9 @@ msgstr "Asociați documentul cu un contact corporativ înregistrat"
 
 msgid "Search Company Name"
 msgstr "Căutare nume companie"
+
+msgid "Type company name to filter..."
+msgstr ""
 
 msgid "Select Contact Record"
 msgstr "Selectare înregistrare contact"
@@ -1405,11 +1516,20 @@ msgstr "Trimitere atașament document PDF către destinatarii de e-mail"
 msgid "Recipients"
 msgstr "Destinatari"
 
+msgid "recipient@example.com (comma separated)"
+msgstr ""
+
 msgid "Subject"
 msgstr "Subiect"
 
+msgid "NamiFAX Transmission Document"
+msgstr ""
+
 msgid "Message"
 msgstr "Mesaj"
+
+msgid "Please find the attached facsimile document."
+msgstr ""
 
 msgid "Send"
 msgstr "Trimite"
@@ -1420,20 +1540,8 @@ msgstr "Adăugare notă administrativă internă sau comentarii"
 msgid "Note / Description"
 msgstr "Notă / Descriere"
 
-msgid "Reply to Fax"
-msgstr "Reply to FAX"
-
-msgid "Dispatch quick reply transmission to originating sender"
-msgstr "Trimitere răspuns rapid către expeditorul inițial"
-
-msgid "Destination Number"
-msgstr "Numar de fax"
-
-msgid "Regarding (Subject)"
-msgstr "Subiect"
-
-msgid "Comments"
-msgstr "Comentarii"
+msgid "Enter transaction note or dispatch comments..."
+msgstr ""
 
 msgid "Transmission Report"
 msgstr "Raport de transmisie"
@@ -1480,12 +1588,32 @@ msgstr "sarcină în curs"
 msgid "Job ID"
 msgstr "ID sarcină"
 
-#, fuzzy
-msgid "Destination"
-msgstr "Numar de fax"
+msgid "User"
+msgstr ""
 
-msgid "Queued"
-msgstr "În coadă"
+msgid "Dials"
+msgstr ""
+
+msgid "TTS"
+msgstr ""
+
+msgid "Modify"
+msgstr ""
+
+msgid "Kill job"
+msgstr ""
+
+msgid "Kill"
+msgstr ""
+
+msgid "Failed Transmissions"
+msgstr "Transmisii eșuate"
+
+msgid "Review the number or retry below."
+msgstr "Verificați numărul sau reîncercați mai jos."
+
+msgid "Retry"
+msgstr "Retry"
 
 msgid "No jobs in queue"
 msgstr "Nicio sarcină în coadă"
@@ -1500,18 +1628,6 @@ msgstr ""
 #, fuzzy
 msgid "Send a Fax"
 msgstr "Trimite Fax"
-
-msgid "Failed Transmissions"
-msgstr "Transmisii eșuate"
-
-msgid "Review the number or retry below."
-msgstr "Verificați numărul sau reîncercați mai jos."
-
-msgid "Reason"
-msgstr "Motiv"
-
-msgid "Retry"
-msgstr "Retry"
 
 #, fuzzy
 msgid "Password Expired"
@@ -1533,8 +1649,14 @@ msgstr ""
 msgid "Old Password"
 msgstr "Parola Veche"
 
+msgid "Current credentials"
+msgstr ""
+
 msgid "New Password"
 msgstr "Parola Noua"
+
+msgid "New secure passphrase"
+msgstr ""
 
 #, fuzzy
 msgid "Confirm New Password"
@@ -1542,6 +1664,9 @@ msgstr ""
 "Va rog sa introduceti adresa de mail si apoi sa apasati pe butonul "
 "Trimite Parola.Veti primi o parola noua in scurt timp.  Folositi aceasta "
 "parola pentru a accesa situl."
+
+msgid "Re-type new passphrase"
+msgstr ""
 
 #, fuzzy
 msgid "Update Password"
@@ -1557,10 +1682,14 @@ msgstr "Numar de fax"
 msgid "Enter the fax number and recipient details."
 msgstr "Introduceți numărul de fax și detaliile destinatarului."
 
-msgid "To send to multiple recipients at once, separate numbers with a comma."
+msgid "Destination Number"
+msgstr "Numar de fax"
+
+msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
 msgstr ""
-"Pentru a trimite către mai mulți destinatari simultan, separați numerele "
-"prin virgulă."
+
+msgid "To send to multiple recipients at once, separate numbers with a semicolon."
+msgstr ""
 
 msgid "Saved contacts are available in the"
 msgstr "Contactele salvate sunt disponibile în"
@@ -1570,6 +1699,9 @@ msgstr "In atentia d-lui (d-nei)"
 
 msgid "optional"
 msgstr "opțional"
+
+msgid "e.g. Jane Doe"
+msgstr ""
 
 msgid "Voice Number"
 msgstr ""
@@ -1582,6 +1714,9 @@ msgstr ""
 
 msgid "Subject / Regarding"
 msgstr "Subiect"
+
+msgid "e.g. Purchase Order #4921"
+msgstr ""
 
 msgid "Document Attachment"
 msgstr "Atașament document"
@@ -1634,14 +1769,14 @@ msgstr "Orice linie disponibilă (Auto)"
 msgid "Cover Comments"
 msgstr "Cover Pages"
 
+msgid "Notes or message to print on the cover sheet..."
+msgstr ""
+
 msgid "Advanced Options"
 msgstr "Opțiuni avansate"
 
 msgid "Priority, retries, notifications"
 msgstr "Prioritate, reîncercări, notificări"
-
-msgid "Priority"
-msgstr "Priority"
 
 #, fuzzy
 msgid "Max Retries"
@@ -1649,21 +1784,6 @@ msgstr "Categorii fax vizualizabile"
 
 msgid "Retries automatically on busy signal."
 msgstr "Reîncearcă automat la semnal de ocupat."
-
-msgid "Expire after"
-msgstr ""
-
-msgid "Minutes"
-msgstr ""
-
-msgid "Hours"
-msgstr ""
-
-msgid "Days"
-msgstr ""
-
-msgid "Schedule Send Time"
-msgstr ""
 
 msgid "TSI ID"
 msgstr ""
@@ -1710,6 +1830,9 @@ msgstr "Numar de fax"
 msgid "Transmitting Station ID (TSI)"
 msgstr "ID stație de transmisie (TSI)"
 
+msgid "e.g. +1 555 123 4567"
+msgstr ""
+
 msgid "Header identifier imprinted on top of transmitted fax pages."
 msgstr ""
 "Identificator de antet imprimat în partea de sus a paginilor de fax "
@@ -1741,6 +1864,15 @@ msgstr ""
 "Va rog sa introduceti adresa de mail si apoi sa apasati pe butonul "
 "Trimite Parola.Veti primi o parola noua in scurt timp.  Folositi aceasta "
 "parola pentru a accesa situl."
+
+msgid "Enter current password to verify"
+msgstr ""
+
+msgid "Enter secure new password"
+msgstr ""
+
+msgid "Re-type new password"
+msgstr ""
 
 #, fuzzy
 msgid "Update Settings"
@@ -1977,6 +2109,9 @@ msgstr ""
 msgid "SAML 2.0 configuration saved successfully."
 msgstr ""
 
+msgid "Please enter a valid number."
+msgstr ""
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr ""
@@ -1996,6 +2131,12 @@ msgid ""
 msgstr ""
 
 msgid "Email failed to send"
+msgstr ""
+
+msgid "Your session has expired. Reload the page and try again."
+msgstr ""
+
+msgid "Invalid job number."
 msgstr ""
 
 msgid "The code is not valid."
@@ -2087,4 +2228,31 @@ msgstr ""
 
 #~ msgid "High (Urgent)"
 #~ msgstr "Ridicată (Urgent)"
+
+#~ msgid "Reply to Fax"
+#~ msgstr "Reply to FAX"
+
+#~ msgid "Dispatch quick reply transmission to originating sender"
+#~ msgstr "Trimitere răspuns rapid către expeditorul inițial"
+
+#~ msgid "Regarding (Subject)"
+#~ msgstr "Subiect"
+
+#~ msgid "Comments"
+#~ msgstr "Comentarii"
+
+#~ msgid "Destination"
+#~ msgstr "Numar de fax"
+
+#~ msgid "Queued"
+#~ msgstr "În coadă"
+
+#~ msgid "Reason"
+#~ msgstr "Motiv"
+
+#~ msgid "To send to multiple recipients at once, separate numbers with a comma."
+#~ msgstr ""
+#~ "Pentru a trimite către mai mulți "
+#~ "destinatari simultan, separați numerele prin"
+#~ " virgulă."
 

@@ -108,7 +108,10 @@
               <div class="flex items-center gap-2 text-xs text-slate-400">
                 <a href="/settings" class="hover:text-blue-600 transition-colors">{{ _('Settings') }}</a>
                 <span>·</span>
-                <a href="/logout" class="hover:text-red-500 transition-colors">{{ _('Logout') }}</a>
+                <form method="post" action="/logout" class="inline">
+                  <input type="hidden" name="csrf_token" value="{{ request.session.get_csrf_token() }}" />
+                  <button type="submit" class="hover:text-red-500 transition-colors">{{ _('Logout') }}</button>
+                </form>
               </div>
             </div>
           </div>

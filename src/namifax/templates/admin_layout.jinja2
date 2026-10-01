@@ -268,9 +268,12 @@
           <p class="text-[10px] text-slate-400 font-mono">Superuser</p>
         </div>
       </div>
-      <a href="/logout" class="px-2.5 py-1 rounded bg-slate-800/80 hover:bg-red-500/20 text-slate-400 hover:text-red-400 border border-slate-700 font-medium transition text-[11px]">
+      <form method="post" action="/logout" class="inline">
+        <input type="hidden" name="csrf_token" value="{{ request.session.get_csrf_token() }}" />
+        <button type="submit" class="px-2.5 py-1 rounded bg-slate-800/80 hover:bg-red-500/20 text-slate-400 hover:text-red-400 border border-slate-700 font-medium transition text-[11px]">
         {{ _('Logout') }}
-      </a>
+      </button>
+      </form>
     </div>
 
   </aside>

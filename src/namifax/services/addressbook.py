@@ -301,6 +301,27 @@ class AFAddressBook:
         self.error = f"{template} '{clean_num}'"
         return False, False
 
+    def number_matches(self, faxnumber: str | None) -> list[tuple[int, str]]:
+        """Every address book entry that has this fax number, as ``(abookfax_id, "Company - description")``.
+
+        The original's ``get_multinfo``: what a fax from a number shared by several companies is offered to be assigned to.
+        """
+        clean_num = clean_faxnum(faxnumber or "")
+        if not clean_num:
+            return []
+        rows = self.addressbookfax.find({"faxnumber": clean_num}, reduce_single=False) or []
+        if isinstance(rows, dict):
+            rows = [rows]
+        matches = []
+        for row in sorted(rows, key=lambda r: r.get("abookfax_id") or 0):
+            company = self.addressbook.find({"abook_id": row.get("abook_id")}) or {}
+            if isinstance(company, list):
+                company = company[0] if company else {}
+            name = company.get("company") or clean_num
+            description = row.get("description")
+            matches.append((row["abookfax_id"], f"{name} - {description}" if description else name))
+        return matches
+
     def find_or_create_number(self, faxnumber: str | None, company: str | None = None) -> tuple[int, int | None, str]:
         """Resolve a sender's fax number, registering it when it is new.
 

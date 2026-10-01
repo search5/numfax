@@ -49,7 +49,7 @@
 
       <div>
         <label for="contact_name" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Contact Name') }} *</label>
-        <input type="text" name="contact_name" id="contact_name" value="{{ contact.name or '' }}" required class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="John Doe" />
+        <input type="text" name="contact_name" id="contact_name" value="{{ contact.name or '' }}" required class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="{{ _('John Doe') }}" />
       </div>
 
       <div>

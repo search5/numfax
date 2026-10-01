@@ -54,7 +54,7 @@
       </div>
       <div>
         <label for="company" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Company Name') }} *</label>
-        <input type="text" name="company" id="company" value="{{ company.company or '' }}" required class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="e.g. Acme Corporation" />
+        <input type="text" name="company" id="company" value="{{ company.company or '' }}" required class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="{{ _('e.g. Acme Corporation') }}" />
       </div>
     </div>
 

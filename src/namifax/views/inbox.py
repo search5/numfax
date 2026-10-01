@@ -42,8 +42,18 @@ def inbox_view(request):
                             cname = ab.get_company()
                     except Exception:
                         pass
+                choices = []
+                if not r.get("faxnumid") and r.get("origfaxnum"):
+                    # the sender's number belongs to several companies: ask which one it is (the original's mult_nums)
+                    try:
+                        found, several = ab.loadbyfaxnum(r.get("origfaxnum"))
+                        if found and several:
+                            choices = ab.number_matches(r.get("origfaxnum"))
+                    except Exception:
+                        pass
                 faxes.append({
                     "id": fid,
+                    "choices": choices,
                     "company": cname or r.get("company") or "",
                     "origfaxnum": r.get("origfaxnum") or "-",
                     "archstamp": r.get("archstamp") or "",

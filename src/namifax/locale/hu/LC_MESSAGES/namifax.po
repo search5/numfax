@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: hMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 18:15+0900\n"
+"POT-Creation-Date: 2026-10-01 21:10+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hu\n"
@@ -20,6 +20,9 @@ msgstr "Email Címek"
 
 msgid "Save frequently used fax numbers for quick access when sending."
 msgstr "Gyakran használt faxszámok mentése a gyors hozzáféréshez küldéskor."
+
+msgid "Company or fax number..."
+msgstr ""
 
 msgid "Search"
 msgstr "Keresés"
@@ -91,6 +94,9 @@ msgstr "Cég"
 #, fuzzy
 msgid "Company Name"
 msgstr "Cég"
+
+msgid "e.g. Acme Corporation"
+msgstr ""
 
 msgid "Clear the number to remove it."
 msgstr ""
@@ -307,6 +313,9 @@ msgstr "Megtekinthető fax kategóriák"
 msgid "Category Name"
 msgstr "Kategória név"
 
+msgid "e.g. Invoices, Contracts"
+msgstr ""
+
 #, fuzzy
 msgid "Configure Cover Pages"
 msgstr "Cover Pages"
@@ -335,6 +344,9 @@ msgstr "Cím"
 
 msgid "File"
 msgstr "Fájl"
+
+msgid "e.g. custom.ps"
+msgstr ""
 
 msgid "Cover Template Studio: Dynamic Tag References"
 msgstr ""
@@ -375,6 +387,9 @@ msgstr "Hívóazonosító szabály hozzáadása"
 
 msgid "Caller ID"
 msgstr "Caller ID"
+
+msgid "e.g. 5550199 or pattern"
+msgstr ""
 
 msgid "Modem Device"
 msgstr "Modemeszköz"
@@ -524,6 +539,12 @@ msgstr "Fax Modems"
 msgid "Configure Modems Device"
 msgstr "Modemeszköz beállítása"
 
+msgid "e.g. ttyS0"
+msgstr ""
+
+msgid "e.g. Main Inbound Line"
+msgstr ""
+
 msgid "Reset"
 msgstr "Reset"
 
@@ -552,6 +573,9 @@ msgstr ""
 msgid "Printer Name"
 msgstr ""
 
+msgid "e.g. Office HP LaserJet"
+msgstr ""
+
 msgid "Protocol"
 msgstr ""
 
@@ -563,6 +587,9 @@ msgid "Port"
 msgstr "Priority"
 
 msgid "Queue Name (Optional)"
+msgstr ""
+
+msgid "2nd Floor Accounting Printer"
 msgstr ""
 
 msgid "Register Printer"
@@ -610,6 +637,12 @@ msgstr "Művelet"
 
 msgid "Configure Routing Rule"
 msgstr "Továbbítási szabály beállítása"
+
+msgid "e.g. 1000"
+msgstr ""
+
+msgid "e.g. Sales Direct Line"
+msgstr ""
 
 msgid "-- None --"
 msgstr "-- Nincs --"
@@ -732,7 +765,13 @@ msgstr "E-mail cím"
 msgid "From Display Name"
 msgstr "Cég"
 
+msgid "NamiFAX Corporate Dispatcher"
+msgstr ""
+
 msgid "Email Signature (Plaintext)"
+msgstr ""
+
+msgid "Sent automatically by NamiFAX Gateway."
 msgstr ""
 
 #, fuzzy
@@ -880,6 +919,9 @@ msgstr "Auditnaplók és HylaFAX kiszolgáló működési eseménykövetése"
 msgid "Keywords:"
 msgstr "Kulcsszavak:"
 
+msgid "Search text..."
+msgstr ""
+
 msgid "Date:"
 msgstr "Dátum:"
 
@@ -977,6 +1019,9 @@ msgstr ""
 msgid "Keyword"
 msgstr "Keyword"
 
+msgid "Company, number, notes..."
+msgstr ""
+
 #, fuzzy
 msgid "All Categories"
 msgstr "Megtekinthető fax kategóriák"
@@ -1012,6 +1057,9 @@ msgstr "Csak elküldött"
 #, fuzzy
 msgid "Fax ID"
 msgstr "Fax Modems"
+
+msgid "e.g. 104"
+msgstr ""
 
 #, fuzzy
 msgid "Results"
@@ -1077,6 +1125,9 @@ msgstr "Új terjesztési lista létrehozása"
 msgid "List Name"
 msgstr "Lista neve"
 
+msgid "e.g. Executive Sales Team"
+msgstr ""
+
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "Csoporttagok (Névjegyek és faxszámok)"
 
@@ -1089,6 +1140,9 @@ msgstr "Eltávolítás"
 
 msgid "No contacts assigned to this list yet."
 msgstr "Még nincsenek névjegyek rendelve ehhez a listához."
+
+msgid "Add contact name or fax number..."
+msgstr ""
 
 msgid "Add Member"
 msgstr "Tag hozzáadása"
@@ -1116,6 +1170,9 @@ msgstr "Vissza a listákhoz"
 
 msgid "Distribution List Profile"
 msgstr "Terjesztési lista profilja"
+
+msgid "e.g. Finance Operations"
+msgstr ""
 
 msgid "Enrolled Members"
 msgstr "Regisztrált tagok"
@@ -1173,6 +1230,42 @@ msgstr "Vissza az E-mail címjegyzékhez"
 
 msgid "Contact Profile Details"
 msgstr "Kapcsolati profil részletei"
+
+msgid "John Doe"
+msgstr ""
+
+msgid "Modify Fax Job"
+msgstr ""
+
+msgid "New Destination"
+msgstr ""
+
+msgid "Priority"
+msgstr "Priority"
+
+msgid "Modem / Device"
+msgstr ""
+
+msgid "Number of tries"
+msgstr ""
+
+msgid "Expire after"
+msgstr ""
+
+msgid "Now"
+msgstr ""
+
+msgid "Minutes"
+msgstr ""
+
+msgid "Hours"
+msgstr ""
+
+msgid "Days"
+msgstr ""
+
+msgid "Schedule Send Time"
+msgstr ""
 
 #, fuzzy
 msgid "Lost Password"
@@ -1240,6 +1333,9 @@ msgstr "Fax megtekintése"
 #, fuzzy
 msgid "Received"
 msgstr "Archívum"
+
+msgid "This number belongs to several companies. Which one is it?"
+msgstr ""
 
 msgid "Reply"
 msgstr "Válasz a faxra"
@@ -1327,11 +1423,17 @@ msgstr "A folytatáshoz adja meg hitelesítési adatait."
 msgid "System Online"
 msgstr "Rendszer Funkciók"
 
+msgid "Enter your username"
+msgstr ""
+
 msgid "Forgot password?"
 msgstr ""
 "Kérem adja meg az e-mail címét, majd kattintson a Jelszó Küldése "
 "gombra.Hamarosan kapni fog egy új jelszót.  Használja ezt az új jelszót a"
 " belépésre."
+
+msgid "Enter your password"
+msgstr ""
 
 msgid "Contact your system administrator if you need an account."
 msgstr "Ha fiókra van szüksége, forduljon a rendszergazdához."
@@ -1357,7 +1459,13 @@ msgstr ""
 msgid "Authentication Code"
 msgstr "Személynek"
 
+msgid "123456 or 8-char backup code"
+msgstr ""
+
 msgid "Verify & Log In"
+msgstr ""
+
+msgid "Sign out?"
 msgstr ""
 
 msgid "Assign Company Name"
@@ -1368,6 +1476,9 @@ msgstr "Dokumentum társítása regisztrált vállalati partnerhez"
 
 msgid "Search Company Name"
 msgstr "Vállalat nevének keresése"
+
+msgid "Type company name to filter..."
+msgstr ""
 
 msgid "Select Contact Record"
 msgstr "Névjegyrekord kiválasztása"
@@ -1392,11 +1503,20 @@ msgstr "Csatolt PDF dokumentum elküldése e-mail címzetteknek"
 msgid "Recipients"
 msgstr "Címzettek"
 
+msgid "recipient@example.com (comma separated)"
+msgstr ""
+
 msgid "Subject"
 msgstr "Tárgy"
 
+msgid "NamiFAX Transmission Document"
+msgstr ""
+
 msgid "Message"
 msgstr "Üzenet"
+
+msgid "Please find the attached facsimile document."
+msgstr ""
 
 msgid "Send"
 msgstr "Küldés"
@@ -1407,20 +1527,8 @@ msgstr "Belső adminisztrátori megjegyzés vagy hozzászólás hozzáfűzése"
 msgid "Note / Description"
 msgstr "Megjegyzés / Leírás"
 
-msgid "Reply to Fax"
-msgstr "Válasz a faxra"
-
-msgid "Dispatch quick reply transmission to originating sender"
-msgstr "Gyors válasz küldése az eredeti feladónak"
-
-msgid "Destination Number"
-msgstr "Fax szám"
-
-msgid "Regarding (Subject)"
-msgstr "Tárgy"
-
-msgid "Comments"
-msgstr "Megjegyzések"
+msgid "Enter transaction note or dispatch comments..."
+msgstr ""
 
 msgid "Transmission Report"
 msgstr "Átviteli jelentés"
@@ -1467,12 +1575,32 @@ msgstr "folyamatban lévő feladat"
 msgid "Job ID"
 msgstr "Feladat azonosítója"
 
-#, fuzzy
-msgid "Destination"
-msgstr "Fax szám"
+msgid "User"
+msgstr ""
 
-msgid "Queued"
-msgstr "Várakozik"
+msgid "Dials"
+msgstr ""
+
+msgid "TTS"
+msgstr ""
+
+msgid "Modify"
+msgstr ""
+
+msgid "Kill job"
+msgstr ""
+
+msgid "Kill"
+msgstr ""
+
+msgid "Failed Transmissions"
+msgstr "Sikertelen átvitelek"
+
+msgid "Review the number or retry below."
+msgstr "Ellenőrizze a számot, vagy próbálja újra alább."
+
+msgid "Retry"
+msgstr "Retry"
 
 msgid "No jobs in queue"
 msgstr "Nincs feladat a sorban"
@@ -1487,18 +1615,6 @@ msgstr ""
 #, fuzzy
 msgid "Send a Fax"
 msgstr "Fax küldés"
-
-msgid "Failed Transmissions"
-msgstr "Sikertelen átvitelek"
-
-msgid "Review the number or retry below."
-msgstr "Ellenőrizze a számot, vagy próbálja újra alább."
-
-msgid "Reason"
-msgstr "Ok"
-
-msgid "Retry"
-msgstr "Retry"
 
 #, fuzzy
 msgid "Password Expired"
@@ -1520,8 +1636,14 @@ msgstr ""
 msgid "Old Password"
 msgstr "Régi jelszó"
 
+msgid "Current credentials"
+msgstr ""
+
 msgid "New Password"
 msgstr "Új jelszó"
+
+msgid "New secure passphrase"
+msgstr ""
 
 #, fuzzy
 msgid "Confirm New Password"
@@ -1529,6 +1651,9 @@ msgstr ""
 "Kérem adja meg az e-mail címét, majd kattintson a Jelszó Küldése "
 "gombra.Hamarosan kapni fog egy új jelszót.  Használja ezt az új jelszót a"
 " belépésre."
+
+msgid "Re-type new passphrase"
+msgstr ""
 
 #, fuzzy
 msgid "Update Password"
@@ -1544,10 +1669,14 @@ msgstr "Fax szám"
 msgid "Enter the fax number and recipient details."
 msgstr "Adja meg a faxszámot és a címzett adatait."
 
-msgid "To send to multiple recipients at once, separate numbers with a comma."
+msgid "Destination Number"
+msgstr "Fax szám"
+
+msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
 msgstr ""
-"Ha egyszerre több címzettnek szeretne küldeni, vesszővel válassza el a "
-"számokat."
+
+msgid "To send to multiple recipients at once, separate numbers with a semicolon."
+msgstr ""
 
 msgid "Saved contacts are available in the"
 msgstr "A mentett névjegyek elérhetők itt:"
@@ -1557,6 +1686,9 @@ msgstr "Személynek"
 
 msgid "optional"
 msgstr "opcionális"
+
+msgid "e.g. Jane Doe"
+msgstr ""
 
 msgid "Voice Number"
 msgstr ""
@@ -1569,6 +1701,9 @@ msgstr ""
 
 msgid "Subject / Regarding"
 msgstr "Tárgy"
+
+msgid "e.g. Purchase Order #4921"
+msgstr ""
 
 msgid "Document Attachment"
 msgstr "Dokumentum csatolása"
@@ -1619,14 +1754,14 @@ msgstr "Bármely elérhető vonal (Automatikus)"
 msgid "Cover Comments"
 msgstr "Cover Pages"
 
+msgid "Notes or message to print on the cover sheet..."
+msgstr ""
+
 msgid "Advanced Options"
 msgstr "Speciális beállítások"
 
 msgid "Priority, retries, notifications"
 msgstr "Prioritás, újrapróbálkozások, értesítések"
-
-msgid "Priority"
-msgstr "Priority"
 
 #, fuzzy
 msgid "Max Retries"
@@ -1634,21 +1769,6 @@ msgstr "Megtekinthető fax kategóriák"
 
 msgid "Retries automatically on busy signal."
 msgstr "Foglalt jelzés esetén automatikus újrapróbálkozás."
-
-msgid "Expire after"
-msgstr ""
-
-msgid "Minutes"
-msgstr ""
-
-msgid "Hours"
-msgstr ""
-
-msgid "Days"
-msgstr ""
-
-msgid "Schedule Send Time"
-msgstr ""
 
 msgid "TSI ID"
 msgstr ""
@@ -1693,6 +1813,9 @@ msgstr "Fax szám"
 msgid "Transmitting Station ID (TSI)"
 msgstr "Adóállomás azonosítója (TSI)"
 
+msgid "e.g. +1 555 123 4567"
+msgstr ""
+
 msgid "Header identifier imprinted on top of transmitted fax pages."
 msgstr "Az elküldött faxoldalak tetejére nyomtatott fejléc-azonosító."
 
@@ -1722,6 +1845,15 @@ msgstr ""
 "Kérem adja meg az e-mail címét, majd kattintson a Jelszó Küldése "
 "gombra.Hamarosan kapni fog egy új jelszót.  Használja ezt az új jelszót a"
 " belépésre."
+
+msgid "Enter current password to verify"
+msgstr ""
+
+msgid "Enter secure new password"
+msgstr ""
+
+msgid "Re-type new password"
+msgstr ""
 
 #, fuzzy
 msgid "Update Settings"
@@ -1958,6 +2090,9 @@ msgstr ""
 msgid "SAML 2.0 configuration saved successfully."
 msgstr ""
 
+msgid "Please enter a valid number."
+msgstr ""
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr ""
@@ -1977,6 +2112,12 @@ msgid ""
 msgstr ""
 
 msgid "Email failed to send"
+msgstr ""
+
+msgid "Your session has expired. Reload the page and try again."
+msgstr ""
+
+msgid "Invalid job number."
 msgstr ""
 
 msgid "The code is not valid."
@@ -2065,4 +2206,31 @@ msgstr ""
 
 #~ msgid "High (Urgent)"
 #~ msgstr "Magas (Sürgős)"
+
+#~ msgid "Reply to Fax"
+#~ msgstr "Válasz a faxra"
+
+#~ msgid "Dispatch quick reply transmission to originating sender"
+#~ msgstr "Gyors válasz küldése az eredeti feladónak"
+
+#~ msgid "Regarding (Subject)"
+#~ msgstr "Tárgy"
+
+#~ msgid "Comments"
+#~ msgstr "Megjegyzések"
+
+#~ msgid "Destination"
+#~ msgstr "Fax szám"
+
+#~ msgid "Queued"
+#~ msgstr "Várakozik"
+
+#~ msgid "Reason"
+#~ msgstr "Ok"
+
+#~ msgid "To send to multiple recipients at once, separate numbers with a comma."
+#~ msgstr ""
+#~ "Ha egyszerre több címzettnek szeretne "
+#~ "küldeni, vesszővel válassza el a "
+#~ "számokat."
 

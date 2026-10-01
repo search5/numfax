@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: tMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 18:15+0900\n"
+"POT-Creation-Date: 2026-10-01 21:10+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: tr\n"
@@ -22,6 +22,9 @@ msgid "Save frequently used fax numbers for quick access when sending."
 msgstr ""
 "Gönderim sırasında hızlı erişim için sık kullanılan faks numaralarını "
 "kaydedin."
+
+msgid "Company or fax number..."
+msgstr ""
 
 msgid "Search"
 msgstr "Arama"
@@ -93,6 +96,9 @@ msgstr "Şirket"
 #, fuzzy
 msgid "Company Name"
 msgstr "Şirket"
+
+msgid "e.g. Acme Corporation"
+msgstr ""
 
 msgid "Clear the number to remove it."
 msgstr ""
@@ -309,6 +315,9 @@ msgstr "Bağlı grupları"
 msgid "Category Name"
 msgstr "Kategori adı"
 
+msgid "e.g. Invoices, Contracts"
+msgstr ""
+
 #, fuzzy
 msgid "Configure Cover Pages"
 msgstr "Cover Pages"
@@ -337,6 +346,9 @@ msgstr "Başlık"
 
 msgid "File"
 msgstr "Dosya"
+
+msgid "e.g. custom.ps"
+msgstr ""
 
 msgid "Cover Template Studio: Dynamic Tag References"
 msgstr ""
@@ -377,6 +389,9 @@ msgstr "Arayan Kimliği Kuralı Ekle"
 
 msgid "Caller ID"
 msgstr "Caller ID"
+
+msgid "e.g. 5550199 or pattern"
+msgstr ""
 
 msgid "Modem Device"
 msgstr "Modem Cihazı"
@@ -526,6 +541,12 @@ msgstr "Fax Modems"
 msgid "Configure Modems Device"
 msgstr "Modem Cihazını Yapılandır"
 
+msgid "e.g. ttyS0"
+msgstr ""
+
+msgid "e.g. Main Inbound Line"
+msgstr ""
+
 msgid "Reset"
 msgstr "Reset"
 
@@ -554,6 +575,9 @@ msgstr ""
 msgid "Printer Name"
 msgstr ""
 
+msgid "e.g. Office HP LaserJet"
+msgstr ""
+
 msgid "Protocol"
 msgstr ""
 
@@ -565,6 +589,9 @@ msgid "Port"
 msgstr "Priority"
 
 msgid "Queue Name (Optional)"
+msgstr ""
+
+msgid "2nd Floor Accounting Printer"
 msgstr ""
 
 msgid "Register Printer"
@@ -612,6 +639,12 @@ msgstr "İşlem"
 
 msgid "Configure Routing Rule"
 msgstr "Yönlendirme Kuralını Yapılandır"
+
+msgid "e.g. 1000"
+msgstr ""
+
+msgid "e.g. Sales Direct Line"
+msgstr ""
 
 msgid "-- None --"
 msgstr "-- Yok --"
@@ -734,7 +767,13 @@ msgstr "E-posta Adresi"
 msgid "From Display Name"
 msgstr "Şirket"
 
+msgid "NamiFAX Corporate Dispatcher"
+msgstr ""
+
 msgid "Email Signature (Plaintext)"
+msgstr ""
+
+msgid "Sent automatically by NamiFAX Gateway."
 msgstr ""
 
 #, fuzzy
@@ -882,6 +921,9 @@ msgstr "Denetim günlükleri ve HylaFAX sunucusu operasyonel olay izleri"
 msgid "Keywords:"
 msgstr "Anahtar Kelimeler:"
 
+msgid "Search text..."
+msgstr ""
+
 msgid "Date:"
 msgstr "Tarih:"
 
@@ -979,6 +1021,9 @@ msgstr ""
 msgid "Keyword"
 msgstr "Keyword"
 
+msgid "Company, number, notes..."
+msgstr ""
+
 #, fuzzy
 msgid "All Categories"
 msgstr "Bağlı grupları"
@@ -1014,6 +1059,9 @@ msgstr "Yalnızca gönderilenler"
 #, fuzzy
 msgid "Fax ID"
 msgstr "Fax Modems"
+
+msgid "e.g. 104"
+msgstr ""
 
 #, fuzzy
 msgid "Results"
@@ -1079,6 +1127,9 @@ msgstr "Yeni Dağıtım Listesi Oluştur"
 msgid "List Name"
 msgstr "Liste adı"
 
+msgid "e.g. Executive Sales Team"
+msgstr ""
+
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "Grup Üyeleri (Kişiler ve Faks Numaraları)"
 
@@ -1091,6 +1142,9 @@ msgstr "Kaldır"
 
 msgid "No contacts assigned to this list yet."
 msgstr "Bu listeye henüz kişi atanmadı."
+
+msgid "Add contact name or fax number..."
+msgstr ""
 
 msgid "Add Member"
 msgstr "Üye Ekle"
@@ -1116,6 +1170,9 @@ msgstr "Listelere Dön"
 
 msgid "Distribution List Profile"
 msgstr "Dağıtım Listesi Profili"
+
+msgid "e.g. Finance Operations"
+msgstr ""
 
 msgid "Enrolled Members"
 msgstr "Kayıtlı Üyeler"
@@ -1171,6 +1228,42 @@ msgstr "E-posta Rehberine Dön"
 
 msgid "Contact Profile Details"
 msgstr "Kişi Profili Ayrıntıları"
+
+msgid "John Doe"
+msgstr ""
+
+msgid "Modify Fax Job"
+msgstr ""
+
+msgid "New Destination"
+msgstr ""
+
+msgid "Priority"
+msgstr "Priority"
+
+msgid "Modem / Device"
+msgstr ""
+
+msgid "Number of tries"
+msgstr ""
+
+msgid "Expire after"
+msgstr ""
+
+msgid "Now"
+msgstr ""
+
+msgid "Minutes"
+msgstr ""
+
+msgid "Hours"
+msgstr ""
+
+msgid "Days"
+msgstr ""
+
+msgid "Schedule Send Time"
+msgstr ""
 
 #, fuzzy
 msgid "Lost Password"
@@ -1238,6 +1331,9 @@ msgstr "Faksı Görüntüle"
 #, fuzzy
 msgid "Received"
 msgstr "Arşiv"
+
+msgid "This number belongs to several companies. Which one is it?"
+msgstr ""
 
 msgid "Reply"
 msgstr "Faksı cevapla"
@@ -1325,11 +1421,17 @@ msgstr "Devam etmek için kimlik bilgilerinizi girin."
 msgid "System Online"
 msgstr "Sistem fonksiyonları"
 
+msgid "Enter your username"
+msgstr ""
+
 msgid "Forgot password?"
 msgstr ""
 "Lütfen eposta adresini yazıp şifre Gönder düğmesine basınız.Yeni "
 "şifrenizi kısa bir zamanda alacaksınız. Siteye girmek için alacağınız "
 "yeni şifrenizi kullanınız"
+
+msgid "Enter your password"
+msgstr ""
 
 msgid "Contact your system administrator if you need an account."
 msgstr "Bir hesaba ihtiyacınız varsa sistem yöneticinizle iletişime geçin."
@@ -1355,7 +1457,13 @@ msgstr ""
 msgid "Authentication Code"
 msgstr "Kime"
 
+msgid "123456 or 8-char backup code"
+msgstr ""
+
 msgid "Verify & Log In"
+msgstr ""
+
+msgid "Sign out?"
 msgstr ""
 
 msgid "Assign Company Name"
@@ -1366,6 +1474,9 @@ msgstr "Belgeyi kayıtlı kurumsal kişiyle ilişkilendirin"
 
 msgid "Search Company Name"
 msgstr "Şirket Adı Ara"
+
+msgid "Type company name to filter..."
+msgstr ""
 
 msgid "Select Contact Record"
 msgstr "Kişi Kaydını Seçin"
@@ -1390,11 +1501,20 @@ msgstr "PDF belge ekini e-posta alıcılarına gönderin"
 msgid "Recipients"
 msgstr "Alıcılar"
 
+msgid "recipient@example.com (comma separated)"
+msgstr ""
+
 msgid "Subject"
 msgstr "Konu"
 
+msgid "NamiFAX Transmission Document"
+msgstr ""
+
 msgid "Message"
 msgstr "Mesaj"
+
+msgid "Please find the attached facsimile document."
+msgstr ""
 
 msgid "Send"
 msgstr "Gönder"
@@ -1405,20 +1525,8 @@ msgstr "Dahili yönetim notu veya yorum ekleyin"
 msgid "Note / Description"
 msgstr "Not / Açıklama"
 
-msgid "Reply to Fax"
-msgstr "Faksı cevapla"
-
-msgid "Dispatch quick reply transmission to originating sender"
-msgstr "Orijinal gönderene hızlı yanıt iletimi gönderin"
-
-msgid "Destination Number"
-msgstr "Faks nosu"
-
-msgid "Regarding (Subject)"
-msgstr "Konu"
-
-msgid "Comments"
-msgstr "Açıklama"
+msgid "Enter transaction note or dispatch comments..."
+msgstr ""
 
 msgid "Transmission Report"
 msgstr "İletim Raporu"
@@ -1465,12 +1573,32 @@ msgstr "devam eden iş"
 msgid "Job ID"
 msgstr "İş Kimliği"
 
-#, fuzzy
-msgid "Destination"
-msgstr "Faks nosu"
+msgid "User"
+msgstr ""
 
-msgid "Queued"
-msgstr "Kuyrukta"
+msgid "Dials"
+msgstr ""
+
+msgid "TTS"
+msgstr ""
+
+msgid "Modify"
+msgstr ""
+
+msgid "Kill job"
+msgstr ""
+
+msgid "Kill"
+msgstr ""
+
+msgid "Failed Transmissions"
+msgstr "Başarısız İletimler"
+
+msgid "Review the number or retry below."
+msgstr "Numarayı kontrol edin veya aşağıdan tekrar deneyin."
+
+msgid "Retry"
+msgstr "Retry"
 
 msgid "No jobs in queue"
 msgstr "Kuyrukta iş yok"
@@ -1485,18 +1613,6 @@ msgstr ""
 #, fuzzy
 msgid "Send a Fax"
 msgstr "Faks Gönder"
-
-msgid "Failed Transmissions"
-msgstr "Başarısız İletimler"
-
-msgid "Review the number or retry below."
-msgstr "Numarayı kontrol edin veya aşağıdan tekrar deneyin."
-
-msgid "Reason"
-msgstr "Neden"
-
-msgid "Retry"
-msgstr "Retry"
 
 #, fuzzy
 msgid "Password Expired"
@@ -1518,8 +1634,14 @@ msgstr ""
 msgid "Old Password"
 msgstr "Eski şifre"
 
+msgid "Current credentials"
+msgstr ""
+
 msgid "New Password"
 msgstr "Yeni şifre"
+
+msgid "New secure passphrase"
+msgstr ""
 
 #, fuzzy
 msgid "Confirm New Password"
@@ -1527,6 +1649,9 @@ msgstr ""
 "Lütfen eposta adresini yazıp şifre Gönder düğmesine basınız.Yeni "
 "şifrenizi kısa bir zamanda alacaksınız. Siteye girmek için alacağınız "
 "yeni şifrenizi kullanınız"
+
+msgid "Re-type new passphrase"
+msgstr ""
 
 #, fuzzy
 msgid "Update Password"
@@ -1542,8 +1667,14 @@ msgstr "Faks nosu"
 msgid "Enter the fax number and recipient details."
 msgstr "Faks numarasını ve alıcı ayrıntılarını girin."
 
-msgid "To send to multiple recipients at once, separate numbers with a comma."
-msgstr "Aynı anda birden fazla alıcıya göndermek için numaraları virgülle ayırın."
+msgid "Destination Number"
+msgstr "Faks nosu"
+
+msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
+msgstr ""
+
+msgid "To send to multiple recipients at once, separate numbers with a semicolon."
+msgstr ""
 
 msgid "Saved contacts are available in the"
 msgstr "Kayıtlı kişiler şurada mevcuttur:"
@@ -1553,6 +1684,9 @@ msgstr "Kime"
 
 msgid "optional"
 msgstr "isteğe bağlı"
+
+msgid "e.g. Jane Doe"
+msgstr ""
 
 msgid "Voice Number"
 msgstr ""
@@ -1565,6 +1699,9 @@ msgstr ""
 
 msgid "Subject / Regarding"
 msgstr "Konu"
+
+msgid "e.g. Purchase Order #4921"
+msgstr ""
 
 msgid "Document Attachment"
 msgstr "Belge Eki"
@@ -1615,14 +1752,14 @@ msgstr "Herhangi Bir Uygun Hat (Otomatik)"
 msgid "Cover Comments"
 msgstr "Cover Pages"
 
+msgid "Notes or message to print on the cover sheet..."
+msgstr ""
+
 msgid "Advanced Options"
 msgstr "Gelişmiş Seçenekler"
 
 msgid "Priority, retries, notifications"
 msgstr "Öncelik, yeniden denemeler, bildirimler"
-
-msgid "Priority"
-msgstr "Priority"
 
 #, fuzzy
 msgid "Max Retries"
@@ -1630,21 +1767,6 @@ msgstr "Bağlı grupları"
 
 msgid "Retries automatically on busy signal."
 msgstr "Meşgul sinyalinde otomatik olarak tekrar dener."
-
-msgid "Expire after"
-msgstr ""
-
-msgid "Minutes"
-msgstr ""
-
-msgid "Hours"
-msgstr ""
-
-msgid "Days"
-msgstr ""
-
-msgid "Schedule Send Time"
-msgstr ""
 
 msgid "TSI ID"
 msgstr ""
@@ -1691,6 +1813,9 @@ msgstr "Faks nosu"
 msgid "Transmitting Station ID (TSI)"
 msgstr "Gönderici İstasyon Kimliği (TSI)"
 
+msgid "e.g. +1 555 123 4567"
+msgstr ""
+
 msgid "Header identifier imprinted on top of transmitted fax pages."
 msgstr "İletilen faks sayfalarının üst kısmına basılan başlık tanımlayıcısı."
 
@@ -1720,6 +1845,15 @@ msgstr ""
 "Lütfen eposta adresini yazıp şifre Gönder düğmesine basınız.Yeni "
 "şifrenizi kısa bir zamanda alacaksınız. Siteye girmek için alacağınız "
 "yeni şifrenizi kullanınız"
+
+msgid "Enter current password to verify"
+msgstr ""
+
+msgid "Enter secure new password"
+msgstr ""
+
+msgid "Re-type new password"
+msgstr ""
 
 #, fuzzy
 msgid "Update Settings"
@@ -1956,6 +2090,9 @@ msgstr ""
 msgid "SAML 2.0 configuration saved successfully."
 msgstr ""
 
+msgid "Please enter a valid number."
+msgstr ""
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr ""
@@ -1975,6 +2112,12 @@ msgid ""
 msgstr ""
 
 msgid "Email failed to send"
+msgstr ""
+
+msgid "Your session has expired. Reload the page and try again."
+msgstr ""
+
+msgid "Invalid job number."
 msgstr ""
 
 msgid "The code is not valid."
@@ -2062,4 +2205,30 @@ msgstr ""
 
 #~ msgid "High (Urgent)"
 #~ msgstr "Yüksek (Acil)"
+
+#~ msgid "Reply to Fax"
+#~ msgstr "Faksı cevapla"
+
+#~ msgid "Dispatch quick reply transmission to originating sender"
+#~ msgstr "Orijinal gönderene hızlı yanıt iletimi gönderin"
+
+#~ msgid "Regarding (Subject)"
+#~ msgstr "Konu"
+
+#~ msgid "Comments"
+#~ msgstr "Açıklama"
+
+#~ msgid "Destination"
+#~ msgstr "Faks nosu"
+
+#~ msgid "Queued"
+#~ msgstr "Kuyrukta"
+
+#~ msgid "Reason"
+#~ msgstr "Neden"
+
+#~ msgid "To send to multiple recipients at once, separate numbers with a comma."
+#~ msgstr ""
+#~ "Aynı anda birden fazla alıcıya göndermek"
+#~ " için numaraları virgülle ayırın."
 

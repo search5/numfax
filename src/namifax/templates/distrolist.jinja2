@@ -74,7 +74,7 @@
       <form action="/distrolist/edit" method="post" class="space-y-5 text-xs">
         <div>
           <label for="listname" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('List Name') }} *</label>
-          <input type="text" name="listname" id="listname" value="{{ selected_list.listname if selected_list else '' }}" required placeholder="e.g. Executive Sales Team" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" />
+          <input type="text" name="listname" id="listname" value="{{ selected_list.listname if selected_list else '' }}" required placeholder="{{ _('e.g. Executive Sales Team') }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" />
         </div>
 
         {% if selected_list %}
@@ -103,7 +103,7 @@
 
           <!-- Add Member Subform (Strict 2nd text input + Add Member button) -->
           <div class="p-3.5 bg-slate-50 border border-slate-200/80 rounded-xl flex items-center space-x-2">
-            <input type="text" placeholder="Add contact name or fax number..." class="flex-grow border border-slate-300 rounded-lg px-3 py-1.5 text-xs bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" />
+            <input type="text" placeholder="{{ _('Add contact name or fax number...') }}" class="flex-grow border border-slate-300 rounded-lg px-3 py-1.5 text-xs bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" />
             <button type="button" class="px-4 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-lg font-bold text-xs transition">{{ _('Add Member') }}</button>
           </div>
         {% endif %}

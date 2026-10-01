@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: cMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 18:15+0900\n"
+"POT-Creation-Date: 2026-10-01 21:10+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cs\n"
@@ -20,6 +20,9 @@ msgstr "E-mailové adresy"
 
 msgid "Save frequently used fax numbers for quick access when sending."
 msgstr "Uložte často používaná faxová čísla pro rychlý přístup při odesílání."
+
+msgid "Company or fax number..."
+msgstr ""
 
 msgid "Search"
 msgstr "Vyhledat"
@@ -91,6 +94,9 @@ msgstr "Naše firma"
 #, fuzzy
 msgid "Company Name"
 msgstr "Naše firma"
+
+msgid "e.g. Acme Corporation"
+msgstr ""
 
 msgid "Clear the number to remove it."
 msgstr ""
@@ -307,6 +313,9 @@ msgstr "Sledovatelné fax kategorie"
 msgid "Category Name"
 msgstr "Jméno kategorie"
 
+msgid "e.g. Invoices, Contracts"
+msgstr ""
+
 #, fuzzy
 msgid "Configure Cover Pages"
 msgstr "Cover Pages"
@@ -335,6 +344,9 @@ msgstr "Nadpis"
 
 msgid "File"
 msgstr "Soubor"
+
+msgid "e.g. custom.ps"
+msgstr ""
 
 msgid "Cover Template Studio: Dynamic Tag References"
 msgstr ""
@@ -375,6 +387,9 @@ msgstr "Přidat pravidlo ID volajícího"
 
 msgid "Caller ID"
 msgstr "Caller ID"
+
+msgid "e.g. 5550199 or pattern"
+msgstr ""
 
 msgid "Modem Device"
 msgstr "Modemové zařízení"
@@ -524,6 +539,12 @@ msgstr "Fax Modems"
 msgid "Configure Modems Device"
 msgstr "Konfigurovat modemové zařízení"
 
+msgid "e.g. ttyS0"
+msgstr ""
+
+msgid "e.g. Main Inbound Line"
+msgstr ""
+
 msgid "Reset"
 msgstr "Reset"
 
@@ -552,6 +573,9 @@ msgstr ""
 msgid "Printer Name"
 msgstr ""
 
+msgid "e.g. Office HP LaserJet"
+msgstr ""
+
 msgid "Protocol"
 msgstr ""
 
@@ -563,6 +587,9 @@ msgid "Port"
 msgstr "Priority"
 
 msgid "Queue Name (Optional)"
+msgstr ""
+
+msgid "2nd Floor Accounting Printer"
 msgstr ""
 
 msgid "Register Printer"
@@ -610,6 +637,12 @@ msgstr "Akce"
 
 msgid "Configure Routing Rule"
 msgstr "Konfigurovat pravidlo směrování"
+
+msgid "e.g. 1000"
+msgstr ""
+
+msgid "e.g. Sales Direct Line"
+msgstr ""
 
 msgid "-- None --"
 msgstr "-- Žádný --"
@@ -732,7 +765,13 @@ msgstr "E-mailová adresa"
 msgid "From Display Name"
 msgstr "Naše firma"
 
+msgid "NamiFAX Corporate Dispatcher"
+msgstr ""
+
 msgid "Email Signature (Plaintext)"
+msgstr ""
+
+msgid "Sent automatically by NamiFAX Gateway."
 msgstr ""
 
 #, fuzzy
@@ -877,6 +916,9 @@ msgstr "Protokoly auditu a záznamy provozních událostí serveru HylaFAX"
 msgid "Keywords:"
 msgstr "Klíčová slova:"
 
+msgid "Search text..."
+msgstr ""
+
 msgid "Date:"
 msgstr "Datum:"
 
@@ -974,6 +1016,9 @@ msgstr ""
 msgid "Keyword"
 msgstr "Keyword"
 
+msgid "Company, number, notes..."
+msgstr ""
+
 #, fuzzy
 msgid "All Categories"
 msgstr "Sledovatelné fax kategorie"
@@ -1009,6 +1054,9 @@ msgstr "Pouze odeslané"
 #, fuzzy
 msgid "Fax ID"
 msgstr "Fax Modems"
+
+msgid "e.g. 104"
+msgstr ""
 
 #, fuzzy
 msgid "Results"
@@ -1074,6 +1122,9 @@ msgstr "Vytvořit nový distribuční seznam"
 msgid "List Name"
 msgstr "Název seznamu"
 
+msgid "e.g. Executive Sales Team"
+msgstr ""
+
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "Členové skupiny (kontakty a faxová čísla)"
 
@@ -1086,6 +1137,9 @@ msgstr "Odebrat"
 
 msgid "No contacts assigned to this list yet."
 msgstr "K tomuto seznamu zatím nejsou přiřazeny žádné kontakty."
+
+msgid "Add contact name or fax number..."
+msgstr ""
 
 msgid "Add Member"
 msgstr "Přidat člena"
@@ -1111,6 +1165,9 @@ msgstr "Zpět na seznamy"
 
 msgid "Distribution List Profile"
 msgstr "Profil distribučního seznamu"
+
+msgid "e.g. Finance Operations"
+msgstr ""
 
 msgid "Enrolled Members"
 msgstr "Zapsaní členové"
@@ -1168,6 +1225,42 @@ msgstr "Zpět do knihy e-mailů"
 
 msgid "Contact Profile Details"
 msgstr "Podrobnosti profilu kontaktu"
+
+msgid "John Doe"
+msgstr ""
+
+msgid "Modify Fax Job"
+msgstr ""
+
+msgid "New Destination"
+msgstr ""
+
+msgid "Priority"
+msgstr "Priority"
+
+msgid "Modem / Device"
+msgstr ""
+
+msgid "Number of tries"
+msgstr ""
+
+msgid "Expire after"
+msgstr ""
+
+msgid "Now"
+msgstr ""
+
+msgid "Minutes"
+msgstr ""
+
+msgid "Hours"
+msgstr ""
+
+msgid "Days"
+msgstr ""
+
+msgid "Schedule Send Time"
+msgstr ""
 
 #, fuzzy
 msgid "Lost Password"
@@ -1235,6 +1328,9 @@ msgstr "Prohlížet Fax"
 #, fuzzy
 msgid "Received"
 msgstr "Archiv"
+
+msgid "This number belongs to several companies. Which one is it?"
+msgstr ""
 
 msgid "Reply"
 msgstr "Odpovědět na FAX"
@@ -1320,11 +1416,17 @@ msgstr "Chcete-li pokračovat, zadejte své přihlašovací údaje."
 msgid "System Online"
 msgstr "System funkce"
 
+msgid "Enter your username"
+msgstr ""
+
 msgid "Forgot password?"
 msgstr ""
 "Zadejte prosím Vaši e-mailovou adresu a potom klikněte na tlačítko Poslat"
 " heslo.Vaše nové heslo Vám bude brzy posláno.Použijte toto heslo pro "
 "přístup na faxserver."
+
+msgid "Enter your password"
+msgstr ""
 
 msgid "Contact your system administrator if you need an account."
 msgstr "Pokud potřebujete účet, obraťte se na správce systému."
@@ -1350,7 +1452,13 @@ msgstr ""
 msgid "Authentication Code"
 msgstr "Osoba"
 
+msgid "123456 or 8-char backup code"
+msgstr ""
+
 msgid "Verify & Log In"
+msgstr ""
+
+msgid "Sign out?"
 msgstr ""
 
 msgid "Assign Company Name"
@@ -1361,6 +1469,9 @@ msgstr "Přiřadit dokument k registrovanému firemnímu kontaktu"
 
 msgid "Search Company Name"
 msgstr "Hledat název společnosti"
+
+msgid "Type company name to filter..."
+msgstr ""
 
 msgid "Select Contact Record"
 msgstr "Vyberte záznam kontaktu"
@@ -1385,11 +1496,20 @@ msgstr "Odeslat přílohu dokumentu PDF příjemcům e-mailu"
 msgid "Recipients"
 msgstr "Příjemci"
 
+msgid "recipient@example.com (comma separated)"
+msgstr ""
+
 msgid "Subject"
 msgstr "Předmět"
 
+msgid "NamiFAX Transmission Document"
+msgstr ""
+
 msgid "Message"
 msgstr "Zpráva"
+
+msgid "Please find the attached facsimile document."
+msgstr ""
 
 msgid "Send"
 msgstr "Poslat"
@@ -1400,20 +1520,8 @@ msgstr "Připojit interní administrativní poznámku nebo komentáře"
 msgid "Note / Description"
 msgstr "Poznámka / popis"
 
-msgid "Reply to Fax"
-msgstr "Odpovědět na FAX"
-
-msgid "Dispatch quick reply transmission to originating sender"
-msgstr "Odeslat rychlou odpověď původnímu odesílateli"
-
-msgid "Destination Number"
-msgstr "Faxové číslo"
-
-msgid "Regarding (Subject)"
-msgstr "Věc (předmět)"
-
-msgid "Comments"
-msgstr "Krátký text nebo poznámka bez diakritiky"
+msgid "Enter transaction note or dispatch comments..."
+msgstr ""
 
 msgid "Transmission Report"
 msgstr "Zpráva o přenosu"
@@ -1459,12 +1567,32 @@ msgstr "probíhající úloha"
 msgid "Job ID"
 msgstr "ID úlohy"
 
-#, fuzzy
-msgid "Destination"
-msgstr "Faxové číslo"
+msgid "User"
+msgstr ""
 
-msgid "Queued"
-msgstr "Ve frontě"
+msgid "Dials"
+msgstr ""
+
+msgid "TTS"
+msgstr ""
+
+msgid "Modify"
+msgstr ""
+
+msgid "Kill job"
+msgstr ""
+
+msgid "Kill"
+msgstr ""
+
+msgid "Failed Transmissions"
+msgstr "Neúspěšné přenosy"
+
+msgid "Review the number or retry below."
+msgstr "Zkontrolujte číslo nebo to zkuste znovu níže."
+
+msgid "Retry"
+msgstr "Retry"
 
 msgid "No jobs in queue"
 msgstr "Žádné úlohy ve frontě"
@@ -1477,18 +1605,6 @@ msgstr "Na odeslání nečekají žádné faxy. Odešlete fax a sledujte jeho pr
 #, fuzzy
 msgid "Send a Fax"
 msgstr "Poslat Fax"
-
-msgid "Failed Transmissions"
-msgstr "Neúspěšné přenosy"
-
-msgid "Review the number or retry below."
-msgstr "Zkontrolujte číslo nebo to zkuste znovu níže."
-
-msgid "Reason"
-msgstr "Důvod"
-
-msgid "Retry"
-msgstr "Retry"
 
 #, fuzzy
 msgid "Password Expired"
@@ -1510,8 +1626,14 @@ msgstr ""
 msgid "Old Password"
 msgstr "Původní heslo"
 
+msgid "Current credentials"
+msgstr ""
+
 msgid "New Password"
 msgstr "Nové heslo"
+
+msgid "New secure passphrase"
+msgstr ""
 
 #, fuzzy
 msgid "Confirm New Password"
@@ -1519,6 +1641,9 @@ msgstr ""
 "Zadejte prosím Vaši e-mailovou adresu a potom klikněte na tlačítko Poslat"
 " heslo.Vaše nové heslo Vám bude brzy posláno.Použijte toto heslo pro "
 "přístup na faxserver."
+
+msgid "Re-type new passphrase"
+msgstr ""
 
 #, fuzzy
 msgid "Update Password"
@@ -1534,8 +1659,14 @@ msgstr "Faxové číslo"
 msgid "Enter the fax number and recipient details."
 msgstr "Zadejte faxové číslo a podrobnosti o příjemci."
 
-msgid "To send to multiple recipients at once, separate numbers with a comma."
-msgstr "Chcete-li odeslat více příjemcům najednou, oddělte čísla čárkou."
+msgid "Destination Number"
+msgstr "Faxové číslo"
+
+msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
+msgstr ""
+
+msgid "To send to multiple recipients at once, separate numbers with a semicolon."
+msgstr ""
 
 msgid "Saved contacts are available in the"
 msgstr "Uložené kontakty jsou k dispozici v"
@@ -1545,6 +1676,9 @@ msgstr "Osoba"
 
 msgid "optional"
 msgstr "volitelné"
+
+msgid "e.g. Jane Doe"
+msgstr ""
 
 msgid "Voice Number"
 msgstr ""
@@ -1557,6 +1691,9 @@ msgstr ""
 
 msgid "Subject / Regarding"
 msgstr "Předmět"
+
+msgid "e.g. Purchase Order #4921"
+msgstr ""
 
 msgid "Document Attachment"
 msgstr "Příloha dokumentu"
@@ -1607,14 +1744,14 @@ msgstr "Jakákoli dostupná linka (automaticky)"
 msgid "Cover Comments"
 msgstr "Cover Pages"
 
+msgid "Notes or message to print on the cover sheet..."
+msgstr ""
+
 msgid "Advanced Options"
 msgstr "Pokročilé možnosti"
 
 msgid "Priority, retries, notifications"
 msgstr "Priorita, opakování, oznámení"
-
-msgid "Priority"
-msgstr "Priority"
 
 #, fuzzy
 msgid "Max Retries"
@@ -1622,21 +1759,6 @@ msgstr "Sledovatelné fax kategorie"
 
 msgid "Retries automatically on busy signal."
 msgstr "Automaticky opakuje volání při obsazovacím tónu."
-
-msgid "Expire after"
-msgstr ""
-
-msgid "Minutes"
-msgstr ""
-
-msgid "Hours"
-msgstr ""
-
-msgid "Days"
-msgstr ""
-
-msgid "Schedule Send Time"
-msgstr ""
 
 msgid "TSI ID"
 msgstr ""
@@ -1683,6 +1805,9 @@ msgstr "Faxové číslo"
 msgid "Transmitting Station ID (TSI)"
 msgstr "Identifikátor vysílací stanice (TSI)"
 
+msgid "e.g. +1 555 123 4567"
+msgstr ""
+
 msgid "Header identifier imprinted on top of transmitted fax pages."
 msgstr "Identifikátor záhlaví vytištěný v horní části odeslaných faxových stránek."
 
@@ -1712,6 +1837,15 @@ msgstr ""
 "Zadejte prosím Vaši e-mailovou adresu a potom klikněte na tlačítko Poslat"
 " heslo.Vaše nové heslo Vám bude brzy posláno.Použijte toto heslo pro "
 "přístup na faxserver."
+
+msgid "Enter current password to verify"
+msgstr ""
+
+msgid "Enter secure new password"
+msgstr ""
+
+msgid "Re-type new password"
+msgstr ""
 
 #, fuzzy
 msgid "Update Settings"
@@ -1948,6 +2082,9 @@ msgstr ""
 msgid "SAML 2.0 configuration saved successfully."
 msgstr ""
 
+msgid "Please enter a valid number."
+msgstr ""
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr ""
@@ -1967,6 +2104,12 @@ msgid ""
 msgstr ""
 
 msgid "Email failed to send"
+msgstr ""
+
+msgid "Your session has expired. Reload the page and try again."
+msgstr ""
+
+msgid "Invalid job number."
 msgstr ""
 
 msgid "The code is not valid."
@@ -2055,4 +2198,28 @@ msgstr ""
 
 #~ msgid "High (Urgent)"
 #~ msgstr "Vysoká (naléhavé)"
+
+#~ msgid "Reply to Fax"
+#~ msgstr "Odpovědět na FAX"
+
+#~ msgid "Dispatch quick reply transmission to originating sender"
+#~ msgstr "Odeslat rychlou odpověď původnímu odesílateli"
+
+#~ msgid "Regarding (Subject)"
+#~ msgstr "Věc (předmět)"
+
+#~ msgid "Comments"
+#~ msgstr "Krátký text nebo poznámka bez diakritiky"
+
+#~ msgid "Destination"
+#~ msgstr "Faxové číslo"
+
+#~ msgid "Queued"
+#~ msgstr "Ve frontě"
+
+#~ msgid "Reason"
+#~ msgstr "Důvod"
+
+#~ msgid "To send to multiple recipients at once, separate numbers with a comma."
+#~ msgstr "Chcete-li odeslat více příjemcům najednou, oddělte čísla čárkou."
 

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: rMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 18:15+0900\n"
+"POT-Creation-Date: 2026-10-01 21:10+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -23,6 +23,9 @@ msgid "Save frequently used fax numbers for quick access when sending."
 msgstr ""
 "Сохраняйте часто используемые номера факсов для быстрого доступа при "
 "отправке."
+
+msgid "Company or fax number..."
+msgstr ""
 
 msgid "Search"
 msgstr "Поиск"
@@ -94,6 +97,9 @@ msgstr "Организация"
 #, fuzzy
 msgid "Company Name"
 msgstr "Организация"
+
+msgid "e.g. Acme Corporation"
+msgstr ""
 
 msgid "Clear the number to remove it."
 msgstr ""
@@ -310,6 +316,9 @@ msgstr "Просматриваемая категория факсов"
 msgid "Category Name"
 msgstr "Имя категории"
 
+msgid "e.g. Invoices, Contracts"
+msgstr ""
+
 #, fuzzy
 msgid "Configure Cover Pages"
 msgstr "Cover Pages"
@@ -338,6 +347,9 @@ msgstr "Заголовок"
 
 msgid "File"
 msgstr "Файл"
+
+msgid "e.g. custom.ps"
+msgstr ""
 
 msgid "Cover Template Studio: Dynamic Tag References"
 msgstr ""
@@ -378,6 +390,9 @@ msgstr "Добавить правило Caller ID"
 
 msgid "Caller ID"
 msgstr "Caller ID"
+
+msgid "e.g. 5550199 or pattern"
+msgstr ""
 
 msgid "Modem Device"
 msgstr "Устройство модема"
@@ -527,6 +542,12 @@ msgstr "Fax Modems"
 msgid "Configure Modems Device"
 msgstr "Настроить модемное устройство"
 
+msgid "e.g. ttyS0"
+msgstr ""
+
+msgid "e.g. Main Inbound Line"
+msgstr ""
+
 msgid "Reset"
 msgstr "Reset"
 
@@ -555,6 +576,9 @@ msgstr ""
 msgid "Printer Name"
 msgstr ""
 
+msgid "e.g. Office HP LaserJet"
+msgstr ""
+
 msgid "Protocol"
 msgstr ""
 
@@ -566,6 +590,9 @@ msgid "Port"
 msgstr "Важность"
 
 msgid "Queue Name (Optional)"
+msgstr ""
+
+msgid "2nd Floor Accounting Printer"
 msgstr ""
 
 msgid "Register Printer"
@@ -613,6 +640,12 @@ msgstr "Действие"
 
 msgid "Configure Routing Rule"
 msgstr "Настроить правило маршрутизации"
+
+msgid "e.g. 1000"
+msgstr ""
+
+msgid "e.g. Sales Direct Line"
+msgstr ""
 
 msgid "-- None --"
 msgstr "-- Нет --"
@@ -735,7 +768,13 @@ msgstr "Адрес эл. почты"
 msgid "From Display Name"
 msgstr "Организация"
 
+msgid "NamiFAX Corporate Dispatcher"
+msgstr ""
+
 msgid "Email Signature (Plaintext)"
+msgstr ""
+
+msgid "Sent automatically by NamiFAX Gateway."
 msgstr ""
 
 #, fuzzy
@@ -882,6 +921,9 @@ msgstr "Журналы аудита и операционные события �
 msgid "Keywords:"
 msgstr "Ключевые слова:"
 
+msgid "Search text..."
+msgstr ""
+
 msgid "Date:"
 msgstr "Дата:"
 
@@ -979,6 +1021,9 @@ msgstr ""
 msgid "Keyword"
 msgstr "Ключевому слову"
 
+msgid "Company, number, notes..."
+msgstr ""
+
 #, fuzzy
 msgid "All Categories"
 msgstr "Просматриваемая категория факсов"
@@ -1014,6 +1059,9 @@ msgstr "Только отправленные"
 #, fuzzy
 msgid "Fax ID"
 msgstr "Fax Modems"
+
+msgid "e.g. 104"
+msgstr ""
 
 #, fuzzy
 msgid "Results"
@@ -1079,6 +1127,9 @@ msgstr "Создать новый список рассылки"
 msgid "List Name"
 msgstr "Название списка"
 
+msgid "e.g. Executive Sales Team"
+msgstr ""
+
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "Участники группы (контакты и номера факсов)"
 
@@ -1091,6 +1142,9 @@ msgstr "Удалить"
 
 msgid "No contacts assigned to this list yet."
 msgstr "В этот список еще не добавлены контакты."
+
+msgid "Add contact name or fax number..."
+msgstr ""
 
 msgid "Add Member"
 msgstr "Добавить участника"
@@ -1116,6 +1170,9 @@ msgstr "Назад к спискам"
 
 msgid "Distribution List Profile"
 msgstr "Профиль списка рассылки"
+
+msgid "e.g. Finance Operations"
+msgstr ""
 
 msgid "Enrolled Members"
 msgstr "Зарегистрированные участники"
@@ -1175,6 +1232,42 @@ msgstr "Назад к адресной книге эл. почты"
 
 msgid "Contact Profile Details"
 msgstr "Сведения о контакте"
+
+msgid "John Doe"
+msgstr ""
+
+msgid "Modify Fax Job"
+msgstr ""
+
+msgid "New Destination"
+msgstr ""
+
+msgid "Priority"
+msgstr "Важность"
+
+msgid "Modem / Device"
+msgstr ""
+
+msgid "Number of tries"
+msgstr ""
+
+msgid "Expire after"
+msgstr ""
+
+msgid "Now"
+msgstr ""
+
+msgid "Minutes"
+msgstr ""
+
+msgid "Hours"
+msgstr ""
+
+msgid "Days"
+msgstr ""
+
+msgid "Schedule Send Time"
+msgstr ""
 
 #, fuzzy
 msgid "Lost Password"
@@ -1242,6 +1335,9 @@ msgstr "Посмотреть факс"
 #, fuzzy
 msgid "Received"
 msgstr "Архив"
+
+msgid "This number belongs to several companies. Which one is it?"
+msgstr ""
 
 msgid "Reply"
 msgstr "Ответить на факс"
@@ -1329,10 +1425,16 @@ msgstr "Введите учетные данные для продолжения
 msgid "System Online"
 msgstr "Системные функции"
 
+msgid "Enter your username"
+msgstr ""
+
 msgid "Forgot password?"
 msgstr ""
 "Пожалуйста введите Ваш почтовый адрес и нажмите кнопку Выслать "
 "парольНовый пароль будет выслан немедленно. Используйте его для доступа."
+
+msgid "Enter your password"
+msgstr ""
 
 msgid "Contact your system administrator if you need an account."
 msgstr "Если вам требуется учетная запись, обратитесь к системному администратору."
@@ -1358,7 +1460,13 @@ msgstr ""
 msgid "Authentication Code"
 msgstr "Контактное лицо"
 
+msgid "123456 or 8-char backup code"
+msgstr ""
+
 msgid "Verify & Log In"
+msgstr ""
+
+msgid "Sign out?"
 msgstr ""
 
 msgid "Assign Company Name"
@@ -1369,6 +1477,9 @@ msgstr "Связать документ с зарегистрированным 
 
 msgid "Search Company Name"
 msgstr "Поиск названия компании"
+
+msgid "Type company name to filter..."
+msgstr ""
 
 msgid "Select Contact Record"
 msgstr "Выбрать запись контакта"
@@ -1393,11 +1504,20 @@ msgstr "Отправка вложенного PDF-документа получ�
 msgid "Recipients"
 msgstr "Получатели"
 
+msgid "recipient@example.com (comma separated)"
+msgstr ""
+
 msgid "Subject"
 msgstr "Тема"
 
+msgid "NamiFAX Transmission Document"
+msgstr ""
+
 msgid "Message"
 msgstr "Сообщение"
+
+msgid "Please find the attached facsimile document."
+msgstr ""
 
 msgid "Send"
 msgstr "Отправить"
@@ -1408,20 +1528,8 @@ msgstr "Добавить внутреннюю административную �
 msgid "Note / Description"
 msgstr "Примечание / Описание"
 
-msgid "Reply to Fax"
-msgstr "Ответить на факс"
-
-msgid "Dispatch quick reply transmission to originating sender"
-msgstr "Отправить быстрый ответ отправителю"
-
-msgid "Destination Number"
-msgstr "Номер факса"
-
-msgid "Regarding (Subject)"
-msgstr "Тема"
-
-msgid "Comments"
-msgstr "Комментарий"
+msgid "Enter transaction note or dispatch comments..."
+msgstr ""
 
 msgid "Transmission Report"
 msgstr "Отчет о передаче"
@@ -1468,12 +1576,32 @@ msgstr "задание выполняется"
 msgid "Job ID"
 msgstr "ID задания"
 
-#, fuzzy
-msgid "Destination"
-msgstr "Номер факса"
+msgid "User"
+msgstr ""
 
-msgid "Queued"
-msgstr "В очереди"
+msgid "Dials"
+msgstr ""
+
+msgid "TTS"
+msgstr ""
+
+msgid "Modify"
+msgstr ""
+
+msgid "Kill job"
+msgstr ""
+
+msgid "Kill"
+msgstr ""
+
+msgid "Failed Transmissions"
+msgstr "Неудачные передачи"
+
+msgid "Review the number or retry below."
+msgstr "Проверьте номер или повторите попытку ниже."
+
+msgid "Retry"
+msgstr "Retry"
 
 msgid "No jobs in queue"
 msgstr "В очереди нет заданий"
@@ -1488,18 +1616,6 @@ msgstr ""
 #, fuzzy
 msgid "Send a Fax"
 msgstr "Отправить"
-
-msgid "Failed Transmissions"
-msgstr "Неудачные передачи"
-
-msgid "Review the number or retry below."
-msgstr "Проверьте номер или повторите попытку ниже."
-
-msgid "Reason"
-msgstr "Причина"
-
-msgid "Retry"
-msgstr "Retry"
 
 #, fuzzy
 msgid "Password Expired"
@@ -1521,14 +1637,23 @@ msgstr ""
 msgid "Old Password"
 msgstr "Старый пароль"
 
+msgid "Current credentials"
+msgstr ""
+
 msgid "New Password"
 msgstr "Новый пароль"
+
+msgid "New secure passphrase"
+msgstr ""
 
 #, fuzzy
 msgid "Confirm New Password"
 msgstr ""
 "Пожалуйста введите Ваш почтовый адрес и нажмите кнопку Выслать "
 "парольНовый пароль будет выслан немедленно. Используйте его для доступа."
+
+msgid "Re-type new passphrase"
+msgstr ""
 
 #, fuzzy
 msgid "Update Password"
@@ -1544,10 +1669,14 @@ msgstr "Номер факса"
 msgid "Enter the fax number and recipient details."
 msgstr "Введите номер факса и сведения о получателе."
 
-msgid "To send to multiple recipients at once, separate numbers with a comma."
+msgid "Destination Number"
+msgstr "Номер факса"
+
+msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
 msgstr ""
-"Для одновременной отправки нескольким получателям разделяйте номера "
-"запятыми."
+
+msgid "To send to multiple recipients at once, separate numbers with a semicolon."
+msgstr ""
 
 msgid "Saved contacts are available in the"
 msgstr "Сохраненные контакты доступны в"
@@ -1557,6 +1686,9 @@ msgstr "Контактное лицо"
 
 msgid "optional"
 msgstr "необязательно"
+
+msgid "e.g. Jane Doe"
+msgstr ""
 
 msgid "Voice Number"
 msgstr ""
@@ -1569,6 +1701,9 @@ msgstr ""
 
 msgid "Subject / Regarding"
 msgstr "Тема"
+
+msgid "e.g. Purchase Order #4921"
+msgstr ""
 
 msgid "Document Attachment"
 msgstr "Вложение документа"
@@ -1619,14 +1754,14 @@ msgstr "Любая доступная линия (Авто)"
 msgid "Cover Comments"
 msgstr "Cover Pages"
 
+msgid "Notes or message to print on the cover sheet..."
+msgstr ""
+
 msgid "Advanced Options"
 msgstr "Дополнительные параметры"
 
 msgid "Priority, retries, notifications"
 msgstr "Приоритет, повторные попытки, уведомления"
-
-msgid "Priority"
-msgstr "Важность"
 
 #, fuzzy
 msgid "Max Retries"
@@ -1634,21 +1769,6 @@ msgstr "Просматриваемая категория факсов"
 
 msgid "Retries automatically on busy signal."
 msgstr "Автоматический повтор при сигнале «занято»."
-
-msgid "Expire after"
-msgstr ""
-
-msgid "Minutes"
-msgstr ""
-
-msgid "Hours"
-msgstr ""
-
-msgid "Days"
-msgstr ""
-
-msgid "Schedule Send Time"
-msgstr ""
 
 msgid "TSI ID"
 msgstr ""
@@ -1695,6 +1815,9 @@ msgstr "Номер факса"
 msgid "Transmitting Station ID (TSI)"
 msgstr "Идентификатор передающей станции (TSI)"
 
+msgid "e.g. +1 555 123 4567"
+msgstr ""
+
 msgid "Header identifier imprinted on top of transmitted fax pages."
 msgstr ""
 "Заголовок-идентификатор, печатаемый в верхней части передаваемых страниц "
@@ -1725,6 +1848,15 @@ msgid "Current Password"
 msgstr ""
 "Пожалуйста введите Ваш почтовый адрес и нажмите кнопку Выслать "
 "парольНовый пароль будет выслан немедленно. Используйте его для доступа."
+
+msgid "Enter current password to verify"
+msgstr ""
+
+msgid "Enter secure new password"
+msgstr ""
+
+msgid "Re-type new password"
+msgstr ""
 
 #, fuzzy
 msgid "Update Settings"
@@ -1961,6 +2093,9 @@ msgstr ""
 msgid "SAML 2.0 configuration saved successfully."
 msgstr ""
 
+msgid "Please enter a valid number."
+msgstr ""
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr ""
@@ -1980,6 +2115,12 @@ msgid ""
 msgstr ""
 
 msgid "Email failed to send"
+msgstr ""
+
+msgid "Your session has expired. Reload the page and try again."
+msgstr ""
+
+msgid "Invalid job number."
 msgstr ""
 
 msgid "The code is not valid."
@@ -2068,4 +2209,30 @@ msgstr ""
 
 #~ msgid "High (Urgent)"
 #~ msgstr "Высокий (Срочно)"
+
+#~ msgid "Reply to Fax"
+#~ msgstr "Ответить на факс"
+
+#~ msgid "Dispatch quick reply transmission to originating sender"
+#~ msgstr "Отправить быстрый ответ отправителю"
+
+#~ msgid "Regarding (Subject)"
+#~ msgstr "Тема"
+
+#~ msgid "Comments"
+#~ msgstr "Комментарий"
+
+#~ msgid "Destination"
+#~ msgstr "Номер факса"
+
+#~ msgid "Queued"
+#~ msgstr "В очереди"
+
+#~ msgid "Reason"
+#~ msgstr "Причина"
+
+#~ msgid "To send to multiple recipients at once, separate numbers with a comma."
+#~ msgstr ""
+#~ "Для одновременной отправки нескольким "
+#~ "получателям разделяйте номера запятыми."
 

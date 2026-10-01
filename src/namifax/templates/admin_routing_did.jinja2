@@ -97,12 +97,12 @@
       <form action="/admin/routing/did{% if selected_route %}?didr_id={{ selected_route.didr_id }}{% endif %}" method="post" class="space-y-4 text-xs">
         <div>
           <label for="route" class="block font-semibold text-slate-300 text-xs mb-1.5">{{ _('Route Code') }} *</label>
-          <input type="text" name="route" id="route" required placeholder="e.g. 1000" value="{{ selected_route.route if selected_route else '' }}" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white font-mono focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition" />
+          <input type="text" name="route" id="route" required placeholder="{{ _('e.g. 1000') }}" value="{{ selected_route.route if selected_route else '' }}" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white font-mono focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition" />
         </div>
 
         <div>
           <label for="alias" class="block font-semibold text-slate-300 text-xs mb-1.5">{{ _('Alias') }} *</label>
-          <input type="text" name="alias" id="alias" required placeholder="e.g. Sales Direct Line" value="{{ selected_route.alias if selected_route else '' }}" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition" />
+          <input type="text" name="alias" id="alias" required placeholder="{{ _('e.g. Sales Direct Line') }}" value="{{ selected_route.alias if selected_route else '' }}" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition" />
         </div>
 
         <div>

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: zh_CMIME-Version: 1.Content-"
 "Type: text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 18:15+0900\n"
+"POT-Creation-Date: 2026-10-01 21:10+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -20,6 +20,9 @@ msgstr "Email地址"
 
 msgid "Save frequently used fax numbers for quick access when sending."
 msgstr "保存常用传真号码，以便发送时快速选择。"
+
+msgid "Company or fax number..."
+msgstr ""
 
 msgid "Search"
 msgstr "搜索"
@@ -89,6 +92,9 @@ msgstr "公司"
 #, fuzzy
 msgid "Company Name"
 msgstr "公司"
+
+msgid "e.g. Acme Corporation"
+msgstr ""
 
 msgid "Clear the number to remove it."
 msgstr ""
@@ -299,6 +305,9 @@ msgstr "允许查看的传真类别"
 msgid "Category Name"
 msgstr "分类名称"
 
+msgid "e.g. Invoices, Contracts"
+msgstr ""
+
 #, fuzzy
 msgid "Configure Cover Pages"
 msgstr "Cover Pages"
@@ -327,6 +336,9 @@ msgstr "标题"
 
 msgid "File"
 msgstr "文件"
+
+msgid "e.g. custom.ps"
+msgstr ""
 
 msgid "Cover Template Studio: Dynamic Tag References"
 msgstr ""
@@ -365,6 +377,9 @@ msgstr "添加来电显示规则"
 
 msgid "Caller ID"
 msgstr "Caller ID"
+
+msgid "e.g. 5550199 or pattern"
+msgstr ""
 
 msgid "Modem Device"
 msgstr "调制解调器设备"
@@ -510,6 +525,12 @@ msgstr "Fax Modems"
 msgid "Configure Modems Device"
 msgstr "配置调制解调器设备"
 
+msgid "e.g. ttyS0"
+msgstr ""
+
+msgid "e.g. Main Inbound Line"
+msgstr ""
+
 msgid "Reset"
 msgstr "Reset"
 
@@ -535,6 +556,9 @@ msgstr ""
 msgid "Printer Name"
 msgstr ""
 
+msgid "e.g. Office HP LaserJet"
+msgstr ""
+
 msgid "Protocol"
 msgstr ""
 
@@ -546,6 +570,9 @@ msgid "Port"
 msgstr "Priority"
 
 msgid "Queue Name (Optional)"
+msgstr ""
+
+msgid "2nd Floor Accounting Printer"
 msgstr ""
 
 msgid "Register Printer"
@@ -591,6 +618,12 @@ msgstr "操作"
 
 msgid "Configure Routing Rule"
 msgstr "配置路由规则"
+
+msgid "e.g. 1000"
+msgstr ""
+
+msgid "e.g. Sales Direct Line"
+msgstr ""
 
 msgid "-- None --"
 msgstr "-- 无 --"
@@ -710,7 +743,13 @@ msgstr "电子邮箱地址"
 msgid "From Display Name"
 msgstr "公司"
 
+msgid "NamiFAX Corporate Dispatcher"
+msgstr ""
+
 msgid "Email Signature (Plaintext)"
+msgstr ""
+
+msgid "Sent automatically by NamiFAX Gateway."
 msgstr ""
 
 #, fuzzy
@@ -850,6 +889,9 @@ msgstr "审计日志和HylaFAX服务器操作事件跟踪"
 msgid "Keywords:"
 msgstr "关键词:"
 
+msgid "Search text..."
+msgstr ""
+
 msgid "Date:"
 msgstr "日期:"
 
@@ -941,6 +983,9 @@ msgstr "留空筛选条件以搜索所有记录。添加更多条件可缩小搜
 msgid "Keyword"
 msgstr "Keyword"
 
+msgid "Company, number, notes..."
+msgstr ""
+
 #, fuzzy
 msgid "All Categories"
 msgstr "允许查看的传真类别"
@@ -976,6 +1021,9 @@ msgstr "仅发送"
 #, fuzzy
 msgid "Fax ID"
 msgstr "Fax Modems"
+
+msgid "e.g. 104"
+msgstr ""
 
 #, fuzzy
 msgid "Results"
@@ -1039,6 +1087,9 @@ msgstr "创建新分发列表"
 msgid "List Name"
 msgstr "列表名"
 
+msgid "e.g. Executive Sales Team"
+msgstr ""
+
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "群组成员（联系人与传真号码）"
 
@@ -1051,6 +1102,9 @@ msgstr "移除"
 
 msgid "No contacts assigned to this list yet."
 msgstr "该列表中尚未分配任何联系人。"
+
+msgid "Add contact name or fax number..."
+msgstr ""
 
 msgid "Add Member"
 msgstr "添加成员"
@@ -1076,6 +1130,9 @@ msgstr "返回列表"
 
 msgid "Distribution List Profile"
 msgstr "分发列表资料"
+
+msgid "e.g. Finance Operations"
+msgstr ""
 
 msgid "Enrolled Members"
 msgstr "已加入的成员"
@@ -1129,6 +1186,42 @@ msgstr "返回邮箱通讯录"
 
 msgid "Contact Profile Details"
 msgstr "联系人资料详情"
+
+msgid "John Doe"
+msgstr ""
+
+msgid "Modify Fax Job"
+msgstr ""
+
+msgid "New Destination"
+msgstr ""
+
+msgid "Priority"
+msgstr "Priority"
+
+msgid "Modem / Device"
+msgstr ""
+
+msgid "Number of tries"
+msgstr ""
+
+msgid "Expire after"
+msgstr ""
+
+msgid "Now"
+msgstr ""
+
+msgid "Minutes"
+msgstr ""
+
+msgid "Hours"
+msgstr ""
+
+msgid "Days"
+msgstr ""
+
+msgid "Schedule Send Time"
+msgstr ""
 
 #, fuzzy
 msgid "Lost Password"
@@ -1196,6 +1289,9 @@ msgstr "查看传真"
 #, fuzzy
 msgid "Received"
 msgstr "档案柜"
+
+msgid "This number belongs to several companies. Which one is it?"
+msgstr ""
 
 msgid "Reply"
 msgstr "回复传真"
@@ -1275,8 +1371,14 @@ msgstr "请输入您的凭据以继续。"
 msgid "System Online"
 msgstr "系统功能"
 
+msgid "Enter your username"
+msgstr ""
+
 msgid "Forgot password?"
 msgstr "请输入您的电子邮件地址，然后按发送密码按钮。您很快就会收到新的密码，请用新密码访问。"
+
+msgid "Enter your password"
+msgstr ""
 
 msgid "Contact your system administrator if you need an account."
 msgstr "如需账户，请联系系统管理员。"
@@ -1302,7 +1404,13 @@ msgstr ""
 msgid "Authentication Code"
 msgstr "收件人"
 
+msgid "123456 or 8-char backup code"
+msgstr ""
+
 msgid "Verify & Log In"
+msgstr ""
+
+msgid "Sign out?"
 msgstr ""
 
 msgid "Assign Company Name"
@@ -1313,6 +1421,9 @@ msgstr "将文件与已注册的企业联系人关联"
 
 msgid "Search Company Name"
 msgstr "搜索企业名称"
+
+msgid "Type company name to filter..."
+msgstr ""
 
 msgid "Select Contact Record"
 msgstr "选择联系人记录"
@@ -1337,11 +1448,20 @@ msgstr "将PDF文档附件发送给邮件收件人"
 msgid "Recipients"
 msgstr "收件人"
 
+msgid "recipient@example.com (comma separated)"
+msgstr ""
+
 msgid "Subject"
 msgstr "主题"
 
+msgid "NamiFAX Transmission Document"
+msgstr ""
+
 msgid "Message"
 msgstr "信息"
+
+msgid "Please find the attached facsimile document."
+msgstr ""
 
 msgid "Send"
 msgstr "发送"
@@ -1352,20 +1472,8 @@ msgstr "附加内部管理备注或评注"
 msgid "Note / Description"
 msgstr "备注 / 描述"
 
-msgid "Reply to Fax"
-msgstr "回复传真"
-
-msgid "Dispatch quick reply transmission to originating sender"
-msgstr "向原始发件人发送快速回复"
-
-msgid "Destination Number"
-msgstr "传真号码"
-
-msgid "Regarding (Subject)"
-msgstr "事由（主题）"
-
-msgid "Comments"
-msgstr "注释"
+msgid "Enter transaction note or dispatch comments..."
+msgstr ""
 
 msgid "Transmission Report"
 msgstr "传输报告"
@@ -1409,12 +1517,32 @@ msgstr "个进行中的任务"
 msgid "Job ID"
 msgstr "任务ID"
 
-#, fuzzy
-msgid "Destination"
-msgstr "传真号码"
+msgid "User"
+msgstr ""
 
-msgid "Queued"
-msgstr "已排队"
+msgid "Dials"
+msgstr ""
+
+msgid "TTS"
+msgstr ""
+
+msgid "Modify"
+msgstr ""
+
+msgid "Kill job"
+msgstr ""
+
+msgid "Kill"
+msgstr ""
+
+msgid "Failed Transmissions"
+msgstr "传输失败记录"
+
+msgid "Review the number or retry below."
+msgstr "请检查号码或在下方重试。"
+
+msgid "Retry"
+msgstr "Retry"
 
 msgid "No jobs in queue"
 msgstr "队列中没有任务"
@@ -1427,18 +1555,6 @@ msgstr "没有等待发送的传真。发送传真即可在此查看其进度。
 #, fuzzy
 msgid "Send a Fax"
 msgstr "发传真"
-
-msgid "Failed Transmissions"
-msgstr "传输失败记录"
-
-msgid "Review the number or retry below."
-msgstr "请检查号码或在下方重试。"
-
-msgid "Reason"
-msgstr "原因"
-
-msgid "Retry"
-msgstr "Retry"
 
 #, fuzzy
 msgid "Password Expired"
@@ -1458,12 +1574,21 @@ msgstr "您的密码已过期或需要修改后方可继续。请输入您的旧
 msgid "Old Password"
 msgstr "旧密码"
 
+msgid "Current credentials"
+msgstr ""
+
 msgid "New Password"
 msgstr "新密码"
+
+msgid "New secure passphrase"
+msgstr ""
 
 #, fuzzy
 msgid "Confirm New Password"
 msgstr "请输入您的电子邮件地址，然后按发送密码按钮。您很快就会收到新的密码，请用新密码访问。"
+
+msgid "Re-type new passphrase"
+msgstr ""
 
 #, fuzzy
 msgid "Update Password"
@@ -1479,8 +1604,14 @@ msgstr "传真号码"
 msgid "Enter the fax number and recipient details."
 msgstr "输入传真号码和收件人详情。"
 
-msgid "To send to multiple recipients at once, separate numbers with a comma."
-msgstr "若要同时发送给多个收件人，请用逗号分隔号码。"
+msgid "Destination Number"
+msgstr "传真号码"
+
+msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
+msgstr ""
+
+msgid "To send to multiple recipients at once, separate numbers with a semicolon."
+msgstr ""
 
 msgid "Saved contacts are available in the"
 msgstr "已保存的联系人可在此处获取:"
@@ -1490,6 +1621,9 @@ msgstr "收件人"
 
 msgid "optional"
 msgstr "可选"
+
+msgid "e.g. Jane Doe"
+msgstr ""
 
 msgid "Voice Number"
 msgstr ""
@@ -1502,6 +1636,9 @@ msgstr ""
 
 msgid "Subject / Regarding"
 msgstr "主题"
+
+msgid "e.g. Purchase Order #4921"
+msgstr ""
 
 msgid "Document Attachment"
 msgstr "文档附件"
@@ -1550,14 +1687,14 @@ msgstr "任意可用线路 (自动)"
 msgid "Cover Comments"
 msgstr "Cover Pages"
 
+msgid "Notes or message to print on the cover sheet..."
+msgstr ""
+
 msgid "Advanced Options"
 msgstr "高级选项"
 
 msgid "Priority, retries, notifications"
 msgstr "优先级、重试次数、通知设置"
-
-msgid "Priority"
-msgstr "Priority"
 
 #, fuzzy
 msgid "Max Retries"
@@ -1565,21 +1702,6 @@ msgstr "允许查看的传真类别"
 
 msgid "Retries automatically on busy signal."
 msgstr "占线时自动重试。"
-
-msgid "Expire after"
-msgstr ""
-
-msgid "Minutes"
-msgstr ""
-
-msgid "Hours"
-msgstr ""
-
-msgid "Days"
-msgstr ""
-
-msgid "Schedule Send Time"
-msgstr ""
 
 msgid "TSI ID"
 msgstr ""
@@ -1624,6 +1746,9 @@ msgstr "传真号码"
 msgid "Transmitting Station ID (TSI)"
 msgstr "发送台站标识 (TSI)"
 
+msgid "e.g. +1 555 123 4567"
+msgstr ""
+
 msgid "Header identifier imprinted on top of transmitted fax pages."
 msgstr "印在已发送传真页面顶部的页眉标识符。"
 
@@ -1650,6 +1775,15 @@ msgstr "密码"
 #, fuzzy
 msgid "Current Password"
 msgstr "请输入您的电子邮件地址，然后按发送密码按钮。您很快就会收到新的密码，请用新密码访问。"
+
+msgid "Enter current password to verify"
+msgstr ""
+
+msgid "Enter secure new password"
+msgstr ""
+
+msgid "Re-type new password"
+msgstr ""
 
 #, fuzzy
 msgid "Update Settings"
@@ -1886,6 +2020,9 @@ msgstr ""
 msgid "SAML 2.0 configuration saved successfully."
 msgstr ""
 
+msgid "Please enter a valid number."
+msgstr ""
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr ""
@@ -1905,6 +2042,12 @@ msgid ""
 msgstr ""
 
 msgid "Email failed to send"
+msgstr ""
+
+msgid "Your session has expired. Reload the page and try again."
+msgstr ""
+
+msgid "Invalid job number."
 msgstr ""
 
 msgid "The code is not valid."
@@ -1982,4 +2125,28 @@ msgstr ""
 
 #~ msgid "High (Urgent)"
 #~ msgstr "高 (紧急)"
+
+#~ msgid "Reply to Fax"
+#~ msgstr "回复传真"
+
+#~ msgid "Dispatch quick reply transmission to originating sender"
+#~ msgstr "向原始发件人发送快速回复"
+
+#~ msgid "Regarding (Subject)"
+#~ msgstr "事由（主题）"
+
+#~ msgid "Comments"
+#~ msgstr "注释"
+
+#~ msgid "Destination"
+#~ msgstr "传真号码"
+
+#~ msgid "Queued"
+#~ msgstr "已排队"
+
+#~ msgid "Reason"
+#~ msgstr "原因"
+
+#~ msgid "To send to multiple recipients at once, separate numbers with a comma."
+#~ msgstr "若要同时发送给多个收件人，请用逗号分隔号码。"
 

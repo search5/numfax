@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: nMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 18:15+0900\n"
+"POT-Creation-Date: 2026-10-01 21:10+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: no\n"
@@ -20,6 +20,9 @@ msgstr "Epost-addresser"
 
 msgid "Save frequently used fax numbers for quick access when sending."
 msgstr "Lagre ofte brukte faksnumre for rask tilgang ved sending."
+
+msgid "Company or fax number..."
+msgstr ""
 
 msgid "Search"
 msgstr "Søk"
@@ -91,6 +94,9 @@ msgstr "To company"
 #, fuzzy
 msgid "Company Name"
 msgstr "To company"
+
+msgid "e.g. Acme Corporation"
+msgstr ""
 
 msgid "Clear the number to remove it."
 msgstr ""
@@ -307,6 +313,9 @@ msgstr "Synlige fakskategorier"
 msgid "Category Name"
 msgstr "Kategorinavn"
 
+msgid "e.g. Invoices, Contracts"
+msgstr ""
+
 #, fuzzy
 msgid "Configure Cover Pages"
 msgstr "Cover Pages"
@@ -335,6 +344,9 @@ msgstr "Titel"
 
 msgid "File"
 msgstr "Fil"
+
+msgid "e.g. custom.ps"
+msgstr ""
 
 msgid "Cover Template Studio: Dynamic Tag References"
 msgstr ""
@@ -375,6 +387,9 @@ msgstr "Legg til anrops-ID-regel"
 
 msgid "Caller ID"
 msgstr "Caller ID"
+
+msgid "e.g. 5550199 or pattern"
+msgstr ""
 
 msgid "Modem Device"
 msgstr "Modemenhet"
@@ -524,6 +539,12 @@ msgstr "Fax Modems"
 msgid "Configure Modems Device"
 msgstr "Konfigurer modemenhet"
 
+msgid "e.g. ttyS0"
+msgstr ""
+
+msgid "e.g. Main Inbound Line"
+msgstr ""
+
 msgid "Reset"
 msgstr "Reset"
 
@@ -552,6 +573,9 @@ msgstr ""
 msgid "Printer Name"
 msgstr ""
 
+msgid "e.g. Office HP LaserJet"
+msgstr ""
+
 msgid "Protocol"
 msgstr ""
 
@@ -563,6 +587,9 @@ msgid "Port"
 msgstr "Priority"
 
 msgid "Queue Name (Optional)"
+msgstr ""
+
+msgid "2nd Floor Accounting Printer"
 msgstr ""
 
 msgid "Register Printer"
@@ -610,6 +637,12 @@ msgstr "Handling"
 
 msgid "Configure Routing Rule"
 msgstr "Konfigurer rutingsregel"
+
+msgid "e.g. 1000"
+msgstr ""
+
+msgid "e.g. Sales Direct Line"
+msgstr ""
 
 msgid "-- None --"
 msgstr "-- Ingen --"
@@ -732,7 +765,13 @@ msgstr "E-postadresse"
 msgid "From Display Name"
 msgstr "To company"
 
+msgid "NamiFAX Corporate Dispatcher"
+msgstr ""
+
 msgid "Email Signature (Plaintext)"
+msgstr ""
+
+msgid "Sent automatically by NamiFAX Gateway."
 msgstr ""
 
 #, fuzzy
@@ -877,6 +916,9 @@ msgstr "Revisjonslogger og spor over operative hendelser på HylaFAX-serveren"
 msgid "Keywords:"
 msgstr "Nøkkelord:"
 
+msgid "Search text..."
+msgstr ""
+
 msgid "Date:"
 msgstr "Dato:"
 
@@ -974,6 +1016,9 @@ msgstr ""
 msgid "Keyword"
 msgstr "Keyword"
 
+msgid "Company, number, notes..."
+msgstr ""
+
 #, fuzzy
 msgid "All Categories"
 msgstr "Synlige fakskategorier"
@@ -1009,6 +1054,9 @@ msgstr "Kun sendt"
 #, fuzzy
 msgid "Fax ID"
 msgstr "Fax Modems"
+
+msgid "e.g. 104"
+msgstr ""
 
 #, fuzzy
 msgid "Results"
@@ -1074,6 +1122,9 @@ msgstr "Opprett ny distribusjonsliste"
 msgid "List Name"
 msgstr "Listenavn"
 
+msgid "e.g. Executive Sales Team"
+msgstr ""
+
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "Gruppemedlemmer (kontakter og faksnumre)"
 
@@ -1086,6 +1137,9 @@ msgstr "Fjern"
 
 msgid "No contacts assigned to this list yet."
 msgstr "Ingen kontakter er tilordnet denne listen ennå."
+
+msgid "Add contact name or fax number..."
+msgstr ""
 
 msgid "Add Member"
 msgstr "Legg til medlem"
@@ -1111,6 +1165,9 @@ msgstr "Tilbake til lister"
 
 msgid "Distribution List Profile"
 msgstr "Profil for distribusjonsliste"
+
+msgid "e.g. Finance Operations"
+msgstr ""
 
 msgid "Enrolled Members"
 msgstr "Tilmeldte medlemmer"
@@ -1166,6 +1223,42 @@ msgstr "Tilbake til e-postboken"
 
 msgid "Contact Profile Details"
 msgstr "Detaljer om kontaktprofil"
+
+msgid "John Doe"
+msgstr ""
+
+msgid "Modify Fax Job"
+msgstr ""
+
+msgid "New Destination"
+msgstr ""
+
+msgid "Priority"
+msgstr "Priority"
+
+msgid "Modem / Device"
+msgstr ""
+
+msgid "Number of tries"
+msgstr ""
+
+msgid "Expire after"
+msgstr ""
+
+msgid "Now"
+msgstr ""
+
+msgid "Minutes"
+msgstr ""
+
+msgid "Hours"
+msgstr ""
+
+msgid "Days"
+msgstr ""
+
+msgid "Schedule Send Time"
+msgstr ""
 
 #, fuzzy
 msgid "Lost Password"
@@ -1233,6 +1326,9 @@ msgstr "Se på faks"
 #, fuzzy
 msgid "Received"
 msgstr "Arkiv"
+
+msgid "This number belongs to several companies. Which one is it?"
+msgstr ""
 
 msgid "Reply"
 msgstr "Svar på FAKS"
@@ -1320,10 +1416,16 @@ msgstr "Skriv inn påloggingsinformasjonen din for å fortsette."
 msgid "System Online"
 msgstr "Systemfunksjoner"
 
+msgid "Enter your username"
+msgstr ""
+
 msgid "Forgot password?"
 msgstr ""
 "Skriv inn epostadressen din og klikk på Send passord-knappen.Du vil motta"
 " et nytt passord snart.  Bruk dette til å få tilgang til siden."
+
+msgid "Enter your password"
+msgstr ""
 
 msgid "Contact your system administrator if you need an account."
 msgstr "Kontakt systemadministratoren hvis du trenger en konto."
@@ -1349,7 +1451,13 @@ msgstr ""
 msgid "Authentication Code"
 msgstr "To person"
 
+msgid "123456 or 8-char backup code"
+msgstr ""
+
 msgid "Verify & Log In"
+msgstr ""
+
+msgid "Sign out?"
 msgstr ""
 
 msgid "Assign Company Name"
@@ -1360,6 +1468,9 @@ msgstr "Knytt dokument til registrert bedriftskontakt"
 
 msgid "Search Company Name"
 msgstr "Søk etter firmanavn"
+
+msgid "Type company name to filter..."
+msgstr ""
 
 msgid "Select Contact Record"
 msgstr "Velg kontaktoppføring"
@@ -1384,11 +1495,20 @@ msgstr "Send PDF-dokumentvedlegg til e-postmottakere"
 msgid "Recipients"
 msgstr "Mottakere"
 
+msgid "recipient@example.com (comma separated)"
+msgstr ""
+
 msgid "Subject"
 msgstr "Emne"
 
+msgid "NamiFAX Transmission Document"
+msgstr ""
+
 msgid "Message"
 msgstr "Melding"
+
+msgid "Please find the attached facsimile document."
+msgstr ""
 
 msgid "Send"
 msgstr "Send"
@@ -1399,20 +1519,8 @@ msgstr "Legg til internt administrativt notat eller kommentarer"
 msgid "Note / Description"
 msgstr "Notat / beskrivelse"
 
-msgid "Reply to Fax"
-msgstr "Svar på FAKS"
-
-msgid "Dispatch quick reply transmission to originating sender"
-msgstr "Send hurtigsvaroverføring til opprinnelig avsender"
-
-msgid "Destination Number"
-msgstr "Fax number"
-
-msgid "Regarding (Subject)"
-msgstr "Vedrørende (emne)"
-
-msgid "Comments"
-msgstr "Kommentarer"
+msgid "Enter transaction note or dispatch comments..."
+msgstr ""
 
 msgid "Transmission Report"
 msgstr "Overføringsrapport"
@@ -1458,12 +1566,32 @@ msgstr "jobb pågår"
 msgid "Job ID"
 msgstr "Jobb-ID"
 
-#, fuzzy
-msgid "Destination"
-msgstr "Fax number"
+msgid "User"
+msgstr ""
 
-msgid "Queued"
-msgstr "I kø"
+msgid "Dials"
+msgstr ""
+
+msgid "TTS"
+msgstr ""
+
+msgid "Modify"
+msgstr ""
+
+msgid "Kill job"
+msgstr ""
+
+msgid "Kill"
+msgstr ""
+
+msgid "Failed Transmissions"
+msgstr "Mislykkede overføringer"
+
+msgid "Review the number or retry below."
+msgstr "Kontroller nummeret eller prøv på nytt nedenfor."
+
+msgid "Retry"
+msgstr "Retry"
 
 msgid "No jobs in queue"
 msgstr "Ingen jobber i kø"
@@ -1478,18 +1606,6 @@ msgstr ""
 #, fuzzy
 msgid "Send a Fax"
 msgstr "Send faks"
-
-msgid "Failed Transmissions"
-msgstr "Mislykkede overføringer"
-
-msgid "Review the number or retry below."
-msgstr "Kontroller nummeret eller prøv på nytt nedenfor."
-
-msgid "Reason"
-msgstr "Årsak"
-
-msgid "Retry"
-msgstr "Retry"
 
 #, fuzzy
 msgid "Password Expired"
@@ -1511,14 +1627,23 @@ msgstr ""
 msgid "Old Password"
 msgstr "Gammelt passord"
 
+msgid "Current credentials"
+msgstr ""
+
 msgid "New Password"
 msgstr "Nytt passord"
+
+msgid "New secure passphrase"
+msgstr ""
 
 #, fuzzy
 msgid "Confirm New Password"
 msgstr ""
 "Skriv inn epostadressen din og klikk på Send passord-knappen.Du vil motta"
 " et nytt passord snart.  Bruk dette til å få tilgang til siden."
+
+msgid "Re-type new passphrase"
+msgstr ""
 
 #, fuzzy
 msgid "Update Password"
@@ -1534,8 +1659,14 @@ msgstr "Fax number"
 msgid "Enter the fax number and recipient details."
 msgstr "Skriv inn faksnummer og mottakerdetaljer."
 
-msgid "To send to multiple recipients at once, separate numbers with a comma."
-msgstr "For å sende til flere mottakere samtidig, skill numrene med komma."
+msgid "Destination Number"
+msgstr "Fax number"
+
+msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
+msgstr ""
+
+msgid "To send to multiple recipients at once, separate numbers with a semicolon."
+msgstr ""
 
 msgid "Saved contacts are available in the"
 msgstr "Lagrede kontakter er tilgjengelige i"
@@ -1545,6 +1676,9 @@ msgstr "To person"
 
 msgid "optional"
 msgstr "valgfritt"
+
+msgid "e.g. Jane Doe"
+msgstr ""
 
 msgid "Voice Number"
 msgstr ""
@@ -1557,6 +1691,9 @@ msgstr ""
 
 msgid "Subject / Regarding"
 msgstr "Emne"
+
+msgid "e.g. Purchase Order #4921"
+msgstr ""
 
 msgid "Document Attachment"
 msgstr "Dokumentvedlegg"
@@ -1607,14 +1744,14 @@ msgstr "Enhver tilgjengelig linje (auto)"
 msgid "Cover Comments"
 msgstr "Cover Pages"
 
+msgid "Notes or message to print on the cover sheet..."
+msgstr ""
+
 msgid "Advanced Options"
 msgstr "Avanserte alternativer"
 
 msgid "Priority, retries, notifications"
 msgstr "Prioritet, forsøk, varsler"
-
-msgid "Priority"
-msgstr "Priority"
 
 #, fuzzy
 msgid "Max Retries"
@@ -1622,21 +1759,6 @@ msgstr "Synlige fakskategorier"
 
 msgid "Retries automatically on busy signal."
 msgstr "Prøver automatisk på nytt ved opptatt-signal."
-
-msgid "Expire after"
-msgstr ""
-
-msgid "Minutes"
-msgstr ""
-
-msgid "Hours"
-msgstr ""
-
-msgid "Days"
-msgstr ""
-
-msgid "Schedule Send Time"
-msgstr ""
 
 msgid "TSI ID"
 msgstr ""
@@ -1683,6 +1805,9 @@ msgstr "Fax number"
 msgid "Transmitting Station ID (TSI)"
 msgstr "Transmitting Station ID (TSI)"
 
+msgid "e.g. +1 555 123 4567"
+msgstr ""
+
 msgid "Header identifier imprinted on top of transmitted fax pages."
 msgstr "Hodeidentifikator trykket øverst på overførte faks-sider."
 
@@ -1711,6 +1836,15 @@ msgid "Current Password"
 msgstr ""
 "Skriv inn epostadressen din og klikk på Send passord-knappen.Du vil motta"
 " et nytt passord snart.  Bruk dette til å få tilgang til siden."
+
+msgid "Enter current password to verify"
+msgstr ""
+
+msgid "Enter secure new password"
+msgstr ""
+
+msgid "Re-type new password"
+msgstr ""
 
 #, fuzzy
 msgid "Update Settings"
@@ -1947,6 +2081,9 @@ msgstr ""
 msgid "SAML 2.0 configuration saved successfully."
 msgstr ""
 
+msgid "Please enter a valid number."
+msgstr ""
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr ""
@@ -1966,6 +2103,12 @@ msgid ""
 msgstr ""
 
 msgid "Email failed to send"
+msgstr ""
+
+msgid "Your session has expired. Reload the page and try again."
+msgstr ""
+
+msgid "Invalid job number."
 msgstr ""
 
 msgid "The code is not valid."
@@ -2054,4 +2197,28 @@ msgstr ""
 
 #~ msgid "High (Urgent)"
 #~ msgstr "Høy (haster)"
+
+#~ msgid "Reply to Fax"
+#~ msgstr "Svar på FAKS"
+
+#~ msgid "Dispatch quick reply transmission to originating sender"
+#~ msgstr "Send hurtigsvaroverføring til opprinnelig avsender"
+
+#~ msgid "Regarding (Subject)"
+#~ msgstr "Vedrørende (emne)"
+
+#~ msgid "Comments"
+#~ msgstr "Kommentarer"
+
+#~ msgid "Destination"
+#~ msgstr "Fax number"
+
+#~ msgid "Queued"
+#~ msgstr "I kø"
+
+#~ msgid "Reason"
+#~ msgstr "Årsak"
+
+#~ msgid "To send to multiple recipients at once, separate numbers with a comma."
+#~ msgstr "For å sende til flere mottakere samtidig, skill numrene med komma."
 

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: aMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 18:15+0900\n"
+"POT-Creation-Date: 2026-10-01 21:10+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -21,6 +21,9 @@ msgstr "عناوين البريد الإلكتروني"
 
 msgid "Save frequently used fax numbers for quick access when sending."
 msgstr "حفظ أرقام الفاكس المستخدمة بكثرة للوصول السريع عند الإرسال."
+
+msgid "Company or fax number..."
+msgstr ""
 
 msgid "Search"
 msgstr "بحث"
@@ -92,6 +95,9 @@ msgstr "شركة"
 #, fuzzy
 msgid "Company Name"
 msgstr "شركة"
+
+msgid "e.g. Acme Corporation"
+msgstr ""
 
 msgid "Clear the number to remove it."
 msgstr ""
@@ -306,6 +312,9 @@ msgstr "عرض فئات الفاكس"
 msgid "Category Name"
 msgstr "اسم الفئة"
 
+msgid "e.g. Invoices, Contracts"
+msgstr ""
+
 #, fuzzy
 msgid "Configure Cover Pages"
 msgstr "Cover Pages"
@@ -334,6 +343,9 @@ msgstr "العنوان"
 
 msgid "File"
 msgstr "ملف"
+
+msgid "e.g. custom.ps"
+msgstr ""
 
 msgid "Cover Template Studio: Dynamic Tag References"
 msgstr ""
@@ -372,6 +384,9 @@ msgstr "إضافة قاعدة Caller ID"
 
 msgid "Caller ID"
 msgstr "Caller ID"
+
+msgid "e.g. 5550199 or pattern"
+msgstr ""
 
 msgid "Modem Device"
 msgstr "جهاز المودم"
@@ -519,6 +534,12 @@ msgstr "Fax Modems"
 msgid "Configure Modems Device"
 msgstr "تكوين جهاز المودم"
 
+msgid "e.g. ttyS0"
+msgstr ""
+
+msgid "e.g. Main Inbound Line"
+msgstr ""
+
 msgid "Reset"
 msgstr "Reset"
 
@@ -547,6 +568,9 @@ msgstr ""
 msgid "Printer Name"
 msgstr ""
 
+msgid "e.g. Office HP LaserJet"
+msgstr ""
+
 msgid "Protocol"
 msgstr ""
 
@@ -558,6 +582,9 @@ msgid "Port"
 msgstr "الأولوية"
 
 msgid "Queue Name (Optional)"
+msgstr ""
+
+msgid "2nd Floor Accounting Printer"
 msgstr ""
 
 msgid "Register Printer"
@@ -605,6 +632,12 @@ msgstr "الإجراء"
 
 msgid "Configure Routing Rule"
 msgstr "تكوين قاعدة التوجيه"
+
+msgid "e.g. 1000"
+msgstr ""
+
+msgid "e.g. Sales Direct Line"
+msgstr ""
 
 msgid "-- None --"
 msgstr "-- لا يوجد --"
@@ -727,7 +760,13 @@ msgstr "عنوان البريد الإلكتروني"
 msgid "From Display Name"
 msgstr "شركة"
 
+msgid "NamiFAX Corporate Dispatcher"
+msgstr ""
+
 msgid "Email Signature (Plaintext)"
+msgstr ""
+
+msgid "Sent automatically by NamiFAX Gateway."
 msgstr ""
 
 #, fuzzy
@@ -872,6 +911,9 @@ msgstr "سجلات التدقيق وتتبع الأحداث التشغيلية �
 msgid "Keywords:"
 msgstr "الكلمات المفتاحية:"
 
+msgid "Search text..."
+msgstr ""
+
 msgid "Date:"
 msgstr "التاريخ:"
 
@@ -967,6 +1009,9 @@ msgstr ""
 msgid "Keyword"
 msgstr "Keyword"
 
+msgid "Company, number, notes..."
+msgstr ""
+
 #, fuzzy
 msgid "All Categories"
 msgstr "عرض فئات الفاكس"
@@ -1002,6 +1047,9 @@ msgstr "المرسلة فقط"
 #, fuzzy
 msgid "Fax ID"
 msgstr "Fax Modems"
+
+msgid "e.g. 104"
+msgstr ""
 
 #, fuzzy
 msgid "Results"
@@ -1067,6 +1115,9 @@ msgstr "إنشاء قائمة توزيع جديدة"
 msgid "List Name"
 msgstr "قائمة الاسماء"
 
+msgid "e.g. Executive Sales Team"
+msgstr ""
+
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "أعضاء المجموعة (جهات الاتصال وأرقام الفاكس)"
 
@@ -1079,6 +1130,9 @@ msgstr "إزالة"
 
 msgid "No contacts assigned to this list yet."
 msgstr "لم يتم تعيين جهات اتصال لهذه القائمة بعد."
+
+msgid "Add contact name or fax number..."
+msgstr ""
 
 msgid "Add Member"
 msgstr "إضافة عضو"
@@ -1104,6 +1158,9 @@ msgstr "العودة إلى القوائم"
 
 msgid "Distribution List Profile"
 msgstr "الملف التعريفي لقائمة التوزيع"
+
+msgid "e.g. Finance Operations"
+msgstr ""
 
 msgid "Enrolled Members"
 msgstr "الأعضاء المسجلون"
@@ -1159,6 +1216,42 @@ msgstr "العودة إلى دفتر البريد الإلكتروني"
 
 msgid "Contact Profile Details"
 msgstr "تفاصيل الملف التعريفي لجهة الاتصال"
+
+msgid "John Doe"
+msgstr ""
+
+msgid "Modify Fax Job"
+msgstr ""
+
+msgid "New Destination"
+msgstr ""
+
+msgid "Priority"
+msgstr "الأولوية"
+
+msgid "Modem / Device"
+msgstr ""
+
+msgid "Number of tries"
+msgstr ""
+
+msgid "Expire after"
+msgstr ""
+
+msgid "Now"
+msgstr ""
+
+msgid "Minutes"
+msgstr ""
+
+msgid "Hours"
+msgstr ""
+
+msgid "Days"
+msgstr ""
+
+msgid "Schedule Send Time"
+msgstr ""
 
 #, fuzzy
 msgid "Lost Password"
@@ -1226,6 +1319,9 @@ msgstr "استعرض الفاكس"
 #, fuzzy
 msgid "Received"
 msgstr "ارشيف"
+
+msgid "This number belongs to several companies. Which one is it?"
+msgstr ""
 
 msgid "Reply"
 msgstr "الرد على فاكس"
@@ -1309,11 +1405,17 @@ msgstr "أدخل بيانات اعتمادك للمتابعة."
 msgid "System Online"
 msgstr "وظائف النظام"
 
+msgid "Enter your username"
+msgstr ""
+
 msgid "Forgot password?"
 msgstr ""
 "الرجاء إدخال عنوان البريد الإلكتروني الخاص بك ثم اضغط على زر ارسال كلمة "
 "المرور.  ستتلقى كلمة المرور الجديدة بعد قليل.  استخدمها لتسجيل الدخول فى "
 "موقعنا"
+
+msgid "Enter your password"
+msgstr ""
 
 msgid "Contact your system administrator if you need an account."
 msgstr "اتصل بمسؤول النظام إذا كنت بحاجة إلى حساب."
@@ -1339,7 +1441,13 @@ msgstr ""
 msgid "Authentication Code"
 msgstr "الى شخص"
 
+msgid "123456 or 8-char backup code"
+msgstr ""
+
 msgid "Verify & Log In"
+msgstr ""
+
+msgid "Sign out?"
 msgstr ""
 
 msgid "Assign Company Name"
@@ -1350,6 +1458,9 @@ msgstr "ربط المستند بجهة اتصال مؤسسية مسجلة"
 
 msgid "Search Company Name"
 msgstr "البحث عن اسم الشركة"
+
+msgid "Type company name to filter..."
+msgstr ""
 
 msgid "Select Contact Record"
 msgstr "تحديد سجل جهة الاتصال"
@@ -1374,11 +1485,20 @@ msgstr "إرسال مرفق مستند PDF إلى مستلمي البريد ال
 msgid "Recipients"
 msgstr "المستلمون"
 
+msgid "recipient@example.com (comma separated)"
+msgstr ""
+
 msgid "Subject"
 msgstr "موضوع"
 
+msgid "NamiFAX Transmission Document"
+msgstr ""
+
 msgid "Message"
 msgstr "الرسالة"
+
+msgid "Please find the attached facsimile document."
+msgstr ""
 
 msgid "Send"
 msgstr "ارسال"
@@ -1389,20 +1509,8 @@ msgstr "إلحاق ملاحظة إدارية داخلية أو تعليقات"
 msgid "Note / Description"
 msgstr "ملاحظة / وصف"
 
-msgid "Reply to Fax"
-msgstr "الرد على فاكس"
-
-msgid "Dispatch quick reply transmission to originating sender"
-msgstr "إرسال رد سريع إلى المرسل الأصلي"
-
-msgid "Destination Number"
-msgstr "رقم الفاكس"
-
-msgid "Regarding (Subject)"
-msgstr "بخصوص (الموضوع)"
-
-msgid "Comments"
-msgstr "مُلَاحَظَات"
+msgid "Enter transaction note or dispatch comments..."
+msgstr ""
 
 msgid "Transmission Report"
 msgstr "تقرير الإرسال"
@@ -1448,12 +1556,32 @@ msgstr "مهمة قيد التقدم"
 msgid "Job ID"
 msgstr "معرف المهمة"
 
-#, fuzzy
-msgid "Destination"
-msgstr "رقم الفاكس"
+msgid "User"
+msgstr ""
 
-msgid "Queued"
-msgstr "في قائمة الانتظار"
+msgid "Dials"
+msgstr ""
+
+msgid "TTS"
+msgstr ""
+
+msgid "Modify"
+msgstr ""
+
+msgid "Kill job"
+msgstr ""
+
+msgid "Kill"
+msgstr ""
+
+msgid "Failed Transmissions"
+msgstr "عمليات الإرسال الفاشلة"
+
+msgid "Review the number or retry below."
+msgstr "راجع الرقم أو أعد المحاولة أدناه."
+
+msgid "Retry"
+msgstr "Retry"
 
 msgid "No jobs in queue"
 msgstr "لا توجد مهام في قائمة الانتظار"
@@ -1466,18 +1594,6 @@ msgstr "لا توجد فاكسات بانتظار الإرسال. أرسل فا�
 #, fuzzy
 msgid "Send a Fax"
 msgstr "إرسال فاكس"
-
-msgid "Failed Transmissions"
-msgstr "عمليات الإرسال الفاشلة"
-
-msgid "Review the number or retry below."
-msgstr "راجع الرقم أو أعد المحاولة أدناه."
-
-msgid "Reason"
-msgstr "السبب"
-
-msgid "Retry"
-msgstr "Retry"
 
 #, fuzzy
 msgid "Password Expired"
@@ -1499,8 +1615,14 @@ msgstr ""
 msgid "Old Password"
 msgstr "كلمة السر القديمة"
 
+msgid "Current credentials"
+msgstr ""
+
 msgid "New Password"
 msgstr "كلمة السر الجديدة"
+
+msgid "New secure passphrase"
+msgstr ""
 
 #, fuzzy
 msgid "Confirm New Password"
@@ -1508,6 +1630,9 @@ msgstr ""
 "الرجاء إدخال عنوان البريد الإلكتروني الخاص بك ثم اضغط على زر ارسال كلمة "
 "المرور.  ستتلقى كلمة المرور الجديدة بعد قليل.  استخدمها لتسجيل الدخول فى "
 "موقعنا"
+
+msgid "Re-type new passphrase"
+msgstr ""
 
 #, fuzzy
 msgid "Update Password"
@@ -1523,8 +1648,14 @@ msgstr "رقم الفاكس"
 msgid "Enter the fax number and recipient details."
 msgstr "أدخل رقم الفاكس وتفاصيل المستلم."
 
-msgid "To send to multiple recipients at once, separate numbers with a comma."
-msgstr "للإرسال إلى مستلمين متعددين في وقت واحد، افصل بين الأرقام بفاصلة."
+msgid "Destination Number"
+msgstr "رقم الفاكس"
+
+msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
+msgstr ""
+
+msgid "To send to multiple recipients at once, separate numbers with a semicolon."
+msgstr ""
 
 msgid "Saved contacts are available in the"
 msgstr "جهات الاتصال المحفوظة متوفرة في"
@@ -1534,6 +1665,9 @@ msgstr "الى شخص"
 
 msgid "optional"
 msgstr "اختياري"
+
+msgid "e.g. Jane Doe"
+msgstr ""
 
 msgid "Voice Number"
 msgstr ""
@@ -1546,6 +1680,9 @@ msgstr ""
 
 msgid "Subject / Regarding"
 msgstr "موضوع"
+
+msgid "e.g. Purchase Order #4921"
+msgstr ""
 
 msgid "Document Attachment"
 msgstr "مرفق المستند"
@@ -1596,14 +1733,14 @@ msgstr "أي خط متاح (تلقائي)"
 msgid "Cover Comments"
 msgstr "Cover Pages"
 
+msgid "Notes or message to print on the cover sheet..."
+msgstr ""
+
 msgid "Advanced Options"
 msgstr "خيارات متقدمة"
 
 msgid "Priority, retries, notifications"
 msgstr "الأولوية، وإعادة المحاولة، والإشعارات"
-
-msgid "Priority"
-msgstr "الأولوية"
 
 #, fuzzy
 msgid "Max Retries"
@@ -1611,21 +1748,6 @@ msgstr "عرض فئات الفاكس"
 
 msgid "Retries automatically on busy signal."
 msgstr "إعادة المحاولة تلقائياً عند إشارة مشغول."
-
-msgid "Expire after"
-msgstr ""
-
-msgid "Minutes"
-msgstr ""
-
-msgid "Hours"
-msgstr ""
-
-msgid "Days"
-msgstr ""
-
-msgid "Schedule Send Time"
-msgstr ""
 
 msgid "TSI ID"
 msgstr ""
@@ -1670,6 +1792,9 @@ msgstr "رقم الفاكس"
 msgid "Transmitting Station ID (TSI)"
 msgstr "معرف محطة الإرسال (TSI)"
 
+msgid "e.g. +1 555 123 4567"
+msgstr ""
+
 msgid "Header identifier imprinted on top of transmitted fax pages."
 msgstr "معرف رأس الصفحة المطبوع في أعلى صفحات الفاكس المرسلة."
 
@@ -1699,6 +1824,15 @@ msgstr ""
 "الرجاء إدخال عنوان البريد الإلكتروني الخاص بك ثم اضغط على زر ارسال كلمة "
 "المرور.  ستتلقى كلمة المرور الجديدة بعد قليل.  استخدمها لتسجيل الدخول فى "
 "موقعنا"
+
+msgid "Enter current password to verify"
+msgstr ""
+
+msgid "Enter secure new password"
+msgstr ""
+
+msgid "Re-type new password"
+msgstr ""
 
 #, fuzzy
 msgid "Update Settings"
@@ -1935,6 +2069,9 @@ msgstr ""
 msgid "SAML 2.0 configuration saved successfully."
 msgstr ""
 
+msgid "Please enter a valid number."
+msgstr ""
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr ""
@@ -1954,6 +2091,12 @@ msgid ""
 msgstr ""
 
 msgid "Email failed to send"
+msgstr ""
+
+msgid "Your session has expired. Reload the page and try again."
+msgstr ""
+
+msgid "Invalid job number."
 msgstr ""
 
 msgid "The code is not valid."
@@ -2040,4 +2183,28 @@ msgstr ""
 
 #~ msgid "High (Urgent)"
 #~ msgstr "عالية (عاجل)"
+
+#~ msgid "Reply to Fax"
+#~ msgstr "الرد على فاكس"
+
+#~ msgid "Dispatch quick reply transmission to originating sender"
+#~ msgstr "إرسال رد سريع إلى المرسل الأصلي"
+
+#~ msgid "Regarding (Subject)"
+#~ msgstr "بخصوص (الموضوع)"
+
+#~ msgid "Comments"
+#~ msgstr "مُلَاحَظَات"
+
+#~ msgid "Destination"
+#~ msgstr "رقم الفاكس"
+
+#~ msgid "Queued"
+#~ msgstr "في قائمة الانتظار"
+
+#~ msgid "Reason"
+#~ msgstr "السبب"
+
+#~ msgid "To send to multiple recipients at once, separate numbers with a comma."
+#~ msgstr "للإرسال إلى مستلمين متعددين في وقت واحد، افصل بين الأرقام بفاصلة."
 
