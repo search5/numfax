@@ -14,7 +14,7 @@ import webtest
 from namifax.services.user_account import AFUserAccount, md5_hash
 
 OLD = "OldPassword1!"
-NEW = "BrandNewPassword2!"
+NEW = "BrandNewPass2!"
 
 
 def _account(session, username="carol", **extra):
@@ -149,7 +149,7 @@ def test_the_installers_administrator_must_change_the_default_password(testapp, 
     dbsession.flush()
     res = _login(testapp, "admin", "password")
     assert res.headers["Location"].endswith("/pwdexpired")
-    assert _change(testapp, old="password", new="A-much-better-1!").headers["Location"].endswith("/inbox")
+    assert _change(testapp, old="password", new="Much-better-1!").headers["Location"].endswith("/inbox")
 
 
 def test_the_demo_accounts_are_not_forced_to_change_their_passwords(testapp):

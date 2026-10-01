@@ -49,10 +49,10 @@ def _password(given: str | None) -> str | None:
         if getpass.getpass("Repeat password: ") != password:
             print("[!] The passwords do not match.")
             return None
-    from namifax.services.user_account import MIN_PASSWD_SIZE
+    from namifax.common import settings
 
-    if len(password) < MIN_PASSWD_SIZE:
-        print(f"[!] The password must be at least {MIN_PASSWD_SIZE} characters long.")
+    if len(password) < settings.min_passwd_size():
+        print(f"[!] The password must be at least {settings.min_passwd_size()} characters long.")
         return None
     return password
 

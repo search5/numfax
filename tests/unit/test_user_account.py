@@ -109,11 +109,11 @@ class TestAFUserAccount(unittest.TestCase):
         self.assertFalse(self.user_svc.change_password("InitPassword1"))
 
         # 3. Valid new password
-        self.assertTrue(self.user_svc.change_password("BrandNewPassword1"))
+        self.assertTrue(self.user_svc.change_password("BrandNewPass1"))
 
         # 4. Verify login with new password
         tester = AFUserAccount(db=self.engine, user_passwords=self.passwords_svc)
-        self.assertTrue(tester.login("bob", "BrandNewPassword1"))
+        self.assertTrue(tester.login("bob", "BrandNewPass1"))
 
     def test_reset_password(self):
         self.user_svc.create({

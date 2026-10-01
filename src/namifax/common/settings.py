@@ -52,6 +52,26 @@ def sendfax_requeue_email() -> bool:
     return flag("SENDFAX_REQUEUE_EMAIL", True)
 
 
+def max_username_size() -> int:
+    """``MAX_USERNAME_SIZE`` (15): the length limit of the user name field."""
+    return number("MAX_USERNAME_SIZE", 15)
+
+
+def max_passwd_size() -> int:
+    """``MAX_PASSWD_SIZE`` (15): the longest password that can be set."""
+    return number("MAX_PASSWD_SIZE", 15)
+
+
+def min_passwd_size() -> int:
+    """``MIN_PASSWD_SIZE`` (8): the shortest password that can be set."""
+    return number("MIN_PASSWD_SIZE", 8)
+
+
+def max_email_size() -> int:
+    """``MAX_EMAIL_SIZE`` (99): the length limit of the e-mail address field."""
+    return number("MAX_EMAIL_SIZE", 99)
+
+
 def hylaspool() -> str:
     return text("HYLASPOOL", "/var/spool/hylafax").rstrip("/") or "/"
 

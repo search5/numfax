@@ -6,13 +6,12 @@ import string
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional, Tuple
 
+from namifax.common import settings
 from namifax.db.repository import MDBOData
 from namifax.services import hylafax_users
 from namifax.services.user_passwords import AFUserPasswords
 
 
-MIN_PASSWD_SIZE = 8
-MAX_PASSWD_SIZE = 64
 
 
 def genpasswd(length: int = 8) -> str:
@@ -159,12 +158,12 @@ class AFUserAccount:
             self.error = "No uid set"
             return False
 
-        if len(pwd) < MIN_PASSWD_SIZE:
-            self.error = f"Password too short (minimum {MIN_PASSWD_SIZE} characters)"
+        if len(pwd) < settings.min_passwd_size():
+            self.error = f"Password too short (minimum {settings.min_passwd_size()} characters)"
             return False
 
-        if len(pwd) > MAX_PASSWD_SIZE:
-            self.error = f"Password too long (maximum {MAX_PASSWD_SIZE} characters)"
+        if len(pwd) > settings.max_passwd_size():
+            self.error = f"Password too long (maximum {settings.max_passwd_size()} characters)"
             return False
 
         # Reuse check
@@ -241,7 +240,7 @@ class AFUserAccount:
             self.error = "No uid set"
             return False
 
-        if len(oldpwd) < MIN_PASSWD_SIZE:
+        if len(oldpwd) < settings.min_passwd_size():
             self.error = "Old password too short"
             return False
 

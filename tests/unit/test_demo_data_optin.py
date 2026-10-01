@@ -156,9 +156,9 @@ def test_createuser_can_reset_the_password_of_an_existing_account(tmp_path, monk
     monkeypatch.delenv("NAMIFAX_DEMO_DATA", raising=False)
     monkeypatch.setenv("DATABASE_URL", f"sqlite:///{tmp_path / 'l.db'}")
     assert run_createuser(["-u", "boss", "-p", "FirstPassword1!"]) == 0
-    assert run_createuser(["-u", "boss", "-p", "SecondPassword2!"]) == 0
+    assert run_createuser(["-u", "boss", "-p", "SecondPass2!"]) == 0
     engine = create_sa_engine(f"sqlite:///{tmp_path / 'l.db'}")
     with Session(engine) as s:
-        assert AFUserAccount(db=s).login("boss", "SecondPassword2!") is True
+        assert AFUserAccount(db=s).login("boss", "SecondPass2!") is True
         assert AFUserAccount(db=s).login("boss", "FirstPassword1!") is False
     engine.dispose()

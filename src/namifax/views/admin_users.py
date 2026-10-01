@@ -14,6 +14,7 @@ from datetime import date
 from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
 
+from namifax.common import settings
 from namifax.common.helpers import send_mail
 from namifax.common.validators import is_valid_email
 from namifax.i18n import _
@@ -23,12 +24,11 @@ from namifax.services.did import DIDRouting
 from namifax.services.categories import FaxPDFCategory
 from namifax.services.fax_access import _did_routing_enabled
 from namifax.services.modem import FaxModem
-from namifax.services.user_account import AFUserAccount, MAX_PASSWD_SIZE
+from namifax.services.user_account import AFUserAccount
 from namifax.views.admin import get_all_admin_users
 
 FAXES_PER_PAGE = ["10", "15", "20", "25", "30", "50", "100"]
 DEFAULT_INBOX, DEFAULT_ARCHIVE = "25", "30"
-MAX_USERNAME_SIZE, MAX_EMAIL_SIZE = 40, 99
 FLAGS = ("is_admin", "superuser", "can_del", "any_modem", "pwd_reuse")
 
 
@@ -196,7 +196,8 @@ def admin_users_view(request):
     users = get_all_admin_users(request.dbsession)
     return {"title": "NamiFAX - Admin - Users", "current_user": identity, "active_tab": "admin", "active_admin": "users",
             "users": users, "values": values, "errors": errors, "saved": saved, "choices": _choices(request),
-            "max_username": MAX_USERNAME_SIZE, "max_email": MAX_EMAIL_SIZE, "max_password": MAX_PASSWD_SIZE}
+            "max_username": settings.max_username_size(), "max_email": settings.max_email_size(),
+            "max_password": settings.max_passwd_size()}
 
 
 def _edit(request, svc: AFUserAccount, v: dict):
