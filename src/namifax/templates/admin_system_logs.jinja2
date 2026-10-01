@@ -36,8 +36,8 @@
         </select>
         <select name="month" id="month" class="bg-slate-900 border border-slate-700 rounded-lg px-2 py-1.5 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition">
           <option value="">MM</option>
-          {% for m in months %}
-            <option value="{{ m }}" {% if m == month %}selected{% endif %}>{{ m }}</option>
+          {% for m, mname in months %}
+            <option value="{{ m }}" {% if m == month %}selected{% endif %}>{{ mname }}</option>
           {% endfor %}
         </select>
         <select name="year" id="year" class="bg-slate-900 border border-slate-700 rounded-lg px-2 py-1.5 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition">

@@ -34,7 +34,7 @@ def test_inbox_view_authenticated_list(authenticated_app):
     assert "viewfax.png" in res.text
     assert "rotate.png" in res.text
     assert "pdf.png" in res.text
-    assert "tiff.png" in res.text
+    assert "tiff.png" not in res.text                 # the TIFF download is only offered with ENABLE_DL_TIFF
     assert "refax.png" in res.text
     assert "email.png" in res.text
     assert "note.png" in res.text

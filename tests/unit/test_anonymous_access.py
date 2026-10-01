@@ -39,7 +39,8 @@ def test_every_route_needs_a_login(anonymous):
             res = getattr(client, method)(url, {"_submit_check": "1"} if method == "post" else None, expect_errors=True)
             if res.status_int == 200:
                 open_routes.append((method.upper(), url))
-    assert open_routes == []
+    # the OpenSearch description is public by design: a browser reads it without a session and it names nothing private
+    assert open_routes == [("GET", "/search")]
 
 
 def test_the_state_changing_ajax_calls_do_nothing_without_a_login(anonymous, dbsession):

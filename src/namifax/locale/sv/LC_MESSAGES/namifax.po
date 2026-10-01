@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: sMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:46+0900\n"
+"POT-Creation-Date: 2026-10-02 00:54+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sv\n"
@@ -1508,6 +1508,9 @@ msgstr ""
 "Ladda ner fax som PDF, arkivera dem för senare eller sök bland alla "
 "poster i arkivet."
 
+msgid "Archive search"
+msgstr ""
+
 msgid "new fax"
 msgstr ""
 
@@ -2117,6 +2120,42 @@ msgstr ""
 msgid "Modem created"
 msgstr ""
 
+msgid "January"
+msgstr ""
+
+msgid "February"
+msgstr ""
+
+msgid "March"
+msgstr ""
+
+msgid "April"
+msgstr ""
+
+msgid "May"
+msgstr ""
+
+msgid "June"
+msgstr ""
+
+msgid "July"
+msgstr ""
+
+msgid "August"
+msgstr ""
+
+msgid "September"
+msgstr ""
+
+msgid "October"
+msgstr ""
+
+msgid "November"
+msgstr ""
+
+msgid "December"
+msgstr ""
+
 msgid "Cover page template removed successfully"
 msgstr ""
 
@@ -2234,42 +2273,6 @@ msgid "You cannot delete the last superuser."
 msgstr ""
 
 msgid "Please enter a valid number."
-msgstr ""
-
-msgid "January"
-msgstr ""
-
-msgid "February"
-msgstr ""
-
-msgid "March"
-msgstr ""
-
-msgid "April"
-msgstr ""
-
-msgid "May"
-msgstr ""
-
-msgid "June"
-msgstr ""
-
-msgid "July"
-msgstr ""
-
-msgid "August"
-msgstr ""
-
-msgid "September"
-msgstr ""
-
-msgid "October"
-msgstr ""
-
-msgid "November"
-msgstr ""
-
-msgid "December"
 msgstr ""
 
 msgid "Both sent and received faxes"

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: kMIME-Version: 1.Content-Type: text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:46+0900\n"
+"POT-Creation-Date: 2026-10-02 00:54+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ko\n"
@@ -1341,6 +1341,9 @@ msgstr "기록 관리"
 msgid "Download faxes as PDF, archive them for later, or search all records in the Archive."
 msgstr "팩스를 PDF로 다운로드하거나 나중에 볼 수 있도록 보관하고, 보관함에서 모든 기록을 검색할 수 있습니다."
 
+msgid "Archive search"
+msgstr "보관함 검색"
+
 msgid "new fax"
 msgstr "새 팩스"
 
@@ -1885,6 +1888,42 @@ msgstr "이미 있는 모뎀입니다"
 msgid "Modem created"
 msgstr "모뎀을 만들었습니다"
 
+msgid "January"
+msgstr "1월"
+
+msgid "February"
+msgstr "2월"
+
+msgid "March"
+msgstr "3월"
+
+msgid "April"
+msgstr "4월"
+
+msgid "May"
+msgstr "5월"
+
+msgid "June"
+msgstr "6월"
+
+msgid "July"
+msgstr "7월"
+
+msgid "August"
+msgstr "8월"
+
+msgid "September"
+msgstr "9월"
+
+msgid "October"
+msgstr "10월"
+
+msgid "November"
+msgstr "11월"
+
+msgid "December"
+msgstr "12월"
+
 msgid "Cover page template removed successfully"
 msgstr "표지 템플릿이 성공적으로 삭제되었습니다."
 
@@ -2009,42 +2048,6 @@ msgstr "마지막 슈퍼유저는 삭제할 수 없습니다."
 
 msgid "Please enter a valid number."
 msgstr "올바른 숫자를 입력하십시오."
-
-msgid "January"
-msgstr "1월"
-
-msgid "February"
-msgstr "2월"
-
-msgid "March"
-msgstr "3월"
-
-msgid "April"
-msgstr "4월"
-
-msgid "May"
-msgstr "5월"
-
-msgid "June"
-msgstr "6월"
-
-msgid "July"
-msgstr "7월"
-
-msgid "August"
-msgstr "8월"
-
-msgid "September"
-msgstr "9월"
-
-msgid "October"
-msgstr "10월"
-
-msgid "November"
-msgstr "11월"
-
-msgid "December"
-msgstr "12월"
 
 msgid "Both sent and received faxes"
 msgstr "보낸 팩스와 받은 팩스 모두"

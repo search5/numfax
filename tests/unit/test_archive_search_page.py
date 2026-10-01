@@ -155,3 +155,23 @@ def test_a_user_who_cannot_delete_gets_no_delete_action(arch):
 def test_no_results_say_so(arch):
     soup, ids = _get(arch, "?kw=zzzz&sentrecvd=*&start_year=*&start_month=*&start_day=*&end_year=*&end_month=*&end_day=*")
     assert ids == [] and "No results were found" in soup.get_text(" ", strip=True)
+
+
+# --- OpenSearch (the browser's search box) -----------------------------------------------------------------------------------
+
+def test_the_site_describes_itself_for_browser_search(client_for_opensearch):
+    res = client_for_opensearch.get("/search")
+    assert res.content_type == "application/opensearchdescription+xml"
+    assert "{searchTerms}" in res.text and "/archive?opensearch&amp;kw=" in res.text
+    assert 'rel="search"' in client_for_opensearch.get("/inbox").text
+
+
+def test_an_opensearch_query_looks_through_every_date(arch):
+    _, ids = _get(arch, "?opensearch&kw=R3")                          # R3 is from 2024; "today" would never find it
+    assert ids == [arch.fax["R3"]]
+
+
+@pytest.fixture
+def client_for_opensearch(testapp):
+    testapp.post("/login", {"username": "admin", "password": "password", "_submit_check": "1"})
+    return testapp

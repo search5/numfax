@@ -190,10 +190,10 @@
                       <img src="/static/images/rotate.png" alt="" class="w-4 h-4 shrink-0" /> {{ _('Rotate') }}
                     </button>
                   </form>
-                  <a href="/faxes/download/{{ fax.id }}?format=tiff"
+                  {% if dl_tiff_enabled %}<a href="/faxes/download/{{ fax.id }}?format=tiff"
                      class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
                     <img src="/static/images/tiff.png" alt="" class="w-4 h-4 shrink-0" /> {{ _('Download TIFF') }}
-                  </a>
+                  </a>{% endif %}
                   {% if can_del %}
                   <div class="border-t border-slate-100 mt-1 pt-1">
                     <a href="/delete?fid={{ fax.id }}"

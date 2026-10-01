@@ -30,7 +30,7 @@ def render_previews(folder: str) -> int:
     """Write ``page<N>.png`` for every page of fax.tif and ``thumb.png`` for the first one; returns the number of pages."""
     tiff = os.path.join(folder, TIFFNAME)
     if not os.path.isfile(tiff):
-        return 0
+        return render_pdf_previews(folder)                 # a sent fax: only its PDF
     count = 0
     with Image.open(tiff) as img:
         for i in range(getattr(img, "n_frames", 1)):
@@ -41,6 +41,36 @@ def render_previews(folder: str) -> int:
                 _scaled(img, settings.number("PREV_TN", 80)).save(os.path.join(folder, THUMBNAIL), format="PNG")
             count += 1
     return count
+
+
+def render_pdf_previews(folder: str) -> int:
+    """The same previews from ``fax.pdf`` (a sent fax has no TIFF) through Ghostscript; returns the number of pages, 0 without it."""
+    import glob
+    import subprocess
+
+    pdf = os.path.join(folder, "fax.pdf")
+    gs = settings.binary("gs")
+    if not gs or not os.path.isfile(pdf):
+        return 0
+    pattern = os.path.join(folder, "gs-%d.png")
+    argv = [gs, "-q", "-dNOPAUSE", "-dBATCH", "-dSAFER", "-sDEVICE=pnggray", f"-r{min(settings.dpi(), 100)}",
+            f"-sOutputFile={pattern}", pdf]
+    try:
+        if subprocess.run(argv, capture_output=True, check=False, timeout=120).returncode != 0:
+            return 0
+    except (OSError, subprocess.SubprocessError):
+        return 0
+    rendered = sorted(glob.glob(os.path.join(folder, "gs-*.png")), key=lambda n: int(os.path.basename(n)[3:-4]))
+    try:
+        for index, name in enumerate(rendered):
+            with Image.open(name) as img:
+                _scaled(img, settings.number("PREV_SP", 750)).save(page_path(folder, index), format="PNG")
+                if index == 0:
+                    _scaled(img, settings.number("PREV_TN", 80)).save(os.path.join(folder, THUMBNAIL), format="PNG")
+        return len(rendered)
+    finally:
+        for name in rendered:
+            os.remove(name)
 
 
 def ensure_page(folder: str, index: int) -> Optional[str]:

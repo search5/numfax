@@ -1046,3 +1046,23 @@ DB 계층을 옮기는 동안 기존 코드의 실제 결함이 많이 드러났
 | 보안 | 비밀번호 변경 강제가 없음(SEC-05): `pwdexpired` 처리가 스텁이라 초기화된 계정·만료 계정·최초 로그인이 그대로 들어옴 | 로그인에서 변경 페이지로 보내고 변경 후 로그인 | `e622ffa` |
 | 보안 | 새 SQLite DB가 `admin`/`password`를 만들고 `createuser`에 기본 비밀번호가 있음, 이미 있는 계정의 비밀번호를 재설정할 수 없음 | 데모 옵트인, 비밀번호 필수, 재설정 | `e622ffa` |
 | 도구 | `import_archive`가 스텁(F4-19) | 이식, 경로 기준 분류(원본의 부분 문자열 매칭·경로 덮어쓰기 결함 수정) | `1420b8f` |
+
+### 17.6 전수 조사 결함 목록 처리 (`docs/PORTING_GAPS.md`)
+
+원본과 한 줄씩 대조해 찾은 빠진 기능·결함을 작은 것부터 처리했습니다. 항목별 상태(✅/◐)는 `docs/PORTING_GAPS.md`에 있습니다.
+새로 생긴 모듈과 파일:
+
+| 영역 | 내용 | 커밋 |
+|---|---|---|
+| 관리자 | 사용자(전 필드·회선/DID/카테고리 배정·무작위 비밀번호 메일·삭제 확인) `views/admin_users.py`, 모뎀·바코드 카테고리, 카테고리 삭제 시 팩스 해제, 시스템 기능(재부팅·종료·보관소/DB 내려받기) `services/sysfunc.py`, 시스템 로그 오늘 기본값, 설정에 따른 DID/바코드 메뉴, DB 중단 안내 페이지 | `35564ae`, `7b3c97d` |
+| 목록 | 받은 팩스함 페이지 나누기(사용자 쪽당 개수), 보관함 원본 필터·행 동작·OpenSearch, 환경설정 표지·쪽당 개수 | `293c1c6` |
+| 보기 | 실제 페이지 이미지·썸네일(`services/fax_images.py`, `views/fax_files.py`), 이전/다음 팩스, 보내기 규칙(회선·업로드 `services/upload_check.py`·슈퍼유저 전용 필드·작업 번호) | `28f8118`, `81793bb` |
+| 배포 그룹 | 구성원 `<id>\|<번호>`, "업체 - 번호" 표시, 추가 도우미, POST 삭제, 번호만 돌려주는 ajax | `ee4f0d5` |
+| 훅 | 수신 팩스 인쇄 `services/printing.py`, `notify`의 수신자 등록(`user.email` 오류 수정), `faxinfo` 검증, `convert2pdf`(PDF/PS), `faxcover`(PostScript 안전 값), 복사 실패 중단·팩스 ID 주석·`TIFF_TO_G4` | `ee4f0d5`, `7031680`, `f2ad664` |
+| 설정 | 원본 이름·기본값 `common/settings.py`(`HYLASPOOL`, `BINARYDIR`, 날짜 형식, `PAPERSIZE`/`DPI`, 미리보기 크기), 최신 스키마면 마이그레이션 생략, `dynconf` 시스템 로그 | `6ab9cbe` |
+| 보안 | 모뎀 상태는 사용자 모뎀만, 로그인 감사 로그(비밀번호 마스킹)·비활성 계정 메시지, 대체 인증(`auth/alternate.py`: PAM·pwauth)·`WEBSERVER_AUTH` | `8a1b058`, `2720856` |
+| 화면 | 새 팩스 알림(모든 화면의 안 읽은 수·30초 폴링·소리 파일·20초 모뎀 상태 `static/js/notify.js`), 연락처·배포 그룹·이메일 선택 창(`templates/contact_picker.jinja2`), 실시간 필터, 전송 보고서, 헤더 이름·서버 이름·접근 키·인쇄 스타일 | `774548a`, `d4fbeb7` |
+| 운영 | HylaFAX 사용자 동기화 `services/hylafax_users.py`(`HYLAFAX_USER_SYNC`, 기본 꺼짐), `deploy/` 파일, `docs/INSTALL_HYLAFAX.md` | `d4fbeb7` |
+
+의도적으로 남긴 차이: 관리자 판정은 `is_admin or superuser`(원본은 별도 관리자 로그인), `WWWUSER` 기본 `www-data`, 변경 요청은 POST+CSRF,
+한국어 외 번역 보류. HylaFAX와의 실제 연동(훅·`faxstat`·`faxadduser`)은 이 저장소에서 시험하지 못했습니다.

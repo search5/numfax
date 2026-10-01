@@ -38,7 +38,9 @@
       <button type="submit" title="{{ _('Rotate fax') }}" class="px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 transition inline-flex items-center">{{ _('Rotate') }}</button>
     </form>
     <a href="/faxes/download/{{ fid }}?format=pdf" title="{{ _('Download PDF') }}" class="px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 transition inline-flex items-center">PDF</a>
+    {% if dl_tiff_enabled %}
     <a href="/faxes/download/{{ fid }}?format=tiff" title="{{ _('Download TIFF') }}" class="px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 transition inline-flex items-center">TIFF</a>
+    {% endif %}
     <a href="/refax?fid={{ fid }}" title="{{ _('Reply to fax') }}" class="px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 transition inline-flex items-center">{{ _('Reply') }}</a>
     <a href="/email?fid={{ fid }}" title="{{ _('Email PDF') }}" class="px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 transition inline-flex items-center">{{ _('Email') }}</a>
     <a href="/note?fid={{ fid }}" title="{{ _('Add note to fax') }}" class="px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 transition inline-flex items-center">{{ _('Note') }}</a>

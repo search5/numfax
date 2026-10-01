@@ -9,6 +9,7 @@ from pyramid.httpexceptions import HTTPFound, HTTPMethodNotAllowed, HTTPNotFound
 from pyramid.response import Response
 from pyramid.view import view_config
 
+from namifax.common import settings
 from namifax.common.helpers import clean_faxnum
 from namifax.services.addressbook import RESERVED_FAX_NUM, AFAddressBook
 from namifax.services.archive_in import ArchiveIn
@@ -215,6 +216,8 @@ def fax_download_view(request):
     """Stream PDF or TIFF binary file matching legacy file.php and pdf.php."""
     fid = request.matchdict.get("fid", "1")
     fmt = request.params.get("format", "pdf")
+    if fmt != "pdf" and not settings.flag("ENABLE_DL_TIFF", False):        # the original shows the TIFF only when asked to
+        raise HTTPNotFound()
     content_type = "application/pdf" if fmt == "pdf" else "image/tiff"
 
     # Attempt to locate actual archived fax file on disk

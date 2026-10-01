@@ -85,11 +85,13 @@
           <input type="text" name="from_faxnumber" id="from_faxnumber" value="{{ user_profile.from_faxnumber or '' }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" />
         </div>
 
+        {% if is_superuser %}
         <div class="md:col-span-2">
           <label for="user_tsi" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Transmitting Station ID (TSI)') }}</label>
           <input type="text" name="user_tsi" id="user_tsi" value="{{ user_profile.user_tsi or '' }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 font-mono bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" placeholder="{{ _('e.g. +1 555 123 4567') }}" />
           <p class="text-[11px] text-slate-400 mt-1">{{ _('Header identifier imprinted on top of transmitted fax pages.') }}</p>
         </div>
+        {% endif %}
       </div>
 
       <div>

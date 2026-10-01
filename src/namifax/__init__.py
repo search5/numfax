@@ -43,11 +43,18 @@ def create_app(global_config=None, **settings):
 
         # The admin menu follows the settings (the original's $ENABLE_DID_ROUTING / ENABLE_BARDECODE_SUPPORT)
         from namifax.services.fax_access import _did_routing_enabled, barcode_enabled
+        import socket
+
         from pyramid.events import BeforeRender
+
+        from namifax.common.settings import flag, text
 
         def add_switches(event):
             event["did_routing_enabled"] = _did_routing_enabled()
             event["barcode_enabled"] = barcode_enabled()
+            event["dl_tiff_enabled"] = flag("ENABLE_DL_TIFF", False)
+            event["show_server_name"] = flag("SHOWSERVER_DETAILS", False)
+            event["server_name"] = text("AVANTFAX_SERVERNAME", socket.gethostname())
             _add_page_counters(event)
 
         config.add_subscriber(add_switches, BeforeRender)

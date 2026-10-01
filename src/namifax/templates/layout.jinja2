@@ -19,6 +19,11 @@
     .has-tooltip:hover .tooltip-text { visibility: visible; opacity: 1; }
   </style>
   {% block extra_head %}{% endblock %}
+  <link rel="search" type="application/opensearchdescription+xml" href="/search" title="{{ _('Archive search') }}" />
+  <style media="print">
+    header, nav, footer, .print-hide, form button, .servername { display: none !important; }
+    body { background: #fff !important; }
+  </style>
 </head>
 <body data-inbox-poll="30" data-modem-poll="20" data-new-fax="{{ _('new fax') }}" class="min-h-full flex flex-col text-slate-900 font-sans antialiased bg-slate-50">
 
@@ -48,8 +53,9 @@
             ('archive',  '/archive',     _('Archive'),  'Search all fax records',   none),
             ('contacts', '/addressbook', _('Contacts'), 'Manage your address book', none),
           ] %}
+          {% set keys = {'inbox': 'i', 'sendfax': 's', 'outbox': 'o', 'archive': 'a', 'contacts': 'c'} %}
           {% for tab, href, label, desc, badge in nav_items %}
-          <a href="{{ href }}"
+          <a href="{{ href }}" accesskey="{{ keys[tab] }}"
              class="has-tooltip relative flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors
                     {% if active_tab == tab %}text-blue-700 bg-blue-50{% else %}text-slate-600 hover:text-slate-900 hover:bg-slate-100{% endif %}">
             <span>{{ label }}</span>
@@ -107,11 +113,11 @@
             <div class="hidden sm:block">
               <div class="text-sm font-semibold text-slate-900 leading-tight" title="{{ current_user.username }}">{{ user_full_name or current_user.username }}{% if current_user.superuser %} <span data-superuser class="ml-1 px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 text-[10px] font-bold uppercase">{{ _('Superuser') }}</span>{% endif %}</div>
               <div class="flex items-center gap-2 text-xs text-slate-400">
-                <a href="/settings" class="hover:text-blue-600 transition-colors">{{ _('Settings') }}</a>
+                <a href="/settings" accesskey="p" class="hover:text-blue-600 transition-colors">{{ _('Settings') }}</a>
                 <span>·</span>
                 <form method="post" action="/logout" class="inline">
                   <input type="hidden" name="csrf_token" value="{{ request.session.get_csrf_token() }}" />
-                  <button type="submit" class="hover:text-red-500 transition-colors">{{ _('Logout') }}</button>
+                  <button type="submit" accesskey="l" class="hover:text-red-500 transition-colors">{{ _('Logout') }}</button>
                 </form>
               </div>
             </div>
@@ -158,6 +164,7 @@
     </div>
   </footer>
 
+  {% if show_server_name %}<div class="text-center text-[11px] text-slate-400 pb-3 servername">{{ server_name }}</div>{% endif %}
   <script src="/static/js/notify.js" defer></script>
   <script src="/static/js/livefilter.js" defer></script>
   {% block extra_scripts %}{% endblock %}

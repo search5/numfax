@@ -56,11 +56,12 @@ def _target(request) -> str:
     return value if re.fullmatch(r"[A-Za-z][A-Za-z0-9_\-]{0,40}", value) else ""
 
 
-def _picker(request, *, title, heading, action, options, separator, fetch=""):
+def _picker(request, *, title, heading, action, options, separator, fetch="", prefill=False):
     from pyramid.renderers import render_to_response
 
     return render_to_response("namifax:templates/contact_picker.jinja2", {
         "title": title, "heading": heading, "action": action, "options": options, "separator": separator, "fetch": fetch,
+        "prefill": prefill,
         "target": _target(request), "query": (request.params.get("regexp") or "").strip()}, request=request)
 
 
@@ -86,9 +87,9 @@ def popup_fax_contacts(request):
     options = []
     for company in (book.search_companies(query) if query else []):
         for number in numbers.get(company.get("abook_id"), []):
-            options.append((number["faxnumber"], f"{company.get('company')} - {number['faxnumber']}"))
+            options.append((number["faxnumber"], f"{company.get('company')} - {number['faxnumber']}", number.get("abookfax_id")))
     return _picker(request, title="- NamiFAX - Fax Contacts", heading=str(_("Fax Contacts")), action="/helper/faxcontacts",
-                   options=options, separator="; ")
+                   options=options, separator="; ", prefill=True)
 
 
 @view_config(route_name="popup_email_contacts", permission="view")

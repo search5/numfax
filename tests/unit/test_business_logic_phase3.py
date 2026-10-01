@@ -247,7 +247,7 @@ def test_faxrcvd_ocr_index_logic(tmp_path):
          patch("namifax.cli.faxrcvd.ArchiveIn") as mock_in, \
          patch("namifax.cli.faxrcvd.AFAddressBook") as mock_book, \
          patch("namifax.cli.faxrcvd.DIDRouting"), \
-         patch("namifax.cli.faxrcvd.tiff2pdf"), \
+         patch("namifax.cli.faxrcvd.tiff2pdf"), patch("namifax.cli.faxrcvd.copy_tiff", return_value=True), \
          patch("namifax.cli.faxrcvd.static_preview"), \
          patch("namifax.cli.faxrcvd.send_mail"), \
          patch("namifax.services.ocr.OcrService.index_fax") as mock_index_fax:

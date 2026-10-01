@@ -24,6 +24,7 @@ def includeme(config):
     config.add_route("fax_rotate", "/faxes/rotate/{fid}")
     config.add_route("sendfax", "/sendfax")
     config.add_route("outbox", "/outbox")
+    config.add_route("opensearch", "/search")
     config.add_route("archive", "/archive")
     config.add_route("addressbook", "/addressbook")
     config.add_route("addressbook_edit", "/addressbook/edit")

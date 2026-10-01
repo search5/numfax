@@ -76,3 +76,19 @@ def test_the_send_fax_page_offers_the_pickers(client):
 def test_the_email_dialog_offers_the_picker(world):
     html = _login(world, "alice").get(f"/email?fid={world.fax['A']}").text
     assert "/helper/emailcontacts?target=emails" in html
+
+
+def test_a_fax_number_carries_its_id_so_the_cover_fields_can_be_filled(client):
+    soup = BeautifulSoup(client.get("/helper/faxcontacts?target=faxnumber&regexp=Other").text, "html.parser")
+    box = soup.select_one("input[data-pick]")
+    assert box["data-fnid"].isdigit() and soup.find("body")["data-prefill"] == "1"
+
+
+def test_the_prefill_answer_has_the_cover_page_fields(client, dbsession):
+    from sqlalchemy import select
+
+    number = dbsession.execute(select(AddressBookFAX).where(AddressBookFAX.faxnumber == "+1-555-5000")).scalar_one()
+    number.to_person = "Olga"
+    dbsession.flush()
+    res = client.get(f"/ajax/prefillto?fnid={number.abookfax_id}")
+    assert "<to_person>Olga</to_person>" in res.text and "<to_company>Other Ltd</to_company>" in res.text

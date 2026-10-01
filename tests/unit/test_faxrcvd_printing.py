@@ -95,7 +95,7 @@ def _hook(tmp_path, *, printer_of_modem=None, contact=None, book_printer=None):
     with patch.multiple(hook, FaxModem=MagicMock(return_value=modem), AFAddressBook=MagicMock(return_value=book),
                         ArchiveIn=MagicMock(return_value=inbox), DIDRouting=MagicMock(), BarcodeRouting=MagicMock()), \
             patch.object(hook, "faxinfo", return_value={"Sender": "1", "Pages": "1", "Received": "2026:10:01 10:00:00"}), \
-            patch.object(hook, "tiff2pdf"), patch.object(hook, "static_preview"), patch.object(hook, "send_mail"), \
+            patch.object(hook, "tiff2pdf"), patch.object(hook, "copy_tiff", return_value=True), patch.object(hook, "static_preview"), patch.object(hook, "send_mail"), \
             patch.object(hook, "bardecode", return_value=None), patch("namifax.services.ocr.OcrService"), \
             patch.object(hook, "print_received") as printed:
         hook.run_faxrcvd(["faxrcvd.py", str(tiff), "ttyS0", "comm01", "none"], session=object())

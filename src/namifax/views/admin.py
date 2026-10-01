@@ -260,6 +260,11 @@ def admin_routing_did_view(request):
     }
 
 
+def _months_of_the_year():
+    return [_("January"), _("February"), _("March"), _("April"), _("May"), _("June"), _("July"), _("August"), _("September"),
+            _("October"), _("November"), _("December")]
+
+
 def get_all_syslogs(kw: str = "", day: str = "", month: str = "", year: str = "", session: Any = None) -> list[dict[str, Any]]:
     """Retrieve system logs from the database through an ORM session (empty without a session)."""
     if session is None:
@@ -297,7 +302,7 @@ def admin_system_logs_view(request):
         "month": month,
         "year": year,
         "days": [f"{d:02d}" for d in range(1, 32)],
-        "months": [f"{m:02d}" for m in range(1, 13)],
+        "months": [(f"{m:02d}", str(name)) for m, name in enumerate(_months_of_the_year(), 1)],
         "years": [str(y) for y in range(2004, today.year + 2)],
     }
 

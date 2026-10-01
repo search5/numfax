@@ -419,6 +419,61 @@ def convert2pdf(path: str, convertfiles: Sequence[str]) -> bool:
                 os.remove(name)
 
 
+def copy_tiff(src: str, dst: str, group4: bool = False) -> bool:
+    """Copy a received fax TIFF into the archive (the original's tiffcp); ``group4`` stores it recompressed as CCITT Group 4."""
+    try:
+        if not group4:
+            shutil.copy2(src, dst)
+            return True
+        with Image.open(src) as img:
+            frames = []
+            for i in range(getattr(img, "n_frames", 1)):
+                img.seek(i)
+                frames.append(img.convert("1"))
+        frames[0].save(dst, save_all=True, append_images=frames[1:], format="TIFF", compression="group4")
+        return True
+    except (OSError, ValueError):
+        return False
+
+
+def annotated_pages(tiff_file: str, text: str, gravity: str = "southeast") -> List[Image.Image]:
+    """Every page of the TIFF with ``text`` written at ``gravity`` (north/south, optionally east/west; centred otherwise)."""
+    from PIL import ImageDraw, ImageFont
+
+    pages: List[Image.Image] = []
+    with Image.open(tiff_file) as img:
+        for i in range(getattr(img, "n_frames", 1)):
+            img.seek(i)
+            page = img.convert("L")
+            try:
+                font = ImageFont.load_default(size=25)
+            except TypeError:
+                font = ImageFont.load_default()
+            draw = ImageDraw.Draw(page)
+            left, top, right, bottom = draw.textbbox((0, 0), text, font=font)
+            width, height = right - left, bottom - top
+            margin = 10
+            x = page.width - width - margin if "east" in gravity else margin if "west" in gravity else (page.width - width) // 2
+            y = margin if gravity.startswith("north") else page.height - height - margin * 2 if gravity.startswith("south") \
+                else (page.height - height) // 2
+            draw.text((x, y), text, fill=0, font=font)
+            pages.append(page)
+    return pages
+
+
+def annotate_fax(tiff_file: str, text: str, pdf_out: str, gravity: str = "southeast") -> bool:
+    """Write a PDF of the fax with ``text`` (for example "FaxID: 42") stamped on every page (the original's annotate_fax)."""
+    try:
+        pages = annotated_pages(tiff_file, text, gravity)
+        if not pages:
+            return False
+        pages[0].convert("RGB").save(pdf_out, save_all=True, append_images=[p.convert("RGB") for p in pages[1:]],
+                                     format="PDF", resolution=200)
+        return True
+    except (OSError, ValueError):
+        return False
+
+
 def pdf_preview(path: str) -> bool:
     """Create thumbnail image of fax.pdf or fax.tif located in path."""
     if not path or not os.path.exists(path):
@@ -433,6 +488,11 @@ def pdf_preview(path: str) -> bool:
 
     if not os.path.exists(pdffile):
         return False
+
+    from namifax.services.fax_images import render_pdf_previews
+
+    if render_pdf_previews(path):                       # a real picture of the pages
+        return True
 
     if not os.path.exists(thumbfile):
         try:

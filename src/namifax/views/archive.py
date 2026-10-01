@@ -7,6 +7,7 @@ import datetime
 from typing import Any, Optional
 from urllib.parse import urlencode
 
+from pyramid.response import Response
 from pyramid.view import view_config
 
 from namifax.i18n import _
@@ -58,6 +59,20 @@ def _months() -> list[tuple[str, str]]:
     return [("*", "")] + [(str(i + 1), str(n)) for i, n in enumerate(names)]
 
 
+@view_config(route_name="opensearch", request_method="GET", permission="public")
+def opensearch_view(request):
+    """The OpenSearch description that lets a browser search the archive from its search box (the original's search.php)."""
+    base = request.application_url.rstrip("/")
+    body = ('<?xml version="1.0"?>\n<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/"\n'
+            '                       xmlns:moz="http://www.mozilla.org/2006/browser/search/">\n'
+            '<ShortName>NamiFAX Archive</ShortName>\n<Description>NamiFAX Archive search</Description>\n'
+            '<InputEncoding>utf-8</InputEncoding>\n'
+            f'<Image height="16" width="16" type="image/x-icon">{base}/static/favicon.ico</Image>\n'
+            f'<Url type="text/html" method="GET" template="{base}/archive?opensearch&amp;kw={{searchTerms}}"></Url>\n'
+            '</OpenSearchDescription>\n')
+    return Response(body, content_type="application/opensearchdescription+xml", charset="utf-8")
+
+
 @view_config(route_name="archive", renderer="namifax:templates/archive.jinja2", permission="view")
 def archive_view(request):
     """Search the archive; without a search the faxes of today are listed."""
@@ -81,6 +96,10 @@ def archive_view(request):
             **{n: str(getattr(today, n.split("_")[1])) for n in DATE_FIELDS}}
     if searched:
         start, end = _bounds(params)
+        if "opensearch" in params:                              # the browser's search box looks through every date
+            start = end = None
+            for name in DATE_FIELDS:
+                form[name] = "*"
         sentrecvd = params.get("sentrecvd") if params.get("sentrecvd") in SENTRECVD else "*"
         criteria.update(start_date=start, end_date=end, keywords=(params.get("kw") or "").strip() or None,
                         companyid=_number(params.get("companyid")), sentrecvd=sentrecvd,

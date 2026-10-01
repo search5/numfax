@@ -51,7 +51,7 @@ class TestCLIFaxrcvd(unittest.TestCase):
                  patch("namifax.cli.faxrcvd.ArchiveIn") as mock_in, \
                  patch("namifax.cli.faxrcvd.send_mail") as mock_send, \
                  patch("namifax.cli.faxrcvd.faxinfo") as mock_finfo, \
-                 patch("namifax.cli.faxrcvd.tiff2pdf"), \
+                 patch("namifax.cli.faxrcvd.tiff2pdf"), patch("namifax.cli.faxrcvd.copy_tiff", return_value=True), \
                  patch("namifax.cli.faxrcvd.static_preview"):
 
                 # Mock modem

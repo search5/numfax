@@ -6,7 +6,7 @@
   <title>{{ title }}</title>
   <link rel="stylesheet" href="/static/css/main.css?v=3.5.1" type="text/css" />
 </head>
-<body class="bg-slate-50 text-slate-800 p-4" data-target="{{ target }}" data-separator="{{ separator }}" data-fetch="{{ fetch }}">
+<body class="bg-slate-50 text-slate-800 p-4" data-target="{{ target }}" data-separator="{{ separator }}" data-fetch="{{ fetch }}" data-prefill="{{ 1 if prefill else 0 }}">
   <div class="max-w-md mx-auto bg-white p-5 rounded-xl shadow border border-slate-200 space-y-3">
     <h2 class="text-base font-bold text-sky-900">{{ heading }}</h2>
 
@@ -18,9 +18,9 @@
     </form>
 
     <div id="items" class="max-h-72 overflow-y-auto border border-slate-200 rounded divide-y divide-slate-100">
-      {% for value, label in options %}
+      {% for option in options %}
         <label class="flex items-center gap-2 px-3 py-1.5 text-sm cursor-pointer hover:bg-slate-50">
-          <input type="checkbox" data-pick value="{{ value }}" class="rounded border-slate-300" /> <span>{{ label }}</span>
+          <input type="checkbox" data-pick value="{{ option[0] }}"{% if option|length > 2 and option[2] %} data-fnid="{{ option[2] }}"{% endif %} class="rounded border-slate-300" /> <span>{{ option[1] }}</span>
         </label>
       {% else %}
         <p class="p-4 text-center text-sm text-slate-400">{{ _('No contacts found') }}</p>
@@ -52,7 +52,19 @@
     field.dispatchEvent(new Event('input', { bubbles: true }));
   }
   document.getElementById('add').addEventListener('click', function () {
-    var chosen = Array.prototype.map.call(items.querySelectorAll('input[data-pick]:checked'), function (c) { return c.value; });
+    var boxes = items.querySelectorAll('input[data-pick]:checked');
+    var chosen = Array.prototype.map.call(boxes, function (c) { return c.value; });
+    // one number chosen from the address book: its cover page fields (person, company, address...) are filled in too
+    if (body.getAttribute('data-prefill') === '1' && boxes.length === 1 && boxes[0].getAttribute('data-fnid')) {
+      fetch('/ajax/prefillto?fnid=' + encodeURIComponent(boxes[0].getAttribute('data-fnid')), { credentials: 'same-origin' })
+        .then(function (r) { return r.text(); }).then(function (text) {
+          var xml = new DOMParser().parseFromString(text, 'text/xml');
+          ['to_person', 'to_company', 'to_address', 'to_zip', 'to_city', 'to_location', 'to_voicenumber'].forEach(function (id) {
+            var node = xml.getElementsByTagName(id)[0], field = window.opener && window.opener.document.getElementById(id);
+            if (node && node.firstChild && field) field.value = node.firstChild.data;
+          });
+        });
+    }
     if (!fetchUrl) { put(chosen); window.close(); return; }
     Promise.all(chosen.map(function (id) { return fetch(fetchUrl + encodeURIComponent(id), { credentials: 'same-origin' }).then(function (r) { return r.text(); }); }))
       .then(function (answers) {

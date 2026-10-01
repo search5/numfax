@@ -24,6 +24,8 @@ from namifax.common import settings
 from namifax.services import printing
 from namifax.services.printing import print_received
 from namifax.common.helpers import (
+    annotate_fax,
+    copy_tiff,
     hylafax_date_to_iso,
     avantfaxlog,
     bardecode,
@@ -50,6 +52,9 @@ ENABLE_FAX_ANNOTATION = os.environ.get("ENABLE_FAX_ANNOTATION", "0") in ("1", "t
 FAXRCVD_INCLUDE_THUMBNAIL = os.environ.get("FAXRCVD_INCLUDE_THUMBNAIL", "1") in ("1", "true", "True")
 FAXRCVD_INCLUDE_PDF = settings.flag("FAXRCVD_INCLUDE_PDF", True)
 ARCHIVEFAX2EMAIL = settings.flag("ARCHIVEFAX2EMAIL", True)
+TIFF_TO_G4 = settings.flag("TIFF_TO_G4", False)
+ENABLE_FAX_ANNOTATION = settings.flag("ENABLE_FAX_ANNOTATION", False)
+ANN_GRAVITY = settings.text("ANN_GRAVITY", "southeast")
 PRINTFAXRCVD = os.environ.get("PRINTFAXRCVD", "0") in ("1", "true", "True")
 PRINTERNAME = os.environ.get("PRINTERNAME", "")
 
@@ -140,10 +145,9 @@ def _process_faxrcvd(args: list[str], session: Any) -> int:
     pdffile = os.path.join(faxpath, "fax.pdf")
     thumbnail = os.path.join(faxpath, "thumb.png")
 
-    try:
-        shutil.copy2(tiff_file, faxfile)
-    except OSError:
-        pass
+    if not copy_tiff(tiff_file, faxfile, group4=TIFF_TO_G4):
+        avantfaxlog(f"faxrcvd> Failed to copy {tiff_file} to {faxfile}", echo=True)
+        return 0
 
     print("Create PDF")
     tiff2pdf(faxfile, pdffile)
@@ -180,6 +184,8 @@ def _process_faxrcvd(args: list[str], session: Any) -> int:
     if inbox.create(faxpath, faxnumid, company_fax, modemdev, pages, hylafax_date_to_iso(recv_date), didr_id):
         faxid = inbox.get_fid()
         avantfaxlog(f"faxrcvd> Inserted {faxpath} from {company_name} to Inbox", echo=False)
+        if ENABLE_FAX_ANNOTATION:                                       # the fax id on every page of the PDF
+            annotate_fax(faxfile, f"FaxID: {faxid}", pdffile, gravity=ANN_GRAVITY)
         try:
             from namifax.services.ocr import OcrService
 
