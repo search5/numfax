@@ -1115,3 +1115,8 @@ SQLite·MySQL은 오름차순에서 NULL을 먼저, PostgreSQL은 나중에 둔�
 `cron`은 `cli_session`을 쓰고 `-p`(TIFF 정리)·`-s`(저장된 정책)를 지원한다. 서비스는 Session 기반이라 PostgreSQL·MySQL·MariaDB에서도 동작하고 서버 테스트로 검증했다.
 
 **미해결(확인 필요)**: 클라우드 `secret_key`가 SystemConfig에 평문으로 저장된다.
+
+### 14.18 브리지 제거 (`bridge_cli.py`, `*Bridge.php` 24개)
+`src/namifax/db/bridge_cli.py`와 PHP 브리지 24개를 삭제했다. 이 파일들은 호출자가 없었다: `*Bridge.php`는 `bridge_cli.py`를 실행하는 용도뿐이고, 그 PHP 클래스를 쓰는 곳이 레거시 PHP·Python·테스트 어디에도 없다(`docs/numfax-defects.md` COR-30). 게다가 `bridge_cli.py`는 JSON 요청만으로 임의 SQL과 임의 실행 파일(`pwauth`의 `binary_path`)을 실행할 수 있어 보안상 위험했다. Strangler Fig의 전환 단계는 끝났고(웹/CLI가 모두 Python으로 동작), Phase 4의 죽은 코드 정리에 해당한다.
+
+**제거된 로직(Dead Code Removal Protocol)**: PHP→Python JSON 브리지 전체와 전역 엔진 `_GLOBAL_ENGINE`. 상태표의 `[FFI_BRIDGED]`는 "브리지 연결 완료"가 아니라 "이식 완료, 브리지는 제거됨"으로 읽는다. `specs/`의 브리지 항목은 당시 설계 기록으로 남겨 둔다.
