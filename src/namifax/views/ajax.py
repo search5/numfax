@@ -107,18 +107,20 @@ def ajax_addressbook_suggest(request):
 
     try:
         companies = [] if not settings.contact_lookup_allowed(q) else (ab.search_companies(q) if q else ab.get_companies())
-        if companies:
-            for c in companies:
-                cid = c.get("ab_id") or c.get("abook_id") or 1
-                cname = c.get("company", "")
-                faxnum = c.get("faxnum") or c.get("faxnumber") or ""
-                label = f"{cname} - {faxnum}" if faxnum else cname
+        numbers = ab.numbers_by_company() if companies else {}
+        for c in companies or []:
+            cid = c.get("abook_id")
+            for number in numbers.get(cid, []):                 # one row per fax number, like the original
+                label = c.get("company") or ""
+                if number.get("description"):
+                    label += f" ({number['description']})"
+                faxnum = number.get("faxnumber") or ""
                 rows_xml.append(
                     f"  <row>\n"
-                    f"    <company>{html.escape(label)}</company>\n"
+                    f"    <company>{html.escape(f'{label} - {faxnum}')}</company>\n"
                     f"    <cid>{cid}</cid>\n"
-                    f"    <faxnum>{html.escape(str(faxnum))}</faxnum>\n"
-                    f"    <fnid>{cid}</fnid>\n"
+                    f"    <faxnum>{html.escape(faxnum)}</faxnum>\n"
+                    f"    <fnid>{number.get('abookfax_id')}</fnid>\n"
                     f"  </row>"
                 )
     except Exception:
