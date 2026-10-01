@@ -30,6 +30,9 @@ def create_app(global_config=None, **settings):
         # token cookie of the security policy, not this one.
         config.set_session_factory(_session_factory(settings))
 
+        from namifax.common.secretbox import set_default_key
+        set_default_key(settings.get("secret.key"))
+
         # Include i18n translation directories & negotiator
         config.add_translation_dirs("namifax:locale")
         config.set_locale_negotiator(custom_locale_negotiator)

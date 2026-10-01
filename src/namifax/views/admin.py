@@ -1013,6 +1013,7 @@ def admin_storage_view(request):
 
     from namifax.services.cloud_storage import StorageConfig, CloudStorageManager
     from namifax.services.storage_lifecycle import StorageLifecyclePolicy, StorageLifecycleService
+    from namifax.common.secretbox import SecretKeyError
     from namifax.services.system_config import SystemConfigService
 
     config_store = SystemConfigService(request.dbsession)
@@ -1046,17 +1047,20 @@ def admin_storage_view(request):
             set_cfg("cloud_region_name", region)
             set_cfg("cloud_bucket_name", bucket)
             set_cfg("cloud_access_key", access_key)
-            if secret_key:
-                set_cfg("cloud_secret_key", secret_key)
-            set_cfg("cloud_prefix", prefix)
-            message = _("Cloud storage configuration saved successfully.")
+            try:
+                if secret_key:
+                    config_store.set_secret("cloud_secret_key", secret_key)
+                set_cfg("cloud_prefix", prefix)
+                message = _("Cloud storage configuration saved successfully.")
+            except SecretKeyError as exc:
+                error = str(exc)
         elif action == "test_cloud":
             stype = request.params.get("storage_type", "LOCAL").strip()
             endpoint = request.params.get("endpoint_url", "").strip() or None
             region = request.params.get("region_name", "").strip() or None
             bucket = request.params.get("bucket_name", "").strip() or None
             access_key = request.params.get("access_key", "").strip() or None
-            secret_key = request.params.get("secret_key", "").strip() or get_cfg("cloud_secret_key", "")
+            secret_key = request.params.get("secret_key", "").strip() or config_store.get_secret("cloud_secret_key", "")
             prefix = request.params.get("prefix", "").strip()
 
             cfg = StorageConfig(

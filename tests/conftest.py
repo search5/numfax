@@ -34,6 +34,12 @@ def seeded_db():
 
 
 @pytest.fixture(autouse=True)
+def _secret_key(monkeypatch):
+    """A fixed key so credentials can be stored in any test (tests of the missing-key case remove it)."""
+    monkeypatch.setenv("NAMIFAX_SECRET_KEY", "test-only-passphrase-for-the-suite")
+
+
+@pytest.fixture(autouse=True)
 def isolated_database(tmp_path, monkeypatch):
     """Point the application at a per-test database so no test touches the working-tree namifax.db."""
     db_file = tmp_path / "namifax-test.db"

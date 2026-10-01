@@ -1135,3 +1135,22 @@ SQLite·MySQL은 오름차순에서 NULL을 먼저, PostgreSQL은 나중에 둔�
 | `FaxQueue`의 사용자 이름 조회 | 레거시 엔진 사용(PostgreSQL에서 혼합 대소문자 테이블명으로 실패), `AFUserAccount`에 `name`이 없어 표시 이름이 항상 폴백 | Session 사용(뷰가 `request.dbsession` 전달), 표시 이름 표시 |
 
 **알려진 한계(미수정)**: SAML 로그인은 2FA 단계를 거치지 않는다(IdP가 인증을 책임진다는 가정). 6자리 TOTP 코드에는 시도 횟수 제한이 없다. SAML 서명 검증과 IdP 설정은 관리자 화면의 별도 기능이다.
+
+### 14.20 보안 보완: 2FA 시도 제한과 비밀값 암호화 저장
+**TOTP 시도 제한** (`services/totp.py`, `UserTOTP.failed_attempts/locked_until`, 리비전 0021)
+* 6자리 코드는 값이 100만 개뿐이므로 사용자별로 틀린 시도를 **DB에 기록**한다(워커가 여럿이어도 같은 값). 연속 5회 실패하면 15분 잠기고, 잠긴 동안은 올바른 코드·복구 코드도 거부한다. 성공하면 카운터가 초기화되고, 잠금이 풀린 뒤 첫 실패는 1부터 다시 센다. 2FA를 다시 등록하면 잠금도 해제된다.
+* **시도를 먼저 센다**: 확인하기 전에 원자적 증가(`failed_attempts = failed_attempts + 1`)로 시도를 확보하므로, 동시에 보낸 추측들이 모두 옛 카운트를 읽고 통과할 수 없다.
+* 로그인 화면은 잠겼을 때 "Too many failed attempts. Try again in N minutes."를 보여준다. 기존 SQLite DB는 기동 시 컬럼이 추가되고(등록된 시드 유지), 서버 DB는 Alembic으로 추가된다.
+
+**비밀값 암호화 저장** (`common/secretbox.py`, 리비전 0022)
+| 대상 | 저장 위치 | 처리 |
+| :--- | :--- | :--- |
+| 클라우드 `secret_key` | `SystemConfig.cloud_secret_key` | `set_secret`/`get_secret`, 사용 시점(연결 테스트, 라이프사이클 실행)에 복호화 |
+| SMTP 비밀번호 | `SystemSettings.smtp_password`(255→512자) | 저장 시 암호화, 읽을 때 복호화. 복호화 불가면 "없음"으로 취급(관리자가 다시 입력) |
+| TOTP 시드 | `UserTOTP.secret_key` | 등록 시 암호화. 복호화 불가면 로그인 거부(fail closed) |
+
+* 형식은 `enc:v1:<Fernet 토큰>`(AES-128-CBC + HMAC). 키는 환경변수 `NAMIFAX_SECRET_KEY` 또는 ini의 `secret.key`(환경변수 우선). Fernet 키 또는 16자 이상의 임의 문자열(HKDF로 유도)을 쓸 수 있고, 쉼표로 여러 개를 주면 **키 교체**가 가능하다(앞의 키로 암호화, 모든 키로 복호화).
+* **키가 없으면 평문으로 저장하지 않고** `SecretKeyError`로 거부한다(관리자 화면에는 안내 문구가 표시됨). 기존 평문 값은 키 없이도 읽히고, 다시 저장될 때 암호화된다. `namifax encrypt-secrets`가 한 번에 변환한다(여러 번 실행해도 안전).
+* **운영 절차**: ① 키 생성 `python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"` → ② `NAMIFAX_SECRET_KEY`로 설정 → ③ `namifax encrypt-secrets`. 키를 잃으면 암호화된 값은 복구할 수 없으므로 안전한 곳에 보관한다.
+
+**남은 항목**: TOTP 복구 코드는 일회용 평문 값으로 저장된다(해시 저장으로 바꿀 수 있음). 현재 TOTP 등록(`enable_totp`)을 호출하는 화면·엔드포인트가 없어 사용자가 직접 2FA를 켤 방법이 없다(서비스와 로그인 단계만 존재).

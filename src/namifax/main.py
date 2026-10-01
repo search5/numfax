@@ -41,6 +41,7 @@ Available commands:
   serve              Start the HTTP / API web service (with integrated APScheduler)
   scheduler          Start the standalone background APScheduler daemon
   createuser         Create or update user account (ID / PW credentials)
+  encrypt-secrets    Encrypt stored credentials (cloud key, SMTP password, 2FA seeds) with NAMIFAX_SECRET_KEY
   dynconf            Execute HylaFAX dynamic configuration call filter
   cron               Execute periodic maintenance and archive cleanup (manual trigger)
   notify             Execute HylaFAX outbound post-send notification hook
@@ -186,6 +187,10 @@ def main(argv: list[str] | None = None) -> int:
     elif cmd in ("import-blacklist", "import_blacklist"):
         from namifax.cli import import_blacklist
         return import_blacklist.main(sub_args)
+
+    elif cmd in ("encrypt-secrets", "encrypt_secrets"):
+        from namifax.cli import encrypt_secrets
+        return encrypt_secrets.run_encrypt_secrets(sub_args)
 
     elif cmd == "reroute":
         from namifax.cli import reroute

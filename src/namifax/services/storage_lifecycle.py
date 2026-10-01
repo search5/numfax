@@ -139,7 +139,7 @@ class StorageLifecycleService:
                 region_name=cfg.get("cloud_region_name", "") or None,
                 bucket_name=cfg.get("cloud_bucket_name", "") or None,
                 access_key=cfg.get("cloud_access_key", "") or None,
-                secret_key=cfg.get("cloud_secret_key", "") or None,
+                secret_key=cfg.get_secret("cloud_secret_key", "") or None,
                 prefix=cfg.get("cloud_prefix", ""),
             ))
         policy = StorageLifecyclePolicy(

@@ -1,3 +1,4 @@
+import logging
 import os
 import smtplib
 import ssl
@@ -7,6 +8,7 @@ from email.message import EmailMessage
 from typing import Any, Dict, List, Optional
 from sqlalchemy.orm import Session
 
+from namifax.common.secretbox import encrypt
 from namifax.models.systemsettings import SystemSettings
 
 
@@ -41,6 +43,17 @@ class SmtpSettingsService:
 
     ROW_ID = 1
 
+    @staticmethod
+    def _read_password(stored):
+        """The SMTP password in plain text; an undecryptable one is treated as missing (the admin re-enters it)."""
+        from namifax.common.secretbox import SecretDecryptError, SecretKeyError, decrypt
+
+        try:
+            return decrypt(stored) or stored
+        except (SecretDecryptError, SecretKeyError):
+            logging.getLogger("namifax").error("The stored SMTP password cannot be decrypted; enter it again")
+            return None
+
     def __init__(self, session: Optional[Session] = None) -> None:
         self.session = session
 
@@ -60,7 +73,7 @@ class SmtpSettingsService:
             smtp_security=row.smtp_security or "NONE",
             smtp_auth=bool(row.smtp_auth),
             smtp_username=row.smtp_username,
-            smtp_password=row.smtp_password,
+            smtp_password=self._read_password(row.smtp_password),
             from_email=row.from_email or "root@localhost",
             from_name=row.from_name or "NamiFAX",
             email_sig_text=row.email_sig_text or "",
@@ -95,7 +108,7 @@ class SmtpSettingsService:
         row.smtp_security = security
         row.smtp_auth = auth
         row.smtp_username = data.get("smtp_username") or ""
-        row.smtp_password = data.get("smtp_password") or ""
+        row.smtp_password = encrypt(data.get("smtp_password") or "")
         row.from_email = str(data.get("from_email", "root@localhost")).strip()
         row.from_name = str(data.get("from_name", "NamiFAX")).strip()
         row.email_sig_text = data.get("email_sig_text", "") or ""

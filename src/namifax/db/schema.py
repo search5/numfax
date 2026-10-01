@@ -191,7 +191,9 @@ SCHEMA_STATEMENTS = [
         secret_key TEXT NOT NULL,
         is_enabled INTEGER DEFAULT 0,
         backup_codes TEXT,
-        created_at TEXT
+        created_at TEXT,
+        failed_attempts INTEGER DEFAULT 0,
+        locked_until TEXT
     );""",
     """CREATE TABLE IF NOT EXISTS UserWebAuthnCredentials (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -232,11 +234,19 @@ def init_database_tables(db: DatabaseEngine) -> bool:
     _rename_user_passwords_columns(db)
     _migrate_address_book_keys(db)
     _apply_schema_migrations(db)
+    _add_totp_lockout_columns(db)
     _backfill_alias_columns(db)
     _normalize_boolean_flags(db)
     seed_database_if_empty(db)
     _backfill_alias_columns(db)  # rows created by the seed
     return True
+
+
+def _add_totp_lockout_columns(db: DatabaseEngine) -> None:
+    """Databases created before the 2FA lockout get its two columns (the enrolled secrets are kept)."""
+    for column, ddl in (("failed_attempts", "INTEGER DEFAULT 0"), ("locked_until", "TEXT")):
+        if not _has_column(db, "UserTOTP", column):
+            db.query(f"ALTER TABLE UserTOTP ADD COLUMN {column} {ddl}")
 
 
 _USER_ACCOUNT_FLAGS = ("superuser", "can_del", "pwd_reuse", "is_admin", "wasreset", "acc_enabled", "deleted", "any_modem")

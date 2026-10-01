@@ -21,7 +21,7 @@ class SystemSettings(Base):
     smtp_security: Mapped[Optional[str]] = mapped_column(String(16), server_default="NONE")
     smtp_auth: Mapped[Optional[bool]] = mapped_column(Boolean, server_default=false())
     smtp_username: Mapped[Optional[str]] = mapped_column(String(255))
-    smtp_password: Mapped[Optional[str]] = mapped_column(String(255))
+    smtp_password: Mapped[Optional[str]] = mapped_column(String(512))   # holds an encrypted token
     from_email: Mapped[Optional[str]] = mapped_column(String(255), server_default="root@localhost")
     from_name: Mapped[Optional[str]] = mapped_column(String(255), server_default="NamiFAX")
     email_sig_text: Mapped[Optional[str]] = mapped_column(Text)

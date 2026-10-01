@@ -14,6 +14,15 @@ def _tables(engine):
     return set(sa.inspect(engine).get_table_names())
 
 
+def _alembic_head():
+    from alembic.config import Config
+    from alembic.script import ScriptDirectory
+
+    cfg = Config()
+    cfg.set_main_option("script_location", "namifax:alembic")
+    return ScriptDirectory.from_config(cfg).get_current_head()
+
+
 def _model_tables():
     import namifax.models  # noqa: F401
     from namifax.models.meta import Base
@@ -73,7 +82,7 @@ def test_server_database_gets_the_schema_and_default_records_only(server_db_url)
         ensure_schema(engine)
         assert _model_tables() <= _tables(engine)
         with engine.connect() as c:
-            assert c.execute(sa.text("SELECT version_num FROM alembic_version")).scalar() == "0020"
+            assert c.execute(sa.text("SELECT version_num FROM alembic_version")).scalar() == _alembic_head()
         with Session(engine) as s:
             from namifax.models import CoverPages, FaxCategory, UserAccount
 

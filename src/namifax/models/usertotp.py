@@ -19,3 +19,6 @@ class UserTOTP(Base):
     is_enabled: Mapped[Optional[bool]] = mapped_column(LegacyBoolean, server_default=false())
     backup_codes: Mapped[Optional[str]] = mapped_column(Text)
     created_at: Mapped[Optional[str]] = mapped_column(String(40))
+    # brute-force protection: consecutive wrong codes and, once too many, when the lock ends (ISO text)
+    failed_attempts: Mapped[Optional[int]] = mapped_column(Integer, server_default="0")
+    locked_until: Mapped[Optional[str]] = mapped_column(String(32))

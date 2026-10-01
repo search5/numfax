@@ -23,6 +23,19 @@ class SystemConfigService:
             return default
         return row.value
 
+    def get_secret(self, key: str, default: str = "") -> str:
+        """A value stored with ``set_secret`` (or, from before encryption existed, in plain text)."""
+        from namifax.common.secretbox import decrypt
+
+        stored = self.get(key, "")
+        return decrypt(stored) if stored else default
+
+    def set_secret(self, key: str, value: str) -> None:
+        """Store ``value`` encrypted; raises ``SecretKeyError`` when no encryption key is configured."""
+        from namifax.common.secretbox import encrypt
+
+        self.set(key, encrypt(value))
+
     def set(self, key: str, value: str) -> None:
         self.session.merge(SystemConfig(key=key, value=value))
         self.session.flush()

@@ -33,8 +33,9 @@ def test_model_maps_the_legacy_table():
     assert isinstance(table.c.smtp_port.type, Integer)
     assert isinstance(table.c.smtp_auth.type, Boolean)
     assert isinstance(table.c.email_sig_html.type, Text)
-    for name in ("smtp_host", "smtp_username", "smtp_password", "from_email", "from_name"):
+    for name in ("smtp_host", "smtp_username", "from_email", "from_name"):
         assert isinstance(table.c[name].type, String) and table.c[name].type.length == 255
+    assert table.c.smtp_password.type.length == 512      # room for the encrypted value
     assert table.c.updated_at.type.length == 40  # ISO text, kept compatible with legacy rows
 
 

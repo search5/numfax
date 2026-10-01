@@ -17,7 +17,8 @@ def test_model_maps_the_table():
 
     t = UserTOTP.__table__
     assert t.name == "UserTOTP" and [c.name for c in t.primary_key.columns] == ["uid"]
-    assert set(t.c.keys()) == {"uid", "secret_key", "is_enabled", "backup_codes", "created_at"}
+    assert set(t.c.keys()) == {"uid", "secret_key", "is_enabled", "backup_codes", "created_at",
+                               "failed_attempts", "locked_until"}
     assert not t.c.secret_key.nullable
     for d in (sqlite.dialect(), mysql.dialect(), postgresql.dialect()):
         assert "PRIMARY KEY (uid)" in str(CreateTable(t).compile(dialect=d))

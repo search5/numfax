@@ -79,6 +79,11 @@ def login_post_view(request):
     return HTTPFound(location=loc, headers=headers)
 
 
+def _lockout_message(totp_svc, uid) -> str:
+    minutes = max(1, -(-totp_svc.lock_remaining_seconds(uid) // 60))
+    return _("Too many failed attempts. Try again in %(minutes)d minutes.") % {"minutes": minutes}
+
+
 @view_config(route_name="login_totp", renderer="namifax:templates/login_totp.jinja2", permission="public")
 def login_totp_view(request):
     """Render and verify 2FA TOTP / backup code challenge."""
@@ -98,7 +103,9 @@ def login_totp_view(request):
         db = request.db
         totp_svc = TotpService(request.dbsession)
 
-        if totp_svc.verify_user_login(pending_uid, code):
+        if totp_svc.is_locked(pending_uid):
+            error = _lockout_message(totp_svc, pending_uid)
+        elif totp_svc.verify_user_login(pending_uid, code):
             username = request.session.pop("2fa_pending_username", "user")
             request.session.pop("2fa_pending_uid", None)
             request.session["user_id"] = pending_uid
@@ -111,7 +118,8 @@ def login_totp_view(request):
                     pass
             return HTTPFound(location=loc, headers=headers)
         else:
-            error = _("Invalid or expired verification code.")
+            error = _lockout_message(totp_svc, pending_uid) if totp_svc.is_locked(pending_uid) \
+                else _("Invalid or expired verification code.")
 
     return {
         "title": "- NamiFAX - Two-Factor Authentication",
