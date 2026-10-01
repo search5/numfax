@@ -872,7 +872,7 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 * **로그인은 토큰 쿠키 하나**(`namifax_session`, `NamiFaxSecurityPolicy`)다. 비밀번호, 2FA, SAML, 패스키 모두 성공하면 `remember()`로 같은 쿠키를 받는다(비활성·삭제 계정은 모든 경로에서 거부).
 * **흐름 상태용 세션**(`namifax_flow`, 서명 쿠키, HttpOnly, SameSite=Lax): 2FA 중간 단계, 패스키 챌린지, 2FA 등록 중인 비밀키(암호화). 서명 키는 `session.secret` 또는 `NAMIFAX_SESSION_SECRET`(운영에서는 고정 필수, 없으면 프로세스별 임의 키 + 경고). HTTPS면 `session.secure = true`.
 * **2FA(TOTP)**: 사용자가 설정 화면에서 직접 켜고 끈다(CSRF 토큰, 끄기·복구 코드 재발급은 비밀번호/코드 필요). 틀린 코드는 DB에 집계하고(확인 전에 원자적 증가) 5회 실패 시 15분 잠근다. 복구 코드는 `XXXXX-XXXXX`(약 49비트), 솔트된 scrypt 해시만 저장하며 1회용이다. 분실 시 `namifax reset-2fa <사용자>`.
-* **SAML**: 기존 계정은 IdP가 단언한 이메일로만 찾는다(NameID 앞부분으로 찾지 않음). JIT로 만든 계정은 관리자가 아니고 임의 비밀번호를 쓰지 않는다. `RelayState`는 이 사이트의 경로만 허용. SAML 로그인은 2FA 단계를 거치지 않는다(IdP가 인증을 책임진다는 가정).
+* **SAML**: 기존 계정은 IdP가 단언한 이메일로만 찾는다(NameID 앞부분으로 찾지 않음). JIT로 만든 계정은 관리자가 아니고 임의 비밀번호를 쓰지 않는다. `RelayState`는 이 사이트의 경로만 허용. SAML 로그인은 앱의 2FA 단계를 거치지 않는다(확정된 정책: 2단계 인증은 IdP가 책임진다).
 * **비밀값 암호화**(`common/secretbox.py`): 클라우드 `secret_key`, SMTP 비밀번호, TOTP 시드를 `enc:v1:` Fernet 토큰으로 저장. 키는 `NAMIFAX_SECRET_KEY`/ini `secret.key`(쉼표로 여러 개면 키 교체). **키가 없으면 평문 저장을 거부**한다. 기존 평문은 읽을 수 있고 `namifax encrypt-secrets`가 변환한다. 복호화 불가 시 SMTP는 "없음", TOTP는 로그인 거부(fail closed).
 * **비밀번호 변경 강제**(레거시와 같은 규칙): 관리자가 초기화한 계정(`wasreset`), 만료일(`pwdexpire`, `pwdcycle`)이 지난 계정, 한 번도 로그인하지 않은 계정은 올바른 비밀번호로 로그인해도 인증 쿠키를 받지 못하고 `/pwdexpired`로 간다. 거기서 이전 비밀번호와 새 비밀번호(8자 이상, 이력에 없는 것)를 입력하면 변경 후 로그인이 이어진다(2FA가 있으면 코드 단계가 그다음). 요청에 사용자명이 없으므로 다른 사람의 비밀번호는 바꿀 수 없다. SAML·패스키 로그인은 IdP/기기가 인증을 책임지므로 대상이 아니다.
 * 로그인 비밀번호는 레거시 호환 MD5(해시이므로 되돌릴 수 없음)다. 저장된 해시를 비밀번호로 쓸 수 없다.
@@ -931,7 +931,7 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 
 1. ~~SQLite 새 DB의 데모 계정~~ → **해결**: 데모 데이터는 옵트인이고 `createuser`에 내장 비밀번호가 없다(17.2).
 2. ~~기존 AvantFAX MySQL DB 연결~~ → **해결**: 17.5a.
-1. SAML 로그인이 2FA를 거치지 않는 것이 의도된 정책인지 확인이 필요하다.
+(없음) SAML 로그인이 앱의 2FA를 거치지 않는 것은 **확정된 정책**이다. 2단계 인증은 IdP가 책임진다.
 
 ---
 
