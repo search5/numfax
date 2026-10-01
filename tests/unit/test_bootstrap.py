@@ -124,7 +124,7 @@ def test_the_application_runs_on_the_server_database(server_db_url):
                  "/settings", "/admin", "/admin/users", "/admin/modems", "/admin/routing/did", "/admin/barcodes",
                  "/admin/covers", "/admin/categories", "/admin/dynconf", "/admin/system_logs", "/admin/smtp",
                  "/admin/printers", "/ajax/inbox", "/ajax/modemstatus", "/admin/storage", "/admin/saml", "/admin/fax2email",
-                 "/admin/system_func", "/helper/distrolist", "/helper/faxcontacts", "/helper/emailcontacts",
+                 "/admin/system_func", "/helper/distrocontacts", "/helper/faxcontacts", "/helper/emailcontacts",
                  "/ajax/book?q=a", "/ajax/archivebook?q=a", "/emailbook"):
         r = client.get(path, expect_errors=True)
         if r.status_int != 200:          # a redirect would mean "not logged in" (or a page that bailed out)
