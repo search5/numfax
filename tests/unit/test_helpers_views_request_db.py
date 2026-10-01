@@ -30,6 +30,7 @@ def test_view_builds_domain_objects_with_request_db(name, method, params):
     req = testing.DummyRequest()
     req.__dict__["identity"] = {"username": "admin", "uid": 1, "is_admin": True, "superuser": True}
     req.db = object()
+    req.dbsession = object()
     req.method = method
     req.params = params
     req.POST = params
@@ -40,5 +41,7 @@ def test_view_builds_domain_objects_with_request_db(name, method, params):
 
     calls = [c for m in mocks.values() for c in m.call_args_list]
     assert calls, f"{name} built no domain objects"
-    for call in calls:
-        assert call.kwargs.get("db") is req.db, f"{name}: domain object built without request.db"
+    for cls_name, mock in mocks.items():
+        expected = req.dbsession if cls_name == "FaxPDFCategory" else req.db
+        for call in mock.call_args_list:
+            assert call.kwargs.get("db") is expected, f"{name}: {cls_name} built with the wrong database"

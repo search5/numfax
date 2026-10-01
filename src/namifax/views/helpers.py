@@ -295,7 +295,7 @@ def upload_fax_contacts(request):
 
     category_options = []
     try:
-        cats = FaxPDFCategory(db=request.db).get_categories() or []
+        cats = FaxPDFCategory(db=request.dbsession).get_categories() or []
         for cat in cats:
             cid = cat.get("catid")
             cname = html.escape(str(cat.get("name", "")))

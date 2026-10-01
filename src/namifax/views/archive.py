@@ -55,7 +55,7 @@ def archive_view(request):
             pass
 
     # Retrieve categories
-    cat_svc = FaxPDFCategory(db=request.db)
+    cat_svc = FaxPDFCategory(db=request.dbsession)
     categories = cat_svc.get_categories() or []
 
     return {

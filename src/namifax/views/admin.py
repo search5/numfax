@@ -168,7 +168,7 @@ def admin_users_view(request):
     except Exception:
         did_routes = []
 
-    fc = FaxPDFCategory(db=request.db)
+    fc = FaxPDFCategory(db=request.dbsession)
     try:
         categories = fc.get_categories() or []
     except Exception:
@@ -258,7 +258,7 @@ def admin_routing_did_view(request):
     """Admin DID inbound routing configuration and full CRUD management."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
     did = DIDRouting(db=request.db)
-    fc = FaxPDFCategory(db=request.db)
+    fc = FaxPDFCategory(db=request.dbsession)
     message = None
     error = None
 
@@ -481,7 +481,7 @@ def admin_covers_view(request):
 def admin_categories_view(request):
     """Admin fax categories manager."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    fc = FaxPDFCategory(db=request.db)
+    fc = FaxPDFCategory(db=request.dbsession)
     message = None
     error = None
 
@@ -700,7 +700,7 @@ def admin_fax2email_view(request):
     from namifax.services.addressbook import AFAddressBook
     from namifax.services.categories import FaxPDFCategory
     ab = AFAddressBook(db=request.db)
-    fc = FaxPDFCategory(db=request.db)
+    fc = FaxPDFCategory(db=request.dbsession)
     message = None
     error = None
 

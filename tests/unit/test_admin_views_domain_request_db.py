@@ -58,9 +58,11 @@ def test_view_builds_domain_objects_with_request_db(name, method, params):
         with contextlib.suppress(Exception):
             getattr(admin_mod, name)(req)
 
-    for cls in classes:
+    for target, cls in zip(dict.fromkeys(SERVICE_TARGETS), classes):
+        # ORM-backed services take the request session, the others the legacy request.db
+        expected = req.dbsession if target.endswith("FaxPDFCategory") else req.db
         for call in cls.call_args_list:
-            assert call.kwargs.get("db") is req.db, f"{name}: {cls._mock_name or cls} built without request.db"
+            assert call.kwargs.get("db") is expected, f"{name}: {target} built with the wrong database"
     for hname, helper in helpers.items():
         for call in helper.call_args_list:
             if hname == "get_all_syslogs":  # ORM-backed: takes the request session

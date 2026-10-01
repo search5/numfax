@@ -12,11 +12,15 @@ DEFAULT_LANG = {
 
 
 class FaxPDFCategory:
-    """Service class for managing fax categories (FaxCategory table)."""
+    """Service class for managing fax categories (FaxCategory table).
+
+    ``db`` is a SQLAlchemy ``Session`` (portable across SQLite, MySQL, MariaDB and PostgreSQL) or the
+    legacy ``DatabaseEngine`` (still used by the FFI bridge).
+    """
 
     def __init__(
         self,
-        db: DatabaseEngine | None = None,
+        db: Any = None,
         engine: DatabaseEngine | None = None,
         repo: MDBOData | None = None,
         lang: dict[str, str] | None = None,
@@ -75,8 +79,7 @@ class FaxPDFCategory:
     def get_list_step(self) -> tuple[int, str] | None:
         """Step-by-step cursor emulation for legacy get_list(&$catid, &$name)."""
         if not self._queried:
-            results = self.faxcategory.query("SELECT * FROM FaxCategory ORDER BY name", reduce_single=False)
-            self._list_results = list(results) if isinstance(results, list) else []
+            self._list_results = self.faxcategory.select(order_by="name")
             self._queried = True
 
         if self._list_results:
@@ -88,10 +91,7 @@ class FaxPDFCategory:
 
     def get_categories(self) -> list[dict[str, Any]] | None:
         """Return all categories ordered by name."""
-        results = self.faxcategory.query("SELECT * FROM FaxCategory ORDER BY name", reduce_single=False)
-        if isinstance(results, list):
-            return results
-        return None
+        return self.faxcategory.select(order_by="name")
 
     def get_error(self) -> str | None:
         """Return the last error message."""

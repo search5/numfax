@@ -937,7 +937,8 @@ Pyramid cookiecutter starter(2.1-branch, jinja2 + sqlalchemy)를 임시 디렉�
 | 1 | `SystemSettings` | `[ORM]` | 0002 | SMTP 단일 행(id=1). `SmtpSettingsService(Session)`, `MailerService.from_settings(session)`. 참고: `common/helpers.send_mail`은 DB의 SMTP 설정을 쓰지 않고 `MailerService`를 직접 만든다(저장한 설정이 실제 발송에 반영되지 않음) |
 | 1 | `NetworkPrinters` | `[ORM]` | 0003 | `NetworkPrinterService(Session)`, 자동 증가 PK는 방언별 DDL로 생성. `delete_printer`는 삭제된 행이 있었는지를 반환(이전에는 항상 True). `process_inbound_print_job`의 미사용 `db` 인자는 유지 |
 | 1 | `SysLog` | `[ORM]` | 0004 | `SysLogService(Session).search`. `logdate`는 ISO 텍스트 `String(32)`로 유지(날짜 접두어 `LIKE`가 PostgreSQL의 timestamp에서는 불가). 키워드는 모든 DB에서 대소문자 무시 부분 일치이고 `%`/`_`는 리터럴(이전에는 와일드카드). 조회 오류를 삼키지 않음(이전에는 `except Exception`으로 빈 목록). 관찰: `avantfaxlog()`가 이 테이블에 쓰지 않던 포팅 회귀는 14.7에서 수정 |
-| 2 | `Modems`, `DIDRoute`, `BarcodeRoute`, `FaxCategory`, `CoverPages`, `DynConf`(+`DynamicConfig` 정리) | `[LEGACY]` | - | |
+| 2 | `FaxCategory` | `[ORM]` | 0005 | `FaxPDFCategory`는 `Session`과 레거시 `DatabaseEngine` 모두 받음. 웹 뷰(admin, archive, helpers)는 `request.dbsession` |
+| 2 | `CoverPages`, `DynConf`, `BarcodeRoute`, `DIDRoute`, `Modems` | `[LEGACY]` | - | 14.8의 `OrmRepository` 덕분에 서비스 수정은 `query(...)`를 `select(...)`로 바꾸는 정도. `DynamicConfig` 쌍둥이 테이블은 SQL 사용처가 없어 모델화하지 않고 제거 대상, `BarcodeRoute.bcr_id`는 포트가 만든 `barcode_id` 중복 컬럼이라 모델에서 제외 |
 | 3 | `UserAccount`, `UserPasswords`, `UserTOTP`, `AddressBook*`, `DistroList`, `UserWebAuthnCredentials`, `FaxOCR` | `[LEGACY]` | - | `AddressBook` `ab_id`/`abook_id` 불일치를 모델화하며 정리 |
 | 4 | `FaxArchive` 외 | `[LEGACY]` | - | |
 
@@ -973,3 +974,20 @@ Pyramid cookiecutter starter(2.1-branch, jinja2 + sqlalchemy)를 임시 디렉�
 - 로깅은 호출자를 실패시키지 않는다: DB가 없거나 INSERT가 실패해도 예외를 삼킨다.
 - 검증: 세션/CLI/DB 불가/INSERT 실패 케이스, `faxrcvd` 훅이 남긴 줄이 관리자 로그가 읽는 테이블에 저장되는지, 서버 3종에서 `add`와 검색 왕복.
 - `[관찰]` 호출 한 번마다 엔진·연결을 새로 만든다(훅당 최대 19회). 현재 규모에서는 무시할 수준이지만, 필요해지면 프로세스 단위로 엔진을 재사용하도록 최적화할 수 있다.
+
+### 14.8 `OrmRepository`: 서비스를 다시 쓰지 않고 이식하는 저장소 계층
+**문제**: 2~4그룹의 서비스는 모두 레거시 `MDBOData`를 통해 raw SQL로 DB에 접근한다. 서비스를 하나씩 다시 쓰면 양이 많고 레거시 API 계약(PHP 클래스를 옮긴 상태 보존형 객체)을 깨뜨릴 위험이 크다.
+
+**해결**: `Repository("Modems", db=<Session>)`이 `OrmRepository`를 돌려준다(`Repository.__new__` 디스패치). `DatabaseEngine`을 주면 기존 구현 그대로다. 서비스가 쓰는 메서드(`find`, `new_entry`, `update_entry`, `delete_entry`, `load`, `get_id`, `get_info`, `.data.set_id`)를 같은 시그니처로 제공하고, 값은 바인딩 파라미터이며 테이블·타입·인용은 방언에 맞게 SQLAlchemy가 처리한다. 고정 SQL(`query("SELECT ... ORDER BY ...")`)은 양쪽 구현이 모두 가진 `select(columns, order_by, descending)`로 대체한다.
+
+**레거시 동작 보존(서비스 코드가 의존하는 의미)**
+- `find`는 등호 비교만 지원한다. `None`과의 비교는 아무것도 일치시키지 않는다(SQL `= NULL`).
+- 값은 느슨하게 타입 변환한다: `"5"`가 정수 컬럼과 일치한다(PostgreSQL은 자동 변환하지 않으므로 컬럼 타입별 변환이 필요).
+- 갱신/삭제는 대상 행이 없어도 성공(`True`). `update_entry(info)`는 payload의 기본키가 대상 행을 고르고 기본키 자체는 다시 쓰지 않는다(서비스가 로드한 전체 행을 넘기는 패턴).
+- 알 수 없는 키는 무시. `reduce_single`은 일치가 정확히 1건일 때 dict를 돌려준다. 정렬이 없던 `find`는 기본키 순으로 고정(PostgreSQL 결과 순서 안정).
+
+**의도적으로 다른 점**: 고유 제약 위반 같은 DB 오류가 `False`가 아니라 예외로 올라온다. 세이브포인트를 쓰지 않는 이유: pysqlite(SQLite)는 최외곽 `RELEASE SAVEPOINT`에서 트랜잭션을 조기 커밋해 `pyramid_tm`의 원자성을 깨뜨린다. 서비스는 대부분 생성 전에 `find`로 중복을 확인한다. 원시 `query()`는 ORM 저장소에서 `NotImplementedError`로 막아 변환 누락이 즉시 드러나게 했다.
+
+**서비스 생성자**: `db` 인자에 `Session`(이식 가능) 또는 `DatabaseEngine`(FFI 브리지 `bridge_cli`가 계속 사용)을 받는다. 모든 호출처가 세션으로 넘어가면 레거시 경로를 제거한다.
+
+**검증**: `tests/unit/test_orm_repository.py`(SQLite 20개 + 서버 3종). 서비스는 `Session`과 `DatabaseEngine` 양쪽으로 매개변수화한 테스트가 같은 결과를 요구한다(`test_fax_category.py`).

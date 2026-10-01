@@ -21,6 +21,7 @@ class _Request(testing.DummyRequest):
 def _request(method="GET", params=None, session=None):
     req = _Request()
     req.db = object()
+    req.dbsession = object()
     req.method = method
     req.params = params or {}
     req.POST = req.params
@@ -79,7 +80,8 @@ def test_archive_view_uses_request_db():
     with patch.object(archive_mod, "FaxPDFArchive", arc), patch.object(archive_mod, "FaxPDFCategory", cat), \
             patch.object(archive_mod, "get_all_admin_modems", modems), contextlib.suppress(Exception):
         archive_mod.archive_view(req)
-    _assert_all_db(_calls(arc, cat, modems), req, "archive_view")
+    _assert_all_db(_calls(arc, modems), req, "archive_view")
+    assert cat.call_args.kwargs.get("db") is req.dbsession  # ORM-backed: the request session
     assert arc.call_args_list and modems.call_args_list
 
 

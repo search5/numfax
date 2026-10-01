@@ -14,6 +14,16 @@ T = TypeVar("T", bound=MDBObject)
 class Repository(Generic[T]):
     """Generic repository managing CRUD and queries for MDBObject entities."""
 
+    def __new__(cls, model_class: Any, db: Any = None):
+        # A SQLAlchemy session selects the ORM-backed, database-portable implementation.
+        from sqlalchemy.orm import Session
+
+        if isinstance(db, Session):
+            from namifax.db.orm_repository import OrmRepository
+
+            return OrmRepository(model_class, db)
+        return super().__new__(cls)
+
     def __init__(self, model_class: type[T] | str, db: DatabaseEngine | None = None) -> None:
         self._db = resolve_db(db, "Repository")
         if isinstance(model_class, str):
@@ -110,6 +120,25 @@ class Repository(Generic[T]):
         if reduce_single and len(records) == 1:
             return records[0]
         return records
+
+    def select(
+        self,
+        columns: list[str] | None = None,
+        order_by: str | None = None,
+        descending: bool = False,
+    ) -> list[dict[str, Any]]:
+        """Ordered listing; the same call exists on the ORM repository (portable across databases)."""
+        import re
+
+        names = [*(columns or [])] + ([order_by] if order_by else [])
+        if any(not re.fullmatch(r"\w+", n) for n in names):
+            raise ValueError("select() takes plain column names")
+        cols = ", ".join(columns) if columns else "*"
+        sql = f"SELECT {cols} FROM {self.data.get_table_name()}"
+        if order_by:
+            sql += f" ORDER BY {order_by} {'DESC' if descending else 'ASC'}"
+        rows = self.query(sql, reduce_single=False)
+        return list(rows) if isinstance(rows, list) else []
 
     def quote(self, val: Any) -> str:
         """Escape and quote value for SQL."""
