@@ -5,7 +5,6 @@ from __future__ import annotations
 from contextlib import contextmanager
 from unittest.mock import MagicMock, patch
 
-import namifax.db.engine as engine_mod
 from namifax.cli import notify as mod
 
 QFILE = (
@@ -38,7 +37,6 @@ def _run(tmp_path, **kwargs):
 
 
 def test_injected_db_reaches_every_domain_object(tmp_path, monkeypatch):
-    monkeypatch.setattr(engine_mod, "_DEFAULT_ENGINE", None)
     db = object()
     code, classes = _run(tmp_path, db=db)
     assert code == 0
@@ -46,7 +44,6 @@ def test_injected_db_reaches_every_domain_object(tmp_path, monkeypatch):
         assert cls.call_args_list, f"{name} not built"
         for call in cls.call_args_list:
             assert call.kwargs.get("db") is db, name
-    assert engine_mod._DEFAULT_ENGINE is None
 
 
 def test_without_injected_db_opens_cli_db_once(tmp_path):

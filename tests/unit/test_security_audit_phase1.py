@@ -173,22 +173,21 @@ class TestSecurityAuditPhase1(unittest.TestCase):
         # Insert known log
         self.db.query("INSERT INTO SysLog (logdate, logtext) VALUES ('2026-10-01 10:00:00', 'Legitimate security test log')")
 
-        with patch("namifax.db.repository.get_default_engine", return_value=self.db):
-            # Attack payload in kw
-            malicious_kw = "' OR '1'='1"
-            rows = get_all_syslogs(kw=malicious_kw)
-            # Should safely search for the literal string and return 0 results
-            self.assertEqual(len(rows), 0)
+        # Attack payload in kw
+        malicious_kw = "' OR '1'='1"
+        rows = get_all_syslogs(kw=malicious_kw, db=self.db)
+        # Should safely search for the literal string and return 0 results
+        self.assertEqual(len(rows), 0)
 
-            # Legitimate search should find the record
-            legit_rows = get_all_syslogs(kw="security test")
-            self.assertEqual(len(legit_rows), 1)
-            self.assertEqual(legit_rows[0]["logtext"], "Legitimate security test log")
+        # Legitimate search should find the record
+        legit_rows = get_all_syslogs(kw="security test", db=self.db)
+        self.assertEqual(len(legit_rows), 1)
+        self.assertEqual(legit_rows[0]["logtext"], "Legitimate security test log")
 
-            # Attack payload in date parts
-            malicious_day = "01' OR '1'='1"
-            date_rows = get_all_syslogs(day=malicious_day, month="10", year="2026")
-            self.assertEqual(len(date_rows), 0)
+        # Attack payload in date parts
+        malicious_day = "01' OR '1'='1"
+        date_rows = get_all_syslogs(day=malicious_day, month="10", year="2026", db=self.db)
+        self.assertEqual(len(date_rows), 0)
 
     # =========================================================================
     # AUDIT-18: Package Import Path Verification

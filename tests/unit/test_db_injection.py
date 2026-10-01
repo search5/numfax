@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import sqlite3
-from unittest.mock import patch
 
 import pytest
 from pyramid.scripting import prepare
@@ -81,15 +80,6 @@ def _make_app(db_file):
     from namifax import create_app
 
     return create_app(**{"sqlalchemy.url": f"sqlite:///{db_file}"})
-
-
-def test_create_app_does_not_touch_default_engine(tmp_path):
-    with patch("namifax.db.engine.get_default_engine") as spy:
-        app = _make_app(tmp_path / "a.db")
-        env = prepare(registry=app.registry)
-        env["request"].db.query("SELECT 1 AS one")
-        env["closer"]()
-    spy.assert_not_called()
 
 
 def test_registry_holds_engine_and_tables_are_initialised(tmp_path):

@@ -3,22 +3,12 @@
 from __future__ import annotations
 
 from contextlib import contextmanager
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
-import pytest
-
-import namifax.db.engine as engine_mod
 from namifax.cli import dynconf as dynconf_mod
 from namifax.cli import faxcover as faxcover_mod
 from namifax.cli import phb as phb_mod
 from namifax.cli import user as user_mod
-
-
-@pytest.fixture(autouse=True)
-def pristine_default_engine(monkeypatch):
-    monkeypatch.setattr(engine_mod, "_DEFAULT_ENGINE", None)
-    yield
-    assert engine_mod._DEFAULT_ENGINE is None, "global default engine was created implicitly"
 
 
 def _fake_cli_db(opened, calls):

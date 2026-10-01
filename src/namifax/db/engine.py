@@ -277,28 +277,3 @@ class MissingDatabase:
 def resolve_db(db: "DatabaseEngine | None", owner: str) -> Any:
     """Return the injected engine, or a loud MissingDatabase placeholder."""
     return db if db is not None else MissingDatabase(owner)
-
-
-_DEFAULT_ENGINE: DatabaseEngine | None = None
-
-
-def get_default_engine() -> DatabaseEngine:
-    """Retrieve or initialize the default application DatabaseEngine."""
-    global _DEFAULT_ENGINE
-    if _DEFAULT_ENGINE is None:
-        _DEFAULT_ENGINE = DatabaseEngine()
-        db_path = os.environ.get("NAMIFAX_DB_PATH", os.path.join(os.getcwd(), "namifax.db"))
-        _DEFAULT_ENGINE.connect_sqlite(db_path)
-        try:
-            from namifax.db.schema import init_database_tables
-            init_database_tables(_DEFAULT_ENGINE)
-        except ImportError:
-            pass
-    return _DEFAULT_ENGINE
-
-
-def set_default_engine(engine: DatabaseEngine) -> None:
-    """Override default application DatabaseEngine."""
-    global _DEFAULT_ENGINE
-    _DEFAULT_ENGINE = engine
-

@@ -826,7 +826,7 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 | C4 | `cli/dynconf.py`, `phb.py`, `user.py`, `faxcover.py`: 동일 패턴. `faxcover`는 연결 없는 `DatabaseEngine()`과 존재하지 않는 `reduce_single` 인자 때문에 발신자 조회가 항상 조용히 실패하던 결함을 `query()`+`get_records()`로 수정 | `[COMPLETE]` | `tests/unit/test_cli_misc_db.py` 9개, 전체 544 통과 |
 | C5 | `main.py` `serve_main`: `get_default_engine()` 제거 → `cli_db()`로 스키마 보장, Pyramid 앱 생성 실패를 stderr에 기록한 뒤 폴백 | `[COMPLETE]` | `tests/unit/test_serve_main_db.py` 2개, 전체 546 통과 |
 | C6 (P2) | `namifax.cli`에 `ocr_import`, `create_thumbnails`, `import_users`, `import_blacklist`, `reroute` 이식(`main(args, *, db=None)` + `cli_db()`), `main.py` 디스패치를 `namifax.cli.*`로 전환. `ocr_import`는 항상 `""`을 반환하던 스텁 `ocr_faxcontent` 대신 `common.helpers.ocr_faxcontent`(실제 OCR) 사용 | `[COMPLETE]` | `tests/unit/test_cli_batch_tools_db.py` 17개, 전체 565 통과. `import_archive`는 결함 F4-19의 스텁이라 이식하지 않음 |
-| F | `Repository` 폴백 제거 및 `get_default_engine` 삭제는 13.2(web/*)·13.3(avantfax 복사본) 결정 이후 | `[BLOCKED]` | 현재 `get_default_engine`을 쓰는 곳: `db/repository.py`(namifax·avantfax), `namifax.web.*`, `avantfax.*` 전체 |
+| F (P5) | `Repository`의 `get_default_engine()` 폴백을 `resolve_db`(미주입 시 첫 사용에서 `RuntimeError`)로 교체하고 `get_default_engine`/`set_default_engine`/`_DEFAULT_ENGINE` 삭제. 테스트의 "전역 엔진 미생성" 스캐폴딩은 구조적 보장으로 대체 | `[COMPLETE]` | `tests/unit/test_global_engine_removed.py` 11개, 전체 566 통과(고정/랜덤). 잔여 `DatabaseEngine()`는 의도된 2곳: `common/helpers.py` `OcrService()`(텍스트 추출 전용), `db/bridge_cli.py`(PHP FFI 프로토콜의 `connect` 요청으로 연결을 지정) |
 
 ### 13.1 루프 3에서 발견된 기존 결함 (미해결, 별도 처리 필요)
 - `[NEEDS_CLARIFICATION]` `services/ocr.py`(`FaxOCR`), `services/webauthn.py`(`UserWebAuthnCredentials`)의 `CREATE TABLE`이 MySQL 전용 DDL(`AUTO_INCREMENT`, `INDEX`, `ENGINE=InnoDB`)이고 `db/schema.py`에도 없다. SQLite에서는 `try/except: pass`로 가려진 채 테이블이 생성되지 않는다. 운영 DB가 MySQL/SQLite 중 무엇인지 확정 후 `schema.py`로 이관 필요.
@@ -864,3 +864,9 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
   - `namifax.create_app`의 `except ImportError` 폴백과 `serve_main`의 JSON 앱 폴백도 제거했다. Pyramid 앱 생성에 실패하면 `serve_main`은 오류를 stderr에 출력하고 종료 코드 1로 끝난다(조용한 대체 서비스 없음).
   - 함께 삭제한 테스트: `test_web_{admin,app,archive,auth,inbox,outbox,sendfax}.py` 7개 파일(제거된 핸들러 대상).
 - 위 모듈 매트릭스(1~21절)의 `src/avantfax/...` 경로 표기는 실제 위치인 `src/namifax/...`로 정정했다.
+
+### 13.7 Spec 48 최종 상태
+- 프로세스 전역 DB 엔진(`_DEFAULT_ENGINE`)은 존재하지 않는다. DB 접근 경로는 두 가지뿐이다: 웹은 `create_app`이 설정(`sqlalchemy.url` > `DATABASE_URL` > `AFDB_URL` > `NAMIFAX_DB_PATH`)에서 만든 엔진 하나를 `registry["dbengine"]`에 보관하고 요청마다 `request.db`로 제공한다. CLI는 같은 URL 해석을 쓰는 `provider.cli_db()` 컨텍스트로 명령 단위 연결을 연다.
+- 도메인 객체/서비스는 `db`를 주입받으며, 주입하지 않으면 연결 없는 엔진으로 조용히 실패하는 대신 첫 사용에서 `RuntimeError`를 낸다.
+- 테스트는 `tests/conftest.py`의 autouse `isolated_database`로 테스트마다 별도 DB를 쓰고, 공용 `seeded_db` 픽스처로 시드된 격리 DB를 명시 주입한다.
+- 다음 트랙(B): `request.dbsession`(SQLAlchemy ORM) 전환. 선행 조건은 `pyramid_tm`/`zope.sqlalchemy` 의존성 추가와 ORM 모델 정의이며, 모듈 단위 파일럿(예: `SystemSettings`/`SysLog`)으로 시작한다. 한 요청에서 `request.db`와 `request.dbsession`을 동시에 쓰지 않도록 모듈 단위로 전환한다.

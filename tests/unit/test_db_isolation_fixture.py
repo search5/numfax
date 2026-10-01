@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import os
 
-import namifax.db.engine as engine_mod
 from namifax.db.provider import cli_db, resolve_database_url
 
 
@@ -21,9 +20,3 @@ def test_cli_db_does_not_touch_the_working_tree_database():
         assert db.query("SELECT COUNT(*) AS n FROM UserAccount").executed
     after = os.stat(path).st_mtime_ns if os.path.exists(path) else None
     assert before == after
-
-
-def test_legacy_default_engine_is_isolated_and_reset():
-    assert engine_mod._DEFAULT_ENGINE is None
-    engine = engine_mod.get_default_engine()
-    assert engine is engine_mod._DEFAULT_ENGINE

@@ -5,7 +5,6 @@ from __future__ import annotations
 from contextlib import contextmanager
 from unittest.mock import MagicMock, patch
 
-import namifax.db.engine as engine_mod
 from namifax.cli import faxrcvd as mod
 
 
@@ -25,7 +24,6 @@ def _run(tmp_path, **kwargs):
 
 
 def test_injected_db_reaches_every_domain_object(tmp_path, monkeypatch):
-    monkeypatch.setattr(engine_mod, "_DEFAULT_ENGINE", None)
     db = object()
     code, classes, ocr = _run(tmp_path, db=db)
     assert code == 0
@@ -34,7 +32,6 @@ def test_injected_db_reaches_every_domain_object(tmp_path, monkeypatch):
         for call in classes[name].call_args_list:
             assert call.kwargs.get("db") is db, name
     assert ocr.call_args.kwargs.get("db") is db
-    assert engine_mod._DEFAULT_ENGINE is None
 
 
 def test_without_injected_db_opens_cli_db_once(tmp_path):

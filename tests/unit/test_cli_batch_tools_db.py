@@ -7,14 +7,6 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-import namifax.db.engine as engine_mod
-
-
-@pytest.fixture(autouse=True)
-def pristine_default_engine(monkeypatch):
-    monkeypatch.setattr(engine_mod, "_DEFAULT_ENGINE", None)
-    yield
-    assert engine_mod._DEFAULT_ENGINE is None, "global default engine was created implicitly"
 
 
 def _fake_cli_db(opened, calls):

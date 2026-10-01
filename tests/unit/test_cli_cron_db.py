@@ -5,7 +5,6 @@ from __future__ import annotations
 from contextlib import contextmanager
 from unittest.mock import MagicMock, patch
 
-import namifax.db.engine as engine_mod
 from namifax.cli import cron as mod
 
 
@@ -19,7 +18,6 @@ def _run(argv, tmp_path, **kwargs):
 
 
 def test_injected_db_reaches_every_service(tmp_path, monkeypatch):
-    monkeypatch.setattr(engine_mod, "_DEFAULT_ENGINE", None)
     db = object()
     code, classes, lifecycle = _run(["-t", "30", "-i", "7", "-d", "9", "-p", "3"], tmp_path, db=db)
     assert code == 0
@@ -27,7 +25,6 @@ def test_injected_db_reaches_every_service(tmp_path, monkeypatch):
         assert cls.call_args_list, cls._mock_name
         for call in cls.call_args_list:
             assert call.kwargs.get("db") is db, cls._mock_name
-    assert engine_mod._DEFAULT_ENGINE is None
 
 
 def test_tmp_cleanup_only_does_not_open_a_database(tmp_path):

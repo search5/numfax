@@ -4,19 +4,15 @@ from __future__ import annotations
 
 import sqlite3
 
-import namifax.db.engine as engine_mod
 from namifax.db.engine import DatabaseEngine
 
 
 def test_cli_db_uses_env_url_and_ensures_schema(tmp_path, monkeypatch):
     from namifax.db.provider import cli_db
-
-    monkeypatch.setattr(engine_mod, "_DEFAULT_ENGINE", None)
     db_file = tmp_path / "cli.db"
     with cli_db(environ={"DATABASE_URL": f"sqlite:///{db_file}"}) as db:
         assert isinstance(db, DatabaseEngine)
         assert db.query("SELECT COUNT(*) AS n FROM UserAccount").executed
-    assert engine_mod._DEFAULT_ENGINE is None
 
     con = sqlite3.connect(db_file)
     try:

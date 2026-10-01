@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Any, Generic, TypeVar
 
 from namifax.db.base import MDBObject
-from namifax.db.engine import DatabaseEngine, get_default_engine
+from namifax.db.engine import DatabaseEngine, resolve_db
 from namifax.db.query import QueryBuilder, SQL_AND
 
 T = TypeVar("T", bound=MDBObject)
@@ -15,7 +15,7 @@ class Repository(Generic[T]):
     """Generic repository managing CRUD and queries for MDBObject entities."""
 
     def __init__(self, model_class: type[T] | str, db: DatabaseEngine | None = None) -> None:
-        self._db = db or get_default_engine()
+        self._db = resolve_db(db, "Repository")
         if isinstance(model_class, str):
             import namifax.models.entities as ent_mod
 
