@@ -130,6 +130,20 @@ class Repository(Generic[T]):
         res = self._db.query(f"DELETE FROM {self.data.get_table_name()} WHERE {where}")
         return int(self._db.affected_rows) if res.executed else 0
 
+    def search_text(self, column: str, text: str, order_by: str | None = None) -> list[dict[str, Any]]:
+        """Rows whose ``column`` contains the words of ``text`` in order (case-insensitive, wildcards literal)."""
+        import re
+
+        from namifax.db.textsearch import ESCAPE_CHAR, like_pattern
+
+        if not re.fullmatch(r"\w+", column) or (order_by and not re.fullmatch(r"\w+", order_by)):
+            raise ValueError("search_text() takes plain column names")
+        pattern = self._db.quote(like_pattern(text))
+        sql = (f"SELECT * FROM {self.data.get_table_name()} WHERE LOWER({column}) LIKE {pattern} "
+               f"ESCAPE '{ESCAPE_CHAR}' ORDER BY {order_by or column}")
+        rows = self.query(sql, reduce_single=False)
+        return list(rows) if isinstance(rows, list) else []
+
     def select(
         self,
         columns: list[str] | None = None,

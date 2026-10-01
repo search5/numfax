@@ -207,6 +207,41 @@ def test_server_database_repository_behaviour(monkeypatch, server_db_url, alembi
             assert repo.find({"name": "renamed"})["catid"] == repo.get_id()
             repo.data.set_id(repo.get_id())
             assert repo.delete_entry() is True and repo.find({"name": "renamed"}, reduce_single=False) == []
+
+            for name in ("Acme Corp", "100% Fax", "100 Fax", "file_name", "fileXname"):
+                repo.new_entry({"name": name})
+            found = lambda text: [r["name"] for r in repo.search_text("name", text, order_by="name")]  # noqa: E731
+            assert found("ACME") == ["Acme Corp"] and found("acm corp") == ["Acme Corp"] and found("corp acm") == []
+            assert found("100%") == ["100% Fax"] and found("file_name") == ["file_name"]
+            assert found("x'/**/OR/**/1=1--") == [] and found("한글") == ["한글 'q' \\x"]
             session.commit()
     finally:
         engine.dispose()
+
+
+# --- search_text: the same safe, portable search on both repository implementations ---------------
+
+def test_search_text_is_case_insensitive_ordered_and_literal_on_both_backends(dbsession, seeded_db):
+    from namifax.db.repository import Repository
+
+    for backend in (dbsession, seeded_db):
+        if backend is dbsession:
+            backend.execute(sa.text("DELETE FROM FaxCategory"))
+        else:
+            backend.query("DELETE FROM FaxCategory")
+        repo = Repository("FaxCategory", db=backend)
+        for name in ("Acme Corp", "100% Fax", "100 Fax", "file_name", "fileXname", "O'Brien \\ & Co"):
+            repo.new_entry({"name": name})
+        names = lambda text: [r["name"] for r in repo.search_text("name", text, order_by="name")]  # noqa: E731
+        assert names("ACME") == ["Acme Corp"]
+        assert names("acm corp") == ["Acme Corp"] and names("corp acm") == []
+        assert names("100%") == ["100% Fax"] and names("file_name") == ["file_name"]
+        assert names("o'brien") == ["O'Brien \\ & Co"]
+        assert names("' OR 1=1 --") == [] and names("x\\' OR 1=1") == []
+
+
+def test_search_text_rejects_unsafe_column_names_on_the_legacy_repository(seeded_db):
+    from namifax.db.repository import Repository
+
+    with pytest.raises(ValueError):
+        Repository("FaxCategory", db=seeded_db).search_text("name; DROP TABLE FaxCategory", "x")

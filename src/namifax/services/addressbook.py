@@ -101,10 +101,7 @@ class AFAddressBook:
 
     def search_companies(self, query: str) -> list[dict[str, Any]]:
         """Search companies matching query string."""
-        keywords = query.strip().replace(" ", "%")
-        sql = f"SELECT * FROM AddressBook WHERE company LIKE '%{keywords}%' ORDER BY company"
-        res = self.addressbook.query(sql, reduce_single=False)
-        return res if isinstance(res, list) else []
+        return self.addressbook.search_text("company", query, order_by="company")
 
     def totalfaxes(self) -> tuple[int, int] | None:
         """Return (faxfrom, faxto) counts for loaded fax number."""

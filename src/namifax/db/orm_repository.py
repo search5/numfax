@@ -236,6 +236,17 @@ class OrmRepository:
         self.session.expire_all()
         return int(result.rowcount or 0)
 
+    def search_text(self, column: str, text: str, order_by: Optional[str] = None) -> list[dict[str, Any]]:
+        """Rows whose ``column`` contains the words of ``text`` in order (case-insensitive, wildcards literal)."""
+        from namifax.db.textsearch import ESCAPE_CHAR, like_pattern
+
+        col = self._column(column)
+        order_col = self._column(order_by) if order_by else self._pk_col
+        stmt = (sa.select(self.model)
+                .where(sa.func.lower(col).like(like_pattern(text), escape=ESCAPE_CHAR))
+                .order_by(order_col, self._pk_col))
+        return [self._row_dict(o) for o in self.session.scalars(stmt)]
+
     def findext(self, conditions: dict[str, Any]) -> Any:
         return self.find(conditions=conditions, query_logic=SQL_AND, reduce_single=True)
 
