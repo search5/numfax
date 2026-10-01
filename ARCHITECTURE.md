@@ -870,3 +870,25 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 - 도메인 객체/서비스는 `db`를 주입받으며, 주입하지 않으면 연결 없는 엔진으로 조용히 실패하는 대신 첫 사용에서 `RuntimeError`를 낸다.
 - 테스트는 `tests/conftest.py`의 autouse `isolated_database`로 테스트마다 별도 DB를 쓰고, 공용 `seeded_db` 픽스처로 시드된 격리 DB를 명시 주입한다.
 - 다음 트랙(B): `request.dbsession`(SQLAlchemy ORM) 전환. 선행 조건은 `pyramid_tm`/`zope.sqlalchemy` 의존성 추가와 ORM 모델 정의이며, 모듈 단위 파일럿(예: `SystemSettings`/`SysLog`)으로 시작한다. 한 요청에서 `request.db`와 `request.dbsession`을 동시에 쓰지 않도록 모듈 단위로 전환한다.
+
+---
+
+## 14. B 트랙 준비 (B0): Pyramid starter 구조 도입
+
+Pyramid cookiecutter starter(2.1-branch, jinja2 + sqlalchemy)를 임시 디렉터리에 생성해 비교한 뒤, 우리에게 없던 인프라를 도입했다. 생성물은 확인 후 삭제했다.
+
+| 단계 | 내용 | 상태 | 검증 |
+| :---: | :--- | :---: | :--- |
+| B0-1 | 의존성 추가: `pyramid_tm`, `pyramid_retry`, `transaction`, `zope.sqlalchemy`, `alembic` | `[COMPLETE]` | 전체 통과 유지 |
+| B0-2 | `models.includeme`를 starter 구조로 완성: `tm.manager_hook`을 `pyramid_tm` include **전에** 설정(기존에는 후에 설정해 무시됨), `pyramid_retry` include, `get_tm_session`, `app.dbsession` 테스트 훅, `ImportError` 폴백 제거 | `[COMPLETE]` | `tests/unit/test_models_includeme.py` 8개 |
+| B0-3 | `src/namifax/alembic/{env.py,script.py.mako,versions/}` + ini의 `[alembic] script_location = namifax:alembic`. `env.py`는 앱과 같은 `resolve_database_url`로 DB를 정하고 `Base.metadata`를 대상으로 함 | `[COMPLETE]` | `tests/unit/test_alembic_wiring.py` 6개, 실제 `alembic -c development.ini current/heads` 확인 |
+| B0-4 | starter 스타일 픽스처 `dbengine`, `app`, `tm`(doomed), `dbsession`, `testapp`, `app_request`, `dummy_request`, `dummy_config` (테스트별 격리 DB에 바인딩) | `[COMPLETE]` | `tests/unit/test_orm_fixtures.py` 6개 |
+| B0-5 | `request.db`가 `pyramid_tm` tween 아래(`environ["tm.active"]`)에서는 `request.dbsession`의 커넥션·트랜잭션을 공유(`DatabaseEngine.from_connection(..., managed=True, on_change=mark_changed)`). tween 밖(스크립트, `prepare`)에서는 기존처럼 독립 커넥션 + 쓰기마다 commit | `[COMPLETE]` | `tests/unit/test_request_db_shared_session.py` 11개(실제 tween, 롤백, E2E 로그인+SMTP 저장), 전체 597 통과 |
+| B0-6 | 가장 작은 모듈(`SysLog` 등)의 ORM 모델 + `request.dbsession` 파일럿 | `[PENDING]` | 운영 DB 종류(MySQL/SQLite) 확정 필요 |
+
+### 14.1 B0에서 확정된 계약
+- **zope.sqlalchemy는 변경이 감지된 세션만 커밋한다.** ORM flush는 자동으로 변경을 표시하지만 `session.execute(text(...))` 같은 raw SQL은 `zope.sqlalchemy.mark_changed(session)`를 호출하지 않으면 요청 끝에 **롤백**된다. 그래서 `request.db`(raw 커서)의 모든 성공한 쓰기는 `on_change`로 `mark_changed`를 호출한다.
+- managed `DatabaseEngine`은 commit/rollback/close를 하지 않는다. `transaction()` 컨텍스트도 커밋하지 않고 소유자(tm)에게 맡긴다.
+- 요청이 예외로 끝나면 `request.db`로 쓴 변경도 함께 롤백된다(이전에는 쓰기마다 즉시 commit이라 부분 반영이 가능했음).
+- explicit 매니저는 호출자가 `begin()`해야 한다(tween이 요청마다 수행). tween 없이 `prepare()`로 만든 요청에서 `request.dbsession`을 쓰려면 먼저 `request.tm.begin()`이 필요하다.
+- `namifax.main`은 모듈 이름이자 패키지의 `main = create_app` 함수 이름이다(13.4 참조).

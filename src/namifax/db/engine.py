@@ -38,6 +38,9 @@ class DatabaseEngine:
         self._last_insert_id: int | None = None
         self._affected_rows: int = 0
         self._error: str | None = None
+        # managed: the connection and its transaction belong to someone else (e.g. pyramid_tm)
+        self._managed: bool = False
+        self._on_change: Any = None
 
     @property
     def affected_rows(self) -> int:
@@ -81,11 +84,26 @@ class DatabaseEngine:
             return False
 
     @classmethod
-    def from_connection(cls, conn: Any, debug: bool = False) -> "DatabaseEngine":
-        """Wrap an already-open DBAPI connection (e.g. a pooled SQLAlchemy raw connection)."""
+    def from_connection(
+        cls,
+        conn: Any,
+        debug: bool = False,
+        *,
+        managed: bool = False,
+        on_change: Any = None,
+    ) -> "DatabaseEngine":
+        """Wrap an already-open DBAPI connection (e.g. a pooled SQLAlchemy raw connection).
+
+        With ``managed=True`` the engine never commits, rolls back or closes the connection: the
+        transaction belongs to the owner (a ``pyramid_tm`` request transaction). ``on_change`` is
+        called after every successful write so the owner can learn that the transaction changed
+        (zope.sqlalchemy only commits sessions it knows are changed).
+        """
         db = cls(debug=debug)
         db._conn = conn
         db._cursor = conn.cursor()
+        db._managed = managed
+        db._on_change = on_change
         return db
 
     def connect_sqlite(self, path: str = ":memory:") -> bool:
@@ -105,7 +123,7 @@ class DatabaseEngine:
         if self._cursor:
             with contextlib.suppress(Exception):
                 self._cursor.close()
-        if self._conn:
+        if self._conn and not self._managed:
             with contextlib.suppress(Exception):
                 self._conn.close()
         self._conn = None
@@ -157,9 +175,12 @@ class DatabaseEngine:
 
                 return QueryResult(executed=True, row_count=row_count)
             else:
-                self._conn.commit()
+                if not self._managed:
+                    self._conn.commit()
                 self._affected_rows = self._cursor.rowcount
                 self._last_insert_id = self._cursor.lastrowid
+                if self._on_change is not None:
+                    self._on_change()
                 return QueryResult(executed=True, affected_rows=self._affected_rows)
         except Exception as exc:
             self._error = str(exc)
@@ -249,6 +270,10 @@ class DatabaseEngine:
         """Transactional context manager."""
         if not self._conn:
             raise RuntimeError("Database not connected")
+        if self._managed:
+            # the owner of the transaction commits or rolls back
+            yield self._cursor
+            return
         try:
             yield self._cursor
             self._conn.commit()

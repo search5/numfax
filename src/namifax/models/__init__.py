@@ -67,8 +67,26 @@ def includeme(config):
     config.registry["dbsession_factory"] = session_factory
 
     def db(request):
-        """Legacy-compatible DatabaseEngine on a pooled connection, released at request end."""
+        """Legacy-compatible DatabaseEngine for this request.
+
+        Under the ``pyramid_tm`` tween it shares the connection and transaction of
+        ``request.dbsession``: raw writes commit or roll back together with the ORM session, and
+        every write marks the session as changed (zope.sqlalchemy ignores raw SQL otherwise).
+        Outside the tween (scripts, ``prepare``) it uses its own pooled connection and commits
+        each write.
+        """
+        from namifax.db.engine import DatabaseEngine
         from namifax.db.provider import open_db
+
+        if request.environ.get("tm.active"):
+            session = request.dbsession
+            shared = DatabaseEngine.from_connection(
+                session.connection().connection,
+                managed=True,
+                on_change=lambda: zope.sqlalchemy.mark_changed(session),
+            )
+            request.add_finished_callback(lambda req: shared.disconnect())
+            return shared
 
         legacy = open_db(request.registry["dbengine"])
         request.add_finished_callback(lambda req: legacy.disconnect())
