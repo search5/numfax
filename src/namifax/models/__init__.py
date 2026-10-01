@@ -11,6 +11,7 @@ from namifax.models.meta import Base  # noqa: F401
 # Ensure all entities are registered to Base
 from namifax.models import entities  # noqa: F401
 from namifax.models.systemconfig import SystemConfig  # noqa: F401
+from namifax.models.networkprinters import NetworkPrinters  # noqa: F401
 from namifax.models.systemsettings import SystemSettings  # noqa: F401
 
 configure_mappers()

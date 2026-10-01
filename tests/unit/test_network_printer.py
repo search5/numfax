@@ -2,9 +2,12 @@ import os
 import socket
 import unittest
 from unittest.mock import MagicMock, patch
-from namifax.db.engine import DatabaseEngine
-from src.namifax.db.schema import init_database_tables
-from src.namifax.services.printer import (
+from sqlalchemy.orm import Session
+
+import namifax.models  # noqa: F401  (registers every model)
+from namifax.db.provider import create_sa_engine
+from namifax.models.meta import Base
+from namifax.services.printer import (
     NetworkPrinter,
     NetworkPrinterService,
     extract_fax_tags,
@@ -14,10 +17,14 @@ from src.namifax.services.printer import (
 
 class TestNetworkPrinter(unittest.TestCase):
     def setUp(self):
-        self.db = DatabaseEngine()
-        self.db.connect_sqlite(":memory:")
-        init_database_tables(self.db)
-        self.service = NetworkPrinterService(self.db)
+        self.engine = create_sa_engine("sqlite://")
+        Base.metadata.create_all(self.engine)
+        self.session = Session(self.engine)
+        self.service = NetworkPrinterService(self.session)
+
+    def tearDown(self):
+        self.session.close()
+        self.engine.dispose()
 
     def test_printer_crud(self):
         pid = self.service.create_printer(
@@ -84,7 +91,7 @@ class TestNetworkPrinter(unittest.TestCase):
         job_result = process_inbound_print_job(
             print_data=b"Document with [[FAX: 02-555-1234]]",
             sender_user="erp_system",
-            db=self.db,
+            db=self.session,
         )
         self.assertTrue(job_result["dispatched"])
         self.assertEqual(job_result["destination"], "02-555-1234")
@@ -95,7 +102,7 @@ class TestNetworkPrinter(unittest.TestCase):
         job_result = process_inbound_print_job(
             print_data=b"Document without any fax tag",
             sender_user="office_pc",
-            db=self.db,
+            db=self.session,
         )
         self.assertFalse(job_result["dispatched"])
         self.assertEqual(job_result["status"], "DRAFT")

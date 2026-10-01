@@ -3,7 +3,10 @@ import re
 import socket
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
-from namifax.db.engine import DatabaseEngine, resolve_db
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+
+from namifax.models.networkprinters import NetworkPrinters
 
 
 @dataclass
@@ -18,28 +21,34 @@ class NetworkPrinter:
 
 
 class NetworkPrinterService:
-    """Manages physical network printers and direct socket printing dispatch."""
+    """Manages physical network printers and direct socket printing dispatch.
 
-    def __init__(self, db: Optional[DatabaseEngine] = None) -> None:
-        self.db = resolve_db(db, "NetworkPrinterService")
+    Printers are stored through an ORM session, so the same code runs on SQLite, MySQL, MariaDB
+    and PostgreSQL.
+    """
+
+    def __init__(self, session: Optional[Session] = None) -> None:
+        self.session = session
+
+    def _require_session(self) -> Session:
+        if self.session is None:
+            raise RuntimeError("NetworkPrinterService: no database session injected (pass request.dbsession)")
+        return self.session
 
     def list_printers(self) -> List[NetworkPrinter]:
-        res = self.db.query("SELECT id, name, protocol, host, port, queue_name, description FROM NetworkPrinters ORDER BY id ASC")
-        records = self.db.get_records() if res.executed else []
-        printers: List[NetworkPrinter] = []
-        for r in records:
-            printers.append(
-                NetworkPrinter(
-                    id=int(r["id"]),
-                    name=r["name"],
-                    protocol=r.get("protocol") or "RAW",
-                    host=r["host"],
-                    port=int(r.get("port") or 9100),
-                    queue_name=r.get("queue_name"),
-                    description=r.get("description"),
-                )
+        rows = self._require_session().scalars(select(NetworkPrinters).order_by(NetworkPrinters.id.asc()))
+        return [
+            NetworkPrinter(
+                id=int(r.id),
+                name=r.name,
+                protocol=r.protocol or "RAW",
+                host=r.host,
+                port=int(r.port or 9100),
+                queue_name=r.queue_name,
+                description=r.description,
             )
-        return printers
+            for r in rows
+        ]
 
     def create_printer(
         self,
@@ -50,22 +59,28 @@ class NetworkPrinterService:
         queue_name: Optional[str] = None,
         description: Optional[str] = None,
     ) -> int:
-        clean_name = self.db.quote(name)
-        clean_proto = self.db.quote(protocol.upper())
-        clean_host = self.db.quote(host)
-        clean_queue = self.db.quote(queue_name) if queue_name else "NULL"
-        clean_desc = self.db.quote(description) if description else "NULL"
-
-        sql = (
-            f"INSERT INTO NetworkPrinters (name, protocol, host, port, queue_name, description) "
-            f"VALUES ({clean_name}, {clean_proto}, {clean_host}, {int(port)}, {clean_queue}, {clean_desc})"
+        session = self._require_session()
+        printer = NetworkPrinters(
+            name=name,
+            protocol=protocol.upper(),
+            host=host,
+            port=int(port),
+            queue_name=queue_name or None,
+            description=description or None,
         )
-        self.db.query(sql)
-        return self.db.get_insert_id() or 0
+        session.add(printer)
+        session.flush()
+        return int(printer.id)
 
     def delete_printer(self, printer_id: int) -> bool:
-        res = self.db.query(f"DELETE FROM NetworkPrinters WHERE id = {int(printer_id)}")
-        return res.executed
+        """Delete a printer; True when a printer with that id existed."""
+        session = self._require_session()
+        printer = session.get(NetworkPrinters, int(printer_id))
+        if printer is None:
+            return False
+        session.delete(printer)
+        session.flush()
+        return True
 
     def send_raw_print(self, host: str, port: int, data: bytes, timeout: int = 10) -> Dict[str, Any]:
         """Dispatch print stream directly to printer RAW 9100 socket."""
@@ -114,7 +129,7 @@ def extract_fax_tags(text_content: str) -> List[str]:
 def process_inbound_print_job(
     print_data: bytes,
     sender_user: str = "guest",
-    db: Optional[DatabaseEngine] = None,
+    db: Any = None,
 ) -> Dict[str, Any]:
     """Process inbound print stream from CUPS virtual queue and persist files."""
     import tempfile

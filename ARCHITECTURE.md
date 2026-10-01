@@ -935,7 +935,7 @@ Pyramid cookiecutter starter(2.1-branch, jinja2 + sqlalchemy)를 임시 디렉�
 | :--- | :--- | :---: | :---: | :--- |
 | 1 | `SystemConfig` | `[ORM]` | 0001 | 파일럿. storage/saml 뷰 |
 | 1 | `SystemSettings` | `[ORM]` | 0002 | SMTP 단일 행(id=1). `SmtpSettingsService(Session)`, `MailerService.from_settings(session)`. 참고: `common/helpers.send_mail`은 DB의 SMTP 설정을 쓰지 않고 `MailerService`를 직접 만든다(저장한 설정이 실제 발송에 반영되지 않음) |
-| 1 | `NetworkPrinters` | `[LEGACY]` | - | 다음 |
+| 1 | `NetworkPrinters` | `[ORM]` | 0003 | `NetworkPrinterService(Session)`, 자동 증가 PK는 방언별 DDL로 생성. `delete_printer`는 삭제된 행이 있었는지를 반환(이전에는 항상 True). `process_inbound_print_job`의 미사용 `db` 인자는 유지 |
 | 1 | `SysLog` | `[LEGACY]` | - | |
 | 2 | `Modems`, `DIDRoute`, `BarcodeRoute`, `FaxCategory`, `CoverPages`, `DynConf`(+`DynamicConfig` 정리) | `[LEGACY]` | - | |
 | 3 | `UserAccount`, `UserPasswords`, `UserTOTP`, `AddressBook*`, `DistroList`, `UserWebAuthnCredentials`, `FaxOCR` | `[LEGACY]` | - | `AddressBook` `ab_id`/`abook_id` 불일치를 모델화하며 정리 |

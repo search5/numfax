@@ -8,14 +8,12 @@ from pyramid import testing
 from namifax.db.engine import DatabaseEngine
 from namifax.services.cover_studio import CoverStudioService
 from namifax.services.ocr import OcrService
-from namifax.services.printer import NetworkPrinterService
 from namifax.services.saml import SAMLService
 from namifax.services.storage_lifecycle import StorageLifecycleService
 from namifax.services.totp import TotpService
 from namifax.services.webauthn import WebAuthnService
 
 SERVICES = [
-    NetworkPrinterService,
     StorageLifecycleService,
     CoverStudioService,
     TotpService,

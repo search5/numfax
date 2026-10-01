@@ -13,6 +13,7 @@ import pytest
 import sqlalchemy as sa
 import transaction
 import webtest
+from pyramid.request import Request
 from pyramid.scripting import prepare
 from pyramid.testing import DummyRequest, testConfig
 
@@ -171,3 +172,16 @@ def alembic_cfg(tmp_path):
     ini_path = tmp_path / "alembic-test.ini"
     ini_path.write_text(ini)
     return alembic.config.Config(str(ini_path))
+
+
+@pytest.fixture
+def admin_call(app, tm, dbsession):
+    """Call an admin view as a superadmin, with the fixture session and transaction manager."""
+    def call(view, method="GET", params=None, path="/admin/x"):
+        req = Request.blank(path, POST=params) if method == "POST" else Request.blank(path)
+        with prepare(registry=app.registry, request=req) as env:
+            request = env["request"]
+            request.dbsession, request.tm = dbsession, tm
+            request.session = {"is_superadmin": True, "is_admin": True, "username": "admin"}
+            return view(request)
+    return call
