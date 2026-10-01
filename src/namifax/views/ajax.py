@@ -196,7 +196,7 @@ def ajax_faxalter(request):
     if request.method == "POST":
         jid = request.params.get("jid")
         if jid:
-            fq = FaxQueue(db=request.db)
+            fq = FaxQueue(db=request.dbsession)
             operations = {}
             for key in ("destination", "priority", "numtries", "killtime", "sendtime"):
                 if key in request.params:

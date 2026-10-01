@@ -120,11 +120,11 @@ class FaxQueue:
 
             if owner in (self.faxmail_user, self.www_user):
                 if user_svc.loadbyemail(mailaddr):
-                    entry["user"] = getattr(user_svc, "name", mailaddr)
+                    entry["user"] = getattr(user_svc, "name", None) or mailaddr
                 else:
                     entry["user"] = mailaddr
             elif user_svc.load_username(owner):
-                entry["user"] = getattr(user_svc, "name", owner)
+                entry["user"] = getattr(user_svc, "name", None) or owner
             else:
                 entry["user"] = owner
 
@@ -144,7 +144,7 @@ class FaxQueue:
 
             if q_owner == owner:
                 if user_svc.load_username(q_owner):
-                    entry["user"] = getattr(user_svc, "name", owner)
+                    entry["user"] = getattr(user_svc, "name", None) or owner
                 else:
                     entry["user"] = owner
                 ret.append(entry)

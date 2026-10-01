@@ -14,7 +14,7 @@ def outbox_view(request):
     identity = request.identity or {"username": "admin", "is_admin": True}
     flash_message = None
 
-    fq = FaxQueue(auto_process=False, db=request.db)
+    fq = FaxQueue(auto_process=False, db=request.dbsession)
 
     kill_jid = request.params.get("kill")
     if kill_jid:

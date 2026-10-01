@@ -2,10 +2,12 @@ from __future__ import annotations
 
 from pyramid.httpexceptions import HTTPFound
 from pyramid.request import Request
+from pyramid.security import remember
 from pyramid.response import Response
 from pyramid.view import view_config
 
 from namifax.services.saml import SAMLService, SAMLSettings
+from namifax.services.user_account import AFUserAccount
 
 def _get_saml_service(request: Request) -> SAMLService:
     base_url = request.application_url if hasattr(request, "application_url") else "http://localhost:8000"
@@ -15,7 +17,12 @@ def _get_saml_service(request: Request) -> SAMLService:
         sp_acs_url=f"{base_url}/auth/saml/acs",
         sp_sls_url=f"{base_url}/auth/saml/sls",
     )
-    return SAMLService(settings, db=request.db)
+    return SAMLService(settings, db=request.dbsession)
+
+def _safe_relay(target: str) -> str:
+    """Only paths on this site; ``RelayState`` comes from the browser and must not become an open redirect."""
+    return target if target.startswith("/") and not target.startswith("//") and "\\" not in target else "/inbox"
+
 
 @view_config(route_name="saml_metadata")
 def saml_metadata_view(request: Request) -> Response:
@@ -55,13 +62,13 @@ def saml_acs_view(request: Request) -> Response:
     if not user:
         return HTTPFound(location="/login?error=user_provision_failed")
 
-    if hasattr(request, "session"):
-        request.session["username"] = user.get_username()
-        request.session["uid"] = user.get_uid()
-        if hasattr(request.session, "changed"):
-            request.session.changed()
+    # sign in like the password login does: the same checks (disabled account) and the same token cookie
+    username = user.get_username()
+    remote_ip = getattr(request, "remote_addr", None) or "127.0.0.1"
+    if not AFUserAccount(db=request.dbsession).login_webauth(username, remote_ip=remote_ip):
+        return HTTPFound(location="/login?error=account_disabled")
 
-    return HTTPFound(location=relay_state)
+    return HTTPFound(location=_safe_relay(relay_state), headers=remember(request, username))
 
 @view_config(route_name="saml_sls")
 def saml_sls_view(request: Request) -> Response:

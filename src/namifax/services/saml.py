@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import base64
+import re
 import os
 import urllib.parse
 import uuid
@@ -29,7 +30,7 @@ class SAMLSettings:
 class SAMLService:
     """Enterprise SAML 2.0 Service Provider implementation."""
 
-    def __init__(self, settings: SAMLSettings | None = None, db: DatabaseEngine | None = None) -> None:
+    def __init__(self, settings: SAMLSettings | None = None, db: Any = None) -> None:
         self.settings = settings or SAMLSettings()
         self.db = resolve_db(db, "SAMLService")
 
@@ -132,17 +133,28 @@ class SAMLService:
         name_id: str,
         attributes: dict[str, Any] | None = None,
     ) -> AFUserAccount | None:
-        """Find user by NameID/email or provision new account if JIT is enabled."""
+        """Find the account with the asserted email, or create one when JIT provisioning is on.
+
+        An existing account is matched by email only. Matching on the local part of the NameID would let
+        ``admin@other-company`` sign in as the local ``admin``. A new account gets a free username derived
+        from the local part, no admin rights and a random password it never uses.
+        """
         attributes = attributes or {}
-        username = name_id.split("@")[0] if "@" in name_id else name_id
-        email = attributes.get("email") or (name_id if "@" in name_id else f"{username}@local")
-        display_name = attributes.get("displayName") or attributes.get("name") or username
+        local = name_id.split("@")[0] if "@" in name_id else name_id
+        base = re.sub(r"[^\w.]", "_", local) or "user"
+        email = attributes.get("email") or (name_id if "@" in name_id else f"{base}@local")
+        display_name = attributes.get("displayName") or attributes.get("name") or base
 
         user = AFUserAccount(db=self.db)
-        if user.load_by_username(username):
+        if user.loadbyemail(email):
             return user
 
         if self.settings.jit_provisioning:
+            username = base
+            for n in range(1, 1000):
+                if not AFUserAccount(db=self.db).load_username(username):
+                    break
+                username = f"{base}{n}"
             temp_pwd = base64.b64encode(os.urandom(12)).decode("ascii")
             if user.create_user(
                 username=username,

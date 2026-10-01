@@ -114,3 +114,28 @@ def test_the_application_runs_on_the_server_database(server_db_url):
         if r.status_int != 200:          # a redirect would mean "not logged in" (or a page that bailed out)
             bad.append((path, r.status_int, r.headers.get("Location")))
     assert bad == []
+
+    # the flows that need the session cookie and the account service, on this database
+    from unittest.mock import patch
+
+    from namifax.services.totp import TotpService
+
+    with Session(engine) as s:
+        two = AFUserAccount(db=s)
+        assert two.create({"username": "twofa", "password": "Secret123!", "email": "twofa@x.test", "acc_enabled": 1})
+        t = TotpService(s)
+        with patch.object(t, "verify_code", return_value=True):
+            codes = t.enable_totp(two.uid, t.generate_secret(), "123456")["backup_codes"]
+        s.commit()
+    second = webtest.TestApp(app, extra_environ={"HTTP_HOST": "example.com"})
+    step = second.post("/login", {"username": "twofa", "password": "Secret123!", "_submit_check": "1"})
+    assert step.headers["Location"].endswith("/login/totp")
+    assert second.post("/login/totp", {"code": codes[0]}).status_int == 302
+    assert second.get("/inbox", expect_errors=True).status_int == 200
+
+    third = webtest.TestApp(app, extra_environ={"HTTP_HOST": "example.com"})
+    result = {"success": True, "name_id": "sso@x.test", "attributes": {"email": "sso@x.test", "displayName": "Sso User"}}
+    with patch("namifax.services.saml.SAMLService.process_saml_response", return_value=result):
+        assert third.post("/auth/saml/acs", {"SAMLResponse": "x"}).status_int == 302
+    assert third.get("/inbox", expect_errors=True).status_int == 200
+    assert third.get("/admin", expect_errors=True).status_int == 403

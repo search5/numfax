@@ -1,4 +1,4 @@
-"""Spec 48 loop V11: FaxQueue receives a DatabaseEngine and its callers pass request.db."""
+"""Spec 48 loop V11: FaxQueue resolves users through the session its callers pass (request.dbsession)."""
 
 from __future__ import annotations
 
@@ -20,6 +20,7 @@ class _Request(testing.DummyRequest):
 def _request(method="GET", params=None):
     req = _Request()
     req.db = object()
+    req.dbsession = object()
     req.method = method
     req.params = params or {}
     req.POST = req.params
@@ -47,7 +48,7 @@ def _assert_queue_built_with_db(mod, view, req):
         view(req)
     assert cls.call_args_list, "FaxQueue was never built"
     for call in cls.call_args_list:
-        assert call.kwargs.get("db") is req.db
+        assert call.kwargs.get("db") is req.dbsession
 
 
 def test_ajax_faxalter_builds_queue_with_request_db():

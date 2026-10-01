@@ -83,18 +83,4 @@ def test_process_saml_response():
     assert parsed["attributes"]["email"] == "john.doe@enterprise.com"
     assert parsed["attributes"]["displayName"] == "John Doe"
 
-def test_provision_or_get_user():
-    svc = SAMLService(SAMLSettings(enabled=True, jit_provisioning=True))
-    with patch("namifax.services.saml.AFUserAccount") as mock_user_cls:
-        mock_user = MagicMock()
-        mock_user.load_by_username.return_value = False
-        mock_user.create_user.return_value = True
-        mock_user.get_username.return_value = "john.doe"
-        mock_user_cls.return_value = mock_user
-
-        user = svc.provision_or_get_user(
-            name_id="john.doe@enterprise.com",
-            attributes={"displayName": "John Doe", "email": "john.doe@enterprise.com"},
-        )
-        assert user is not None
-        mock_user.create_user.assert_called()
+# provisioning (match by email, free username, no JIT) is tested with real accounts in test_sso_and_2fa_login.py

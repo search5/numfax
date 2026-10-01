@@ -26,6 +26,10 @@ def create_app(global_config=None, **settings):
         config.set_security_policy(policy)
         config.registry.namifax_policy = policy
 
+        # Short-lived signed cookie for flow state (the 2FA step, passkey challenges). Login itself is the
+        # token cookie of the security policy, not this one.
+        config.set_session_factory(_session_factory(settings))
+
         # Include i18n translation directories & negotiator
         config.add_translation_dirs("namifax:locale")
         config.set_locale_negotiator(custom_locale_negotiator)
@@ -44,6 +48,32 @@ def create_app(global_config=None, **settings):
         config.scan(".views")
 
         return config.make_wsgi_app()
+
+
+def _session_factory(settings):
+    """Signed-cookie session; the secret comes from ``session.secret`` or ``NAMIFAX_SESSION_SECRET``.
+
+    Without one a random secret is used, which is fine for a single process but means that a restart, or a
+    request answered by another worker, loses the flow state. Production should set a fixed secret.
+    """
+    import logging
+    import secrets
+
+    from pyramid.session import SignedCookieSessionFactory
+
+    secret = settings.get("session.secret") or os.environ.get("NAMIFAX_SESSION_SECRET")
+    if not secret:
+        secret = secrets.token_hex(32)
+        logging.getLogger("namifax").warning(
+            "No session.secret / NAMIFAX_SESSION_SECRET configured: using a random one for this process only")
+    return SignedCookieSessionFactory(
+        secret,
+        cookie_name="namifax_flow",
+        httponly=True,
+        samesite="Lax",
+        secure=str(settings.get("session.secure", "false")).lower() in ("1", "true", "yes"),
+        timeout=1800,
+    )
 
 
 main = create_app

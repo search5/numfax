@@ -1120,3 +1120,18 @@ SQLite·MySQL은 오름차순에서 NULL을 먼저, PostgreSQL은 나중에 둔�
 `src/namifax/db/bridge_cli.py`와 PHP 브리지 24개를 삭제했다. 이 파일들은 호출자가 없었다: `*Bridge.php`는 `bridge_cli.py`를 실행하는 용도뿐이고, 그 PHP 클래스를 쓰는 곳이 레거시 PHP·Python·테스트 어디에도 없다(`docs/numfax-defects.md` COR-30). 게다가 `bridge_cli.py`는 JSON 요청만으로 임의 SQL과 임의 실행 파일(`pwauth`의 `binary_path`)을 실행할 수 있어 보안상 위험했다. Strangler Fig의 전환 단계는 끝났고(웹/CLI가 모두 Python으로 동작), Phase 4의 죽은 코드 정리에 해당한다.
 
 **제거된 로직(Dead Code Removal Protocol)**: PHP→Python JSON 브리지 전체와 전역 엔진 `_GLOBAL_ENGINE`. 상태표의 `[FFI_BRIDGED]`는 "브리지 연결 완료"가 아니라 "이식 완료, 브리지는 제거됨"으로 읽는다. `specs/`의 브리지 항목은 당시 설계 기록으로 남겨 둔다.
+
+### 14.19 2FA·SAML·패스키 로그인과 `FaxQueue` (mock 테스트가 가린 결함)
+기존 테스트는 `AFUserAccount`, 서비스, 세션을 mock으로 바꿔서 아래 문제를 보지 못했다. 새 테스트(`test_sso_and_2fa_login.py`)는 실제 앱·DB·WebTest로 로그인까지 확인한다.
+
+| 결함 | 근거 | 수정 |
+| :--- | :--- | :--- |
+| **TOTP를 켠 사용자가 로그인하면 500** | 앱에 HTTP 세션 팩토리가 없어 `request.session`이 `AttributeError`. 2단계 인증 로그인이 불가능(잠김). 패스키 챌린지도 `hasattr(request,"session")`가 거짓이라 저장되지 않아 패스키 로그인은 항상 실패 | `create_app`이 서명 쿠키 세션(`namifax_flow`, HttpOnly, SameSite=Lax)을 등록. 비밀키는 `session.secret` 또는 `NAMIFAX_SESSION_SECRET`(없으면 프로세스별 임의 키 + 경고 로그, 운영에서는 고정 키 필요). `session.secure=true`로 Secure 플래그 |
+| **SAML·패스키가 `AFUserAccount`에 없는 메서드를 호출** | `load_by_username`, `load_by_id`, `create_user`, `get_name`, `get_username`이 없어 `AttributeError`(SAML 최초 로그인 자동 생성, 패스키 등록·로그인 불가) | 메서드 추가. `name` 프로퍼티는 `FaxQueue`의 표시 이름 조회에도 쓰임 |
+| **SAML·패스키 "로그인"이 실제로는 로그인되지 않음** | `request.session["username"]`만 기록하는데 보안 정책은 `remember()`의 토큰 쿠키로 인증 | 두 경로 모두 `remember()` 헤더를 내려줌. 비활성 계정은 `login_webauth`로 거부 |
+| **SAML 계정 연결(보안)** | NameID의 `@` 앞부분으로 기존 계정을 찾아 `admin@다른회사`가 로컬 `admin`으로 로그인 가능 | 기존 계정은 IdP가 단언한 **이메일로만** 찾음. 새 계정은 앞부분에서 만든 빈 사용자명(`frank`, `frank1`, …), 관리자 아님, 사용되지 않는 임의 비밀번호 |
+| SAML `RelayState` 열린 리다이렉트 | 브라우저가 보낸 값을 그대로 `Location`으로 사용 | 이 사이트의 경로(`/...`, `//`와 `\` 제외)만 허용, 아니면 `/inbox` |
+| 패스키 챌린지 재사용 | 검증 후에도 세션에 남음 | 읽을 때 제거(1회용) |
+| `FaxQueue`의 사용자 이름 조회 | 레거시 엔진 사용(PostgreSQL에서 혼합 대소문자 테이블명으로 실패), `AFUserAccount`에 `name`이 없어 표시 이름이 항상 폴백 | Session 사용(뷰가 `request.dbsession` 전달), 표시 이름 표시 |
+
+**알려진 한계(미수정)**: SAML 로그인은 2FA 단계를 거치지 않는다(IdP가 인증을 책임진다는 가정). 6자리 TOTP 코드에는 시도 횟수 제한이 없다. SAML 서명 검증과 IdP 설정은 관리자 화면의 별도 기능이다.

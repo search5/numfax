@@ -181,7 +181,7 @@ def modal_refax_view(request):
         comments = request.params.get("comments", "").strip()
 
         if destinations:
-            fq = FaxQueue(db=request.db)
+            fq = FaxQueue(db=request.dbsession)
             jid = fq.create_job(
                 destinations=destinations,
                 regarding=regarding,

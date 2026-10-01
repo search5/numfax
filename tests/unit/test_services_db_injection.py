@@ -52,12 +52,13 @@ def test_ocr_text_helpers_do_not_need_a_database():
 
 # --- view factories pass request.db -------------------------------------------
 
-def test_saml_view_factory_passes_request_db(db):
+def test_saml_view_factory_passes_request_dbsession(db):
     from namifax.views.saml import _get_saml_service
 
     req = testing.DummyRequest()
     req.db = db
-    assert _get_saml_service(req).db is db
+    req.dbsession = object()
+    assert _get_saml_service(req).db is req.dbsession
 
 
 def test_webauthn_view_factory_passes_request_dbsession(db):

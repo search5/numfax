@@ -334,6 +334,38 @@ class AFUserAccount:
         self.error = "Invalid userid"
         return False
 
+    def load_by_username(self, username: str) -> bool:
+        """Alias used by the SSO and passkey code."""
+        return self.load_username(username)
+
+    def load_by_id(self, userid: int) -> bool:
+        """Alias of ``load`` used by the passkey code."""
+        return self.load(userid)
+
+    def create_user(
+        self,
+        username: str,
+        password: str,
+        name: str = "",
+        email: str = "",
+        is_admin: bool = False,
+    ) -> bool:
+        """Create an account from keyword arguments (single sign-on provisioning)."""
+        return self.create({
+            "username": username, "password": password, "name": name, "email": email,
+            "is_admin": 1 if is_admin else 0,
+        })
+
+    def get_username(self) -> Optional[str]:
+        return self.dbdata.get("username")
+
+    def get_name(self) -> Optional[str]:
+        return self.dbdata.get("name")
+
+    @property
+    def name(self) -> Optional[str]:
+        return self.dbdata.get("name")
+
     def load_username(self, username: str) -> bool:
         if not username:
             self.error = "No username"

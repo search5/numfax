@@ -4,6 +4,7 @@ import json
 from typing import Any
 from pyramid.request import Request
 from pyramid.response import Response
+from pyramid.security import remember
 from pyramid.view import view_config
 
 from namifax.services.user_account import AFUserAccount
@@ -55,7 +56,7 @@ def webauthn_register_verify_view(request: Request) -> Response:
     if not user:
         return _json_res({"error": "Unauthorized"}, status=401)
 
-    challenge = request.session.get("webauthn_reg_challenge") if hasattr(request, "session") else None
+    challenge = request.session.pop("webauthn_reg_challenge", None) if hasattr(request, "session") else None
     if not challenge:
         return _json_res({"error": "Missing registration challenge"}, status=400)
 
@@ -98,7 +99,7 @@ def webauthn_auth_options_view(request: Request) -> Response:
 
 @view_config(route_name="api_webauthn_auth_verify", renderer="json")
 def webauthn_auth_verify_view(request: Request) -> Response:
-    challenge = request.session.get("webauthn_auth_challenge") if hasattr(request, "session") else None
+    challenge = request.session.pop("webauthn_auth_challenge", None) if hasattr(request, "session") else None   # one use
     if not challenge:
         return _json_res({"error": "Missing authentication challenge"}, status=400)
 
@@ -121,15 +122,17 @@ def webauthn_auth_verify_view(request: Request) -> Response:
         )
         svc.update_sign_count(cred_id, new_sign_count)
 
-        # Login session
+        # Sign in like the password login: the same disabled-account check and the same token cookie
         uid = cred_row["uid"]
         user = AFUserAccount(db=request.dbsession)
         if user.load_by_id(uid):
             username = user.get_username()
-            if hasattr(request, "session"):
-                request.session["username"] = username
-                request.session["uid"] = uid
-            return _json_res({"success": True, "username": username})
+            remote_ip = getattr(request, "remote_addr", None) or "127.0.0.1"
+            if not AFUserAccount(db=request.dbsession).login_webauth(username, remote_ip=remote_ip):
+                return _json_res({"error": "Account is disabled"}, status=400)
+            response = _json_res({"success": True, "username": username})
+            response.headerlist.extend(remember(request, username))
+            return response
 
         return _json_res({"error": "User account not found"}, status=400)
     except Exception as e:
