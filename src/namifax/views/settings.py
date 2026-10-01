@@ -14,7 +14,7 @@ def settings_view(request):
     message = None
     error = None
 
-    db = getattr(request, "db", None)
+    db = request.db
     user_account = AFUserAccount(db=db)
     user_loaded = False
 
@@ -116,7 +116,7 @@ def settings_view(request):
     if identity and identity.get("uid"):
         try:
             from namifax.services.totp import TotpService
-            totp_enabled = TotpService(getattr(request, "db", None)).is_totp_enabled(identity["uid"])
+            totp_enabled = TotpService(request.db).is_totp_enabled(identity["uid"])
         except Exception:
             pass
 

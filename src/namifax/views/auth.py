@@ -34,7 +34,7 @@ def login_post_view(request):
     password = params.get("password", "")
 
     # Check credentials using AFUserAccount service
-    user = AFUserAccount()
+    user = AFUserAccount(db=request.db)
     is_valid = False
 
     remote_ip = getattr(request, "remote_addr", None) or "127.0.0.1"
@@ -54,7 +54,7 @@ def login_post_view(request):
 
     # Check 2FA requirement
     from namifax.services.totp import TotpService
-    db = getattr(request, "db", None)
+    db = request.db
     totp_svc = TotpService(db)
     uid = getattr(user, "get_uid", lambda: None)() or getattr(user, "uid", None)
     if uid and totp_svc.is_totp_enabled(uid):
@@ -95,7 +95,7 @@ def login_totp_view(request):
 
         code = params.get("code", "").strip()
         from namifax.services.totp import TotpService
-        db = getattr(request, "db", None)
+        db = request.db
         totp_svc = TotpService(db)
 
         if totp_svc.verify_user_login(pending_uid, code):
