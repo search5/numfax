@@ -9,10 +9,10 @@ from pyramid.view import view_config
 
 from namifax.services.addressbook import AFAddressBook
 
-def get_all_companies() -> list[dict[str, Any]]:
+def get_all_companies(db: Any = None) -> list[dict[str, Any]]:
     """Retrieve companies directly from database."""
     try:
-        ab = AFAddressBook()
+        ab = AFAddressBook(db=db)
         rows = ab.get_companies()
         if rows:
             result = []
@@ -44,7 +44,7 @@ def addressbook_list_view(request):
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
     query = request.params.get("q", "").strip().lower()
 
-    companies = get_all_companies()
+    companies = get_all_companies(request.db)
     if query:
         companies = [c for c in companies if query in c["company"].lower() or query in c.get("faxnumber", "")]
 
@@ -68,7 +68,7 @@ def addressbook_edit_view(request):
 
         if params.get("delete") and cid:
             try:
-                ab = AFAddressBook()
+                ab = AFAddressBook(db=request.db)
                 ab.delete_cid(int(cid))
             except Exception:
                 pass
@@ -80,7 +80,7 @@ def addressbook_edit_view(request):
 
         if company_name:
             try:
-                ab = AFAddressBook()
+                ab = AFAddressBook(db=request.db)
                 if cid:
                     if ab.loadbycid(int(cid)):
                         ab.set_company(company_name)
@@ -95,7 +95,7 @@ def addressbook_edit_view(request):
 
             return HTTPFound(location=request.route_url("addressbook"))
 
-    companies = get_all_companies()
+    companies = get_all_companies(request.db)
     company_id = request.params.get("company_id") or request.params.get("id")
     company = None
     if company_id:
@@ -113,7 +113,7 @@ def addressbook_edit_view(request):
 def emailbook_list_view(request):
     """Display email contacts list directly from database."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    ab = AFAddressBook()
+    ab = AFAddressBook(db=request.db)
     contacts = []
     try:
         raw = ab.get_contacts()
@@ -137,7 +137,7 @@ def emailbook_list_view(request):
 def emailbook_edit_view(request):
     """Display and handle email contact add / edit form directly with database."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    ab = AFAddressBook()
+    ab = AFAddressBook(db=request.db)
 
     if request.method == "POST":
         params = request.params
