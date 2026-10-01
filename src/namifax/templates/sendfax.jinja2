@@ -169,13 +169,13 @@
         </div>
         <label class="inline-flex items-center gap-2 cursor-pointer">
           <input type="checkbox" name="coverpage" id="coverpage" value="1" data-folds="coverpagediv"
-                 {% if form_data.coverpage != '0' %}checked{% endif %}
+                 {% if form_data.coverpage %}checked{% endif %}
                  class="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
           <span class="text-sm text-slate-700">{{ _('Include Cover Page') }}</span>
         </label>
       </div>
 
-      <div id="coverpagediv">
+      <div id="coverpagediv"{% if not form_data.coverpage %} class="hidden"{% endif %}>
       <div class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label for="whichcover" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('Cover Template') }}</label>

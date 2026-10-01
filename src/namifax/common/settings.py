@@ -42,6 +42,16 @@ def contact_lookup_allowed(query: str) -> bool:
     return show_all_contacts() or len(query or "") > 1
 
 
+def sendfax_use_coverpage() -> bool:
+    """``SENDFAX_USE_COVERPAGE`` (on by default): the Send Fax form starts with the cover page switched on."""
+    return flag("SENDFAX_USE_COVERPAGE", True)
+
+
+def sendfax_requeue_email() -> bool:
+    """``SENDFAX_REQUEUE_EMAIL`` (on by default): the Send Fax form starts with "notify on retry" ticked."""
+    return flag("SENDFAX_REQUEUE_EMAIL", True)
+
+
 def hylaspool() -> str:
     return text("HYLASPOOL", "/var/spool/hylafax").rstrip("/") or "/"
 

@@ -182,7 +182,10 @@ def sendfax_view(request):
     original_fid = original.get_fid() if original is not None else None
 
     if request.method != "POST":
-        form = {"faxnumber": _sender_number(request, original)} if original is not None else {}
+        form = {"coverpage": "1" if settings.sendfax_use_coverpage() else "",
+                "notify_requeue": "1" if settings.sendfax_requeue_email() else ""}
+        if original is not None:
+            form["faxnumber"] = _sender_number(request, original)
         return page(form, original_fid=original_fid)
 
     params = request.params
