@@ -91,19 +91,13 @@ def cli_session(
     Uses the same URL resolution as the web app. The session is committed when the block ends
     normally, rolled back on error, and the engine pool is released either way.
 
-    ``ensure_schema=True`` creates the legacy tables on SQLite like ``cli_db()`` does. Other databases
-    get their schema from ``alembic upgrade head``.
+    ``ensure_schema=True`` brings the schema up to date first (see ``namifax.db.bootstrap``).
     """
     engine = create_sa_engine(resolve_database_url(settings, os.environ if environ is None else environ))
-    if ensure_schema and engine.dialect.name == "sqlite":
-        from namifax.db.schema import init_database_tables
+    if ensure_schema:
+        from namifax.db.bootstrap import ensure_schema as bootstrap
 
-        boot = open_db(engine)
-        try:
-            if not init_database_tables(boot):
-                raise RuntimeError(f"Database initialisation failed: {boot.get_error()}")
-        finally:
-            boot.disconnect()
+        bootstrap(engine)
     session = Session(engine, expire_on_commit=False)
     token = _ACTIVE_SESSION.set(session)
     try:
@@ -140,15 +134,10 @@ def cli_unit(
     Everything is committed when the block ends normally and rolled back on error.
     """
     engine = create_sa_engine(resolve_database_url(settings, os.environ if environ is None else environ))
-    if ensure_schema and engine.dialect.name == "sqlite":
-        from namifax.db.schema import init_database_tables
+    if ensure_schema:
+        from namifax.db.bootstrap import ensure_schema as bootstrap
 
-        boot = open_db(engine)
-        try:
-            if not init_database_tables(boot):
-                raise RuntimeError(f"Database initialisation failed: {boot.get_error()}")
-        finally:
-            boot.disconnect()
+        bootstrap(engine)
     connection = engine.connect()
     connection.begin()
     session = Session(bind=connection, expire_on_commit=False)

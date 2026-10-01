@@ -35,14 +35,8 @@ def create_app(global_config=None, **settings):
         config.include(".models")
 
         # Initialize DB tables and seed data on the injected engine
-        from namifax.db.provider import open_db
-        from namifax.db.schema import init_database_tables
-        boot_db = open_db(config.registry["dbengine"])
-        try:
-            if not init_database_tables(boot_db):
-                raise RuntimeError(f"Database initialisation failed: {boot_db.get_error()}")
-        finally:
-            boot_db.disconnect()
+        from namifax.db.bootstrap import ensure_schema
+        ensure_schema(config.registry["dbengine"])
 
         config.include(".routes")
 

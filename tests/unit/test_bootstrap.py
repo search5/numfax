@@ -1,0 +1,116 @@
+"""Starting the application on any supported database (SQLite, MySQL, MariaDB, PostgreSQL)."""
+
+from __future__ import annotations
+
+import pytest
+import sqlalchemy as sa
+import webtest
+from sqlalchemy.orm import Session
+
+from namifax.db.provider import create_sa_engine
+
+
+def _tables(engine):
+    return set(sa.inspect(engine).get_table_names())
+
+
+def _model_tables():
+    import namifax.models  # noqa: F401
+    from namifax.models.meta import Base
+
+    return {t.name for t in Base.metadata.sorted_tables}
+
+
+# --- SQLite keeps the legacy path (and the demo data) -------------------------------------------------------
+
+def test_sqlite_creates_every_table_and_the_demo_data(tmp_path):
+    from namifax.db.bootstrap import ensure_schema
+
+    engine = create_sa_engine(f"sqlite:///{tmp_path / 'a.db'}")
+    ensure_schema(engine)
+    assert _model_tables() <= _tables(engine)
+    with engine.connect() as c:
+        assert c.execute(sa.text("SELECT COUNT(*) FROM UserAccount")).scalar() == 2
+    ensure_schema(engine)                                   # idempotent
+    with engine.connect() as c:
+        assert c.execute(sa.text("SELECT COUNT(*) FROM UserAccount")).scalar() == 2
+    engine.dispose()
+
+
+def test_a_failure_to_initialise_is_loud(tmp_path, monkeypatch):
+    from namifax.db import bootstrap
+
+    monkeypatch.setattr("namifax.db.schema.init_database_tables", lambda db: False)
+    engine = create_sa_engine(f"sqlite:///{tmp_path / 'b.db'}")
+    with pytest.raises(RuntimeError, match="initialisation failed"):
+        bootstrap.ensure_schema(engine)
+    engine.dispose()
+
+
+def test_alembic_environment_accepts_an_existing_connection(tmp_path):
+    """Programmatic upgrades hand env.py the connection; there is no ini file to read."""
+    import alembic.command
+    from alembic.config import Config
+
+    engine = create_sa_engine(f"sqlite:///{tmp_path / 'c.db'}")
+    cfg = Config()
+    cfg.set_main_option("script_location", "namifax:alembic")
+    with engine.begin() as conn:
+        cfg.attributes["connection"] = conn
+        alembic.command.upgrade(cfg, "head")
+    assert _model_tables() <= _tables(engine) | {"alembic_version"}
+    engine.dispose()
+
+
+# --- real servers --------------------------------------------------------------------------------------------
+
+@pytest.mark.serverdb
+def test_server_database_gets_the_schema_and_default_records_only(server_db_url):
+    from namifax.db.bootstrap import ensure_schema
+
+    engine = create_sa_engine(server_db_url)
+    try:
+        ensure_schema(engine)
+        assert _model_tables() <= _tables(engine)
+        with engine.connect() as c:
+            assert c.execute(sa.text("SELECT version_num FROM alembic_version")).scalar() == "0020"
+        with Session(engine) as s:
+            from namifax.models import CoverPages, FaxCategory, UserAccount
+
+            count = lambda m: s.execute(sa.select(sa.func.count()).select_from(m)).scalar()   # noqa: E731
+            assert (count(FaxCategory), count(CoverPages)) == (3, 2)
+            assert count(UserAccount) == 0                  # no demo accounts with a well-known password
+        ensure_schema(engine)                               # a second start changes nothing
+        with Session(engine) as s:
+            assert s.execute(sa.select(sa.func.count()).select_from(FaxCategory)).scalar() == 3
+    finally:
+        engine.dispose()
+
+
+@pytest.mark.serverdb
+def test_the_application_runs_on_the_server_database(server_db_url):
+    from namifax import create_app
+    from namifax.models import UserAccount  # noqa: F401
+    from namifax.services.user_account import AFUserAccount
+
+    app = create_app(**{"sqlalchemy.url": server_db_url})
+    engine = app.registry["dbengine"]
+    with Session(engine) as s:
+        assert AFUserAccount(db=s).create({"username": "boss", "password": "Secret123!", "email": "boss@x.test",
+                                           "name": "Boss", "is_admin": 1, "superuser": 1, "acc_enabled": 1})
+        s.commit()
+
+    client = webtest.TestApp(app, extra_environ={"HTTP_HOST": "example.com"})
+    res = client.post("/login", {"username": "boss", "password": "Secret123!", "_submit_check": "1"})
+    assert res.status_int in (302, 303) and "/login" not in res.headers["Location"], res.text[:300]
+    bad = []
+    for path in ("/inbox", "/archive", "/archive?sentrecvd=*", "/addressbook", "/distrolist", "/outbox", "/sendfax",
+                 "/settings", "/admin", "/admin/users", "/admin/modems", "/admin/routing/did", "/admin/barcodes",
+                 "/admin/covers", "/admin/categories", "/admin/dynconf", "/admin/system_logs", "/admin/smtp",
+                 "/admin/printers", "/ajax/inbox", "/ajax/modemstatus", "/admin/storage", "/admin/saml", "/admin/fax2email",
+                 "/admin/system_func", "/helper/distrolist", "/helper/faxcontacts", "/helper/emailcontacts",
+                 "/ajax/book?q=a", "/ajax/archivebook?q=a", "/emailbook"):
+        r = client.get(path, expect_errors=True)
+        if r.status_int != 200:          # a redirect would mean "not logged in" (or a page that bailed out)
+            bad.append((path, r.status_int, r.headers.get("Location")))
+    assert bad == []

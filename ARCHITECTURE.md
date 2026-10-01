@@ -1085,3 +1085,16 @@ SQLite·MySQL은 오름차순에서 NULL을 먼저, PostgreSQL은 나중에 둔�
 | 인박스 회사명 폴백 | `r.get("company")`는 레거시에 없는 포트 전용 컬럼. ORM 행에는 없음 | 주소록 조회만 사용(시드 행은 `companyid`로 연결되어 영향 없음) |
 
 **남은 레거시 경로**: `cron`/`StorageLifecycleService`(레거시에 없는 `FaxArchive.lastmod` 컬럼을 참조하는 포트 전용 기능 — 별도 확인 필요), `bridge_cli`, `FaxQueue`/`saml`의 `AFUserAccount`.
+
+### 14.16 모든 DB에서 앱 기동 (`namifax.db.bootstrap`)
+`create_app`, `cli_session`, `cli_unit`은 `ensure_schema(engine)` 하나로 스키마를 맞춘다.
+
+| DB | 동작 |
+| :--- | :--- |
+| SQLite | 기존 경로 유지: `init_database_tables`(레거시 DDL, 구버전 포트 DB 마이그레이션, **새 DB에 한해 데모 데이터**) |
+| MySQL, MariaDB, PostgreSQL | `alembic upgrade head`(리비전 0001~0020, 이미 있는 테이블은 건너뜀) + 기본 팩스 카테고리 3개·커버 페이지 2개(테이블이 비었을 때만). **데모 계정은 만들지 않는다** |
+
+* **첫 관리자**: 서버 DB는 `namifax createuser`로 만든다(기본 `admin`/`password` 계정이 운영 DB에 생기지 않도록 의도적으로 제외). SQLite 데모 계정 정책은 기존 `[NEEDS_CLARIFICATION]` 그대로.
+* `alembic/env.py`는 ini 파일이 없을 때 호출자가 넘긴 연결(`config.attributes["connection"]`)을 쓴다. 명령줄 `alembic` 사용 방식은 변하지 않는다.
+* **검증(`tests/unit/test_bootstrap.py`, serverdb)**: 빈 서버 DB에 `ensure_schema` → 모든 모델 테이블과 `alembic_version=0020`, 기본 레코드만 존재, 재호출해도 변화 없음. 이어서 같은 DB로 `create_app` → 사용자 생성 → 로그인 → 주요 페이지 31개가 모두 200(리다이렉트도 실패로 간주). PostgreSQL 16, MySQL 8.4, MariaDB 11에서 통과.
+* **주의**: 여러 워커가 빈 DB를 동시에 처음 기동하면 마이그레이션이 경합할 수 있다. 처음에는 한 프로세스로 기동하거나 배포 단계에서 `alembic upgrade head`를 먼저 실행한다.

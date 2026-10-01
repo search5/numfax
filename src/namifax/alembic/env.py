@@ -18,10 +18,14 @@ import namifax.models  # noqa: F401
 
 config = context.config
 
-setup_logging(config.config_file_name)
-
-settings = get_appsettings(config.config_file_name)
-database_url = resolve_database_url(settings, os.environ)
+# An ini file is present when alembic is run from the command line. The application itself upgrades
+# the schema at start-up and hands over its open connection instead (see namifax.db.bootstrap).
+if config.config_file_name:
+    setup_logging(config.config_file_name)
+    settings = get_appsettings(config.config_file_name)
+else:
+    settings = {}
+database_url = resolve_database_url(settings, os.environ) if config.config_file_name else None
 target_metadata = Base.metadata
 
 
@@ -39,6 +43,13 @@ def run_migrations_offline():
 
 def run_migrations_online():
     """Run migrations in 'online' mode with an Engine and a connection."""
+    existing = config.attributes.get("connection")
+    if existing is not None:
+        context.configure(connection=existing, target_metadata=target_metadata)
+        with context.begin_transaction():
+            context.run_migrations()
+        return
+
     engine = create_sa_engine(database_url)
 
     with engine.connect() as connection:
