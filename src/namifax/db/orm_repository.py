@@ -219,6 +219,23 @@ class OrmRepository:
             return records[0]
         return records
 
+    def delete_where(self, conditions: dict[str, Any]) -> int:
+        """Delete every row matching all conditions; returns how many. No conditions deletes nothing."""
+        if not conditions:
+            return 0
+        clauses = []
+        for key, value in conditions.items():
+            column = self._column(key)
+            if value is None:
+                return 0                      # SQL "= NULL" never matches
+            try:
+                clauses.append(column == _coerce(column, value))
+            except ValueError:
+                return 0
+        result = self.session.execute(sa.delete(self._table).where(sa.and_(*clauses)))
+        self.session.expire_all()
+        return int(result.rowcount or 0)
+
     def findext(self, conditions: dict[str, Any]) -> Any:
         return self.find(conditions=conditions, query_logic=SQL_AND, reduce_single=True)
 

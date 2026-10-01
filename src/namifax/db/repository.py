@@ -121,6 +121,15 @@ class Repository(Generic[T]):
             return records[0]
         return records
 
+    def delete_where(self, conditions: dict[str, Any]) -> int:
+        """Delete every row matching all conditions; returns how many. No conditions deletes nothing."""
+        if not conditions or any(v is None for v in conditions.values()):
+            return 0
+        qb = QueryBuilder(self._db)
+        where = SQL_AND.join(f"{col} = {qb.quote(val)}" for col, val in conditions.items())
+        res = self._db.query(f"DELETE FROM {self.data.get_table_name()} WHERE {where}")
+        return int(self._db.affected_rows) if res.executed else 0
+
     def select(
         self,
         columns: list[str] | None = None,

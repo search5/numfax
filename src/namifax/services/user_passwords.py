@@ -12,7 +12,7 @@ class AFUserPasswords:
 
     def __init__(
         self,
-        db: DatabaseEngine | None = None,
+        db: Any = None,
         engine: DatabaseEngine | None = None,
         repo: MDBOData | None = None,
     ) -> None:
@@ -47,13 +47,8 @@ class AFUserPasswords:
         """Clear all historical password records for user."""
         if uid is None:
             return False
-
-        if self.db:
-            res = self.db.query("DELETE FROM UserPasswords WHERE uid = :uid", params={"uid": uid})
-            return bool(res.executed)
-
-        # Fallback to repository raw query
-        return bool(self.userpasswords.query(f"DELETE FROM UserPasswords WHERE uid = {int(uid)}"))
+        self.userpasswords.delete_where({"uid": uid})
+        return True
 
 
 # Modern architectural alias

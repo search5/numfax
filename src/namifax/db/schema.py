@@ -42,10 +42,9 @@ SCHEMA_STATEMENTS = [
         any_modem INTEGER DEFAULT 0
     );""",
     """CREATE TABLE IF NOT EXISTS UserPasswords (
-        pwd_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        upid INTEGER PRIMARY KEY AUTOINCREMENT,
         uid INTEGER NOT NULL,
-        password TEXT NOT NULL,
-        date TEXT
+        pwdhash TEXT NOT NULL
     );""",
     """CREATE TABLE IF NOT EXISTS Modems (
         devid INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -207,6 +206,7 @@ def init_database_tables(db: DatabaseEngine) -> bool:
         res = db.query(stmt)
         if not res.executed:
             return False
+    _rename_user_passwords_columns(db)
     _apply_schema_migrations(db)
     _backfill_alias_columns(db)
     seed_database_if_empty(db)
@@ -227,6 +227,17 @@ def _backfill_alias_columns(db: DatabaseEngine) -> None:
     db.query("UPDATE AddressBook SET abook_id = ab_id WHERE abook_id IS NULL")
     db.query("UPDATE BarcodeRoute SET barcode_id = bcr_id WHERE barcode_id IS NULL AND bcr_id IS NOT NULL")
     db.query("UPDATE FaxArchive SET archstamp = archivetime WHERE archstamp IS NULL AND archivetime IS NOT NULL")
+
+
+def _rename_user_passwords_columns(db: DatabaseEngine) -> None:
+    """Older port versions created UserPasswords(pwd_id, uid, password, date) while the service uses the
+    legacy names (upid, uid, pwdhash), so nothing was ever stored. Rename the columns in place."""
+    db.query("SELECT name FROM pragma_table_info('UserPasswords')")
+    columns = {r["name"] for r in db.get_records()}
+    if "pwd_id" in columns and "upid" not in columns:
+        db.query("ALTER TABLE UserPasswords RENAME COLUMN pwd_id TO upid")
+    if "password" in columns and "pwdhash" not in columns:
+        db.query("ALTER TABLE UserPasswords RENAME COLUMN password TO pwdhash")
 
 
 def _apply_schema_migrations(db: DatabaseEngine) -> None:
