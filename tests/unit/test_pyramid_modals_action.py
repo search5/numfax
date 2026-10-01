@@ -18,6 +18,7 @@ def dummy_request():
     request = testing.DummyRequest()
     request.__dict__["identity"] = {"username": "admin", "uid": 1, "is_admin": True, "superuser": True}
     request.db = MagicMock()
+    request.dbsession = MagicMock()
     return request
 
 
@@ -80,7 +81,7 @@ def test_modal_email_post(dummy_request):
         "_submit_check": "1",
     }
     with patch("namifax.views.modals.ArchiveIn") as mock_arc_cls, \
-         patch("namifax.views.modals.Mailer") as mock_mailer_cls, \
+         patch("namifax.views.modals.send_mail", return_value=True) as mock_send_mail, \
          patch("namifax.views.modals.AFAddressBook") as mock_ab_cls:
         inst_arc = MagicMock()
         inst_arc.load_fax.return_value = True
@@ -88,15 +89,11 @@ def test_modal_email_post(dummy_request):
         inst_arc.get_thumbnail.return_value = "/tmp/thumb42.png"
         mock_arc_cls.return_value = inst_arc
 
-        inst_mailer = MagicMock()
-        inst_mailer.send_mail.return_value = True
-        mock_mailer_cls.return_value = inst_mailer
-
         inst_ab = MagicMock()
         mock_ab_cls.return_value = inst_ab
 
         res = modal_email_view(dummy_request)
-        inst_mailer.send_mail.assert_called()
+        mock_send_mail.assert_called_once()
         inst_ab.create_contacts.assert_called_with("client@example.com")
         assert res.get("title") == "- NamiFAX - Send Fax via Email"
 

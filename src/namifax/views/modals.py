@@ -7,7 +7,7 @@ from pyramid.view import view_config
 from namifax.services.addressbook import AFAddressBook
 from namifax.services.archive_in import ArchiveIn
 from namifax.services.faxqueue import FaxQueue
-from namifax.services.mailer import Mailer
+from namifax.common.helpers import send_mail
 
 
 @view_config(route_name="modal_email", renderer="namifax:templates/modal_email.jinja2", permission="view")
@@ -37,20 +37,22 @@ def modal_email_view(request):
             except (ValueError, TypeError):
                 pass
 
-            mailer = Mailer()
-            sent = mailer.send_mail(
-                to=emails,
-                subject=subject,
-                message=msg,
-                attachment=pdf_path,
-                thumbnail=thumb_path,
+            sent = send_mail(
+                emails,
+                identity.get("email"),
+                subject,
+                msg,
+                file=pdf_path,
+                altname=request.params.get("filename") or None,
+                embedd=thumb_path,
+                session=request.dbsession,
             )
             if sent:
                 ab = AFAddressBook(db=request.db)
                 ab.create_contacts(emails)
                 message = "Email sent successfully"
             else:
-                error = mailer.get_error() or "Failed to send email"
+                error = "Failed to send email"
 
     return {
         "title": "- NamiFAX - Send Fax via Email",

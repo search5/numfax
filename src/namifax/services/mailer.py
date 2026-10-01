@@ -45,8 +45,13 @@ class MailerService:
         self._embedded_images: list[dict[str, Any]] = []
 
     @classmethod
-    def from_settings(cls, session: Any = None) -> MailerService:
-        """Build a mailer from the saved SMTP settings (ORM session); defaults without a session."""
+    def get_active_mailer(cls, session: Any = None) -> MailerService:
+        """Build a mailer from the SMTP gateway saved in the database (spec 39, section 3.2).
+
+        Without a session there is no configuration source and the plain default mailer is returned.
+        When the database cannot be read the local MTA (localhost:25) is used: a mailer without a
+        server only keeps messages in memory, so falling back to it would lose the mail silently.
+        """
         if session is None:
             return cls()
         try:
@@ -67,7 +72,14 @@ class MailerService:
                 email_sig_html=cfg.email_sig_html,
             )
         except Exception:
-            return cls()
+            return cls.local_mta()
+
+    @classmethod
+    def local_mta(cls) -> MailerService:
+        """Mailer that hands messages to the MTA on this host."""
+        return cls(smtp_server="localhost", smtp_port=25)
+
+    from_settings = get_active_mailer  # earlier name, kept as an alias
 
     def set_message(self, text: str, subject: str | None = None) -> None:
         """Construct multi-part plaintext and HTML message bodies."""

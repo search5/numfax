@@ -35,7 +35,7 @@ def test_view_builds_domain_objects_with_request_db(name, method, params):
     ab_cls.return_value.get_companies.return_value = []
     with patch.object(modals_mod, "ArchiveIn", arc_cls), \
             patch.object(modals_mod, "AFAddressBook", ab_cls), \
-            patch.object(modals_mod, "Mailer", MagicMock()), \
+            patch.object(modals_mod, "send_mail", MagicMock(return_value=True)), \
             contextlib.suppress(Exception):
         getattr(modals_mod, name)(req)
 

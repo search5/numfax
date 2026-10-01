@@ -952,3 +952,17 @@ Pyramid cookiecutter starter(2.1-branch, jinja2 + sqlalchemy)를 임시 디렉�
 - 뷰 `admin_storage/saml/smtp/printers/system_logs`는 `request.dbsession`을 쓴다. 이 뷰들에서 `request.db`와 문자열 조립 SQL, SQLite 전용 구문이 사라졌다.
 - 검증: SQLite(자동) + PostgreSQL 16 + MySQL 8.4 + MariaDB 11.8(`pytest -m serverdb`). 마이그레이션-모델 드리프트 검사가 모든 서버에서 통과한다.
 - 반복해서 확인된 패턴: (1) 서버 DB 테스트는 모델 기반 쿼리만 쓴다(혼합 대소문자 테이블명과 PostgreSQL). (2) 레거시 SQLite 스키마와 공존하도록 모든 리비전은 `has_table`로 멱등하다. (3) 서비스는 세션 없이 생성하면 첫 사용에서 `RuntimeError`.
+
+### 14.6 기능 결함 수정: SMTP 설정이 실제 발송에 반영되지 않던 문제 (P1)
+레거시 원본과 스펙으로 확인한 뒤 TDD로 수정했다.
+
+| 결함 | 근거 | 수정 |
+| :--- | :--- | :--- |
+| 관리자가 저장한 SMTP 게이트웨이를 아무 발송 경로도 쓰지 않음 | 스펙 39 §3.2: `MailerService`는 DB의 최신 설정을 동적으로 로드하고 읽지 못하면 폴백해야 함 | `MailerService.get_active_mailer(session)`(기존 `from_settings`는 별칭), `helpers.send_mail(..., session=None)`이 이를 사용. 보내는 사람(`from_addr`)은 메시지별로 유지하고, 없으면 게이트웨이의 `from_email` |
+| **포팅 후 CLI의 모든 메일 알림이 실제로는 발송되지 않았음** | `send_mail`이 항상 `MailerService(admin_email=...)`(서버 없음)를 만들었고, 서버가 없으면 `sendmail()`은 메모리에만 쌓고 `True`를 반환 | 설정이 없으면 기본 설정(`localhost:25`)으로 실제 발송. DB를 읽지 못하면 로컬 MTA(`MailerService.local_mta()`)로 폴백(조용히 유실되지 않도록) |
+| 웹 "팩스 이메일 전송" 모달이 `AttributeError` | `modal_email_view`가 존재하지 않는 `mailer.send_mail(...)`을 호출. 기존 테스트는 `Mailer`를 가짜로 대체해 가려 놓음 | 레거시 `email.php`처럼 `send_mail` 헬퍼를 호출(`file`, `embedd`, `session=request.dbsession`) |
+
+- 요청이 없는 CLI(`faxrcvd`, `notify`)는 호출처를 바꾸지 않고도 설정을 읽는다: `send_mail`이 `provider.cli_session()`(신규, 요청 없는 ORM 세션 컨텍스트)으로 읽기 전용 세션을 잠시 연다.
+- 검증: 실제 소켓 SMTP 서버(테스트 내 가짜 서버)가 DB에 저장한 호스트·포트로 메시지를 받는 E2E 테스트(`test_active_mailer.py`).
+- `[관찰]` `MailerService()`의 서버 없음 모드는 발송하지 않고 `True`를 반환한다. 호출자가 성공으로 오인할 수 있어 별도 정리를 권장한다(스풀 전용 모드는 `spool_mode=True`로 명시하는 편이 안전).
+- `[관찰]` 레거시 `create_tables.sql`의 `SysLog`는 PK `syslogid`, 포트의 SQLite 스키마와 모델은 `log_id`다. 레거시 MySQL DB를 그대로 이어받는 시나리오가 필요한지 `[NEEDS_CLARIFICATION]`. (`AddressBook`의 `ab_id`/`abook_id`와 같은 종류의 이름 불일치)

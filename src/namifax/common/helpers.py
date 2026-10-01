@@ -257,9 +257,29 @@ def decode_entity(text: str) -> str:
     return html.unescape(text) if text else ""
 
 
+def _active_mailer(session: Any = None) -> Any:
+    """MailerService configured with the SMTP gateway saved in the database (spec 39, section 3.2).
+
+    Web code passes the request session. Command-line hooks pass nothing, so the settings are read
+    through a short-lived session on the configured database. Any problem reading them falls back
+    to the local MTA, so a mail is still attempted (never silently kept in memory).
+    """
+    from namifax.services.mailer import MailerService
+
+    if session is not None:
+        return MailerService.get_active_mailer(session)
+    try:
+        from namifax.db.provider import cli_session
+
+        with cli_session() as own_session:
+            return MailerService.get_active_mailer(own_session)
+    except Exception:
+        return MailerService.local_mta()
+
+
 def send_mail(
     to: str | Sequence[str],
-    from_addr: str,
+    from_addr: Optional[str],
     subject: str,
     text: str,
     file: Optional[str] = None,
@@ -267,11 +287,15 @@ def send_mail(
     embedd: Optional[str] = None,
     cc: Optional[str] = None,
     bcc: Optional[str] = None,
+    session: Any = None,
 ) -> bool:
-    """Send email via MailerService."""
-    from namifax.services.mailer import MailerService
+    """Send email through the SMTP gateway saved in the database.
 
-    mailer = MailerService(admin_email=from_addr)
+    ``from_addr`` is the sender of this message; without it the gateway's configured address is used.
+    """
+    mailer = _active_mailer(session)
+    if from_addr:
+        mailer.admin_email = from_addr
     mailer.set_message(text, subject=subject)
     if file and os.path.exists(file):
         mailer.attach_file(file, filename=altname)

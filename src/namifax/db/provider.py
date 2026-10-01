@@ -11,6 +11,7 @@ from contextlib import contextmanager
 from typing import Any, Iterator, Mapping
 
 from sqlalchemy import Engine, create_engine
+from sqlalchemy.orm import Session
 from sqlalchemy.pool import StaticPool
 
 from namifax.db.engine import DatabaseEngine
@@ -64,4 +65,28 @@ def cli_db(
         yield db
     finally:
         db.disconnect()
+        engine.dispose()
+
+
+@contextmanager
+def cli_session(
+    settings: Mapping[str, Any] | None = None,
+    environ: Mapping[str, str] | None = None,
+) -> Iterator[Session]:
+    """Open an ORM session for a command-line entry point (no request object).
+
+    Uses the same URL resolution as the web app. The session is committed when the block ends
+    normally, rolled back on error, and the engine pool is released either way. The schema is not
+    created here; use ``cli_db()`` for that.
+    """
+    engine = create_sa_engine(resolve_database_url(settings, os.environ if environ is None else environ))
+    session = Session(engine, expire_on_commit=False)
+    try:
+        yield session
+        session.commit()
+    except BaseException:
+        session.rollback()
+        raise
+    finally:
+        session.close()
         engine.dispose()
