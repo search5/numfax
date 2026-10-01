@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: iMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 23:03+0900\n"
+"POT-Creation-Date: 2026-10-01 23:44+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: it\n"
@@ -1659,6 +1659,14 @@ msgstr "Trasmesso con successo (OK)"
 
 msgid "Close"
 msgstr "Chiudi"
+
+msgid "Database unavailable"
+msgstr ""
+
+msgid ""
+"The database cannot be reached right now. This page tries again every 10 "
+"seconds."
+msgstr ""
 
 msgid "Faxes currently queued or being transmitted."
 msgstr "Fax attualmente in coda o in corso di trasmissione."

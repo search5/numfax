@@ -41,6 +41,16 @@ def create_app(global_config=None, **settings):
         config.include("pyramid_jinja2")
         config.include(".models")
 
+        # The admin menu follows the settings (the original's $ENABLE_DID_ROUTING / ENABLE_BARDECODE_SUPPORT)
+        from namifax.services.fax_access import _did_routing_enabled, barcode_enabled
+        from pyramid.events import BeforeRender
+
+        def add_switches(event):
+            event["did_routing_enabled"] = _did_routing_enabled()
+            event["barcode_enabled"] = barcode_enabled()
+
+        config.add_subscriber(add_switches, BeforeRender)
+
         # Initialize DB tables and seed data on the injected engine
         from namifax.db.bootstrap import ensure_schema
         ensure_schema(config.registry["dbengine"], settings)

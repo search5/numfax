@@ -75,13 +75,13 @@
         </optgroup>
         <optgroup label="Configuration">
           <option value="/admin/modems" {% if current_admin_tab == 'modems' %}selected{% endif %}>Configure Modems</option>
-          <option value="/admin/did" {% if current_admin_tab == 'did' %}selected{% endif %}>DID Routing Rules</option>
+          {% if did_routing_enabled %}<option value="/admin/did" {% if current_admin_tab == 'did' %}selected{% endif %}>DID Routing Rules</option>{% endif %}
           <option value="/admin/categories" {% if current_admin_tab == 'categories' %}selected{% endif %}>Fax Categories</option>
           <option value="/admin/covers" {% if current_admin_tab == 'covers' %}selected{% endif %}>Cover Pages</option>
           <option value="/admin/printers" {% if current_admin_tab == 'printers' %}selected{% endif %}>Network Printers</option>
         </optgroup>
         <optgroup label="Advanced Routing &amp; Blacklist">
-          <option value="/admin/barcodes" {% if current_admin_tab == 'barcodes' %}selected{% endif %}>Routing by Barcode</option>
+          {% if barcode_enabled %}<option value="/admin/barcodes" {% if current_admin_tab == 'barcodes' %}selected{% endif %}>Routing by Barcode</option>{% endif %}
           <option value="/admin/dynconf" {% if current_admin_tab == 'dynconf' %}selected{% endif %}>CallID Blacklist (DynConf)</option>
           <option value="/admin/fax2email" {% if current_admin_tab == 'fax2email' %}selected{% endif %}>Fax2Email Rules</option>
           <option value="/admin/syslog" {% if current_admin_tab == 'syslog' %}selected{% endif %}>System Audit Logs</option>
@@ -154,6 +154,7 @@
       <!-- Group 4: Inbound Routing Rules -->
       <div class="space-y-1">
         <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">{{ _('Inbound Routing') }}</p>
+        {% if did_routing_enabled %}
         <a href="/admin/did"
            class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium transition
                   {% if current_admin_tab == 'did' %}bg-blue-600/15 text-blue-400 border border-blue-500/30 font-semibold{% else %}text-slate-300 hover:text-white hover:bg-slate-800/80{% endif %}">
@@ -162,6 +163,7 @@
           </svg>
           <span>{{ _('DID Routing') }}</span>
         </a>
+        {% endif %}
         <a href="/admin/fax2email"
            class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium transition
                   {% if current_admin_tab == 'fax2email' %}bg-blue-600/15 text-blue-400 border border-blue-500/30 font-semibold{% else %}text-slate-300 hover:text-white hover:bg-slate-800/80{% endif %}">
@@ -170,6 +172,7 @@
           </svg>
           <span>{{ _('Fax to Email') }}</span>
         </a>
+        {% if barcode_enabled %}
         <a href="/admin/barcodes"
            class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium transition
                   {% if current_admin_tab == 'barcodes' %}bg-blue-600/15 text-blue-400 border border-blue-500/30 font-semibold{% else %}text-slate-300 hover:text-white hover:bg-slate-800/80{% endif %}">
@@ -178,6 +181,7 @@
           </svg>
           <span>{{ _('Barcode Routing') }}</span>
         </a>
+        {% endif %}
       </div>
 
       <!-- Group 5: Content & Classification -->
@@ -322,10 +326,10 @@
             <option value="/admin" {% if current_admin_tab == 'dashboard' %}selected{% endif %}>Dashboard</option>
             <option value="/admin/users" {% if current_admin_tab == 'users' %}selected{% endif %}>Users</option>
             <option value="/admin/modems" {% if current_admin_tab == 'modems' %}selected{% endif %}>Modems</option>
-            <option value="/admin/did" {% if current_admin_tab == 'did' %}selected{% endif %}>DID Routing</option>
+            {% if did_routing_enabled %}<option value="/admin/did" {% if current_admin_tab == 'did' %}selected{% endif %}>DID Routing</option>{% endif %}
             <option value="/admin/categories" {% if current_admin_tab == 'categories' %}selected{% endif %}>Categories</option>
             <option value="/admin/covers" {% if current_admin_tab == 'covers' %}selected{% endif %}>Covers</option>
-            <option value="/admin/barcodes" {% if current_admin_tab == 'barcodes' %}selected{% endif %}>Barcodes</option>
+            {% if barcode_enabled %}<option value="/admin/barcodes" {% if current_admin_tab == 'barcodes' %}selected{% endif %}>Barcodes</option>{% endif %}
             <option value="/admin/dynconf" {% if current_admin_tab == 'dynconf' %}selected{% endif %}>Blacklist</option>
             <option value="/admin/fax2email" {% if current_admin_tab == 'fax2email' %}selected{% endif %}>Fax2Email</option>
             <option value="/admin/syslog" {% if current_admin_tab == 'syslog' %}selected{% endif %}>Logs</option>

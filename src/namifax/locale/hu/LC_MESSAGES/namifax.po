@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: hMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 23:03+0900\n"
+"POT-Creation-Date: 2026-10-01 23:44+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hu\n"
@@ -1649,6 +1649,14 @@ msgstr "Sikeresen továbbítva (OK)"
 
 msgid "Close"
 msgstr "Bezárás"
+
+msgid "Database unavailable"
+msgstr ""
+
+msgid ""
+"The database cannot be reached right now. This page tries again every 10 "
+"seconds."
+msgstr ""
 
 msgid "Faxes currently queued or being transmitted."
 msgstr "Jelenleg sorban álló vagy továbbítás alatt álló faxok."

@@ -20,6 +20,10 @@ def _did_routing_enabled() -> bool:
     return os.environ.get("ENABLE_DID_ROUTING", "0") in ("1", "true", "True")
 
 
+def barcode_enabled() -> bool:
+    return os.environ.get("ENABLE_BARDECODE_SUPPORT", "0") in ("1", "true", "True")
+
+
 @dataclass(frozen=True)
 class FaxAccess:
     uid: Optional[int] = None
