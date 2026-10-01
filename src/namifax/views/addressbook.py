@@ -100,8 +100,6 @@ def addressbook_edit_view(request):
     company = None
     if company_id:
         company = next((c for c in companies if str(c.get("id")) == str(company_id) or str(c.get("company_id")) == str(company_id)), None)
-        if not company and str(company_id) == "1" and companies:
-            company = companies[0]
 
     return {
         "title": "NamiFAX - Address Book",

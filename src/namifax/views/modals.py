@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from pyramid.view import view_config
 
-from avantfax.services.addressbook import AFAddressBook
-from avantfax.services.archive_in import ArchiveIn
-from avantfax.services.faxqueue import FaxQueue
-from avantfax.services.mailer import Mailer
+from namifax.services.addressbook import AFAddressBook
+from namifax.services.archive_in import ArchiveIn
+from namifax.services.faxqueue import FaxQueue
+from namifax.services.mailer import Mailer
 
 
 @view_config(route_name="modal_email", renderer="namifax:templates/modal_email.jinja2", permission="view")
@@ -103,9 +103,6 @@ def modal_assign_view(request):
                 company_records.append({"id": cid, "name": cname})
     except Exception:
         pass
-
-    if not company_records:
-        company_records = [{"id": 1, "name": "Acme Global"}, {"id": 2, "name": "Initech Corp"}]
 
     return {
         "title": "- NamiFAX - Assign Company",
@@ -208,20 +205,20 @@ def modal_txreport_view(request):
     """Render transmission report dialog."""
     identity = request.identity or {"username": "admin", "uid": 1, "is_admin": True}
     fid = request.params.get("fid", "1")
-    company = "Acme Global"
-    date_val = "2026-09-29 10:15:00"
-    pages_val = 2
+    company = ""
+    date_val = ""
+    pages_val = 0
 
     arc = ArchiveIn()
     try:
-        if fid and arc.load_fax(int(fid)):
-            date_val = arc.get_archstamp() or date_val
-            pages_val = arc.get_pages() or pages_val
+        if fid and str(fid).isdigit() and arc.load_fax(int(fid)):
+            date_val = arc.get_archstamp() or ""
+            pages_val = arc.get_pages() or 0
             cid = arc.get_companyid()
             if cid:
                 ab = AFAddressBook()
                 if ab.loadbycid(cid):
-                    company = ab.get_company() or company
+                    company = ab.get_company() or ""
             elif arc.get_origfaxnum():
                 company = arc.get_origfaxnum()
     except Exception:

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import os
 
-from pyramid.httpexceptions import HTTPFound
+from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from pyramid.response import Response
 from pyramid.view import view_config
 
@@ -46,12 +46,12 @@ def inbox_view(request):
                         pass
                 faxes.append({
                     "id": fid,
-                    "company": cname or r.get("company") or "Acme Corp",
+                    "company": cname or r.get("company") or "",
                     "origfaxnum": r.get("origfaxnum") or "-",
-                    "archstamp": r.get("archstamp") or "2026-09-29 10:00:00",
-                    "modemdev": r.get("modemdev") or "ttyS0",
+                    "archstamp": r.get("archstamp") or "",
+                    "modemdev": r.get("modemdev") or "",
                     "pages": r.get("pages") or 1,
-                    "description": r.get("description") or "Received Facsimile",
+                    "description": r.get("description") or "",
                 })
 
     if "Authorization" in request.headers or "application/json" in request.headers.get("Accept", ""):
@@ -75,16 +75,31 @@ def viewfax_view(request):
     """Render fax preview dialog."""
     identity = request.identity or {"username": "admin", "is_admin": True}
     fid = request.params.get("fid", "1")
-    pages = 2
-    archstamp = "2026-09-29 10:00:00"
-    modemdev = "ttyS0"
+    pages = 1
+    archstamp = ""
+    modemdev = ""
+    company = ""
 
     try:
         arc = ArchiveIn()
         if fid.isdigit() and arc.load_fax(int(fid)):
             pages = arc.get_pages() or 1
-            archstamp = arc.get_archstamp() or archstamp
-            modemdev = arc.get_modemdev() or modemdev
+            archstamp = arc.get_archstamp() or ""
+            modemdev = arc.get_modemdev() or ""
+            if arc.get_companyid():
+                try:
+                    ab = AFAddressBook()
+                    if ab.loadbycid(arc.get_companyid()):
+                        company = ab.get_company()
+                except Exception:
+                    pass
+            if not company and arc.get_faxnumid():
+                try:
+                    ab = AFAddressBook()
+                    if ab.loadbyfaxnumid(arc.get_faxnumid()):
+                        company = ab.get_company()
+                except Exception:
+                    pass
     except Exception:
         pass
 
@@ -96,6 +111,7 @@ def viewfax_view(request):
         "pages": pages,
         "archstamp": archstamp,
         "modemdev": modemdev,
+        "company": company,
     }
 
 
@@ -119,7 +135,7 @@ def fax_download_view(request):
         pass
 
     if file_bytes is None:
-        file_bytes = b"%PDF-1.4\n% NamiFAX synthetic PDF binary stream for fax #" + fid.encode("utf-8") + b"\n%%EOF\n"
+        raise HTTPNotFound("Fax document file not found")
 
     res = Response(body=file_bytes, content_type=content_type)
     res.headers["Content-Disposition"] = f'inline; filename="fax_{fid}.{fmt}"'

@@ -5,7 +5,7 @@ from typing import Any
 from PIL import Image
 import pytesseract
 
-from avantfax.db.engine import DatabaseEngine
+from namifax.db.engine import DatabaseEngine
 
 class OcrService:
     """Enterprise Fax OCR Text Extraction & Full-Text Search service."""

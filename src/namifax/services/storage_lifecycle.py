@@ -4,7 +4,7 @@ import time
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Any, Dict, Optional
-from avantfax.db.engine import DatabaseEngine
+from namifax.db.engine import DatabaseEngine
 
 
 @dataclass

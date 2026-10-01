@@ -110,8 +110,6 @@ def distrolist_edit_view(request):
     selected_list = None
     if dl_id:
         selected_list = next((d for d in distrolists if str(d.get("dl_id")) == str(dl_id)), None)
-        if not selected_list and str(dl_id) == "1" and distrolists:
-            selected_list = distrolists[0]
 
     return {
         "title": "NamiFAX - Distribution Lists",

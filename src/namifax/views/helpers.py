@@ -5,6 +5,7 @@ from pyramid.response import Response
 from pyramid.view import view_config
 
 from namifax.services.addressbook import AFAddressBook
+from namifax.services.categories import FaxPDFCategory
 from namifax.services.distro import DistributionList
 
 
@@ -31,17 +32,11 @@ def popup_distrolist_helper(request):
             for c in companies:
                 cid = c.get("ab_id") or c.get("abook_id") or 1
                 cname = c.get("company", "")
-                faxnum = c.get("faxnum") or c.get("faxnumber") or "1234567"
+                faxnum = c.get("faxnum") or c.get("faxnumber") or ""
                 label = f"{cname} - {faxnum}" if faxnum else cname
                 options_html.append(f'          <option value="{cid}">{html.escape(label)}</option>')
     except Exception:
         pass
-
-    if not options_html:
-        options_html = [
-            '          <option value="1">Acme Corp - 1234567</option>',
-            '          <option value="2">Global Tech - 7654321</option>',
-        ]
 
     select_content = "\n".join(options_html)
 
@@ -90,12 +85,6 @@ def popup_distro_contacts(request):
     except Exception:
         pass
 
-    if not options_html:
-        options_html = [
-            '          <option value="1">All Partners (5 recipients)</option>',
-            '          <option value="2">Vendors (3 recipients)</option>',
-        ]
-
     select_content = "\n".join(options_html)
 
     html_content = f"""<!DOCTYPE html>
@@ -137,17 +126,11 @@ def popup_fax_contacts(request):
             for c in companies:
                 cid = c.get("ab_id") or c.get("abook_id") or 1
                 cname = c.get("company", "")
-                faxnum = c.get("faxnum") or c.get("faxnumber") or "1234567"
+                faxnum = c.get("faxnum") or c.get("faxnumber") or ""
                 label = f"{cname} - {faxnum}" if faxnum else cname
                 options_html.append(f'          <option value="{cid}">{html.escape(label)}</option>')
     except Exception:
         pass
-
-    if not options_html:
-        options_html = [
-            '          <option value="1">Acme Corp - 1234567</option>',
-            '          <option value="2">Global Tech - 7654321</option>',
-        ]
 
     select_content = "\n".join(options_html)
 
@@ -191,12 +174,6 @@ def popup_email_contacts(request):
                 options_html.append(f'          <option value="{eid}">{html.escape(cstr)}</option>')
     except Exception:
         pass
-
-    if not options_html:
-        options_html = [
-            '          <option value="1">admin@avantfax.com</option>',
-            '          <option value="2">user@example.com</option>',
-        ]
 
     select_content = "\n".join(options_html)
 
@@ -316,7 +293,19 @@ def upload_fax_contacts(request):
                     if current_name and email:
                         ab.create_contact(current_name, email)
 
-    html = f"""<!DOCTYPE html>
+    category_options = []
+    try:
+        cats = FaxPDFCategory().get_categories() or []
+        for cat in cats:
+            cid = cat.get("catid")
+            cname = html.escape(str(cat.get("name", "")))
+            category_options.append(f'          <option value="{cid}">{cname}</option>')
+    except Exception:
+        pass
+
+    cat_content = "\n".join(category_options)
+
+    html_content = f"""<!DOCTYPE html>
 <html>
 <head><title>- NamiFAX - Upload Fax Contacts</title></head>
 <body class="bg-slate-50 text-slate-800 p-6">
@@ -327,8 +316,7 @@ def upload_fax_contacts(request):
       <div>
         <label class="block text-sm font-semibold mb-1">Category:</label>
         <select name="catid" class="w-full border border-slate-300 rounded px-2 py-1.5 text-sm">
-          <option value="1">General</option>
-          <option value="2">Confidential</option>
+{cat_content}
         </select>
       </div>
       <div>
@@ -343,4 +331,4 @@ def upload_fax_contacts(request):
   </div>
 </body>
 </html>"""
-    return Response(html, content_type="text/html")
+    return Response(html_content, content_type="text/html")

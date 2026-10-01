@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from pyramid.view import view_config
 
+from namifax.services.user_account import AFUserAccount
+
 
 @view_config(route_name="settings", renderer="namifax:templates/settings.jinja2", permission="view")
 def settings_view(request):
@@ -12,19 +14,43 @@ def settings_view(request):
     message = None
     error = None
 
-    profile_data = {
-        "name": identity.get("name", "Administrator"),
-        "email": identity.get("email", "admin@avantfax.local"),
-        "from_company": "Enterprise Inc.",
-        "from_location": "Headquarters",
-        "from_voicenumber": "+1-555-0100",
-        "from_faxnumber": "+1-555-0199",
-        "user_tsi": "ENTERPRISE-HQ",
-        "email_sig": "-- \nBest regards,\nNamiFAX Administrator",
-    }
+    db = getattr(request, "db", None)
+    user_account = AFUserAccount(db=db)
+    user_loaded = False
 
-    # Determine current language from cookie, session, or identity
-    current_lang = "en"
+    uid = identity.get("uid")
+    if uid:
+        user_loaded = user_account.load(int(uid))
+    elif identity.get("username"):
+        user_loaded = user_account.load_username(identity["username"])
+
+    if user_loaded and user_account.dbdata:
+        profile_data = {
+            "name": user_account.dbdata.get("name") or identity.get("name", "Administrator"),
+            "email": user_account.dbdata.get("email") or identity.get("email", "admin@avantfax.local"),
+            "from_company": user_account.dbdata.get("from_company") or "",
+            "from_location": user_account.dbdata.get("from_location") or "",
+            "from_voicenumber": user_account.dbdata.get("from_voicenumber") or "",
+            "from_faxnumber": user_account.dbdata.get("from_faxnumber") or "",
+            "user_tsi": user_account.dbdata.get("user_tsi") or "",
+            "email_sig": user_account.dbdata.get("email_sig") or "",
+            "language": user_account.dbdata.get("language") or "en",
+        }
+    else:
+        profile_data = {
+            "name": identity.get("name", "Administrator"),
+            "email": identity.get("email", "admin@avantfax.local"),
+            "from_company": identity.get("from_company", "Enterprise Inc."),
+            "from_location": identity.get("from_location", "Headquarters"),
+            "from_voicenumber": identity.get("from_voicenumber", "+1-555-0100"),
+            "from_faxnumber": identity.get("from_faxnumber", "+1-555-0199"),
+            "user_tsi": identity.get("user_tsi", "ENTERPRISE-HQ"),
+            "email_sig": identity.get("email_sig", "-- \nBest regards,\nNamiFAX Administrator"),
+            "language": identity.get("language", "en"),
+        }
+
+    # Determine current language from cookie, session, profile, or identity
+    current_lang = profile_data.get("language", "en")
     if hasattr(request, "cookies") and request.cookies.get("_LOCALE_"):
         current_lang = request.cookies.get("_LOCALE_")
     elif hasattr(request, "session") and request.session.get("language"):
@@ -36,14 +62,28 @@ def settings_view(request):
 
     if request.method == "POST":
         params = request.params
-        old_pw = params.get("old_password", "")
-        new_pw = params.get("new_password", "")
-        confirm_pw = params.get("confirm_password", "")
+        old_pw = params.get("old_password", "").strip()
+        new_pw = params.get("new_password", "").strip()
+        confirm_pw = params.get("confirm_password", "").strip()
 
-        if new_pw and new_pw != confirm_pw:
-            error = "New passwords do not match."
-        else:
-            selected_lang = params.get("language", "en")
+        # Handle password change
+        if old_pw or new_pw:
+            if not old_pw:
+                error = "Old password is required to change password."
+            elif not new_pw:
+                error = "New password is required."
+            elif new_pw != confirm_pw:
+                error = "New passwords do not match."
+            elif user_loaded:
+                success = user_account.set_newpassword(old_pw, new_pw)
+                if not success:
+                    error = user_account.get_error() or "Failed to change password."
+            else:
+                error = "User account not loaded."
+
+        # Handle profile fields update
+        if not error:
+            selected_lang = params.get("language", current_lang)
             profile_data.update({
                 "name": params.get("name", profile_data["name"]),
                 "email": params.get("email", profile_data["email"]),
@@ -56,15 +96,21 @@ def settings_view(request):
                 "language": selected_lang,
             })
 
-            # Update session language
-            if hasattr(request, "session"):
-                request.session["language"] = selected_lang
+            if user_loaded:
+                user_account.dbdata.update(profile_data)
+                if not user_account.user_update():
+                    error = user_account.get_error() or "Failed to update profile."
 
-            # Set _LOCALE_ cookie for immediate persistence across requests
-            if hasattr(request, "response"):
-                request.response.set_cookie("_LOCALE_", selected_lang, max_age=31536000, path="/")
+            if not error:
+                # Update session language
+                if hasattr(request, "session"):
+                    request.session["language"] = selected_lang
 
-            message = "Settings updated successfully."
+                # Set _LOCALE_ cookie for immediate persistence across requests
+                if hasattr(request, "response"):
+                    request.response.set_cookie("_LOCALE_", selected_lang, max_age=31536000, path="/")
+
+                message = "Settings updated successfully."
 
     totp_enabled = False
     if identity and identity.get("uid"):

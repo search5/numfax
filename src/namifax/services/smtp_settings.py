@@ -5,7 +5,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from email.message import EmailMessage
 from typing import Any, Dict, List, Optional
-from avantfax.db.engine import DatabaseEngine
+from namifax.db.engine import DatabaseEngine
 
 
 @dataclass

@@ -45,3 +45,6 @@ htmlcov/
 .serena
 node_modules
 .venv
+faxes/
+*.zip
+

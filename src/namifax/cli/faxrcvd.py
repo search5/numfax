@@ -163,9 +163,11 @@ def run_faxrcvd(argv: Sequence[str] | None = None) -> int:
         avantfaxlog(f"faxrcvd> Inserted {faxpath} from {company_name} to Inbox", echo=False)
         try:
             from namifax.services.ocr import OcrService
+
+            faxname = os.path.basename(faxfile)
             OcrService().index_fax(fax_file=faxname, tiff_path=faxfile, fax_id=faxid)
-        except Exception:
-            pass
+        except Exception as e:
+            avantfaxlog(f"faxrcvd> OCR indexing failed for {faxfile}: {e}", echo=False)
 
     # Routing Priorities: DID/Modem -> Fax2Email -> Barcode
     printer = PRINTERNAME

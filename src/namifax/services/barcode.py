@@ -110,7 +110,12 @@ class BarcodeRouting:
     def list_all(self) -> list[dict[str, Any]]:
         """Return all barcode routes ordered by alias."""
         res = self.barcoderoute.query("SELECT * FROM BarcodeRoute ORDER BY alias", reduce_single=False)
-        return res if isinstance(res, list) else []
+        if isinstance(res, list):
+            for r in res:
+                if "barcode_id" not in r or r["barcode_id"] is None:
+                    r["barcode_id"] = r.get("bcr_id")
+            return res
+        return []
 
     def reset_list(self) -> None:
         """Reset internal cursor for list traversal."""
@@ -148,7 +153,7 @@ class BarcodeRouting:
             self.barcode = data.get("barcode")
             self.contact = data.get("contact")
             self.printer = data.get("printer")
-            self.barcode_id = data.get("barcode_id")
+            self.barcode_id = data.get("barcode_id") or data.get("bcr_id")
             self.faxcatid = data.get("faxcatid")
             self.error = None
             return True
@@ -164,12 +169,15 @@ class BarcodeRouting:
             return False
 
         data = self.barcoderoute.find({"barcode_id": barcode_id})
+        if not data:
+            data = self.barcoderoute.find({"bcr_id": barcode_id})
+
         if data and isinstance(data, dict):
             self.alias = data.get("alias")
             self.barcode = data.get("barcode")
             self.contact = data.get("contact")
             self.printer = data.get("printer")
-            self.barcode_id = data.get("barcode_id")
+            self.barcode_id = data.get("barcode_id") or data.get("bcr_id")
             self.faxcatid = data.get("faxcatid")
             self.error = None
             return True

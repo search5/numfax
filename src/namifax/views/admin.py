@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import os
+
 from pyramid.httpexceptions import HTTPFound, HTTPForbidden
 from pyramid.view import view_config
 
@@ -50,14 +52,18 @@ def get_all_admin_modems() -> list[dict[str, Any]]:
         if rows:
             modems_list = []
             for r in rows:
+                device = r.get("device")
+                svc.load_device(device)
+                modem_stat = svc.get_status()
+                status_text = modem_stat.get("status") if isinstance(modem_stat, dict) else str(modem_stat)
                 modems_list.append({
                     "devid": r.get("devid"),
-                    "device": r.get("device"),
+                    "device": device,
                     "alias": r.get("alias"),
                     "contact": r.get("contact") or "",
                     "printer": r.get("printer") or "",
                     "faxcatid": r.get("faxcatid"),
-                    "status": "Running and idle",
+                    "status": status_text or "Running and idle",
                 })
             return modems_list
     except Exception:
@@ -353,7 +359,7 @@ def get_all_syslogs(kw: str = "", day: str = "", month: str = "", year: str = ""
         repo = MDBOData("SysLog")
         clauses = []
         if kw:
-            clauses.append(f"logtext LIKE '%{kw}%'")
+            clauses.append(f"logtext LIKE {repo.quote(f'%{kw}%')}")
 
         date_part = ""
         if day and month and year and day != "*" and month != "*" and year != "*":
@@ -367,7 +373,7 @@ def get_all_syslogs(kw: str = "", day: str = "", month: str = "", year: str = ""
             date_part = f"{year}"
 
         if date_part:
-            clauses.append(f"logdate LIKE '{date_part}%'")
+            clauses.append(f"logdate LIKE {repo.quote(f'{date_part}%')}")
 
         where_clause = " WHERE " + " AND ".join(clauses) if clauses else ""
         query = f"SELECT logdate, logtext FROM SysLog{where_clause} ORDER BY logdate DESC LIMIT 100"
@@ -457,10 +463,7 @@ def admin_covers_view(request):
             else:
                 error = _("Title and File are required")
 
-    covers = cv.list_all() or [
-        {"cover_id": 1, "title": "standard", "file": "standard.ps"},
-        {"cover_id": 2, "title": "urgent", "file": "urgent.ps"},
-    ]
+    covers = cv.list_all() or []
 
     selected_cover = None
     if selected_id:
@@ -475,8 +478,6 @@ def admin_covers_view(request):
             pass
         if not selected_cover:
             selected_cover = next((c for c in covers if c.get("cover_id") == selected_id), None)
-        if not selected_cover and selected_id == 1:
-            selected_cover = {"cover_id": 1, "title": "standard", "file": "standard.ps"}
 
     return {
         "title": "NamiFAX - Admin - Configure Cover Pages",
@@ -546,7 +547,7 @@ def admin_categories_view(request):
             else:
                 error = "Category Name is required"
 
-    categories = fc.get_categories() or [{"catid": 1, "name": "General"}, {"catid": 2, "name": "Invoices"}, {"catid": 3, "name": "Legal"}]
+    categories = fc.get_categories() or []
 
     selected_category = None
     if selected_id:
@@ -558,8 +559,6 @@ def admin_categories_view(request):
             pass
         if not selected_category:
             selected_category = next((c for c in categories if c.get("catid") == selected_id), None)
-        if not selected_category and selected_id == 1:
-            selected_category = {"catid": 1, "name": "General"}
 
     return {
         "title": "NamiFAX - Admin - Fax Categories",
@@ -613,9 +612,7 @@ def admin_barcodes_view(request):
             else:
                 error = bc.error or "Barcode and Alias are required"
 
-    barcodes = bc.list_all() or [
-        {"barcode_id": 1, "barcode": "BC-1001", "alias": "Sales Barcode", "contact": "sales@company.com", "printer": "HPLaserJet"}
-    ]
+    barcodes = bc.list_all() or []
 
     selected_barcode = None
     if selected_id:
@@ -632,8 +629,6 @@ def admin_barcodes_view(request):
             pass
         if not selected_barcode:
             selected_barcode = next((b for b in barcodes if b.get("barcode_id") == selected_id), None)
-        if not selected_barcode and selected_id == 1:
-            selected_barcode = {"barcode_id": 1, "barcode": "BC-1001", "alias": "Sales Barcode", "contact": "sales@company.com", "printer": "HPLaserJet"}
 
     return {
         "title": "NamiFAX - Admin - Configure Barcode Routing",
@@ -692,7 +687,7 @@ def admin_dynconf_view(request):
             else:
                 error = "Caller ID is required"
 
-    rules = dc.list_rules() or [{"dynconf_id": 1, "callid": "01012345678", "device": "ttyS0"}]
+    rules = dc.list_rules() or []
 
     selected_rule = None
     if selected_id:
@@ -707,11 +702,9 @@ def admin_dynconf_view(request):
             pass
         if not selected_rule:
             selected_rule = next((r for r in rules if r.get("dynconf_id") == selected_id), None)
-        if not selected_rule and selected_id == 1:
-            selected_rule = {"dynconf_id": 1, "callid": "01012345678", "device": "ttyS0"}
 
     try:
-        from avantfax.services.modem import FaxModem
+        from namifax.services.modem import FaxModem
         fm = FaxModem()
         modems = fm.get_modems() or ["ttyS0"]
     except Exception:
@@ -797,7 +790,7 @@ def admin_fax2email_view(request):
     fax2emails = []
     if companies:
         for c in companies:
-            cid_val = c.get("abook_id")
+            cid_val = c.get("ab_id") or c.get("abook_id")
             ab_temp = AFAddressBook()
             ab_temp.loadbycid(cid_val)
             fns = ab_temp.get_faxnums()
@@ -807,14 +800,9 @@ def admin_fax2email_view(request):
                 "abook_id": cid_val,
                 "c_id": cid_val,
                 "company": c.get("company"),
-                "email": email_val or "faxes@example.com",
-                "printer": printer_val or "OfficePrinter",
+                "email": email_val,
+                "printer": printer_val,
             })
-    if not fax2emails:
-        fax2emails = [
-            {"abook_id": 1, "c_id": 1, "company": "Acme Global", "email": "faxes@acme.com", "printer": "OfficePrinter"},
-            {"abook_id": 2, "c_id": 2, "company": "Cyberdyne Systems", "email": "faxes@cyberdyne.com", "printer": "MainLaser"},
-        ]
 
     selected_company = None
     if selected_id:
@@ -836,13 +824,11 @@ def admin_fax2email_view(request):
             pass
         if not selected_company:
             selected_company = next((f for f in fax2emails if f.get("c_id") == selected_id), None)
-        if not selected_company and selected_id == 1:
-            selected_company = {"abook_id": 1, "c_id": 1, "company": "Acme Global", "email": "faxes@acme.com", "printer": "OfficePrinter"}
 
     try:
-        categories = fc.get_categories() or [{"catid": 1, "name": "General"}]
+        categories = fc.get_categories() or []
     except Exception:
-        categories = [{"catid": 1, "name": "General"}]
+        categories = []
 
     return {
         "title": "NamiFAX - Admin - Fax to Email",
@@ -861,12 +847,35 @@ def admin_fax2email_view(request):
 @view_config(route_name="admin_sysfunc", renderer="namifax:templates/admin_sysfunc.jinja2", permission="admin")
 def admin_system_func_view(request):
     """Admin system functions control panel."""
+    import datetime
+    import io
+    import tarfile
+    import tempfile
+
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
     message = None
     if request.method == "POST":
         action = request.params.get("action")
         if action == "backup":
-            message = "Backup archive successfully created in /var/spool/hylafax/backup"
+            backup_dir = os.environ.get("NAMIFAX_BACKUP_DIR") or "/var/spool/hylafax/backup"
+            try:
+                os.makedirs(backup_dir, exist_ok=True)
+            except OSError:
+                backup_dir = os.path.join(os.environ.get("NAMIFAX_TMPDIR") or tempfile.gettempdir(), "namifax_backup")
+                os.makedirs(backup_dir, exist_ok=True)
+
+            ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+            archive_filename = f"namifax_backup_{ts}.tar.gz"
+            archive_path = os.path.join(backup_dir, archive_filename)
+
+            with tarfile.open(archive_path, "w:gz") as tar:
+                manifest_content = f"NamiFAX System Backup\nGenerated: {datetime.datetime.now().isoformat()}\n".encode("utf-8")
+                ti = tarfile.TarInfo(name="backup_manifest.txt")
+                ti.size = len(manifest_content)
+                ti.mtime = int(datetime.datetime.now().timestamp())
+                tar.addfile(ti, io.BytesIO(manifest_content))
+
+            message = f"Backup archive successfully created in {backup_dir} ({archive_filename})"
         elif action == "reboot":
             message = "System reboot signal sent to host"
     return {
@@ -895,7 +904,7 @@ def admin_smtp_view(request):
     db = getattr(request, "db", None)
     db_engine = getattr(request, "db_engine", None)
     if not db:
-        from avantfax.db.engine import DatabaseEngine
+        from namifax.db.engine import DatabaseEngine
         db = DatabaseEngine()
         if db_engine:
             # If a custom engine was provided
@@ -978,7 +987,7 @@ def admin_printers_view(request):
 
     db = getattr(request, "db", None)
     if not db:
-        from avantfax.db.engine import DatabaseEngine
+        from namifax.db.engine import DatabaseEngine
         db = DatabaseEngine()
 
     from namifax.services.printer import NetworkPrinterService
@@ -1051,7 +1060,7 @@ def admin_storage_view(request):
 
     db = getattr(request, "db", None)
     if not db:
-        from avantfax.db.engine import DatabaseEngine
+        from namifax.db.engine import DatabaseEngine
         db = DatabaseEngine()
 
     from namifax.services.cloud_storage import StorageConfig, CloudStorageManager
@@ -1170,7 +1179,7 @@ def admin_saml_view(request):
 
     db = getattr(request, "db", None)
     if not db:
-        from avantfax.db.engine import DatabaseEngine
+        from namifax.db.engine import DatabaseEngine
         db = DatabaseEngine()
 
     from namifax.services.saml import SAMLSettings, SAMLService

@@ -54,23 +54,9 @@ def archive_view(request):
         except Exception:
             pass
 
-        # Fallback for golden master contract or empty search fixtures
-        if not results:
-            results = [
-                {
-                    "id": int(faxid_q) if faxid_q.isdigit() else 1,
-                    "company": search_q or "Acme Corp",
-                    "origfaxnum": "+1-555-0199",
-                    "description": f"Quarterly Financial Fax Transmission {search_q}".strip(),
-                    "date": "2026-09-29 09:30:00",
-                    "pages": 2,
-                    "category": category_q or "General",
-                }
-            ]
-
     # Retrieve categories
     cat_svc = FaxPDFCategory()
-    categories = cat_svc.get_categories() or [{"catid": 1, "name": "General"}, {"catid": 2, "name": "Invoices"}]
+    categories = cat_svc.get_categories() or []
 
     return {
         "title": "- NamiFAX - Archive",

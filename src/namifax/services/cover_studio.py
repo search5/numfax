@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from typing import Any, Dict, List, Optional
-from avantfax.db.engine import DatabaseEngine
+from namifax.db.engine import DatabaseEngine
 
 
 SUPPORTED_COVER_EXTENSIONS = {".ps", ".pdf", ".html", ".jinja2"}

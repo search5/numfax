@@ -3,7 +3,7 @@ import re
 import socket
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
-from avantfax.db.engine import DatabaseEngine
+from namifax.db.engine import DatabaseEngine
 
 
 @dataclass
@@ -116,7 +116,10 @@ def process_inbound_print_job(
     sender_user: str = "guest",
     db: Optional[DatabaseEngine] = None,
 ) -> Dict[str, Any]:
-    """Process inbound print stream from CUPS virtual queue."""
+    """Process inbound print stream from CUPS virtual queue and persist files."""
+    import tempfile
+    import uuid
+
     # Attempt text extraction from raw PostScript/Text stream
     text_content = ""
     try:
@@ -126,22 +129,40 @@ def process_inbound_print_job(
 
     fax_numbers = extract_fax_tags(text_content)
 
+    tmp_dir = os.environ.get("NAMIFAX_TMPDIR") or tempfile.gettempdir()
+    ext = ".ps" if print_data.startswith(b"%!PS") else ".pdf" if print_data.startswith(b"%PDF") else ".prn"
+    job_token = uuid.uuid4().hex[:8]
+
     if fax_numbers:
         destination = fax_numbers[0]
-        # In real operation, queue via sendfax/FaxQueue
+        spool_dir = os.path.join(tmp_dir, "namifax_spool")
+        os.makedirs(spool_dir, exist_ok=True)
+        file_path = os.path.join(spool_dir, f"printjob_{job_token}_{sender_user}{ext}")
+        with open(file_path, "wb") as f_out:
+            f_out.write(print_data)
+
         return {
             "dispatched": True,
             "status": "QUEUED",
             "destination": destination,
             "sender": sender_user,
             "bytes_received": len(print_data),
+            "file_path": file_path,
+            "job_id": job_token,
         }
     else:
         # Fallback to web drafts repository
+        drafts_dir = os.path.join(tmp_dir, "namifax_drafts")
+        os.makedirs(drafts_dir, exist_ok=True)
+        file_path = os.path.join(drafts_dir, f"draft_{job_token}_{sender_user}{ext}")
+        with open(file_path, "wb") as f_out:
+            f_out.write(print_data)
+
         return {
             "dispatched": False,
             "status": "DRAFT",
             "sender": sender_user,
             "bytes_received": len(print_data),
+            "file_path": file_path,
             "message": "No [[FAX: ...]] tag found in print data. Saved to drafts for manual dispatch.",
         }

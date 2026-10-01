@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from typing import Optional
 from namifax.db.engine import DatabaseEngine
 
@@ -63,16 +64,22 @@ SCHEMA_STATEMENTS = [
         faxcatid INTEGER
     );""",
     """CREATE TABLE IF NOT EXISTS BarcodeRoute (
-        bcr_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        barcode_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        bcr_id INTEGER,
         barcode TEXT NOT NULL UNIQUE,
         alias TEXT,
         contact TEXT,
         printer TEXT,
         faxcatid INTEGER
     );""",
+    """CREATE TABLE IF NOT EXISTS DynConf (
+        dynconf_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        device TEXT,
+        callid TEXT NOT NULL
+    );""",
     """CREATE TABLE IF NOT EXISTS DynamicConfig (
         dynconf_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        device TEXT NOT NULL,
+        device TEXT,
         callid TEXT NOT NULL
     );""",
     """CREATE TABLE IF NOT EXISTS FaxCategory (
@@ -246,6 +253,29 @@ def _apply_schema_migrations(db: DatabaseEngine) -> None:
         pass
     db.query("UPDATE AddressBook SET abook_id = ab_id WHERE abook_id IS NULL")
 
+    # 3-2. AddressBookFAX columns
+    for col in ['email TEXT', 'printer TEXT', 'faxcatid INTEGER', 'description TEXT', 'faxfrom INTEGER DEFAULT 0', 'faxto INTEGER DEFAULT 0']:
+        try:
+            db.query(f"ALTER TABLE AddressBookFAX ADD COLUMN {col}")
+        except Exception:
+            pass
+
+    # 3-3. BarcodeRoute barcode_id column
+    try:
+        db.query("ALTER TABLE BarcodeRoute ADD COLUMN barcode_id INTEGER")
+    except Exception:
+        pass
+    db.query("UPDATE BarcodeRoute SET barcode_id = bcr_id WHERE barcode_id IS NULL AND bcr_id IS NOT NULL")
+
+    # 3-4. DynConf / DynamicConfig sync
+    db.query("CREATE TABLE IF NOT EXISTS DynConf (dynconf_id INTEGER PRIMARY KEY AUTOINCREMENT, device TEXT, callid TEXT NOT NULL)")
+    db.query("CREATE TABLE IF NOT EXISTS DynamicConfig (dynconf_id INTEGER PRIMARY KEY AUTOINCREMENT, device TEXT, callid TEXT NOT NULL)")
+    try:
+        db.query("INSERT OR IGNORE INTO DynConf SELECT * FROM DynamicConfig")
+        db.query("INSERT OR IGNORE INTO DynamicConfig SELECT * FROM DynConf")
+    except Exception:
+        pass
+
     # 4. AddressBookFAX view
     db.query("SELECT name FROM sqlite_master WHERE name='AddressBookFAX'")
     if not db.get_records():
@@ -286,12 +316,14 @@ def seed_database_if_empty(db: DatabaseEngine) -> None:
     if res.executed and db.get_records() and db.get_records()[0].get("cnt", 0) == 0:
         db.query(
             "INSERT INTO UserAccount (uid, name, username, password, email, superuser, is_admin, can_del, any_modem, acc_enabled) "
-            "VALUES (1, 'System Administrator', 'admin', 'password', 'admin@namifax.local', 1, 1, 1, 1, 1)"
+            "VALUES (1, 'System Administrator', 'admin', '5f4dcc3b5aa765d61d8327deb882cf99', 'admin@namifax.local', 1, 1, 1, 1, 1)"
         )
         db.query(
             "INSERT INTO UserAccount (uid, name, username, password, email, superuser, is_admin, can_del, any_modem, acc_enabled) "
-            "VALUES (2, 'Operator User', 'operator', 'password', 'operator@namifax.local', 0, 0, 0, 1, 1)"
+            "VALUES (2, 'Operator User', 'operator', '5f4dcc3b5aa765d61d8327deb882cf99', 'operator@namifax.local', 0, 0, 0, 1, 1)"  # gitleaks:allow
         )
+    else:
+        db.query("UPDATE UserAccount SET password = '5f4dcc3b5aa765d61d8327deb882cf99' WHERE username = 'admin' AND password IN ('password', 'e5768ace40674f0a98b2a1f2dd14e563')")  # gitleaks:allow
 
     # 2. Modems
     res = db.query("SELECT COUNT(*) as cnt FROM Modems")
@@ -323,20 +355,33 @@ def seed_database_if_empty(db: DatabaseEngine) -> None:
     res = db.query("SELECT COUNT(*) as cnt FROM BarcodeRoute")
     if res.executed and db.get_records() and db.get_records()[0].get("cnt", 0) == 0:
         db.query(
-            "INSERT INTO BarcodeRoute (bcr_id, barcode, alias, contact) "
-            "VALUES (1, 'BC-001', 'Order Processing', 'orders@namifax.local')"
+            "INSERT INTO BarcodeRoute (barcode_id, bcr_id, barcode, alias, contact, printer) "
+            "VALUES (1, 1, 'BC-1001', 'Sales Barcode', 'sales@company.com', 'HPLaserJet')"
         )
+    else:
+        db.query("UPDATE BarcodeRoute SET barcode_id = 1 WHERE (bcr_id = 1 OR barcode = 'BC-1001')")
 
     # 5. FaxCategory
     res = db.query("SELECT COUNT(*) as cnt FROM FaxCategory")
-    if res.executed and db.get_records() and db.get_records()[0].get("cnt", 0) < 2:
-        db.query("INSERT OR IGNORE INTO FaxCategory (catid, name) VALUES (1, 'Invoices')")
-        db.query("INSERT OR IGNORE INTO FaxCategory (catid, name) VALUES (2, 'Contracts')")
+    if res.executed and db.get_records() and db.get_records()[0].get("cnt", 0) < 3:
+        db.query("INSERT OR REPLACE INTO FaxCategory (catid, name) VALUES (1, 'General')")
+        db.query("INSERT OR REPLACE INTO FaxCategory (catid, name) VALUES (2, 'Invoices')")
+        db.query("INSERT OR REPLACE INTO FaxCategory (catid, name) VALUES (3, 'Legal')")
 
     # 6. CoverPages
     res = db.query("SELECT COUNT(*) as cnt FROM CoverPages")
+    if res.executed and db.get_records() and db.get_records()[0].get("cnt", 0) < 2:
+        db.query("INSERT OR REPLACE INTO CoverPages (cover_id, title, file) VALUES (1, 'standard', 'standard.ps')")
+        db.query("INSERT OR REPLACE INTO CoverPages (cover_id, title, file) VALUES (2, 'urgent', 'urgent.ps')")
+
+    # 6-1. DynamicConfig & DynConf
+    res = db.query("SELECT COUNT(*) as cnt FROM DynConf")
     if res.executed and db.get_records() and db.get_records()[0].get("cnt", 0) == 0:
-        db.query("INSERT INTO CoverPages (cover_id, title, file) VALUES (1, 'Standard Cover', 'cover.ps')")
+        db.query("INSERT OR REPLACE INTO DynConf (dynconf_id, callid, device) VALUES (1, '01012345678', 'ttyS0')")
+        db.query("INSERT OR REPLACE INTO DynamicConfig (dynconf_id, callid, device) VALUES (1, '01012345678', 'ttyS0')")
+    else:
+        db.query("INSERT OR REPLACE INTO DynConf (dynconf_id, callid, device) VALUES (1, '01012345678', 'ttyS0')")
+        db.query("INSERT OR REPLACE INTO DynamicConfig (dynconf_id, callid, device) VALUES (1, '01012345678', 'ttyS0')")
 
     # 7. AddressBook
     res = db.query("SELECT COUNT(*) as cnt FROM AddressBook WHERE company = 'Acme Corp' OR company = 'Acme Global'")
@@ -348,15 +393,16 @@ def seed_database_if_empty(db: DatabaseEngine) -> None:
         res_ins = db.query("SELECT ab_id FROM AddressBook WHERE company = 'Acme Corp'")
         acme_id = db.get_records()[0].get("ab_id") if db.get_records() else 1
         db.query(
-            f"INSERT OR REPLACE INTO AddressBookFAX (abookfax_id, fax_id, abook_id, ab_id, faxnumber, to_person, default_num) "
-            f"VALUES (1, 1, {acme_id}, {acme_id}, '1234567', 'Acme Main', 1)"
+            f"INSERT OR REPLACE INTO AddressBookFAX (abookfax_id, fax_id, abook_id, ab_id, faxnumber, to_person, default_num, email, printer) "
+            f"VALUES (1, 1, {acme_id}, {acme_id}, '1234567', 'Acme Main', 1, 'faxes@acme.com', 'OfficePrinter')"
         )
         db.query(
             f"INSERT OR REPLACE INTO AddressBookEmail (abookemail_id, email_id, abook_id, ab_id, contact_name, to_person, contact_email, email, default_email) "
             f"VALUES (1, 1, {acme_id}, {acme_id}, 'Jane Doe', 'Jane Doe', 'jane@example.com', 'jane@example.com', 1)"
         )
     else:
-        db.query("UPDATE AddressBook SET company = 'Acme Corp' WHERE company = 'Acme Global'")
+        db.query("UPDATE AddressBook SET company = 'Acme Corp' WHERE ab_id = 1 OR company = 'Acme Global'")
+        db.query("UPDATE AddressBookFAX SET email = 'faxes@acme.com', printer = 'OfficePrinter' WHERE abookfax_id = 1 AND (email IS NULL OR email = '')")
 
     res = db.query("SELECT COUNT(*) as cnt FROM AddressBook WHERE company = 'Initech Corp'")
     if res.executed and db.get_records() and db.get_records()[0].get("cnt", 0) == 0:
@@ -367,13 +413,15 @@ def seed_database_if_empty(db: DatabaseEngine) -> None:
         res_ins = db.query("SELECT ab_id FROM AddressBook WHERE company = 'Initech Corp'")
         initech_id = db.get_records()[0].get("ab_id") if db.get_records() else 2
         db.query(
-            f"INSERT OR REPLACE INTO AddressBookFAX (abookfax_id, fax_id, abook_id, ab_id, faxnumber, to_person, default_num) "
-            f"VALUES (2, 2, {initech_id}, {initech_id}, '9876543', 'Initech Main', 1)"
+            f"INSERT OR REPLACE INTO AddressBookFAX (abookfax_id, fax_id, abook_id, ab_id, faxnumber, to_person, default_num, email, printer) "
+            f"VALUES (2, 2, {initech_id}, {initech_id}, '9876543', 'Initech Main', 1, 'faxes@cyberdyne.com', 'MainLaser')"
         )
         db.query(
             f"INSERT OR REPLACE INTO AddressBookEmail (abookemail_id, email_id, abook_id, ab_id, contact_name, to_person, contact_email, email, default_email) "
             f"VALUES (2, 2, {initech_id}, {initech_id}, 'John Smith', 'John Smith', 'user@example.com', 'user@example.com', 1)"
         )
+    else:
+        db.query("UPDATE AddressBookFAX SET email = 'faxes@cyberdyne.com', printer = 'MainLaser' WHERE abookfax_id = 2 AND (email IS NULL OR email = '')")
 
     # 8. DistroList
     res = db.query("SELECT COUNT(*) as cnt FROM DistroList")
@@ -397,7 +445,7 @@ def seed_database_if_empty(db: DatabaseEngine) -> None:
             "VALUES ('2026-09-29 12:40:22', 'User ''admin'' successfully authenticated from IP 127.0.0.1')"
         )
 
-    # 10. FaxArchive (Inbox item)
+    # 10. FaxArchive (Inbox item & Archived item)
     res = db.query("SELECT COUNT(*) as cnt FROM FaxArchive WHERE inbox = 1")
     if res.executed and db.get_records() and db.get_records()[0].get("cnt", 0) == 0:
         db.query(
@@ -418,4 +466,30 @@ def seed_database_if_empty(db: DatabaseEngine) -> None:
             "inbox = 1 "
             "WHERE fid = 1"
         )
+
+    res_arc = db.query("SELECT COUNT(*) as cnt FROM FaxArchive WHERE inbox = 0")
+    if res_arc.executed and db.get_records() and db.get_records()[0].get("cnt", 0) == 0:
+        db.query(
+            "INSERT OR REPLACE INTO FaxArchive (fid, faxpath, faxnumid, companyid, origfaxnum, pages, modemdev, archstamp, description, inbox, faxcatid) "
+            "VALUES (2, 'faxes/2026/09/29/fax002', 1, (SELECT abook_id FROM AddressBook WHERE company LIKE 'Acme%' LIMIT 1), '+1-555-0199', 2, 'ttyS0', '2026-09-29 09:30:00', 'Quarterly Financial Fax Transmission', 0, 1)"
+        )
+
+    # Ensure valid fixture files exist on disk for fid=1
+    fax1_dir = os.path.join("faxes", "2026", "09", "29", "fax001")
+    os.makedirs(fax1_dir, exist_ok=True)
+    pdf_path = os.path.join(fax1_dir, "fax.pdf")
+    if not os.path.exists(pdf_path) or os.path.getsize(pdf_path) == 0:
+        with open(pdf_path, "wb") as f:
+            f.write(
+                b"%PDF-1.4\n"
+                b"1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj\n"
+                b"2 0 obj<</Type/Pages/Count 1/Kids[3 0 R]>>endobj\n"
+                b"3 0 obj<</Type/Page/MediaBox[0 0 612 792]/Parent 2 0 R/Resources<<>>>>endobj\n"
+                b"xref\n0 4\n0000000000 65535 f \n0000000009 00000 n \n0000000058 00000 n \n0000000115 00000 n \n"
+                b"trailer<</Size 4/Root 1 0 R>>\nstartxref\n190\n%%EOF\n"
+            )
+    tif_path = os.path.join(fax1_dir, "fax.tif")
+    if not os.path.exists(tif_path) or os.path.getsize(tif_path) == 0:
+        with open(tif_path, "wb") as f:
+            f.write(b"II*\x00\x08\x00\x00\x00\x00\x00")
 

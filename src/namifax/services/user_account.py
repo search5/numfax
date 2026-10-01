@@ -242,6 +242,14 @@ class AFUserAccount:
         if isinstance(data, list) and data:
             data = data[0]
 
+        if not data:
+            plain_creds: Dict[str, Any] = {"username": username, "password": password}
+            if admin:
+                plain_creds["is_admin"] = 1
+            plain_data = self.useraccount.find(plain_creds)
+            if isinstance(plain_data, list) and plain_data:
+                data = plain_data[0]
+
         if data:
             if data.get("acc_enabled") in (1, True, "1"):
                 self.pwdexpired = False

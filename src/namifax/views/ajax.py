@@ -38,16 +38,7 @@ def ajax_modem_status(request):
     except Exception:
         pass
 
-    if not rows_xml:
-        rows_xml.append(
-            "  <row>\n"
-            "    <modem>ttyS0</modem>\n"
-            "    <status>Idle</status>\n"
-            "    <class>2.0</class>\n"
-            "  </row>"
-        )
-
-    xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n<response>\n' + "\n".join(rows_xml) + "\n</response>"
+    xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n<response>\n' + "\n".join(rows_xml) + ("\n" if rows_xml else "") + "</response>"
     return Response(xml_content, content_type="text/xml")
 
 
@@ -76,7 +67,7 @@ def ajax_addressbook_suggest(request):
             for c in companies:
                 cid = c.get("ab_id") or c.get("abook_id") or 1
                 cname = c.get("company", "")
-                faxnum = c.get("faxnum") or c.get("faxnumber") or "1234567"
+                faxnum = c.get("faxnum") or c.get("faxnumber") or ""
                 label = f"{cname} - {faxnum}" if faxnum else cname
                 rows_xml.append(
                     f"  <row>\n"
@@ -89,17 +80,7 @@ def ajax_addressbook_suggest(request):
     except Exception:
         pass
 
-    if not rows_xml:
-        rows_xml.append(
-            "  <row>\n"
-            f"    <company>Acme Corp - 1234567</company>\n"
-            "    <cid>1</cid>\n"
-            "    <faxnum>1234567</faxnum>\n"
-            "    <fnid>1</fnid>\n"
-            "  </row>"
-        )
-
-    xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n<response>\n' + "\n".join(rows_xml) + "\n</response>"
+    xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n<response>\n' + "\n".join(rows_xml) + ("\n" if rows_xml else "") + "</response>"
     return Response(xml_content, content_type="text/xml")
 
 
@@ -125,15 +106,7 @@ def ajax_emailbook_suggest(request):
     except Exception:
         pass
 
-    if not rows_xml:
-        rows_xml.append(
-            "  <row>\n"
-            "    <id>1</id>\n"
-            "    <email>user@example.com</email>\n"
-            "  </row>"
-        )
-
-    xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n<response>\n' + "\n".join(rows_xml) + "\n</response>"
+    xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n<response>\n' + "\n".join(rows_xml) + ("\n" if rows_xml else "") + "</response>"
     return Response(xml_content, content_type="text/xml")
 
 
@@ -142,27 +115,27 @@ def ajax_addressbook_prefill(request):
     """Address book contact info prefill matching legacy ajaxprefillto.php."""
     fnid = request.GET.get("fnid", "").strip()
     ab = AFAddressBook()
-    to_company = "Acme Corp"
-    to_person = "John Doe"
-    to_address = "123 Street"
-    to_zip = "12345"
-    to_city = "City"
-    to_location = "HQ"
-    to_voicenumber = "555-1234"
+    to_company = ""
+    to_person = ""
+    to_address = ""
+    to_zip = ""
+    to_city = ""
+    to_location = ""
+    to_voicenumber = ""
 
     try:
         if fnid.isdigit():
             fid_int = int(fnid)
             if ab.loadbyfaxnumid(fid_int):
-                to_company = ab.get_company() or to_company
-                to_person = ab.get_to_person() or to_person
-                to_address = ab.get_to_address() or to_address
-                to_zip = ab.get_to_zip() or to_zip
-                to_city = ab.get_to_city() or to_city
-                to_location = ab.get_to_location() or to_location
-                to_voicenumber = ab.get_to_voicenumber() or to_voicenumber
+                to_company = ab.get_company() or ""
+                to_person = ab.get_to_person() or ""
+                to_address = ab.get_to_address() or ""
+                to_zip = ab.get_to_zip() or ""
+                to_city = ab.get_to_city() or ""
+                to_location = ab.get_to_location() or ""
+                to_voicenumber = ab.get_to_voicenumber() or ""
             elif ab.loadbycid(fid_int):
-                to_company = ab.get_company() or to_company
+                to_company = ab.get_company() or ""
     except Exception:
         pass
 
@@ -197,9 +170,6 @@ def ajax_distrolist_faxes(request):
                 faxes_str = "; ".join(entries)
     except Exception:
         pass
-
-    if not faxes_str:
-        faxes_str = "1234567; 9876543"
 
     return Response(faxes_str, content_type="text/plain")
 
@@ -337,15 +307,10 @@ def ajax_archivebook_view(request):
     except Exception:
         pass
 
-    if not rows_xml:
-        rows_xml.append(
-            "  <row>\n"
-            "    <company>Acme Corp</company>\n"
-            "    <cid>1</cid>\n"
-            "  </row>"
-        )
-
-    xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n<response>\n' + "\n".join(rows_xml) + "\n</response>"
+    if rows_xml:
+        xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n<response>\n' + "\n".join(rows_xml) + "\n</response>"
+    else:
+        xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n<response></response>'
     return Response(xml_content, content_type="text/xml")
 
 

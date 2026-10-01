@@ -155,39 +155,59 @@ class FaxQueue:
 
         return ret
 
-    def killjob(self, user: str, jid: int) -> bool:
-        """Cancel and remove job from queue using faxrm."""
-        cmd = f"export FAXUSER='{user}'; {self.faxrm_cmd} {jid}; unset FAXUSER"
-        self.shell_exec(cmd)
-        return True
+    def killjob(self, user_or_jid: Any, jid: Optional[int] = None) -> bool:
+        """Cancel and remove job from queue using faxrm. Supports (jid) or (user, jid)."""
+        if jid is None:
+            target_jid = int(user_or_jid)
+            target_user = getattr(self.user_account, "username", "admin") or "admin"
+        else:
+            target_user = str(user_or_jid)
+            target_jid = int(jid)
+
+        env = dict(os.environ)
+        env["FAXUSER"] = str(target_user)
+        cmd = [self.faxrm_cmd, str(target_jid)]
+        try:
+            proc = subprocess.run(cmd, env=env, capture_output=True, text=True, check=False)
+            return proc.returncode == 0
+        except Exception:
+            return False
+
+    kill_job = killjob
 
     def faxalter(self, user: str, jid: int, operations: Dict[str, Any]) -> bool:
         """Modify parameters of queued job using faxalter."""
-        ops = []
+        args = [self.faxalter_cmd]
         killjob = False
 
         for op, val in operations.items():
             if op == "resubmit":
-                ops.append("-r")
+                args.append("-r")
                 killjob = True
             elif op == "sendtime":
-                ops.append(f'-a "{val}"')
+                args.extend(["-a", str(val)])
             elif op == "destination":
-                ops.append(f'-d "{val}"')
+                args.extend(["-d", str(val)])
             elif op == "killtime":
-                ops.append(f'-k "{val}"')
+                args.extend(["-k", str(val)])
             elif op == "device":
-                ops.append(f'-m "{val}"')
+                args.extend(["-m", str(val)])
             elif op == "priority":
-                ops.append(f'-P "{val}"')
+                args.extend(["-P", str(val)])
             elif op == "tries":
-                ops.append(f'-t "{val}"')
+                args.extend(["-t", str(val)])
 
-        ops_str = " ".join(ops)
-        cmd = f"export FAXUSER='{user}'; {self.faxalter_cmd} {ops_str} {jid}; unset FAXUSER"
-        self.shell_exec(cmd)
+        args.append(str(jid))
+        env = dict(os.environ)
+        env["FAXUSER"] = str(user)
+        try:
+            proc = subprocess.run(args, env=env, capture_output=True, text=True, check=False)
+            success = (proc.returncode == 0)
+        except Exception:
+            return False
 
         if killjob:
-            self.killjob(user, jid)
+            kill_ok = self.killjob(user, jid)
+            return success and kill_ok
 
-        return True
+        return success

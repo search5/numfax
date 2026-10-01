@@ -63,12 +63,28 @@ def dispatch_sendfax(
             return {"success": False, "error": str(e)}
 
     # Fallback / Simulated environment when HylaFAX is not installed locally
-    job_id = str(uuid.uuid4().int)[:6]
+    simulation_env = (
+        os.environ.get("NAMIFAX_QUEUE_SIMULATION", "").lower() in ("1", "true", "yes")
+        or (
+            os.environ.get("NAMIFAX_QUEUE_SIMULATION") is None
+            and (bool(os.environ.get("PYTEST_CURRENT_TEST")) or not os.path.exists("/var/spool/hylafax"))
+        )
+    )
+
+    if simulation_env:
+        job_id = str(uuid.uuid4().int)[:6]
+        return {
+            "success": True,
+            "jobid": job_id,
+            "destination": clean_dest,
+            "files_count": len(files),
+            "simulated": True,
+        }
+
     return {
-        "success": True,
-        "jobid": job_id,
-        "destination": clean_dest,
-        "files_count": len(files),
+        "success": False,
+        "error": "HylaFAX sendfax binary not found on host system.",
+        "simulated": False,
     }
 
 
@@ -79,7 +95,7 @@ def sendfax_view(request):
     modem_list = get_all_admin_modems()
 
     covers_svc = Covers()
-    cover_names = covers_svc.get_covers() or ["standard", "urgent", "confidential"]
+    cover_names = covers_svc.get_covers() or []
 
     if request.method == "POST":
         params = request.params
@@ -117,7 +133,7 @@ def sendfax_view(request):
         comments = params.get("comments")
         selected_modem = params.get("modem")
 
-        dispatch_sendfax(
+        dispatch_res = dispatch_sendfax(
             destinations=faxnumber,
             files=uploaded_files,
             modem=selected_modem,
@@ -129,6 +145,18 @@ def sendfax_view(request):
             comments=comments,
             identity=identity,
         )
+
+        if not dispatch_res.get("success"):
+            request.response.status_code = 200
+            return {
+                "title": "- NamiFAX - Send Fax",
+                "current_user": identity,
+                "active_tab": "sendfax",
+                "error": dispatch_res.get("error", "Failed to dispatch fax"),
+                "form_data": params,
+                "modem_list": modem_list,
+                "cover_names": cover_names,
+            }
 
         # Successful submission: redirect to outbox queue
         return HTTPFound(location=request.route_url("outbox"))

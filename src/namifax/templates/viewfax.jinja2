@@ -21,11 +21,11 @@
       </div>
       
       <div class="text-xs text-slate-500 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px]">
-        <span><strong class="font-sans text-slate-700">{{ _('FROM:') }}</strong> <a href="/addressbook" class="text-sky-700 font-bold hover:underline">{{ company or 'Acme Global (+1-555-0100)' }}</a></span>
+        <span><strong class="font-sans text-slate-700">{{ _('FROM:') }}</strong> <a href="/addressbook" class="text-sky-700 font-bold hover:underline">{{ company or '-' }}</a></span>
         <span class="text-slate-300">&bull;</span>
-        <span><strong class="font-sans text-slate-700">{{ _('DATE:') }}</strong> {{ archstamp or '2026-09-29 10:00:00' }}</span>
+        <span><strong class="font-sans text-slate-700">{{ _('DATE:') }}</strong> {{ archstamp or '-' }}</span>
         <span class="text-slate-300">&bull;</span>
-        <span><strong class="font-sans text-slate-700">{{ _('DEVICE:') }}</strong> <span class="bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded border border-slate-200">{{ modemdev or 'ttyS0' }}</span></span>
+        <span><strong class="font-sans text-slate-700">{{ _('DEVICE:') }}</strong> <span class="bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded border border-slate-200">{{ modemdev or '-' }}</span></span>
       </div>
     </div>
 
@@ -120,13 +120,13 @@
             <div>
               <span class="text-[10px] uppercase font-mono tracking-widest text-slate-500 font-bold block mb-1">{{ _('Incoming Transmission') }}</span>
               <h3 class="text-xl font-black text-slate-900 tracking-tight">{{ _('FACSIMILE TRANSMISSION') }}</h3>
-              <p class="text-xs text-slate-600 mt-1 font-mono">{{ _('Date Received:') }} {{ archstamp or '2026-09-29 10:00:00' }}</p>
-              <p class="text-xs text-slate-800 font-bold mt-0.5">{{ _('Originating Station:') }} {{ company or 'Acme Global Corp' }}</p>
+              <p class="text-xs text-slate-600 mt-1 font-mono">{{ _('Date Received:') }} {{ archstamp or '-' }}</p>
+              <p class="text-xs text-slate-800 font-bold mt-0.5">{{ _('Originating Station:') }} {{ company or '-' }}</p>
             </div>
             
             <div class="text-right">
               <div class="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded bg-slate-100 border border-slate-300 font-mono text-[10px] font-bold text-slate-700">
-                <span>{{ _('PORT') }} {{ modemdev or 'ttyS0' }}</span>
+                <span>{{ _('PORT') }} {{ modemdev or '-' }}</span>
               </div>
             </div>
           </div>
@@ -141,7 +141,7 @@
           </div>
           <div>
             <p class="font-bold text-slate-700 text-sm">{{ _('High-Resolution Raster Preview') }}</p>
-            <p class="text-xs text-slate-400 mt-0.5">{{ _('Page 1 of') }} {{ pages or 1 }} &bull; {{ _('Device Line:') }} {{ modemdev or 'ttyS0' }}</p>
+            <p class="text-xs text-slate-400 mt-0.5">{{ _('Page 1 of') }} {{ pages or 1 }} &bull; {{ _('Device Line:') }} {{ modemdev or '-' }}</p>
           </div>
           <div class="pt-2">
             <a href="/faxes/download/{{ fid or 1 }}" class="inline-flex items-center space-x-1.5 px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg text-xs font-bold shadow-2xs transition">

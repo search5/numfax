@@ -19,10 +19,13 @@ def outbox_view(request):
     kill_jid = request.params.get("kill")
     if kill_jid:
         try:
-            fq.kill_job(kill_jid)
-            flash_message = f"Job #{kill_jid} successfully killed and removed from queue."
+            success = fq.killjob(kill_jid)
+            if success:
+                flash_message = f"Job #{kill_jid} successfully killed"
+            else:
+                flash_message = f"Failed to kill job #{kill_jid}"
         except Exception:
-            flash_message = f"Job #{kill_jid} successfully killed and removed from queue."
+            flash_message = f"Failed to kill job #{kill_jid}"
 
     try:
         jobs = fq.process_queue()

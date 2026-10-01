@@ -4,7 +4,9 @@ import html
 import os
 import re
 import secrets
+import shutil
 import string
+import subprocess
 import syslog
 import tempfile
 import unicodedata
@@ -305,27 +307,30 @@ def convert2pdf(path: str, convertfiles: Sequence[str]) -> bool:
         images[0].save(pdffile, save_all=True, append_images=images[1:], format="PDF")
         return True
 
-    if not os.path.exists(pdffile):
-        with open(pdffile, "wb") as f:
-            f.write(b"%PDF-1.4\n%EOF\n")
-    return True
+    return False
 
 
 def pdf_preview(path: str) -> bool:
     """Create thumbnail image of fax.pdf or fax.tif located in path."""
-    os.makedirs(path, exist_ok=True)
+    if not path or not os.path.exists(path):
+        return False
+
     thumbfile = os.path.join(path, "thumb.png")
     tiffile = os.path.join(path, "fax.tif")
+    pdffile = os.path.join(path, "fax.pdf")
+
     if os.path.exists(tiffile):
         return static_preview(path, pages=1)
+
+    if not os.path.exists(pdffile):
+        return False
 
     if not os.path.exists(thumbfile):
         try:
             img = Image.new("RGB", (120, 160), color=(240, 240, 240))
             img.save(thumbfile, format="PNG")
         except Exception:
-            with open(thumbfile, "wb") as f:
-                f.write(b"")
+            return False
     return True
 
 
@@ -334,7 +339,9 @@ def tiff2pdf(tiff_file: str, pdf: str) -> bool:
     if not os.path.exists(tiff_file):
         return False
 
-    os.makedirs(os.path.dirname(pdf), exist_ok=True)
+    dir_name = os.path.dirname(pdf)
+    if dir_name:
+        os.makedirs(dir_name, exist_ok=True)
 
     # 1. Try native LibTIFF tiff2pdf binary if available in PATH
     try:
@@ -364,23 +371,19 @@ def tiff2pdf(tiff_file: str, pdf: str) -> bool:
     except Exception:
         pass
 
-    if not os.path.exists(pdf):
-        with open(pdf, "wb") as f:
-            f.write(b"%PDF-1.4\n%EOF\n")
-    return True
+    return False
 
 
 def static_preview(path: str, pages: int = 1) -> bool:
     """Generate thumbnail previews for received fax pages matching legacy static_preview."""
-    os.makedirs(path, exist_ok=True)
+    if not path or not os.path.exists(path):
+        return False
+
     thumbfile = os.path.join(path, "thumb.png")
     tiffile = os.path.join(path, "fax.tif")
 
     if not os.path.exists(tiffile):
-        if not os.path.exists(thumbfile):
-            with open(thumbfile, "wb") as f:
-                f.write(b"")
-        return True
+        return False
 
     try:
         with Image.open(tiffile) as img:
@@ -397,10 +400,7 @@ def static_preview(path: str, pages: int = 1) -> bool:
                     thumb_img.save(thumbfile, format="PNG")
         return True
     except Exception:
-        if not os.path.exists(thumbfile):
-            with open(thumbfile, "wb") as f:
-                f.write(b"")
-        return True
+        return False
 
 
 def faxinfo(path: str) -> Optional[Dict[str, Any]]:
@@ -453,12 +453,57 @@ def faxinfo(path: str) -> Optional[Dict[str, Any]]:
 
 
 def bardecode(filename: str) -> Optional[str]:
-    """Decode barcode from fax image file."""
+    """Decode barcode from fax image file matching legacy AvantFAX bardecode."""
+    if not filename or not os.path.exists(filename):
+        return None
+
+    bin_path = os.environ.get("BARDECODE_BINARY") or shutil.which("bardecode") or shutil.which("zbarimg")
+    if not bin_path and os.path.exists("/var/spool/hylafax/bin/bardecode"):
+        bin_path = "/var/spool/hylafax/bin/bardecode"
+
+    if bin_path and (os.path.exists(bin_path) or shutil.which(bin_path)):
+        try:
+            if "bardecode" in os.path.basename(bin_path):
+                cmd = [bin_path, "-t", "any", "-f", filename]
+            else:
+                cmd = [bin_path, "--raw", "-q", filename]
+            proc = subprocess.run(cmd, capture_output=True, text=True, check=False)
+            if proc.returncode == 0 and proc.stdout.strip():
+                return proc.stdout.strip()
+        except Exception:
+            pass
+
+    # Fallback to pyzbar if available
+    try:
+        from PIL import Image
+        from pyzbar.pyzbar import decode as zbar_decode
+
+        with Image.open(filename) as img:
+            decoded = zbar_decode(img)
+            if decoded:
+                return decoded[0].data.decode("utf-8", errors="ignore").strip()
+    except Exception:
+        pass
+
     return None
 
 
 def ocr_faxcontent(filename: str) -> Optional[str]:
-    """Extract OCR text from fax image file."""
-    return None
+    """Extract OCR text from fax image file using OcrService."""
+    if not filename or not os.path.exists(filename):
+        return None
+
+    try:
+        from namifax.services.ocr import OcrService
+
+        ocr = OcrService()
+        res = ocr.extract_text_from_tiff(filename)
+        if res.get("success") and res.get("text"):
+            return str(res["text"]).strip()
+
+        txt = ocr.extract_text_from_image(filename)
+        return txt.strip() if txt else None
+    except Exception:
+        return None
 
 

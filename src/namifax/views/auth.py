@@ -29,7 +29,7 @@ def login_get_view(request):
 @view_config(route_name="login", renderer="namifax:templates/login.jinja2", request_method="POST", permission="public")
 def login_post_view(request):
     """Authenticate user and redirect or re-render login page on failure."""
-    params = request.params
+    params = request.params if (hasattr(request, "params") and request.params) else (getattr(request, "POST", None) or getattr(request, "GET", None) or {})
     username = params.get("username", "").strip()
     password = params.get("password", "")
 
@@ -38,8 +38,8 @@ def login_post_view(request):
     is_valid = False
 
     remote_ip = getattr(request, "remote_addr", None) or "127.0.0.1"
-    # Default admin backdoor / initial setup fallback or AFUserAccount
-    if (username == "admin" and password == "password") or user.login(username, password, remote_ip=remote_ip):
+    # Authenticate credentials strictly via AFUserAccount
+    if user.login(username, password, remote_ip=remote_ip):
         is_valid = True
 
     if not is_valid:
@@ -56,7 +56,7 @@ def login_post_view(request):
     from namifax.services.totp import TotpService
     db = getattr(request, "db", None)
     totp_svc = TotpService(db)
-    uid = getattr(user, "get_uid", lambda: None)() or (1 if username == "admin" else None)
+    uid = getattr(user, "get_uid", lambda: None)() or getattr(user, "uid", None)
     if uid and totp_svc.is_totp_enabled(uid):
         request.session["2fa_pending_uid"] = uid
         request.session["2fa_pending_username"] = username
@@ -70,7 +70,13 @@ def login_post_view(request):
 
     # Successful login: remember credentials and redirect to inbox
     headers = remember(request, username)
-    return HTTPFound(location=request.route_url("inbox") if hasattr(request, "route_url") else "/inbox", headers=headers)
+    loc = "/inbox"
+    if hasattr(request, "route_url"):
+        try:
+            loc = request.route_url("inbox")
+        except Exception:
+            pass
+    return HTTPFound(location=loc, headers=headers)
 
 
 @view_config(route_name="login_totp", renderer="namifax:templates/login_totp.jinja2", permission="public")
