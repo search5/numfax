@@ -19,7 +19,7 @@ class DistributionList:
 
     def __init__(
         self,
-        db: DatabaseEngine | None = None,
+        db: Any = None,
         engine: DatabaseEngine | None = None,
         repo: MDBOData | None = None,
         lang: dict[str, str] | None = None,
@@ -85,8 +85,7 @@ class DistributionList:
 
     def get_distrolists(self) -> list[dict[str, Any]]:
         """Return all distribution lists ordered by listname."""
-        res = self.distrolist.query("SELECT dl_id, listname FROM DistroList ORDER BY listname", reduce_single=False)
-        return res if isinstance(res, list) else []
+        return self.distrolist.select(columns=["dl_id", "listname"], order_by="listname")
 
     def load_list(self, list_id: int | None) -> bool:
         """Load distribution list by ID."""

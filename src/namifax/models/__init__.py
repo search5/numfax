@@ -13,6 +13,7 @@ from namifax.models import entities  # noqa: F401
 from namifax.models.syslog import SysLog  # noqa: F401
 from namifax.models.systemconfig import SystemConfig  # noqa: F401
 from namifax.models.coverpages import CoverPages  # noqa: F401
+from namifax.models.distrolist import DistroList  # noqa: F401
 from namifax.models.dynconf import DynConf  # noqa: F401
 from namifax.models.faxcategory import FaxCategory  # noqa: F401
 from namifax.models.networkprinters import NetworkPrinters  # noqa: F401

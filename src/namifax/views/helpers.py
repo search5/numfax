@@ -14,7 +14,7 @@ def popup_distrolist_helper(request):
     """Distribution list contact multi-select helper popup matching distrolist_helper.php."""
     dl_id = request.params.get("dl_id", "1")
     ab = AFAddressBook(db=request.db)
-    dl = DistributionList(db=request.db)
+    dl = DistributionList(db=request.dbsession)
 
     if request.method == "POST":
         myselect = request.params.getall("myselect[]") or request.params.getall("myselect")
@@ -72,7 +72,7 @@ def popup_distrolist_helper(request):
 @view_config(route_name="popup_distro_contacts")
 def popup_distro_contacts(request):
     """Distro contacts selector popup matching distrocontacts.php."""
-    dl = DistributionList(db=request.db)
+    dl = DistributionList(db=request.dbsession)
     options_html = []
 
     try:

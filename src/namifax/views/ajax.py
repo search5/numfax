@@ -160,7 +160,7 @@ def ajax_addressbook_prefill(request):
 def ajax_distrolist_faxes(request):
     """Distribution list fax numbers matching legacy ajaxdlist.php."""
     dl_id = request.GET.get("dl_id", "").strip()
-    dl = DistributionList(db=request.db)
+    dl = DistributionList(db=request.dbsession)
     faxes_str = ""
 
     try:
