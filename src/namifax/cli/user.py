@@ -5,14 +5,14 @@ from __future__ import annotations
 import argparse
 from datetime import datetime
 import sys
-from typing import Sequence
+from typing import Any, Sequence
 
-from namifax.db.engine import get_default_engine
+from namifax.db.provider import cli_db
 from namifax.db.schema import init_database_tables
 from namifax.services.user_account import AFUserAccount
 
 
-def run_createuser(argv: Sequence[str] | None = None) -> int:
+def run_createuser(argv: Sequence[str] | None = None, *, db: Any = None) -> int:
     parser = argparse.ArgumentParser(
         prog="namifax createuser",
         description="Create or update a NamiFAX user account",
@@ -26,8 +26,15 @@ def run_createuser(argv: Sequence[str] | None = None) -> int:
 
     args = parser.parse_args(argv)
 
+    if db is not None:
+        return _create_user(args, db)
+    with cli_db() as opened:
+        return _create_user(args, opened)
+
+
+def _create_user(args: argparse.Namespace, engine: Any) -> int:
+    """Create or update the requested account on the given database engine."""
     # Ensure DB is initialized
-    engine = get_default_engine()
     init_database_tables(engine)
 
     user_svc = AFUserAccount(db=engine)

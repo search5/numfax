@@ -9,13 +9,14 @@ from __future__ import annotations
 import argparse
 import os
 import sys
-from typing import Sequence
+from typing import Any, Sequence
 
 # Ensure src directory is on sys.path
 SRC_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 if SRC_DIR not in sys.path:
     sys.path.insert(0, SRC_DIR)
 
+from namifax.db.provider import cli_db
 from namifax.services.addressbook import AFAddressBook
 
 DEFAULT_PHONEBOOK_PATH = os.environ.get("PHONEBOOK", "/var/spool/hylafax/etc/phonebook")
@@ -41,7 +42,7 @@ def generate_phonebook_content(addressbook: AFAddressBook) -> str:
     return "".join(out)
 
 
-def run_phb(argv: Sequence[str] | None = None, addressbook: AFAddressBook | None = None) -> int:
+def run_phb(argv: Sequence[str] | None = None, addressbook: AFAddressBook | None = None, *, db: Any = None) -> int:
     """Execute phonebook export logic."""
     parser = argparse.ArgumentParser(description="Generate HylaFAX phonebook from AvantFAX address book.")
     parser.add_argument(
@@ -52,10 +53,13 @@ def run_phb(argv: Sequence[str] | None = None, addressbook: AFAddressBook | None
     )
     args = parser.parse_args(argv[1:] if argv is not None else None)
 
-    if addressbook is None:
-        addressbook = AFAddressBook()
-
-    content = generate_phonebook_content(addressbook)
+    if addressbook is not None:
+        content = generate_phonebook_content(addressbook)
+    elif db is not None:
+        content = generate_phonebook_content(AFAddressBook(db=db))
+    else:
+        with cli_db() as opened:
+            content = generate_phonebook_content(AFAddressBook(db=opened))
 
     out_path = os.path.abspath(args.output)
     parent_dir = os.path.dirname(out_path)
@@ -71,9 +75,9 @@ def run_phb(argv: Sequence[str] | None = None, addressbook: AFAddressBook | None
     return 0
 
 
-def export_phonebook(output_path: str = DEFAULT_PHONEBOOK_PATH, addressbook: AFAddressBook | None = None) -> int:
+def export_phonebook(output_path: str = DEFAULT_PHONEBOOK_PATH, addressbook: AFAddressBook | None = None, *, db: Any = None) -> int:
     """Convenience helper to export phonebook directly."""
-    return run_phb(["phb", "-o", output_path], addressbook=addressbook)
+    return run_phb(["phb", "-o", output_path], addressbook=addressbook, db=db)
 
 
 def main() -> None:

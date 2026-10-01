@@ -25,7 +25,7 @@ from namifax.common.helpers import (
     invalid_email,
     rem_nl,
 )
-from namifax.db.engine import DatabaseEngine
+from namifax.db.provider import cli_db
 
 USAGE = (
     "Usage: faxcover [-t to] [-c comments] [-p #pages] [-l to-location] [-m maxcomments] [-z maxlencomments] "
@@ -61,7 +61,37 @@ def process_template(template_path: str, match: str, values: Dict[str, Any]) -> 
     return lines
 
 
-def run_faxcover(argv: Sequence[str] | None = None) -> int:
+def _first_row(db: Any, sql: str) -> Dict[str, Any] | None:
+    """Run a SELECT and return the first record, or None."""
+    if db.query(sql).executed:
+        records = db.get_records()
+        if records:
+            return records[0]
+    return None
+
+
+def _resolve_sender(db: Any, from_name: str, from_email: str | None) -> tuple[str, str | None]:
+    """Resolve sender display name / email from UserAccount (legacy faxcover.php lookup)."""
+    if from_email:
+        row = _first_row(db, f"SELECT name FROM UserAccount WHERE email = {db.quote(from_email)}")
+        if row:
+            return row.get("name", from_name), from_email
+        if not invalid_email(from_name):
+            row2 = _first_row(db, f"SELECT name FROM UserAccount WHERE email = {db.quote(from_name)}")
+            if row2:
+                return row2.get("name", from_name), from_name
+        return from_name, from_email
+
+    row = _first_row(db, f"SELECT email FROM UserAccount WHERE name = {db.quote(from_name)}")
+    if row:
+        return from_name, row.get("email", from_email)
+    row_u = _first_row(db, f"SELECT name, email FROM UserAccount WHERE username = {db.quote(from_name)}")
+    if row_u:
+        return row_u.get("name", from_name), row_u.get("email", from_email)
+    return from_name, from_email
+
+
+def run_faxcover(argv: Sequence[str] | None = None, *, db: Any = None) -> int:
     """Execute faxcover page generator."""
     args = list(argv[1:]) if argv is not None else list(sys.argv[1:])
 
@@ -85,41 +115,11 @@ def run_faxcover(argv: Sequence[str] | None = None) -> int:
 
     # Optional DB lookup for user details
     try:
-        db = DatabaseEngine()
-        if from_email:
-            res = db.query(
-                f"SELECT name FROM UserAccount WHERE email = {db.quote(from_email)}",
-                reduce_single=True,
-            )
-            if res:
-                row = res[0] if isinstance(res, list) else res
-                from_name = row.get("name", from_name)
-            elif not invalid_email(from_name):
-                res2 = db.query(
-                    f"SELECT name FROM UserAccount WHERE email = {db.quote(from_name)}",
-                    reduce_single=True,
-                )
-                if res2:
-                    row2 = res2[0] if isinstance(res2, list) else res2
-                    from_email = from_name
-                    from_name = row2.get("name", from_name)
+        if db is not None:
+            from_name, from_email = _resolve_sender(db, from_name, from_email)
         else:
-            res = db.query(
-                f"SELECT email FROM UserAccount WHERE name = {db.quote(from_name)}",
-                reduce_single=True,
-            )
-            if res:
-                row = res[0] if isinstance(res, list) else res
-                from_email = row.get("email", from_email)
-            else:
-                res_u = db.query(
-                    f"SELECT name, email FROM UserAccount WHERE username = {db.quote(from_name)}",
-                    reduce_single=True,
-                )
-                if res_u:
-                    row_u = res_u[0] if isinstance(res_u, list) else res_u
-                    from_name = row_u.get("name", from_name)
-                    from_email = row_u.get("email", from_email)
+            with cli_db() as opened:
+                from_name, from_email = _resolve_sender(opened, from_name, from_email)
     except Exception:
         pass
 
