@@ -13,7 +13,7 @@ import os
 import re
 import shutil
 import sys
-from typing import Sequence
+from typing import Any, Sequence
 
 # Ensure src directory is on sys.path
 SRC_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
@@ -32,6 +32,7 @@ from namifax.common.helpers import (
     static_preview,
     tiff2pdf,
 )
+from namifax.db.provider import cli_db
 from namifax.services.addressbook import AFAddressBook
 from namifax.services.archive_in import ArchiveIn
 from namifax.services.barcode import BarcodeRouting
@@ -55,13 +56,22 @@ LANG = {
 }
 
 
-def run_faxrcvd(argv: Sequence[str] | None = None) -> int:
+def run_faxrcvd(argv: Sequence[str] | None = None, *, db: Any = None) -> int:
     """Execute HylaFAX inbound fax received handler."""
     args = list(argv) if argv is not None else list(sys.argv)
 
     if len(args) < 3:
         print("Usage: faxrcvd.php file devID commID error-msg [CIDNumber] [CIDName] [DIDnum]")
         return 0
+
+    if db is not None:
+        return _process_faxrcvd(args, db)
+    with cli_db() as opened:
+        return _process_faxrcvd(args, opened)
+
+
+def _process_faxrcvd(args: list[str], db: Any) -> int:
+    """Process one received fax using the given database engine."""
 
     tiff_file = args[1]
     modemdev = args[2]
@@ -72,7 +82,7 @@ def run_faxrcvd(argv: Sequence[str] | None = None) -> int:
     did_num = args[7] if len(args) >= 8 else None
 
     # Check / configure modem
-    modem = FaxModem()
+    modem = FaxModem(db=db)
     if not modem.load_device(modemdev):
         avantfaxlog(f"faxrcvd> Found unconfigured modem: {modemdev}. Configuring...", echo=False)
         modem.create(modemdev, modemdev, None)
@@ -133,7 +143,7 @@ def run_faxrcvd(argv: Sequence[str] | None = None) -> int:
     static_preview(faxpath, pages)
 
     # AddressBook
-    addressbook = AFAddressBook()
+    addressbook = AFAddressBook(db=db)
     faxnumid = 0
     if addressbook.loadbyfaxnum(company_fax):
         faxnumid = addressbook.get_faxnumid()
@@ -147,7 +157,7 @@ def run_faxrcvd(argv: Sequence[str] | None = None) -> int:
 
     # DID Routing
     didr_id = 0
-    didr = DIDRouting()
+    didr = DIDRouting(db=db)
     if ENABLE_DID_ROUTING and did_num:
         if didr.load_route(did_num):
             didr_id = didr.get_didr_id()
@@ -156,17 +166,16 @@ def run_faxrcvd(argv: Sequence[str] | None = None) -> int:
                 didr_id = didr.get_didr_id()
 
     # ArchiveIn
-    inbox = ArchiveIn()
+    inbox = ArchiveIn(db=db)
     faxid = None
     if inbox.create(faxpath, faxnumid, company_fax, modemdev, pages, f"{day} {hour}", didr_id):
         faxid = inbox.get_fid()
         avantfaxlog(f"faxrcvd> Inserted {faxpath} from {company_name} to Inbox", echo=False)
         try:
-            from namifax.db.engine import get_default_engine
             from namifax.services.ocr import OcrService
 
             faxname = os.path.basename(faxfile)
-            OcrService(db=get_default_engine()).index_fax(fax_file=faxname, tiff_path=faxfile, fax_id=faxid)
+            OcrService(db=db).index_fax(fax_file=faxname, tiff_path=faxfile, fax_id=faxid)
         except Exception as e:
             avantfaxlog(f"faxrcvd> OCR indexing failed for {faxfile}: {e}", echo=False)
 
@@ -214,7 +223,7 @@ def run_faxrcvd(argv: Sequence[str] | None = None) -> int:
     bcode_val = bardecode(faxfile)
     if bcode_val:
         inbox.set_note(bcode_val, None, None)
-        barcode = BarcodeRouting()
+        barcode = BarcodeRouting(db=db)
         if barcode.load_route(bcode_val):
             if barcode.get_faxcatid():
                 faxcatid = barcode.get_faxcatid()

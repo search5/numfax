@@ -819,7 +819,9 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 | V11 | `services/faxqueue.py`에 `db` 인자 추가(내부 `AFUserAccount(db=self.db)`), `views/ajax·modals·outbox`는 `FaxQueue(db=request.db)` | `[COMPLETE]` | `tests/unit/test_faxqueue_db_injection.py` 4개, 전체 518 통과 |
 | V12 | `views/addressbook.py` emailbook `MDBOData(..., db=request.db)` 2곳, `SAMLService.provision_or_get_user`의 `AFUserAccount(db=self.db)` | `[COMPLETE]` | `tests/unit/test_remaining_web_db_injection.py` 3개, 전체 521 통과 |
 | V-audit | 웹 계층 AST 전수 점검: `views/*`, `security.py`, 웹 경로 서비스는 모두 주입 완료 | `[COMPLETE]` | 잔여: ① `common/helpers.py` `OcrService()`는 텍스트 추출 전용이라 DB 불필요(유지) ② `cli/*`(C 단계) ③ `db/bridge_cli.py` `FaxQueue`(C/F) ④ `web/*` 폴백 앱(13.2 결정 대기) |
-| C1~ | CLI별 `cli_db()`(provider.py) 컨텍스트로 엔진 생성 후 명시 주입: `faxrcvd`(4), `notify`(3), `cron`(2), `phb`, `dynconf`, `user`, `faxcover`, `services/faxqueue` | `[PENDING]` | CLI는 request가 없으므로 `request.db` 사용 불가. 웹과 동일한 `resolve_database_url` 규칙 사용 |
+| C0 | `db/provider.py` `cli_db(settings, environ, ensure_schema)` 컨텍스트 매니저: 웹과 동일한 URL 해석, 스키마 보장, 종료/오류 시 커넥션·풀 해제 | `[COMPLETE]` | `tests/unit/test_cli_db.py` 4개 |
+| C1 | `cli/faxrcvd.py`: `run_faxrcvd(argv, *, db=None)` — 미주입 시 `cli_db()`로 1회 오픈, 5개 도메인 객체와 `OcrService`에 동일 db 전달, usage 경로는 DB를 열지 않음 | `[COMPLETE]` | `tests/unit/test_cli_faxrcvd_db.py` 3개, 전체 528 통과. 기존 phase3 테스트는 `db=MagicMock()` 주입으로 작업 트리 DB 접근 제거 |
+| C2~ | 나머지 CLI를 같은 패턴(`db=None` 주입 + `cli_db()`)으로 전환: `notify`(3), `cron`(3), `phb`, `dynconf`, `user`, `faxcover`, `main.py serve/createuser` | `[PENDING]` | CLI는 request가 없으므로 `request.db` 사용 불가 |
 | F | `Repository`의 `get_default_engine()` 폴백을 `resolve_db`로 교체, `get_default_engine` shim화/삭제, `bridge_cli._GLOBAL_ENGINE` 정리, 테스트 격리 픽스처 | `[PENDING]` | 보관해 둔 `test_repository_db_injection.py`(전역 엔진 미생성 검증)를 이 루프에서 복원 |
 
 ### 13.1 루프 3에서 발견된 기존 결함 (미해결, 별도 처리 필요)

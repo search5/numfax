@@ -7,7 +7,8 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Mapping
+from contextlib import contextmanager
+from typing import Any, Iterator, Mapping
 
 from sqlalchemy import Engine, create_engine
 from sqlalchemy.pool import StaticPool
@@ -39,3 +40,27 @@ def create_sa_engine(url: str) -> Engine:
 def open_db(engine: Engine) -> DatabaseEngine:
     """Borrow a pooled connection wrapped as a DatabaseEngine (disconnect() returns it)."""
     return DatabaseEngine.from_connection(engine.raw_connection())
+
+
+@contextmanager
+def cli_db(
+    settings: Mapping[str, Any] | None = None,
+    environ: Mapping[str, str] | None = None,
+    ensure_schema: bool = True,
+) -> Iterator[DatabaseEngine]:
+    """Open the configured database for a command-line entry point (no request object).
+
+    Uses the same URL resolution as the web app. The connection and the engine pool
+    are released when the block exits, also on error.
+    """
+    engine = create_sa_engine(resolve_database_url(settings, os.environ if environ is None else environ))
+    db = open_db(engine)
+    try:
+        if ensure_schema:
+            from namifax.db.schema import init_database_tables
+
+            init_database_tables(db)
+        yield db
+    finally:
+        db.disconnect()
+        engine.dispose()

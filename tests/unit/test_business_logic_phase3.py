@@ -252,7 +252,7 @@ def test_faxrcvd_ocr_index_logic(tmp_path):
         mock_in.return_value = inbox_inst
 
         # Run faxrcvd CLI function
-        code = run_faxrcvd(["faxrcvd.py", tiff_path, "ttyS0", "comm01", "none"])
+        code = run_faxrcvd(["faxrcvd.py", tiff_path, "ttyS0", "comm01", "none"], db=MagicMock())
         assert code == 0
 
         # Verify index_fax was called with fax_file='fax.tif', tiff_path containing fax.tif, and fax_id=99
