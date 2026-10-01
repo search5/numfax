@@ -793,3 +793,19 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 - **단위 및 통합 테스트**: 402개 테스트 100% PASS (402 Passed, 0 Failed, 신규 TDD 테스트 40개 추가).
 
 
+
+---
+
+## 13. DB 엔진 주입 리팩터링 (Spec 48, 방식 A 브리지)
+
+- 목적: 전역 싱글턴 `_DEFAULT_ENGINE` 제거 (결함 F5-12, R4F-13/F5-08). `DatabaseEngine`(SQL.php 의미론)은 유지하고 연결만 주입한다.
+- 흐름: `create_app(**settings)` → `resolve_database_url` → `create_sa_engine` → `registry["dbengine"]` → 요청마다 `request.db` (풀 커넥션을 감싼 `DatabaseEngine`, 요청 종료 시 반환).
+- URL 우선순위: `sqlalchemy.url` > `DATABASE_URL` > `AFDB_URL` > `NAMIFAX_DB_PATH`/`cwd/namifax.db`.
+
+| 루프 | 범위 | 상태 | 비고 |
+| :---: | :--- | :---: | :--- |
+| 1 | `db/provider.py`, `DatabaseEngine.from_connection`, `create_app`, `request.db` | `[COMPLETE]` | `tests/unit/test_db_injection.py` 11개, 전체 413 통과 |
+| 2 | `views/*`의 `getattr(request,"db",None)` 및 `DatabaseEngine()` 직접 생성(admin 4곳) 정리 | `[PENDING]` | |
+| 3 | `services/*` (`DatabaseEngine()` 기본 생성 9곳) 생성자 주입 필수화 | `[PENDING]` | |
+| 4 | `db/repository.py`, `cli/*`, `main.py` 의 `get_default_engine()` 제거 | `[PENDING]` | |
+| 5 | `bridge_cli._GLOBAL_ENGINE`, 테스트 롤백/격리 픽스처, `get_default_engine` shim화 | `[PENDING]` | |

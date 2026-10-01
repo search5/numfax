@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import os
-from sqlalchemy import create_engine, engine_from_config
 from sqlalchemy.orm import configure_mappers, sessionmaker
 
 from namifax.models.meta import Base
@@ -15,15 +14,10 @@ configure_mappers()
 
 
 def get_engine(settings=None, prefix="sqlalchemy."):
-    """Create SQLAlchemy engine from settings or environment."""
-    if settings and any(k.startswith(prefix) for k in settings):
-        return engine_from_config(settings, prefix)
+    """Create SQLAlchemy engine from settings or environment (spec 48)."""
+    from namifax.db.provider import create_sa_engine, resolve_database_url
 
-    db_url = os.environ.get(
-        "DATABASE_URL",
-        os.environ.get("AFDB_URL", "sqlite:///:memory:"),
-    )
-    return create_engine(db_url)
+    return create_sa_engine(resolve_database_url(settings, os.environ))
 
 
 def get_session_factory(engine):
@@ -38,8 +32,20 @@ def includeme(config):
     if not engine:
         engine = get_engine(settings)
 
+    settings["dbengine"] = engine
+    config.registry["dbengine"] = engine
     session_factory = get_session_factory(engine)
     config.registry["dbsession_factory"] = session_factory
+
+    def db(request):
+        """Legacy-compatible DatabaseEngine on a pooled connection, released at request end."""
+        from namifax.db.provider import open_db
+
+        legacy = open_db(request.registry["dbengine"])
+        request.add_finished_callback(lambda req: legacy.disconnect())
+        return legacy
+
+    config.add_request_method(db, "db", reify=True)
 
     # Try integrating pyramid_tm if installed
     try:

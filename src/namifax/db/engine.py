@@ -80,6 +80,14 @@ class DatabaseEngine:
             self._error = str(exc)
             return False
 
+    @classmethod
+    def from_connection(cls, conn: Any, debug: bool = False) -> "DatabaseEngine":
+        """Wrap an already-open DBAPI connection (e.g. a pooled SQLAlchemy raw connection)."""
+        db = cls(debug=debug)
+        db._conn = conn
+        db._cursor = conn.cursor()
+        return db
+
     def connect_sqlite(self, path: str = ":memory:") -> bool:
         """Connect to SQLite database for testing and embedded deployment."""
         self._error = None
@@ -135,8 +143,12 @@ class DatabaseEngine:
 
             if is_select:
                 rows = self._cursor.fetchall()
-                # Convert sqlite3.Row or tuple to dict
-                self._records = [dict(row) for row in rows]
+                # Convert sqlite3.Row / tuple / mapping rows to dict
+                cols = [d[0] for d in (self._cursor.description or ())]
+                self._records = [
+                    dict(row) if isinstance(row, dict) or hasattr(row, "keys") else dict(zip(cols, row))
+                    for row in rows
+                ]
                 row_count = len(self._records)
                 self._affected_rows = 0
 
