@@ -194,7 +194,9 @@ def test_server_database_repository_behaviour(monkeypatch, server_db_url, alembi
             assert {r["name"] for r in repo.find({"name": "a", "catid": 99999}, query_logic=SQL_OR,
                                                   reduce_single=False)} == {"a"}
             assert [r["name"] for r in repo.find(limit=2, offset=1, reduce_single=False)] == ["a", "한글 'q' \\x"]
-            assert [r["name"] for r in repo.select(order_by="name")] == sorted(["b", "a", "한글 'q' \\x", "d"])
+            ordered = [r["name"] for r in repo.select(order_by="name")]
+            assert set(ordered) == {"b", "a", "한글 'q' \\x", "d"}
+            assert [n for n in ordered if n.isascii()] == ["a", "b", "d"]  # collation decides where 한글 goes
             with pytest.raises(IntegrityError):
                 repo.new_entry({"name": "a"})
             session.rollback()

@@ -31,7 +31,7 @@ def test_dynconf_injected_db():
 
 def test_dynconf_opens_cli_db_and_usage_does_not():
     opened, calls = object(), []
-    with patch.object(dynconf_mod, "cli_db", _fake_cli_db(opened, calls)), \
+    with patch.object(dynconf_mod, "cli_session", _fake_cli_db(opened, calls)), \
             patch.object(dynconf_mod, "DynamicConfig") as cls:
         cls.return_value.lookup.return_value = False
         dynconf_mod.run_dynconf(["dynconf.py", "ttyS0", "12345"])

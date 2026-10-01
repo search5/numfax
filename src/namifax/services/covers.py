@@ -14,11 +14,14 @@ DEFAULT_LANG = {
 
 
 class Covers:
-    """Service class for managing AvantFAX cover pages (CoverPages table)."""
+    """Service class for managing AvantFAX cover pages (CoverPages table).
+
+    ``db`` is a SQLAlchemy ``Session`` (portable across databases) or the legacy ``DatabaseEngine``.
+    """
 
     def __init__(
         self,
-        db: DatabaseEngine | None = None,
+        db: Any = None,
         engine: DatabaseEngine | None = None,
         repo: MDBOData | None = None,
         lang: dict[str, str] | None = None,
@@ -69,8 +72,8 @@ class Covers:
 
     def get_covers(self) -> list[str] | None:
         """Return list of all configured cover filenames ordered by filename."""
-        covers = self.covers.query("SELECT file FROM CoverPages ORDER BY file", reduce_single=False)
-        if covers and isinstance(covers, list):
+        covers = self.covers.select(columns=["file"], order_by="file")
+        if covers:
             return [c["file"] for c in covers if "file" in c]
 
         self.error = self.lang.get("NO_COVERS_CONFIGURED", "No cover pages configured")
@@ -78,10 +81,7 @@ class Covers:
 
     def list_all(self) -> list[dict[str, Any]]:
         """Modern Python helper: returns all cover pages ordered by title."""
-        results = self.covers.query("SELECT * FROM CoverPages ORDER BY title", reduce_single=False)
-        if isinstance(results, list):
-            return results
-        return []
+        return self.covers.select(order_by="title")
 
     def reset_list(self) -> None:
         """Reset the internal cursor for list_covers_step."""
@@ -91,8 +91,7 @@ class Covers:
     def list_covers_step(self) -> tuple[str, str] | None:
         """Emulates legacy stateful list_covers(&$title, &$file) step-by-step."""
         if not self._queried:
-            results = self.covers.query("SELECT * FROM CoverPages ORDER BY title", reduce_single=False)
-            self._list_results = list(results) if isinstance(results, list) else []
+            self._list_results = self.covers.select(order_by="title")
             self._queried = True
 
         if self._list_results:

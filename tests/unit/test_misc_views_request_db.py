@@ -93,7 +93,8 @@ def test_sendfax_view_uses_request_db():
     with patch.object(sendfax_mod, "Covers", covers), patch.object(sendfax_mod, "get_all_admin_modems", modems), \
             contextlib.suppress(Exception):
         sendfax_mod.sendfax_view(req)
-    _assert_all_db(_calls(covers, modems), req, "sendfax_view")
+    _assert_all_db(_calls(modems), req, "sendfax_view")
+    assert covers.call_args.kwargs.get("db") is req.dbsession  # ORM-backed: the request session
     assert covers.call_args_list and modems.call_args_list
 
 

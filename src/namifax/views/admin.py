@@ -394,7 +394,7 @@ def admin_system_logs_view(request):
 def admin_covers_view(request):
     """Admin configure cover page templates and CRUD."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    cv = Covers(db=request.db)
+    cv = Covers(db=request.dbsession)
     message = None
     error = None
 
@@ -616,7 +616,7 @@ def admin_barcodes_view(request):
 def admin_dynconf_view(request):
     """Admin dynamic configuration / blacklist."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    dc = DynamicConfig(db=request.db)
+    dc = DynamicConfig(db=request.dbsession)
     message = None
     error = None
 

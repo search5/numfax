@@ -16,7 +16,7 @@ class DynamicConfig:
 
     def __init__(
         self,
-        db: DatabaseEngine | None = None,
+        db: Any = None,
         engine: DatabaseEngine | None = None,
         repo: MDBOData | None = None,
         lang: dict[str, str] | None = None,
@@ -62,13 +62,7 @@ class DynamicConfig:
 
     def list_rules(self) -> list[dict[str, Any]]:
         """Return all reject rules ordered by callid."""
-        results = self.dynamicconfig.query(
-            "SELECT dynconf_id, device, callid FROM DynConf ORDER BY callid",
-            reduce_single=False,
-        )
-        if isinstance(results, list):
-            return results
-        return []
+        return self.dynamicconfig.select(columns=["dynconf_id", "device", "callid"], order_by="callid")
 
     def remove(self, dynconf_id: int) -> bool:
         """Remove a rule by ID."""

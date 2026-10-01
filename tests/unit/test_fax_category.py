@@ -145,7 +145,8 @@ def test_server_database_service(monkeypatch, server_db_url, alembic_cfg):
                 assert svc.create(name) is True
             assert svc.create("Invoices") is False
             cats = svc.get_categories()
-            assert [c["name"] for c in cats] == sorted(["Invoices", "한글 'q' \\x", "Archive"])
+            assert {c["name"] for c in cats} == {"Invoices", "한글 'q' \\x", "Archive"}  # collation decides the order
+            assert [c["name"] for c in cats if c["name"].isascii()] == ["Archive", "Invoices"]
             catid = next(c["catid"] for c in cats if c["name"] == "Archive")
             assert svc.get_name(str(catid)) == "Archive"
             assert svc.set_name("Renamed", catid) is True and svc.get_name(catid) == "Renamed"

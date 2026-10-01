@@ -938,7 +938,9 @@ Pyramid cookiecutter starter(2.1-branch, jinja2 + sqlalchemy)를 임시 디렉�
 | 1 | `NetworkPrinters` | `[ORM]` | 0003 | `NetworkPrinterService(Session)`, 자동 증가 PK는 방언별 DDL로 생성. `delete_printer`는 삭제된 행이 있었는지를 반환(이전에는 항상 True). `process_inbound_print_job`의 미사용 `db` 인자는 유지 |
 | 1 | `SysLog` | `[ORM]` | 0004 | `SysLogService(Session).search`. `logdate`는 ISO 텍스트 `String(32)`로 유지(날짜 접두어 `LIKE`가 PostgreSQL의 timestamp에서는 불가). 키워드는 모든 DB에서 대소문자 무시 부분 일치이고 `%`/`_`는 리터럴(이전에는 와일드카드). 조회 오류를 삼키지 않음(이전에는 `except Exception`으로 빈 목록). 관찰: `avantfaxlog()`가 이 테이블에 쓰지 않던 포팅 회귀는 14.7에서 수정 |
 | 2 | `FaxCategory` | `[ORM]` | 0005 | `FaxPDFCategory`는 `Session`과 레거시 `DatabaseEngine` 모두 받음. 웹 뷰(admin, archive, helpers)는 `request.dbsession` |
-| 2 | `CoverPages`, `DynConf`, `BarcodeRoute`, `DIDRoute`, `Modems` | `[LEGACY]` | - | 14.8의 `OrmRepository` 덕분에 서비스 수정은 `query(...)`를 `select(...)`로 바꾸는 정도. `DynamicConfig` 쌍둥이 테이블은 SQL 사용처가 없어 모델화하지 않고 제거 대상, `BarcodeRoute.bcr_id`는 포트가 만든 `barcode_id` 중복 컬럼이라 모델에서 제외 |
+| 2 | `CoverPages` | `[ORM]` | 0006 | `Covers`는 `Session`/`DatabaseEngine` 모두. 웹 뷰(admin, sendfax)는 `request.dbsession` |
+| 2 | `DynConf` | `[ORM]` | 0007 | `DynamicConfig` 서비스. 웹 뷰는 `request.dbsession`, CLI(`dynconf`, `import_blacklist`)는 `cli_session(ensure_schema=True)`. 쌍둥이 테이블 `DynamicConfig`는 SQL 사용처가 없어 생성/동기화/시드를 제거(기존 DB의 잔여 테이블은 건드리지 않음) |
+| 2 | `BarcodeRoute`, `DIDRoute`, `Modems` | `[LEGACY]` | - | 다음. `faxrcvd`가 세 서비스와 레거시 `ArchiveIn`을 한 실행에서 함께 쓰므로 CLI용 공유 연결 유닛(`cli_unit`)이 먼저 필요(SQLite는 쓰기 연결이 둘이면 잠김) |
 | 3 | `UserAccount`, `UserPasswords`, `UserTOTP`, `AddressBook*`, `DistroList`, `UserWebAuthnCredentials`, `FaxOCR` | `[LEGACY]` | - | `AddressBook` `ab_id`/`abook_id` 불일치를 모델화하며 정리 |
 | 4 | `FaxArchive` 외 | `[LEGACY]` | - | |
 
@@ -991,3 +993,22 @@ Pyramid cookiecutter starter(2.1-branch, jinja2 + sqlalchemy)를 임시 디렉�
 **서비스 생성자**: `db` 인자에 `Session`(이식 가능) 또는 `DatabaseEngine`(FFI 브리지 `bridge_cli`가 계속 사용)을 받는다. 모든 호출처가 세션으로 넘어가면 레거시 경로를 제거한다.
 
 **검증**: `tests/unit/test_orm_repository.py`(SQLite 20개 + 서버 3종). 서비스는 `Session`과 `DatabaseEngine` 양쪽으로 매개변수화한 테스트가 같은 결과를 요구한다(`test_fax_category.py`).
+
+### 14.9 결함 수정: 서버가 시작될 때마다 기존 데이터를 훼손하던 시드/마이그레이션 (P3 진행 중 발견)
+`DynamicConfig` 쌍둥이 테이블을 정리하다가 `db/schema.py`가 **애플리케이션 시작 때마다** 데모 값을 다시 적용한다는 것을 발견했다. 운영 데이터가 있는 DB에서 일어나던 일:
+
+| 위치 | 시작할 때마다 |
+| :--- | :--- |
+| `UserAccount` else | `admin`의 비밀번호가 `password` 또는 `createuser` 기본값(`admin1234!`의 MD5)이면 `password`로 되돌림 |
+| `Modems`·`FaxCategory`·`CoverPages` | 행이 2·3개 미만이면 `INSERT OR REPLACE`로 실제 모뎀/카테고리/커버를 덮어씀 |
+| `DIDRoute`·`AddressBook`·`DistroList` else | 1번 행의 별칭·회사명·목록 이름을 데모 값으로 덮어씀 |
+| `BarcodeRoute` else | 행의 기본키를 1로 바꾸려 함 |
+| `DynConf` else | 1번 규칙을 데모 값으로 덮어씀 |
+| `FaxArchive` | 받은 팩스가 없으면 `INSERT OR REPLACE`로 **실제 팩스 #1을 데모 행으로 교체**, else는 #1을 받은편지함으로 되돌리고 Acme에 연결 |
+| 마이그레이션 | NULL인 모든 `faxnumid`를 1(Acme 번호)로, NULL인 `modemdev`를 `ttyS0`로, #1의 회사를 Acme로 채움 |
+
+**수정**(`tests/unit/test_schema_seed_safety.py`, 데모 행을 관리자 데이터처럼 바꾼 뒤 재시작해도 모든 테이블이 동일해야 함):
+- 데모 데이터는 **사용자가 한 명도 없는 새 DB에만** 넣는다. 레거시 설치 SQL이 기본 관리자와 커버 페이지를 넣은 것처럼, 커버 페이지·카테고리 기본값은 **테이블이 비어 있을 때만** 넣는다.
+- 모든 `INSERT OR REPLACE`는 `INSERT OR IGNORE`, 모든 `else:` 복구 UPDATE와 데모 마이그레이션 UPDATE는 제거.
+- 구조용 백필(`abook_id`, `barcode_id`, `archstamp` 등 NULL 채우기)은 `_backfill_alias_columns`로 모아 마이그레이션 직후와 시드 직후에 실행해, 새 DB가 첫 시작에서 완전하게 만들어진다(이전에는 두 번째 시작에서야 채워졌음).
+- `[관찰]` 새 SQLite DB는 여전히 `admin`/`password` 기본 관리자를 만든다(레거시 설치와 같은 동작이지만 레거시는 `wasreset=TRUE`로 첫 로그인에서 변경을 강제했다). 운영 배포에서는 기본 계정을 만들지 않거나 변경을 강제하는 장치가 필요하다 `[NEEDS_CLARIFICATION]`.

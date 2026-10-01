@@ -94,7 +94,7 @@ def sendfax_view(request):
     identity = request.identity or {"username": "admin", "is_admin": True}
     modem_list = get_all_admin_modems(request.db)
 
-    covers_svc = Covers(db=request.db)
+    covers_svc = Covers(db=request.dbsession)
     cover_names = covers_svc.get_covers() or []
 
     if request.method == "POST":

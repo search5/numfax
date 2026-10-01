@@ -72,14 +72,26 @@ def cli_db(
 def cli_session(
     settings: Mapping[str, Any] | None = None,
     environ: Mapping[str, str] | None = None,
+    ensure_schema: bool = False,
 ) -> Iterator[Session]:
     """Open an ORM session for a command-line entry point (no request object).
 
     Uses the same URL resolution as the web app. The session is committed when the block ends
-    normally, rolled back on error, and the engine pool is released either way. The schema is not
-    created here; use ``cli_db()`` for that.
+    normally, rolled back on error, and the engine pool is released either way.
+
+    ``ensure_schema=True`` creates the legacy tables on SQLite like ``cli_db()`` does. Other databases
+    get their schema from ``alembic upgrade head``.
     """
     engine = create_sa_engine(resolve_database_url(settings, os.environ if environ is None else environ))
+    if ensure_schema and engine.dialect.name == "sqlite":
+        from namifax.db.schema import init_database_tables
+
+        boot = open_db(engine)
+        try:
+            if not init_database_tables(boot):
+                raise RuntimeError(f"Database initialisation failed: {boot.get_error()}")
+        finally:
+            boot.disconnect()
     session = Session(engine, expire_on_commit=False)
     try:
         yield session

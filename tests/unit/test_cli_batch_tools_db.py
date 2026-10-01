@@ -64,7 +64,7 @@ def test_import_blacklist_creates_rules_in_injected_db(tmp_path, seeded_db, caps
 def test_import_blacklist_usage_does_not_open_db():
     from namifax.cli import import_blacklist
 
-    with patch.object(import_blacklist, "cli_db", side_effect=AssertionError("must not open DB")):
+    with patch.object(import_blacklist, "cli_session", side_effect=AssertionError("must not open DB")):
         assert import_blacklist.main([]) == 0
 
 

@@ -10,7 +10,7 @@ import sys
 
 from typing import Any
 
-from namifax.db.provider import cli_db
+from namifax.db.provider import cli_session
 from namifax.services.dynconf import DynamicConfig
 
 
@@ -36,7 +36,7 @@ One CallID (fax number) per line""")
 
     if db is not None:
         return _import_blacklist(lines, device, db)
-    with cli_db() as opened:
+    with cli_session(ensure_schema=True) as opened:
         return _import_blacklist(lines, device, opened)
 
 
