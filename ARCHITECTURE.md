@@ -1179,3 +1179,19 @@ SQLite·MySQL은 오름차순에서 NULL을 먼저, PostgreSQL은 나중에 둔�
 **테스트 구조**: `tests/sqlsession.py`의 `SqlSession`은 실제 `Session`에 테스트 설정·검증용 raw SQL 편의(`query`, `get_records`, `get_insert_id`, `quote`)를 더한 **테스트 전용** 클래스다(`seeded_session()`, `empty_session()`, `bare_session()`). 아카이브 검색의 기대 답은 레거시 SQL 구현에서 제거 전에 기록한 골든 데이터(`tests/unit/data/fax_archive_search_golden.json`)이며 ORM과 3개 서버 DB가 같은 답을 내는지 계속 검사한다.
 
 **결과**: 프로덕션 코드에 raw SQL 문자열 조립 경로가 없다(`seed`/`sqlite_upgrade`의 고정 SQL 제외). SQLite, MySQL, MariaDB, PostgreSQL이 같은 코드 경로와 같은 Alembic 리비전으로 동작한다.
+
+### 14.22 2FA 자가 설정과 복구 코드 해시 저장
+**화면** (`views/settings_2fa.py`, `templates/settings_2fa.jinja2`, 설정 화면의 2FA 카드)
+| 요청 | 동작 |
+| :--- | :--- |
+| `GET /settings/2fa/setup` | 새 비밀키를 만들고 QR(인라인 SVG, `segno`)·키·otpauth URI를 보여 준다. 확인 전의 비밀키는 흐름 쿠키에 **암호화해서**(`enc:v1`) 보관 |
+| `POST /settings/2fa/enable` | 앱이 보여 주는 6자리 코드로 확인하면 켜지고 복구 코드 8개를 **한 번만** 보여 준다. 틀리면 같은 QR로 재시도 |
+| `POST /settings/2fa/disable` | 비밀번호 + 유효한 코드(또는 복구 코드)가 필요. 틀린 코드는 잠금 횟수에 합산 |
+| `POST /settings/2fa/recovery` | 유효한 코드를 입력하면 복구 코드를 새로 발급(기존 코드는 모두 무효) |
+모든 POST는 CSRF 토큰(`request.session.get_csrf_token()`)을 확인한다. 로그인한 사용자만 접근 가능. 암호화 키가 없으면 설정 화면이 `NAMIFAX_SECRET_KEY` 안내를 보여 준다(오류 페이지가 아님).
+
+**복구 코드**: `XXXXX-XXXXX`(10자, 0/O/1/I/L 제외, 약 49비트). DB에는 코드마다 다른 솔트의 **scrypt 해시**만 저장(`scrypt$<salt>$<hash>`). 입력은 대소문자·공백·하이픈을 무시하고, 맞으면 그 항목이 삭제된다(1회용). 6자리 숫자 입력은 복구 코드 형식이 아니므로 해시 비교를 건너뛰어 잘못된 TOTP 시도가 느려지지 않는다. 이전 버전의 평문 8자리 hex 코드도 한 번씩 쓸 수 있고, `namifax encrypt-secrets`가 해시로 바꾼다.
+
+**운영**: 기기와 복구 코드를 모두 잃은 사용자는 `namifax reset-2fa <사용자명>`으로 2FA 등록을 지운다(관리자 작업).
+
+**함께 고친 결함**: 설정 화면의 2FA 상태가 항상 "꺼짐"이었다. 세션 identity에는 `uid`가 없고 `user_id`만 있는데 `identity["uid"]`를 읽었기 때문이다. 이제 불러온 계정의 uid를 쓴다. 또 설정 화면의 "Enable 2FA"는 로그인 코드 입력 페이지(`/login/totp?setup=1`)로, "Disable 2FA"는 같은 페이지로 POST해서 실제로는 아무 동작도 하지 않았다.

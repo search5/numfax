@@ -111,11 +111,15 @@ def settings_view(request):
 
                 message = "Settings updated successfully."
 
-    totp_enabled = False
-    if identity and identity.get("uid"):
+    # the session identity carries "user_id" (not "uid"); the loaded account is the reliable source
+    account_uid = (user_account.get_uid() if user_loaded else None) or identity.get("uid") or identity.get("user_id")
+    totp_enabled, recovery_codes_left = False, 0
+    if account_uid:
         try:
             from namifax.services.totp import TotpService
-            totp_enabled = TotpService(request.dbsession).is_totp_enabled(identity["uid"])
+            totp_svc = TotpService(request.dbsession)
+            totp_enabled = totp_svc.is_totp_enabled(account_uid)
+            recovery_codes_left = totp_svc.backup_codes_remaining(account_uid) if totp_enabled else 0
         except Exception:
             pass
 
@@ -127,4 +131,6 @@ def settings_view(request):
         "error": error,
         "user_profile": profile_data,
         "totp_enabled": totp_enabled,
+        "recovery_codes_left": recovery_codes_left,
+        "csrf_token": request.session.get_csrf_token(),
     }

@@ -31,6 +31,29 @@ def run_createuser(argv: Sequence[str] | None = None, *, session: Any = None) ->
         return _create_user(args, opened)
 
 
+def run_reset_2fa(argv: Sequence[str] | None = None, *, session: Any = None) -> int:
+    """Turn two-factor authentication off for a user who lost their device and their recovery codes."""
+    parser = argparse.ArgumentParser(prog="namifax reset-2fa", description="Remove a user's two-factor enrolment")
+    parser.add_argument("username")
+    args = parser.parse_args(argv)
+    if session is not None:
+        return _reset_2fa(args.username, session)
+    with cli_session(ensure_schema=True) as opened:
+        return _reset_2fa(args.username, opened)
+
+
+def _reset_2fa(username: str, session: Any) -> int:
+    from namifax.services.totp import TotpService
+
+    user = AFUserAccount(db=session)
+    if not user.load_username(username):
+        print(f"[!] No such user: {username}")
+        return 1
+    TotpService(session).disable_totp(user.get_uid())
+    print(f"[+] Two-factor authentication is off for '{username}'.")
+    return 0
+
+
 def _create_user(args: argparse.Namespace, session: Any) -> int:
     """Create or update the requested account in the given session."""
     user_svc = AFUserAccount(db=session)

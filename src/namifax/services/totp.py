@@ -1,4 +1,8 @@
+import hashlib
+import hmac
 import logging
+import os
+import re
 import secrets
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
@@ -12,6 +16,44 @@ from namifax.db.repository import Repository
 MAX_FAILED_ATTEMPTS = 5
 LOCK_MINUTES = 15
 _TS = "%Y-%m-%d %H:%M:%S"
+
+
+# Recovery codes: 10 characters from an alphabet without look-alikes (about 49 bits), shown as XXXXX-XXXXX. Only salted
+# scrypt hashes are stored, so a copy of the database does not reveal usable codes. (Codes made by older versions are
+# plain 8-character hex values; they are still accepted once.)
+RECOVERY_CODE_COUNT = 8
+_CODE_ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"
+_SCRYPT = dict(n=2 ** 12, r=8, p=1, dklen=32)   # ~15 ms; the codes themselves carry ~49 bits
+
+
+def _normalize_code(code: str) -> str:
+    return re.sub(r"[\s-]", "", code or "").upper()
+
+
+def new_recovery_code() -> str:
+    raw = "".join(secrets.choice(_CODE_ALPHABET) for _ in range(10))
+    return f"{raw[:5]}-{raw[5:]}"
+
+
+def hash_recovery_code(code: str) -> str:
+    salt = os.urandom(16)
+    digest = hashlib.scrypt(_normalize_code(code).encode(), salt=salt, **_SCRYPT)
+    return f"scrypt${salt.hex()}${digest.hex()}"
+
+
+def recovery_code_matches(stored: str, code: str) -> bool:
+    """Does ``code`` match the stored entry (a hash, or an old plaintext code)?"""
+    stored, typed = (stored or "").strip(), _normalize_code(code)
+    if not typed:
+        return False
+    if stored.startswith("scrypt$"):
+        try:
+            _, salt, digest = stored.split("$")
+            candidate = hashlib.scrypt(typed.encode(), salt=bytes.fromhex(salt), **_SCRYPT)
+            return hmac.compare_digest(candidate, bytes.fromhex(digest))
+        except ValueError:
+            return False
+    return hmac.compare_digest(stored.upper().encode(), typed.encode())
 
 
 class TotpService:
@@ -58,13 +100,13 @@ class TotpService:
         if not self.verify_code(secret, code):
             return {"success": False, "message": "Invalid TOTP verification code."}
 
-        # Generate 8 single-use recovery codes (e.g., 8-char uppercase hex)
-        backup_codes = [secrets.token_hex(4).upper() for _ in range(8)]
+        # Generate single-use recovery codes; only their hashes are stored
+        backup_codes = [new_recovery_code() for _ in range(RECOVERY_CODE_COUNT)]
         repo = self._rows(uid)
         repo.delete_where({"uid": int(uid)})
         repo.new_entry({
             "uid": int(uid), "secret_key": encrypt(secret), "is_enabled": 1,
-            "backup_codes": ",".join(backup_codes), "created_at": datetime.now().isoformat(),
+            "backup_codes": ",".join(hash_recovery_code(c) for c in backup_codes), "created_at": datetime.now().isoformat(),
             "failed_attempts": 0, "locked_until": None,
         })
         return {
@@ -151,13 +193,29 @@ class TotpService:
         if secret and self.verify_code(secret, clean_code):
             return True
 
-        # 2. Backup emergency recovery code check (each code works once)
-        codes = [c.strip().upper() for c in (row.get("backup_codes") or "").split(",") if c.strip()]
-        if clean_code.upper() in codes:
-            codes.remove(clean_code.upper())
-            repo.update_where({"uid": int(uid)}, {"backup_codes": ",".join(codes)})
-            return True
+        # 2. Backup emergency recovery code check (each code works once). A 6-digit input is a TOTP attempt, never a
+        # recovery code, so the (deliberately slow) hash comparison is skipped for it.
+        if re.fullmatch(r"\d{6}", clean_code):
+            return False
+        entries = [c.strip() for c in (row.get("backup_codes") or "").split(",") if c.strip()]
+        for index, stored in enumerate(entries):
+            if recovery_code_matches(stored, clean_code):
+                del entries[index]
+                repo.update_where({"uid": int(uid)}, {"backup_codes": ",".join(entries)})
+                return True
         return False
+
+    def backup_codes_remaining(self, uid: int) -> int:
+        row = self._row(uid)
+        return len([c for c in ((row or {}).get("backup_codes") or "").split(",") if c.strip()])
+
+    def regenerate_backup_codes(self, uid: int) -> list:
+        """Replace every recovery code with new ones (returned once, stored hashed)."""
+        if not self._row(uid):
+            return []
+        codes = [new_recovery_code() for _ in range(RECOVERY_CODE_COUNT)]
+        self._rows(uid).update_where({"uid": int(uid)}, {"backup_codes": ",".join(hash_recovery_code(c) for c in codes)})
+        return codes
 
 
 def _flag(value: Any) -> bool:

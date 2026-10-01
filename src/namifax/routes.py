@@ -28,6 +28,10 @@ def includeme(config):
     config.add_route("distrolist", "/distrolist")
     config.add_route("distrolist_edit", "/distrolist/edit")
     config.add_route("settings", "/settings")
+    config.add_route("totp_setup", "/settings/2fa/setup")
+    config.add_route("totp_enable", "/settings/2fa/enable")
+    config.add_route("totp_disable", "/settings/2fa/disable")
+    config.add_route("totp_recovery", "/settings/2fa/recovery")
 
     # Admin only routes (permission: 'admin')
     config.add_route("admin", "/admin")
