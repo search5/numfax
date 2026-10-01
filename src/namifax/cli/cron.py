@@ -19,7 +19,7 @@ SRC_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 if SRC_DIR not in sys.path:
     sys.path.insert(0, SRC_DIR)
 
-from namifax.db.provider import cli_db
+from namifax.db.provider import cli_session
 from namifax.services.archive_base import FaxPDFArchive
 from namifax.services.archive_in import ArchiveIn
 
@@ -28,6 +28,8 @@ options:
  -i num-days\tprune Inbox of faxes older than number of days
  -d num-days\tdelete faxes from Inbox/Archive that are older than number of days
  -t num-days\tclean AvantFAX temporary directory of files older than number of days
+ -p num-days\tdelete original TIFF files that are older than number of days when a PDF exists
+ -s\t\trun the storage lifecycle policy saved on the admin Storage page (nothing runs unless one was saved)
 """
 
 DEFAULT_TMPDIR = os.environ.get("AVANTFAX_TMPDIR", "/tmp/avantfax/")
@@ -73,11 +75,11 @@ def _run_cron(
     def get_db() -> Any:
         nonlocal db
         if db is None:
-            db = stack.enter_context(cli_db())
+            db = stack.enter_context(cli_session(ensure_schema=True))
         return db
 
     try:
-        opts, _ = getopt.getopt(args, "i:t:d:p:")
+        opts, _ = getopt.getopt(args, "i:t:d:p:s")
     except getopt.GetoptError:
         print(USAGE, end="")
         return 0
@@ -134,6 +136,12 @@ def _run_cron(
             lifecycle.purge_local_tiffs(days_old=purgelifedays)
         except ValueError:
             pass
+
+    # 5. The saved storage lifecycle policy (retention and TIFF purge, local and remote)
+    if "-s" in opt_dict:
+        from namifax.services.storage_lifecycle import StorageLifecycleService
+
+        StorageLifecycleService(db=get_db()).run_saved_policy()
 
     return 0
 

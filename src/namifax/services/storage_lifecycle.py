@@ -4,7 +4,7 @@ import time
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Any, Dict, Optional
-from namifax.db.engine import DatabaseEngine, resolve_db
+from namifax.db.engine import resolve_db
 
 
 @dataclass
@@ -20,7 +20,7 @@ class StorageLifecycleService:
 
     def __init__(
         self,
-        db: Optional[DatabaseEngine] = None,
+        db: Any = None,
         storage_provider: Optional[Any] = None,
         archive_dir: Optional[str] = None,
     ) -> None:
@@ -64,60 +64,52 @@ class StorageLifecycleService:
             "reclaimed_bytes": reclaimed_bytes,
         }
 
-    def purge_expired_faxes(self, retention_days: int) -> Dict[str, Any]:
-        """Purge fax database entries, local directories, and sync with remote cloud storage."""
+    def purge_expired_faxes(self, retention_days: int, use_remote: bool = True) -> Dict[str, Any]:
+        """Delete faxes archived more than ``retention_days`` ago: database row, files and remote copy.
+
+        The age is the fax's ``archstamp`` (as the legacy cron's ``-d`` uses) and its files are found through
+        the stored ``faxpath``. ``retention_days <= 0`` keeps everything.
+        """
         if retention_days <= 0:
             return {"purged_faxes_count": 0}
 
-        cutoff_date = (datetime.now() - timedelta(days=retention_days)).strftime(
-            "%Y-%m-%d %H:%M:%S"
-        )
+        from namifax.services import archive_orm
+        from namifax.services.archive_base import FaxPDFArchive
 
-        res = self.db.query(
-            f"SELECT fid, lastmod FROM FaxArchive WHERE lastmod < {self.db.quote(cutoff_date)}"
-        )
-        records = self.db.get_records() if res.executed else []
-        purged_faxes_count = 0
-
-        for row in records:
-            fid = row.get("fid")
-            if not fid:
+        cutoff = (datetime.now() - timedelta(days=retention_days)).strftime("%Y-%m-%d %H:%M:%S")
+        purged = 0
+        for fid in archive_orm.fids_older_than(self.db, cutoff):
+            arc = FaxPDFArchive(db=self.db)
+            if not arc.load_fax(fid):
                 continue
+            faxpath = arc.dbdata.get("faxpath") or ""
 
-            # 1. Locate and remove local directory if exists
-            # Search within archive_dir for directory ending with fax{fid}
-            found_dir = None
-            for root, dirs, _ in os.walk(self.archive_dir):
-                for d in dirs:
-                    if d == f"fax{fid}":
-                        found_dir = os.path.join(root, d)
-                        break
-                if found_dir:
-                    break
-
-            if found_dir and os.path.exists(found_dir):
-                try:
-                    shutil.rmtree(found_dir, ignore_errors=True)
-                except OSError:
-                    pass
-
-            # 2. Remote storage notification
-            if self.storage_provider and hasattr(self.storage_provider, "delete_fax"):
+            if use_remote and self.storage_provider and hasattr(self.storage_provider, "delete_fax"):
                 try:
                     self.storage_provider.delete_fax(fid)
                 except Exception:
-                    pass
+                    pass          # an unreachable bucket must not keep local data forever
 
-            # 3. Remove DB record
-            self.db.query(f"DELETE FROM FaxArchive WHERE fid = {fid}")
-            purged_faxes_count += 1
+            if arc.delete_fax():
+                self._remove_leftovers(faxpath)
+                purged += 1
+        return {"purged_faxes_count": purged}
 
-        return {"purged_faxes_count": purged_faxes_count}
+    def _remove_leftovers(self, faxpath: str) -> None:
+        """Remove what is left of a fax directory, but only inside the archive."""
+        if not faxpath:
+            return
+        root = os.path.realpath(self.archive_dir)
+        target = os.path.realpath(faxpath)
+        if target != root and target.startswith(root + os.sep) and os.path.isdir(target):
+            shutil.rmtree(target, ignore_errors=True)
 
     def run_lifecycle(self, policy: StorageLifecyclePolicy) -> Dict[str, Any]:
         """Execute complete storage lifecycle sequence based on active policy."""
         tiff_res = self.purge_local_tiffs(days_old=policy.purge_tiff_after_days)
-        fax_res = self.purge_expired_faxes(retention_days=policy.full_retention_days)
+        fax_res = self.purge_expired_faxes(
+            retention_days=policy.full_retention_days, use_remote=policy.remote_sync_delete
+        )
 
         return {
             "tiffs_purged": tiff_res["purged_count"],
@@ -125,3 +117,34 @@ class StorageLifecycleService:
             "faxes_purged": fax_res["purged_faxes_count"],
             "executed_at": datetime.now().isoformat(),
         }
+
+    def run_saved_policy(self) -> Optional[Dict[str, Any]]:
+        """Run the policy an administrator saved on the storage page (``None`` when none was saved).
+
+        Nothing runs on the displayed defaults: deleting faxes automatically has to be an explicit choice.
+        The remote provider comes from the saved cloud settings; with ``LOCAL`` there is no remote copy.
+        """
+        from namifax.services.cloud_storage import CloudStorageManager, StorageConfig
+        from namifax.services.system_config import SystemConfigService
+
+        cfg = SystemConfigService(self.db)
+        tiff_days, keep_days = cfg.get("storage_purge_tiff_days", ""), cfg.get("storage_retention_days", "")
+        if not tiff_days and not keep_days:
+            return None
+
+        if self.storage_provider is None and cfg.get("cloud_storage_type", "LOCAL").upper() in ("S3", "GCS"):
+            self.storage_provider = CloudStorageManager.get_provider(StorageConfig(
+                storage_type=cfg.get("cloud_storage_type", "LOCAL"),
+                endpoint_url=cfg.get("cloud_endpoint_url", "") or None,
+                region_name=cfg.get("cloud_region_name", "") or None,
+                bucket_name=cfg.get("cloud_bucket_name", "") or None,
+                access_key=cfg.get("cloud_access_key", "") or None,
+                secret_key=cfg.get("cloud_secret_key", "") or None,
+                prefix=cfg.get("cloud_prefix", ""),
+            ))
+        policy = StorageLifecyclePolicy(
+            purge_tiff_after_days=int(tiff_days or 7),
+            full_retention_days=int(keep_days or 0),
+            remote_sync_delete=cfg.get("storage_remote_sync_delete", "1") == "1",
+        )
+        return self.run_lifecycle(policy)

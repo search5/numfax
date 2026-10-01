@@ -28,7 +28,7 @@ def test_injected_db_reaches_every_service(tmp_path, monkeypatch):
 
 
 def test_tmp_cleanup_only_does_not_open_a_database(tmp_path):
-    with patch.object(mod, "cli_db", side_effect=AssertionError("must not open DB")):
+    with patch.object(mod, "cli_session", side_effect=AssertionError("must not open DB")):
         code, classes, lifecycle = _run(["-t", "30"], tmp_path)
     assert code == 0
     assert not classes["ArchiveIn"].called and not lifecycle.called
@@ -42,7 +42,7 @@ def test_database_is_opened_once_and_shared(tmp_path):
         calls.append(1)
         yield opened
 
-    with patch.object(mod, "cli_db", fake_cli_db):
+    with patch.object(mod, "cli_session", fake_cli_db):
         code, classes, lifecycle = _run(["-t", "30", "-i", "7", "-d", "9", "-p", "3"], tmp_path)
     assert code == 0 and calls == [1]
     assert classes["ArchiveIn"].call_args.kwargs.get("db") is opened
@@ -52,7 +52,7 @@ def test_database_is_opened_once_and_shared(tmp_path):
 
 def test_injected_services_do_not_open_a_database(tmp_path):
     arc_in, arc_base = MagicMock(), MagicMock()
-    with patch.object(mod, "cli_db", side_effect=AssertionError("must not open DB")):
+    with patch.object(mod, "cli_session", side_effect=AssertionError("must not open DB")):
         code = mod.run_cron(["cron.py", "-t", "30", "-i", "7", "-d", "9"], archive_in=arc_in,
                             archive_base=arc_base, tmp_dir=str(tmp_path))
     assert code == 0

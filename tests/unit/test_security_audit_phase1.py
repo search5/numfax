@@ -230,12 +230,10 @@ class TestSecurityAuditPhase1(unittest.TestCase):
             )
 
         # Dynamic import test
-        from namifax.services.storage_lifecycle import DatabaseEngine as StorageEngine
         from namifax.services.cover_studio import DatabaseEngine as CoverEngine
         from namifax.db.engine import DatabaseEngine as MainEngine
 
         # OcrService is ORM-backed now and no longer touches the legacy engine at all
-        self.assertIs(StorageEngine, MainEngine)
         self.assertIs(CoverEngine, MainEngine)
 
 

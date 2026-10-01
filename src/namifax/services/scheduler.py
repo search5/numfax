@@ -35,10 +35,10 @@ class NamiFaxScheduler:
         self._stop_event = threading.Event()
 
     def job_cron_maintenance(self) -> None:
-        """Execute daily temporary folder and inbox retention cleanup."""
+        """Execute the daily temporary folder cleanup and the storage lifecycle policy saved by an administrator."""
         logger.info("[Scheduler] Executing scheduled cron maintenance...")
         try:
-            run_cron(["cron", "-t", str(self.tmp_clean_days)])
+            run_cron(["cron", "-t", str(self.tmp_clean_days), "-s"])
             logger.info("[Scheduler] Cron maintenance completed successfully.")
         except Exception as exc:
             logger.error(f"[Scheduler] Cron maintenance failed: {exc}", exc_info=True)

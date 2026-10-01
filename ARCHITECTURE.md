@@ -1098,3 +1098,20 @@ SQLite·MySQL은 오름차순에서 NULL을 먼저, PostgreSQL은 나중에 둔�
 * `alembic/env.py`는 ini 파일이 없을 때 호출자가 넘긴 연결(`config.attributes["connection"]`)을 쓴다. 명령줄 `alembic` 사용 방식은 변하지 않는다.
 * **검증(`tests/unit/test_bootstrap.py`, serverdb)**: 빈 서버 DB에 `ensure_schema` → 모든 모델 테이블과 `alembic_version=0020`, 기본 레코드만 존재, 재호출해도 변화 없음. 이어서 같은 DB로 `create_app` → 사용자 생성 → 로그인 → 주요 페이지 31개가 모두 200(리다이렉트도 실패로 간주). PostgreSQL 16, MySQL 8.4, MariaDB 11에서 통과.
 * **주의**: 여러 워커가 빈 DB를 동시에 처음 기동하면 마이그레이션이 경합할 수 있다. 처음에는 한 프로세스로 기동하거나 배포 단계에서 `alembic upgrade head`를 먼저 실행한다.
+
+### 14.17 스토리지 라이프사이클과 cron (신규 기능, 레거시 구조에 맞춰 수정)
+**판단**: 계획서 3.9의 신규 기능이며(레거시 `avantfaxcron.php`는 팩스 전체 삭제만 제공) 유지한다. 다만 레거시 DB·시스템 구조와 맞지 않아 **실제로는 동작하지 않았으므로** 수정했다(`docs/numfax-defects.md` COR-32와 같은 원인).
+
+| 결함 | 근거 | 수정 |
+| :--- | :--- | :--- |
+| 존재하지 않는 컬럼로 만료 판단 | `purge_expired_faxes`가 `FaxArchive.lastmod`를 조회. 레거시에 없는 포트 전용 컬럼이고 아무도 값을 쓰지 않아 NULL 비교로 항상 0건(서버 DB에서는 컬럼 자체가 없어 오류) | 레거시 크론 `-d`와 같은 `archstamp` 기준, ORM(`archive_orm.fids_older_than`) 사용 |
+| 팩스 디렉터리를 못 찾음 | `fax<fid>` 이름의 디렉터리를 탐색하지만 `faxrcvd`는 `<archive>/<일자>/<번호>/<HylaFAX id>`에 저장 | 행의 `faxpath`로 직접 접근. 삭제는 `FaxPDFArchive.delete_fax`를 재사용하고, 아카이브 디렉터리 안에서만 잔여 파일을 정리(밖의 경로는 건드리지 않음) |
+| `FaxPDFArchive.delete_fax`가 파일을 지우지 못함 | 설치 디렉터리가 비어 있을 때 절대 경로 `/var/spool/...`가 상대 경로 `var/spool/...`가 되어 파일이 한 번도 삭제되지 않음(COR-28) | 설치 디렉터리가 없으면 저장된 경로를 그대로 사용 |
+| 저장한 정책이 한 번도 실행되지 않음 | 관리자 화면은 정책을 SystemConfig에 저장하지만 스케줄러의 매일 작업은 임시 폴더 정리(`-t`)만 실행. `run_lifecycle`은 테스트에서만 호출 | `StorageLifecycleService.run_saved_policy()`, `cron -s`, 스케줄러가 매일 `-s` 실행 |
+| `remote_sync_delete` 미반영 | 정책 값이 무시되고 항상 원격 삭제 호출 | 정책에 따라 원격 삭제 여부 결정, 원격 실패는 로컬 삭제를 막지 않음 |
+
+**자동 삭제는 관리자가 정책을 저장했을 때만 실행한다.** 화면에 보이는 기본값(보존 365일)만으로는 아무것도 지우지 않는다. 설정이 없는 기존 설치에서 스케줄러 기동만으로 팩스가 삭제되는 일을 막기 위한 것이다.
+
+`cron`은 `cli_session`을 쓰고 `-p`(TIFF 정리)·`-s`(저장된 정책)를 지원한다. 서비스는 Session 기반이라 PostgreSQL·MySQL·MariaDB에서도 동작하고 서버 테스트로 검증했다.
+
+**미해결(확인 필요)**: 클라우드 `secret_key`가 SystemConfig에 평문으로 저장된다.

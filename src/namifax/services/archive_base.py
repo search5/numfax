@@ -475,7 +475,7 @@ class FaxPDFArchive:
         pages = self.dbdata.get("pages") or 0
         if self.dbdata.get("inbox"):
             for i in range(pages):
-                img_path = os.path.join(self.installdir, faxpath.lstrip("/"), f"{PREVIMG}{i}{PREVIMGSFX}")
+                img_path = os.path.join(self._on_disk(faxpath), f"{PREVIMG}{i}{PREVIMGSFX}")
                 if os.path.exists(img_path):
                     try:
                         os.remove(img_path)
@@ -485,7 +485,7 @@ class FaxPDFArchive:
         # Remove thumbnail, tiff, pdf
         for fpath in [self.thumbnail, self.tiffpath, self.pdfpath]:
             if fpath:
-                full_p = os.path.join(self.installdir, fpath.lstrip("/"))
+                full_p = self._on_disk(fpath)
                 if os.path.exists(full_p):
                     try:
                         os.remove(full_p)
@@ -494,7 +494,7 @@ class FaxPDFArchive:
 
         # Remove directory if empty
         if faxpath:
-            full_dir = os.path.join(self.installdir, faxpath.lstrip("/"))
+            full_dir = self._on_disk(faxpath)
             if os.path.exists(full_dir):
                 try:
                     os.rmdir(full_dir)
@@ -502,6 +502,15 @@ class FaxPDFArchive:
                     pass
 
         return True
+
+    def _on_disk(self, path: str) -> str:
+        """The file system location of a stored path.
+
+        With an install directory the stored path is relative to it. Without one (faxrcvd stores the
+        absolute archive path) it is used as it is; joining it onto an empty directory turned
+        ``/var/spool/...`` into the relative ``var/spool/...``, so deleting a fax never removed its files.
+        """
+        return os.path.join(self.installdir, path.lstrip("/")) if self.installdir else path
 
     def prune_archive(self, days: int) -> int:
         cutoff = (datetime.now() - timedelta(days=days)).strftime("%Y-%m-%d 00:00:00")

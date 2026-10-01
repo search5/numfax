@@ -28,7 +28,7 @@ class TestScheduler(unittest.TestCase):
     def test_job_cron_maintenance(self):
         with patch("namifax.services.scheduler.run_cron") as mock_cron:
             self.scheduler.job_cron_maintenance()
-            mock_cron.assert_called_once_with(["cron", "-t", "1"])
+            mock_cron.assert_called_once_with(["cron", "-t", "1", "-s"])
 
     def test_job_phonebook_sync(self):
         with patch("namifax.services.scheduler.export_phonebook", return_value=5) as mock_phb:

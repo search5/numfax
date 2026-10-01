@@ -108,44 +108,8 @@ class TestStorageLifecycleService(unittest.TestCase):
         self.assertEqual(res["purged_count"], 0)
         self.assertTrue(os.path.exists(tif_path))
 
-    def test_purge_expired_faxes(self):
-        # Insert expired fax record in DB
-        old_date = (datetime.now() - timedelta(days=400)).strftime("%Y-%m-%d %H:%M:%S")
-        self.db.query(
-            f"INSERT INTO FaxArchive (lastmod, pages) "
-            f"VALUES ('{old_date}', 2)"
-        )
-        fid = self.db.get_insert_id()
-
-        fax_dir = os.path.join(self.archive_dir, "2025", "08", "01", f"fax{fid}")
-        os.makedirs(fax_dir, exist_ok=True)
-        pdf_path = os.path.join(fax_dir, "fax.pdf")
-        with open(pdf_path, "wb") as f:
-            f.write(b"%PDF-1.4\ncontent")
-
-        res = self.service.purge_expired_faxes(retention_days=365)
-        self.assertEqual(res["purged_faxes_count"], 1)
-
-        # Verify DB record is deleted
-        self.db.query(f"SELECT fid FROM FaxArchive WHERE fid = {fid}")
-        self.assertEqual(len(self.db.get_records()), 0)
-
-        # Verify local dir is deleted
-        self.assertFalse(os.path.exists(fax_dir))
-
-        # Verify remote provider was notified to purge
-        self.mock_remote.delete_fax.assert_called_once_with(fid)
-
-    def test_run_lifecycle_full(self):
-        policy = StorageLifecyclePolicy(
-            purge_tiff_after_days=7,
-            full_retention_days=365,
-            remote_sync_delete=True,
-        )
-        summary = self.service.run_lifecycle(policy)
-        self.assertIn("tiffs_purged", summary)
-        self.assertIn("faxes_purged", summary)
-        self.assertIn("reclaimed_bytes", summary)
+    # retention, the full lifecycle run and the saved policy are covered against the real table layout in
+    # test_storage_lifecycle_orm.py
 
 
 if __name__ == "__main__":
