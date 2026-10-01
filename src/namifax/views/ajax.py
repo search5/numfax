@@ -1,10 +1,11 @@
 """NamiFAX asynchronous AJAX API views matching legacy ajax/*.php."""
 
 import html
-from pyramid.httpexceptions import HTTPForbidden
+from pyramid.httpexceptions import HTTPFound, HTTPForbidden
 from pyramid.response import Response
 from pyramid.view import view_config
 
+from namifax.i18n import _
 from namifax.services.addressbook import AFAddressBook
 from namifax.services.archive_in import ArchiveIn
 from namifax.services.distro import DistributionList
@@ -189,66 +190,70 @@ def ajax_archive_fax(request):
     return Response("", status_code=200)
 
 
-@view_config(route_name="ajax_faxalter", permission="view")
+@view_config(route_name="ajax_faxalter", renderer="namifax:templates/faxalter.jinja2", permission="view")
 def ajax_faxalter(request):
-    """Fax queue alteration dialog matching legacy faxalter.php."""
-    identity = request.identity or {"username": "admin", "uid": 1, "is_admin": True}
-    if request.method == "POST":
-        jid = request.params.get("jid")
-        if jid:
-            fq = FaxQueue(db=request.dbsession)
-            operations = {}
-            for key in ("destination", "priority", "numtries", "killtime", "sendtime"):
-                if key in request.params:
-                    operations[key] = request.params[key]
-            try:
-                fq.faxalter(identity.get("username", "admin"), int(jid), operations)
-            except (ValueError, TypeError):
-                pass
-        return Response("", status_code=200)
+    """Modify or resubmit a queued fax job (the original ajax/faxalter.php).
 
-    jid = html.escape(request.params.get("jid", ""), quote=True)
-    page = f"""<!DOCTYPE html>
-<html>
-<head><title>- NamiFAX - Modify Fax Job</title></head>
-<body class="bg-slate-50 text-slate-800 p-6">
-  <div class="max-w-md mx-auto bg-white p-6 rounded shadow border border-slate-200">
-    <h1 class="text-xl font-bold mb-4 text-sky-900">Modify Fax Job</h1>
-    <form id="faxalter" action="/ajax/faxalter" method="post" class="space-y-4">
-      <div>
-        <label for="dest" class="block text-sm font-semibold mb-1">New Destination:</label>
-        <input type="text" name="destination" id="dest" class="w-full border border-slate-300 rounded px-3 py-1.5 text-sm" />
-      </div>
-      <div>
-        <label for="priority" class="block text-sm font-semibold mb-1">Priority:</label>
-        <select name="priority" id="priority" class="w-full border border-slate-300 rounded px-3 py-1.5 text-sm">
-          <option value="*">Normal</option>
-          <option value="10">High</option>
-          <option value="100">Low</option>
-        </select>
-      </div>
-      <div>
-        <label for="numtries" class="block text-sm font-semibold mb-1">Number of tries:</label>
-        <input type="text" name="numtries" id="numtries" value="3" class="w-full border border-slate-300 rounded px-3 py-1.5 text-sm" />
-      </div>
-      <div>
-        <label for="killtime" class="block text-sm font-semibold mb-1">Kill time:</label>
-        <input type="text" name="killtime" id="killtime" value="3" class="w-full border border-slate-300 rounded px-3 py-1.5 text-sm" />
-      </div>
-      <div class="flex items-center space-x-2">
-        <input type="checkbox" name="sendtime" id="sendtime" value="1" class="rounded border-slate-300" />
-        <label for="sendtime" class="text-sm">Schedule Send Time</label>
-      </div>
-      <input type="hidden" name="jid" value="{jid}" />
-      <input type="hidden" name="_submit_check" value="1" />
-      <div class="pt-4 flex justify-end space-x-2">
-        <button type="submit" class="px-4 py-2 bg-sky-800 text-white rounded text-sm font-medium hover:bg-sky-700">Save</button>
-      </div>
-    </form>
-  </div>
-</body>
-</html>"""
-    return Response(page, content_type="text/html")
+    The fields become faxalter operations in the original's order. The job is altered in the name of the signed-in user;
+    only a superuser may name another owner (the original took any owner from the request, so anybody could alter any job).
+    """
+    access = fax_access(request)
+    params = request.POST if request.method == "POST" else request.params
+    resubmit = bool(params.get("resubmit") or params.get("r"))
+    jid = (params.get("jid") or "").strip()
+    owner = (params.get("owner") or "").strip() if access.superuser else ""
+    owner = owner or access.username or (request.identity or {}).get("username", "")
+
+    modems = FaxModem(db=request.dbsession)
+    devices = (access.configured_modems if access.superuser else access.modems) or []
+    modem_list = []
+    for device in devices:
+        if modems.load_device(device):
+            modem_list.append((device, modems.get_alias() or device))
+
+    def text(name: str, default: str = "") -> str:
+        return (params.get(name) or default).strip()
+
+    values = {"jid": jid, "owner": owner, "resubmit": "1" if resubmit else "", "destination": text("destination"),
+              "priority": text("priority", "*"), "modem": text("modem"), "numtries": text("numtries"),
+              "killtime": text("killtime", "3" if resubmit and request.method != "POST" else ""),
+              "killtime_unit": text("killtime_unit", "hours"), "sendnow": bool(text("sendnow")),
+              "sendtime": bool(text("sendtime")), "sendtimeHour": text("sendtimeHour"), "sendtimeMin": text("sendtimeMin")}
+
+    def page(error=None):
+        return {"title": "- NamiFAX - Modify Fax Job", "values": values, "error": error, "modem_list": modem_list,
+                "priority_list": ["*"] + [str(n) for n in range(0, 255, 10)],
+                "hours": [f"{n:02d}" for n in range(24)], "minutes": [f"{n:02d}" for n in range(60)]}
+
+    if request.method != "POST":
+        return page()
+
+    if not (jid.isdigit() and (not values["killtime"] or values["killtime"].isdigit())
+            and (not values["numtries"] or values["numtries"].isdigit())):
+        return page(_("Please enter a valid number."))
+
+    operations: dict = {}
+    if values["destination"]:
+        operations["destination"] = values["destination"]
+    if values["numtries"]:
+        operations["tries"] = values["numtries"]
+    if values["modem"]:
+        operations["device"] = values["modem"]
+    if values["priority"] != "*":
+        operations["priority"] = values["priority"]
+    if values["sendtime"] and values["sendtimeHour"] and values["sendtimeMin"]:
+        operations["sendtime"] = f"{values['sendtimeHour']}:{values['sendtimeMin']}"
+    if values["killtime"]:
+        operations["killtime"] = f"now + {values['killtime']} {values['killtime_unit']}"
+    if values["sendnow"]:
+        operations["sendtime"] = "now"
+    if resubmit:
+        operations["resubmit"] = True
+
+    FaxQueue(db=request.dbsession).faxalter(owner, int(jid), operations)
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        return Response("", status_code=200)
+    return HTTPFound(location=request.route_url("outbox"))
 
 
 @view_config(route_name="ajax_deletefaxes", permission="view")

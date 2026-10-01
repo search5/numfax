@@ -9,6 +9,7 @@ import pytest
 from pyramid import testing
 
 from namifax.views import modals as modals_mod
+from request_identity import set_identity
 
 CASES = [
     ("modal_email_view", "POST", {"fid": "1", "emails": "a@example.test", "_submit_check": "1"}),
@@ -23,7 +24,7 @@ CASES = [
 @pytest.mark.parametrize("name,method,params", CASES, ids=[f"{c[0]}-{c[1]}" for c in CASES])
 def test_view_builds_domain_objects_with_request_db(name, method, params, as_superuser):
     req = testing.DummyRequest()
-    req.__dict__["identity"] = {"username": "admin", "uid": 1, "is_admin": True, "superuser": True}
+    set_identity(req, {"username": "admin", "uid": 1, "is_admin": True, "superuser": True})
     req.db = object()
     req.dbsession = object()
     req.method = method

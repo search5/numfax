@@ -1,10 +1,10 @@
 
 msgid ""
 msgstr ""
-"Project-Id-Version: NamiFAX 4.0.Language: kMIME-Version: 1.Content-Type: "
-"text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
+"Project-Id-Version: NamiFAX 4.0.Language: kMIME-Version: 1.Content-Type: text/plain; charset=utf-Content-Transfer-"
+"Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 00:54+0900\n"
+"POT-Creation-Date: 2026-10-01 18:15+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ko\n"
@@ -15,2079 +15,1810 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:13
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:25
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:25
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:19
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:64
 msgid "Address Book"
 msgstr "주소록"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:14
 msgid "Save frequently used fax numbers for quick access when sending."
 msgstr "자주 사용하는 팩스 번호를 저장하여 전송 시 빠르게 선택하세요."
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:24
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:53
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:98
 msgid "Search"
 msgstr "검색"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:32
 msgid "New Company"
 msgstr "새 회사 추가"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:43
 msgid "Company / Name"
 msgstr "회사명 / 수신자"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:44
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:52
 msgid "Fax Number"
 msgstr "팩스 번호"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:45
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:121
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:76
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:35
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:77
 msgid "Email"
 msgstr "이메일"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:46
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:38
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:121
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:54
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:72
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:57
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:129
 msgid "Actions"
 msgstr "작업"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:74
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:28
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:46
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:78
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:19
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:11
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:248
 msgid "Send Fax"
 msgstr "팩스 보내기"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:78
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:61
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:42
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:59
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:45
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:45
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:69
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:67
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:65
 msgid "Edit"
 msgstr "편집"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:92
 msgid "No contacts yet"
 msgstr "등록된 연락처가 없습니다"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:95
 msgid "No contacts matched"
 msgstr "일치하는 연락처가 없습니다"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:97
-msgid ""
-"Add contacts to quickly select fax numbers when sending without typing "
-"them every time."
+msgid "Add contacts to quickly select fax numbers when sending without typing them every time."
 msgstr "연락처를 등록하면 매번 입력할 필요 없이 빠르게 팩스를 보낼 수 있습니다."
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:105
 msgid "Add First Contact"
 msgstr "첫 번째 연락처 추가"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:18
 msgid "Edit Company"
 msgstr "회사 정보 편집"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:18
 msgid "Add New Company"
 msgstr "새 회사 추가"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:20
-msgid "Configure corporate contact identity and transmission routing defaults."
-msgstr "회사 연락처 정보 및 팩스 수신 라우팅 기본값을 구성합니다."
+msgid "Configure the company and every fax number it uses."
+msgstr "회사와 그 회사가 쓰는 모든 팩스 번호를 설정합니다."
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:26
 msgid "Back to Contacts"
 msgstr "연락처 목록으로 돌아가기"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:42
-msgid "Primary Company Profile"
-msgstr "기본 회사 프로필"
+msgid "Upload contacts file (vCard)"
+msgstr "연락처 파일(vCard) 올리기"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:46
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:69
-msgid "Company Name"
-msgstr "회사명"
+msgid "Upload"
+msgstr "올리기"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:57
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:106
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:53
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:49
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:64
-msgid "Email Address"
-msgstr "이메일 주소"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:67
-msgid "Recipient Contact & Physical Address"
-msgstr "수신자 담당자 및 주소 정보"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:72
-msgid "Attention Person"
-msgstr "담당자"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:77
-msgid "Voice Telephone"
-msgstr "전화번호"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:82
-msgid "Street Address"
-msgstr "상세 주소"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:87
-msgid "City / Postal Region"
-msgstr "도시 / 우편번호"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:92
-msgid "Category Tag"
-msgstr "카테고리 태그"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:94
-msgid "General"
-msgstr "일반"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:95
-msgid "Invoices & Billing"
-msgstr "청구서 및 정산"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:96
-msgid "Legal"
-msgstr "법무"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:102
-msgid "Description / Internal Notes"
-msgstr "설명 / 내부 메모"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:112
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:113
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:72
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:101
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:92
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:88
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:136
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:186
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:74
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:62
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:171
-#: /home/jiho/numfax/src/namifax/templates/modal_delete.jinja2:39
-msgid "Delete"
-msgstr "삭제"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:115
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:123
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:112
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:74
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:100
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:94
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:90
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:135
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:188
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:196
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:77
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:85
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:65
-#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:63
-#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:56
-#: /home/jiho/numfax/src/namifax/templates/modal_delete.jinja2:36
-#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:57
-#: /home/jiho/numfax/src/namifax/templates/modal_note.jinja2:47
-#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:57
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:81
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:64
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:187
-msgid "Cancel"
-msgstr "취소"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:117
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:125
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:114
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:116
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:75
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:80
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:102
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:104
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:95
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:100
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:91
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:96
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:137
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:140
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:190
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:198
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:79
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:87
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:67
-#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:59
-#: /home/jiho/numfax/src/namifax/templates/modal_note.jinja2:50
-msgid "Save"
-msgstr "저장"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:18
-msgid "Dashboard Overview"
-msgstr "대시보드 개요"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:21
-msgid "SYSTEM OPERATIONAL"
-msgstr "시스템 정상 운영 중"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:24
-msgid ""
-"Real-time status of fax spools, hardware serial modems, and registered "
-"users"
-msgstr "팩스 스풀, 하드웨어 시리얼 모뎀 및 등록된 사용자의 실시간 상태"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:30
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:59
-msgid "Users"
-msgstr "사용자"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:31
-msgid "Modems"
-msgstr "모뎀"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:32
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:139
-msgid "DID Routes"
-msgstr "DID 라우팅"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:33
-msgid "Logs"
-msgstr "로그"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:43
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:152
-msgid "Fax Lines"
-msgstr "팩스 회선"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:46
-msgid "Hardware Ready"
-msgstr "하드웨어 준비 완료"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:61
-msgid "Active accounts"
-msgstr "활성 계정"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:73
-msgid "Backend Core"
-msgstr "백엔드 코어"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:87
-msgid "Scheduler"
-msgstr "스케줄러"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:89
-msgid "Running"
-msgstr "실행 중"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:107
-msgid "Registered User Accounts"
-msgstr "등록된 사용자 계정"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:110
-msgid "Manage Users"
-msgstr "사용자 관리"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:118
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:34
-msgid "Name"
-msgstr "이름"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:119
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:33
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:95
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:68
-msgid "Username"
-msgstr "사용자 이름"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:120
-msgid "Last Login"
-msgstr "마지막 로그인"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:143
-msgid "Server Status"
-msgstr "서버 상태"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:148
-msgid "Core"
-msgstr "코어"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:152
-msgid "Database Engine"
-msgstr "데이터베이스 엔진"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:156
-msgid "System Scheduler"
-msgstr "시스템 스케줄러"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:168
-msgid "Configured Modems"
-msgstr "구성된 모뎀"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:196
-msgid "Administrator Workflow Guide"
-msgstr "관리자 워크플로우 가이드"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:17
-msgid "Configure Barcode Routing"
-msgstr "바코드 라우팅 설정"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:18
-msgid ""
-"Route incoming faxes automatically based on recognized Code39 / QR "
-"barcodes"
-msgstr "인식된 Code39 / QR 바코드를 기준으로 수신 팩스를 자동 라우팅합니다."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:23
-msgid "New Barcode Route"
-msgstr "새 바코드 라우트"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:46
-msgid "Barcode Routing Rules"
-msgstr "바코드 라우팅 규칙"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:55
-msgid "Barcode:"
-msgstr "바코드:"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:58
-msgid "Contact:"
-msgstr "연락처:"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:58
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:41
-msgid "None"
-msgstr "없음"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:58
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:41
-msgid "Printer:"
-msgstr "프린터:"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:74
-msgid "Edit Barcode Route"
-msgstr "바코드 라우트 편집"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:74
-msgid "Add Barcode Route"
-msgstr "바코드 라우트 추가"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:78
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:76
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:62
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:91
-msgid "EDIT MODE"
-msgstr "편집 모드"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:80
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:78
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:64
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:93
-msgid "NEW"
-msgstr "신규"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:86
-msgid "Barcode"
-msgstr "바코드"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:91
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:41
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:83
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:54
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:104
-msgid "Alias"
-msgstr "별칭"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:96
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:88
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:109
-msgid "Contact Email"
-msgstr "연락처 이메일"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:101
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:81
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:93
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:56
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:114
-msgid "Printer"
-msgstr "프린터"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:17
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:181
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:268
-msgid "Fax Categories"
-msgstr "팩스 카테고리 관리"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:18
-msgid ""
-"Manage classification tags and archival categories for organizing "
-"transmissions"
-msgstr "팩스 전송 내역 정리를 위한 분류 태그 및 보관 카테고리를 관리합니다."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:23
-msgid "New Category"
-msgstr "새 카테고리"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:33
-msgid "Existing Categories"
-msgstr "등록된 카테고리"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:54
-msgid "Edit Category"
-msgstr "카테고리 편집"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:54
-msgid "Add Category"
-msgstr "카테고리 추가"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:65
-msgid "Category Name"
-msgstr "카테고리명"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:17
-msgid "Configure Cover Pages"
-msgstr "표지 템플릿 설정"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:18
-msgid "Manage facsimile PostScript cover page templates and layouts"
-msgstr "팩스 PostScript 표지 템플릿 및 레이아웃을 관리합니다."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:23
-msgid "New Cover Page"
-msgstr "새 표지 템플릿"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:46
-msgid "Available Cover Pages"
-msgstr "사용 가능한 표지 목록"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:72
-msgid "Edit Cover Page"
-msgstr "표지 템플릿 편집"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:72
-msgid "Add Cover Page"
-msgstr "표지 템플릿 추가"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:84
-msgid "Title"
-msgstr "제목"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:89
-msgid "File"
-msgstr "파일"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:115
-msgid "Cover Template Studio: Dynamic Tag References"
-msgstr "표지 템플릿 스튜디오: 동적 태그 레퍼런스"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:117
-msgid ""
-"Use these placeholder tags in your PostScript (.ps), HTML (.html), or PDF"
-" templates. The Cover Studio engine automatically substitutes them during"
-" fax rendering."
-msgstr ""
-"PostScript(.ps), HTML(.html) 또는 PDF 템플릿에서 이 치환 태그들을 사용하십시오. Cover Studio "
-"엔진이 팩스 렌더링 시 자동으로 값을 대입합니다."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:17
-msgid "Dynamic Configuration"
-msgstr "동적 구성(DynConf)"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:18
-msgid ""
-"Manage Caller ID blacklists and transmission rejection rules for modem "
-"devices"
-msgstr "모뎀 장치의 발신자 번호 차단 목록 및 수신 거부 규칙을 관리합니다."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:23
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:23
-msgid "New Rule"
-msgstr "새 규칙"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:33
-msgid "Blocked Caller IDs"
-msgstr "차단된 발신자 번호"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:40
-msgid "Caller ID:"
-msgstr "발신자 번호:"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:41
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:82
-msgid "All Devices"
-msgstr "모든 장치"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:58
-msgid "Edit Caller ID Rule"
-msgstr "발신자 차단 규칙 편집"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:58
-msgid "Add Caller ID Rule"
-msgstr "발신자 차단 규칙 추가"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:75
-msgid "Caller ID"
-msgstr "발신자 번호"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:80
-msgid "Modem Device"
-msgstr "모뎀 장치"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:17
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:160
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:272
-msgid "Fax to Email"
-msgstr "팩스-이메일 라우팅"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:18
-msgid ""
-"Configure automated inbound fax forwarding and PDF dispatch rules mapped "
-"by company"
-msgstr "회사별 수신 팩스 자동 전달 및 PDF 발송 규칙을 구성합니다."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:33
-msgid "Company Forwarding Rules"
-msgstr "회사별 전달 규칙"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:41
-msgid "Email:"
-msgstr "이메일:"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:58
-msgid "Edit Forwarding Rule"
-msgstr "전달 규칙 편집"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:58
-msgid "Add Forwarding Rule"
-msgstr "전달 규칙 추가"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:71
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:54
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:81
 msgid "Company"
 msgstr "회사"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:49
-msgid "Control Panel"
-msgstr "제어판"
+msgid "Company Name"
+msgstr "회사명"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:61
-msgid "User Portal"
-msgstr "사용자 포털"
+msgid "Clear the number to remove it."
+msgstr "번호를 지우면 삭제됩니다."
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:63
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:13
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:45
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:81
-msgid "Inbox"
-msgstr "받은 팩스함"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:106
-msgid "Overview"
-msgstr "개요"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:113
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:264
-msgid "Dashboard"
-msgstr "대시보드"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:119
-msgid "Access Control"
-msgstr "접근 제어"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:126
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:265
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:17
-msgid "User Accounts"
-msgstr "사용자 계정 관리"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:132
-msgid "Hardware & Lines"
-msgstr "하드웨어 및 회선"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:139
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:266
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:17
-msgid "Fax Modems"
-msgstr "팩스 모뎀 장치"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:145
-msgid "Inbound Routing"
-msgstr "수신 라우팅"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:152
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:267
-msgid "DID Routing"
-msgstr "DID 수신 라우팅"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:168
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:270
-msgid "Barcode Routing"
-msgstr "바코드 라우팅"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:174
-msgid "Content & Templates"
-msgstr "콘텐츠 및 템플릿"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:189
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:269
-msgid "Cover Pages"
-msgstr "표지 템플릿 관리"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:195
-msgid "Security & System"
-msgstr "보안 및 시스템"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:202
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:271
-msgid "Blacklist (DynConf)"
-msgstr "동적 차단 목록(DynConf)"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:210
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:273
-msgid "System Audit Logs"
-msgstr "시스템 감사 로그"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:219
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:274
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:18
-msgid "System Functions"
-msgstr "시스템 기능"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:227
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:275
-msgid "SMTP Gateway"
-msgstr "SMTP 게이트웨이"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:245
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:111
-msgid "Logout"
-msgstr "로그아웃"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:261
-msgid "Admin Control Panel"
-msgstr "관리자 제어판"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:285
-msgid "Appliance Engine Online"
-msgstr "어플라이언스 엔진 정상 가동 중"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:18
-msgid ""
-"Configure Modems hardware devices, physical serial ports, and print-"
-"forwarding rules"
-msgstr "모뎀 하드웨어 장치, 물리 시리얼 포트 및 인쇄 전달 규칙을 설정합니다."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:23
-msgid "Configure Modems"
-msgstr "모뎀 설정"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:33
-msgid "Active Modem Lines"
-msgstr "활성 모뎀 회선"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:40
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:78
-msgid "Device"
-msgstr "장치"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:42
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:55
-msgid "Contact"
-msgstr "연락처"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:43
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:56
-msgid "Status"
-msgstr "상태"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:72
-msgid "Edit Modem"
-msgstr "모뎀 편집"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:72
-msgid "Configure Modems Device"
-msgstr "모뎀 장치 설정"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:100
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:139
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:91
-msgid "Reset"
-msgstr "초기화"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:102
-msgid "Save Modem"
-msgstr "모뎀 설정 저장"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:112
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:150
-msgid "Appliance Note:"
-msgstr "어플라이언스 안내:"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:112
-msgid ""
-"Modems configured here must correspond to physical RS-232 serial devices,"
-" USB modems, or virtual IAX modems recognized by the underlying HylaFAX "
-"server."
-msgstr ""
-"여기서 구성하는 모뎀은 HylaFAX 서버가 인식하는 물리 RS-232 시리얼 장치, USB 모뎀 또는 가상 IAX 모뎀과 일치해야"
-" 합니다."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:17
-msgid "Configure DID Routing"
-msgstr "DID 라우팅 설정"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:18
-msgid ""
-"Route incoming faxes by Direct Inward Dialing (DID) extension to specific"
-" email boxes or printers"
-msgstr "수신 다이얼(DID) 내선 번호를 기준으로 특정 이메일 수신함이나 프린터로 팩스를 라우팅합니다."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:23
-msgid "New DID Route"
-msgstr "새 DID 라우트"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:46
-msgid "Active DID Routing Rules"
-msgstr "활성 DID 라우팅 규칙"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:53
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:99
-msgid "Route Code"
-msgstr "라우트 코드"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:57
-msgid "Action"
-msgstr "작업"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:84
-msgid "Configure Routing Rule"
-msgstr "라우팅 규칙 설정"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:119
-msgid "Category"
-msgstr "카테고리"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:121
-msgid "-- None --"
-msgstr "-- 없음 --"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:150
-msgid ""
-"DID (Direct Inward Dialing) routing automatically redirects incoming "
-"transmissions matching extension patterns directly to mapped operator "
-"inboxes or physical printers."
-msgstr ""
-"DID(Direct Inward Dialing) 라우팅은 내선 번호 패턴과 일치하는 수신 팩스를 매핑된 담당자 수신함이나 프린터로 "
-"직접 자동 전달합니다."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:18
-msgid "External SMTP Gateway"
-msgstr "외부 SMTP 게이트웨이"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:21
-msgid ""
-"Configure external mail delivery server for inbound fax notifications and"
-" user alerts"
-msgstr "수신 팩스 알림 및 사용자 경보를 위한 외부 메일 발송 서버를 설정합니다."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:62
-msgid "Diagnostics Result"
-msgstr "진단 결과"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:89
-msgid "Server Connection & Security"
-msgstr "서버 연결 및 보안"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:95
-msgid "SMTP Host / Server"
-msgstr "SMTP 호스트 / 서버"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:103
-msgid "Port"
-msgstr "포트"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:112
-msgid "Encryption Protocol"
-msgstr "암호화 프로토콜"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:116
-msgid "None (Plain)"
-msgstr "없음 (일반)"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:120
-msgid "STARTTLS (587)"
-msgstr "STARTTLS (587)"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:124
-msgid "SSL / TLS (465)"
-msgstr "SSL / TLS (465)"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:134
-msgid "Requires SMTP Authentication"
-msgstr "SMTP 인증 필요"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:139
-msgid "Username / Login"
-msgstr "사용자 이름 / 로그인"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:145
-msgid "Password / App Key"
-msgstr "비밀번호 / 앱 키"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:160
-msgid "Default Sender Profile & Signatures"
-msgstr "기본 발신자 프로필 및 서명"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:165
-msgid "From Email Address"
-msgstr "발신자 이메일 주소"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:171
-msgid "From Display Name"
-msgstr "발신자 표시 이름"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:179
-msgid "Email Signature (Plaintext)"
-msgstr "이메일 서명 (일반 텍스트)"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:187
-msgid "Last updated"
-msgstr "최근 업데이트"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:194
-msgid "Save Gateway Settings"
-msgstr "게이트웨이 설정 저장"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:207
-msgid "Diagnostic Self-Test"
-msgstr "자가 진단 테스트"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:210
-msgid ""
-"Verify server reachability, TLS handshake, credentials and message "
-"dispatch in real time."
-msgstr "서버 연결성, TLS 핸드셰이크, 인증 자격증명 및 메시지 발송을 실시간으로 검증합니다."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:214
-msgid "Target Recipient Email"
-msgstr "테스트 수신자 이메일"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:226
-msgid "Send Diagnostic Email"
-msgstr "진단 이메일 전송"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:19
-msgid "Perform maintenance operations, service control, and backups."
-msgstr "유지보수 작업, 서비스 제어 및 백업을 수행합니다."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:26
-msgid "HylaFAX Engine Active"
-msgstr "HylaFAX 엔진 가동 중"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:29
-msgid "Admin Dashboard"
-msgstr "관리자 대시보드"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:40
-msgid "Caution: Appliance Maintenance Operations"
-msgstr "주의: 어플라이언스 유지보수 작업"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:42
-msgid ""
-"Restarting or shutting down services will interrupt active fax modem "
-"spooling and disconnect client sessions. Ensure all outbound "
-"transmissions in the modem queue are completed before initiating "
-"maintenance tasks."
-msgstr ""
-"서비스를 재시작하거나 종료하면 진행 중인 팩스 모뎀 스풀링이 중단되고 클라이언트 세션 연결이 끊어집니다. 유지보수 작업을 시작하기 "
-"전에 모뎀 대기열의 모든 발신 전송이 완료되었는지 확인하십시오."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:58
-msgid "Daemon Service Control"
-msgstr "데몬 서비스 제어"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:61
-msgid "Restart HylaFAX and NamiFAX web services, or halt background workers."
-msgstr "HylaFAX 및 NamiFAX 웹 서비스를 재시작하거나 백그라운드 워커를 중지합니다."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:84
-msgid "Reboot Services"
-msgstr "서비스 재시작"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:90
-msgid "Shutdown Services"
-msgstr "서비스 종료"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:100
-msgid "Database & Archive Backup"
-msgstr "데이터베이스 및 보관함 백업"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:103
-msgid "Download system archives and database snapshots for offsite retention."
-msgstr "외부 보관을 위해 시스템 보관함 및 데이터베이스 스냅샷을 다운로드합니다."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:126
-msgid "Download Archive"
-msgstr "보관함 다운로드"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:132
-msgid "Download Database"
-msgstr "데이터베이스 다운로드"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:17
-msgid "System Logs"
-msgstr "시스템 로그"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:18
-msgid "Audit logs and HylaFAX server operational event traces"
-msgstr "감사 로그 및 HylaFAX 서버 운영 이벤트 추적 내역"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:25
-msgid "Keywords:"
-msgstr "키워드:"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:30
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:43
-msgid "Date:"
-msgstr "날짜:"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:64
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:120
-msgid "Date"
-msgstr "날짜"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:65
-msgid "Log Text"
-msgstr "로그 내용"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:79
-msgid "No system logs found matching criteria."
-msgstr "조건과 일치하는 시스템 로그가 없습니다."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:80
-msgid "Transmissions and server events will be streamed here in real time."
-msgstr "전송 내역 및 서버 이벤트가 여기에 실시간으로 스트리밍됩니다."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:18
-msgid "Manage system operator credentials, access permissions, and route mapping"
-msgstr "시스템 운영자 자격 증명, 접근 권한 및 라우트 매핑을 관리합니다."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:23
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:82
-msgid "Create New User"
-msgstr "새 사용자 생성"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:36
-msgid "Superuser"
-msgstr "최고 관리자"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:37
-msgid "Admin"
-msgstr "관리자"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:53
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:60
-msgid "YES"
-msgstr "예"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:55
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:62
-msgid "NO"
-msgstr "아니오"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:82
-msgid "Configure User:"
-msgstr "사용자 설정:"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:91
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:59
-msgid "Full Name"
-msgstr "전체 이름"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:102
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:82
-msgid "Password"
-msgstr "비밀번호"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:113
-msgid "Permissions & Capabilities"
-msgstr "권한 및 기능"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:117
-msgid "Administrator Console"
-msgstr "관리자 콘솔"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:121
-msgid "Superuser Rights"
-msgstr "최고 관리자 권한"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:125
-msgid "Can Delete Faxes"
-msgstr "팩스 삭제 권한"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:129
-msgid "Send on Any Modem"
-msgstr "모든 모뎀 발신 권한"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:165
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:41
-msgid "Categories"
-msgstr "카테고리"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:13
-msgid "Archive Search"
-msgstr "보관함 검색"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:14
-msgid "Search all sent and received fax records by date, company, or fax number."
-msgstr "날짜, 회사 또는 팩스 번호별로 수발신 팩스 기록을 검색합니다."
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:18
-msgid "results"
-msgstr "건의 결과"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:18
-msgid "result"
-msgstr "건의 결과"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:26
-msgid "Search Filters"
-msgstr "검색 필터"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:27
-msgid ""
-"Leave filters empty to search all records. Narrow results by adding more "
-"criteria."
-msgstr "필터를 비워두면 전체 기록을 검색합니다. 조건을 추가하여 검색 결과를 좁힐 수 있습니다."
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:33
-msgid "Keyword"
-msgstr "키워드"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:45
-msgid "All Categories"
-msgstr "모든 카테고리"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:46
-msgid "Invoices / Orders"
-msgstr "청구서 / 발주서"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:47
-msgid "Legal / Contracts"
-msgstr "법무 / 계약서"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:52
-msgid "From Date"
-msgstr "시작 날짜"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:60
-msgid "To Date"
-msgstr "종료 날짜"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:70
-msgid "Direction"
-msgstr "구분"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:74
-msgid "Sent & Received"
-msgstr "수신 및 발신 전체"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:75
-msgid "Received only"
-msgstr "수신 팩스만"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:76
-msgid "Sent only"
-msgstr "발신 팩스만"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:81
-msgid "Fax ID"
-msgstr "팩스 ID"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:110
-msgid "Results"
-msgstr "검색 결과"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:111
-msgid "records"
-msgstr "건의 기록"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:111
-msgid "record"
-msgstr "건의 기록"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:117
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:69
-msgid "Sender"
-msgstr "발신자"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:118
 msgid "Description"
 msgstr "설명"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:119
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:71
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:55
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:92
+msgid "Category"
+msgstr "카테고리"
+
+msgid "Attention Person"
+msgstr "담당자"
+
+msgid "Location"
+msgstr "위치"
+
+msgid "Voice Telephone"
+msgstr "전화번호"
+
+msgid "Street Address"
+msgstr "상세 주소"
+
+msgid "Zip / Postal Code"
+msgstr "우편번호"
+
+msgid "City"
+msgstr "도시"
+
+msgid "Add a Fax Number"
+msgstr "팩스 번호 추가"
+
+msgid "First Fax Number"
+msgstr "첫 번째 팩스 번호"
+
+msgid "Delete"
+msgstr "삭제"
+
+msgid "Cancel"
+msgstr "취소"
+
+msgid "Save"
+msgstr "저장"
+
+msgid "Dashboard Overview"
+msgstr "대시보드 개요"
+
+msgid "SYSTEM OPERATIONAL"
+msgstr "시스템 정상 운영 중"
+
+msgid "Real-time status of fax spools, hardware serial modems, and registered users"
+msgstr "팩스 스풀, 하드웨어 시리얼 모뎀 및 등록된 사용자의 실시간 상태"
+
+msgid "Users"
+msgstr "사용자"
+
+msgid "Modems"
+msgstr "모뎀"
+
+msgid "DID Routes"
+msgstr "DID 라우팅"
+
+msgid "Logs"
+msgstr "로그"
+
+msgid "Fax Lines"
+msgstr "팩스 회선"
+
+msgid "Hardware Ready"
+msgstr "하드웨어 준비 완료"
+
+msgid "Active accounts"
+msgstr "활성 계정"
+
+msgid "Backend Core"
+msgstr "백엔드 코어"
+
+msgid "Scheduler"
+msgstr "스케줄러"
+
+msgid "Running"
+msgstr "실행 중"
+
+msgid "Registered User Accounts"
+msgstr "등록된 사용자 계정"
+
+msgid "Manage Users"
+msgstr "사용자 관리"
+
+msgid "Name"
+msgstr "이름"
+
+msgid "Username"
+msgstr "사용자 이름"
+
+msgid "Last Login"
+msgstr "마지막 로그인"
+
+msgid "Server Status"
+msgstr "서버 상태"
+
+msgid "Core"
+msgstr "코어"
+
+msgid "Database Engine"
+msgstr "데이터베이스 엔진"
+
+msgid "System Scheduler"
+msgstr "시스템 스케줄러"
+
+msgid "Configured Modems"
+msgstr "구성된 모뎀"
+
+msgid "Administrator Workflow Guide"
+msgstr "관리자 워크플로우 가이드"
+
+msgid "Configure Barcode Routing"
+msgstr "바코드 라우팅 설정"
+
+msgid "Route incoming faxes automatically based on recognized Code39 / QR barcodes"
+msgstr "인식된 Code39 / QR 바코드를 기준으로 수신 팩스를 자동 라우팅합니다."
+
+msgid "New Barcode Route"
+msgstr "새 바코드 라우트"
+
+msgid "Barcode Routing Rules"
+msgstr "바코드 라우팅 규칙"
+
+msgid "Barcode:"
+msgstr "바코드:"
+
+msgid "Contact:"
+msgstr "연락처:"
+
+msgid "None"
+msgstr "없음"
+
+msgid "Printer:"
+msgstr "프린터:"
+
+msgid "Edit Barcode Route"
+msgstr "바코드 라우트 편집"
+
+msgid "Add Barcode Route"
+msgstr "바코드 라우트 추가"
+
+msgid "EDIT MODE"
+msgstr "편집 모드"
+
+msgid "NEW"
+msgstr "신규"
+
+msgid "Barcode"
+msgstr "바코드"
+
+msgid "Alias"
+msgstr "별칭"
+
+msgid "Contact Email"
+msgstr "연락처 이메일"
+
+msgid "Printer"
+msgstr "프린터"
+
+msgid "Fax Categories"
+msgstr "팩스 카테고리 관리"
+
+msgid "Manage classification tags and archival categories for organizing transmissions"
+msgstr "팩스 전송 내역 정리를 위한 분류 태그 및 보관 카테고리를 관리합니다."
+
+msgid "New Category"
+msgstr "새 카테고리"
+
+msgid "Existing Categories"
+msgstr "등록된 카테고리"
+
+msgid "Edit Category"
+msgstr "카테고리 편집"
+
+msgid "Add Category"
+msgstr "카테고리 추가"
+
+msgid "Category Name"
+msgstr "카테고리명"
+
+msgid "Configure Cover Pages"
+msgstr "표지 템플릿 설정"
+
+msgid "Manage facsimile PostScript cover page templates and layouts"
+msgstr "팩스 PostScript 표지 템플릿 및 레이아웃을 관리합니다."
+
+msgid "New Cover Page"
+msgstr "새 표지 템플릿"
+
+msgid "Available Cover Pages"
+msgstr "사용 가능한 표지 목록"
+
+msgid "Edit Cover Page"
+msgstr "표지 템플릿 편집"
+
+msgid "Add Cover Page"
+msgstr "표지 템플릿 추가"
+
+msgid "Title"
+msgstr "제목"
+
+msgid "File"
+msgstr "파일"
+
+msgid "Cover Template Studio: Dynamic Tag References"
+msgstr "표지 템플릿 스튜디오: 동적 태그 레퍼런스"
+
+msgid ""
+"Use these placeholder tags in your PostScript (.ps), HTML (.html), or PDF templates. The Cover Studio engine "
+"automatically substitutes them during fax rendering."
+msgstr "PostScript(.ps), HTML(.html) 또는 PDF 템플릿에서 이 치환 태그들을 사용하십시오. Cover Studio 엔진이 팩스 렌더링 시 자동으로 값을 대입합니다."
+
+msgid "Dynamic Configuration"
+msgstr "동적 구성(DynConf)"
+
+msgid "Manage Caller ID blacklists and transmission rejection rules for modem devices"
+msgstr "모뎀 장치의 발신자 번호 차단 목록 및 수신 거부 규칙을 관리합니다."
+
+msgid "New Rule"
+msgstr "새 규칙"
+
+msgid "Blocked Caller IDs"
+msgstr "차단된 발신자 번호"
+
+msgid "Caller ID:"
+msgstr "발신자 번호:"
+
+msgid "All Devices"
+msgstr "모든 장치"
+
+msgid "Edit Caller ID Rule"
+msgstr "발신자 차단 규칙 편집"
+
+msgid "Add Caller ID Rule"
+msgstr "발신자 차단 규칙 추가"
+
+msgid "Caller ID"
+msgstr "발신자 번호"
+
+msgid "Modem Device"
+msgstr "모뎀 장치"
+
+msgid "Fax to Email"
+msgstr "팩스-이메일 라우팅"
+
+msgid "Configure automated inbound fax forwarding and PDF dispatch rules mapped by company"
+msgstr "회사별 수신 팩스 자동 전달 및 PDF 발송 규칙을 구성합니다."
+
+msgid "Add companies in the Address Book"
+msgstr "주소록에서 회사 추가하기"
+
+msgid "Company Forwarding Rules"
+msgstr "회사별 전달 규칙"
+
+msgid "fax numbers"
+msgstr "팩스 번호"
+
+msgid "Email:"
+msgstr "이메일:"
+
+msgid "Edit Forwarding Rules"
+msgstr "전달 규칙 편집"
+
+msgid "Forwarding Rules"
+msgstr "전달 규칙"
+
+msgid "This company has no fax numbers yet. Add them in the Address Book."
+msgstr "이 회사에는 아직 팩스 번호가 없습니다. 주소록에서 추가하십시오."
+
+msgid "Select a company on the left to set where the faxes received on each of its numbers are sent."
+msgstr "왼쪽에서 회사를 고르면 각 번호로 받은 팩스를 어디로 보낼지 설정할 수 있습니다."
+
+msgid "Control Panel"
+msgstr "제어판"
+
+msgid "User Portal"
+msgstr "사용자 포털"
+
+msgid "Inbox"
+msgstr "받은 팩스함"
+
+msgid "Overview"
+msgstr "개요"
+
+msgid "Dashboard"
+msgstr "대시보드"
+
+msgid "Access Control"
+msgstr "접근 제어"
+
+msgid "User Accounts"
+msgstr "사용자 계정 관리"
+
+msgid "Hardware & Lines"
+msgstr "하드웨어 및 회선"
+
+msgid "Fax Modems"
+msgstr "팩스 모뎀 장치"
+
+msgid "Network Printers"
+msgstr "네트워크 프린터"
+
+msgid "Inbound Routing"
+msgstr "수신 라우팅"
+
+msgid "DID Routing"
+msgstr "DID 수신 라우팅"
+
+msgid "Barcode Routing"
+msgstr "바코드 라우팅"
+
+msgid "Content & Templates"
+msgstr "콘텐츠 및 템플릿"
+
+msgid "Cover Pages"
+msgstr "표지 템플릿 관리"
+
+msgid "Security & System"
+msgstr "보안 및 시스템"
+
+msgid "Blacklist (DynConf)"
+msgstr "동적 차단 목록(DynConf)"
+
+msgid "System Audit Logs"
+msgstr "시스템 감사 로그"
+
+msgid "System Functions"
+msgstr "시스템 기능"
+
+msgid "SMTP Gateway"
+msgstr "SMTP 게이트웨이"
+
+msgid "Storage & Cloud"
+msgstr "스토리지 및 클라우드"
+
+msgid "SAML 2.0 SSO"
+msgstr "SAML 2.0 SSO"
+
+msgid "Logout"
+msgstr "로그아웃"
+
+msgid "Admin Control Panel"
+msgstr "관리자 제어판"
+
+msgid "Appliance Engine Online"
+msgstr "어플라이언스 엔진 정상 가동 중"
+
+msgid "Configure Modems hardware devices, physical serial ports, and print-forwarding rules"
+msgstr "모뎀 하드웨어 장치, 물리 시리얼 포트 및 인쇄 전달 규칙을 설정합니다."
+
+msgid "Configure Modems"
+msgstr "모뎀 설정"
+
+msgid "Active Modem Lines"
+msgstr "활성 모뎀 회선"
+
+msgid "Device"
+msgstr "장치"
+
+msgid "Contact"
+msgstr "연락처"
+
+msgid "Status"
+msgstr "상태"
+
+msgid "Edit Modem"
+msgstr "모뎀 편집"
+
+msgid "Configure Modems Device"
+msgstr "모뎀 장치 설정"
+
+msgid "Reset"
+msgstr "초기화"
+
+msgid "Save Modem"
+msgstr "모뎀 설정 저장"
+
+msgid "Appliance Note:"
+msgstr "어플라이언스 안내:"
+
+msgid ""
+"Modems configured here must correspond to physical RS-232 serial devices, USB modems, or virtual IAX modems "
+"recognized by the underlying HylaFAX server."
+msgstr "여기서 구성하는 모뎀은 HylaFAX 서버가 인식하는 물리 RS-232 시리얼 장치, USB 모뎀 또는 가상 IAX 모뎀과 일치해야 합니다."
+
+msgid "Direct RAW socket & IPP network printing dispatch for received faxes"
+msgstr "받은 팩스를 RAW 소켓과 IPP로 네트워크 프린터에 바로 출력"
+
+msgid "Add Network Printer"
+msgstr "네트워크 프린터 추가"
+
+msgid "Printer Name"
+msgstr "프린터 이름"
+
+msgid "Protocol"
+msgstr "프로토콜"
+
+msgid "Host / IP"
+msgstr "호스트 / IP"
+
+msgid "Port"
+msgstr "포트"
+
+msgid "Queue Name (Optional)"
+msgstr "큐 이름 (선택)"
+
+msgid "Register Printer"
+msgstr "프린터 등록"
+
+msgid "Configured Printers"
+msgstr "등록된 프린터"
+
+msgid "No network printers configured yet. Add one using the form on the left."
+msgstr "등록된 네트워크 프린터가 없습니다. 왼쪽 양식으로 추가하십시오."
+
+msgid "Endpoint"
+msgstr "접속 주소"
+
+msgid "Test Print"
+msgstr "테스트 출력"
+
+msgid "Are you sure you want to delete this printer?"
+msgstr "이 프린터를 삭제하시겠습니까?"
+
+msgid "Configure DID Routing"
+msgstr "DID 라우팅 설정"
+
+msgid "Route incoming faxes by Direct Inward Dialing (DID) extension to specific email boxes or printers"
+msgstr "수신 다이얼(DID) 내선 번호를 기준으로 특정 이메일 수신함이나 프린터로 팩스를 라우팅합니다."
+
+msgid "New DID Route"
+msgstr "새 DID 라우트"
+
+msgid "Active DID Routing Rules"
+msgstr "활성 DID 라우팅 규칙"
+
+msgid "Route Code"
+msgstr "라우트 코드"
+
+msgid "Action"
+msgstr "작업"
+
+msgid "Configure Routing Rule"
+msgstr "라우팅 규칙 설정"
+
+msgid "-- None --"
+msgstr "-- 없음 --"
+
+msgid ""
+"DID (Direct Inward Dialing) routing automatically redirects incoming transmissions matching extension patterns "
+"directly to mapped operator inboxes or physical printers."
+msgstr "DID(Direct Inward Dialing) 라우팅은 내선 번호 패턴과 일치하는 수신 팩스를 매핑된 담당자 수신함이나 프린터로 직접 자동 전달합니다."
+
+msgid "SAML 2.0 Enterprise SSO"
+msgstr "SAML 2.0 기업 SSO"
+
+msgid "Single Sign-On integration with Okta, Microsoft Entra ID (Azure AD), Google Workspace & Keycloak"
+msgstr "Okta, Microsoft Entra ID(Azure AD), Google Workspace, Keycloak과의 싱글 사인온 연동"
+
+msgid "Download SP Metadata XML"
+msgstr "SP 메타데이터 XML 내려받기"
+
+msgid "Identity Provider (IdP) Settings"
+msgstr "IdP(인증 제공자) 설정"
+
+msgid "Enable SAML 2.0 Single Sign-On"
+msgstr "SAML 2.0 싱글 사인온 사용"
+
+msgid "Shows \"SAML 2.0 Enterprise SSO\" login option on login page"
+msgstr "로그인 화면에 \"SAML 2.0 기업 SSO\" 로그인 항목을 표시합니다"
+
+msgid "IdP Entity ID / Issuer"
+msgstr "IdP 엔터티 ID / 발급자"
+
+msgid "IdP Single Sign-On Service URL (HTTP-Redirect / POST)"
+msgstr "IdP 싱글 사인온 서비스 URL (HTTP-Redirect / POST)"
+
+msgid "IdP Public X.509 Certificate (PEM)"
+msgstr "IdP 공개 X.509 인증서 (PEM)"
+
+msgid "Just-in-Time (JIT) Provisioning"
+msgstr "JIT(첫 로그인 시) 계정 생성"
+
+msgid "Auto-create account on first login"
+msgstr "첫 로그인 때 계정 자동 생성"
+
+msgid "Default Role for JIT Users"
+msgstr "JIT 사용자의 기본 권한"
+
+msgid "Save SAML Configuration"
+msgstr "SAML 설정 저장"
+
+msgid "NamiFAX SP Endpoints"
+msgstr "NamiFAX SP 접속 주소"
+
+msgid "Copy these endpoints into your Identity Provider (Azure AD, Okta, Google) console:"
+msgstr "아래 주소를 인증 제공자(Azure AD, Okta, Google) 콘솔에 복사해 넣으십시오:"
+
+msgid "Assertion Consumer Service (ACS) URL"
+msgstr "ACS(Assertion Consumer Service) URL"
+
+msgid "SP Entity ID / Metadata URL"
+msgstr "SP 엔터티 ID / 메타데이터 URL"
+
+msgid "NameID Format"
+msgstr "NameID 형식"
+
+msgid "External SMTP Gateway"
+msgstr "외부 SMTP 게이트웨이"
+
+msgid "Configure external mail delivery server for inbound fax notifications and user alerts"
+msgstr "수신 팩스 알림 및 사용자 경보를 위한 외부 메일 발송 서버를 설정합니다."
+
+msgid "Diagnostics Result"
+msgstr "진단 결과"
+
+msgid "Server Connection & Security"
+msgstr "서버 연결 및 보안"
+
+msgid "SMTP Host / Server"
+msgstr "SMTP 호스트 / 서버"
+
+msgid "Encryption Protocol"
+msgstr "암호화 프로토콜"
+
+msgid "None (Plain)"
+msgstr "없음 (일반)"
+
+msgid "STARTTLS (587)"
+msgstr "STARTTLS (587)"
+
+msgid "SSL / TLS (465)"
+msgstr "SSL / TLS (465)"
+
+msgid "Requires SMTP Authentication"
+msgstr "SMTP 인증 필요"
+
+msgid "Username / Login"
+msgstr "사용자 이름 / 로그인"
+
+msgid "Password / App Key"
+msgstr "비밀번호 / 앱 키"
+
+msgid "Default Sender Profile & Signatures"
+msgstr "기본 발신자 프로필 및 서명"
+
+msgid "From Email Address"
+msgstr "발신자 이메일 주소"
+
+msgid "From Display Name"
+msgstr "발신자 표시 이름"
+
+msgid "Email Signature (Plaintext)"
+msgstr "이메일 서명 (일반 텍스트)"
+
+msgid "Last updated"
+msgstr "최근 업데이트"
+
+msgid "Save Gateway Settings"
+msgstr "게이트웨이 설정 저장"
+
+msgid "Diagnostic Self-Test"
+msgstr "자가 진단 테스트"
+
+msgid "Verify server reachability, TLS handshake, credentials and message dispatch in real time."
+msgstr "서버 연결성, TLS 핸드셰이크, 인증 자격증명 및 메시지 발송을 실시간으로 검증합니다."
+
+msgid "Target Recipient Email"
+msgstr "테스트 수신자 이메일"
+
+msgid "Send Diagnostic Email"
+msgstr "진단 이메일 전송"
+
+msgid "Enterprise storage lifecycle policies and S3 / MinIO / GCS cloud backends"
+msgstr "기업용 보관 수명주기 정책과 S3 / MinIO / GCS 클라우드 저장소"
+
+msgid "Storage Lifecycle Policies"
+msgstr "보관 수명주기 정책"
+
+msgid "Purge Local TIFFs After (Days)"
+msgstr "로컬 TIFF 삭제 시점 (일)"
+
+msgid "Frees local disk space if a PDF version exists. 0 = immediate after conversion."
+msgstr "PDF 버전이 있으면 로컬 디스크 공간을 비웁니다. 0 = 변환 직후."
+
+msgid "Full Fax Retention (Days)"
+msgstr "팩스 전체 보관 기간 (일)"
+
+msgid "Purge entire fax record and archival files after specified days. 0 = keep forever."
+msgstr "지정한 일수가 지나면 팩스 기록과 보관 파일을 모두 삭제합니다. 0 = 영구 보관."
+
+msgid "Synchronize remote cloud object deletion on fax purge"
+msgstr "팩스를 삭제할 때 클라우드의 객체도 함께 삭제"
+
+msgid "Save Lifecycle Policy"
+msgstr "수명주기 정책 저장"
+
+msgid "Cloud Storage Backend"
+msgstr "클라우드 저장소"
+
+msgid "Storage Provider"
+msgstr "저장소 종류"
+
+msgid "Local Filesystem (Default)"
+msgstr "로컬 파일 시스템 (기본)"
+
+msgid "Endpoint URL (MinIO / S3 Compatible)"
+msgstr "엔드포인트 URL (MinIO / S3 호환)"
+
+msgid "Region"
+msgstr "리전"
+
+msgid "Bucket Name"
+msgstr "버킷 이름"
+
+msgid "Access Key ID"
+msgstr "액세스 키 ID"
+
+msgid "Secret Access Key"
+msgstr "시크릿 액세스 키"
+
+msgid "Key Prefix"
+msgstr "키 접두어"
+
+msgid "Save Storage Config"
+msgstr "저장소 설정 저장"
+
+msgid "Test Connection"
+msgstr "연결 테스트"
+
+msgid "Perform maintenance operations, service control, and backups."
+msgstr "유지보수 작업, 서비스 제어 및 백업을 수행합니다."
+
+msgid "HylaFAX Engine Active"
+msgstr "HylaFAX 엔진 가동 중"
+
+msgid "Admin Dashboard"
+msgstr "관리자 대시보드"
+
+msgid "Caution: Appliance Maintenance Operations"
+msgstr "주의: 어플라이언스 유지보수 작업"
+
+msgid ""
+"Restarting or shutting down services will interrupt active fax modem spooling and disconnect client sessions. Ensure "
+"all outbound transmissions in the modem queue are completed before initiating maintenance tasks."
+msgstr "서비스를 재시작하거나 종료하면 진행 중인 팩스 모뎀 스풀링이 중단되고 클라이언트 세션 연결이 끊어집니다. 유지보수 작업을 시작하기 전에 모뎀 대기열의 모든 발신 전송이 완료되었는지 확인하십시오."
+
+msgid "Daemon Service Control"
+msgstr "데몬 서비스 제어"
+
+msgid "Restart HylaFAX and NamiFAX web services, or halt background workers."
+msgstr "HylaFAX 및 NamiFAX 웹 서비스를 재시작하거나 백그라운드 워커를 중지합니다."
+
+msgid "Reboot Services"
+msgstr "서비스 재시작"
+
+msgid "Shutdown Services"
+msgstr "서비스 종료"
+
+msgid "Database & Archive Backup"
+msgstr "데이터베이스 및 보관함 백업"
+
+msgid "Download system archives and database snapshots for offsite retention."
+msgstr "외부 보관을 위해 시스템 보관함 및 데이터베이스 스냅샷을 다운로드합니다."
+
+msgid "Download Archive"
+msgstr "보관함 다운로드"
+
+msgid "Download Database"
+msgstr "데이터베이스 다운로드"
+
+msgid "System Logs"
+msgstr "시스템 로그"
+
+msgid "Audit logs and HylaFAX server operational event traces"
+msgstr "감사 로그 및 HylaFAX 서버 운영 이벤트 추적 내역"
+
+msgid "Keywords:"
+msgstr "키워드:"
+
+msgid "Date:"
+msgstr "날짜:"
+
+msgid "Date"
+msgstr "날짜"
+
+msgid "Log Text"
+msgstr "로그 내용"
+
+msgid "No system logs found matching criteria."
+msgstr "조건과 일치하는 시스템 로그가 없습니다."
+
+msgid "Transmissions and server events will be streamed here in real time."
+msgstr "전송 내역 및 서버 이벤트가 여기에 실시간으로 스트리밍됩니다."
+
+msgid "Manage system operator credentials, access permissions, and route mapping"
+msgstr "시스템 운영자 자격 증명, 접근 권한 및 라우트 매핑을 관리합니다."
+
+msgid "Create New User"
+msgstr "새 사용자 생성"
+
+msgid "Superuser"
+msgstr "최고 관리자"
+
+msgid "Admin"
+msgstr "관리자"
+
+msgid "YES"
+msgstr "예"
+
+msgid "NO"
+msgstr "아니오"
+
+msgid "Configure User:"
+msgstr "사용자 설정:"
+
+msgid "Full Name"
+msgstr "전체 이름"
+
+msgid "Password"
+msgstr "비밀번호"
+
+msgid "Email Address"
+msgstr "이메일 주소"
+
+msgid "Permissions & Capabilities"
+msgstr "권한 및 기능"
+
+msgid "Administrator Console"
+msgstr "관리자 콘솔"
+
+msgid "Superuser Rights"
+msgstr "최고 관리자 권한"
+
+msgid "Can Delete Faxes"
+msgstr "팩스 삭제 권한"
+
+msgid "Send on Any Modem"
+msgstr "모든 모뎀 발신 권한"
+
+msgid "Categories"
+msgstr "카테고리"
+
+msgid "Archive Search"
+msgstr "보관함 검색"
+
+msgid "Search all sent and received fax records by date, company, or fax number."
+msgstr "날짜, 회사 또는 팩스 번호별로 수발신 팩스 기록을 검색합니다."
+
+msgid "results"
+msgstr "건의 결과"
+
+msgid "result"
+msgstr "건의 결과"
+
+msgid "Search Filters"
+msgstr "검색 필터"
+
+msgid "Leave filters empty to search all records. Narrow results by adding more criteria."
+msgstr "필터를 비워두면 전체 기록을 검색합니다. 조건을 추가하여 검색 결과를 좁힐 수 있습니다."
+
+msgid "Keyword"
+msgstr "키워드"
+
+msgid "All Categories"
+msgstr "모든 카테고리"
+
+msgid "Invoices / Orders"
+msgstr "청구서 / 발주서"
+
+msgid "Legal / Contracts"
+msgstr "법무 / 계약서"
+
+msgid "From Date"
+msgstr "시작 날짜"
+
+msgid "To Date"
+msgstr "종료 날짜"
+
+msgid "Direction"
+msgstr "구분"
+
+msgid "Sent & Received"
+msgstr "수신 및 발신 전체"
+
+msgid "Received only"
+msgstr "수신 팩스만"
+
+msgid "Sent only"
+msgstr "발신 팩스만"
+
+msgid "Fax ID"
+msgstr "팩스 ID"
+
+msgid "Results"
+msgstr "검색 결과"
+
+msgid "records"
+msgstr "건의 기록"
+
+msgid "record"
+msgstr "건의 기록"
+
+msgid "Sender"
+msgstr "발신자"
+
 msgid "Pages"
 msgstr "페이지 수"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:147
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:122
 msgid "View"
 msgstr "보기"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:155
 msgid "Re-send"
 msgstr "재전송"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:173
 msgid "No results found"
 msgstr "검색 결과가 없습니다"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:174
 msgid "Try adjusting your search terms or date range."
 msgstr "검색어나 날짜 범위를 조정해 보세요."
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:175
 msgid "Reset filters"
 msgstr "필터 초기화"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:187
 msgid "Search the Archive"
 msgstr "보관함 검색"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:189
 msgid "Enter a keyword or filter above and click Search to find fax records."
 msgstr "키워드나 필터를 입력하고 검색 버튼을 누르면 팩스 기록을 찾을 수 있습니다."
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:17
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:26
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:26
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:25
 msgid "Distribution Lists"
 msgstr "배포 그룹"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:18
 msgid "Organize recipient groups for mass fax broadcasting and notifications."
 msgstr "대량 팩스 동보 발송 및 알림을 위한 수신자 그룹을 구성합니다."
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:29
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:119
 msgid "Create List"
 msgstr "그룹 생성"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:40
 msgid "Saved Distribution Lists"
 msgstr "저장된 배포 그룹"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:52
 msgid "members"
 msgstr "명의 구성원"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:66
 msgid "Group Members & Settings"
 msgstr "그룹 구성원 및 설정"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:66
 msgid "Create New Distribution List"
 msgstr "새 배포 그룹 생성"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:76
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:45
 msgid "List Name"
 msgstr "그룹명"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:83
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "그룹 구성원 (연락처 및 팩스 번호)"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:84
 msgid "contacts assigned"
 msgstr "개의 연락처 지정됨"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:95
 msgid "Remove"
 msgstr "삭제"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:99
 msgid "No contacts assigned to this list yet."
 msgstr "아직 이 그룹에 지정된 연락처가 없습니다."
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:107
 msgid "Add Member"
 msgstr "구성원 추가"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:116
 msgid "Delete List"
 msgstr "그룹 삭제"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:117
 msgid "Save Changes"
 msgstr "변경사항 저장"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:18
 msgid "Edit Distribution List"
 msgstr "배포 그룹 편집"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:18
 msgid "Create Distribution List"
 msgstr "배포 그룹 생성"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:20
 msgid "Configure broadcast list parameters and recipient group members."
 msgstr "동보 발송 그룹 파라미터 및 수신자 그룹 구성원을 설정합니다."
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:26
 msgid "Back to Lists"
 msgstr "그룹 목록으로 돌아가기"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:41
 msgid "Distribution List Profile"
 msgstr "배포 그룹 프로필"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:52
 msgid "Enrolled Members"
 msgstr "등록된 구성원"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:53
 msgid "List ID:"
 msgstr "그룹 ID:"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:62
 msgid "No contacts in this list."
 msgstr "이 그룹에 연락처가 없습니다."
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:17
 msgid "Email Address Book"
 msgstr "이메일 주소록"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:18
 msgid "Manage email recipients, transmission routing, and contacts directory."
 msgstr "이메일 수신자, 전송 라우팅 및 연락처 디렉터리를 관리합니다."
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:27
 msgid "Email Book"
 msgstr "이메일 주소록"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:30
 msgid "New Contact"
 msgstr "새 연락처"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:40
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:49
 msgid "Contacts"
 msgstr "연락처"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:43
 msgid "recipients"
 msgstr "명의 수신자"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:51
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:44
 msgid "Contact Name"
 msgstr "담당자명"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:52
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:39
 msgid "Company Affiliation"
 msgstr "소속 회사"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:72
-msgid ""
-"No email contacts found in the directory. Click \"+ New Contact\" to "
-"register one."
+msgid "No email contacts found in the directory. Click \"+ New Contact\" to register one."
 msgstr "디렉터리에 이메일 연락처가 없습니다. \"+ 새 연락처\"를 클릭하여 등록하세요."
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:17
 msgid "Email Book - Edit Email Contact"
 msgstr "이메일 주소록 - 이메일 연락처 편집"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:18
 msgid "Manage contact information and company affiliation in Email Book."
 msgstr "이메일 주소록에서 연락처 정보 및 소속 회사를 관리합니다."
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:24
 msgid "Back to Email Book"
 msgstr "이메일 주소록으로 돌아가기"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:35
 msgid "Contact Profile Details"
 msgstr "연락처 프로필 세부정보"
 
-#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:26
 msgid "Lost Password"
 msgstr "비밀번호 찾기"
 
-#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:27
 msgid "Account Recovery Assistance"
 msgstr "계정 복구 지원"
 
-#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:30
-#: /home/jiho/numfax/src/namifax/templates/login_totp.jinja2:48
 msgid "Back to Login"
 msgstr "로그인으로 돌아가기"
 
-#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:48
-msgid ""
-"Please enter your registered username or email address below. Password "
-"reset instructions will be dispatched to your account email address."
-msgstr "등록된 사용자 이름 또는 이메일 주소를 입력하세요. 비밀번호 재설정 안내가 등록된 이메일로 발송됩니다."
+msgid "Your password will be sent to the given e-mail address."
+msgstr "입력하신 이메일 주소로 비밀번호를 보내 드립니다."
 
-#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:55
-msgid "Username or Email Address"
-msgstr "사용자 이름 또는 이메일 주소"
+msgid "Once you have received your new password you can login in and change it."
+msgstr "새 비밀번호를 받으면 로그인한 뒤 원하는 비밀번호로 바꿀 수 있습니다."
 
-#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:65
-msgid "Reset Password"
-msgstr "비밀번호 재설정"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:14
-msgid "Received faxes appear here automatically in real time."
-msgstr "수신된 팩스가 여기에 실시간으로 자동 표시됩니다."
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:20
-msgid "Faxes"
-msgstr "팩스"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:20
-msgid "Fax"
-msgstr "팩스"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:39
-msgid "Select All"
-msgstr "전체 선택"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:47
-msgid "Archive Selected"
-msgstr "선택 항목 보관"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:54
-msgid "Delete Selected"
-msgstr "선택 항목 삭제"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:57
-msgid "Showing"
-msgstr "표시 중:"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:57
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:186
-msgid "of"
-msgstr "/"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:67
-msgid "Select"
-msgstr "선택"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:68
-msgid "Preview"
-msgstr "미리보기"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:70
-msgid "Received"
-msgstr "수신일시"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:136
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:70
-msgid "Reply"
-msgstr "회신"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:150
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:48
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:37
-msgid "Archive"
-msgstr "보관함"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:154
-msgid "Email Fax"
-msgstr "이메일로 팩스 전송"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:158
-#: /home/jiho/numfax/src/namifax/templates/modal_note.jinja2:23
-msgid "Add Note"
-msgstr "메모 추가"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:162
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:49
-msgid "Rotate"
-msgstr "회전"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:166
-msgid "Download TIFF"
-msgstr "TIFF 다운로드"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:186
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:150
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:151
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:152
-msgid "faxes"
-msgstr "개의 팩스"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:204
-msgid "0 FAXES"
-msgstr "0건의 팩스"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:206
-msgid ""
-"There are no incoming faxes waiting in your inbox. Incoming transmissions"
-" will automatically appear here in real time."
-msgstr "받은 팩스함에 대기 중인 수신 팩스가 없습니다. 새로 수신되는 팩스는 실시간으로 자동 표시됩니다."
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:214
-msgid "Send Your First Fax"
-msgstr "첫 번째 팩스 보내기"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:218
-msgid "Search Archive"
-msgstr "보관함 검색"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:225
-msgid "Getting Started with NamiFAX"
-msgstr "NamiFAX 시작하기"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:230
-msgid "Receive Faxes"
-msgstr "팩스 수신"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:231
-msgid ""
-"When someone sends a fax to this system's number, it will appear here "
-"automatically."
-msgstr "팩스 번호로 팩스가 전송되면 여기에 자동으로 표시됩니다."
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:237
-msgid "Send Faxes"
-msgstr "팩스 발신"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:238
-msgid "Click Send Fax to transmit a PDF or image document to any fax number."
-msgstr "팩스 보내기를 클릭하여 PDF나 이미지 문서를 원하는 팩스 번호로 전송하세요."
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:244
-msgid "Manage Records"
-msgstr "기록 관리"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:245
-msgid ""
-"Download faxes as PDF, archive them for later, or search all records in "
-"the Archive."
-msgstr "팩스를 PDF로 다운로드하거나 나중에 볼 수 있도록 보관하고, 보관함에서 모든 기록을 검색할 수 있습니다."
-
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:47
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:11
-msgid "Outbox"
-msgstr "보낸 팩스함"
-
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:109
-msgid "Settings"
-msgstr "환경설정"
-
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:43
-msgid "Sign in"
-msgstr "로그인"
-
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:44
-msgid "Enter your credentials to continue."
-msgstr "계속하려면 자격 증명을 입력하세요."
-
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:48
-msgid "System Online"
-msgstr "시스템 온라인"
-
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:85
-msgid "Forgot password?"
-msgstr "비밀번호를 잊으셨습니까?"
-
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:94
-msgid "Contact your system administrator if you need an account."
-msgstr "계정이 필요하시면 시스템 관리자에게 문의하세요."
-
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:105
 msgid "Login"
 msgstr "로그인"
 
-#: /home/jiho/numfax/src/namifax/templates/login_totp.jinja2:18
+msgid ""
+"Please enter your e-mail address then click on the Send Password button. You will receive a new password shortly. Use"
+" this new password to access the site."
+msgstr "이메일 주소를 입력하고 비밀번호 보내기를 누르십시오. 새 비밀번호를 곧 받게 되며, 그 비밀번호로 접속하십시오."
+
+msgid "E-mail address"
+msgstr "이메일 주소"
+
+msgid "Send Password"
+msgstr "비밀번호 보내기"
+
+msgid "Received faxes appear here automatically in real time."
+msgstr "수신된 팩스가 여기에 실시간으로 자동 표시됩니다."
+
+msgid "Faxes"
+msgstr "팩스"
+
+msgid "Fax"
+msgstr "팩스"
+
+msgid "Select All"
+msgstr "전체 선택"
+
+msgid "Archive Selected"
+msgstr "선택 항목 보관"
+
+msgid "Delete Selected"
+msgstr "선택 항목 삭제"
+
+msgid "Showing"
+msgstr "표시 중:"
+
+msgid "of"
+msgstr "/"
+
+msgid "Select"
+msgstr "선택"
+
+msgid "Preview"
+msgstr "미리보기"
+
+msgid "Received"
+msgstr "수신일시"
+
+msgid "Reply"
+msgstr "회신"
+
+msgid "Archive"
+msgstr "보관함"
+
+msgid "Email Fax"
+msgstr "이메일로 팩스 전송"
+
+msgid "Add Note"
+msgstr "메모 추가"
+
+msgid "Rotate"
+msgstr "회전"
+
+msgid "Download TIFF"
+msgstr "TIFF 다운로드"
+
+msgid "faxes"
+msgstr "개의 팩스"
+
+msgid "0 FAXES"
+msgstr "0건의 팩스"
+
+msgid "There are no incoming faxes waiting in your inbox. Incoming transmissions will automatically appear here in real time."
+msgstr "받은 팩스함에 대기 중인 수신 팩스가 없습니다. 새로 수신되는 팩스는 실시간으로 자동 표시됩니다."
+
+msgid "Send Your First Fax"
+msgstr "첫 번째 팩스 보내기"
+
+msgid "Search Archive"
+msgstr "보관함 검색"
+
+msgid "Getting Started with NamiFAX"
+msgstr "NamiFAX 시작하기"
+
+msgid "Receive Faxes"
+msgstr "팩스 수신"
+
+msgid "When someone sends a fax to this system's number, it will appear here automatically."
+msgstr "팩스 번호로 팩스가 전송되면 여기에 자동으로 표시됩니다."
+
+msgid "Send Faxes"
+msgstr "팩스 발신"
+
+msgid "Click Send Fax to transmit a PDF or image document to any fax number."
+msgstr "팩스 보내기를 클릭하여 PDF나 이미지 문서를 원하는 팩스 번호로 전송하세요."
+
+msgid "Manage Records"
+msgstr "기록 관리"
+
+msgid "Download faxes as PDF, archive them for later, or search all records in the Archive."
+msgstr "팩스를 PDF로 다운로드하거나 나중에 볼 수 있도록 보관하고, 보관함에서 모든 기록을 검색할 수 있습니다."
+
+msgid "Outbox"
+msgstr "보낸 팩스함"
+
+msgid "Settings"
+msgstr "환경설정"
+
+msgid "Sign in"
+msgstr "로그인"
+
+msgid "Enter your credentials to continue."
+msgstr "계속하려면 자격 증명을 입력하세요."
+
+msgid "System Online"
+msgstr "시스템 온라인"
+
+msgid "Forgot password?"
+msgstr "비밀번호를 잊으셨습니까?"
+
+msgid "Contact your system administrator if you need an account."
+msgstr "계정이 필요하시면 시스템 관리자에게 문의하세요."
+
+msgid "Or continue with"
+msgstr "또는 다음으로 계속"
+
+msgid "Sign in with Passkey (Touch ID / Security Key)"
+msgstr "패스키로 로그인 (Touch ID / 보안 키)"
+
+msgid "SAML 2.0 Enterprise SSO (Okta / Entra ID)"
+msgstr "SAML 2.0 기업 SSO (Okta / Entra ID)"
+
 msgid "Two-Factor Authentication"
 msgstr "2단계 인증 (2FA)"
 
-#: /home/jiho/numfax/src/namifax/templates/login_totp.jinja2:19
-msgid ""
-"Enter the 6-digit code from your authenticator app or an emergency "
-"recovery code."
+msgid "Enter the 6-digit code from your authenticator app or an emergency recovery code."
 msgstr "인증 앱의 6자리 인증 코드 또는 비상 복구 코드를 입력하십시오."
 
-#: /home/jiho/numfax/src/namifax/templates/login_totp.jinja2:33
 msgid "Authentication Code"
 msgstr "인증 코드"
 
-#: /home/jiho/numfax/src/namifax/templates/login_totp.jinja2:44
 msgid "Verify & Log In"
 msgstr "확인 및 로그인"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:23
 msgid "Assign Company Name"
 msgstr "회사명 지정"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:24
 msgid "Associate document with registered enterprise contact"
 msgstr "문서를 등록된 기업 연락처와 연결합니다."
 
-#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:37
 msgid "Search Company Name"
 msgstr "회사명 검색"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:42
 msgid "Select Contact Record"
 msgstr "연락처 선택"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_delete.jinja2:22
 msgid "Delete Fax"
 msgstr "팩스 삭제"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_delete.jinja2:23
 msgid "Are you sure you want to delete this fax?"
 msgstr "이 팩스를 삭제하시겠습니까?"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_delete.jinja2:24
 msgid "This operation will permanently purge the fax document archive."
 msgstr "이 작업은 팩스 문서 보관 파일을 영구적으로 삭제합니다."
 
-#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:23
 msgid "Send Fax via Email"
 msgstr "이메일로 팩스 전송"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:24
 msgid "Dispatch PDF document attachment to email recipients"
 msgstr "PDF 문서 첨부 파일을 이메일 수신자에게 발송합니다."
 
-#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:37
 msgid "Recipients"
 msgstr "수신자"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:42
 msgid "Subject"
 msgstr "제목"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:47
 msgid "Message"
 msgstr "내용"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:60
-#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:60
 msgid "Send"
 msgstr "전송"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_note.jinja2:24
 msgid "Append internal administrative note or comments"
 msgstr "내부 관리 메모 또는 코멘트를 추가합니다."
 
-#: /home/jiho/numfax/src/namifax/templates/modal_note.jinja2:37
 msgid "Note / Description"
 msgstr "메모 / 설명"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:23
 msgid "Reply to Fax"
 msgstr "팩스에 회신"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:24
 msgid "Dispatch quick reply transmission to originating sender"
 msgstr "발신자에게 빠른 회신 팩스를 발송합니다."
 
-#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:37
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:54
 msgid "Destination Number"
 msgstr "수신 팩스 번호"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:42
 msgid "Regarding (Subject)"
 msgstr "용건 (제목)"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:47
 msgid "Comments"
 msgstr "전달 내용"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:23
 msgid "Transmission Report"
 msgstr "전송 보고서"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:24
 msgid "Official facsimile delivery confirmation receipt"
 msgstr "공식 팩스 전송 확인증"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:31
 msgid "Print"
 msgstr "인쇄"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:39
 msgid "Company:"
 msgstr "회사:"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:47
 msgid "Pages:"
 msgstr "페이지 수:"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:51
 msgid "Status:"
 msgstr "상태:"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:53
 msgid "Transmitted Successfully (OK)"
 msgstr "정상 전송 완료 (OK)"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:60
 msgid "Close"
 msgstr "닫기"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:12
 msgid "Faxes currently queued or being transmitted."
 msgstr "현재 대기 중이거나 전송 중인 팩스입니다."
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:37
 msgid ""
-"This page shows only faxes that are queued or in progress. Once "
-"delivered, they are removed from this list. Find completed records in the"
+"This page shows only faxes that are queued or in progress. Once delivered, they are removed from this list. Find "
+"completed records in the"
 msgstr "이 페이지에는 대기 중이거나 진행 중인 팩스만 표시됩니다. 전송이 완료되면 목록에서 제거되며 보관함에서 확인할 수 있습니다:"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:45
 msgid "jobs in progress"
 msgstr "건의 작업 진행 중"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:45
 msgid "job in progress"
 msgstr "건의 작업 진행 중"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:52
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:126
 msgid "Job ID"
 msgstr "작업 ID"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:53
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:127
 msgid "Destination"
 msgstr "수신처"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:74
 msgid "Queued"
 msgstr "대기 등록 일시"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:99
 msgid "No jobs in queue"
 msgstr "대기 중인 작업 없음"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:101
-msgid ""
-"There are no faxes waiting to be sent. Send a fax to see its progress "
-"here."
+msgid "There are no faxes waiting to be sent. Send a fax to see its progress here."
 msgstr "전송 대기 중인 팩스가 없습니다. 팩스를 보내면 진행 상황이 여기에 표시됩니다."
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:108
 msgid "Send a Fax"
 msgstr "팩스 보내기"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:119
 msgid "Failed Transmissions"
 msgstr "전송 실패 내역"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:120
 msgid "Review the number or retry below."
 msgstr "번호를 확인하거나 아래에서 재시도하세요."
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:128
 msgid "Reason"
 msgstr "사유"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:141
 msgid "Retry"
 msgstr "재시도"
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:26
 msgid "Password Expired"
 msgstr "비밀번호 만료"
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:27
 msgid "Security Credentials Renewal"
 msgstr "보안 자격 증명 갱신"
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:30
 msgid "Action Required"
 msgstr "필수 조치 사항"
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:41
 msgid ""
-"Your password has expired or needs to be changed before proceeding. "
-"Please enter your old password and choose a new password."
+"Your password has expired or needs to be changed before proceeding. Please enter your old password and choose a new "
+"password."
 msgstr "비밀번호가 만료되었거나 계속 진행하기 전에 변경해야 합니다. 기존 비밀번호를 입력하고 새 비밀번호를 설정하세요."
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:47
 msgid "Old Password"
 msgstr "기존 비밀번호"
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:52
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:172
 msgid "New Password"
 msgstr "새 비밀번호"
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:57
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:176
 msgid "Confirm New Password"
 msgstr "새 비밀번호 확인"
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:66
 msgid "Update Password"
 msgstr "비밀번호 변경"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:12
 msgid "Fill in the details below and click Send."
 msgstr "아래 세부 정보를 입력하고 전송 버튼을 누르세요."
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:46
 msgid "Destination & Recipients"
 msgstr "수신처 및 수신자 정보"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:47
 msgid "Enter the fax number and recipient details."
 msgstr "팩스 번호 및 수신자 정보를 입력하세요."
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:63
 msgid "To send to multiple recipients at once, separate numbers with a comma."
 msgstr "여러 수신자에게 동시에 보내려면 번호를 쉼표로 구분하세요."
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:64
 msgid "Saved contacts are available in the"
 msgstr "저장된 연락처는 다음에서 선택할 수 있습니다:"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:71
 msgid "Attention To"
 msgstr "수신자명"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:71
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:81
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:93
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:181
 msgid "optional"
 msgstr "선택 사항"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:93
+msgid "Voice Number"
+msgstr "전화번호"
+
+msgid "Address"
+msgstr "주소"
+
+msgid "Zip"
+msgstr "우편번호"
+
 msgid "Subject / Regarding"
 msgstr "제목 / 용건"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:109
 msgid "Document Attachment"
 msgstr "문서 첨부"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:110
 msgid "Attach the file you want to transmit."
 msgstr "전송할 파일을 첨부하세요."
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:122
 msgid "Click to select a file"
 msgstr "클릭하여 파일 선택"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:123
 msgid "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
 msgstr "지원 형식: PDF, TIFF, PostScript, TXT · 최대 10 MB"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:127
-msgid ""
-"PDF is the most commonly used format. Convert Word or Excel files to PDF "
-"before attaching."
+msgid "PDF is the most commonly used format. Convert Word or Excel files to PDF before attaching."
 msgstr "PDF가 가장 권장되는 형식입니다. Word나 Excel 파일은 PDF로 변환 후 첨부하세요."
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:138
 msgid "Cover Page"
 msgstr "표지(Cover Page)"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:139
 msgid "Add a cover sheet with sender and recipient info."
 msgstr "발신자 및 수신자 정보가 포함된 표지를 추가합니다."
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:146
 msgid "Include Cover Page"
 msgstr "표지 포함"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:152
 msgid "Cover Template"
 msgstr "표지 템플릿"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:156
-msgid "Standard (Default)"
-msgstr "표준 (기본값)"
+msgid "No cover pages are set up"
+msgstr "설정된 표지가 없습니다"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:157
-msgid "Urgent"
-msgstr "긴급"
-
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:158
-msgid "Confidential"
-msgstr "기밀"
-
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:164
 msgid "Send via Line"
 msgstr "발신 회선 선택"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:165
 msgid "Auto-select recommended"
 msgstr "자동 선택 권장"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:170
 msgid "Any Available Line (Auto)"
 msgstr "사용 가능한 모든 회선 (자동)"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:181
 msgid "Cover Comments"
 msgstr "표지 전달 내용"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:196
 msgid "Advanced Options"
 msgstr "고급 옵션"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:197
 msgid "Priority, retries, notifications"
 msgstr "우선순위, 재시도 횟수, 알림 설정"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:206
 msgid "Priority"
 msgstr "우선순위"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:210
-msgid "Normal"
-msgstr "보통"
-
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:211
-msgid "Low"
-msgstr "낮음"
-
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:212
-msgid "High (Urgent)"
-msgstr "높음 (긴급)"
-
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:217
 msgid "Max Retries"
 msgstr "최대 재시도 횟수"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:222
 msgid "Retries automatically on busy signal."
 msgstr "통화 중일 경우 자동으로 재시도합니다."
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:230
+msgid "Expire after"
+msgstr "만료 시간"
+
+msgid "Minutes"
+msgstr "분"
+
+msgid "Hours"
+msgstr "시간"
+
+msgid "Days"
+msgstr "일"
+
+msgid "Schedule Send Time"
+msgstr "전송 시각 예약"
+
+msgid "TSI ID"
+msgstr "TSI ID"
+
 msgid "Notify on retry"
 msgstr "재시도 시 알림"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:241
+msgid "The original fax is sent along."
+msgstr "원본 팩스를 함께 보냅니다."
+
+msgid "Download PDF"
+msgstr "PDF 내려받기"
+
 msgid "Cancel & return to Inbox"
 msgstr "취소하고 받은 팩스함으로 이동"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:17
 msgid "User Settings"
 msgstr "사용자 환경설정"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:18
-msgid ""
-"Configure your personal profile, fax station identity, and portal "
-"preferences."
+msgid "Configure your personal profile, fax station identity, and portal preferences."
 msgstr "개인 프로필, 팩스 국선 식별 정보 및 포털 환경설정을 구성합니다."
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:24
 msgid "Return to Inbox"
 msgstr "받은 팩스함으로 돌아가기"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:54
 msgid "Personal & Organization Details"
 msgstr "개인 및 조직 세부 정보"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:74
 msgid "Office / Location"
 msgstr "사무실 / 위치"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:79
 msgid "Direct Voice Number"
 msgstr "직통 전화번호"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:84
 msgid "Direct Fax Number"
 msgstr "직통 팩스 번호"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:89
 msgid "Transmitting Station ID (TSI)"
 msgstr "발신 팩스 식별자 (TSI)"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:91
 msgid "Header identifier imprinted on top of transmitted fax pages."
 msgstr "전송되는 팩스 페이지 상단에 인쇄되는 헤더 식별자입니다."
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:96
 msgid "Email & Fax Notification Signature"
 msgstr "이메일 및 팩스 알림 서명"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:105
 msgid "Portal & Delivery Preferences"
 msgstr "포털 및 수신 기본 설정"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:110
 msgid "Display Language"
 msgstr "표시 언어"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:140
 msgid "Default Cover Page"
 msgstr "기본 표지 템플릿"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:148
 msgid "Faxes Per Page"
 msgstr "페이지당 팩스 수"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:162
 msgid "Change Password"
 msgstr "비밀번호 변경"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:166
 msgid "Current Password"
 msgstr "현재 비밀번호"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:189
 msgid "Update Settings"
 msgstr "설정 업데이트"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:17
+msgid "Two-Factor Authentication (TOTP)"
+msgstr "2단계 인증 (TOTP)"
+
+msgid "Protect your account with Google Authenticator, Authy, or compatible RFC 6238 apps."
+msgstr "Google Authenticator, Authy 등 RFC 6238 호환 앱으로 계정을 보호하십시오."
+
+msgid "Active / Enabled"
+msgstr "사용 중"
+
+msgid "Disabled"
+msgstr "사용 안 함"
+
+msgid "When enabled, signing in requires your password and a 6-digit one-time token from your mobile device."
+msgstr "사용하면 로그인할 때 비밀번호와 휴대폰의 6자리 일회용 코드가 필요합니다."
+
+msgid "recovery codes left"
+msgstr "개의 복구 코드가 남았습니다"
+
+msgid "Code from your app (to get new recovery codes)"
+msgstr "앱의 코드 (새 복구 코드를 받으려면)"
+
+msgid "New recovery codes"
+msgstr "새 복구 코드"
+
+msgid "Turn off 2FA for your account?"
+msgstr "내 계정의 2단계 인증을 끄시겠습니까?"
+
+msgid "Code or recovery code"
+msgstr "코드 또는 복구 코드"
+
+msgid "Disable 2FA"
+msgstr "2단계 인증 끄기"
+
+msgid "Enable 2FA (Setup Authenticator)"
+msgstr "2단계 인증 켜기 (인증 앱 설정)"
+
+msgid "FIDO2 Passkeys & Biometric Security Keys"
+msgstr "FIDO2 패스키 및 생체 보안 키"
+
+msgid "Sign in securely without passwords using Touch ID, Face ID, Windows Hello, or YubiKey."
+msgstr "Touch ID, Face ID, Windows Hello, YubiKey로 비밀번호 없이 안전하게 로그인합니다."
+
+msgid "Register New Passkey"
+msgstr "새 패스키 등록"
+
+msgid "Loading registered security keys..."
+msgstr "등록된 보안 키를 불러오는 중..."
+
+msgid "No Passkeys registered yet."
+msgstr "등록된 패스키가 없습니다."
+
+msgid "No Passkeys registered yet. Click Register to add Touch ID or a security key."
+msgstr "등록된 패스키가 없습니다. 등록을 눌러 Touch ID나 보안 키를 추가하십시오."
+
+msgid "1. Scan this code with Google Authenticator, Authy or another RFC 6238 app, or type the key by hand."
+msgstr "1. Google Authenticator, Authy 등 RFC 6238 앱으로 이 코드를 스캔하거나 키를 직접 입력하십시오."
+
+msgid "Key"
+msgstr "키"
+
+msgid "2. Enter the 6-digit code the app shows"
+msgstr "2. 앱에 표시된 6자리 코드를 입력하십시오"
+
+msgid "Turn on 2FA"
+msgstr "2단계 인증 켜기"
+
+msgid "Save your recovery codes"
+msgstr "복구 코드를 저장하십시오"
+
+msgid "Each code works once if you lose your phone. They are shown only now; store them somewhere safe."
+msgstr "휴대폰을 잃어버렸을 때 각 코드는 한 번씩 쓸 수 있습니다. 지금만 표시되니 안전한 곳에 보관하십시오."
+
+msgid "Done"
+msgstr "완료"
+
+msgid "Back to settings"
+msgstr "환경설정으로 돌아가기"
+
 msgid "Fax Viewer"
 msgstr "팩스 뷰어"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:19
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:144
 msgid "Page 1 of"
 msgstr "페이지: 1 /"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:24
 msgid "FROM:"
 msgstr "발신:"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:26
 msgid "DATE:"
 msgstr "수신일시:"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:28
 msgid "DEVICE:"
 msgstr "장치:"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:36
 msgid "Prev"
 msgstr "이전"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:41
 msgid "Next"
 msgstr "다음"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:56
 msgid "PDF"
 msgstr "PDF"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:63
 msgid "TIFF"
 msgstr "TIFF"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:93
 msgid "Total"
 msgstr "전체"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:99
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:104
 msgid "Page"
 msgstr "페이지"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:121
 msgid "Incoming Transmission"
 msgstr "수신 팩스 전송"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:122
 msgid "FACSIMILE TRANSMISSION"
 msgstr "팩스 전송 내역"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:123
 msgid "Date Received:"
 msgstr "수신 일시:"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:124
 msgid "Originating Station:"
 msgstr "발신 국선 ID:"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:129
 msgid "PORT"
 msgstr "포트"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:143
 msgid "High-Resolution Raster Preview"
 msgstr "고해상도 래스터 미리보기"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:144
 msgid "Device Line:"
 msgstr "장치 회선:"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:151
 msgid "Download Original Document"
 msgstr "원본 문서 다운로드"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:158
 msgid "NamiFAX Enterprise Facsimile Engine"
 msgstr "NamiFAX 엔터프라이즈 팩스 엔진"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:159
 msgid "Archive ID:"
 msgstr "보관 ID:"
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:434
+#, python-format
+msgid "Invalid fax number: %(number)s"
+msgstr "잘못된 팩스 번호: %(number)s"
+
+msgid "Address book entry saved."
+msgstr "주소록 항목을 저장했습니다."
+
+msgid "Please enter a company name"
+msgstr "회사 이름을 입력하십시오"
+
+msgid "Please enter a valid fax number"
+msgstr "올바른 팩스 번호를 입력하십시오"
+
+msgid "You are not allowed to delete address book entries."
+msgstr "주소록 항목을 삭제할 권한이 없습니다."
+
+msgid "Contact saved."
+msgstr "연락처를 저장했습니다."
+
+msgid "You are not allowed to delete contacts."
+msgstr "연락처를 삭제할 권한이 없습니다."
+
 msgid "Cover page template removed successfully"
 msgstr "표지 템플릿이 성공적으로 삭제되었습니다."
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:437
 msgid "Failed to remove cover page template"
 msgstr "표지 템플릿 삭제에 실패했습니다."
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:446
 msgid "Cover page template updated successfully"
 msgstr "표지 템플릿이 성공적으로 업데이트되었습니다."
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:448
 msgid "Failed to update cover page template"
 msgstr "표지 템플릿 업데이트에 실패했습니다."
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:454
 msgid "Cover page template registered successfully"
 msgstr "표지 템플릿이 성공적으로 등록되었습니다."
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:458
 msgid "Title and File are required"
 msgstr "제목과 파일은 필수 항목입니다."
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:893
+msgid "The company does not exist."
+msgstr "해당 회사가 없습니다."
+
+msgid "The company and its fax numbers were deleted."
+msgstr "회사와 그 팩스 번호를 삭제했습니다."
+
+msgid "Please enter a valid e-mail address."
+msgstr "올바른 이메일 주소를 입력하십시오."
+
+msgid "Fax to Email settings saved"
+msgstr "팩스 이메일 전달 설정을 저장했습니다"
+
 msgid "Access denied. Superadmin permission required."
 msgstr "접근이 거부되었습니다. 최고 관리자 권한이 필요합니다."
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:923
 msgid "SMTP Gateway settings saved successfully."
 msgstr "SMTP 게이트웨이 설정이 성공적으로 저장되었습니다."
 
-#: /home/jiho/numfax/src/namifax/views/auth.py:108
+msgid "Printer name and host are required."
+msgstr "프린터 이름과 호스트를 입력해야 합니다."
+
+msgid "Network printer registered successfully."
+msgstr "네트워크 프린터를 등록했습니다."
+
+msgid "Printer deleted successfully."
+msgstr "프린터를 삭제했습니다."
+
+msgid "Lifecycle policy saved successfully."
+msgstr "수명주기 정책을 저장했습니다."
+
+msgid "Cloud storage configuration saved successfully."
+msgstr "클라우드 저장소 설정을 저장했습니다."
+
+msgid "SAML 2.0 configuration saved successfully."
+msgstr "SAML 2.0 설정을 저장했습니다."
+
+#, python-format
+msgid "Too many failed attempts. Try again in %(minutes)d minutes."
+msgstr "실패 횟수가 너무 많습니다. %(minutes)d분 뒤에 다시 시도하십시오."
+
 msgid "Invalid or expired verification code."
 msgstr "유효하지 않거나 만료된 인증 코드입니다."
 
+#, python-format
+msgid ""
+"The user account %(user)s has this email associated with it.  A web user from %(ip)s has just requested that a new "
+"password be sent.\n"
+"\n"
+"Your New Password is: %(password)s\n"
+"\n"
+"If this was an error just login with your new password and then change your password to what you would like it to be."
+msgstr ""
+"사용자 계정 %(user)s에 이 이메일 주소가 등록되어 있습니다.  %(ip)s의 웹 사용자가 방금 새 비밀번호를 보내 달라고 요청했습니다.\n"
+"\n"
+"새 비밀번호: %(password)s\n"
+"\n"
+"요청하신 적이 없다면 새 비밀번호로 로그인한 뒤 원하는 비밀번호로 바꾸십시오."
+
+msgid "Email failed to send"
+msgstr "이메일을 보내지 못했습니다"
+
+msgid "The code is not valid."
+msgstr "코드가 올바르지 않습니다."
+
+msgid "The code did not match. Check the time on your phone and try again."
+msgstr "코드가 일치하지 않습니다. 휴대폰의 시간을 확인하고 다시 시도하십시오."
+
+msgid "The password is not correct."
+msgstr "비밀번호가 올바르지 않습니다."
+
 #~ msgid "High"
 #~ msgstr "높음"
+
+#~ msgid "Configure corporate contact identity and transmission routing defaults."
+#~ msgstr "회사 연락처 정보 및 팩스 수신 라우팅 기본값을 구성합니다."
+
+#~ msgid "Primary Company Profile"
+#~ msgstr "기본 회사 프로필"
+
+#~ msgid "Recipient Contact & Physical Address"
+#~ msgstr "수신자 담당자 및 주소 정보"
+
+#~ msgid "City / Postal Region"
+#~ msgstr "도시 / 우편번호"
+
+#~ msgid "Category Tag"
+#~ msgstr "카테고리 태그"
+
+#~ msgid "General"
+#~ msgstr "일반"
+
+#~ msgid "Invoices & Billing"
+#~ msgstr "청구서 및 정산"
+
+#~ msgid "Legal"
+#~ msgstr "법무"
+
+#~ msgid "Description / Internal Notes"
+#~ msgstr "설명 / 내부 메모"
+
+#~ msgid "Edit Forwarding Rule"
+#~ msgstr "전달 규칙 편집"
+
+#~ msgid "Add Forwarding Rule"
+#~ msgstr "전달 규칙 추가"
+
+#~ msgid ""
+#~ "Please enter your registered username or email address below. "
+#~ "Password reset instructions will be dispatched to your account "
+#~ "email address."
+#~ msgstr "등록된 사용자 이름 또는 이메일 주소를 입력하세요. 비밀번호 재설정 안내가 등록된 이메일로 발송됩니다."
+
+#~ msgid "Username or Email Address"
+#~ msgstr "사용자 이름 또는 이메일 주소"
+
+#~ msgid "Reset Password"
+#~ msgstr "비밀번호 재설정"
+
+#~ msgid "Standard (Default)"
+#~ msgstr "표준 (기본값)"
+
+#~ msgid "Urgent"
+#~ msgstr "긴급"
+
+#~ msgid "Confidential"
+#~ msgstr "기밀"
+
+#~ msgid "Normal"
+#~ msgstr "보통"
+
+#~ msgid "Low"
+#~ msgstr "낮음"
+
+#~ msgid "High (Urgent)"
+#~ msgstr "높음 (긴급)"
 

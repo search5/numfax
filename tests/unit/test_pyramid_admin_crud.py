@@ -15,6 +15,7 @@ from namifax.views.admin import (
     admin_users_view,
 )
 from namifax.views.distrolist import distrolist_edit_view
+from request_identity import set_identity
 
 
 @pytest.fixture
@@ -22,7 +23,7 @@ def dummy_request(seeded_db, dbsession):
     request = testing.DummyRequest()
     request.db = seeded_db
     request.dbsession = dbsession
-    request.__dict__["identity"] = {"username": "admin", "is_admin": True, "superuser": True}
+    set_identity(request, {"username": "admin", "is_admin": True, "superuser": True})
     return request
 
 

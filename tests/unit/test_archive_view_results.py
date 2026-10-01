@@ -6,6 +6,7 @@ import pytest
 from pyramid import testing
 
 from namifax.views.archive import archive_view
+from request_identity import set_identity
 
 
 pytestmark = pytest.mark.usefixtures("as_superuser")
@@ -13,7 +14,7 @@ pytestmark = pytest.mark.usefixtures("as_superuser")
 
 def _request(dbsession, **params):
     req = testing.DummyRequest(params=params)
-    req.__dict__["identity"] = {"username": "admin", "uid": 1, "is_admin": True, "superuser": True}
+    set_identity(req, {"username": "admin", "uid": 1, "is_admin": True, "superuser": True})
     req.dbsession = dbsession
     req.db = dbsession
     return req

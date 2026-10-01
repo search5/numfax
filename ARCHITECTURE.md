@@ -923,6 +923,8 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 ### 17.5c 답장(refax)과 연락처 업로드
 
 * **답장** `GET/POST /sendfax?refax=<fid>`(원본 `refax.php`): 팩스가 없거나 권한이 없으면 일반 Send Fax 화면으로 돌려보낸다(원본과 같다). 상대 번호는 주소록 번호, 없으면 받은 번호이며, 숫자가 없거나 예약 번호(`XXXXXXX`)면 비운다. 보낼 때 원본 PDF를 첨부하고 폼에 `refax` 숨은 값을 둔다. 출력함의 실패 작업 "재시도" 링크가 작업 번호를 `refax`로 넘기던 오류(작업 번호가 우연히 팩스 번호와 같으면 엉뚱한 PDF가 붙음)는 `/ajax/faxalter?jid=…&r=1`로 바꿨고, 그 대화상자는 작업 번호를 실제로 받아 쓴다(전에는 항상 1).
+* **`/refax?fid=N`**(원본의 답장 주소)은 `sendfax?refax=N`으로 넘긴다. 문서를 불러오지 않고 작업만 만들던 모달(`modal_refax`)은 없앴다.
+* **작업 수정·재제출 `/ajax/faxalter`**(원본 `ajax/faxalter.php`): 대화상자는 원본 항목(새 수신처, 0~250 우선순위, 모뎀(사용자에게 모뎀이 있을 때), 시도 횟수, 만료 `now + N 분/시간/일`, "지금" 또는 예약 시각 H:M)을 갖고, 값은 원본 순서대로 faxalter 작업(`destination → tries → device → priority → sendtime → killtime`, "지금"은 `sendtime=now`, 재제출은 `resubmit`)이 된다. 전에는 `numtries`를 `tries`로 바꾸지 않았고 모뎀·"지금"·만료 단위·H:M·재제출이 없었으며 폼도 원본과 달랐다. 재제출 대화상자는 만료 3시간으로 시작한다. 입력은 숫자 검사를 한다. 원본과 다른 점: 작업은 **로그인한 사용자 이름으로** 바꾸고, 슈퍼유저만 `owner`로 다른 소유자를 지정할 수 있다(원본은 요청의 `owner`를 그대로 받아 누구나 남의 작업을 바꿀 수 있었다). 화면에서 보낸 요청은 출력함으로 돌아가고 AJAX 요청은 빈 응답을 받는다.
 * **vCard 업로드**(`/upload/contacts`, `/upload/faxcontacts`): 결과 문구 `Successfully uploaded N contacts`와 오류(`vCard file problem`)가 화면에 나오고, 새 연락처/새 회사 화면에서 업로드 폼으로 갈 수 있다(원본 템플릿과 같은 위치). 팩스 업로드는 회사 이름을 ORG, 없으면 FN으로 하고, 한 번 쓴 ORG는 다시 쓰지 않으며, 카드가 바뀌면 이름·ORG를 비운다. 전에는 앞 카드의 ORG가 뒤 카드(ORG 없음)의 회사로 새어 들어갔고, 이름이 없어도 "Unknown" 회사를 만들었다. 이메일 줄은 팩스 업로드에서도 이메일북에 들어가지만 개수에는 넣지 않는다. 원본과 다른 점: 값에 `:`가 있으면 원본은 첫 `:`와 둘째 `:` 사이만 읽었으나(잘림) 포트는 첫 `:` 뒤 전체를 읽고, 이름이 없는 카드의 이메일은 앞 카드의 이름을 쓰지 않으며, `EMAIL:`(종류 없는 줄)과 `TEL;FAX;…:`도 받는다.
 
 ### 17.5d 팩스 전송 명령 (`services/sendfax_command.py`)
@@ -964,6 +966,9 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 
 * **원본 실행 대조**: `tests/unit/test_archive_search_legacy_parity.py`의 기대값은 원본 PHP(`FaxPDFArchive`)를 PHP 5.6 + MDB2 + MariaDB로 실제 실행해 얻었다(`golden_master/Dockerfile.legacy`와 같은 계열의 `avantfax-legacy-test` 이미지, `legacy/create_tables.sql` 스키마). 같은 방법으로 다른 쿼리도 대조할 수 있다.
 * **골든 마스터**(`golden_master/test_web_e2e.py`, 68개): 기본 `pytest`(`tests/`만)에는 들어 있지 않으며 `uv run pytest golden_master/test_web_e2e.py`로 돌린다. 러너는 이제 **새 임시 SQLite DB(데모 데이터)** 에서 실행한다(전에는 작업 디렉터리의 `namifax.db`를 써서 개발자 DB 상태에 따라 결과가 달랐다). 폼 검사는 n번째 명세를 n번째 폼과 맞추고, 비밀번호 변경 화면(W24)은 실제 흐름(변경이 필요한 계정으로 로그인)으로 검사하며, 주소록·이메일북·Fax to Email 계약(W15/29/54/62/65/67)은 원본 방식으로 다시 만든 화면에 맞춰 갱신했다.
+
+* **번역 카탈로그**: `namifax.pot`를 다시 추출(`pybabel extract -F babel.cfg --no-location .`)해 24개 언어 `.po`를 갱신했고, 한국어는 새 문구 136개(이번 작업뿐 아니라 SAML, 프린터, 스토리지, 패스키, 2FA 화면 포함)를 번역해 **빠진 번역이 0개**이며 `tests/unit/test_ko_catalog_complete.py`가 이를 지킨다(번역 누락과 `%(x)s` 자리표시자 불일치를 잡는다). 다른 23개 언어는 새 문구가 영어로 보인다. 언어는 `?lang=ko` 또는 `_LOCALE_` 쿠키로 정한다.
+* **`DummyRequest.identity` 함정**: `request.__dict__["identity"] = …`는 무시된다(`identity`가 클래스의 property라서). 72개 테스트가 이 때문에 선언한 신원이 아니라 뷰의 기본 사용자(uid 없는 관리자)로 돌고 있었다. `tests/request_identity.py`의 `set_identity`로 모두 바꿨고, 같은 방식이 다시 쓰이면 `test_no_ignored_identity.py`가 실패한다. 바꾸고 나서 실패한 4개는 제품 문제가 아니라 대역 세션에 DB가 없어서였다.
 
 ### 17.8 제거된 로직 (Dead Code Removal Protocol)
 
@@ -1022,6 +1027,10 @@ DB 계층을 옮기는 동안 기존 코드의 실제 결함이 많이 드러났
 | 호환 | DID 라우팅(`ENABLE_DID_ROUTING`)을 켠 원본과의 일치가 확인되지 않음 | 원본을 DID 모드로 실행해 얻은 결과로 70건 패리티 테스트(모뎀·DID 각 35건) | `b5856d2` |
 | 보안·기능 | `/forgot`가 스텁: 계정 조회도 메일 발송도 없이 "발송했다"고만 표시 | 17.5e: 원본 방식(새 임시 비밀번호 메일 발송, 로그인 후 강제 변경), 비밀번호 평문 로그 없음, 발송 실패 시 되돌림 | `8f53a65` |
 | 호환 | 슈퍼유저의 받은 팩스함이 모든 팩스를 보여 줌(원본은 설정된 모뎀/라우트만) | 원본 실행 결과로 맞춤(17.5b) | `8f53a65` |
+| 기능 | 작업 수정 대화상자가 원본 폼이 아니고 `numtries`·모뎀·"지금"·만료 단위·예약 시각·재제출을 처리하지 않으며, 요청의 `owner`로 남의 작업을 바꿀 수 있음(원본 결함) | 17.5c: 원본 항목과 operations 순서, 소유자는 로그인한 사용자(슈퍼유저만 지정) | `HASH6` |
+| 기능 | `/refax` 모달이 원본 문서 없이 작업만 만듦 | 답장 화면(`sendfax?refax=`)으로 연결 | `HASH6` |
+| 문서 | 새 화면 문구 136개가 한국어로 번역되지 않음 | 카탈로그 재추출과 한국어 번역, 누락 검사 테스트 | `HASH6` |
+| 테스트 | `DummyRequest.identity`를 `__dict__`로 넣은 72개 테스트가 기본 신원으로 돌았음 | `set_identity`와 재발 방지 테스트 | `HASH6` |
 | 보안 | 비밀번호 변경 강제가 없음(SEC-05): `pwdexpired` 처리가 스텁이라 초기화된 계정·만료 계정·최초 로그인이 그대로 들어옴 | 로그인에서 변경 페이지로 보내고 변경 후 로그인 | `e622ffa` |
 | 보안 | 새 SQLite DB가 `admin`/`password`를 만들고 `createuser`에 기본 비밀번호가 있음, 이미 있는 계정의 비밀번호를 재설정할 수 없음 | 데모 옵트인, 비밀번호 필수, 재설정 | `e622ffa` |
 | 도구 | `import_archive`가 스텁(F4-19) | 이식, 경로 기준 분류(원본의 부분 문자열 매칭·경로 덮어쓰기 결함 수정) | `1420b8f` |

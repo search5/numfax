@@ -92,11 +92,8 @@ def test_ajax_archive_fax(dummy_request):
 
 
 def test_ajax_faxalter_get(dummy_request):
-    """Verify GET renders modal form for queue job alteration."""
+    """The dialog for a queued job is rendered from a template (its fields are checked in test_faxalter_dialog.py)."""
     dummy_request.GET["jid"] = "1"
     res = ajax_faxalter(dummy_request)
-    assert res.status_code == 200
-    assert "text/html" in res.content_type
-    assert "Modify Fax Job" in res.text
-    assert 'name="destination"' in res.text
-    assert 'name="priority"' in res.text
+    assert res["title"] == "- NamiFAX - Modify Fax Job" and res["values"]["jid"] == "1"
+    assert res["priority_list"][0] == "*" and res["error"] is None

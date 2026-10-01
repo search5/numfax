@@ -9,6 +9,7 @@ import pytest
 
 from namifax.models import UserTOTP
 from namifax.services.totp import TotpService
+from request_identity import set_identity
 
 
 def _login(client, username="admin", password="password"):
@@ -73,7 +74,7 @@ def test_the_pending_secret_is_not_kept_in_the_clear():
     from namifax.views import settings_2fa
 
     req = testing.DummyRequest()
-    req.__dict__["identity"] = {"username": "admin", "uid": 1}
+    set_identity(req, {"username": "admin", "uid": 1})
     req.session = {}
     req.dbsession = object()
     settings_2fa.begin_enrolment(req)

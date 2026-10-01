@@ -122,3 +122,19 @@ def test_the_job_dialog_carries_the_job_it_was_opened_for(world):
 def test_the_job_dialog_does_not_echo_markup_in_the_job_id(world):
     page = _login(world, "alice").get('/ajax/faxalter?jid="><script>x</script>')
     assert "<script>x" not in page.text
+
+
+# --- the original address refax.php?fid=N keeps working -----------------------------------------------------------------------
+
+def test_the_old_refax_address_leads_to_the_reply_page(world):
+    res = _login(world, "alice").get(f"/refax?fid={world.fax['A']}")
+    assert res.status_int == 302 and res.headers["Location"].endswith(f"/sendfax?refax={world.fax['A']}")
+
+
+def test_the_old_refax_address_without_a_fax_leads_to_the_plain_page(world):
+    res = _login(world, "alice").get("/refax")
+    assert res.status_int == 302 and res.headers["Location"].endswith("/sendfax")
+
+
+def test_the_old_refax_address_needs_a_login(testapp):
+    assert testapp.get("/refax?fid=1", expect_errors=True).status_int in (302, 401, 403)

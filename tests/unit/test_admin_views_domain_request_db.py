@@ -9,6 +9,7 @@ import pytest
 from pyramid import testing
 
 from namifax.views import admin as admin_mod
+from request_identity import set_identity
 
 # (patch target, name) — local imports are patched at the source module, module-level ones on admin
 SERVICE_TARGETS = [
@@ -45,7 +46,7 @@ CASES = [
 @pytest.mark.parametrize("name,method,params", CASES, ids=[f"{c[0]}-{c[1]}-{i}" for i, c in enumerate(CASES)])
 def test_view_builds_domain_objects_with_request_db(name, method, params):
     req = testing.DummyRequest()
-    req.__dict__["identity"] = {"username": "admin", "uid": 1, "is_admin": True, "superuser": True}
+    set_identity(req, {"username": "admin", "uid": 1, "is_admin": True, "superuser": True})
     req.db = object()
     req.dbsession = object()
     req.method = method

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: hMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 00:54+0900\n"
+"POT-Creation-Date: 2026-10-01 18:15+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hu\n"
@@ -15,89 +15,45 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:13
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:25
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:25
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:19
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:64
 msgid "Address Book"
 msgstr "Email Címek"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:14
 msgid "Save frequently used fax numbers for quick access when sending."
 msgstr "Gyakran használt faxszámok mentése a gyors hozzáféréshez küldéskor."
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:24
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:53
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:98
 msgid "Search"
 msgstr "Keresés"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:32
 #, fuzzy
 msgid "New Company"
 msgstr "Cég"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:43
 #, fuzzy
 msgid "Company / Name"
 msgstr "Cég"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:44
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:52
 msgid "Fax Number"
 msgstr "Fax szám"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:45
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:121
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:76
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:35
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:77
 msgid "Email"
 msgstr "E-mail"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:46
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:38
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:121
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:54
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:72
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:57
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:129
 msgid "Actions"
 msgstr "Műveletek"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:74
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:28
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:46
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:78
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:19
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:11
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:248
 msgid "Send Fax"
 msgstr "Fax küldés"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:78
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:61
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:42
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:59
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:45
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:45
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:69
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:67
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:65
 msgid "Edit"
 msgstr "Szerkesztés"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:92
 #, fuzzy
 msgid "No contacts yet"
 msgstr "Kontaktok"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:95
 msgid "No contacts matched"
 msgstr "Nincs egyező névjegy"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:97
 msgid ""
 "Add contacts to quickly select fax numbers when sending without typing "
 "them every time."
@@ -105,166 +61,88 @@ msgstr ""
 "Adjon hozzá névjegyeket, hogy küldéskor gyorsan kiválaszthassa a "
 "faxszámokat anélkül, hogy minden alkalommal be kellene gépelnie őket."
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:105
 msgid "Add First Contact"
 msgstr "Első névjegy hozzáadása"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:18
 #, fuzzy
 msgid "Edit Company"
 msgstr "Cég"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:18
 #, fuzzy
 msgid "Add New Company"
 msgstr "Cég"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:20
-msgid "Configure corporate contact identity and transmission routing defaults."
+msgid "Configure the company and every fax number it uses."
 msgstr ""
-"Vállalati kapcsolati adatok és alapértelmezett továbbítási útvonalak "
-"beállítása."
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:26
 #, fuzzy
 msgid "Back to Contacts"
 msgstr "Kontaktok"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:42
-msgid "Primary Company Profile"
-msgstr "Elsődleges vállalati profil"
+msgid "Upload contacts file (vCard)"
+msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:46
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:69
+msgid "Upload"
+msgstr ""
+
+msgid "Company"
+msgstr "Cég"
+
 #, fuzzy
 msgid "Company Name"
 msgstr "Cég"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:57
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:106
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:53
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:49
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:64
-msgid "Email Address"
-msgstr "E-mail cím"
+msgid "Clear the number to remove it."
+msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:67
-msgid "Recipient Contact & Physical Address"
-msgstr "Címzett kapcsolata és fizikai címe"
+msgid "Description"
+msgstr "Leírás"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:72
+msgid "Category"
+msgstr "Kategória"
+
 #, fuzzy
 msgid "Attention Person"
 msgstr "Személynek"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:77
+msgid "Location"
+msgstr ""
+
 msgid "Voice Telephone"
 msgstr "Telefonszám"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:82
 msgid "Street Address"
 msgstr "Utca, házszám"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:87
-msgid "City / Postal Region"
-msgstr "Város / Irányítószám régió"
+msgid "Zip / Postal Code"
+msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:92
-msgid "Category Tag"
-msgstr "Kategóriacímke"
+msgid "City"
+msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:94
-#, fuzzy
-msgid "General"
-msgstr "Normal"
+msgid "Add a Fax Number"
+msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:95
-msgid "Invoices & Billing"
-msgstr "Számlák és számlázás"
+msgid "First Fax Number"
+msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:96
-msgid "Legal"
-msgstr "Jogi"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:102
-msgid "Description / Internal Notes"
-msgstr "Leírás / Belső megjegyzések"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:112
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:113
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:72
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:101
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:92
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:88
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:136
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:186
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:74
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:62
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:171
-#: /home/jiho/numfax/src/namifax/templates/modal_delete.jinja2:39
 msgid "Delete"
 msgstr "Törlés"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:115
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:123
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:112
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:74
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:100
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:94
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:90
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:135
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:188
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:196
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:77
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:85
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:65
-#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:63
-#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:56
-#: /home/jiho/numfax/src/namifax/templates/modal_delete.jinja2:36
-#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:57
-#: /home/jiho/numfax/src/namifax/templates/modal_note.jinja2:47
-#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:57
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:81
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:64
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:187
 msgid "Cancel"
 msgstr "Mégse"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:117
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:125
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:114
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:116
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:75
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:80
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:102
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:104
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:95
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:100
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:91
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:96
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:137
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:140
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:190
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:198
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:79
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:87
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:67
-#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:59
-#: /home/jiho/numfax/src/namifax/templates/modal_note.jinja2:50
 msgid "Save"
 msgstr "Mentés"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:18
 #, fuzzy
 msgid "Dashboard Overview"
 msgstr "Dashboard"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:21
 #, fuzzy
 msgid "SYSTEM OPERATIONAL"
 msgstr "Rendszer Funkciók"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:24
 msgid ""
 "Real-time status of fax spools, hardware serial modems, and registered "
 "users"
@@ -272,108 +150,78 @@ msgstr ""
 "A fax várakozási sorok, hardveres soros modemek és regisztrált "
 "felhasználók valós idejű állapota"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:30
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:59
 msgid "Users"
 msgstr "Felhasználók"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:31
 msgid "Modems"
 msgstr "Modemek Beállítása"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:32
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:139
 #, fuzzy
 msgid "DID Routes"
 msgstr "DID/DTMF útvonal csoportok"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:33
 #, fuzzy
 msgid "Logs"
 msgstr "Kilépés"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:43
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:152
 #, fuzzy
 msgid "Fax Lines"
 msgstr "Fax Modems"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:46
 msgid "Hardware Ready"
 msgstr "Hardver kész"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:61
 #, fuzzy
 msgid "Active accounts"
 msgstr "Felhasználók"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:73
 msgid "Backend Core"
 msgstr "Háttérrendszer mag"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:87
 msgid "Scheduler"
 msgstr "Ütemező"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:89
 msgid "Running"
 msgstr "Fut"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:107
 #, fuzzy
 msgid "Registered User Accounts"
 msgstr "Felhasználók"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:110
 msgid "Manage Users"
 msgstr "Felhasználók kezelése"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:118
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:34
 msgid "Name"
 msgstr "Név"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:119
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:33
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:95
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:68
 msgid "Username"
 msgstr "felhasználónév"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:120
 msgid "Last Login"
 msgstr "Utolsó Belépés"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:143
 msgid "Server Status"
 msgstr "Kiszolgáló állapota"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:148
 msgid "Core"
 msgstr "Mag"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:152
 msgid "Database Engine"
 msgstr "Adatbázis-motor"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:156
 msgid "System Scheduler"
 msgstr "Rendszerütemező"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:168
 msgid "Configured Modems"
 msgstr "Konfigurált modemek"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:196
 msgid "Administrator Workflow Guide"
 msgstr "Rendszergazdai munkafolyamat-útmutató"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:17
 #, fuzzy
 msgid "Configure Barcode Routing"
 msgstr "Barcode Routing"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:18
 msgid ""
 "Route incoming faxes automatically based on recognized Code39 / QR "
 "barcodes"
@@ -381,95 +229,59 @@ msgstr ""
 "Bejövő faxok automatikus átirányítása felismert Code39 / QR vonalkódok "
 "alapján"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:23
 #, fuzzy
 msgid "New Barcode Route"
 msgstr "Barcode Routing"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:46
 #, fuzzy
 msgid "Barcode Routing Rules"
 msgstr "Barcode Routing"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:55
 #, fuzzy
 msgid "Barcode:"
 msgstr "Barcode Routing"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:58
 #, fuzzy
 msgid "Contact:"
 msgstr "Kontaktok"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:58
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:41
 msgid "None"
 msgstr "Nincs"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:58
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:41
 msgid "Printer:"
 msgstr "Nyomtató:"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:74
 #, fuzzy
 msgid "Edit Barcode Route"
 msgstr "Barcode Routing"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:74
 #, fuzzy
 msgid "Add Barcode Route"
 msgstr "Barcode Routing"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:78
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:76
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:62
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:91
 #, fuzzy
 msgid "EDIT MODE"
 msgstr "Szerkesztés"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:80
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:78
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:64
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:93
 msgid "NEW"
 msgstr "ÚJ"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:86
 msgid "Barcode"
 msgstr "Barcode"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:91
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:41
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:83
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:54
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:104
 msgid "Alias"
 msgstr "Alias"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:96
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:88
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:109
 #, fuzzy
 msgid "Contact Email"
 msgstr "Kontaktok"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:101
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:81
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:93
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:56
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:114
 msgid "Printer"
 msgstr "Printer"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:17
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:181
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:268
 msgid "Fax Categories"
 msgstr "Megtekinthető fax kategóriák"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:18
 msgid ""
 "Manage classification tags and archival categories for organizing "
 "transmissions"
@@ -477,82 +289,65 @@ msgstr ""
 "Besorolási címkék és archiválási kategóriák kezelése az átvitelek "
 "rendszerezéséhez"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:23
 #, fuzzy
 msgid "New Category"
 msgstr "Megtekinthető fax kategóriák"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:33
 #, fuzzy
 msgid "Existing Categories"
 msgstr "Megtekinthető fax kategóriák"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:54
 msgid "Edit Category"
 msgstr "Kategória szerkesztése"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:54
 #, fuzzy
 msgid "Add Category"
 msgstr "Megtekinthető fax kategóriák"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:65
 msgid "Category Name"
 msgstr "Kategória név"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:17
 #, fuzzy
 msgid "Configure Cover Pages"
 msgstr "Cover Pages"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:18
 msgid "Manage facsimile PostScript cover page templates and layouts"
 msgstr "Fax PostScript fedőlapsablonok és elrendezések kezelése"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:23
 #, fuzzy
 msgid "New Cover Page"
 msgstr "Fedőlap használata"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:46
 #, fuzzy
 msgid "Available Cover Pages"
 msgstr "Cover Pages"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:72
 #, fuzzy
 msgid "Edit Cover Page"
 msgstr "Fedőlap használata"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:72
 #, fuzzy
 msgid "Add Cover Page"
 msgstr "Fedőlap használata"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:84
 msgid "Title"
 msgstr "Cím"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:89
 msgid "File"
 msgstr "Fájl"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:115
 msgid "Cover Template Studio: Dynamic Tag References"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:117
 msgid ""
 "Use these placeholder tags in your PostScript (.ps), HTML (.html), or PDF"
 " templates. The Cover Studio engine automatically substitutes them during"
 " fax rendering."
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:17
 msgid "Dynamic Configuration"
 msgstr "Dinamikus konfiguráció"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:18
 msgid ""
 "Manage Caller ID blacklists and transmission rejection rules for modem "
 "devices"
@@ -560,48 +355,34 @@ msgstr ""
 "Hívóazonosító (Caller ID) feketelisták és átviteli elutasítási szabályok "
 "kezelése a modemekhez"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:23
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:23
 msgid "New Rule"
 msgstr "Új szabály"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:33
 msgid "Blocked Caller IDs"
 msgstr "Letiltott hívóazonosítók"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:40
 msgid "Caller ID:"
 msgstr "Hívóazonosító:"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:41
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:82
 msgid "All Devices"
 msgstr "Összes eszköz"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:58
 msgid "Edit Caller ID Rule"
 msgstr "Hívóazonosító szabály szerkesztése"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:58
 msgid "Add Caller ID Rule"
 msgstr "Hívóazonosító szabály hozzáadása"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:75
 msgid "Caller ID"
 msgstr "Caller ID"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:80
 msgid "Modem Device"
 msgstr "Modemeszköz"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:17
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:160
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:272
 #, fuzzy
 msgid "Fax to Email"
 msgstr "Fax Modems"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:18
 msgid ""
 "Configure automated inbound fax forwarding and PDF dispatch rules mapped "
 "by company"
@@ -609,137 +390,110 @@ msgstr ""
 "Automatikus bejövő faxtovábbítási és vállalathoz rendelt PDF-küldési "
 "szabályok konfigurálása"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:33
+msgid "Add companies in the Address Book"
+msgstr ""
+
 msgid "Company Forwarding Rules"
 msgstr "Vállalati továbbítási szabályok"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:41
+msgid "fax numbers"
+msgstr ""
+
 msgid "Email:"
 msgstr "E-mail:"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:58
-msgid "Edit Forwarding Rule"
-msgstr "Továbbítási szabály szerkesztése"
+msgid "Edit Forwarding Rules"
+msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:58
-msgid "Add Forwarding Rule"
-msgstr "Továbbítási szabály hozzáadása"
+msgid "Forwarding Rules"
+msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:71
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:54
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:81
-msgid "Company"
-msgstr "Cég"
+msgid "This company has no fax numbers yet. Add them in the Address Book."
+msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:49
+msgid ""
+"Select a company on the left to set where the faxes received on each of "
+"its numbers are sent."
+msgstr ""
+
 #, fuzzy
 msgid "Control Panel"
 msgstr "Fedőlap használata"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:61
 msgid "User Portal"
 msgstr "User Portal"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:63
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:13
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:45
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:81
 msgid "Inbox"
 msgstr "Beérkezett"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:106
 #, fuzzy
 msgid "Overview"
 msgstr "Fax megtekintése"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:113
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:264
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:119
 msgid "Access Control"
 msgstr "Hozzáférés-vezérlés"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:126
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:265
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:17
 msgid "User Accounts"
 msgstr "Felhasználók"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:132
 msgid "Hardware & Lines"
 msgstr "Hardver és vonalak"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:139
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:266
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:17
 msgid "Fax Modems"
 msgstr "Fax Modems"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:145
+msgid "Network Printers"
+msgstr ""
+
 #, fuzzy
 msgid "Inbound Routing"
 msgstr "DID/DTMF útvonal csoportok"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:152
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:267
 msgid "DID Routing"
 msgstr "DID/DTMF útvonal csoportok"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:168
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:270
 msgid "Barcode Routing"
 msgstr "Barcode Routing"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:174
 msgid "Content & Templates"
 msgstr "Tartalom és sablonok"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:189
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:269
 msgid "Cover Pages"
 msgstr "Cover Pages"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:195
 msgid "Security & System"
 msgstr "Biztonság és rendszer"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:202
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:271
 msgid "Blacklist (DynConf)"
 msgstr "Blacklist (DynConf)"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:210
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:273
 msgid "System Audit Logs"
 msgstr "System Audit Logs"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:219
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:274
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:18
 msgid "System Functions"
 msgstr "Rendszer Funkciók"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:227
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:275
 msgid "SMTP Gateway"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:245
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:111
+msgid "Storage & Cloud"
+msgstr ""
+
+msgid "SAML 2.0 SSO"
+msgstr ""
+
 msgid "Logout"
 msgstr "Kilépés"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:261
 msgid "Admin Control Panel"
 msgstr "Adminisztrációs vezérlőpult"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:285
 msgid "Appliance Engine Online"
 msgstr "Készülékmotor online"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:18
 msgid ""
 "Configure Modems hardware devices, physical serial ports, and print-"
 "forwarding rules"
@@ -747,56 +501,39 @@ msgstr ""
 "Modemek hardvereszközeinek, fizikai soros portjainak és nyomtatási "
 "továbbítási szabályainak beállítása"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:23
 #, fuzzy
 msgid "Configure Modems"
 msgstr "Fax Modems"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:33
 msgid "Active Modem Lines"
 msgstr "Aktív modemvonalak"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:40
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:78
 msgid "Device"
 msgstr "Eszköz"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:42
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:55
 msgid "Contact"
 msgstr "Kontakt"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:43
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:56
 msgid "Status"
 msgstr "Állapot"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:72
 #, fuzzy
 msgid "Edit Modem"
 msgstr "Fax Modems"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:72
 msgid "Configure Modems Device"
 msgstr "Modemeszköz beállítása"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:100
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:139
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:91
 msgid "Reset"
 msgstr "Reset"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:102
 #, fuzzy
 msgid "Save Modem"
 msgstr "Fax Modems"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:112
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:150
 msgid "Appliance Note:"
 msgstr "Készülékmegjegyzés:"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:112
 msgid ""
 "Modems configured here must correspond to physical RS-232 serial devices,"
 " USB modems, or virtual IAX modems recognized by the underlying HylaFAX "
@@ -806,12 +543,50 @@ msgstr ""
 "kiszolgáló által felismert fizikai RS-232 soros eszközöknek, USB "
 "modemeknek vagy virtuális IAX modemeknek."
 
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:17
+msgid "Direct RAW socket & IPP network printing dispatch for received faxes"
+msgstr ""
+
+msgid "Add Network Printer"
+msgstr ""
+
+msgid "Printer Name"
+msgstr ""
+
+msgid "Protocol"
+msgstr ""
+
+msgid "Host / IP"
+msgstr ""
+
+#, fuzzy
+msgid "Port"
+msgstr "Priority"
+
+msgid "Queue Name (Optional)"
+msgstr ""
+
+msgid "Register Printer"
+msgstr ""
+
+msgid "Configured Printers"
+msgstr ""
+
+msgid "No network printers configured yet. Add one using the form on the left."
+msgstr ""
+
+msgid "Endpoint"
+msgstr ""
+
+msgid "Test Print"
+msgstr ""
+
+msgid "Are you sure you want to delete this printer?"
+msgstr ""
+
 #, fuzzy
 msgid "Configure DID Routing"
 msgstr "DID/DTMF útvonal csoportok"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:18
 msgid ""
 "Route incoming faxes by Direct Inward Dialing (DID) extension to specific"
 " email boxes or printers"
@@ -819,38 +594,26 @@ msgstr ""
 "Bejövő faxok továbbítása közvetlen beválasztási (DID) mellék alapján "
 "adott e-mail fiókokhoz vagy nyomtatókhoz"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:23
 #, fuzzy
 msgid "New DID Route"
 msgstr "DID/DTMF útvonal csoportok"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:46
 #, fuzzy
 msgid "Active DID Routing Rules"
 msgstr "DID/DTMF útvonal csoportok"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:53
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:99
 msgid "Route Code"
 msgstr "Útvonalkód"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:57
 msgid "Action"
 msgstr "Művelet"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:84
 msgid "Configure Routing Rule"
 msgstr "Továbbítási szabály beállítása"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:119
-msgid "Category"
-msgstr "Kategória"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:121
 msgid "-- None --"
 msgstr "-- Nincs --"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:150
 msgid ""
 "DID (Direct Inward Dialing) routing automatically redirects incoming "
 "transmissions matching extension patterns directly to mapped operator "
@@ -860,130 +623,217 @@ msgstr ""
 "bejövő átviteleket automatikusan közvetlenül a hozzárendelt kezelői "
 "fiókokba vagy fizikai nyomtatókra irányítja."
 
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:18
+msgid "SAML 2.0 Enterprise SSO"
+msgstr ""
+
+msgid ""
+"Single Sign-On integration with Okta, Microsoft Entra ID (Azure AD), "
+"Google Workspace & Keycloak"
+msgstr ""
+
+msgid "Download SP Metadata XML"
+msgstr ""
+
+msgid "Identity Provider (IdP) Settings"
+msgstr ""
+
+msgid "Enable SAML 2.0 Single Sign-On"
+msgstr ""
+
+msgid "Shows \"SAML 2.0 Enterprise SSO\" login option on login page"
+msgstr ""
+
+msgid "IdP Entity ID / Issuer"
+msgstr ""
+
+msgid "IdP Single Sign-On Service URL (HTTP-Redirect / POST)"
+msgstr ""
+
+msgid "IdP Public X.509 Certificate (PEM)"
+msgstr ""
+
+msgid "Just-in-Time (JIT) Provisioning"
+msgstr ""
+
+msgid "Auto-create account on first login"
+msgstr ""
+
+msgid "Default Role for JIT Users"
+msgstr ""
+
+msgid "Save SAML Configuration"
+msgstr ""
+
+msgid "NamiFAX SP Endpoints"
+msgstr ""
+
+msgid ""
+"Copy these endpoints into your Identity Provider (Azure AD, Okta, Google)"
+" console:"
+msgstr ""
+
+msgid "Assertion Consumer Service (ACS) URL"
+msgstr ""
+
+msgid "SP Entity ID / Metadata URL"
+msgstr ""
+
+msgid "NameID Format"
+msgstr ""
+
 msgid "External SMTP Gateway"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:21
 msgid ""
 "Configure external mail delivery server for inbound fax notifications and"
 " user alerts"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:62
 msgid "Diagnostics Result"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:89
 msgid "Server Connection & Security"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:95
 msgid "SMTP Host / Server"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:103
-#, fuzzy
-msgid "Port"
-msgstr "Priority"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:112
 msgid "Encryption Protocol"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:116
 msgid "None (Plain)"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:120
 msgid "STARTTLS (587)"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:124
 msgid "SSL / TLS (465)"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:134
 msgid "Requires SMTP Authentication"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:139
 #, fuzzy
 msgid "Username / Login"
 msgstr "felhasználónév"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:145
 #, fuzzy
 msgid "Password / App Key"
 msgstr "jelszó"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:160
 msgid "Default Sender Profile & Signatures"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:165
 #, fuzzy
 msgid "From Email Address"
 msgstr "E-mail cím"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:171
 #, fuzzy
 msgid "From Display Name"
 msgstr "Cég"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:179
 msgid "Email Signature (Plaintext)"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:187
 #, fuzzy
 msgid "Last updated"
 msgstr "Fax forgatása"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:194
 #, fuzzy
 msgid "Save Gateway Settings"
 msgstr "Beállítások"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:207
 msgid "Diagnostic Self-Test"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:210
 msgid ""
 "Verify server reachability, TLS handshake, credentials and message "
 "dispatch in real time."
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:214
 msgid "Target Recipient Email"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:226
 #, fuzzy
 msgid "Send Diagnostic Email"
 msgstr "Fax küldés"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:19
+msgid "Enterprise storage lifecycle policies and S3 / MinIO / GCS cloud backends"
+msgstr ""
+
+msgid "Storage Lifecycle Policies"
+msgstr ""
+
+msgid "Purge Local TIFFs After (Days)"
+msgstr ""
+
+msgid ""
+"Frees local disk space if a PDF version exists. 0 = immediate after "
+"conversion."
+msgstr ""
+
+msgid "Full Fax Retention (Days)"
+msgstr ""
+
+msgid ""
+"Purge entire fax record and archival files after specified days. 0 = keep"
+" forever."
+msgstr ""
+
+msgid "Synchronize remote cloud object deletion on fax purge"
+msgstr ""
+
+msgid "Save Lifecycle Policy"
+msgstr ""
+
+msgid "Cloud Storage Backend"
+msgstr ""
+
+msgid "Storage Provider"
+msgstr ""
+
+msgid "Local Filesystem (Default)"
+msgstr ""
+
+msgid "Endpoint URL (MinIO / S3 Compatible)"
+msgstr ""
+
+msgid "Region"
+msgstr ""
+
+msgid "Bucket Name"
+msgstr ""
+
+msgid "Access Key ID"
+msgstr ""
+
+msgid "Secret Access Key"
+msgstr ""
+
+msgid "Key Prefix"
+msgstr ""
+
+msgid "Save Storage Config"
+msgstr ""
+
+msgid "Test Connection"
+msgstr ""
+
 msgid "Perform maintenance operations, service control, and backups."
 msgstr ""
 "Karbantartási műveletek, szolgáltatásfelügyelet és biztonsági mentések "
 "végrehajtása."
 
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:26
 msgid "HylaFAX Engine Active"
 msgstr "HylaFAX motor aktív"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:29
 #, fuzzy
 msgid "Admin Dashboard"
 msgstr "Dashboard"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:40
 msgid "Caution: Appliance Maintenance Operations"
 msgstr "Figyelem: Készülék-karbantartási műveletek"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:42
 msgid ""
 "Restarting or shutting down services will interrupt active fax modem "
 "spooling and disconnect client sessions. Ensure all outbound "
@@ -995,170 +845,128 @@ msgstr ""
 "karbantartási feladatok megkezdése előtt győződjön meg arról, hogy a "
 "modemsorban lévő összes kimenő átvitel befejeződött."
 
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:58
 msgid "Daemon Service Control"
 msgstr "Démonszolgáltatások vezérlése"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:61
 msgid "Restart HylaFAX and NamiFAX web services, or halt background workers."
 msgstr ""
 "A HylaFAX és NamiFAX webszolgáltatások újraindítása vagy a "
 "háttérfolyamatok leállítása."
 
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:84
 msgid "Reboot Services"
 msgstr "Szolgáltatások újraindítása"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:90
 msgid "Shutdown Services"
 msgstr "Szolgáltatások leállítása"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:100
 msgid "Database & Archive Backup"
 msgstr "Adatbázis és archívum biztonsági mentése"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:103
 msgid "Download system archives and database snapshots for offsite retention."
 msgstr "Rendszerarchívumok és adatbázis-pillanatképek letöltése külső tároláshoz."
 
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:126
 msgid "Download Archive"
 msgstr "Download Archive"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:132
 msgid "Download Database"
 msgstr "Download Database"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:17
 msgid "System Logs"
 msgstr "Rendszer naplók"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:18
 msgid "Audit logs and HylaFAX server operational event traces"
 msgstr "Auditnaplók és HylaFAX kiszolgáló működési eseménykövetése"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:25
 msgid "Keywords:"
 msgstr "Kulcsszavak:"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:30
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:43
 msgid "Date:"
 msgstr "Dátum:"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:64
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:120
 msgid "Date"
 msgstr "Dátum"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:65
 msgid "Log Text"
 msgstr "Naplószöveg"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:79
 msgid "No system logs found matching criteria."
 msgstr "A feltételeknek megfelelő rendszernapló nem található."
 
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:80
 msgid "Transmissions and server events will be streamed here in real time."
 msgstr "Az átvitelek és a kiszolgáló eseményei valós időben jelennek meg itt."
 
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:18
 msgid "Manage system operator credentials, access permissions, and route mapping"
 msgstr ""
 "Rendszerkezelői hitelesítő adatok, hozzáférési jogosultságok és "
 "útvonalleképezések kezelése"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:23
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:82
 msgid "Create New User"
 msgstr "Új felhasználó létrehozása"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:36
 msgid "Superuser"
 msgstr "Rendszergazda (Superuser)"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:37
 msgid "Admin"
 msgstr "Admin"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:53
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:60
 msgid "YES"
 msgstr "Igen"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:55
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:62
 msgid "NO"
 msgstr "Nem"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:82
 msgid "Configure User:"
 msgstr "Felhasználó beállítása:"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:91
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:59
 msgid "Full Name"
 msgstr "Teljes név"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:102
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:82
 msgid "Password"
 msgstr "jelszó"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:113
+msgid "Email Address"
+msgstr "E-mail cím"
+
 msgid "Permissions & Capabilities"
 msgstr "Jogosultságok és képességek"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:117
 msgid "Administrator Console"
 msgstr "Adminisztrátori konzol"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:121
 msgid "Superuser Rights"
 msgstr "Rendszergazdai jogok"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:125
 msgid "Can Delete Faxes"
 msgstr "Törölhet faxokat"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:129
 msgid "Send on Any Modem"
 msgstr "Küldés bármelyik modemen"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:165
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:41
 #, fuzzy
 msgid "Categories"
 msgstr "Megtekinthető fax kategóriák"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:13
 #, fuzzy
 msgid "Archive Search"
 msgstr "Archívum"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:14
 msgid "Search all sent and received fax records by date, company, or fax number."
 msgstr ""
 "Keresés az összes elküldött és fogadott faxrekord között dátum, vállalat "
 "vagy faxszám alapján."
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:18
 #, fuzzy
 msgid "results"
 msgstr "Reset"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:18
 #, fuzzy
 msgid "result"
 msgstr "Reset"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:26
 #, fuzzy
 msgid "Search Filters"
 msgstr "Keresés"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:27
 msgid ""
 "Leave filters empty to search all records. Narrow results by adding more "
 "criteria."
@@ -1166,257 +974,185 @@ msgstr ""
 "Hagyja üresen a szűrőket az összes rekord közötti kereséshez. Szűkítse a "
 "találatokat további feltételek megadásával."
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:33
 msgid "Keyword"
 msgstr "Keyword"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:45
 #, fuzzy
 msgid "All Categories"
 msgstr "Megtekinthető fax kategóriák"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:46
 msgid "Invoices / Orders"
 msgstr "Számlák / Megrendelések"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:47
 #, fuzzy
 msgid "Legal / Contracts"
 msgstr "Kontaktok"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:52
 #, fuzzy
 msgid "From Date"
 msgstr "Fax forgatása"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:60
 #, fuzzy
 msgid "To Date"
 msgstr "Fax forgatása"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:70
 #, fuzzy
 msgid "Direction"
 msgstr "DID/DTMF útvonal csoportok"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:74
 msgid "Sent & Received"
 msgstr "Elküldött és fogadott"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:75
 msgid "Received only"
 msgstr "Csak fogadott"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:76
 msgid "Sent only"
 msgstr "Csak elküldött"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:81
 #, fuzzy
 msgid "Fax ID"
 msgstr "Fax Modems"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:110
 #, fuzzy
 msgid "Results"
 msgstr "Reset"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:111
 msgid "records"
 msgstr "rekord"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:111
 msgid "record"
 msgstr "rekord"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:117
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:69
 msgid "Sender"
 msgstr "Sender"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:118
-msgid "Description"
-msgstr "Leírás"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:119
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:71
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:55
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:92
 msgid "Pages"
 msgstr "Oldalak"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:147
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:122
 msgid "View"
 msgstr "Fax megtekintése"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:155
 #, fuzzy
 msgid "Re-send"
 msgstr "Küldés"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:173
 msgid "No results found"
 msgstr "Nincs találat"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:174
 msgid "Try adjusting your search terms or date range."
 msgstr "Próbálja módosítani a keresési kifejezéseket vagy a dátumtartományt."
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:175
 msgid "Reset filters"
 msgstr "Szűrők visszaállítása"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:187
 msgid "Search the Archive"
 msgstr "Keresés az archívumban"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:189
 msgid "Enter a keyword or filter above and click Search to find fax records."
 msgstr ""
 "Adjon meg egy kulcsszót vagy szűrőt fent, majd kattintson a Keresés "
 "gombra a faxrekordok megkereséséhez."
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:17
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:26
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:26
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:25
 msgid "Distribution Lists"
 msgstr "Disztribúciós listák"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:18
 msgid "Organize recipient groups for mass fax broadcasting and notifications."
 msgstr "Címzettcsoportok rendszerezése tömeges faxküldéshez és értesítésekhez."
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:29
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:119
 msgid "Create List"
 msgstr "Lista létrehozása"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:40
 msgid "Saved Distribution Lists"
 msgstr "Mentett terjesztési listák"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:52
 msgid "members"
 msgstr "tag"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:66
 msgid "Group Members & Settings"
 msgstr "Csoporttagok és beállítások"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:66
 msgid "Create New Distribution List"
 msgstr "Új terjesztési lista létrehozása"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:76
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:45
 msgid "List Name"
 msgstr "Lista neve"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:83
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "Csoporttagok (Névjegyek és faxszámok)"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:84
 #, fuzzy
 msgid "contacts assigned"
 msgstr "Kontaktok"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:95
 msgid "Remove"
 msgstr "Eltávolítás"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:99
 msgid "No contacts assigned to this list yet."
 msgstr "Még nincsenek névjegyek rendelve ehhez a listához."
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:107
 msgid "Add Member"
 msgstr "Tag hozzáadása"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:116
 msgid "Delete List"
 msgstr "Lista törlése"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:117
 #, fuzzy
 msgid "Save Changes"
 msgstr "Cover Pages"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:18
 msgid "Edit Distribution List"
 msgstr "Terjesztési lista szerkesztése"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:18
 msgid "Create Distribution List"
 msgstr "Terjesztési lista létrehozása"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:20
 msgid "Configure broadcast list parameters and recipient group members."
 msgstr ""
 "Terjesztési lista paramétereinek és a címzettcsoport tagjainak "
 "konfigurálása."
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:26
 msgid "Back to Lists"
 msgstr "Vissza a listákhoz"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:41
 msgid "Distribution List Profile"
 msgstr "Terjesztési lista profilja"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:52
 msgid "Enrolled Members"
 msgstr "Regisztrált tagok"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:53
 msgid "List ID:"
 msgstr "Lista azonosítója:"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:62
 msgid "No contacts in this list."
 msgstr "Nincsenek névjegyek ezen a listán."
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:17
 #, fuzzy
 msgid "Email Address Book"
 msgstr "Email Címek"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:18
 msgid "Manage email recipients, transmission routing, and contacts directory."
 msgstr "E-mail címzettek, átviteli útvonalak és névjegyzék kezelése."
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:27
 msgid "Email Book"
 msgstr "E-mail címjegyzék"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:30
 #, fuzzy
 msgid "New Contact"
 msgstr "Kontaktok"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:40
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:49
 msgid "Contacts"
 msgstr "Kontaktok"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:43
 msgid "recipients"
 msgstr "címzett"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:51
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:44
 #, fuzzy
 msgid "Contact Name"
 msgstr "Kontaktok"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:52
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:39
 msgid "Company Affiliation"
 msgstr "Vállalati hovatartozás"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:72
 msgid ""
 "No email contacts found in the directory. Click \"+ New Contact\" to "
 "register one."
@@ -1424,148 +1160,111 @@ msgstr ""
 "Nem található e-mail névjegy a könyvtárban. Kattintson a \"+ New "
 "Contact\" gombra egy új regisztrálásához."
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:17
 msgid "Email Book - Edit Email Contact"
 msgstr "E-mail címjegyzék - E-mail kapcsolat szerkesztése"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:18
 msgid "Manage contact information and company affiliation in Email Book."
 msgstr ""
 "Kapcsolati adatok és vállalati hovatartozás kezelése az E-mail "
 "címjegyzékben."
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:24
 msgid "Back to Email Book"
 msgstr "Vissza az E-mail címjegyzékhez"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:35
 msgid "Contact Profile Details"
 msgstr "Kapcsolati profil részletei"
 
-#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:26
 #, fuzzy
 msgid "Lost Password"
 msgstr "jelszó"
 
-#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:27
 msgid "Account Recovery Assistance"
 msgstr "Fiók-helyreállítási segítség"
 
-#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:30
-#: /home/jiho/numfax/src/namifax/templates/login_totp.jinja2:48
 msgid "Back to Login"
 msgstr "Vissza a bejelentkezéshez"
 
-#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:48
+msgid "Your password will be sent to the given e-mail address."
+msgstr ""
+
+msgid "Once you have received your new password you can login in and change it."
+msgstr ""
+
+msgid "Login"
+msgstr "Belépés"
+
 msgid ""
-"Please enter your registered username or email address below. Password "
-"reset instructions will be dispatched to your account email address."
+"Please enter your e-mail address then click on the Send Password button. "
+"You will receive a new password shortly. Use this new password to access "
+"the site."
 msgstr ""
-"Kérjük, adja meg regisztrált felhasználónevét vagy e-mail címét az "
-"alábbiakban. A jelszó-visszaállítási utasításokat elküldjük a fiókjához "
-"tartozó e-mail címre."
 
-#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:55
-msgid "Username or Email Address"
-msgstr "Felhasználónév vagy e-mail cím"
-
-#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:65
-#, fuzzy
-msgid "Reset Password"
+msgid "E-mail address"
 msgstr ""
-"Kérem adja meg az e-mail címét, majd kattintson a Jelszó Küldése "
-"gombra.Hamarosan kapni fog egy új jelszót.  Használja ezt az új jelszót a"
-" belépésre."
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:14
+msgid "Send Password"
+msgstr ""
+
 msgid "Received faxes appear here automatically in real time."
 msgstr "A beérkezett faxok itt automatikusan, valós időben megjelennek."
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:20
 msgid "Faxes"
 msgstr "fax"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:20
 msgid "Fax"
 msgstr "Fax"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:39
 msgid "Select All"
 msgstr "Összes kijelölése"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:47
 #, fuzzy
 msgid "Archive Selected"
 msgstr "Archívum"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:54
 msgid "Delete Selected"
 msgstr "Kijelöltek törlése"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:57
 msgid "Showing"
 msgstr "Megjelenítés:"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:57
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:186
 msgid "of"
 msgstr "of"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:67
 msgid "Select"
 msgstr "Kiválaszt"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:68
 #, fuzzy
 msgid "Preview"
 msgstr "Fax megtekintése"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:70
 #, fuzzy
 msgid "Received"
 msgstr "Archívum"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:136
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:70
 msgid "Reply"
 msgstr "Válasz a faxra"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:150
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:48
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:37
 msgid "Archive"
 msgstr "Archívum"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:154
 msgid "Email Fax"
 msgstr "Fax küldése e-mailben"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:158
-#: /home/jiho/numfax/src/namifax/templates/modal_note.jinja2:23
 msgid "Add Note"
 msgstr "Megjegyzés hozzáadása"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:162
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:49
 msgid "Rotate"
 msgstr "Fax forgatása"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:166
 msgid "Download TIFF"
 msgstr "TIFF letöltése"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:186
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:150
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:151
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:152
 msgid "faxes"
 msgstr "fax"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:204
 msgid "0 FAXES"
 msgstr "0 FAX"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:206
 msgid ""
 "There are no incoming faxes waiting in your inbox. Incoming transmissions"
 " will automatically appear here in real time."
@@ -1573,24 +1272,19 @@ msgstr ""
 "Nincsenek bejövő faxok a beérkező fiókjában. A beérkező átvitelek "
 "automatikusan megjelennek itt valós időben."
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:214
 msgid "Send Your First Fax"
 msgstr "Küldje el első faxát"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:218
 #, fuzzy
 msgid "Search Archive"
 msgstr "Archívum"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:225
 msgid "Getting Started with NamiFAX"
 msgstr "Első lépések a NamiFAX használatával"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:230
 msgid "Receive Faxes"
 msgstr "Faxok fogadása"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:231
 msgid ""
 "When someone sends a fax to this system's number, it will appear here "
 "automatically."
@@ -1598,22 +1292,18 @@ msgstr ""
 "Amikor valaki faxot küld a rendszer számára, az automatikusan megjelenik "
 "itt."
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:237
 #, fuzzy
 msgid "Send Faxes"
 msgstr "Fax küldés"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:238
 msgid "Click Send Fax to transmit a PDF or image document to any fax number."
 msgstr ""
 "Kattintson a Fax küldése gombra egy PDF vagy képi dokumentum "
 "továbbításához bármely faxszámra."
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:244
 msgid "Manage Records"
 msgstr "Rekordok kezelése"
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:245
 msgid ""
 "Download faxes as PDF, archive them for later, or search all records in "
 "the Archive."
@@ -1621,184 +1311,145 @@ msgstr ""
 "Töltse le a faxokat PDF-ként, archiválja őket későbbre, vagy keressen az "
 "összes rekordban az Archívumban."
 
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:47
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:11
 msgid "Outbox"
 msgstr "Kimenő"
 
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:109
 msgid "Settings"
 msgstr "Beállítások"
 
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:43
 msgid "Sign in"
 msgstr "Belépés"
 
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:44
 msgid "Enter your credentials to continue."
 msgstr "A folytatáshoz adja meg hitelesítési adatait."
 
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:48
 #, fuzzy
 msgid "System Online"
 msgstr "Rendszer Funkciók"
 
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:85
 msgid "Forgot password?"
 msgstr ""
 "Kérem adja meg az e-mail címét, majd kattintson a Jelszó Küldése "
 "gombra.Hamarosan kapni fog egy új jelszót.  Használja ezt az új jelszót a"
 " belépésre."
 
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:94
 msgid "Contact your system administrator if you need an account."
 msgstr "Ha fiókra van szüksége, forduljon a rendszergazdához."
 
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:105
-msgid "Login"
-msgstr "Belépés"
+msgid "Or continue with"
+msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/login_totp.jinja2:18
+msgid "Sign in with Passkey (Touch ID / Security Key)"
+msgstr ""
+
+msgid "SAML 2.0 Enterprise SSO (Okta / Entra ID)"
+msgstr ""
+
 msgid "Two-Factor Authentication"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/login_totp.jinja2:19
 msgid ""
 "Enter the 6-digit code from your authenticator app or an emergency "
 "recovery code."
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/login_totp.jinja2:33
 #, fuzzy
 msgid "Authentication Code"
 msgstr "Személynek"
 
-#: /home/jiho/numfax/src/namifax/templates/login_totp.jinja2:44
 msgid "Verify & Log In"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:23
 msgid "Assign Company Name"
 msgstr "Vállalat nevének hozzárendelése"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:24
 msgid "Associate document with registered enterprise contact"
 msgstr "Dokumentum társítása regisztrált vállalati partnerhez"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:37
 msgid "Search Company Name"
 msgstr "Vállalat nevének keresése"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:42
 msgid "Select Contact Record"
 msgstr "Névjegyrekord kiválasztása"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_delete.jinja2:22
 #, fuzzy
 msgid "Delete Fax"
 msgstr "Törlés"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_delete.jinja2:23
 msgid "Are you sure you want to delete this fax?"
 msgstr "Biztosan törölni szeretné ezt a faxot?"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_delete.jinja2:24
 msgid "This operation will permanently purge the fax document archive."
 msgstr "Ez a művelet véglegesen törli a faxdokumentumot az archívumból."
 
-#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:23
 #, fuzzy
 msgid "Send Fax via Email"
 msgstr "Fax küldés"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:24
 msgid "Dispatch PDF document attachment to email recipients"
 msgstr "Csatolt PDF dokumentum elküldése e-mail címzetteknek"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:37
 msgid "Recipients"
 msgstr "Címzettek"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:42
 msgid "Subject"
 msgstr "Tárgy"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:47
 msgid "Message"
 msgstr "Üzenet"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:60
-#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:60
 msgid "Send"
 msgstr "Küldés"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_note.jinja2:24
 msgid "Append internal administrative note or comments"
 msgstr "Belső adminisztrátori megjegyzés vagy hozzászólás hozzáfűzése"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_note.jinja2:37
 msgid "Note / Description"
 msgstr "Megjegyzés / Leírás"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:23
 msgid "Reply to Fax"
 msgstr "Válasz a faxra"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:24
 msgid "Dispatch quick reply transmission to originating sender"
 msgstr "Gyors válasz küldése az eredeti feladónak"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:37
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:54
 msgid "Destination Number"
 msgstr "Fax szám"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:42
 msgid "Regarding (Subject)"
 msgstr "Tárgy"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:47
 msgid "Comments"
 msgstr "Megjegyzések"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:23
 msgid "Transmission Report"
 msgstr "Átviteli jelentés"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:24
 msgid "Official facsimile delivery confirmation receipt"
 msgstr "Hivatalos faxkézbesítési igazolás"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:31
 msgid "Print"
 msgstr "Print"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:39
 #, fuzzy
 msgid "Company:"
 msgstr "Cég"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:47
 msgid "Pages:"
 msgstr "Oldalak száma:"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:51
 msgid "Status:"
 msgstr "Állapot:"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:53
 msgid "Transmitted Successfully (OK)"
 msgstr "Sikeresen továbbítva (OK)"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:60
 msgid "Close"
 msgstr "Bezárás"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:12
 msgid "Faxes currently queued or being transmitted."
 msgstr "Jelenleg sorban álló vagy továbbítás alatt álló faxok."
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:37
 msgid ""
 "This page shows only faxes that are queued or in progress. Once "
 "delivered, they are removed from this list. Find completed records in the"
@@ -1807,34 +1458,25 @@ msgstr ""
 "kézbesítést követően eltávolításra kerülnek ebből a listából. A "
 "befejezett rekordokat itt találja:"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:45
 msgid "jobs in progress"
 msgstr "folyamatban lévő feladat"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:45
 msgid "job in progress"
 msgstr "folyamatban lévő feladat"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:52
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:126
 msgid "Job ID"
 msgstr "Feladat azonosítója"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:53
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:127
 #, fuzzy
 msgid "Destination"
 msgstr "Fax szám"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:74
 msgid "Queued"
 msgstr "Várakozik"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:99
 msgid "No jobs in queue"
 msgstr "Nincs feladat a sorban"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:101
 msgid ""
 "There are no faxes waiting to be sent. Send a fax to see its progress "
 "here."
@@ -1842,41 +1484,32 @@ msgstr ""
 "Nincsenek küldésre váró faxok. Küldjön egy faxot, hogy lássa az állapotát"
 " itt."
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:108
 #, fuzzy
 msgid "Send a Fax"
 msgstr "Fax küldés"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:119
 msgid "Failed Transmissions"
 msgstr "Sikertelen átvitelek"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:120
 msgid "Review the number or retry below."
 msgstr "Ellenőrizze a számot, vagy próbálja újra alább."
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:128
 msgid "Reason"
 msgstr "Ok"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:141
 msgid "Retry"
 msgstr "Retry"
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:26
 #, fuzzy
 msgid "Password Expired"
 msgstr "jelszó"
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:27
 msgid "Security Credentials Renewal"
 msgstr "Biztonsági hitelesítő adatok megújítása"
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:30
 msgid "Action Required"
 msgstr "Művelet szükséges"
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:41
 msgid ""
 "Your password has expired or needs to be changed before proceeding. "
 "Please enter your old password and choose a new password."
@@ -1884,17 +1517,12 @@ msgstr ""
 "A jelszava lejárt, vagy a folytatás előtt meg kell változtatnia. Kérjük, "
 "adja meg a régi jelszavát, és válasszon egy új jelszót."
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:47
 msgid "Old Password"
 msgstr "Régi jelszó"
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:52
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:172
 msgid "New Password"
 msgstr "Új jelszó"
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:57
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:176
 #, fuzzy
 msgid "Confirm New Password"
 msgstr ""
@@ -1902,66 +1530,58 @@ msgstr ""
 "gombra.Hamarosan kapni fog egy új jelszót.  Használja ezt az új jelszót a"
 " belépésre."
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:66
 #, fuzzy
 msgid "Update Password"
 msgstr "jelszó"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:12
 msgid "Fill in the details below and click Send."
 msgstr "Töltse ki az alábbi adatokat, majd kattintson a Küldés gombra."
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:46
 #, fuzzy
 msgid "Destination & Recipients"
 msgstr "Fax szám"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:47
 msgid "Enter the fax number and recipient details."
 msgstr "Adja meg a faxszámot és a címzett adatait."
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:63
 msgid "To send to multiple recipients at once, separate numbers with a comma."
 msgstr ""
 "Ha egyszerre több címzettnek szeretne küldeni, vesszővel válassza el a "
 "számokat."
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:64
 msgid "Saved contacts are available in the"
 msgstr "A mentett névjegyek elérhetők itt:"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:71
 msgid "Attention To"
 msgstr "Személynek"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:71
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:81
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:93
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:181
 msgid "optional"
 msgstr "opcionális"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:93
+msgid "Voice Number"
+msgstr ""
+
+msgid "Address"
+msgstr ""
+
+msgid "Zip"
+msgstr ""
+
 msgid "Subject / Regarding"
 msgstr "Tárgy"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:109
 msgid "Document Attachment"
 msgstr "Dokumentum csatolása"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:110
 msgid "Attach the file you want to transmit."
 msgstr "Csatolja a továbbítani kívánt fájlt."
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:122
 msgid "Click to select a file"
 msgstr "Kattintson a fájl kiválasztásához"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:123
 msgid "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
 msgstr "Támogatott: PDF, TIFF, PostScript, TXT · Max. 10 MB"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:127
 msgid ""
 "PDF is the most commonly used format. Convert Word or Excel files to PDF "
 "before attaching."
@@ -1969,161 +1589,133 @@ msgstr ""
 "A PDF a leggyakrabban használt formátum. A csatolás előtt konvertálja a "
 "Word vagy Excel fájlokat PDF-be."
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:138
 msgid "Cover Page"
 msgstr "Fedőlap használata"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:139
 msgid "Add a cover sheet with sender and recipient info."
 msgstr "Fedőlap hozzáadása a feladó és a címzett adataival."
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:146
 #, fuzzy
 msgid "Include Cover Page"
 msgstr "Fedőlap használata"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:152
 #, fuzzy
 msgid "Cover Template"
 msgstr "Fedőlap használata"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:156
-msgid "Standard (Default)"
-msgstr "Szabványos (Alapértelmezett)"
+msgid "No cover pages are set up"
+msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:157
-msgid "Urgent"
-msgstr "Sürgős"
-
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:158
-msgid "Confidential"
-msgstr "Bizalmas"
-
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:164
 msgid "Send via Line"
 msgstr "Küldés vonalon keresztül"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:165
 msgid "Auto-select recommended"
 msgstr "Automatikus választás ajánlott"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:170
 msgid "Any Available Line (Auto)"
 msgstr "Bármely elérhető vonal (Automatikus)"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:181
 #, fuzzy
 msgid "Cover Comments"
 msgstr "Cover Pages"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:196
 msgid "Advanced Options"
 msgstr "Speciális beállítások"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:197
 msgid "Priority, retries, notifications"
 msgstr "Prioritás, újrapróbálkozások, értesítések"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:206
 msgid "Priority"
 msgstr "Priority"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:210
-msgid "Normal"
-msgstr "Normal"
-
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:211
-msgid "Low"
-msgstr "Low"
-
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:212
-msgid "High (Urgent)"
-msgstr "Magas (Sürgős)"
-
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:217
 #, fuzzy
 msgid "Max Retries"
 msgstr "Megtekinthető fax kategóriák"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:222
 msgid "Retries automatically on busy signal."
 msgstr "Foglalt jelzés esetén automatikus újrapróbálkozás."
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:230
+msgid "Expire after"
+msgstr ""
+
+msgid "Minutes"
+msgstr ""
+
+msgid "Hours"
+msgstr ""
+
+msgid "Days"
+msgstr ""
+
+msgid "Schedule Send Time"
+msgstr ""
+
+msgid "TSI ID"
+msgstr ""
+
 msgid "Notify on retry"
 msgstr "Értesítés újrapróbálkozáskor"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:241
+msgid "The original fax is sent along."
+msgstr ""
+
+msgid "Download PDF"
+msgstr ""
+
 msgid "Cancel & return to Inbox"
 msgstr "Mégse és visszatérés a Beérkező fiókhoz"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:17
 #, fuzzy
 msgid "User Settings"
 msgstr "Beállítások"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:18
 msgid ""
 "Configure your personal profile, fax station identity, and portal "
 "preferences."
 msgstr "Személyes profil, faxállomás azonosító és portálbeállítások konfigurálása."
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:24
 msgid "Return to Inbox"
 msgstr "Vissza a Beérkező fiókhoz"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:54
 msgid "Personal & Organization Details"
 msgstr "Személyes és szervezeti adatok"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:74
 msgid "Office / Location"
 msgstr "Iroda / Helyszín"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:79
 msgid "Direct Voice Number"
 msgstr "Közvetlen telefonszám"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:84
 #, fuzzy
 msgid "Direct Fax Number"
 msgstr "Fax szám"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:89
 msgid "Transmitting Station ID (TSI)"
 msgstr "Adóállomás azonosítója (TSI)"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:91
 msgid "Header identifier imprinted on top of transmitted fax pages."
 msgstr "Az elküldött faxoldalak tetejére nyomtatott fejléc-azonosító."
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:96
 msgid "Email & Fax Notification Signature"
 msgstr "E-mail és fax értesítési aláírás"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:105
 msgid "Portal & Delivery Preferences"
 msgstr "Portál és kézbesítési beállítások"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:110
 msgid "Display Language"
 msgstr "Megjelenítés nyelve"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:140
 #, fuzzy
 msgid "Default Cover Page"
 msgstr "Fedőlap használata"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:148
 msgid "Faxes Per Page"
 msgstr "faxes per page"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:162
 #, fuzzy
 msgid "Change Password"
 msgstr "jelszó"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:166
 #, fuzzy
 msgid "Current Password"
 msgstr ""
@@ -2131,135 +1723,346 @@ msgstr ""
 "gombra.Hamarosan kapni fog egy új jelszót.  Használja ezt az új jelszót a"
 " belépésre."
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:189
 #, fuzzy
 msgid "Update Settings"
 msgstr "Beállítások"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:17
+msgid "Two-Factor Authentication (TOTP)"
+msgstr ""
+
+msgid ""
+"Protect your account with Google Authenticator, Authy, or compatible RFC "
+"6238 apps."
+msgstr ""
+
+msgid "Active / Enabled"
+msgstr ""
+
+msgid "Disabled"
+msgstr ""
+
+msgid ""
+"When enabled, signing in requires your password and a 6-digit one-time "
+"token from your mobile device."
+msgstr ""
+
+msgid "recovery codes left"
+msgstr ""
+
+msgid "Code from your app (to get new recovery codes)"
+msgstr ""
+
+msgid "New recovery codes"
+msgstr ""
+
+msgid "Turn off 2FA for your account?"
+msgstr ""
+
+msgid "Code or recovery code"
+msgstr ""
+
+msgid "Disable 2FA"
+msgstr ""
+
+msgid "Enable 2FA (Setup Authenticator)"
+msgstr ""
+
+msgid "FIDO2 Passkeys & Biometric Security Keys"
+msgstr ""
+
+msgid ""
+"Sign in securely without passwords using Touch ID, Face ID, Windows "
+"Hello, or YubiKey."
+msgstr ""
+
+msgid "Register New Passkey"
+msgstr ""
+
+msgid "Loading registered security keys..."
+msgstr ""
+
+msgid "No Passkeys registered yet."
+msgstr ""
+
+msgid ""
+"No Passkeys registered yet. Click Register to add Touch ID or a security "
+"key."
+msgstr ""
+
+msgid ""
+"1. Scan this code with Google Authenticator, Authy or another RFC 6238 "
+"app, or type the key by hand."
+msgstr ""
+
+msgid "Key"
+msgstr ""
+
+msgid "2. Enter the 6-digit code the app shows"
+msgstr ""
+
+msgid "Turn on 2FA"
+msgstr ""
+
+msgid "Save your recovery codes"
+msgstr ""
+
+msgid ""
+"Each code works once if you lose your phone. They are shown only now; "
+"store them somewhere safe."
+msgstr ""
+
+msgid "Done"
+msgstr ""
+
+msgid "Back to settings"
+msgstr ""
+
 msgid "Fax Viewer"
 msgstr "Faxmegjelenítő"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:19
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:144
 msgid "Page 1 of"
 msgstr "1. oldal /"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:24
 msgid "FROM:"
 msgstr "FELADÓ:"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:26
 msgid "DATE:"
 msgstr "DÁTUM:"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:28
 msgid "DEVICE:"
 msgstr "ESZKÖZ:"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:36
 msgid "Prev"
 msgstr "Előző"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:41
 msgid "Next"
 msgstr "Következő"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:56
 msgid "PDF"
 msgstr "PDF"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:63
 msgid "TIFF"
 msgstr "TIFF"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:93
 msgid "Total"
 msgstr "Összesen"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:99
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:104
 msgid "Page"
 msgstr "Oldal"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:121
 msgid "Incoming Transmission"
 msgstr "Bejövő átvitel"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:122
 msgid "FACSIMILE TRANSMISSION"
 msgstr "FAXÁTVITEL"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:123
 msgid "Date Received:"
 msgstr "Fogadás dátuma:"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:124
 msgid "Originating Station:"
 msgstr "Küldő állomás:"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:129
 #, fuzzy
 msgid "PORT"
 msgstr "Priority"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:143
 msgid "High-Resolution Raster Preview"
 msgstr "Nagy felbontású raszteres előnézet"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:144
 msgid "Device Line:"
 msgstr "Eszközvonala:"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:151
 msgid "Download Original Document"
 msgstr "Eredeti dokumentum letöltése"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:158
 msgid "NamiFAX Enterprise Facsimile Engine"
 msgstr "NamiFAX vállalati faxmotor"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:159
 #, fuzzy
 msgid "Archive ID:"
 msgstr "Archívum"
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:434
+#, python-format
+msgid "Invalid fax number: %(number)s"
+msgstr ""
+
+msgid "Address book entry saved."
+msgstr ""
+
+msgid "Please enter a company name"
+msgstr ""
+
+msgid "Please enter a valid fax number"
+msgstr ""
+
+msgid "You are not allowed to delete address book entries."
+msgstr ""
+
+msgid "Contact saved."
+msgstr ""
+
+msgid "You are not allowed to delete contacts."
+msgstr ""
+
 msgid "Cover page template removed successfully"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:437
 msgid "Failed to remove cover page template"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:446
 msgid "Cover page template updated successfully"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:448
 msgid "Failed to update cover page template"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:454
 msgid "Cover page template registered successfully"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:458
 msgid "Title and File are required"
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:893
+msgid "The company does not exist."
+msgstr ""
+
+msgid "The company and its fax numbers were deleted."
+msgstr ""
+
+msgid "Please enter a valid e-mail address."
+msgstr ""
+
+msgid "Fax to Email settings saved"
+msgstr ""
+
 msgid "Access denied. Superadmin permission required."
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:923
 msgid "SMTP Gateway settings saved successfully."
 msgstr ""
 
-#: /home/jiho/numfax/src/namifax/views/auth.py:108
+msgid "Printer name and host are required."
+msgstr ""
+
+msgid "Network printer registered successfully."
+msgstr ""
+
+msgid "Printer deleted successfully."
+msgstr ""
+
+msgid "Lifecycle policy saved successfully."
+msgstr ""
+
+msgid "Cloud storage configuration saved successfully."
+msgstr ""
+
+msgid "SAML 2.0 configuration saved successfully."
+msgstr ""
+
+#, python-format
+msgid "Too many failed attempts. Try again in %(minutes)d minutes."
+msgstr ""
+
 msgid "Invalid or expired verification code."
+msgstr ""
+
+#, python-format
+msgid ""
+"The user account %(user)s has this email associated with it.  A web user "
+"from %(ip)s has just requested that a new password be sent.\n"
+"\n"
+"Your New Password is: %(password)s\n"
+"\n"
+"If this was an error just login with your new password and then change "
+"your password to what you would like it to be."
+msgstr ""
+
+msgid "Email failed to send"
+msgstr ""
+
+msgid "The code is not valid."
+msgstr ""
+
+msgid "The code did not match. Check the time on your phone and try again."
+msgstr ""
+
+msgid "The password is not correct."
 msgstr ""
 
 #~ msgid "High"
 #~ msgstr "High"
+
+#~ msgid "Configure corporate contact identity and transmission routing defaults."
+#~ msgstr ""
+#~ "Vállalati kapcsolati adatok és alapértelmezett"
+#~ " továbbítási útvonalak beállítása."
+
+#~ msgid "Primary Company Profile"
+#~ msgstr "Elsődleges vállalati profil"
+
+#~ msgid "Recipient Contact & Physical Address"
+#~ msgstr "Címzett kapcsolata és fizikai címe"
+
+#~ msgid "City / Postal Region"
+#~ msgstr "Város / Irányítószám régió"
+
+#~ msgid "Category Tag"
+#~ msgstr "Kategóriacímke"
+
+#~ msgid "General"
+#~ msgstr "Normal"
+
+#~ msgid "Invoices & Billing"
+#~ msgstr "Számlák és számlázás"
+
+#~ msgid "Legal"
+#~ msgstr "Jogi"
+
+#~ msgid "Description / Internal Notes"
+#~ msgstr "Leírás / Belső megjegyzések"
+
+#~ msgid "Edit Forwarding Rule"
+#~ msgstr "Továbbítási szabály szerkesztése"
+
+#~ msgid "Add Forwarding Rule"
+#~ msgstr "Továbbítási szabály hozzáadása"
+
+#~ msgid ""
+#~ "Please enter your registered username or"
+#~ " email address below. Password reset "
+#~ "instructions will be dispatched to your"
+#~ " account email address."
+#~ msgstr ""
+#~ "Kérjük, adja meg regisztrált felhasználónevét"
+#~ " vagy e-mail címét az alábbiakban. A"
+#~ " jelszó-visszaállítási utasításokat elküldjük a"
+#~ " fiókjához tartozó e-mail címre."
+
+#~ msgid "Username or Email Address"
+#~ msgstr "Felhasználónév vagy e-mail cím"
+
+#~ msgid "Reset Password"
+#~ msgstr ""
+#~ "Kérem adja meg az e-mail címét, "
+#~ "majd kattintson a Jelszó Küldése "
+#~ "gombra.Hamarosan kapni fog egy új "
+#~ "jelszót.  Használja ezt az új jelszót"
+#~ " a belépésre."
+
+#~ msgid "Standard (Default)"
+#~ msgstr "Szabványos (Alapértelmezett)"
+
+#~ msgid "Urgent"
+#~ msgstr "Sürgős"
+
+#~ msgid "Confidential"
+#~ msgstr "Bizalmas"
+
+#~ msgid "Normal"
+#~ msgstr "Normal"
+
+#~ msgid "Low"
+#~ msgstr "Low"
+
+#~ msgid "High (Urgent)"
+#~ msgstr "Magas (Sürgős)"
 

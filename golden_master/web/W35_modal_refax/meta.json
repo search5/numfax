@@ -1,8 +1,8 @@
 {
   "id": "W35_modal_refax",
-  "description": "Modal dialog to resend or reply to fax",
+  "description": "refax.php?fid=N address redirects to the Send Fax reply page",
   "route": "/refax",
   "method": "GET",
-  "expected_status": 200,
+  "expected_status": 302,
   "implemented": true
 }

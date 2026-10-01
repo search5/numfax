@@ -15,6 +15,7 @@ from webauthn.helpers import bytes_to_base64url
 
 from namifax.services.totp import TotpService
 from namifax.services.user_account import AFUserAccount
+from request_identity import set_identity
 
 PWD = "Secret123!"
 
@@ -233,7 +234,7 @@ def test_faxqueue_callers_pass_the_request_session():
     from namifax.views import outbox as outbox_mod
 
     req = testing.DummyRequest()
-    req.__dict__["identity"] = {"username": "admin", "uid": 1, "is_admin": True, "superuser": True}
+    set_identity(req, {"username": "admin", "uid": 1, "is_admin": True, "superuser": True})
     req.db, req.dbsession = object(), object()
     req.route_url = MagicMock(return_value="/x")
     with patch.object(outbox_mod, "FaxQueue") as cls, contextlib.suppress(Exception):

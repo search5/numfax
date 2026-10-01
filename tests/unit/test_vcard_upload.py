@@ -21,6 +21,7 @@ from namifax.views.ajax import (
     ajax_addressbook_prefill,
     ajax_archive_fax,
 )
+from request_identity import set_identity
 
 
 @pytest.fixture
@@ -28,7 +29,7 @@ def dummy_request(seeded_db, dbsession):
     request = testing.DummyRequest()
     request.db = seeded_db
     request.dbsession = dbsession
-    request.__dict__["identity"] = {"username": "admin", "uid": 1, "is_admin": True, "superuser": True}
+    set_identity(request, {"username": "admin", "uid": 1, "is_admin": True, "superuser": True})
     return request
 
 

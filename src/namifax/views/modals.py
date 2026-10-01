@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from pyramid.httpexceptions import HTTPForbidden
+from pyramid.httpexceptions import HTTPFound, HTTPForbidden
 from pyramid.view import view_config
 
 from namifax.services.addressbook import AFAddressBook
@@ -170,41 +170,13 @@ def modal_delete_view(request):
     }
 
 
-@view_config(route_name="modal_refax", renderer="namifax:templates/modal_refax.jinja2", permission="view")
+@view_config(route_name="modal_refax", permission="view")
 def modal_refax_view(request):
-    """Render reply to fax / resend dialog and create FaxQueue job."""
-    identity = request.identity or {"username": "admin", "uid": 1, "is_admin": True}
-    fid = request.params.get("fid", "1")
-    destinations = request.params.get("destinations", "+1-555-0199")
-    regarding = request.params.get("regarding", "Re: Document Transmission")
-    comments = request.params.get("comments", "Resending previous transmission.")
-    message = None
-
-    if request.method == "POST":
-        destinations = request.params.get("destinations", "").strip()
-        regarding = request.params.get("regarding", "").strip()
-        comments = request.params.get("comments", "").strip()
-
-        if destinations:
-            fq = FaxQueue(db=request.dbsession)
-            jid = fq.create_job(
-                destinations=destinations,
-                regarding=regarding,
-                comments=comments,
-                user=identity.get("username", "avantfax"),
-            )
-            if jid:
-                message = f"Fax queued for sending (Job ID: {jid})"
-
-    return {
-        "title": "- NamiFAX - Reply to Fax",
-        "current_user": identity,
-        "fid": fid,
-        "destinations": destinations,
-        "regarding": regarding,
-        "comments": comments,
-        "message": message,
-    }
+    """The original's refax.php?fid=N: the reply to a received fax is the Send Fax page (``sendfax?refax=N``)."""
+    fid = (request.params.get("fid") or "").strip()
+    if fid.isdigit():
+        return HTTPFound(location=request.route_url("sendfax", _query={"refax": fid}))
+    return HTTPFound(location=request.route_url("sendfax"))
 
 
 @view_config(route_name="modal_txreport", renderer="namifax:templates/modal_txreport.jinja2", permission="view")

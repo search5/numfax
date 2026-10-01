@@ -9,14 +9,14 @@ from namifax.views.modals import (
     modal_note_view,
     modal_assign_view,
     modal_email_view,
-    modal_refax_view,
 )
+from request_identity import set_identity
 
 
 @pytest.fixture
 def dummy_request():
     request = testing.DummyRequest()
-    request.__dict__["identity"] = {"username": "admin", "uid": 1, "is_admin": True, "superuser": True}
+    set_identity(request, {"username": "admin", "uid": 1, "is_admin": True, "superuser": True})
     request.db = MagicMock()
     request.dbsession = MagicMock()
     return request
@@ -97,23 +97,3 @@ def test_modal_email_post(dummy_request):
         mock_send_mail.assert_called_once()
         inst_ab.create_contacts.assert_called_with("client@example.com")
         assert res.get("title") == "- NamiFAX - Send Fax via Email"
-
-
-def test_modal_refax_post(dummy_request):
-    """Verify resending fax via FaxQueue modal POST."""
-    dummy_request.method = "POST"
-    dummy_request.params = {
-        "fid": "42",
-        "destinations": "123-456-7890",
-        "regarding": "Resending contract",
-        "comments": "Please confirm receipt.",
-        "_submit_check": "1",
-    }
-    with patch("namifax.views.modals.FaxQueue") as mock_fq_cls:
-        inst_fq = MagicMock()
-        inst_fq.create_job.return_value = 999
-        mock_fq_cls.return_value = inst_fq
-
-        res = modal_refax_view(dummy_request)
-        inst_fq.create_job.assert_called()
-        assert res.get("title") == "- NamiFAX - Reply to Fax"

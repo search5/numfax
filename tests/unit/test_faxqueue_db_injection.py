@@ -51,13 +51,9 @@ def _assert_queue_built_with_db(mod, view, req):
         assert call.kwargs.get("db") is req.dbsession
 
 
-def test_ajax_faxalter_builds_queue_with_request_db():
-    _assert_queue_built_with_db(ajax_mod, ajax_mod.ajax_faxalter, _request("POST", {"jid": "1", "priority": "100"}))
-
-
-def test_modal_refax_builds_queue_with_request_db():
-    req = _request("POST", {"fid": "1", "destinations": "555", "_submit_check": "1"})
-    _assert_queue_built_with_db(modals_mod, modals_mod.modal_refax_view, req)
+def test_ajax_faxalter_builds_queue_with_request_db(as_superuser):
+    with patch.object(ajax_mod, "FaxModem", MagicMock()):            # the modem lookup has no database behind a stand-in session
+        _assert_queue_built_with_db(ajax_mod, ajax_mod.ajax_faxalter, _request("POST", {"jid": "1", "priority": "100"}))
 
 
 def test_outbox_builds_queue_with_request_db():

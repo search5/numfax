@@ -9,6 +9,7 @@ import pytest
 from pyramid import testing
 
 from namifax.views import addressbook as mod
+from request_identity import set_identity
 
 CASES = [
     ("addressbook_list_view", "GET", {}),
@@ -26,7 +27,7 @@ CASES = [
 @pytest.mark.parametrize("name,method,params", CASES, ids=[f"{c[0]}-{c[1]}-{i}" for i, c in enumerate(CASES)])
 def test_view_builds_domain_objects_with_request_db(name, method, params):
     req = testing.DummyRequest()
-    req.__dict__["identity"] = {"username": "admin", "uid": 1, "is_admin": True, "superuser": True}
+    set_identity(req, {"username": "admin", "uid": 1, "is_admin": True, "superuser": True})
     req.db = object()
     req.dbsession = object()
     req.method = method
@@ -35,7 +36,9 @@ def test_view_builds_domain_objects_with_request_db(name, method, params):
 
     cls = MagicMock(name="AFAddressBook")
     cls.return_value.get_companies.return_value = []
-    with patch.object(mod, "AFAddressBook", cls), contextlib.suppress(Exception):
+    # the account and category lookups have no database behind a stand-in session; this test is about the address book
+    with patch.object(mod, "AFAddressBook", cls), patch.object(mod, "AFUserAccount", MagicMock()), \
+            patch.object(mod, "FaxPDFCategory", MagicMock()), contextlib.suppress(Exception):
         getattr(mod, name)(req)
 
     assert cls.call_args_list, f"{name} built no AFAddressBook"

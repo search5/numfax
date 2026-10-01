@@ -7,6 +7,7 @@ import pytest
 from namifax.views.inbox import fax_rotate_view, setcompany_view
 from namifax.views.addressbook import emailbook_list_view, emailbook_edit_view
 from namifax.views.ajax import ajax_deletefaxes_view, ajax_archivebook_view
+from request_identity import set_identity
 
 
 @pytest.fixture
@@ -14,7 +15,7 @@ def dummy_request(seeded_db, dbsession):
     request = testing.DummyRequest()
     request.db = seeded_db
     request.dbsession = dbsession
-    request.__dict__["identity"] = {"username": "admin", "uid": 1, "is_admin": True, "superuser": True}
+    set_identity(request, {"username": "admin", "uid": 1, "is_admin": True, "superuser": True})
     request.route_url = MagicMock(side_effect=lambda name, *args, **kwargs: f"/{name}")
     return request
 

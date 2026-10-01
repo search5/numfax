@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: eMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 00:54+0900\n"
+"POT-Creation-Date: 2026-10-01 18:15+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -15,86 +15,42 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:13
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:25
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:25
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:19
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:64
 msgid "Address Book"
 msgstr "Address Book"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:14
 msgid "Save frequently used fax numbers for quick access when sending."
 msgstr "Save frequently used fax numbers for quick access when sending."
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:24
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:53
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:98
 msgid "Search"
 msgstr "Search"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:32
 msgid "New Company"
 msgstr "New Company"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:43
 msgid "Company / Name"
 msgstr "Company / Name"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:44
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:52
 msgid "Fax Number"
 msgstr "Fax Number"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:45
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:121
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:76
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:35
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:77
 msgid "Email"
 msgstr "Email"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:46
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:38
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:121
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:54
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:72
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:57
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:129
 msgid "Actions"
 msgstr "Actions"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:74
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:28
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:46
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:78
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:19
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:11
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:248
 msgid "Send Fax"
 msgstr "Send Fax"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:78
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:61
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:42
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:59
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:45
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:45
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:69
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:67
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:65
 msgid "Edit"
 msgstr "Edit"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:92
 msgid "No contacts yet"
 msgstr "No contacts yet"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:95
 msgid "No contacts matched"
 msgstr "No contacts matched"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:97
 msgid ""
 "Add contacts to quickly select fax numbers when sending without typing "
 "them every time."
@@ -102,1244 +58,1027 @@ msgstr ""
 "Add contacts to quickly select fax numbers when sending without typing "
 "them every time."
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook.jinja2:105
 msgid "Add First Contact"
 msgstr "Add First Contact"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:18
 msgid "Edit Company"
 msgstr "Edit Company"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:18
 msgid "Add New Company"
 msgstr "Add New Company"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:20
-msgid "Configure corporate contact identity and transmission routing defaults."
-msgstr "Configure corporate contact identity and transmission routing defaults."
+msgid "Configure the company and every fax number it uses."
+msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:26
 msgid "Back to Contacts"
 msgstr "Back to Contacts"
 
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:42
-msgid "Primary Company Profile"
-msgstr "Primary Company Profile"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:46
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:69
-msgid "Company Name"
-msgstr "Company Name"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:57
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:106
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:53
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:49
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:64
-msgid "Email Address"
-msgstr "Email Address"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:67
-msgid "Recipient Contact & Physical Address"
-msgstr "Recipient Contact & Physical Address"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:72
-msgid "Attention Person"
-msgstr "Attention Person"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:77
-msgid "Voice Telephone"
-msgstr "Voice Telephone"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:82
-msgid "Street Address"
-msgstr "Street Address"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:87
-msgid "City / Postal Region"
-msgstr "City / Postal Region"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:92
-msgid "Category Tag"
-msgstr "Category Tag"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:94
-msgid "General"
-msgstr "General"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:95
-msgid "Invoices & Billing"
-msgstr "Invoices & Billing"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:96
-msgid "Legal"
-msgstr "Legal"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:102
-msgid "Description / Internal Notes"
-msgstr "Description / Internal Notes"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:112
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:113
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:72
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:101
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:92
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:88
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:136
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:186
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:74
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:62
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:171
-#: /home/jiho/numfax/src/namifax/templates/modal_delete.jinja2:39
-msgid "Delete"
-msgstr "Delete"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:115
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:123
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:112
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:74
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:100
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:94
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:90
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:135
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:188
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:196
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:77
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:85
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:65
-#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:63
-#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:56
-#: /home/jiho/numfax/src/namifax/templates/modal_delete.jinja2:36
-#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:57
-#: /home/jiho/numfax/src/namifax/templates/modal_note.jinja2:47
-#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:57
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:81
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:64
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:187
-msgid "Cancel"
-msgstr "Cancel"
-
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:117
-#: /home/jiho/numfax/src/namifax/templates/addressbook_edit.jinja2:125
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:114
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:116
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:75
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:80
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:102
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:104
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:95
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:100
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:91
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:96
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:137
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:140
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:190
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:198
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:79
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:87
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:67
-#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:59
-#: /home/jiho/numfax/src/namifax/templates/modal_note.jinja2:50
-msgid "Save"
-msgstr "Save"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:18
-msgid "Dashboard Overview"
-msgstr "Dashboard Overview"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:21
-msgid "SYSTEM OPERATIONAL"
-msgstr "SYSTEM OPERATIONAL"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:24
-msgid ""
-"Real-time status of fax spools, hardware serial modems, and registered "
-"users"
+msgid "Upload contacts file (vCard)"
 msgstr ""
-"Real-time status of fax spools, hardware serial modems, and registered "
-"users"
 
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:30
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:59
-msgid "Users"
-msgstr "Users"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:31
-msgid "Modems"
-msgstr "Modems"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:32
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:139
-msgid "DID Routes"
-msgstr "DID Routes"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:33
-msgid "Logs"
-msgstr "Logs"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:43
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:152
-msgid "Fax Lines"
-msgstr "Fax Lines"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:46
-msgid "Hardware Ready"
-msgstr "Hardware Ready"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:61
-msgid "Active accounts"
-msgstr "Active accounts"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:73
-msgid "Backend Core"
-msgstr "Backend Core"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:87
-msgid "Scheduler"
-msgstr "Scheduler"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:89
-msgid "Running"
-msgstr "Running"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:107
-msgid "Registered User Accounts"
-msgstr "Registered User Accounts"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:110
-msgid "Manage Users"
-msgstr "Manage Users"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:118
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:34
-msgid "Name"
-msgstr "Name"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:119
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:33
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:95
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:68
-msgid "Username"
-msgstr "Username"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:120
-msgid "Last Login"
-msgstr "Last Login"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:143
-msgid "Server Status"
-msgstr "Server Status"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:148
-msgid "Core"
-msgstr "Core"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:152
-msgid "Database Engine"
-msgstr "Database Engine"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:156
-msgid "System Scheduler"
-msgstr "System Scheduler"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:168
-msgid "Configured Modems"
-msgstr "Configured Modems"
-
-#: /home/jiho/numfax/src/namifax/templates/admin.jinja2:196
-msgid "Administrator Workflow Guide"
-msgstr "Administrator Workflow Guide"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:17
-msgid "Configure Barcode Routing"
-msgstr "Configure Barcode Routing"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:18
-msgid ""
-"Route incoming faxes automatically based on recognized Code39 / QR "
-"barcodes"
+msgid "Upload"
 msgstr ""
-"Route incoming faxes automatically based on recognized Code39 / QR "
-"barcodes"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:23
-msgid "New Barcode Route"
-msgstr "New Barcode Route"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:46
-msgid "Barcode Routing Rules"
-msgstr "Barcode Routing Rules"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:55
-msgid "Barcode:"
-msgstr "Barcode:"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:58
-msgid "Contact:"
-msgstr "Contact:"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:58
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:41
-msgid "None"
-msgstr "None"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:58
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:41
-msgid "Printer:"
-msgstr "Printer:"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:74
-msgid "Edit Barcode Route"
-msgstr "Edit Barcode Route"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:74
-msgid "Add Barcode Route"
-msgstr "Add Barcode Route"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:78
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:76
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:62
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:91
-msgid "EDIT MODE"
-msgstr "EDIT MODE"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:80
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:78
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:64
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:93
-msgid "NEW"
-msgstr "NEW"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:86
-msgid "Barcode"
-msgstr "Barcode"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:91
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:41
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:83
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:54
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:104
-msgid "Alias"
-msgstr "Alias"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:96
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:88
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:109
-msgid "Contact Email"
-msgstr "Contact Email"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_barcodes.jinja2:101
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:81
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:93
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:56
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:114
-msgid "Printer"
-msgstr "Printer"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:17
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:181
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:268
-msgid "Fax Categories"
-msgstr "Fax Categories"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:18
-msgid ""
-"Manage classification tags and archival categories for organizing "
-"transmissions"
-msgstr ""
-"Manage classification tags and archival categories for organizing "
-"transmissions"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:23
-msgid "New Category"
-msgstr "New Category"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:33
-msgid "Existing Categories"
-msgstr "Existing Categories"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:54
-msgid "Edit Category"
-msgstr "Edit Category"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:54
-msgid "Add Category"
-msgstr "Add Category"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_categories.jinja2:65
-msgid "Category Name"
-msgstr "Category Name"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:17
-msgid "Configure Cover Pages"
-msgstr "Configure Cover Pages"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:18
-msgid "Manage facsimile PostScript cover page templates and layouts"
-msgstr "Manage facsimile PostScript cover page templates and layouts"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:23
-msgid "New Cover Page"
-msgstr "New Cover Page"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:46
-msgid "Available Cover Pages"
-msgstr "Available Cover Pages"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:72
-msgid "Edit Cover Page"
-msgstr "Edit Cover Page"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:72
-msgid "Add Cover Page"
-msgstr "Add Cover Page"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:84
-msgid "Title"
-msgstr "Title"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:89
-msgid "File"
-msgstr "File"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:115
-msgid "Cover Template Studio: Dynamic Tag References"
-msgstr "Cover Template Studio: Dynamic Tag References"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_covers.jinja2:117
-msgid ""
-"Use these placeholder tags in your PostScript (.ps), HTML (.html), or PDF"
-" templates. The Cover Studio engine automatically substitutes them during"
-" fax rendering."
-msgstr ""
-"Use these placeholder tags in your PostScript (.ps), HTML (.html), or PDF"
-" templates. The Cover Studio engine automatically substitutes them during"
-" fax rendering."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:17
-msgid "Dynamic Configuration"
-msgstr "Dynamic Configuration"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:18
-msgid ""
-"Manage Caller ID blacklists and transmission rejection rules for modem "
-"devices"
-msgstr ""
-"Manage Caller ID blacklists and transmission rejection rules for modem "
-"devices"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:23
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:23
-msgid "New Rule"
-msgstr "New Rule"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:33
-msgid "Blocked Caller IDs"
-msgstr "Blocked Caller IDs"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:40
-msgid "Caller ID:"
-msgstr "Caller ID:"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:41
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:82
-msgid "All Devices"
-msgstr "All Devices"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:58
-msgid "Edit Caller ID Rule"
-msgstr "Edit Caller ID Rule"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:58
-msgid "Add Caller ID Rule"
-msgstr "Add Caller ID Rule"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:75
-msgid "Caller ID"
-msgstr "Caller ID"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_dynconf.jinja2:80
-msgid "Modem Device"
-msgstr "Modem Device"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:17
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:160
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:272
-msgid "Fax to Email"
-msgstr "Fax to Email"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:18
-msgid ""
-"Configure automated inbound fax forwarding and PDF dispatch rules mapped "
-"by company"
-msgstr ""
-"Configure automated inbound fax forwarding and PDF dispatch rules mapped "
-"by company"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:33
-msgid "Company Forwarding Rules"
-msgstr "Company Forwarding Rules"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:41
-msgid "Email:"
-msgstr "Email:"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:58
-msgid "Edit Forwarding Rule"
-msgstr "Edit Forwarding Rule"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:58
-msgid "Add Forwarding Rule"
-msgstr "Add Forwarding Rule"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_fax2email.jinja2:71
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:54
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:81
 msgid "Company"
 msgstr "Company"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:49
-msgid "Control Panel"
-msgstr "Control Panel"
+msgid "Company Name"
+msgstr "Company Name"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:61
-msgid "User Portal"
-msgstr "User Portal"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:63
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:13
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:45
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:81
-msgid "Inbox"
-msgstr "Inbox"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:106
-msgid "Overview"
-msgstr "Overview"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:113
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:264
-msgid "Dashboard"
-msgstr "Dashboard"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:119
-msgid "Access Control"
-msgstr "Access Control"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:126
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:265
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:17
-msgid "User Accounts"
-msgstr "User Accounts"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:132
-msgid "Hardware & Lines"
-msgstr "Hardware & Lines"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:139
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:266
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:17
-msgid "Fax Modems"
-msgstr "Fax Modems"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:145
-msgid "Inbound Routing"
-msgstr "Inbound Routing"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:152
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:267
-msgid "DID Routing"
-msgstr "DID Routing"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:168
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:270
-msgid "Barcode Routing"
-msgstr "Barcode Routing"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:174
-msgid "Content & Templates"
-msgstr "Content & Templates"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:189
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:269
-msgid "Cover Pages"
-msgstr "Cover Pages"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:195
-msgid "Security & System"
-msgstr "Security & System"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:202
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:271
-msgid "Blacklist (DynConf)"
-msgstr "Blacklist (DynConf)"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:210
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:273
-msgid "System Audit Logs"
-msgstr "System Audit Logs"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:219
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:274
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:18
-msgid "System Functions"
-msgstr "System Functions"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:227
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:275
-msgid "SMTP Gateway"
-msgstr "SMTP Gateway"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:245
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:111
-msgid "Logout"
-msgstr "Logout"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:261
-msgid "Admin Control Panel"
-msgstr "Admin Control Panel"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_layout.jinja2:285
-msgid "Appliance Engine Online"
-msgstr "Appliance Engine Online"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:18
-msgid ""
-"Configure Modems hardware devices, physical serial ports, and print-"
-"forwarding rules"
+msgid "Clear the number to remove it."
 msgstr ""
-"Configure Modems hardware devices, physical serial ports, and print-"
-"forwarding rules"
 
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:23
-msgid "Configure Modems"
-msgstr "Configure Modems"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:33
-msgid "Active Modem Lines"
-msgstr "Active Modem Lines"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:40
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:78
-msgid "Device"
-msgstr "Device"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:42
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:55
-msgid "Contact"
-msgstr "Contact"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:43
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:56
-msgid "Status"
-msgstr "Status"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:72
-msgid "Edit Modem"
-msgstr "Edit Modem"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:72
-msgid "Configure Modems Device"
-msgstr "Configure Modems Device"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:100
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:139
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:91
-msgid "Reset"
-msgstr "Reset"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:102
-msgid "Save Modem"
-msgstr "Save Modem"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:112
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:150
-msgid "Appliance Note:"
-msgstr "Appliance Note:"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_modems.jinja2:112
-msgid ""
-"Modems configured here must correspond to physical RS-232 serial devices,"
-" USB modems, or virtual IAX modems recognized by the underlying HylaFAX "
-"server."
-msgstr ""
-"Modems configured here must correspond to physical RS-232 serial devices,"
-" USB modems, or virtual IAX modems recognized by the underlying HylaFAX "
-"server."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:17
-msgid "Configure DID Routing"
-msgstr "Configure DID Routing"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:18
-msgid ""
-"Route incoming faxes by Direct Inward Dialing (DID) extension to specific"
-" email boxes or printers"
-msgstr ""
-"Route incoming faxes by Direct Inward Dialing (DID) extension to specific"
-" email boxes or printers"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:23
-msgid "New DID Route"
-msgstr "New DID Route"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:46
-msgid "Active DID Routing Rules"
-msgstr "Active DID Routing Rules"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:53
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:99
-msgid "Route Code"
-msgstr "Route Code"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:57
-msgid "Action"
-msgstr "Action"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:84
-msgid "Configure Routing Rule"
-msgstr "Configure Routing Rule"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:119
-msgid "Category"
-msgstr "Category"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:121
-msgid "-- None --"
-msgstr "-- None --"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_routing_did.jinja2:150
-msgid ""
-"DID (Direct Inward Dialing) routing automatically redirects incoming "
-"transmissions matching extension patterns directly to mapped operator "
-"inboxes or physical printers."
-msgstr ""
-"DID (Direct Inward Dialing) routing automatically redirects incoming "
-"transmissions matching extension patterns directly to mapped operator "
-"inboxes or physical printers."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:18
-msgid "External SMTP Gateway"
-msgstr "External SMTP Gateway"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:21
-msgid ""
-"Configure external mail delivery server for inbound fax notifications and"
-" user alerts"
-msgstr ""
-"Configure external mail delivery server for inbound fax notifications and"
-" user alerts"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:62
-msgid "Diagnostics Result"
-msgstr "Diagnostics Result"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:89
-msgid "Server Connection & Security"
-msgstr "Server Connection & Security"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:95
-msgid "SMTP Host / Server"
-msgstr "SMTP Host / Server"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:103
-msgid "Port"
-msgstr "Port"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:112
-msgid "Encryption Protocol"
-msgstr "Encryption Protocol"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:116
-msgid "None (Plain)"
-msgstr "None (Plain)"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:120
-msgid "STARTTLS (587)"
-msgstr "STARTTLS (587)"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:124
-msgid "SSL / TLS (465)"
-msgstr "SSL / TLS (465)"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:134
-msgid "Requires SMTP Authentication"
-msgstr "Requires SMTP Authentication"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:139
-msgid "Username / Login"
-msgstr "Username / Login"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:145
-msgid "Password / App Key"
-msgstr "Password / App Key"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:160
-msgid "Default Sender Profile & Signatures"
-msgstr "Default Sender Profile & Signatures"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:165
-msgid "From Email Address"
-msgstr "From Email Address"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:171
-msgid "From Display Name"
-msgstr "From Display Name"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:179
-msgid "Email Signature (Plaintext)"
-msgstr "Email Signature (Plaintext)"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:187
-msgid "Last updated"
-msgstr "Last updated"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:194
-msgid "Save Gateway Settings"
-msgstr "Save Gateway Settings"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:207
-msgid "Diagnostic Self-Test"
-msgstr "Diagnostic Self-Test"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:210
-msgid ""
-"Verify server reachability, TLS handshake, credentials and message "
-"dispatch in real time."
-msgstr ""
-"Verify server reachability, TLS handshake, credentials and message "
-"dispatch in real time."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:214
-msgid "Target Recipient Email"
-msgstr "Target Recipient Email"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_smtp.jinja2:226
-msgid "Send Diagnostic Email"
-msgstr "Send Diagnostic Email"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:19
-msgid "Perform maintenance operations, service control, and backups."
-msgstr "Perform maintenance operations, service control, and backups."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:26
-msgid "HylaFAX Engine Active"
-msgstr "HylaFAX Engine Active"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:29
-msgid "Admin Dashboard"
-msgstr "Admin Dashboard"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:40
-msgid "Caution: Appliance Maintenance Operations"
-msgstr "Caution: Appliance Maintenance Operations"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:42
-msgid ""
-"Restarting or shutting down services will interrupt active fax modem "
-"spooling and disconnect client sessions. Ensure all outbound "
-"transmissions in the modem queue are completed before initiating "
-"maintenance tasks."
-msgstr ""
-"Restarting or shutting down services will interrupt active fax modem "
-"spooling and disconnect client sessions. Ensure all outbound "
-"transmissions in the modem queue are completed before initiating "
-"maintenance tasks."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:58
-msgid "Daemon Service Control"
-msgstr "Daemon Service Control"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:61
-msgid "Restart HylaFAX and NamiFAX web services, or halt background workers."
-msgstr "Restart HylaFAX and NamiFAX web services, or halt background workers."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:84
-msgid "Reboot Services"
-msgstr "Reboot Services"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:90
-msgid "Shutdown Services"
-msgstr "Shutdown Services"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:100
-msgid "Database & Archive Backup"
-msgstr "Database & Archive Backup"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:103
-msgid "Download system archives and database snapshots for offsite retention."
-msgstr "Download system archives and database snapshots for offsite retention."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:126
-msgid "Download Archive"
-msgstr "Download Archive"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_sysfunc.jinja2:132
-msgid "Download Database"
-msgstr "Download Database"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:17
-msgid "System Logs"
-msgstr "System Logs"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:18
-msgid "Audit logs and HylaFAX server operational event traces"
-msgstr "Audit logs and HylaFAX server operational event traces"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:25
-msgid "Keywords:"
-msgstr "Keywords:"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:30
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:43
-msgid "Date:"
-msgstr "Date:"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:64
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:120
-msgid "Date"
-msgstr "Date"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:65
-msgid "Log Text"
-msgstr "Log Text"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:79
-msgid "No system logs found matching criteria."
-msgstr "No system logs found matching criteria."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_system_logs.jinja2:80
-msgid "Transmissions and server events will be streamed here in real time."
-msgstr "Transmissions and server events will be streamed here in real time."
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:18
-msgid "Manage system operator credentials, access permissions, and route mapping"
-msgstr "Manage system operator credentials, access permissions, and route mapping"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:23
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:82
-msgid "Create New User"
-msgstr "Create New User"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:36
-msgid "Superuser"
-msgstr "Superuser"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:37
-msgid "Admin"
-msgstr "Admin"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:53
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:60
-msgid "YES"
-msgstr "YES"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:55
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:62
-msgid "NO"
-msgstr "NO"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:82
-msgid "Configure User:"
-msgstr "Configure User:"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:91
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:59
-msgid "Full Name"
-msgstr "Full Name"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:102
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:82
-msgid "Password"
-msgstr "Password"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:113
-msgid "Permissions & Capabilities"
-msgstr "Permissions & Capabilities"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:117
-msgid "Administrator Console"
-msgstr "Administrator Console"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:121
-msgid "Superuser Rights"
-msgstr "Superuser Rights"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:125
-msgid "Can Delete Faxes"
-msgstr "Can Delete Faxes"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:129
-msgid "Send on Any Modem"
-msgstr "Send on Any Modem"
-
-#: /home/jiho/numfax/src/namifax/templates/admin_users.jinja2:165
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:41
-msgid "Categories"
-msgstr "Categories"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:13
-msgid "Archive Search"
-msgstr "Archive Search"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:14
-msgid "Search all sent and received fax records by date, company, or fax number."
-msgstr "Search all sent and received fax records by date, company, or fax number."
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:18
-msgid "results"
-msgstr "results"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:18
-msgid "result"
-msgstr "result"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:26
-msgid "Search Filters"
-msgstr "Search Filters"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:27
-msgid ""
-"Leave filters empty to search all records. Narrow results by adding more "
-"criteria."
-msgstr ""
-"Leave filters empty to search all records. Narrow results by adding more "
-"criteria."
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:33
-msgid "Keyword"
-msgstr "Keyword"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:45
-msgid "All Categories"
-msgstr "All Categories"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:46
-msgid "Invoices / Orders"
-msgstr "Invoices / Orders"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:47
-msgid "Legal / Contracts"
-msgstr "Legal / Contracts"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:52
-msgid "From Date"
-msgstr "From Date"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:60
-msgid "To Date"
-msgstr "To Date"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:70
-msgid "Direction"
-msgstr "Direction"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:74
-msgid "Sent & Received"
-msgstr "Sent & Received"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:75
-msgid "Received only"
-msgstr "Received only"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:76
-msgid "Sent only"
-msgstr "Sent only"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:81
-msgid "Fax ID"
-msgstr "Fax ID"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:110
-msgid "Results"
-msgstr "Results"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:111
-msgid "records"
-msgstr "records"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:111
-msgid "record"
-msgstr "record"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:117
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:69
-msgid "Sender"
-msgstr "Sender"
-
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:118
 msgid "Description"
 msgstr "Description"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:119
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:71
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:55
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:92
+msgid "Category"
+msgstr "Category"
+
+msgid "Attention Person"
+msgstr "Attention Person"
+
+msgid "Location"
+msgstr ""
+
+msgid "Voice Telephone"
+msgstr "Voice Telephone"
+
+msgid "Street Address"
+msgstr "Street Address"
+
+msgid "Zip / Postal Code"
+msgstr ""
+
+msgid "City"
+msgstr ""
+
+msgid "Add a Fax Number"
+msgstr ""
+
+msgid "First Fax Number"
+msgstr ""
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Dashboard Overview"
+msgstr "Dashboard Overview"
+
+msgid "SYSTEM OPERATIONAL"
+msgstr "SYSTEM OPERATIONAL"
+
+msgid ""
+"Real-time status of fax spools, hardware serial modems, and registered "
+"users"
+msgstr ""
+"Real-time status of fax spools, hardware serial modems, and registered "
+"users"
+
+msgid "Users"
+msgstr "Users"
+
+msgid "Modems"
+msgstr "Modems"
+
+msgid "DID Routes"
+msgstr "DID Routes"
+
+msgid "Logs"
+msgstr "Logs"
+
+msgid "Fax Lines"
+msgstr "Fax Lines"
+
+msgid "Hardware Ready"
+msgstr "Hardware Ready"
+
+msgid "Active accounts"
+msgstr "Active accounts"
+
+msgid "Backend Core"
+msgstr "Backend Core"
+
+msgid "Scheduler"
+msgstr "Scheduler"
+
+msgid "Running"
+msgstr "Running"
+
+msgid "Registered User Accounts"
+msgstr "Registered User Accounts"
+
+msgid "Manage Users"
+msgstr "Manage Users"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Username"
+msgstr "Username"
+
+msgid "Last Login"
+msgstr "Last Login"
+
+msgid "Server Status"
+msgstr "Server Status"
+
+msgid "Core"
+msgstr "Core"
+
+msgid "Database Engine"
+msgstr "Database Engine"
+
+msgid "System Scheduler"
+msgstr "System Scheduler"
+
+msgid "Configured Modems"
+msgstr "Configured Modems"
+
+msgid "Administrator Workflow Guide"
+msgstr "Administrator Workflow Guide"
+
+msgid "Configure Barcode Routing"
+msgstr "Configure Barcode Routing"
+
+msgid ""
+"Route incoming faxes automatically based on recognized Code39 / QR "
+"barcodes"
+msgstr ""
+"Route incoming faxes automatically based on recognized Code39 / QR "
+"barcodes"
+
+msgid "New Barcode Route"
+msgstr "New Barcode Route"
+
+msgid "Barcode Routing Rules"
+msgstr "Barcode Routing Rules"
+
+msgid "Barcode:"
+msgstr "Barcode:"
+
+msgid "Contact:"
+msgstr "Contact:"
+
+msgid "None"
+msgstr "None"
+
+msgid "Printer:"
+msgstr "Printer:"
+
+msgid "Edit Barcode Route"
+msgstr "Edit Barcode Route"
+
+msgid "Add Barcode Route"
+msgstr "Add Barcode Route"
+
+msgid "EDIT MODE"
+msgstr "EDIT MODE"
+
+msgid "NEW"
+msgstr "NEW"
+
+msgid "Barcode"
+msgstr "Barcode"
+
+msgid "Alias"
+msgstr "Alias"
+
+msgid "Contact Email"
+msgstr "Contact Email"
+
+msgid "Printer"
+msgstr "Printer"
+
+msgid "Fax Categories"
+msgstr "Fax Categories"
+
+msgid ""
+"Manage classification tags and archival categories for organizing "
+"transmissions"
+msgstr ""
+"Manage classification tags and archival categories for organizing "
+"transmissions"
+
+msgid "New Category"
+msgstr "New Category"
+
+msgid "Existing Categories"
+msgstr "Existing Categories"
+
+msgid "Edit Category"
+msgstr "Edit Category"
+
+msgid "Add Category"
+msgstr "Add Category"
+
+msgid "Category Name"
+msgstr "Category Name"
+
+msgid "Configure Cover Pages"
+msgstr "Configure Cover Pages"
+
+msgid "Manage facsimile PostScript cover page templates and layouts"
+msgstr "Manage facsimile PostScript cover page templates and layouts"
+
+msgid "New Cover Page"
+msgstr "New Cover Page"
+
+msgid "Available Cover Pages"
+msgstr "Available Cover Pages"
+
+msgid "Edit Cover Page"
+msgstr "Edit Cover Page"
+
+msgid "Add Cover Page"
+msgstr "Add Cover Page"
+
+msgid "Title"
+msgstr "Title"
+
+msgid "File"
+msgstr "File"
+
+msgid "Cover Template Studio: Dynamic Tag References"
+msgstr "Cover Template Studio: Dynamic Tag References"
+
+msgid ""
+"Use these placeholder tags in your PostScript (.ps), HTML (.html), or PDF"
+" templates. The Cover Studio engine automatically substitutes them during"
+" fax rendering."
+msgstr ""
+"Use these placeholder tags in your PostScript (.ps), HTML (.html), or PDF"
+" templates. The Cover Studio engine automatically substitutes them during"
+" fax rendering."
+
+msgid "Dynamic Configuration"
+msgstr "Dynamic Configuration"
+
+msgid ""
+"Manage Caller ID blacklists and transmission rejection rules for modem "
+"devices"
+msgstr ""
+"Manage Caller ID blacklists and transmission rejection rules for modem "
+"devices"
+
+msgid "New Rule"
+msgstr "New Rule"
+
+msgid "Blocked Caller IDs"
+msgstr "Blocked Caller IDs"
+
+msgid "Caller ID:"
+msgstr "Caller ID:"
+
+msgid "All Devices"
+msgstr "All Devices"
+
+msgid "Edit Caller ID Rule"
+msgstr "Edit Caller ID Rule"
+
+msgid "Add Caller ID Rule"
+msgstr "Add Caller ID Rule"
+
+msgid "Caller ID"
+msgstr "Caller ID"
+
+msgid "Modem Device"
+msgstr "Modem Device"
+
+msgid "Fax to Email"
+msgstr "Fax to Email"
+
+msgid ""
+"Configure automated inbound fax forwarding and PDF dispatch rules mapped "
+"by company"
+msgstr ""
+"Configure automated inbound fax forwarding and PDF dispatch rules mapped "
+"by company"
+
+msgid "Add companies in the Address Book"
+msgstr ""
+
+msgid "Company Forwarding Rules"
+msgstr "Company Forwarding Rules"
+
+msgid "fax numbers"
+msgstr ""
+
+msgid "Email:"
+msgstr "Email:"
+
+msgid "Edit Forwarding Rules"
+msgstr ""
+
+msgid "Forwarding Rules"
+msgstr ""
+
+msgid "This company has no fax numbers yet. Add them in the Address Book."
+msgstr ""
+
+msgid ""
+"Select a company on the left to set where the faxes received on each of "
+"its numbers are sent."
+msgstr ""
+
+msgid "Control Panel"
+msgstr "Control Panel"
+
+msgid "User Portal"
+msgstr "User Portal"
+
+msgid "Inbox"
+msgstr "Inbox"
+
+msgid "Overview"
+msgstr "Overview"
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "Access Control"
+msgstr "Access Control"
+
+msgid "User Accounts"
+msgstr "User Accounts"
+
+msgid "Hardware & Lines"
+msgstr "Hardware & Lines"
+
+msgid "Fax Modems"
+msgstr "Fax Modems"
+
+msgid "Network Printers"
+msgstr ""
+
+msgid "Inbound Routing"
+msgstr "Inbound Routing"
+
+msgid "DID Routing"
+msgstr "DID Routing"
+
+msgid "Barcode Routing"
+msgstr "Barcode Routing"
+
+msgid "Content & Templates"
+msgstr "Content & Templates"
+
+msgid "Cover Pages"
+msgstr "Cover Pages"
+
+msgid "Security & System"
+msgstr "Security & System"
+
+msgid "Blacklist (DynConf)"
+msgstr "Blacklist (DynConf)"
+
+msgid "System Audit Logs"
+msgstr "System Audit Logs"
+
+msgid "System Functions"
+msgstr "System Functions"
+
+msgid "SMTP Gateway"
+msgstr "SMTP Gateway"
+
+msgid "Storage & Cloud"
+msgstr ""
+
+msgid "SAML 2.0 SSO"
+msgstr ""
+
+msgid "Logout"
+msgstr "Logout"
+
+msgid "Admin Control Panel"
+msgstr "Admin Control Panel"
+
+msgid "Appliance Engine Online"
+msgstr "Appliance Engine Online"
+
+msgid ""
+"Configure Modems hardware devices, physical serial ports, and print-"
+"forwarding rules"
+msgstr ""
+"Configure Modems hardware devices, physical serial ports, and print-"
+"forwarding rules"
+
+msgid "Configure Modems"
+msgstr "Configure Modems"
+
+msgid "Active Modem Lines"
+msgstr "Active Modem Lines"
+
+msgid "Device"
+msgstr "Device"
+
+msgid "Contact"
+msgstr "Contact"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Edit Modem"
+msgstr "Edit Modem"
+
+msgid "Configure Modems Device"
+msgstr "Configure Modems Device"
+
+msgid "Reset"
+msgstr "Reset"
+
+msgid "Save Modem"
+msgstr "Save Modem"
+
+msgid "Appliance Note:"
+msgstr "Appliance Note:"
+
+msgid ""
+"Modems configured here must correspond to physical RS-232 serial devices,"
+" USB modems, or virtual IAX modems recognized by the underlying HylaFAX "
+"server."
+msgstr ""
+"Modems configured here must correspond to physical RS-232 serial devices,"
+" USB modems, or virtual IAX modems recognized by the underlying HylaFAX "
+"server."
+
+msgid "Direct RAW socket & IPP network printing dispatch for received faxes"
+msgstr ""
+
+msgid "Add Network Printer"
+msgstr ""
+
+msgid "Printer Name"
+msgstr ""
+
+msgid "Protocol"
+msgstr ""
+
+msgid "Host / IP"
+msgstr ""
+
+msgid "Port"
+msgstr "Port"
+
+msgid "Queue Name (Optional)"
+msgstr ""
+
+msgid "Register Printer"
+msgstr ""
+
+msgid "Configured Printers"
+msgstr ""
+
+msgid "No network printers configured yet. Add one using the form on the left."
+msgstr ""
+
+msgid "Endpoint"
+msgstr ""
+
+msgid "Test Print"
+msgstr ""
+
+msgid "Are you sure you want to delete this printer?"
+msgstr ""
+
+msgid "Configure DID Routing"
+msgstr "Configure DID Routing"
+
+msgid ""
+"Route incoming faxes by Direct Inward Dialing (DID) extension to specific"
+" email boxes or printers"
+msgstr ""
+"Route incoming faxes by Direct Inward Dialing (DID) extension to specific"
+" email boxes or printers"
+
+msgid "New DID Route"
+msgstr "New DID Route"
+
+msgid "Active DID Routing Rules"
+msgstr "Active DID Routing Rules"
+
+msgid "Route Code"
+msgstr "Route Code"
+
+msgid "Action"
+msgstr "Action"
+
+msgid "Configure Routing Rule"
+msgstr "Configure Routing Rule"
+
+msgid "-- None --"
+msgstr "-- None --"
+
+msgid ""
+"DID (Direct Inward Dialing) routing automatically redirects incoming "
+"transmissions matching extension patterns directly to mapped operator "
+"inboxes or physical printers."
+msgstr ""
+"DID (Direct Inward Dialing) routing automatically redirects incoming "
+"transmissions matching extension patterns directly to mapped operator "
+"inboxes or physical printers."
+
+msgid "SAML 2.0 Enterprise SSO"
+msgstr ""
+
+msgid ""
+"Single Sign-On integration with Okta, Microsoft Entra ID (Azure AD), "
+"Google Workspace & Keycloak"
+msgstr ""
+
+msgid "Download SP Metadata XML"
+msgstr ""
+
+msgid "Identity Provider (IdP) Settings"
+msgstr ""
+
+msgid "Enable SAML 2.0 Single Sign-On"
+msgstr ""
+
+msgid "Shows \"SAML 2.0 Enterprise SSO\" login option on login page"
+msgstr ""
+
+msgid "IdP Entity ID / Issuer"
+msgstr ""
+
+msgid "IdP Single Sign-On Service URL (HTTP-Redirect / POST)"
+msgstr ""
+
+msgid "IdP Public X.509 Certificate (PEM)"
+msgstr ""
+
+msgid "Just-in-Time (JIT) Provisioning"
+msgstr ""
+
+msgid "Auto-create account on first login"
+msgstr ""
+
+msgid "Default Role for JIT Users"
+msgstr ""
+
+msgid "Save SAML Configuration"
+msgstr ""
+
+msgid "NamiFAX SP Endpoints"
+msgstr ""
+
+msgid ""
+"Copy these endpoints into your Identity Provider (Azure AD, Okta, Google)"
+" console:"
+msgstr ""
+
+msgid "Assertion Consumer Service (ACS) URL"
+msgstr ""
+
+msgid "SP Entity ID / Metadata URL"
+msgstr ""
+
+msgid "NameID Format"
+msgstr ""
+
+msgid "External SMTP Gateway"
+msgstr "External SMTP Gateway"
+
+msgid ""
+"Configure external mail delivery server for inbound fax notifications and"
+" user alerts"
+msgstr ""
+"Configure external mail delivery server for inbound fax notifications and"
+" user alerts"
+
+msgid "Diagnostics Result"
+msgstr "Diagnostics Result"
+
+msgid "Server Connection & Security"
+msgstr "Server Connection & Security"
+
+msgid "SMTP Host / Server"
+msgstr "SMTP Host / Server"
+
+msgid "Encryption Protocol"
+msgstr "Encryption Protocol"
+
+msgid "None (Plain)"
+msgstr "None (Plain)"
+
+msgid "STARTTLS (587)"
+msgstr "STARTTLS (587)"
+
+msgid "SSL / TLS (465)"
+msgstr "SSL / TLS (465)"
+
+msgid "Requires SMTP Authentication"
+msgstr "Requires SMTP Authentication"
+
+msgid "Username / Login"
+msgstr "Username / Login"
+
+msgid "Password / App Key"
+msgstr "Password / App Key"
+
+msgid "Default Sender Profile & Signatures"
+msgstr "Default Sender Profile & Signatures"
+
+msgid "From Email Address"
+msgstr "From Email Address"
+
+msgid "From Display Name"
+msgstr "From Display Name"
+
+msgid "Email Signature (Plaintext)"
+msgstr "Email Signature (Plaintext)"
+
+msgid "Last updated"
+msgstr "Last updated"
+
+msgid "Save Gateway Settings"
+msgstr "Save Gateway Settings"
+
+msgid "Diagnostic Self-Test"
+msgstr "Diagnostic Self-Test"
+
+msgid ""
+"Verify server reachability, TLS handshake, credentials and message "
+"dispatch in real time."
+msgstr ""
+"Verify server reachability, TLS handshake, credentials and message "
+"dispatch in real time."
+
+msgid "Target Recipient Email"
+msgstr "Target Recipient Email"
+
+msgid "Send Diagnostic Email"
+msgstr "Send Diagnostic Email"
+
+msgid "Enterprise storage lifecycle policies and S3 / MinIO / GCS cloud backends"
+msgstr ""
+
+msgid "Storage Lifecycle Policies"
+msgstr ""
+
+msgid "Purge Local TIFFs After (Days)"
+msgstr ""
+
+msgid ""
+"Frees local disk space if a PDF version exists. 0 = immediate after "
+"conversion."
+msgstr ""
+
+msgid "Full Fax Retention (Days)"
+msgstr ""
+
+msgid ""
+"Purge entire fax record and archival files after specified days. 0 = keep"
+" forever."
+msgstr ""
+
+msgid "Synchronize remote cloud object deletion on fax purge"
+msgstr ""
+
+msgid "Save Lifecycle Policy"
+msgstr ""
+
+msgid "Cloud Storage Backend"
+msgstr ""
+
+msgid "Storage Provider"
+msgstr ""
+
+msgid "Local Filesystem (Default)"
+msgstr ""
+
+msgid "Endpoint URL (MinIO / S3 Compatible)"
+msgstr ""
+
+msgid "Region"
+msgstr ""
+
+msgid "Bucket Name"
+msgstr ""
+
+msgid "Access Key ID"
+msgstr ""
+
+msgid "Secret Access Key"
+msgstr ""
+
+msgid "Key Prefix"
+msgstr ""
+
+msgid "Save Storage Config"
+msgstr ""
+
+msgid "Test Connection"
+msgstr ""
+
+msgid "Perform maintenance operations, service control, and backups."
+msgstr "Perform maintenance operations, service control, and backups."
+
+msgid "HylaFAX Engine Active"
+msgstr "HylaFAX Engine Active"
+
+msgid "Admin Dashboard"
+msgstr "Admin Dashboard"
+
+msgid "Caution: Appliance Maintenance Operations"
+msgstr "Caution: Appliance Maintenance Operations"
+
+msgid ""
+"Restarting or shutting down services will interrupt active fax modem "
+"spooling and disconnect client sessions. Ensure all outbound "
+"transmissions in the modem queue are completed before initiating "
+"maintenance tasks."
+msgstr ""
+"Restarting or shutting down services will interrupt active fax modem "
+"spooling and disconnect client sessions. Ensure all outbound "
+"transmissions in the modem queue are completed before initiating "
+"maintenance tasks."
+
+msgid "Daemon Service Control"
+msgstr "Daemon Service Control"
+
+msgid "Restart HylaFAX and NamiFAX web services, or halt background workers."
+msgstr "Restart HylaFAX and NamiFAX web services, or halt background workers."
+
+msgid "Reboot Services"
+msgstr "Reboot Services"
+
+msgid "Shutdown Services"
+msgstr "Shutdown Services"
+
+msgid "Database & Archive Backup"
+msgstr "Database & Archive Backup"
+
+msgid "Download system archives and database snapshots for offsite retention."
+msgstr "Download system archives and database snapshots for offsite retention."
+
+msgid "Download Archive"
+msgstr "Download Archive"
+
+msgid "Download Database"
+msgstr "Download Database"
+
+msgid "System Logs"
+msgstr "System Logs"
+
+msgid "Audit logs and HylaFAX server operational event traces"
+msgstr "Audit logs and HylaFAX server operational event traces"
+
+msgid "Keywords:"
+msgstr "Keywords:"
+
+msgid "Date:"
+msgstr "Date:"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Log Text"
+msgstr "Log Text"
+
+msgid "No system logs found matching criteria."
+msgstr "No system logs found matching criteria."
+
+msgid "Transmissions and server events will be streamed here in real time."
+msgstr "Transmissions and server events will be streamed here in real time."
+
+msgid "Manage system operator credentials, access permissions, and route mapping"
+msgstr "Manage system operator credentials, access permissions, and route mapping"
+
+msgid "Create New User"
+msgstr "Create New User"
+
+msgid "Superuser"
+msgstr "Superuser"
+
+msgid "Admin"
+msgstr "Admin"
+
+msgid "YES"
+msgstr "YES"
+
+msgid "NO"
+msgstr "NO"
+
+msgid "Configure User:"
+msgstr "Configure User:"
+
+msgid "Full Name"
+msgstr "Full Name"
+
+msgid "Password"
+msgstr "Password"
+
+msgid "Email Address"
+msgstr "Email Address"
+
+msgid "Permissions & Capabilities"
+msgstr "Permissions & Capabilities"
+
+msgid "Administrator Console"
+msgstr "Administrator Console"
+
+msgid "Superuser Rights"
+msgstr "Superuser Rights"
+
+msgid "Can Delete Faxes"
+msgstr "Can Delete Faxes"
+
+msgid "Send on Any Modem"
+msgstr "Send on Any Modem"
+
+msgid "Categories"
+msgstr "Categories"
+
+msgid "Archive Search"
+msgstr "Archive Search"
+
+msgid "Search all sent and received fax records by date, company, or fax number."
+msgstr "Search all sent and received fax records by date, company, or fax number."
+
+msgid "results"
+msgstr "results"
+
+msgid "result"
+msgstr "result"
+
+msgid "Search Filters"
+msgstr "Search Filters"
+
+msgid ""
+"Leave filters empty to search all records. Narrow results by adding more "
+"criteria."
+msgstr ""
+"Leave filters empty to search all records. Narrow results by adding more "
+"criteria."
+
+msgid "Keyword"
+msgstr "Keyword"
+
+msgid "All Categories"
+msgstr "All Categories"
+
+msgid "Invoices / Orders"
+msgstr "Invoices / Orders"
+
+msgid "Legal / Contracts"
+msgstr "Legal / Contracts"
+
+msgid "From Date"
+msgstr "From Date"
+
+msgid "To Date"
+msgstr "To Date"
+
+msgid "Direction"
+msgstr "Direction"
+
+msgid "Sent & Received"
+msgstr "Sent & Received"
+
+msgid "Received only"
+msgstr "Received only"
+
+msgid "Sent only"
+msgstr "Sent only"
+
+msgid "Fax ID"
+msgstr "Fax ID"
+
+msgid "Results"
+msgstr "Results"
+
+msgid "records"
+msgstr "records"
+
+msgid "record"
+msgstr "record"
+
+msgid "Sender"
+msgstr "Sender"
+
 msgid "Pages"
 msgstr "Pages"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:147
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:122
 msgid "View"
 msgstr "View"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:155
 msgid "Re-send"
 msgstr "Re-send"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:173
 msgid "No results found"
 msgstr "No results found"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:174
 msgid "Try adjusting your search terms or date range."
 msgstr "Try adjusting your search terms or date range."
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:175
 msgid "Reset filters"
 msgstr "Reset filters"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:187
 msgid "Search the Archive"
 msgstr "Search the Archive"
 
-#: /home/jiho/numfax/src/namifax/templates/archive.jinja2:189
 msgid "Enter a keyword or filter above and click Search to find fax records."
 msgstr "Enter a keyword or filter above and click Search to find fax records."
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:17
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:26
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:26
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:25
 msgid "Distribution Lists"
 msgstr "Distribution Lists"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:18
 msgid "Organize recipient groups for mass fax broadcasting and notifications."
 msgstr "Organize recipient groups for mass fax broadcasting and notifications."
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:29
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:119
 msgid "Create List"
 msgstr "Create List"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:40
 msgid "Saved Distribution Lists"
 msgstr "Saved Distribution Lists"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:52
 msgid "members"
 msgstr "members"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:66
 msgid "Group Members & Settings"
 msgstr "Group Members & Settings"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:66
 msgid "Create New Distribution List"
 msgstr "Create New Distribution List"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:76
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:45
 msgid "List Name"
 msgstr "List Name"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:83
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "Group Members (Contacts & Fax Numbers)"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:84
 msgid "contacts assigned"
 msgstr "contacts assigned"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:95
 msgid "Remove"
 msgstr "Remove"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:99
 msgid "No contacts assigned to this list yet."
 msgstr "No contacts assigned to this list yet."
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:107
 msgid "Add Member"
 msgstr "Add Member"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:116
 msgid "Delete List"
 msgstr "Delete List"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist.jinja2:117
 msgid "Save Changes"
 msgstr "Save Changes"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:18
 msgid "Edit Distribution List"
 msgstr "Edit Distribution List"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:18
 msgid "Create Distribution List"
 msgstr "Create Distribution List"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:20
 msgid "Configure broadcast list parameters and recipient group members."
 msgstr "Configure broadcast list parameters and recipient group members."
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:26
 msgid "Back to Lists"
 msgstr "Back to Lists"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:41
 msgid "Distribution List Profile"
 msgstr "Distribution List Profile"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:52
 msgid "Enrolled Members"
 msgstr "Enrolled Members"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:53
 msgid "List ID:"
 msgstr "List ID:"
 
-#: /home/jiho/numfax/src/namifax/templates/distrolist_edit.jinja2:62
 msgid "No contacts in this list."
 msgstr "No contacts in this list."
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:17
 msgid "Email Address Book"
 msgstr "Email Address Book"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:18
 msgid "Manage email recipients, transmission routing, and contacts directory."
 msgstr "Manage email recipients, transmission routing, and contacts directory."
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:27
 msgid "Email Book"
 msgstr "Email Book"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:30
 msgid "New Contact"
 msgstr "New Contact"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:40
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:49
 msgid "Contacts"
 msgstr "Contacts"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:43
 msgid "recipients"
 msgstr "recipients"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:51
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:44
 msgid "Contact Name"
 msgstr "Contact Name"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:52
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:39
 msgid "Company Affiliation"
 msgstr "Company Affiliation"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook.jinja2:72
 msgid ""
 "No email contacts found in the directory. Click \"+ New Contact\" to "
 "register one."
@@ -1347,226 +1086,180 @@ msgstr ""
 "No email contacts found in the directory. Click \"+ New Contact\" to "
 "register one."
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:17
 msgid "Email Book - Edit Email Contact"
 msgstr "Email Book - Edit Email Contact"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:18
 msgid "Manage contact information and company affiliation in Email Book."
 msgstr "Manage contact information and company affiliation in Email Book."
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:24
 msgid "Back to Email Book"
 msgstr "Back to Email Book"
 
-#: /home/jiho/numfax/src/namifax/templates/emailbook_edit.jinja2:35
 msgid "Contact Profile Details"
 msgstr "Contact Profile Details"
 
-#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:26
 msgid "Lost Password"
 msgstr "Lost Password"
 
-#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:27
 msgid "Account Recovery Assistance"
 msgstr "Account Recovery Assistance"
 
-#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:30
-#: /home/jiho/numfax/src/namifax/templates/login_totp.jinja2:48
 msgid "Back to Login"
 msgstr "Back to Login"
 
-#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:48
-msgid ""
-"Please enter your registered username or email address below. Password "
-"reset instructions will be dispatched to your account email address."
+msgid "Your password will be sent to the given e-mail address."
 msgstr ""
-"Please enter your registered username or email address below. Password "
-"reset instructions will be dispatched to your account email address."
 
-#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:55
-msgid "Username or Email Address"
-msgstr "Username or Email Address"
-
-#: /home/jiho/numfax/src/namifax/templates/forgot.jinja2:65
-msgid "Reset Password"
-msgstr "Reset Password"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:14
-msgid "Received faxes appear here automatically in real time."
-msgstr "Received faxes appear here automatically in real time."
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:20
-msgid "Faxes"
-msgstr "Faxes"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:20
-msgid "Fax"
-msgstr "Fax"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:39
-msgid "Select All"
-msgstr "Select All"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:47
-msgid "Archive Selected"
-msgstr "Archive Selected"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:54
-msgid "Delete Selected"
-msgstr "Delete Selected"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:57
-msgid "Showing"
-msgstr "Showing"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:57
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:186
-msgid "of"
-msgstr "of"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:67
-msgid "Select"
-msgstr "Select"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:68
-msgid "Preview"
-msgstr "Preview"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:70
-msgid "Received"
-msgstr "Received"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:136
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:70
-msgid "Reply"
-msgstr "Reply"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:150
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:48
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:37
-msgid "Archive"
-msgstr "Archive"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:154
-msgid "Email Fax"
-msgstr "Email Fax"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:158
-#: /home/jiho/numfax/src/namifax/templates/modal_note.jinja2:23
-msgid "Add Note"
-msgstr "Add Note"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:162
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:49
-msgid "Rotate"
-msgstr "Rotate"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:166
-msgid "Download TIFF"
-msgstr "Download TIFF"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:186
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:150
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:151
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:152
-msgid "faxes"
-msgstr "faxes"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:204
-msgid "0 FAXES"
-msgstr "0 FAXES"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:206
-msgid ""
-"There are no incoming faxes waiting in your inbox. Incoming transmissions"
-" will automatically appear here in real time."
+msgid "Once you have received your new password you can login in and change it."
 msgstr ""
-"There are no incoming faxes waiting in your inbox. Incoming transmissions"
-" will automatically appear here in real time."
 
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:214
-msgid "Send Your First Fax"
-msgstr "Send Your First Fax"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:218
-msgid "Search Archive"
-msgstr "Search Archive"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:225
-msgid "Getting Started with NamiFAX"
-msgstr "Getting Started with NamiFAX"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:230
-msgid "Receive Faxes"
-msgstr "Receive Faxes"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:231
-msgid ""
-"When someone sends a fax to this system's number, it will appear here "
-"automatically."
-msgstr ""
-"When someone sends a fax to this system's number, it will appear here "
-"automatically."
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:237
-msgid "Send Faxes"
-msgstr "Send Faxes"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:238
-msgid "Click Send Fax to transmit a PDF or image document to any fax number."
-msgstr "Click Send Fax to transmit a PDF or image document to any fax number."
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:244
-msgid "Manage Records"
-msgstr "Manage Records"
-
-#: /home/jiho/numfax/src/namifax/templates/inbox.jinja2:245
-msgid ""
-"Download faxes as PDF, archive them for later, or search all records in "
-"the Archive."
-msgstr ""
-"Download faxes as PDF, archive them for later, or search all records in "
-"the Archive."
-
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:47
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:11
-msgid "Outbox"
-msgstr "Outbox"
-
-#: /home/jiho/numfax/src/namifax/templates/layout.jinja2:109
-msgid "Settings"
-msgstr "Settings"
-
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:43
-msgid "Sign in"
-msgstr "Sign in"
-
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:44
-msgid "Enter your credentials to continue."
-msgstr "Enter your credentials to continue."
-
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:48
-msgid "System Online"
-msgstr "System Online"
-
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:85
-msgid "Forgot password?"
-msgstr "Forgot password?"
-
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:94
-msgid "Contact your system administrator if you need an account."
-msgstr "Contact your system administrator if you need an account."
-
-#: /home/jiho/numfax/src/namifax/templates/login.jinja2:105
 msgid "Login"
 msgstr "Login"
 
-#: /home/jiho/numfax/src/namifax/templates/login_totp.jinja2:18
+msgid ""
+"Please enter your e-mail address then click on the Send Password button. "
+"You will receive a new password shortly. Use this new password to access "
+"the site."
+msgstr ""
+
+msgid "E-mail address"
+msgstr ""
+
+msgid "Send Password"
+msgstr ""
+
+msgid "Received faxes appear here automatically in real time."
+msgstr "Received faxes appear here automatically in real time."
+
+msgid "Faxes"
+msgstr "Faxes"
+
+msgid "Fax"
+msgstr "Fax"
+
+msgid "Select All"
+msgstr "Select All"
+
+msgid "Archive Selected"
+msgstr "Archive Selected"
+
+msgid "Delete Selected"
+msgstr "Delete Selected"
+
+msgid "Showing"
+msgstr "Showing"
+
+msgid "of"
+msgstr "of"
+
+msgid "Select"
+msgstr "Select"
+
+msgid "Preview"
+msgstr "Preview"
+
+msgid "Received"
+msgstr "Received"
+
+msgid "Reply"
+msgstr "Reply"
+
+msgid "Archive"
+msgstr "Archive"
+
+msgid "Email Fax"
+msgstr "Email Fax"
+
+msgid "Add Note"
+msgstr "Add Note"
+
+msgid "Rotate"
+msgstr "Rotate"
+
+msgid "Download TIFF"
+msgstr "Download TIFF"
+
+msgid "faxes"
+msgstr "faxes"
+
+msgid "0 FAXES"
+msgstr "0 FAXES"
+
+msgid ""
+"There are no incoming faxes waiting in your inbox. Incoming transmissions"
+" will automatically appear here in real time."
+msgstr ""
+"There are no incoming faxes waiting in your inbox. Incoming transmissions"
+" will automatically appear here in real time."
+
+msgid "Send Your First Fax"
+msgstr "Send Your First Fax"
+
+msgid "Search Archive"
+msgstr "Search Archive"
+
+msgid "Getting Started with NamiFAX"
+msgstr "Getting Started with NamiFAX"
+
+msgid "Receive Faxes"
+msgstr "Receive Faxes"
+
+msgid ""
+"When someone sends a fax to this system's number, it will appear here "
+"automatically."
+msgstr ""
+"When someone sends a fax to this system's number, it will appear here "
+"automatically."
+
+msgid "Send Faxes"
+msgstr "Send Faxes"
+
+msgid "Click Send Fax to transmit a PDF or image document to any fax number."
+msgstr "Click Send Fax to transmit a PDF or image document to any fax number."
+
+msgid "Manage Records"
+msgstr "Manage Records"
+
+msgid ""
+"Download faxes as PDF, archive them for later, or search all records in "
+"the Archive."
+msgstr ""
+"Download faxes as PDF, archive them for later, or search all records in "
+"the Archive."
+
+msgid "Outbox"
+msgstr "Outbox"
+
+msgid "Settings"
+msgstr "Settings"
+
+msgid "Sign in"
+msgstr "Sign in"
+
+msgid "Enter your credentials to continue."
+msgstr "Enter your credentials to continue."
+
+msgid "System Online"
+msgstr "System Online"
+
+msgid "Forgot password?"
+msgstr "Forgot password?"
+
+msgid "Contact your system administrator if you need an account."
+msgstr "Contact your system administrator if you need an account."
+
+msgid "Or continue with"
+msgstr ""
+
+msgid "Sign in with Passkey (Touch ID / Security Key)"
+msgstr ""
+
+msgid "SAML 2.0 Enterprise SSO (Okta / Entra ID)"
+msgstr ""
+
 msgid "Two-Factor Authentication"
 msgstr "Two-Factor Authentication"
 
-#: /home/jiho/numfax/src/namifax/templates/login_totp.jinja2:19
 msgid ""
 "Enter the 6-digit code from your authenticator app or an emergency "
 "recovery code."
@@ -1574,133 +1267,99 @@ msgstr ""
 "Enter the 6-digit code from your authenticator app or an emergency "
 "recovery code."
 
-#: /home/jiho/numfax/src/namifax/templates/login_totp.jinja2:33
 msgid "Authentication Code"
 msgstr "Authentication Code"
 
-#: /home/jiho/numfax/src/namifax/templates/login_totp.jinja2:44
 msgid "Verify & Log In"
 msgstr "Verify & Log In"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:23
 msgid "Assign Company Name"
 msgstr "Assign Company Name"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:24
 msgid "Associate document with registered enterprise contact"
 msgstr "Associate document with registered enterprise contact"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:37
 msgid "Search Company Name"
 msgstr "Search Company Name"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_assign.jinja2:42
 msgid "Select Contact Record"
 msgstr "Select Contact Record"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_delete.jinja2:22
 msgid "Delete Fax"
 msgstr "Delete Fax"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_delete.jinja2:23
 msgid "Are you sure you want to delete this fax?"
 msgstr "Are you sure you want to delete this fax?"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_delete.jinja2:24
 msgid "This operation will permanently purge the fax document archive."
 msgstr "This operation will permanently purge the fax document archive."
 
-#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:23
 msgid "Send Fax via Email"
 msgstr "Send Fax via Email"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:24
 msgid "Dispatch PDF document attachment to email recipients"
 msgstr "Dispatch PDF document attachment to email recipients"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:37
 msgid "Recipients"
 msgstr "Recipients"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:42
 msgid "Subject"
 msgstr "Subject"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:47
 msgid "Message"
 msgstr "Message"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_email.jinja2:60
-#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:60
 msgid "Send"
 msgstr "Send"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_note.jinja2:24
 msgid "Append internal administrative note or comments"
 msgstr "Append internal administrative note or comments"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_note.jinja2:37
 msgid "Note / Description"
 msgstr "Note / Description"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:23
 msgid "Reply to Fax"
 msgstr "Reply to Fax"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:24
 msgid "Dispatch quick reply transmission to originating sender"
 msgstr "Dispatch quick reply transmission to originating sender"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:37
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:54
 msgid "Destination Number"
 msgstr "Destination Number"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:42
 msgid "Regarding (Subject)"
 msgstr "Regarding (Subject)"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_refax.jinja2:47
 msgid "Comments"
 msgstr "Comments"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:23
 msgid "Transmission Report"
 msgstr "Transmission Report"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:24
 msgid "Official facsimile delivery confirmation receipt"
 msgstr "Official facsimile delivery confirmation receipt"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:31
 msgid "Print"
 msgstr "Print"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:39
 msgid "Company:"
 msgstr "Company:"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:47
 msgid "Pages:"
 msgstr "Pages:"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:51
 msgid "Status:"
 msgstr "Status:"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:53
 msgid "Transmitted Successfully (OK)"
 msgstr "Transmitted Successfully (OK)"
 
-#: /home/jiho/numfax/src/namifax/templates/modal_txreport.jinja2:60
 msgid "Close"
 msgstr "Close"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:12
 msgid "Faxes currently queued or being transmitted."
 msgstr "Faxes currently queued or being transmitted."
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:37
 msgid ""
 "This page shows only faxes that are queued or in progress. Once "
 "delivered, they are removed from this list. Find completed records in the"
@@ -1708,33 +1367,24 @@ msgstr ""
 "This page shows only faxes that are queued or in progress. Once "
 "delivered, they are removed from this list. Find completed records in the"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:45
 msgid "jobs in progress"
 msgstr "jobs in progress"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:45
 msgid "job in progress"
 msgstr "job in progress"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:52
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:126
 msgid "Job ID"
 msgstr "Job ID"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:53
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:127
 msgid "Destination"
 msgstr "Destination"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:74
 msgid "Queued"
 msgstr "Queued"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:99
 msgid "No jobs in queue"
 msgstr "No jobs in queue"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:101
 msgid ""
 "There are no faxes waiting to be sent. Send a fax to see its progress "
 "here."
@@ -1742,39 +1392,30 @@ msgstr ""
 "There are no faxes waiting to be sent. Send a fax to see its progress "
 "here."
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:108
 msgid "Send a Fax"
 msgstr "Send a Fax"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:119
 msgid "Failed Transmissions"
 msgstr "Failed Transmissions"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:120
 msgid "Review the number or retry below."
 msgstr "Review the number or retry below."
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:128
 msgid "Reason"
 msgstr "Reason"
 
-#: /home/jiho/numfax/src/namifax/templates/outbox.jinja2:141
 msgid "Retry"
 msgstr "Retry"
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:26
 msgid "Password Expired"
 msgstr "Password Expired"
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:27
 msgid "Security Credentials Renewal"
 msgstr "Security Credentials Renewal"
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:30
 msgid "Action Required"
 msgstr "Action Required"
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:41
 msgid ""
 "Your password has expired or needs to be changed before proceeding. "
 "Please enter your old password and choose a new password."
@@ -1782,76 +1423,63 @@ msgstr ""
 "Your password has expired or needs to be changed before proceeding. "
 "Please enter your old password and choose a new password."
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:47
 msgid "Old Password"
 msgstr "Old Password"
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:52
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:172
 msgid "New Password"
 msgstr "New Password"
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:57
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:176
 msgid "Confirm New Password"
 msgstr "Confirm New Password"
 
-#: /home/jiho/numfax/src/namifax/templates/pwdexpired.jinja2:66
 msgid "Update Password"
 msgstr "Update Password"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:12
 msgid "Fill in the details below and click Send."
 msgstr "Fill in the details below and click Send."
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:46
 msgid "Destination & Recipients"
 msgstr "Destination & Recipients"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:47
 msgid "Enter the fax number and recipient details."
 msgstr "Enter the fax number and recipient details."
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:63
 msgid "To send to multiple recipients at once, separate numbers with a comma."
 msgstr "To send to multiple recipients at once, separate numbers with a comma."
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:64
 msgid "Saved contacts are available in the"
 msgstr "Saved contacts are available in the"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:71
 msgid "Attention To"
 msgstr "Attention To"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:71
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:81
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:93
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:181
 msgid "optional"
 msgstr "optional"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:93
+msgid "Voice Number"
+msgstr ""
+
+msgid "Address"
+msgstr ""
+
+msgid "Zip"
+msgstr ""
+
 msgid "Subject / Regarding"
 msgstr "Subject / Regarding"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:109
 msgid "Document Attachment"
 msgstr "Document Attachment"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:110
 msgid "Attach the file you want to transmit."
 msgstr "Attach the file you want to transmit."
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:122
 msgid "Click to select a file"
 msgstr "Click to select a file"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:123
 msgid "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
 msgstr "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:127
 msgid ""
 "PDF is the most commonly used format. Convert Word or Excel files to PDF "
 "before attaching."
@@ -1859,95 +1487,81 @@ msgstr ""
 "PDF is the most commonly used format. Convert Word or Excel files to PDF "
 "before attaching."
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:138
 msgid "Cover Page"
 msgstr "Cover Page"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:139
 msgid "Add a cover sheet with sender and recipient info."
 msgstr "Add a cover sheet with sender and recipient info."
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:146
 msgid "Include Cover Page"
 msgstr "Include Cover Page"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:152
 msgid "Cover Template"
 msgstr "Cover Template"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:156
-msgid "Standard (Default)"
-msgstr "Standard (Default)"
+msgid "No cover pages are set up"
+msgstr ""
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:157
-msgid "Urgent"
-msgstr "Urgent"
-
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:158
-msgid "Confidential"
-msgstr "Confidential"
-
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:164
 msgid "Send via Line"
 msgstr "Send via Line"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:165
 msgid "Auto-select recommended"
 msgstr "Auto-select recommended"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:170
 msgid "Any Available Line (Auto)"
 msgstr "Any Available Line (Auto)"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:181
 msgid "Cover Comments"
 msgstr "Cover Comments"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:196
 msgid "Advanced Options"
 msgstr "Advanced Options"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:197
 msgid "Priority, retries, notifications"
 msgstr "Priority, retries, notifications"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:206
 msgid "Priority"
 msgstr "Priority"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:210
-msgid "Normal"
-msgstr "Normal"
-
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:211
-msgid "Low"
-msgstr "Low"
-
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:212
-msgid "High (Urgent)"
-msgstr "High (Urgent)"
-
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:217
 msgid "Max Retries"
 msgstr "Max Retries"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:222
 msgid "Retries automatically on busy signal."
 msgstr "Retries automatically on busy signal."
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:230
+msgid "Expire after"
+msgstr ""
+
+msgid "Minutes"
+msgstr ""
+
+msgid "Hours"
+msgstr ""
+
+msgid "Days"
+msgstr ""
+
+msgid "Schedule Send Time"
+msgstr ""
+
+msgid "TSI ID"
+msgstr ""
+
 msgid "Notify on retry"
 msgstr "Notify on retry"
 
-#: /home/jiho/numfax/src/namifax/templates/sendfax.jinja2:241
+msgid "The original fax is sent along."
+msgstr ""
+
+msgid "Download PDF"
+msgstr ""
+
 msgid "Cancel & return to Inbox"
 msgstr "Cancel & return to Inbox"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:17
 msgid "User Settings"
 msgstr "User Settings"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:18
 msgid ""
 "Configure your personal profile, fax station identity, and portal "
 "preferences."
@@ -1955,188 +1569,378 @@ msgstr ""
 "Configure your personal profile, fax station identity, and portal "
 "preferences."
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:24
 msgid "Return to Inbox"
 msgstr "Return to Inbox"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:54
 msgid "Personal & Organization Details"
 msgstr "Personal & Organization Details"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:74
 msgid "Office / Location"
 msgstr "Office / Location"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:79
 msgid "Direct Voice Number"
 msgstr "Direct Voice Number"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:84
 msgid "Direct Fax Number"
 msgstr "Direct Fax Number"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:89
 msgid "Transmitting Station ID (TSI)"
 msgstr "Transmitting Station ID (TSI)"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:91
 msgid "Header identifier imprinted on top of transmitted fax pages."
 msgstr "Header identifier imprinted on top of transmitted fax pages."
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:96
 msgid "Email & Fax Notification Signature"
 msgstr "Email & Fax Notification Signature"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:105
 msgid "Portal & Delivery Preferences"
 msgstr "Portal & Delivery Preferences"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:110
 msgid "Display Language"
 msgstr "Display Language"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:140
 msgid "Default Cover Page"
 msgstr "Default Cover Page"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:148
 msgid "Faxes Per Page"
 msgstr "Faxes Per Page"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:162
 msgid "Change Password"
 msgstr "Change Password"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:166
 msgid "Current Password"
 msgstr "Current Password"
 
-#: /home/jiho/numfax/src/namifax/templates/settings.jinja2:189
 msgid "Update Settings"
 msgstr "Update Settings"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:17
+msgid "Two-Factor Authentication (TOTP)"
+msgstr ""
+
+msgid ""
+"Protect your account with Google Authenticator, Authy, or compatible RFC "
+"6238 apps."
+msgstr ""
+
+msgid "Active / Enabled"
+msgstr ""
+
+msgid "Disabled"
+msgstr ""
+
+msgid ""
+"When enabled, signing in requires your password and a 6-digit one-time "
+"token from your mobile device."
+msgstr ""
+
+msgid "recovery codes left"
+msgstr ""
+
+msgid "Code from your app (to get new recovery codes)"
+msgstr ""
+
+msgid "New recovery codes"
+msgstr ""
+
+msgid "Turn off 2FA for your account?"
+msgstr ""
+
+msgid "Code or recovery code"
+msgstr ""
+
+msgid "Disable 2FA"
+msgstr ""
+
+msgid "Enable 2FA (Setup Authenticator)"
+msgstr ""
+
+msgid "FIDO2 Passkeys & Biometric Security Keys"
+msgstr ""
+
+msgid ""
+"Sign in securely without passwords using Touch ID, Face ID, Windows "
+"Hello, or YubiKey."
+msgstr ""
+
+msgid "Register New Passkey"
+msgstr ""
+
+msgid "Loading registered security keys..."
+msgstr ""
+
+msgid "No Passkeys registered yet."
+msgstr ""
+
+msgid ""
+"No Passkeys registered yet. Click Register to add Touch ID or a security "
+"key."
+msgstr ""
+
+msgid ""
+"1. Scan this code with Google Authenticator, Authy or another RFC 6238 "
+"app, or type the key by hand."
+msgstr ""
+
+msgid "Key"
+msgstr ""
+
+msgid "2. Enter the 6-digit code the app shows"
+msgstr ""
+
+msgid "Turn on 2FA"
+msgstr ""
+
+msgid "Save your recovery codes"
+msgstr ""
+
+msgid ""
+"Each code works once if you lose your phone. They are shown only now; "
+"store them somewhere safe."
+msgstr ""
+
+msgid "Done"
+msgstr ""
+
+msgid "Back to settings"
+msgstr ""
+
 msgid "Fax Viewer"
 msgstr "Fax Viewer"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:19
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:144
 msgid "Page 1 of"
 msgstr "Page 1 of"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:24
 msgid "FROM:"
 msgstr "FROM:"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:26
 msgid "DATE:"
 msgstr "DATE:"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:28
 msgid "DEVICE:"
 msgstr "DEVICE:"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:36
 msgid "Prev"
 msgstr "Prev"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:41
 msgid "Next"
 msgstr "Next"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:56
 msgid "PDF"
 msgstr "PDF"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:63
 msgid "TIFF"
 msgstr "TIFF"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:93
 msgid "Total"
 msgstr "Total"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:99
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:104
 msgid "Page"
 msgstr "Page"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:121
 msgid "Incoming Transmission"
 msgstr "Incoming Transmission"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:122
 msgid "FACSIMILE TRANSMISSION"
 msgstr "FACSIMILE TRANSMISSION"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:123
 msgid "Date Received:"
 msgstr "Date Received:"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:124
 msgid "Originating Station:"
 msgstr "Originating Station:"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:129
 msgid "PORT"
 msgstr "PORT"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:143
 msgid "High-Resolution Raster Preview"
 msgstr "High-Resolution Raster Preview"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:144
 msgid "Device Line:"
 msgstr "Device Line:"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:151
 msgid "Download Original Document"
 msgstr "Download Original Document"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:158
 msgid "NamiFAX Enterprise Facsimile Engine"
 msgstr "NamiFAX Enterprise Facsimile Engine"
 
-#: /home/jiho/numfax/src/namifax/templates/viewfax.jinja2:159
 msgid "Archive ID:"
 msgstr "Archive ID:"
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:434
+#, python-format
+msgid "Invalid fax number: %(number)s"
+msgstr ""
+
+msgid "Address book entry saved."
+msgstr ""
+
+msgid "Please enter a company name"
+msgstr ""
+
+msgid "Please enter a valid fax number"
+msgstr ""
+
+msgid "You are not allowed to delete address book entries."
+msgstr ""
+
+msgid "Contact saved."
+msgstr ""
+
+msgid "You are not allowed to delete contacts."
+msgstr ""
+
 msgid "Cover page template removed successfully"
 msgstr "Cover page template removed successfully"
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:437
 msgid "Failed to remove cover page template"
 msgstr "Failed to remove cover page template"
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:446
 msgid "Cover page template updated successfully"
 msgstr "Cover page template updated successfully"
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:448
 msgid "Failed to update cover page template"
 msgstr "Failed to update cover page template"
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:454
 msgid "Cover page template registered successfully"
 msgstr "Cover page template registered successfully"
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:458
 msgid "Title and File are required"
 msgstr "Title and File are required"
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:893
+msgid "The company does not exist."
+msgstr ""
+
+msgid "The company and its fax numbers were deleted."
+msgstr ""
+
+msgid "Please enter a valid e-mail address."
+msgstr ""
+
+msgid "Fax to Email settings saved"
+msgstr ""
+
 msgid "Access denied. Superadmin permission required."
 msgstr "Access denied. Superadmin permission required."
 
-#: /home/jiho/numfax/src/namifax/views/admin.py:923
 msgid "SMTP Gateway settings saved successfully."
 msgstr "SMTP Gateway settings saved successfully."
 
-#: /home/jiho/numfax/src/namifax/views/auth.py:108
+msgid "Printer name and host are required."
+msgstr ""
+
+msgid "Network printer registered successfully."
+msgstr ""
+
+msgid "Printer deleted successfully."
+msgstr ""
+
+msgid "Lifecycle policy saved successfully."
+msgstr ""
+
+msgid "Cloud storage configuration saved successfully."
+msgstr ""
+
+msgid "SAML 2.0 configuration saved successfully."
+msgstr ""
+
+#, python-format
+msgid "Too many failed attempts. Try again in %(minutes)d minutes."
+msgstr ""
+
 msgid "Invalid or expired verification code."
 msgstr "Invalid or expired verification code."
 
+#, python-format
+msgid ""
+"The user account %(user)s has this email associated with it.  A web user "
+"from %(ip)s has just requested that a new password be sent.\n"
+"\n"
+"Your New Password is: %(password)s\n"
+"\n"
+"If this was an error just login with your new password and then change "
+"your password to what you would like it to be."
+msgstr ""
+
+msgid "Email failed to send"
+msgstr ""
+
+msgid "The code is not valid."
+msgstr ""
+
+msgid "The code did not match. Check the time on your phone and try again."
+msgstr ""
+
+msgid "The password is not correct."
+msgstr ""
+
 #~ msgid "High"
 #~ msgstr "High"
+
+#~ msgid "Configure corporate contact identity and transmission routing defaults."
+#~ msgstr "Configure corporate contact identity and transmission routing defaults."
+
+#~ msgid "Primary Company Profile"
+#~ msgstr "Primary Company Profile"
+
+#~ msgid "Recipient Contact & Physical Address"
+#~ msgstr "Recipient Contact & Physical Address"
+
+#~ msgid "City / Postal Region"
+#~ msgstr "City / Postal Region"
+
+#~ msgid "Category Tag"
+#~ msgstr "Category Tag"
+
+#~ msgid "General"
+#~ msgstr "General"
+
+#~ msgid "Invoices & Billing"
+#~ msgstr "Invoices & Billing"
+
+#~ msgid "Legal"
+#~ msgstr "Legal"
+
+#~ msgid "Description / Internal Notes"
+#~ msgstr "Description / Internal Notes"
+
+#~ msgid "Edit Forwarding Rule"
+#~ msgstr "Edit Forwarding Rule"
+
+#~ msgid "Add Forwarding Rule"
+#~ msgstr "Add Forwarding Rule"
+
+#~ msgid ""
+#~ "Please enter your registered username or"
+#~ " email address below. Password reset "
+#~ "instructions will be dispatched to your"
+#~ " account email address."
+#~ msgstr ""
+#~ "Please enter your registered username or"
+#~ " email address below. Password reset "
+#~ "instructions will be dispatched to your"
+#~ " account email address."
+
+#~ msgid "Username or Email Address"
+#~ msgstr "Username or Email Address"
+
+#~ msgid "Reset Password"
+#~ msgstr "Reset Password"
+
+#~ msgid "Standard (Default)"
+#~ msgstr "Standard (Default)"
+
+#~ msgid "Urgent"
+#~ msgstr "Urgent"
+
+#~ msgid "Confidential"
+#~ msgstr "Confidential"
+
+#~ msgid "Normal"
+#~ msgstr "Normal"
+
+#~ msgid "Low"
+#~ msgstr "Low"
+
+#~ msgid "High (Urgent)"
+#~ msgstr "High (Urgent)"
 
