@@ -1,1 +1,0 @@
-"""AvantFAX web views package."""

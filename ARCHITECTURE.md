@@ -83,13 +83,13 @@ flowchart TB
 
 | 구분 | 프로세스/모듈명 | 실행 트리거 및 구동 방식 | 수명 주기 (Lifecycle) | 주요 역할 및 비즈니스 로직 |
 | :--- | :--- | :--- | :--- | :--- |
-| **[1] 웹 서비스** | `avantfax serve`<br>(`src/avantfax/web/app.py`) | 시스템 부팅 시 systemd 또는 컨테이너에서 상시 구동 (WSGI/HTTP) | **상시 실행 (Persistent Daemon)** | • 사용자 브라우저 HTTP/REST API 요청 처리<br>• 인증 및 권한 확인(`WebAuth`)<br>• 수신 팩스 조회 및 PDF 스트리밍(`WebInbox`)<br>• 팩스 작성 및 발송 큐 등록(`WebSendFax`)<br>• 아카이브 검색/관리자 설정(`WebArchive`, `WebAdmin`) |
-| **[2] 이벤트 훅** | `avantfax dynconf`<br>(`src/avantfax/cli/dynconf.py`) | HylaFAX `faxgetty` 데몬이 착신 벨을 감지할 때마다 즉시 실행 | **단발성 프로세스 (Ephemeral CLI)** | • CallID(발신자 번호) 수신 거부 블랙리스트 조회<br>• 수신 허용 여부를 HylaFAX에 동적 응답 |
-| **[2] 이벤트 훅** | `avantfax faxrcvd`<br>(`src/avantfax/cli/faxrcvd.py`) | HylaFAX가 수신 팩스 TIFF 파일 저장을 마쳤을 때 즉시 실행 | **단발성 프로세스 (Ephemeral CLI)** | • 수신 TIFF 파일 검사 및 PDF/썸네일 변환<br>• DID 및 바코드 분석 후 수신 담당자 결정<br>• 수신 아카이브(`ArchiveIn`) 등록<br>• 담당자 이메일 발송 및 자동 프린터 출력 |
-| **[2] 이벤트 훅** | `avantfax notify`<br>(`src/avantfax/cli/notify.py`) | HylaFAX `faxq`가 팩스 송신(성공, 재시도, 실패) 후 즉시 실행 | **단발성 프로세스 (Ephemeral CLI)** | • `qfile` 파싱 및 전송 결과 상태 확인<br>• 주소록(`AFAddressBook`) 회사 자동 생성/갱신<br>• 송신 아카이브(`ArchiveOut`) 등록<br>• 발신자에게 전송 결과 통지 이메일 발송 |
-| **[2] 이벤트 훅** | `avantfax faxcover`<br>(`src/avantfax/cli/faxcover.py`) | `sendfax` 명령이 팩스 커버를 생성할 때 호출 | **단발성 프로세스 (Ephemeral CLI)** | • 커맨드라인 옵션 및 DB 사용자 정보 매핑<br>• PostScript/HTML 템플릿의 `XXXX-` 토큰 치환 렌더링 |
-| **[3] 정기 배치** | `avantfax cron`<br>(`src/avantfax/cli/cron.py`) | OS crontab에 의해 정기적(예: 매일 자정)으로 실행 | **주기적 배치 (Scheduled Batch)** | • 임시 디렉터리(`/tmp/avantfax/`) 파일 삭제<br>• 인박스 보존 기한이 지난 팩스 아카이브 이동 및 정리 |
-| **[3] 정기 배치** | `avantfax phb`<br>(`src/avantfax/cli/phb.py`) | OS crontab에 의해 정기적으로 실행 | **주기적 배치 (Scheduled Batch)** | • AvantFAX 주소록 DB를 HylaFAX 클라이언트용 `PBOOK1.1` 전화번호부 파일로 동기화 |
+| **[1] 웹 서비스** | `namifax serve`<br>(`src/namifax/web/app.py`) | 시스템 부팅 시 systemd 또는 컨테이너에서 상시 구동 (WSGI/HTTP) | **상시 실행 (Persistent Daemon)** | • 사용자 브라우저 HTTP/REST API 요청 처리<br>• 인증 및 권한 확인(`WebAuth`)<br>• 수신 팩스 조회 및 PDF 스트리밍(`WebInbox`)<br>• 팩스 작성 및 발송 큐 등록(`WebSendFax`)<br>• 아카이브 검색/관리자 설정(`WebArchive`, `WebAdmin`) |
+| **[2] 이벤트 훅** | `namifax dynconf`<br>(`src/namifax/cli/dynconf.py`) | HylaFAX `faxgetty` 데몬이 착신 벨을 감지할 때마다 즉시 실행 | **단발성 프로세스 (Ephemeral CLI)** | • CallID(발신자 번호) 수신 거부 블랙리스트 조회<br>• 수신 허용 여부를 HylaFAX에 동적 응답 |
+| **[2] 이벤트 훅** | `namifax faxrcvd`<br>(`src/namifax/cli/faxrcvd.py`) | HylaFAX가 수신 팩스 TIFF 파일 저장을 마쳤을 때 즉시 실행 | **단발성 프로세스 (Ephemeral CLI)** | • 수신 TIFF 파일 검사 및 PDF/썸네일 변환<br>• DID 및 바코드 분석 후 수신 담당자 결정<br>• 수신 아카이브(`ArchiveIn`) 등록<br>• 담당자 이메일 발송 및 자동 프린터 출력 |
+| **[2] 이벤트 훅** | `namifax notify`<br>(`src/namifax/cli/notify.py`) | HylaFAX `faxq`가 팩스 송신(성공, 재시도, 실패) 후 즉시 실행 | **단발성 프로세스 (Ephemeral CLI)** | • `qfile` 파싱 및 전송 결과 상태 확인<br>• 주소록(`AFAddressBook`) 회사 자동 생성/갱신<br>• 송신 아카이브(`ArchiveOut`) 등록<br>• 발신자에게 전송 결과 통지 이메일 발송 |
+| **[2] 이벤트 훅** | `namifax faxcover`<br>(`src/namifax/cli/faxcover.py`) | `sendfax` 명령이 팩스 커버를 생성할 때 호출 | **단발성 프로세스 (Ephemeral CLI)** | • 커맨드라인 옵션 및 DB 사용자 정보 매핑<br>• PostScript/HTML 템플릿의 `XXXX-` 토큰 치환 렌더링 |
+| **[3] 정기 배치** | `namifax cron`<br>(`src/namifax/cli/cron.py`) | OS crontab에 의해 정기적(예: 매일 자정)으로 실행 | **주기적 배치 (Scheduled Batch)** | • 임시 디렉터리(`/tmp/avantfax/`) 파일 삭제<br>• 인박스 보존 기한이 지난 팩스 아카이브 이동 및 정리 |
+| **[3] 정기 배치** | `namifax phb`<br>(`src/namifax/cli/phb.py`) | OS crontab에 의해 정기적으로 실행 | **주기적 배치 (Scheduled Batch)** | • AvantFAX 주소록 DB를 HylaFAX 클라이언트용 `PBOOK1.1` 전화번호부 파일로 동기화 |
 | **[4] 외부 데몬** | HylaFAX Core<br>(`faxq`, `faxgetty`, `hfaxd`) | OS 서비스(systemd)에서 상시 구동 | **상시 데몬 (External Engine)** | • 실제 모뎀 하드웨어 제어 및 전화선 신호 처리<br>• 전송 큐 스케줄링 및 팩스 프로토콜 송수신 |
 
 
@@ -246,43 +246,43 @@ MySQL 스키마(`create_tables.sql`)를 기준으로 신규 Python 시스템(`SQ
 
 | 순번 | 모듈명 | 레거시 파일 위치 | 타깃 신규 모듈 위치 | 상태 | 의존 모듈 | 비고 |
 | :---: | :--- | :--- | :--- | :---: | :--- | :--- |
-| **01** | `SQL` | `includes/SQL.php` | `src/avantfax/db/engine.py` | `[FFI_BRIDGED]` | Leaf | 모던 DB 엔진 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
-| **02** | `MDBO` | `includes/MDBO.php` | `src/avantfax/db/query.py` | `[FFI_BRIDGED]` | Leaf | 쿼리 빌더 및 CRUD 유틸 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
-| **03** | `FormRules` | `includes/FormRules.php` | `src/avantfax/common/validators.py` | `[FFI_BRIDGED]` | Leaf | 폼/이메일/날짜 검증기 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
-| **04** | `PWAuth` | `includes/PWAuth.php` | `src/avantfax/auth/password.py` | `[FFI_BRIDGED]` | Leaf | pwauth 백엔드 및 MD5 해시 관리자 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
-| **05** | `PAMAuth` | `includes/PAMAuth.php` | `src/avantfax/auth/pam.py` | `[FFI_BRIDGED]` | Leaf | 시스템 PAM 인증 백엔드 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
-| **06** | `FileUpload` | `includes/FileUpload.php` | `src/avantfax/common/upload.py` | `[FFI_BRIDGED]` | Leaf | 파일 업로드 검증 및 이동 모듈 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
-| **07** | `Mailer` | `includes/Mailer.php` | `src/avantfax/services/mailer.py` | `[FFI_BRIDGED]` | Leaf | 이메일 발송 및 첨부파일 처리 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
-| **08** | `MDBObject` | `includes/MDBObject.php` | `src/avantfax/db/base.py` | `[FFI_BRIDGED]` | 01 | ORM ActiveRecord 베이스 클래스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
-| **09** | `classes_entities` | `includes/classes.php` | `src/avantfax/models/entities.py` | `[FFI_BRIDGED]` | 01, 08 | 14개 테이블 엔티티 클래스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
-| **10** | `MDBOData` | `includes/MDBOData.php` | `src/avantfax/db/repository.py` | `[FFI_BRIDGED]` | 02, 09 | CRUD 공통 레포지토리 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
-| **11** | `Covers` | `includes/Covers.php` | `src/avantfax/services/covers.py` | `[FFI_BRIDGED]` | 09, 10 | 팩스 표지 템플릿 관리 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
-| **12** | `FaxPDFCategory` | `includes/FaxPDFCategory.php` | `src/avantfax/services/categories.py` | `[FFI_BRIDGED]` | 09, 10 | 카테고리 관리 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
-| **13** | `AFUserPasswords` | `includes/AFUserPasswords.php` | `src/avantfax/services/user_passwords.py` | `[FFI_BRIDGED]` | 09, 10 | 비밀번호 이력 관리 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
-| **14** | `DynamicConfig` | `includes/DynamicConfig.php` | `src/avantfax/services/dynconf.py` | `[FFI_BRIDGED]` | 09, 10 | 블랙리스트 필터링 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
-| **15** | `BarcodeRouting` | `includes/BarcodeRouting.php` | `src/avantfax/services/barcode.py` | `[FFI_BRIDGED]` | 09, 10 | 바코드 기반 라우팅 규칙 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
-| **16** | `DIDRouting` | `includes/DIDRouting.php` | `src/avantfax/services/did.py` | `[FFI_BRIDGED]` | 09, 10 | DID 번호 기반 라우팅 규칙 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
-| **17** | `DistributionList` | `includes/DistributionList.php`| `src/avantfax/services/distro.py` | `[FFI_BRIDGED]` | 09, 10 | 동보 전송 목록 관리 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
-| **18** | `FaxModem` | `includes/FaxModem.php` | `src/avantfax/services/modem.py` | `[FFI_BRIDGED]` | 09, 10 | 모뎀 장치 관리 및 faxstat 상태 파싱 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
-| **19** | `AFAddressBook` | `includes/AFAddressBook.php` | `src/avantfax/services/addressbook.py` | `[FFI_BRIDGED]` | 09, 10 | 회사/팩스번호/이메일 연락처 통합 주소록 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
-| **20** | `FaxPDFArchive` | `includes/FaxPDFArchive.php` | `src/avantfax/services/archive_base.py` | `[FFI_BRIDGED]` | 09, 10 | 팩스 아카이브 메타데이터 관리, 권한 검사, 인박스/검색 페이징, 삭제/정리 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
-| **21** | `AFUserAccount` | `includes/AFUserAccount.php` | `src/avantfax/services/user_account.py` | `[FFI_BRIDGED]` | 09, 10, 13 | 사용자 계정 관리, 인증, 세션, 접근제어 및 비밀번호 정책 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
-| **22** | `dynconf` (CLI) | `includes/dynconf.php` | `src/avantfax/cli/dynconf.py` | `[COMPLETE]` | 14 | HylaFAX DynConf 수신 콜 필터링 CLI 엔트리포인트 구현 및 E2E Golden Master (01~03) 100% 통과 |
-| **23** | `phb` (CLI) | `includes/phb.php` | `src/avantfax/cli/phb.py` | `[COMPLETE]` | 19 | HylaFAX PBOOK1.1 포맷 전화번호부 자동 생성 CLI 배치 구현 및 단위 테스트 통과 |
-| **24** | `ArchiveIn` | `includes/ArchiveIn.php` | `src/avantfax/services/archive_in.py` | `[FFI_BRIDGED]` | 09, 20 | 수신 팩스 아카이빙, 인박스 관리, 이미지 회전, 오래된 팩스 보관 처리 서비스 구현 및 FFI/CLI 브리지 완료 |
-| **25** | `ArchiveOut` | `includes/ArchiveOut.php` | `src/avantfax/services/archive_out.py` | `[FFI_BRIDGED]` | 09, 20 | 송신 팩스 아카이빙, 발신자/회사 바인딩, 아카이브 직접 저장 서비스 구현 및 FFI/CLI 브리지 완료 |
-| **26** | `FaxQueue` | `includes/FaxQueue.php` | `src/avantfax/services/faxqueue.py` | `[FFI_BRIDGED]` | 09, 21 | HylaFAX 작업 큐 제어, 상태 파싱, 소유자 매핑, 작업 취소/속성 변경 서비스 구현 및 FFI/CLI 브리지 완료 |
-| **27** | `functions` | `includes/functions.php` | `src/avantfax/common/helpers.py` | `[COMPLETE]` | 09, 10, 16, 18, 19, 24, 07 | 전역 문자열/파일/이메일/주소록 조회/로깅 유틸리티 함수군 구현 및 단위 테스트 통과 |
-| **28** | `avantfaxcron` | `includes/avantfaxcron.php` | `src/avantfax/cli/cron.py` | `[COMPLETE]` | 20, 24 | 정기 배치 및 팩스 파일/임시폴더 정리 CLI 구현 및 E2E Golden Master (04~05) 100% 통과 |
-| **29** | `notify` (CLI) | `includes/notify.php` | `src/avantfax/cli/notify.py` | `[COMPLETE]` | 19, 21, 25, 27 | HylaFAX 송신 알림 CLI 구현 및 E2E Golden Master (09~11) 100% 통과 |
-| **30** | `faxrcvd` (CLI) | `includes/faxrcvd.php` | `src/avantfax/cli/faxrcvd.py` | `[COMPLETE]` | 15, 16, 18, 19, 24, 27 | HylaFAX 수신 처리 핵심 훅 구현 및 E2E Golden Master (12~14) 100% 통과 |
-| **31** | `faxcover` (CLI) | `includes/faxcover.php` | `src/avantfax/cli/faxcover.py` | `[COMPLETE]` | 09, 27 | HylaFAX 팩스 커버 생성 CLI 구현 및 E2E Golden Master (06~08) 100% 통과 |
-| **32** | `WebAuth` | `check_login.php`, `logout.php` | `src/avantfax/web/views/auth.py` | `[COMPLETE]` | 04, 05, 21, 27 | 로그인/로그아웃 뷰 및 인증 미들웨어 구현 및 단위 테스트 통과 |
-| **33** | `WebInbox` | `inbox.php`, `viewfax.php` | `src/avantfax/web/views/inbox.py` | `[COMPLETE]` | 19, 21, 24, 27 | 수신함 뷰 및 다운로드 API 구현 및 단위 테스트 통과 |
-| **34** | `WebOutbox` | `outbox.php` | `src/avantfax/web/views/outbox.py` | `[COMPLETE]` | 21, 26, 27 | 송신 큐 뷰 및 제어 API 구현 및 단위 테스트 통과 |
-| **35** | `WebArchive` | `archive.php`, `search.php` | `src/avantfax/web/views/archive.py` | `[COMPLETE]` | 19, 20, 21, 27 | 팩스 검색 및 아카이브 뷰 구현 및 단위 테스트 통과 |
-| **36** | `WebSendFax` | `sendfax.php`, `upload_*.php` | `src/avantfax/web/views/sendfax.py` | `[COMPLETE]` | 06, 11, 19, 21, 26, 27 | 팩스 작성 및 전송 뷰 구현 및 단위 테스트 통과 |
-| **37** | `WebAdmin` | `admin/*.php` | `src/avantfax/web/views/admin.py` | `[COMPLETE]` | 12, 14, 15, 16, 17, 18, 21, 27 | 시스템 관리자 뷰 및 설정 API 구현 및 단위 테스트 통과 |
+| **01** | `SQL` | `includes/SQL.php` | `src/namifax/db/engine.py` | `[FFI_BRIDGED]` | Leaf | 모던 DB 엔진 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
+| **02** | `MDBO` | `includes/MDBO.php` | `src/namifax/db/query.py` | `[FFI_BRIDGED]` | Leaf | 쿼리 빌더 및 CRUD 유틸 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
+| **03** | `FormRules` | `includes/FormRules.php` | `src/namifax/common/validators.py` | `[FFI_BRIDGED]` | Leaf | 폼/이메일/날짜 검증기 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
+| **04** | `PWAuth` | `includes/PWAuth.php` | `src/namifax/auth/password.py` | `[FFI_BRIDGED]` | Leaf | pwauth 백엔드 및 MD5 해시 관리자 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
+| **05** | `PAMAuth` | `includes/PAMAuth.php` | `src/namifax/auth/pam.py` | `[FFI_BRIDGED]` | Leaf | 시스템 PAM 인증 백엔드 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
+| **06** | `FileUpload` | `includes/FileUpload.php` | `src/namifax/common/upload.py` | `[FFI_BRIDGED]` | Leaf | 파일 업로드 검증 및 이동 모듈 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
+| **07** | `Mailer` | `includes/Mailer.php` | `src/namifax/services/mailer.py` | `[FFI_BRIDGED]` | Leaf | 이메일 발송 및 첨부파일 처리 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
+| **08** | `MDBObject` | `includes/MDBObject.php` | `src/namifax/db/base.py` | `[FFI_BRIDGED]` | 01 | ORM ActiveRecord 베이스 클래스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
+| **09** | `classes_entities` | `includes/classes.php` | `src/namifax/models/entities.py` | `[FFI_BRIDGED]` | 01, 08 | 14개 테이블 엔티티 클래스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
+| **10** | `MDBOData` | `includes/MDBOData.php` | `src/namifax/db/repository.py` | `[FFI_BRIDGED]` | 02, 09 | CRUD 공통 레포지토리 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
+| **11** | `Covers` | `includes/Covers.php` | `src/namifax/services/covers.py` | `[FFI_BRIDGED]` | 09, 10 | 팩스 표지 템플릿 관리 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
+| **12** | `FaxPDFCategory` | `includes/FaxPDFCategory.php` | `src/namifax/services/categories.py` | `[FFI_BRIDGED]` | 09, 10 | 카테고리 관리 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
+| **13** | `AFUserPasswords` | `includes/AFUserPasswords.php` | `src/namifax/services/user_passwords.py` | `[FFI_BRIDGED]` | 09, 10 | 비밀번호 이력 관리 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
+| **14** | `DynamicConfig` | `includes/DynamicConfig.php` | `src/namifax/services/dynconf.py` | `[FFI_BRIDGED]` | 09, 10 | 블랙리스트 필터링 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
+| **15** | `BarcodeRouting` | `includes/BarcodeRouting.php` | `src/namifax/services/barcode.py` | `[FFI_BRIDGED]` | 09, 10 | 바코드 기반 라우팅 규칙 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
+| **16** | `DIDRouting` | `includes/DIDRouting.php` | `src/namifax/services/did.py` | `[FFI_BRIDGED]` | 09, 10 | DID 번호 기반 라우팅 규칙 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
+| **17** | `DistributionList` | `includes/DistributionList.php`| `src/namifax/services/distro.py` | `[FFI_BRIDGED]` | 09, 10 | 동보 전송 목록 관리 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
+| **18** | `FaxModem` | `includes/FaxModem.php` | `src/namifax/services/modem.py` | `[FFI_BRIDGED]` | 09, 10 | 모뎀 장치 관리 및 faxstat 상태 파싱 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
+| **19** | `AFAddressBook` | `includes/AFAddressBook.php` | `src/namifax/services/addressbook.py` | `[FFI_BRIDGED]` | 09, 10 | 회사/팩스번호/이메일 연락처 통합 주소록 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
+| **20** | `FaxPDFArchive` | `includes/FaxPDFArchive.php` | `src/namifax/services/archive_base.py` | `[FFI_BRIDGED]` | 09, 10 | 팩스 아카이브 메타데이터 관리, 권한 검사, 인박스/검색 페이징, 삭제/정리 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
+| **21** | `AFUserAccount` | `includes/AFUserAccount.php` | `src/namifax/services/user_account.py` | `[FFI_BRIDGED]` | 09, 10, 13 | 사용자 계정 관리, 인증, 세션, 접근제어 및 비밀번호 정책 서비스 구현, 단위 테스트 통과 및 FFI/CLI 브리지 완료 |
+| **22** | `dynconf` (CLI) | `includes/dynconf.php` | `src/namifax/cli/dynconf.py` | `[COMPLETE]` | 14 | HylaFAX DynConf 수신 콜 필터링 CLI 엔트리포인트 구현 및 E2E Golden Master (01~03) 100% 통과 |
+| **23** | `phb` (CLI) | `includes/phb.php` | `src/namifax/cli/phb.py` | `[COMPLETE]` | 19 | HylaFAX PBOOK1.1 포맷 전화번호부 자동 생성 CLI 배치 구현 및 단위 테스트 통과 |
+| **24** | `ArchiveIn` | `includes/ArchiveIn.php` | `src/namifax/services/archive_in.py` | `[FFI_BRIDGED]` | 09, 20 | 수신 팩스 아카이빙, 인박스 관리, 이미지 회전, 오래된 팩스 보관 처리 서비스 구현 및 FFI/CLI 브리지 완료 |
+| **25** | `ArchiveOut` | `includes/ArchiveOut.php` | `src/namifax/services/archive_out.py` | `[FFI_BRIDGED]` | 09, 20 | 송신 팩스 아카이빙, 발신자/회사 바인딩, 아카이브 직접 저장 서비스 구현 및 FFI/CLI 브리지 완료 |
+| **26** | `FaxQueue` | `includes/FaxQueue.php` | `src/namifax/services/faxqueue.py` | `[FFI_BRIDGED]` | 09, 21 | HylaFAX 작업 큐 제어, 상태 파싱, 소유자 매핑, 작업 취소/속성 변경 서비스 구현 및 FFI/CLI 브리지 완료 |
+| **27** | `functions` | `includes/functions.php` | `src/namifax/common/helpers.py` | `[COMPLETE]` | 09, 10, 16, 18, 19, 24, 07 | 전역 문자열/파일/이메일/주소록 조회/로깅 유틸리티 함수군 구현 및 단위 테스트 통과 |
+| **28** | `avantfaxcron` | `includes/avantfaxcron.php` | `src/namifax/cli/cron.py` | `[COMPLETE]` | 20, 24 | 정기 배치 및 팩스 파일/임시폴더 정리 CLI 구현 및 E2E Golden Master (04~05) 100% 통과 |
+| **29** | `notify` (CLI) | `includes/notify.php` | `src/namifax/cli/notify.py` | `[COMPLETE]` | 19, 21, 25, 27 | HylaFAX 송신 알림 CLI 구현 및 E2E Golden Master (09~11) 100% 통과 |
+| **30** | `faxrcvd` (CLI) | `includes/faxrcvd.php` | `src/namifax/cli/faxrcvd.py` | `[COMPLETE]` | 15, 16, 18, 19, 24, 27 | HylaFAX 수신 처리 핵심 훅 구현 및 E2E Golden Master (12~14) 100% 통과 |
+| **31** | `faxcover` (CLI) | `includes/faxcover.php` | `src/namifax/cli/faxcover.py` | `[COMPLETE]` | 09, 27 | HylaFAX 팩스 커버 생성 CLI 구현 및 E2E Golden Master (06~08) 100% 통과 |
+| **32** | `WebAuth` | `check_login.php`, `logout.php` | `src/namifax/web/views/auth.py` | `[COMPLETE]` | 04, 05, 21, 27 | 로그인/로그아웃 뷰 및 인증 미들웨어 구현 및 단위 테스트 통과 |
+| **33** | `WebInbox` | `inbox.php`, `viewfax.php` | `src/namifax/web/views/inbox.py` | `[COMPLETE]` | 19, 21, 24, 27 | 수신함 뷰 및 다운로드 API 구현 및 단위 테스트 통과 |
+| **34** | `WebOutbox` | `outbox.php` | `src/namifax/web/views/outbox.py` | `[COMPLETE]` | 21, 26, 27 | 송신 큐 뷰 및 제어 API 구현 및 단위 테스트 통과 |
+| **35** | `WebArchive` | `archive.php`, `search.php` | `src/namifax/web/views/archive.py` | `[COMPLETE]` | 19, 20, 21, 27 | 팩스 검색 및 아카이브 뷰 구현 및 단위 테스트 통과 |
+| **36** | `WebSendFax` | `sendfax.php`, `upload_*.php` | `src/namifax/web/views/sendfax.py` | `[COMPLETE]` | 06, 11, 19, 21, 26, 27 | 팩스 작성 및 전송 뷰 구현 및 단위 테스트 통과 |
+| **37** | `WebAdmin` | `admin/*.php` | `src/namifax/web/views/admin.py` | `[COMPLETE]` | 12, 14, 15, 16, 17, 18, 21, 27 | 시스템 관리자 뷰 및 설정 API 구현 및 단위 테스트 통과 |
 | **39** | `AdminSmtpGateway` | `NEW` (엔터프라이즈) | `src/namifax/services/smtp_settings.py`, `src/namifax/views/admin.py` | `[COMPLETE]` | 07 | 외부 SMTP 게이트웨이 웹 설정 및 실시간 연결 진단 도구 완료 |
 | **40** | `StorageLifecycle` | `NEW` (엔터프라이즈) | `src/namifax/services/storage_lifecycle.py`, `src/namifax/cli/cron.py` | `[COMPLETE]` | 28 | 로컬 원본 TIFF 선별 삭제 및 원격 클라우드 객체 통합 수명주기 엔진 완료 |
 | **41** | `CloudStorage` | `NEW` (엔터프라이즈) | `src/namifax/services/cloud_storage.py` | `[COMPLETE]` | 40 | AWS S3, MinIO, GCS 호환 멀티 클라우드 오브젝트 스토리지 연동 완료 |
@@ -856,3 +856,11 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 - 격리로 드러난 숨은 의존: (1) `create_thumbnails` "빈 아카이브" 테스트는 연결 없는 엔진 덕에 우연히 통과했다 → 빈 DB를 명시 주입. (2) 새 DB에서는 시드 순서 때문에 데모 팩스(`fid=1`)가 `Acme Corp`에 연결되지 않았다(주소록 시드가 팩스 시드보다 뒤). 기존 전역 DB는 두 번째 초기화에서야 채워졌다 → `seed_database_if_empty` 끝에서 멱등 재연결(`tests/unit/test_schema_seed_first_run.py`).
 - `[관찰]` `AddressBook`의 기본키는 `ab_id`인데 코드와 시드는 `abook_id` 컬럼을 참조하고 시드 행에서 `NULL`이다. 인박스의 `companyid` 연결이 시드에서는 항상 비어 있다. 정리 대상.
 - `[관찰]` `seed_database_if_empty`는 작업 디렉터리 상대 경로(`faxes/2026/09/29/...`)에 샘플 PDF/TIFF를 쓴다. 초기화할 때마다 cwd에 파일이 생긴다.
+
+### 13.6 제거된 로직 (P4, Dead Code Removal Protocol)
+- **`src/avantfax/` 전체(56개 .py)**: `src/namifax/`의 이름 치환 복사본. 모든 모듈이 `namifax`에 존재하며 테스트는 P3에서 `namifax` 대상으로 전환했다. 복사본에만 있던 CLI 5개는 P2에서 `namifax.cli`로 이식했다.
+  - `avantfax/cli/import_archive.py`: 결함 F4-19의 스텁("Imported N faxes"만 출력)이며 진입점에도 없었다. 이식하지 않고 제거한다. 레거시 `tools/import_archive.php`의 실제 구현은 후속 작업으로 남는다.
+- **`src/namifax/web/` 전체(`app.py`, `session.py`, `views/{admin,archive,auth,inbox,outbox,sendfax}.py`)**: 모듈 32~37(`WebAuth/Inbox/Outbox/Archive/SendFax/Admin`)이 만든 1세대 JSON/WSGI 폴백 앱. 12절의 Pyramid + Jinja2 뷰가 같은 레거시 페이지를 대체했다. `SessionManager`는 P1에서 `namifax/sessions.py`로 이동했다.
+  - `namifax.create_app`의 `except ImportError` 폴백과 `serve_main`의 JSON 앱 폴백도 제거했다. Pyramid 앱 생성에 실패하면 `serve_main`은 오류를 stderr에 출력하고 종료 코드 1로 끝난다(조용한 대체 서비스 없음).
+  - 함께 삭제한 테스트: `test_web_{admin,app,archive,auth,inbox,outbox,sendfax}.py` 7개 파일(제거된 핸들러 대상).
+- 위 모듈 매트릭스(1~21절)의 `src/avantfax/...` 경로 표기는 실제 위치인 `src/namifax/...`로 정정했다.

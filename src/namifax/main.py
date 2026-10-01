@@ -31,7 +31,6 @@ from namifax.cli.notify import run_notify
 from namifax.cli.phb import main as run_phb
 from namifax.cli.user import run_createuser
 from namifax.services.scheduler import get_scheduler, run_scheduler_standalone
-from namifax.web.app import create_app
 
 USAGE = """NamiFAX Modernized Enterprise System CLI
 
@@ -83,8 +82,10 @@ def serve_main(argv: list[str] | None = None) -> int:
         from namifax import create_app as make_app
         app = make_app()
     except Exception as exc:
-        print(f"[!] Pyramid app failed to start ({exc!r}); falling back to the legacy JSON app.", file=sys.stderr)
-        app = create_app()
+        print(f"[!] NamiFAX web application failed to start: {exc!r}", file=sys.stderr)
+        if enable_internal_sched:
+            get_scheduler().stop()
+        return 1
 
     print(f"[*] Starting NamiFAX Web Service on http://{host}:{port} ...")
     with make_server(host, port, app, server_class=ThreadingWSGIServer) as httpd:
