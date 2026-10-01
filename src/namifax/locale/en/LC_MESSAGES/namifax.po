@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: eMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 21:10+0900\n"
+"POT-Creation-Date: 2026-10-01 21:51+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -1034,6 +1034,15 @@ msgstr "Search the Archive"
 msgid "Enter a keyword or filter above and click Search to find fax records."
 msgstr "Enter a keyword or filter above and click Search to find fax records."
 
+msgid "Name the sender"
+msgstr ""
+
+msgid "Select Contact Record"
+msgstr "Select Contact Record"
+
+msgid "Or type a new company name"
+msgstr ""
+
 msgid "Distribution Lists"
 msgstr "Distribution Lists"
 
@@ -1257,6 +1266,9 @@ msgstr "Received"
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
+msgid "Unknown Sender"
+msgstr ""
+
 msgid "Reply"
 msgstr "Reply"
 
@@ -1392,9 +1404,6 @@ msgstr "Search Company Name"
 
 msgid "Type company name to filter..."
 msgstr ""
-
-msgid "Select Contact Record"
-msgstr "Select Contact Record"
 
 msgid "Delete Fax"
 msgstr "Delete Fax"

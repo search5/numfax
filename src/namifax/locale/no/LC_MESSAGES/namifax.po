@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: nMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 21:10+0900\n"
+"POT-Creation-Date: 2026-10-01 21:51+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: no\n"
@@ -1098,6 +1098,15 @@ msgstr ""
 "Skriv inn et nøkkelord eller filter ovenfor og klikk på Søk for å finne "
 "faksoppføringer."
 
+msgid "Name the sender"
+msgstr ""
+
+msgid "Select Contact Record"
+msgstr "Velg kontaktoppføring"
+
+msgid "Or type a new company name"
+msgstr ""
+
 msgid "Distribution Lists"
 msgstr "Distribusjonslister"
 
@@ -1330,6 +1339,9 @@ msgstr "Arkiv"
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
+msgid "Unknown Sender"
+msgstr ""
+
 msgid "Reply"
 msgstr "Svar på FAKS"
 
@@ -1471,9 +1483,6 @@ msgstr "Søk etter firmanavn"
 
 msgid "Type company name to filter..."
 msgstr ""
-
-msgid "Select Contact Record"
-msgstr "Velg kontaktoppføring"
 
 #, fuzzy
 msgid "Delete Fax"

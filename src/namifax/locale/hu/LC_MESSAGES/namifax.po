@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: hMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 21:10+0900\n"
+"POT-Creation-Date: 2026-10-01 21:51+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hu\n"
@@ -1101,6 +1101,15 @@ msgstr ""
 "Adjon meg egy kulcsszót vagy szűrőt fent, majd kattintson a Keresés "
 "gombra a faxrekordok megkereséséhez."
 
+msgid "Name the sender"
+msgstr ""
+
+msgid "Select Contact Record"
+msgstr "Névjegyrekord kiválasztása"
+
+msgid "Or type a new company name"
+msgstr ""
+
 msgid "Distribution Lists"
 msgstr "Disztribúciós listák"
 
@@ -1337,6 +1346,9 @@ msgstr "Archívum"
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
+msgid "Unknown Sender"
+msgstr ""
+
 msgid "Reply"
 msgstr "Válasz a faxra"
 
@@ -1479,9 +1491,6 @@ msgstr "Vállalat nevének keresése"
 
 msgid "Type company name to filter..."
 msgstr ""
-
-msgid "Select Contact Record"
-msgstr "Névjegyrekord kiválasztása"
 
 #, fuzzy
 msgid "Delete Fax"

@@ -56,6 +56,7 @@ def includeme(config):
     # Interaction Modal Dialog routes
     config.add_route("modal_email", "/email")
     config.add_route("modal_assign", "/assign")
+    config.add_route("assignx", "/assignx")
     config.add_route("modal_note", "/note")
     config.add_route("modal_delete", "/delete")
     config.add_route("modal_refax", "/refax")

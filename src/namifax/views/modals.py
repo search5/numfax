@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+from pyramid.csrf import check_csrf_token
 from pyramid.httpexceptions import HTTPFound, HTTPForbidden
 from pyramid.view import view_config
 
+from namifax.i18n import _
 from namifax.services.addressbook import AFAddressBook
 from namifax.services.archive_in import ArchiveIn
 from namifax.services.faxqueue import FaxQueue
@@ -115,6 +117,44 @@ def modal_assign_view(request):
         "companies": company_records,
         "message": message,
     }
+
+
+@view_config(route_name="assignx", renderer="namifax:templates/assignx.jinja2", permission="view")
+def assignx_view(request):
+    """Name the sender of a fax nobody knows (the original assignx.php): pick an existing company or type a new one.
+
+    The fax gets the company (its number link is cleared, as the original did). Unlike the original the user needs the
+    right to the fax, and the POST carries the session's CSRF token.
+    """
+    fid = (request.params.get("fid") or "").strip()
+    arc = ArchiveIn(db=request.dbsession)
+    if not fid.isdigit() or not load_fax(request, arc, fid, action="assignx"):
+        return HTTPFound(location=request.route_url("inbox"))
+
+    book = AFAddressBook(db=request.dbsession)
+    error = None
+    if request.method == "POST":
+        check_csrf_token(request)
+        chosen = (request.POST.get("abook_id") or "").strip()
+        name = (request.POST.get("regexp") or "").strip()
+        cid = None
+        if chosen.isdigit() and book.loadbycid(int(chosen)):
+            cid = int(chosen)
+        elif name:
+            if book.create(name):
+                cid = book.get_companyid()
+            else:
+                error = book.get_error()
+        else:
+            error = _("Please enter a company name")
+        if cid:
+            arc.set_faxnumid(0)                       # no longer tied to the reserved number
+            arc.set_companyid(cid)
+            return HTTPFound(location=request.route_url("inbox"))
+
+    companies = [(c.get("abook_id"), c.get("company")) for c in book.get_companies() or [] if c.get("company")]
+    return {"title": "- NamiFAX - Name the sender", "fid": fid, "companies": companies, "error": error,
+            "origfaxnum": arc.get_origfaxnum() or "", "csrf_token": request.session.get_csrf_token()}
 
 
 @view_config(route_name="modal_note", renderer="namifax:templates/modal_note.jinja2", permission="view")

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: dMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 21:10+0900\n"
+"POT-Creation-Date: 2026-10-01 21:51+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -1105,6 +1105,15 @@ msgstr ""
 "Geben Sie oben ein Schlagwort oder einen Filter ein und klicken Sie auf "
 "Suchen, um Faxdatensätze zu finden."
 
+msgid "Name the sender"
+msgstr ""
+
+msgid "Select Contact Record"
+msgstr "Kontaktdatensatz auswählen"
+
+msgid "Or type a new company name"
+msgstr ""
+
 msgid "Distribution Lists"
 msgstr "Verteiler Listen"
 
@@ -1343,6 +1352,9 @@ msgstr "Archiv"
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
+msgid "Unknown Sender"
+msgstr ""
+
 msgid "Reply"
 msgstr "Antwort an FAX"
 
@@ -1487,9 +1499,6 @@ msgstr "Unternehmensnamen suchen"
 
 msgid "Type company name to filter..."
 msgstr ""
-
-msgid "Select Contact Record"
-msgstr "Kontaktdatensatz auswählen"
 
 #, fuzzy
 msgid "Delete Fax"

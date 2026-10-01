@@ -9,10 +9,65 @@ from pyramid.httpexceptions import HTTPFound, HTTPMethodNotAllowed, HTTPNotFound
 from pyramid.response import Response
 from pyramid.view import view_config
 
-from namifax.services.addressbook import AFAddressBook
+from namifax.common.helpers import clean_faxnum
+from namifax.services.addressbook import RESERVED_FAX_NUM, AFAddressBook
 from namifax.services.archive_in import ArchiveIn
 from namifax.views.admin import get_all_admin_modems
 from namifax.views.fax_rights import fax_access, load_fax
+
+
+def _sender(ab: AFAddressBook, r: dict) -> dict:
+    """Who a received fax is from, as the original's get_company_details() decides.
+
+    ``assign`` is ``"x"`` when the sender is unknown (no entry, or the reserved one: the name can be given with *assignx*),
+    ``"c"`` when its company is named after its own number (the company can be renamed with *assign*) and empty when it has
+    been assigned properly (the name links to its address book entry). ``choices`` lists the companies a shared number
+    could belong to.
+    """
+    origfaxnum = r.get("origfaxnum") or ""
+    out = {"company": "", "assign": "", "cid": None, "description": "", "choices": []}
+
+    def named(company: str, number: str, cid, description: str = "") -> dict:
+        out.update(company=company, cid=cid, description=description or "")
+        if company == RESERVED_FAX_NUM:
+            out["assign"] = "x"
+        elif clean_faxnum(company) and clean_faxnum(company) == clean_faxnum(number):
+            out["assign"] = "c"
+        return out
+
+    try:
+        if r.get("companyid") and ab.loadbycid(r["companyid"]) and ab.get_company():           # given a company by assignx
+            return named(ab.get_company(), origfaxnum, r["companyid"])
+        if r.get("faxnumid") and ab.loadbyfaxnumid(r["faxnumid"]):
+            return named(ab.get_company() or "", ab.get_faxnumber() or origfaxnum, ab.get_companyid(), ab.get_description())
+        if origfaxnum:
+            found, several = ab.loadbyfaxnum(origfaxnum)
+            if found and several:
+                out["choices"] = ab.number_matches(origfaxnum)
+                return out
+            if found and ab.fax_array.get("abookfax_id") and ab.loadbyfaxnumid(ab.fax_array["abookfax_id"]):
+                return named(ab.get_company() or "", ab.get_faxnumber() or origfaxnum, ab.get_companyid(), ab.get_description())
+    except Exception:
+        pass
+    out["assign"] = "x"                                                                          # nobody knows this sender
+    return out
+
+
+def _inbox_row(ab: AFAddressBook, r: dict) -> dict:
+    who = _sender(ab, r)
+    return {
+        "id": r.get("fid"),
+        "choices": who["choices"],
+        "assign": who["assign"],
+        "cid": who["cid"],
+        "number_description": who["description"],
+        "company": who["company"] if who["company"] != RESERVED_FAX_NUM else "",
+        "origfaxnum": r.get("origfaxnum") or "-",
+        "archstamp": r.get("archstamp") or "",
+        "modemdev": r.get("modemdev") or "",
+        "pages": r.get("pages") or 1,
+        "description": r.get("description") or "",
+    }
 
 
 @view_config(route_name="inbox", renderer="namifax:templates/inbox.jinja2", permission="view")
@@ -28,39 +83,7 @@ def inbox_view(request):
         if rows:
             ab = AFAddressBook(db=request.dbsession)
             for r in rows:
-                fid = r.get("fid")
-                cname = None
-                if r.get("companyid"):
-                    try:
-                        if ab.loadbycid(r.get("companyid")):
-                            cname = ab.get_company()
-                    except Exception:
-                        pass
-                if not cname and r.get("faxnumid"):
-                    try:
-                        if ab.loadbyfaxnumid(r.get("faxnumid")):
-                            cname = ab.get_company()
-                    except Exception:
-                        pass
-                choices = []
-                if not r.get("faxnumid") and r.get("origfaxnum"):
-                    # the sender's number belongs to several companies: ask which one it is (the original's mult_nums)
-                    try:
-                        found, several = ab.loadbyfaxnum(r.get("origfaxnum"))
-                        if found and several:
-                            choices = ab.number_matches(r.get("origfaxnum"))
-                    except Exception:
-                        pass
-                faxes.append({
-                    "id": fid,
-                    "choices": choices,
-                    "company": cname or r.get("company") or "",
-                    "origfaxnum": r.get("origfaxnum") or "-",
-                    "archstamp": r.get("archstamp") or "",
-                    "modemdev": r.get("modemdev") or "",
-                    "pages": r.get("pages") or 1,
-                    "description": r.get("description") or "",
-                })
+                faxes.append(_inbox_row(ab, r))
 
     if "Authorization" in request.headers or "application/json" in request.headers.get("Accept", ""):
         return Response(json_body={"items": faxes, "total_count": len(faxes)}, content_type="application/json")

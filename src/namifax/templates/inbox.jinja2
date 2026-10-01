@@ -88,7 +88,7 @@
               </a>
             </td>
 
-            <td class="py-4 px-4 align-middle">
+            <td class="py-4 px-4 align-middle" data-sender="{{ fax.id }}">
               {% if fax.choices %}
               <form method="post" action="/setcompany" class="flex items-center gap-2" title="{{ _('This number belongs to several companies. Which one is it?') }}">
                 <select name="faxnumid" class="border border-slate-300 rounded-lg px-2 py-1 text-xs bg-white">
@@ -101,13 +101,19 @@
               <div class="text-xs text-slate-400 font-mono mt-0.5">{{ fax.origfaxnum }}</div>
               {% else %}
               <div class="font-semibold text-slate-900 group-hover:text-blue-700 transition-colors">
-                <a href="/addressbook?search={{ fax.company or '' }}" class="hover:underline">
-                  {{ fax.company or fax.origfaxnum or 'Unknown Sender' }}
-                </a>
+                {% if fax.assign == 'x' %}
+                <a href="/assignx?fid={{ fax.id }}" class="hover:underline" title="{{ _('Name the sender') }}">{{ fax.origfaxnum if fax.origfaxnum != '-' else _('Unknown Sender') }}</a>
+                {% elif fax.assign == 'c' %}
+                <a href="/assign?abook_id={{ fax.cid }}" class="hover:underline" title="{{ _('Name the sender') }}">{{ fax.company }}</a>
+                {% elif fax.cid %}
+                <a href="/addressbook/edit?abook_id={{ fax.cid }}" class="hover:underline">{{ fax.company }}</a>{% if fax.number_description %} - {{ fax.number_description }}{% endif %}
+                {% else %}
+                <a href="/addressbook?search={{ fax.company or '' }}" class="hover:underline">{{ fax.company or fax.origfaxnum or _('Unknown Sender') }}</a>
+                {% endif %}
               </div>
-              {% endif %}
               {% if fax.origfaxnum and fax.company %}
                 <div class="text-xs text-slate-400 font-mono mt-0.5">{{ fax.origfaxnum }}</div>
+              {% endif %}
               {% endif %}
               {% if fax.description %}
                 <p class="text-xs text-slate-500 truncate max-w-xs mt-0.5">{{ fax.description }}</p>
