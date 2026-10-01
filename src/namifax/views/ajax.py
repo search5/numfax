@@ -15,10 +15,10 @@ from namifax.views.admin import get_all_admin_modems
 @view_config(route_name="ajax_modemstatus")
 def ajax_modem_status(request):
     """Real-time modem status poller matching legacy ajaxmodemstatus.php."""
-    modems = get_all_admin_modems()
+    modems = get_all_admin_modems(request.db)
     rows_xml = []
     try:
-        fm = FaxModem()
+        fm = FaxModem(db=request.db)
         for m in modems:
             dev = m.get("device", "ttyS0")
             status_info = m.get("status", "Idle")
@@ -45,7 +45,7 @@ def ajax_modem_status(request):
 @view_config(route_name="ajax_inbox")
 def ajax_inbox_count(request):
     """Unread inbox count poller matching legacy ajaxinbox.php."""
-    arc = ArchiveIn()
+    arc = ArchiveIn(db=request.db)
     count = 0
     try:
         count = arc.get_num_faxes(inbox=True) or 0
@@ -58,7 +58,7 @@ def ajax_inbox_count(request):
 def ajax_addressbook_suggest(request):
     """Address book auto-suggest matching legacy ajaxbook.php."""
     q = (request.params.get("q") or request.GET.get("q") or "").strip()
-    ab = AFAddressBook()
+    ab = AFAddressBook(db=request.db)
     rows_xml = []
 
     try:
@@ -88,7 +88,7 @@ def ajax_addressbook_suggest(request):
 def ajax_emailbook_suggest(request):
     """Email address auto-suggest matching legacy ajaxemailbook.php."""
     q = (request.params.get("q") or request.GET.get("q") or "").strip().lower()
-    ab = AFAddressBook()
+    ab = AFAddressBook(db=request.db)
     rows_xml = []
 
     try:
@@ -114,7 +114,7 @@ def ajax_emailbook_suggest(request):
 def ajax_addressbook_prefill(request):
     """Address book contact info prefill matching legacy ajaxprefillto.php."""
     fnid = request.GET.get("fnid", "").strip()
-    ab = AFAddressBook()
+    ab = AFAddressBook(db=request.db)
     to_company = ""
     to_person = ""
     to_address = ""
@@ -160,7 +160,7 @@ def ajax_addressbook_prefill(request):
 def ajax_distrolist_faxes(request):
     """Distribution list fax numbers matching legacy ajaxdlist.php."""
     dl_id = request.GET.get("dl_id", "").strip()
-    dl = DistributionList()
+    dl = DistributionList(db=request.db)
     faxes_str = ""
 
     try:
@@ -179,7 +179,7 @@ def ajax_archive_fax(request):
     """Archive fax endpoint matching legacy ajaxarchivefax.php."""
     fid = request.params.get("fid") or request.params.get("fids")
     if fid:
-        arc = ArchiveIn()
+        arc = ArchiveIn(db=request.db)
         try:
             for item in str(fid).split(","):
                 if item.strip():
@@ -256,7 +256,7 @@ def ajax_deletefaxes_view(request):
     fids = request.params.get("fids", "")
     if request.method == "POST":
         if fids:
-            arc = ArchiveIn()
+            arc = ArchiveIn(db=request.db)
             for fid in fids.split(","):
                 try:
                     if fid.strip():
@@ -289,7 +289,7 @@ def ajax_deletefaxes_view(request):
 def ajax_archivebook_view(request):
     """Address book company auto-suggest matching legacy ajax/archivebook.php."""
     q = (request.params.get("q") or request.GET.get("q") or "").strip()
-    ab = AFAddressBook()
+    ab = AFAddressBook(db=request.db)
     rows_xml = []
 
     try:

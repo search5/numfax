@@ -808,10 +808,18 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 | 2 | `views/admin.py` smtp/printers/storage/saml 4개 뷰: `DatabaseEngine()` 폴백 및 `db_engine` 우회 제거, `request.db` 직접 사용 | `[COMPLETE]` | `tests/unit/test_admin_views_request_db.py` 9개, 전체 422 통과 |
 | V1 | `views/inbox.py` 5개 뷰 + 공유 헬퍼 `get_all_admin_modems(db)`: `ArchiveIn/AFAddressBook(db=request.db)` | `[COMPLETE]` | `tests/unit/test_inbox_views_request_db.py` 6개, 전체 447 통과 |
 | V2 | `views/modals.py` 6개 뷰: `ArchiveIn/AFAddressBook(db=request.db)` 8곳 | `[COMPLETE]` | `tests/unit/test_modals_views_request_db.py` 6개, 전체 453 통과. `FaxQueue()`는 내부에서 `AFUserAccount()`를 만들어 C 단계에서 처리 |
-| V3~ | 나머지 웹 뷰를 모듈 단위로 `request.db` 주입: `ajax`(7), `admin`(9), `helpers`(5), `addressbook`(5), `webauthn`(3), `archive`/`auth`/`settings`/`outbox`/`sendfax`, `security.py`, `web/views/*` | `[PENDING]` | 호출처를 모두 바꾸기 전에 폴백을 제거하면 뷰 약 70곳이 깨지므로 폴백 제거는 맨 마지막 |
+| V3 | `views/ajax.py` 9개 뷰: `ArchiveIn/AFAddressBook/FaxModem/DistributionList(db=request.db)`, `get_all_admin_modems(request.db)` | `[COMPLETE]` | `tests/unit/test_ajax_views_request_db.py` 9개, 공용 `tests/conftest.py::seeded_db` 도입(전역 DB 시드 의존 제거), 전체 462 통과. `FaxQueue()`는 C 단계 |
+| V4~ | 나머지 웹 뷰를 모듈 단위로 `request.db` 주입: `admin`(9), `helpers`(5), `addressbook`(5), `webauthn`(3), `archive`/`auth`/`settings`/`outbox`/`sendfax`, `security.py`, `web/views/*` | `[PENDING]` | 호출처를 모두 바꾸기 전에 폴백을 제거하면 뷰 약 70곳이 깨지므로 폴백 제거는 맨 마지막 |
 | C1~ | CLI별 `cli_db()`(provider.py) 컨텍스트로 엔진 생성 후 명시 주입: `faxrcvd`(4), `notify`(3), `cron`(2), `phb`, `dynconf`, `user`, `faxcover`, `services/faxqueue` | `[PENDING]` | CLI는 request가 없으므로 `request.db` 사용 불가. 웹과 동일한 `resolve_database_url` 규칙 사용 |
 | F | `Repository`의 `get_default_engine()` 폴백을 `resolve_db`로 교체, `get_default_engine` shim화/삭제, `bridge_cli._GLOBAL_ENGINE` 정리, 테스트 격리 픽스처 | `[PENDING]` | 보관해 둔 `test_repository_db_injection.py`(전역 엔진 미생성 검증)를 이 루프에서 복원 |
 
 ### 13.1 루프 3에서 발견된 기존 결함 (미해결, 별도 처리 필요)
 - `[NEEDS_CLARIFICATION]` `services/ocr.py`(`FaxOCR`), `services/webauthn.py`(`UserWebAuthnCredentials`)의 `CREATE TABLE`이 MySQL 전용 DDL(`AUTO_INCREMENT`, `INDEX`, `ENGINE=InnoDB`)이고 `db/schema.py`에도 없다. SQLite에서는 `try/except: pass`로 가려진 채 테이블이 생성되지 않는다. 운영 DB가 MySQL/SQLite 중 무엇인지 확정 후 `schema.py`로 이관 필요.
 - 이전에는 위 서비스들이 연결 없는 `DatabaseEngine()`을 썼기 때문에 DB 쓰기가 전부 조용히 실패했다. 주입으로 이 경로가 실제 DB를 보게 되므로 위 DDL 이슈가 표면화된다.
+
+### 13.2 `src/namifax/web/*` (JSON/WSGI 폴백 앱) 조사 결과
+- **포팅 누락이 아님**: 모듈 32~37(`WebAuth/Inbox/Outbox/Archive/SendFax/Admin`, specs 32~37)의 `[COMPLETE]` 산출물로, 레거시 PHP 페이지 컨트롤러를 JSON/WSGI 핸들러로 옮긴 1세대 웹 계층이다. 이후 12절의 Pyramid + Jinja2 뷰가 같은 레거시 페이지를 대체해 실제 UI가 되었다.
+- **참조는 살아 있음**: `main.py:33`(임포트), `serve_main`의 `except Exception: app = create_app()`, `namifax/__init__.py`의 `except ImportError` 폴백, `security.py`의 `web.session.SessionManager`(활성 사용).
+- **테스트 공백**: 테스트는 `avantfax.web.*`(src/avantfax 사본)만 대상이며 `namifax.web.views.*`에는 테스트가 없다. 두 트리는 쿠키명 등 치환 흔적만 다른 사본이다.
+- **주의**: `serve_main`이 Pyramid 앱 생성 실패를 로그 없이 삼키고 JSON 앱으로 대체한다. 루프 1 이후 DB 초기화 오류가 예외로 전파되므로, 장애가 조용히 JSON 앱으로 바뀔 수 있다.
+- `[NEEDS_CLARIFICATION]` 폴백 앱을 유지할지(→ `AvantFaxApp(db=...)` 주입 필요) 제거할지(→ Dead Code 프로토콜로 '제거된 로직' 기록, `SessionManager`는 이전) 결정 필요. 결정 전까지 V 루프에서 제외.

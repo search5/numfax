@@ -24,8 +24,9 @@ from namifax.views.ajax import (
 
 
 @pytest.fixture
-def dummy_request():
+def dummy_request(seeded_db):
     request = testing.DummyRequest()
+    request.db = seeded_db
     request.__dict__["identity"] = {"username": "admin", "uid": 1, "is_admin": True, "superuser": True}
     return request
 

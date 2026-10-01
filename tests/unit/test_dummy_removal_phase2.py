@@ -117,6 +117,7 @@ class TestDummyRemovalPhase2(unittest.TestCase):
     def test_ajax_archivebook_nonexistent_returns_empty_xml(self):
         """Verify ajax_archivebook returns empty <response></response> without hardcoded Acme Corp."""
         req = testing.DummyRequest()
+        req.db = self.db
         req.params = {"q": "NonExistentCompanyXYZ"}
 
         res = ajax_archivebook_view(req)
@@ -128,6 +129,7 @@ class TestDummyRemovalPhase2(unittest.TestCase):
     def test_ajax_archivebook_match_returns_matched_records(self):
         """Verify ajax_archivebook returns actual matched company from database."""
         req = testing.DummyRequest()
+        req.db = self.db
         req.params = {"q": "Acme"}
 
         res = ajax_archivebook_view(req)
