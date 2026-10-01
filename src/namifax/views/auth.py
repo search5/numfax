@@ -54,7 +54,7 @@ def login_post_view(request):
             "title": "- NamiFAX - Login",
             "server_name": "NamiFAX Server 3.3.5",
             "username": username,
-            "error": "Invalid username or password",
+            "error": _("Account is disabled") if user.get_error() == "Account is disabled" else "Invalid username or password",
             "current_user": None,
         }
 

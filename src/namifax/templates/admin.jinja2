@@ -72,7 +72,7 @@
       <div>
         <p class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">{{ _('Backend Core') }}</p>
         <p class="text-lg font-bold text-white mt-1">HylaFAX</p>
-        <p class="text-[11px] text-slate-400 mt-0.5 font-mono">{{ hylafax_version or 'v6.0.7' }}</p>
+        <p class="text-[11px] text-slate-400 mt-0.5 font-mono">{{ hylafax_version or _('unknown') }}</p>
       </div>
       <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center">
         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -146,7 +146,7 @@
         <div class="space-y-2.5 text-slate-300">
           <div class="flex items-center justify-between py-1 border-b border-slate-800/40">
             <span class="text-slate-400">HylaFAX&trade; {{ _('Core') }}</span>
-            <strong class="text-white font-mono">{{ hylafax_version or '6.0.7' }}</strong>
+            <strong class="text-white font-mono">{{ hylafax_version or _('unknown') }}</strong>
           </div>
           <div class="flex items-center justify-between py-1 border-b border-slate-800/40">
             <span class="text-slate-400">{{ _('Database Engine') }}</span>
@@ -171,16 +171,18 @@
         </div>
 
         <div class="space-y-2" id="modem-status-div">
+          {% set tones = {'modem-free': 'emerald', 'modem-send': 'sky', 'modem-recv': 'indigo', 'modem-wait': 'amber'} %}
           {% for m in modems %}
-            <div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-900 border border-slate-800 shadow-sm">
+            {% set tone = tones.get(m.status_class, 'amber') %}
+            <div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-900 border border-slate-800 shadow-sm" data-state="{{ m.status_class }}">
               <div class="flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="w-2 h-2 rounded-full {{ {'emerald': 'bg-emerald-500', 'sky': 'bg-sky-500', 'indigo': 'bg-indigo-500', 'amber': 'bg-amber-500'}[tone] }} animate-pulse"></span>
                 <span class="font-mono text-slate-200 font-semibold">{{ m.device }}</span>
                 {% if m.alias %}
                   <span class="text-[11px] text-slate-400">({{ m.alias }})</span>
                 {% endif %}
               </div>
-              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-800">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold border {{ {'emerald': 'bg-emerald-950 text-emerald-300 border-emerald-800', 'sky': 'bg-sky-950 text-sky-300 border-sky-800', 'indigo': 'bg-indigo-950 text-indigo-300 border-indigo-800', 'amber': 'bg-amber-950 text-amber-300 border-amber-800'}[tone] }}">
                 {{ m.status or 'IDLE' }}
               </span>
             </div>

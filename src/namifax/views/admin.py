@@ -13,6 +13,7 @@ from namifax.services.categories import FaxPDFCategory
 from namifax.services.covers import Covers
 from namifax.services.did import DIDRouting
 from namifax.services.dynconf import DynamicConfig
+from namifax.services import hylafax_info
 from namifax.i18n import _
 
 def get_all_admin_users(db: Any = None) -> list[dict[str, Any]]:
@@ -65,6 +66,7 @@ def get_all_admin_modems(db: Any = None) -> list[dict[str, Any]]:
                     "printer": r.get("printer") or "",
                     "faxcatid": r.get("faxcatid"),
                     "status": status_text or "Running and idle",
+                    "status_class": modem_stat.get("class") if isinstance(modem_stat, dict) else "",
                 })
             return modems_list
     except Exception:
@@ -91,7 +93,7 @@ def admin_dashboard_view(request):
         "users": users,
         "total_users": len(users),
         "modems": modems,
-        "hylafax_version": "6.0.7",
+        "hylafax_version": hylafax_info.version(),
     }
 
 

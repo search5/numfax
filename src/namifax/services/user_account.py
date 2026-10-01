@@ -265,6 +265,7 @@ class AFUserAccount:
 
         if data:
             if data.get("acc_enabled") in (1, True, "1"):
+                self._log(f"class UserAccount> Login successful for '{username}' from IP: '{remote_ip}'")
                 self.pwdexpired = False
                 today = datetime.now().strftime("%Y-%m-%d")
 
@@ -298,11 +299,23 @@ class AFUserAccount:
             else:
                 self.logged_in = False
                 self.error = "Account is disabled"
+                self._failed(username, password, remote_ip)
                 return False
 
         self.logged_in = False
         self.error = "Incorrect username or password"
+        self._failed(username, password, remote_ip)
         return False
+
+    def _log(self, text: str) -> None:
+        """Write to the system log through this account's session."""
+        from namifax.common.helpers import avantfaxlog
+
+        avantfaxlog(text, session=self.db if hasattr(self.db, "execute") else None)
+
+    def _failed(self, username: str, password: str, remote_ip: str) -> None:
+        masked = "XXXXXX" + (password or "")[-3:]                  # never the whole password
+        self._log(f"class UserAccount> failed login attempt for '{username}' pwd: '{masked}' from IP: '{remote_ip}'")
 
     def login_webauth(
         self,

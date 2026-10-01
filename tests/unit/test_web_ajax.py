@@ -25,7 +25,7 @@ def dummy_request(seeded_db, dbsession):
     return request
 
 
-def test_ajax_modem_status(dummy_request):
+def test_ajax_modem_status(dummy_request, as_superuser):
     """Verify XML response structure for modem status."""
     res = ajax_modem_status(dummy_request)
     assert res.status_code == 200

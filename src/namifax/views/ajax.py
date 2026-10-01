@@ -17,29 +17,27 @@ from namifax.views.fax_rights import fax_access, load_fax
 
 @view_config(route_name="ajax_modemstatus", permission="view")
 def ajax_modem_status(request):
-    """Real-time modem status poller matching legacy ajaxmodemstatus.php."""
-    modems = get_all_admin_modems(request.dbsession)
+    """Modem status for the poller (the original ajaxmodemstatus.php): the modems named in ``modems=a,b``, or all of the user's.
+
+    A user is only told about the modems on their account (a superuser about every configured one).
+    """
+    access = fax_access(request)
+    fm = FaxModem(db=request.dbsession)
+    allowed = (fm.get_modems() if access.superuser else access.modems) or []
+    asked = [m.strip() for m in (request.params.get("modems") or "").split(",") if m.strip()]
+    devices = [m for m in asked if m in allowed] if asked else list(allowed)
+
     rows_xml = []
-    try:
-        fm = FaxModem(db=request.dbsession)
-        for m in modems:
-            dev = m.get("device", "ttyS0")
-            status_info = m.get("status", "Idle")
-            if fm.load_device(dev):
-                st = fm.get_status()
-                status_info = st.get("status", status_info)
-                cls_info = st.get("class", "2.0")
-            else:
-                cls_info = "2.0"
+    for dev in devices:
+        if fm.load_device(dev):
+            st = fm.get_status() or {}
             rows_xml.append(
                 f"  <row>\n"
                 f"    <modem>{html.escape(str(dev))}</modem>\n"
-                f"    <status>{html.escape(str(status_info))}</status>\n"
-                f"    <class>{html.escape(str(cls_info))}</class>\n"
+                f"    <status>{html.escape(str(st.get('status', '')))}</status>\n"
+                f"    <class>{html.escape(str(st.get('class', '')))}</class>\n"
                 f"  </row>"
             )
-    except Exception:
-        pass
 
     xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n<response>\n' + "\n".join(rows_xml) + ("\n" if rows_xml else "") + "</response>"
     return Response(xml_content, content_type="text/xml")
