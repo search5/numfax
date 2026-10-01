@@ -139,17 +139,22 @@
         <div>
           <label for="coverpage_id" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Default Cover Page') }}</label>
           <select name="coverpage_id" id="coverpage_id" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition">
-            <option value="standard" selected>standard</option>
-            <option value="urgent">urgent</option>
+            <option value=""></option>
+            {% for cid, title in covers %}<option value="{{ cid }}" {% if user_profile.coverpage_id == cid %}selected{% endif %}>{{ title }}</option>{% endfor %}
           </select>
         </div>
 
         <div>
           <label for="faxperpageinbox" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Faxes Per Page') }}</label>
           <select name="faxperpageinbox" id="faxperpageinbox" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition">
-            <option value="10">10 {{ _('faxes') }}</option>
-            <option value="20" selected>20 {{ _('faxes') }}</option>
-            <option value="50">50 {{ _('faxes') }}</option>
+            {% for n in per_page %}<option value="{{ n }}" {% if user_profile.faxperpageinbox == n %}selected{% endif %}>{{ n }} {{ _('faxes') }}</option>{% endfor %}
+          </select>
+        </div>
+
+        <div>
+          <label for="faxperpagearchive" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('Archive Faxes Per Page') }}</label>
+          <select name="faxperpagearchive" id="faxperpagearchive" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition">
+            {% for n in per_page %}<option value="{{ n }}" {% if user_profile.faxperpagearchive == n %}selected{% endif %}>{{ n }} {{ _('faxes') }}</option>{% endfor %}
           </select>
         </div>
       </div>

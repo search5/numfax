@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: eMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 23:44+0900\n"
+"POT-Creation-Date: 2026-10-02 00:06+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -1018,12 +1018,6 @@ msgstr "Archive Search"
 msgid "Search all sent and received fax records by date, company, or fax number."
 msgstr "Search all sent and received fax records by date, company, or fax number."
 
-msgid "results"
-msgstr "results"
-
-msgid "result"
-msgstr "result"
-
 msgid "Search Filters"
 msgstr "Search Filters"
 
@@ -1034,38 +1028,11 @@ msgstr ""
 "Leave filters empty to search all records. Narrow results by adding more "
 "criteria."
 
-msgid "Keyword"
-msgstr "Keyword"
-
-msgid "Company, number, notes..."
+msgid "Company search"
 msgstr ""
 
-msgid "All Categories"
-msgstr "All Categories"
-
-msgid "Invoices / Orders"
-msgstr "Invoices / Orders"
-
-msgid "Legal / Contracts"
-msgstr "Legal / Contracts"
-
-msgid "From Date"
-msgstr "From Date"
-
-msgid "To Date"
-msgstr "To Date"
-
-msgid "Direction"
-msgstr "Direction"
-
-msgid "Sent & Received"
-msgstr "Sent & Received"
-
-msgid "Received only"
-msgstr "Received only"
-
-msgid "Sent only"
-msgstr "Sent only"
+msgid "Company list"
+msgstr ""
 
 msgid "Fax ID"
 msgstr "Fax ID"
@@ -1073,41 +1040,81 @@ msgstr "Fax ID"
 msgid "e.g. 104"
 msgstr ""
 
-msgid "Results"
-msgstr "Results"
+msgid "Keywords"
+msgstr ""
 
-msgid "records"
-msgstr "records"
+msgid "Company, number, notes..."
+msgstr ""
 
-msgid "record"
-msgstr "record"
+msgid "All Categories"
+msgstr "All Categories"
 
-msgid "Sender"
-msgstr "Sender"
+msgid "User"
+msgstr ""
+
+msgid "Start Date"
+msgstr ""
+
+msgid "End Date"
+msgstr ""
+
+msgid "Direction"
+msgstr "Direction"
+
+#, python-format
+msgid "Total %(n)d results found."
+msgstr ""
 
 msgid "Pages"
 msgstr "Pages"
 
-msgid "View"
-msgstr "View"
+msgid "Download PDF"
+msgstr ""
+
+msgid "Reply to fax"
+msgstr ""
 
 msgid "Re-send"
 msgstr "Re-send"
 
-msgid "No results found"
-msgstr "No results found"
+msgid "Email PDF"
+msgstr ""
 
-msgid "Try adjusting your search terms or date range."
-msgstr "Try adjusting your search terms or date range."
+msgid "Add note to fax"
+msgstr ""
+
+msgid "Note"
+msgstr ""
+
+msgid "Delete fax"
+msgstr ""
+
+msgid "Select"
+msgstr "Select"
+
+msgid "Assign company name"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
+msgid "Received"
+msgstr "Received"
+
+msgid "Sent"
+msgstr ""
+
+msgid "No results were found"
+msgstr ""
 
 msgid "Reset filters"
 msgstr "Reset filters"
 
-msgid "Search the Archive"
-msgstr "Search the Archive"
+msgid "Previous"
+msgstr ""
 
-msgid "Enter a keyword or filter above and click Search to find fax records."
-msgstr "Enter a keyword or filter above and click Search to find fax records."
+msgid "Next"
+msgstr "Next"
 
 msgid "Name the sender"
 msgstr ""
@@ -1329,26 +1336,23 @@ msgstr "Archive Selected"
 msgid "Delete Selected"
 msgstr "Delete Selected"
 
-msgid "Showing"
-msgstr "Showing"
-
-msgid "of"
-msgstr "of"
-
-msgid "Select"
-msgstr "Select"
+msgid "fax"
+msgstr ""
 
 msgid "Preview"
 msgstr "Preview"
 
-msgid "Received"
-msgstr "Received"
+msgid "Sender"
+msgstr "Sender"
 
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
 msgid "Unknown Sender"
 msgstr ""
+
+msgid "View"
+msgstr "View"
 
 msgid "Reply"
 msgstr "Reply"
@@ -1588,9 +1592,6 @@ msgstr "job in progress"
 msgid "Job ID"
 msgstr "Job ID"
 
-msgid "User"
-msgstr ""
-
 msgid "Dials"
 msgstr ""
 
@@ -1777,9 +1778,6 @@ msgstr "Notify on retry"
 msgid "The original fax is sent along."
 msgstr ""
 
-msgid "Download PDF"
-msgstr ""
-
 msgid "Cancel & return to Inbox"
 msgstr "Cancel & return to Inbox"
 
@@ -1831,6 +1829,9 @@ msgstr "Default Cover Page"
 
 msgid "Faxes Per Page"
 msgstr "Faxes Per Page"
+
+msgid "Archive Faxes Per Page"
+msgstr ""
 
 msgid "Change Password"
 msgstr "Change Password"
@@ -1957,9 +1958,6 @@ msgstr "DEVICE:"
 
 msgid "Prev"
 msgstr "Prev"
-
-msgid "Next"
-msgstr "Next"
 
 msgid "PDF"
 msgstr "PDF"
@@ -2162,6 +2160,51 @@ msgstr ""
 msgid "Please enter a valid number."
 msgstr ""
 
+msgid "January"
+msgstr ""
+
+msgid "February"
+msgstr ""
+
+msgid "March"
+msgstr ""
+
+msgid "April"
+msgstr ""
+
+msgid "May"
+msgstr ""
+
+msgid "June"
+msgstr ""
+
+msgid "July"
+msgstr ""
+
+msgid "August"
+msgstr ""
+
+msgid "September"
+msgstr ""
+
+msgid "October"
+msgstr ""
+
+msgid "November"
+msgstr ""
+
+msgid "December"
+msgstr ""
+
+msgid "Both sent and received faxes"
+msgstr ""
+
+msgid "Only sent faxes"
+msgstr ""
+
+msgid "Only received faxes"
+msgstr ""
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr ""
@@ -2316,4 +2359,61 @@ msgstr ""
 
 #~ msgid "Please find the attached facsimile document."
 #~ msgstr ""
+
+#~ msgid "results"
+#~ msgstr "results"
+
+#~ msgid "result"
+#~ msgstr "result"
+
+#~ msgid "Keyword"
+#~ msgstr "Keyword"
+
+#~ msgid "Invoices / Orders"
+#~ msgstr "Invoices / Orders"
+
+#~ msgid "Legal / Contracts"
+#~ msgstr "Legal / Contracts"
+
+#~ msgid "From Date"
+#~ msgstr "From Date"
+
+#~ msgid "To Date"
+#~ msgstr "To Date"
+
+#~ msgid "Sent & Received"
+#~ msgstr "Sent & Received"
+
+#~ msgid "Received only"
+#~ msgstr "Received only"
+
+#~ msgid "Sent only"
+#~ msgstr "Sent only"
+
+#~ msgid "Results"
+#~ msgstr "Results"
+
+#~ msgid "records"
+#~ msgstr "records"
+
+#~ msgid "record"
+#~ msgstr "record"
+
+#~ msgid "No results found"
+#~ msgstr "No results found"
+
+#~ msgid "Try adjusting your search terms or date range."
+#~ msgstr "Try adjusting your search terms or date range."
+
+#~ msgid "Search the Archive"
+#~ msgstr "Search the Archive"
+
+#~ msgid "Enter a keyword or filter above and click Search to find fax records."
+#~ msgstr "Enter a keyword or filter above and click Search to find fax records."
+
+#~ msgid "Showing"
+#~ msgstr "Showing"
+
+#~ msgid "of"
+#~ msgstr "of"
 

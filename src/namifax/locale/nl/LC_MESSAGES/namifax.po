@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: nMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 23:44+0900\n"
+"POT-Creation-Date: 2026-10-02 00:06+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: nl\n"
@@ -1070,14 +1070,6 @@ msgstr ""
 "faxnummer."
 
 #, fuzzy
-msgid "results"
-msgstr "Reset"
-
-#, fuzzy
-msgid "result"
-msgstr "Reset"
-
-#, fuzzy
 msgid "Search Filters"
 msgstr "Zoeken"
 
@@ -1088,43 +1080,11 @@ msgstr ""
 "Laat filters leeg om alle records te doorzoeken. Verfijn de resultaten "
 "door meer criteria toe te voegen."
 
-msgid "Keyword"
-msgstr "Keyword"
-
-msgid "Company, number, notes..."
+msgid "Company search"
 msgstr ""
 
-#, fuzzy
-msgid "All Categories"
-msgstr "Zichtbaren fax categorie�n"
-
-msgid "Invoices / Orders"
-msgstr "Facturen / bestellingen"
-
-#, fuzzy
-msgid "Legal / Contracts"
-msgstr "Contacten"
-
-#, fuzzy
-msgid "From Date"
-msgstr "Draai Fax"
-
-#, fuzzy
-msgid "To Date"
-msgstr "Draai Fax"
-
-#, fuzzy
-msgid "Direction"
-msgstr "DID/DTMF Route groups"
-
-msgid "Sent & Received"
-msgstr "Verzonden & ontvangen"
-
-msgid "Received only"
-msgstr "Alleen ontvangen"
-
-msgid "Sent only"
-msgstr "Alleen verzonden"
+msgid "Company list"
+msgstr ""
 
 #, fuzzy
 msgid "Fax ID"
@@ -1133,45 +1093,85 @@ msgstr "Fax Modems"
 msgid "e.g. 104"
 msgstr ""
 
+msgid "Keywords"
+msgstr ""
+
+msgid "Company, number, notes..."
+msgstr ""
+
 #, fuzzy
-msgid "Results"
-msgstr "Reset"
+msgid "All Categories"
+msgstr "Zichtbaren fax categorie�n"
 
-msgid "records"
-msgstr "records"
+msgid "User"
+msgstr ""
 
-msgid "record"
-msgstr "record"
+msgid "Start Date"
+msgstr ""
 
-msgid "Sender"
-msgstr "Sender"
+msgid "End Date"
+msgstr ""
+
+#, fuzzy
+msgid "Direction"
+msgstr "DID/DTMF Route groups"
+
+#, python-format
+msgid "Total %(n)d results found."
+msgstr ""
 
 msgid "Pages"
 msgstr "Pagina's"
 
-msgid "View"
-msgstr "Bekijk Fax"
+msgid "Download PDF"
+msgstr ""
+
+msgid "Reply to fax"
+msgstr ""
 
 #, fuzzy
 msgid "Re-send"
 msgstr "Verzenden"
 
-msgid "No results found"
-msgstr "Geen resultaten gevonden"
+msgid "Email PDF"
+msgstr ""
 
-msgid "Try adjusting your search terms or date range."
-msgstr "Probeer uw zoektermen of datumbereik aan te passen."
+msgid "Add note to fax"
+msgstr ""
+
+msgid "Note"
+msgstr ""
+
+msgid "Delete fax"
+msgstr ""
+
+msgid "Select"
+msgstr "Selecteren"
+
+msgid "Assign company name"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
+#, fuzzy
+msgid "Received"
+msgstr "Archief"
+
+msgid "Sent"
+msgstr ""
+
+msgid "No results were found"
+msgstr ""
 
 msgid "Reset filters"
 msgstr "Filters resetten"
 
-msgid "Search the Archive"
-msgstr "Het archief doorzoeken"
-
-msgid "Enter a keyword or filter above and click Search to find fax records."
+msgid "Previous"
 msgstr ""
-"Voer hierboven een trefwoord of filter in en klik op Zoeken om faxrecords"
-" te vinden."
+
+msgid "Next"
+msgstr "Volgende"
 
 msgid "Name the sender"
 msgstr ""
@@ -1400,28 +1400,24 @@ msgstr "Archief"
 msgid "Delete Selected"
 msgstr "Geselecteerde verwijderen"
 
-msgid "Showing"
-msgstr "Weergegeven"
-
-msgid "of"
-msgstr "van"
-
-msgid "Select"
-msgstr "Selecteren"
+msgid "fax"
+msgstr ""
 
 #, fuzzy
 msgid "Preview"
 msgstr "Bekijk Fax"
 
-#, fuzzy
-msgid "Received"
-msgstr "Archief"
+msgid "Sender"
+msgstr "Sender"
 
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
 msgid "Unknown Sender"
 msgstr ""
+
+msgid "View"
+msgstr "Bekijk Fax"
 
 msgid "Reply"
 msgstr "Beantwoord deze FAX"
@@ -1672,9 +1668,6 @@ msgstr "taak in uitvoering"
 msgid "Job ID"
 msgstr "Taak-ID"
 
-msgid "User"
-msgstr ""
-
 msgid "Dials"
 msgstr ""
 
@@ -1873,9 +1866,6 @@ msgstr "Melden bij nieuwe poging"
 msgid "The original fax is sent along."
 msgstr ""
 
-msgid "Download PDF"
-msgstr ""
-
 msgid "Cancel & return to Inbox"
 msgstr "Annuleren & terug naar Postvak IN"
 
@@ -1930,6 +1920,9 @@ msgstr "Gebruik voorpagina"
 
 msgid "Faxes Per Page"
 msgstr "faxes per page"
+
+msgid "Archive Faxes Per Page"
+msgstr ""
 
 #, fuzzy
 msgid "Change Password"
@@ -2062,9 +2055,6 @@ msgstr "APPARAAT:"
 
 msgid "Prev"
 msgstr "Vorige"
-
-msgid "Next"
-msgstr "Volgende"
 
 msgid "PDF"
 msgstr "PDF"
@@ -2269,6 +2259,51 @@ msgstr ""
 msgid "Please enter a valid number."
 msgstr ""
 
+msgid "January"
+msgstr ""
+
+msgid "February"
+msgstr ""
+
+msgid "March"
+msgstr ""
+
+msgid "April"
+msgstr ""
+
+msgid "May"
+msgstr ""
+
+msgid "June"
+msgstr ""
+
+msgid "July"
+msgstr ""
+
+msgid "August"
+msgstr ""
+
+msgid "September"
+msgstr ""
+
+msgid "October"
+msgstr ""
+
+msgid "November"
+msgstr ""
+
+msgid "December"
+msgstr ""
+
+msgid "Both sent and received faxes"
+msgstr ""
+
+msgid "Only sent faxes"
+msgstr ""
+
+msgid "Only received faxes"
+msgstr ""
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr ""
@@ -2434,4 +2469,64 @@ msgstr ""
 
 #~ msgid "Please find the attached facsimile document."
 #~ msgstr ""
+
+#~ msgid "results"
+#~ msgstr "Reset"
+
+#~ msgid "result"
+#~ msgstr "Reset"
+
+#~ msgid "Keyword"
+#~ msgstr "Keyword"
+
+#~ msgid "Invoices / Orders"
+#~ msgstr "Facturen / bestellingen"
+
+#~ msgid "Legal / Contracts"
+#~ msgstr "Contacten"
+
+#~ msgid "From Date"
+#~ msgstr "Draai Fax"
+
+#~ msgid "To Date"
+#~ msgstr "Draai Fax"
+
+#~ msgid "Sent & Received"
+#~ msgstr "Verzonden & ontvangen"
+
+#~ msgid "Received only"
+#~ msgstr "Alleen ontvangen"
+
+#~ msgid "Sent only"
+#~ msgstr "Alleen verzonden"
+
+#~ msgid "Results"
+#~ msgstr "Reset"
+
+#~ msgid "records"
+#~ msgstr "records"
+
+#~ msgid "record"
+#~ msgstr "record"
+
+#~ msgid "No results found"
+#~ msgstr "Geen resultaten gevonden"
+
+#~ msgid "Try adjusting your search terms or date range."
+#~ msgstr "Probeer uw zoektermen of datumbereik aan te passen."
+
+#~ msgid "Search the Archive"
+#~ msgstr "Het archief doorzoeken"
+
+#~ msgid "Enter a keyword or filter above and click Search to find fax records."
+#~ msgstr ""
+#~ "Voer hierboven een trefwoord of filter"
+#~ " in en klik op Zoeken om "
+#~ "faxrecords te vinden."
+
+#~ msgid "Showing"
+#~ msgstr "Weergegeven"
+
+#~ msgid "of"
+#~ msgstr "van"
 

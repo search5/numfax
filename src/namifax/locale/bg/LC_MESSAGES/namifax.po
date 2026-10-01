@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: bMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 23:44+0900\n"
+"POT-Creation-Date: 2026-10-02 00:06+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: bg\n"
@@ -1072,14 +1072,6 @@ msgstr ""
 "факс номер."
 
 #, fuzzy
-msgid "results"
-msgstr "Reset"
-
-#, fuzzy
-msgid "result"
-msgstr "Reset"
-
-#, fuzzy
 msgid "Search Filters"
 msgstr "Търси"
 
@@ -1090,43 +1082,11 @@ msgstr ""
 "Оставете филтрите празни за търсене във всички записи. Стеснете "
 "резултатите, като добавите още критерии."
 
-msgid "Keyword"
-msgstr "Ключова дума"
-
-msgid "Company, number, notes..."
+msgid "Company search"
 msgstr ""
 
-#, fuzzy
-msgid "All Categories"
-msgstr "Достъп до факс-категории"
-
-msgid "Invoices / Orders"
-msgstr "Фактури / Поръчки"
-
-#, fuzzy
-msgid "Legal / Contracts"
-msgstr "Контакти"
-
-#, fuzzy
-msgid "From Date"
-msgstr "Завърти Факса"
-
-#, fuzzy
-msgid "To Date"
-msgstr "Завърти Факса"
-
-#, fuzzy
-msgid "Direction"
-msgstr "DID/DTMF Групи с направления"
-
-msgid "Sent & Received"
-msgstr "Изпратени и получени"
-
-msgid "Received only"
-msgstr "Само получени"
-
-msgid "Sent only"
-msgstr "Само изпратени"
+msgid "Company list"
+msgstr ""
 
 #, fuzzy
 msgid "Fax ID"
@@ -1135,45 +1095,85 @@ msgstr "Fax Modems"
 msgid "e.g. 104"
 msgstr ""
 
+msgid "Keywords"
+msgstr ""
+
+msgid "Company, number, notes..."
+msgstr ""
+
 #, fuzzy
-msgid "Results"
-msgstr "Reset"
+msgid "All Categories"
+msgstr "Достъп до факс-категории"
 
-msgid "records"
-msgstr "записа"
+msgid "User"
+msgstr ""
 
-msgid "record"
-msgstr "запис"
+msgid "Start Date"
+msgstr ""
 
-msgid "Sender"
-msgstr "Изпращач"
+msgid "End Date"
+msgstr ""
+
+#, fuzzy
+msgid "Direction"
+msgstr "DID/DTMF Групи с направления"
+
+#, python-format
+msgid "Total %(n)d results found."
+msgstr ""
 
 msgid "Pages"
 msgstr "Страници"
 
-msgid "View"
-msgstr "Преглед на Факса"
+msgid "Download PDF"
+msgstr ""
+
+msgid "Reply to fax"
+msgstr ""
 
 #, fuzzy
 msgid "Re-send"
 msgstr "Изпрати"
 
-msgid "No results found"
-msgstr "Няма намерени резултати"
+msgid "Email PDF"
+msgstr ""
 
-msgid "Try adjusting your search terms or date range."
-msgstr "Опитайте да коригирате условията за търсене или периода от време."
+msgid "Add note to fax"
+msgstr ""
+
+msgid "Note"
+msgstr ""
+
+msgid "Delete fax"
+msgstr ""
+
+msgid "Select"
+msgstr "Избери"
+
+msgid "Assign company name"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
+#, fuzzy
+msgid "Received"
+msgstr "Архив"
+
+msgid "Sent"
+msgstr ""
+
+msgid "No results were found"
+msgstr ""
 
 msgid "Reset filters"
 msgstr "Изчистване на филтрите"
 
-msgid "Search the Archive"
-msgstr "Търсене в архива"
-
-msgid "Enter a keyword or filter above and click Search to find fax records."
+msgid "Previous"
 msgstr ""
-"Въведете ключова дума или филтър по-горе и щракнете върху Търсене, за да "
-"намерите факс записи."
+
+msgid "Next"
+msgstr "Следваща"
 
 msgid "Name the sender"
 msgstr ""
@@ -1408,28 +1408,24 @@ msgstr "Архив"
 msgid "Delete Selected"
 msgstr "Изтриване на избраните"
 
-msgid "Showing"
-msgstr "Показване на"
-
-msgid "of"
-msgstr "от"
-
-msgid "Select"
-msgstr "Избери"
+msgid "fax"
+msgstr ""
 
 #, fuzzy
 msgid "Preview"
 msgstr "Преглед на Факса"
 
-#, fuzzy
-msgid "Received"
-msgstr "Архив"
+msgid "Sender"
+msgstr "Изпращач"
 
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
 msgid "Unknown Sender"
 msgstr ""
+
+msgid "View"
+msgstr "Преглед на Факса"
 
 msgid "Reply"
 msgstr "Отговори на Факса"
@@ -1680,9 +1676,6 @@ msgstr "задача в процес на изпълнение"
 msgid "Job ID"
 msgstr "ID на задача"
 
-msgid "User"
-msgstr ""
-
 msgid "Dials"
 msgstr ""
 
@@ -1881,9 +1874,6 @@ msgstr "Известяване при повторен опит"
 msgid "The original fax is sent along."
 msgstr ""
 
-msgid "Download PDF"
-msgstr ""
-
 msgid "Cancel & return to Inbox"
 msgstr "Отказ и връщане към Входящи"
 
@@ -1940,6 +1930,9 @@ msgstr "Със заглавна страница"
 
 msgid "Faxes Per Page"
 msgstr "faxes per page"
+
+msgid "Archive Faxes Per Page"
+msgstr ""
 
 #, fuzzy
 msgid "Change Password"
@@ -2072,9 +2065,6 @@ msgstr "УСТРОЙСТВО:"
 
 msgid "Prev"
 msgstr "Предишна"
-
-msgid "Next"
-msgstr "Следваща"
 
 msgid "PDF"
 msgstr "PDF"
@@ -2279,6 +2269,51 @@ msgstr ""
 msgid "Please enter a valid number."
 msgstr ""
 
+msgid "January"
+msgstr ""
+
+msgid "February"
+msgstr ""
+
+msgid "March"
+msgstr ""
+
+msgid "April"
+msgstr ""
+
+msgid "May"
+msgstr ""
+
+msgid "June"
+msgstr ""
+
+msgid "July"
+msgstr ""
+
+msgid "August"
+msgstr ""
+
+msgid "September"
+msgstr ""
+
+msgid "October"
+msgstr ""
+
+msgid "November"
+msgstr ""
+
+msgid "December"
+msgstr ""
+
+msgid "Both sent and received faxes"
+msgstr ""
+
+msgid "Only sent faxes"
+msgstr ""
+
+msgid "Only received faxes"
+msgstr ""
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr ""
@@ -2444,4 +2479,64 @@ msgstr ""
 
 #~ msgid "Please find the attached facsimile document."
 #~ msgstr ""
+
+#~ msgid "results"
+#~ msgstr "Reset"
+
+#~ msgid "result"
+#~ msgstr "Reset"
+
+#~ msgid "Keyword"
+#~ msgstr "Ключова дума"
+
+#~ msgid "Invoices / Orders"
+#~ msgstr "Фактури / Поръчки"
+
+#~ msgid "Legal / Contracts"
+#~ msgstr "Контакти"
+
+#~ msgid "From Date"
+#~ msgstr "Завърти Факса"
+
+#~ msgid "To Date"
+#~ msgstr "Завърти Факса"
+
+#~ msgid "Sent & Received"
+#~ msgstr "Изпратени и получени"
+
+#~ msgid "Received only"
+#~ msgstr "Само получени"
+
+#~ msgid "Sent only"
+#~ msgstr "Само изпратени"
+
+#~ msgid "Results"
+#~ msgstr "Reset"
+
+#~ msgid "records"
+#~ msgstr "записа"
+
+#~ msgid "record"
+#~ msgstr "запис"
+
+#~ msgid "No results found"
+#~ msgstr "Няма намерени резултати"
+
+#~ msgid "Try adjusting your search terms or date range."
+#~ msgstr "Опитайте да коригирате условията за търсене или периода от време."
+
+#~ msgid "Search the Archive"
+#~ msgstr "Търсене в архива"
+
+#~ msgid "Enter a keyword or filter above and click Search to find fax records."
+#~ msgstr ""
+#~ "Въведете ключова дума или филтър по-горе"
+#~ " и щракнете върху Търсене, за да "
+#~ "намерите факс записи."
+
+#~ msgid "Showing"
+#~ msgstr "Показване на"
+
+#~ msgid "of"
+#~ msgstr "от"
 

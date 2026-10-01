@@ -12,14 +12,35 @@
         "index": 0,
         "action": "/archive",
         "method": "GET",
-        "inputs_count": 6,
+        "inputs_count": 13,
         "buttons_count": 1,
         "field_sequence": [
           {
-            "name": "search",
+            "name": "regexp",
             "tag": "input",
             "type": "text",
-            "id": "search",
+            "id": "regexp",
+            "required": false
+          },
+          {
+            "name": "companyid",
+            "tag": "select",
+            "type": "select",
+            "id": "companyid",
+            "required": false
+          },
+          {
+            "name": "faxid",
+            "tag": "input",
+            "type": "text",
+            "id": "faxid",
+            "required": false
+          },
+          {
+            "name": "kw",
+            "tag": "input",
+            "type": "text",
+            "id": "kw",
             "required": false
           },
           {
@@ -30,17 +51,52 @@
             "required": false
           },
           {
-            "name": "date_from",
-            "tag": "input",
-            "type": "text",
-            "id": "date_from",
+            "name": "userid",
+            "tag": "select",
+            "type": "select",
+            "id": "userid",
             "required": false
           },
           {
-            "name": "date_to",
-            "tag": "input",
-            "type": "text",
-            "id": "date_to",
+            "name": "start_day",
+            "tag": "select",
+            "type": "select",
+            "id": "start_day",
+            "required": false
+          },
+          {
+            "name": "start_month",
+            "tag": "select",
+            "type": "select",
+            "id": "start_month",
+            "required": false
+          },
+          {
+            "name": "start_year",
+            "tag": "select",
+            "type": "select",
+            "id": "start_year",
+            "required": false
+          },
+          {
+            "name": "end_day",
+            "tag": "select",
+            "type": "select",
+            "id": "end_day",
+            "required": false
+          },
+          {
+            "name": "end_month",
+            "tag": "select",
+            "type": "select",
+            "id": "end_month",
+            "required": false
+          },
+          {
+            "name": "end_year",
+            "tag": "select",
+            "type": "select",
+            "id": "end_year",
             "required": false
           },
           {
@@ -48,13 +104,6 @@
             "tag": "select",
             "type": "select",
             "id": "sentrecvd",
-            "required": false
-          },
-          {
-            "name": "faxid",
-            "tag": "input",
-            "type": "text",
-            "id": "faxid",
             "required": false
           }
         ],
@@ -68,5 +117,66 @@
         ]
       }
     ]
-  }
+  },
+  "forms": [
+    {
+      "method": "get",
+      "action": "/archive",
+      "inputs": [
+        {
+          "name": "regexp",
+          "type": "text"
+        },
+        {
+          "name": "companyid",
+          "type": "select"
+        },
+        {
+          "name": "faxid",
+          "type": "text"
+        },
+        {
+          "name": "kw",
+          "type": "text"
+        },
+        {
+          "name": "category",
+          "type": "select"
+        },
+        {
+          "name": "userid",
+          "type": "select"
+        },
+        {
+          "name": "start_day",
+          "type": "select"
+        },
+        {
+          "name": "start_month",
+          "type": "select"
+        },
+        {
+          "name": "start_year",
+          "type": "select"
+        },
+        {
+          "name": "end_day",
+          "type": "select"
+        },
+        {
+          "name": "end_month",
+          "type": "select"
+        },
+        {
+          "name": "end_year",
+          "type": "select"
+        },
+        {
+          "name": "sentrecvd",
+          "type": "select"
+        }
+      ],
+      "submit_button": true
+    }
+  ]
 }

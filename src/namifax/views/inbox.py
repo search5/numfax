@@ -70,23 +70,57 @@ def _inbox_row(ab: AFAddressBook, r: dict) -> dict:
     }
 
 
+DEFAULT_FAXES_PER_PAGE_INBOX = 10
+MIN_PAGE_LIMIT = 10
+
+
+def page_size(request, column: str = "faxperpageinbox", default: int = DEFAULT_FAXES_PER_PAGE_INBOX) -> int:
+    """The user's own page size ($faxesperpage of the original), then the optional ``pagelimit`` (never below 10)."""
+    from sqlalchemy import select
+
+    from namifax.models import UserAccount
+
+    size = default
+    who = request.identity or {}
+    uid = who.get("user_id") or who.get("uid")
+    if uid:
+        value = request.dbsession.execute(select(getattr(UserAccount, column)).where(UserAccount.uid == uid)).scalar()
+        size = int(value) if value else default
+    limit = (request.params.get("pagelimit") or "").strip()
+    if limit.isdigit():
+        size = max(int(limit), MIN_PAGE_LIMIT)
+    return size
+
+
+def page_index(request, total: int, limit: int) -> tuple[int, int]:
+    """(page index, number of pages) with an index out of range moved to the nearest page, as inbox.php does."""
+    pages = -(-total // limit) if total > limit else 0
+    raw = (request.params.get("pageindex") or "").strip()
+    index = int(raw) if raw.isdigit() else 0
+    return max(min(index, pages - 1), 0), pages
+
+
 @view_config(route_name="inbox", renderer="namifax:templates/inbox.jinja2", permission="view")
 def inbox_view(request):
     """Render inbox list matching NamiFAX layout and action items."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
 
     faxes = []
+    total, limit, index, pages = 0, page_size(request), 0, 0
     if not request.params.get("empty"):
         arc = ArchiveIn(db=request.dbsession)
         access = fax_access(request)
-        rows = arc.list_inbox(devices=access.devices, faxcats=access.categories, enable_did_routing=access.did_routing)
+        total = arc.get_num_faxes(devices=access.devices, faxcats=access.categories, enable_did_routing=access.did_routing)
+        index, pages = page_index(request, total, limit)
+        rows = arc.list_inbox(devices=access.devices, index=index, limit=limit, faxcats=access.categories,
+                              enable_did_routing=access.did_routing)
         if rows:
             ab = AFAddressBook(db=request.dbsession)
             for r in rows:
                 faxes.append(_inbox_row(ab, r))
 
     if "Authorization" in request.headers or "application/json" in request.headers.get("Accept", ""):
-        return Response(json_body={"items": faxes, "total_count": len(faxes)}, content_type="application/json")
+        return Response(json_body={"items": faxes, "total_count": total}, content_type="application/json")
 
     modem_list = get_all_admin_modems(request.dbsession)
 
@@ -95,8 +129,13 @@ def inbox_view(request):
         "current_user": identity,
         "active_tab": "inbox",
         "faxes": faxes,
-        "total_faxes": len(faxes),
-        "num_inbox": len(faxes),
+        "total_faxes": total,
+        "num_inbox": total,
+        "pages": pages,
+        "page": index,
+        "first_shown": index * limit + 1,
+        "last_shown": index * limit + len(faxes),
+        "page_limit_param": request.params.get("pagelimit") if (request.params.get("pagelimit") or "").isdigit() else None,
         "modem_list": modem_list,
         "csrf_token": request.session.get_csrf_token(),
         "can_del": bool(fax_access(request).can_del or fax_access(request).superuser),

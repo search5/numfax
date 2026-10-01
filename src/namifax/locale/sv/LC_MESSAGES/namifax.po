@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: sMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 23:44+0900\n"
+"POT-Creation-Date: 2026-10-02 00:06+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sv\n"
@@ -1069,14 +1069,6 @@ msgstr ""
 " faxnummer."
 
 #, fuzzy
-msgid "results"
-msgstr "Reset"
-
-#, fuzzy
-msgid "result"
-msgstr "Reset"
-
-#, fuzzy
 msgid "Search Filters"
 msgstr "S�k"
 
@@ -1087,43 +1079,11 @@ msgstr ""
 "Lämna filtren tomma för att söka i alla poster. Begränsa resultaten genom"
 " att lägga till fler kriterier."
 
-msgid "Keyword"
-msgstr "Keyword"
-
-msgid "Company, number, notes..."
+msgid "Company search"
 msgstr ""
 
-#, fuzzy
-msgid "All Categories"
-msgstr "Visa faxkategorier"
-
-msgid "Invoices / Orders"
-msgstr "Fakturor / beställningar"
-
-#, fuzzy
-msgid "Legal / Contracts"
-msgstr "Kontakter"
-
-#, fuzzy
-msgid "From Date"
-msgstr "Rotera Fax"
-
-#, fuzzy
-msgid "To Date"
-msgstr "Rotera Fax"
-
-#, fuzzy
-msgid "Direction"
-msgstr "DID/DTMF Route groups"
-
-msgid "Sent & Received"
-msgstr "Skickat & mottaget"
-
-msgid "Received only"
-msgstr "Endast mottagna"
-
-msgid "Sent only"
-msgstr "Endast skickade"
+msgid "Company list"
+msgstr ""
 
 #, fuzzy
 msgid "Fax ID"
@@ -1132,45 +1092,85 @@ msgstr "Fax Modems"
 msgid "e.g. 104"
 msgstr ""
 
+msgid "Keywords"
+msgstr ""
+
+msgid "Company, number, notes..."
+msgstr ""
+
 #, fuzzy
-msgid "Results"
-msgstr "Reset"
+msgid "All Categories"
+msgstr "Visa faxkategorier"
 
-msgid "records"
-msgstr "poster"
+msgid "User"
+msgstr ""
 
-msgid "record"
-msgstr "post"
+msgid "Start Date"
+msgstr ""
 
-msgid "Sender"
-msgstr "Sender"
+msgid "End Date"
+msgstr ""
+
+#, fuzzy
+msgid "Direction"
+msgstr "DID/DTMF Route groups"
+
+#, python-format
+msgid "Total %(n)d results found."
+msgstr ""
 
 msgid "Pages"
 msgstr "Sidor"
 
-msgid "View"
-msgstr "Visa Fax"
+msgid "Download PDF"
+msgstr ""
+
+msgid "Reply to fax"
+msgstr ""
 
 #, fuzzy
 msgid "Re-send"
 msgstr "Skicka"
 
-msgid "No results found"
-msgstr "Inga resultat hittades"
+msgid "Email PDF"
+msgstr ""
 
-msgid "Try adjusting your search terms or date range."
-msgstr "Försök att justera sökorden eller datumintervallet."
+msgid "Add note to fax"
+msgstr ""
+
+msgid "Note"
+msgstr ""
+
+msgid "Delete fax"
+msgstr ""
+
+msgid "Select"
+msgstr "V�lj"
+
+msgid "Assign company name"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
+#, fuzzy
+msgid "Received"
+msgstr "Arkiv"
+
+msgid "Sent"
+msgstr ""
+
+msgid "No results were found"
+msgstr ""
 
 msgid "Reset filters"
 msgstr "Återställ filter"
 
-msgid "Search the Archive"
-msgstr "Sök i arkivet"
-
-msgid "Enter a keyword or filter above and click Search to find fax records."
+msgid "Previous"
 msgstr ""
-"Ange ett nyckelord eller filter ovan och klicka på Sök för att hitta "
-"faxposter."
+
+msgid "Next"
+msgstr "Nästa"
 
 msgid "Name the sender"
 msgstr ""
@@ -1401,28 +1401,24 @@ msgstr "Arkiv"
 msgid "Delete Selected"
 msgstr "Ta bort markerade"
 
-msgid "Showing"
-msgstr "Visar"
-
-msgid "of"
-msgstr "av"
-
-msgid "Select"
-msgstr "V�lj"
+msgid "fax"
+msgstr ""
 
 #, fuzzy
 msgid "Preview"
 msgstr "Visa Fax"
 
-#, fuzzy
-msgid "Received"
-msgstr "Arkiv"
+msgid "Sender"
+msgstr "Sender"
 
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
 msgid "Unknown Sender"
 msgstr ""
+
+msgid "View"
+msgstr "Visa Fax"
 
 msgid "Reply"
 msgstr "Reply to FAX"
@@ -1670,9 +1666,6 @@ msgstr "jobb pågår"
 msgid "Job ID"
 msgstr "Jobb-ID"
 
-msgid "User"
-msgstr ""
-
 msgid "Dials"
 msgstr ""
 
@@ -1871,9 +1864,6 @@ msgstr "Avisera vid nytt försök"
 msgid "The original fax is sent along."
 msgstr ""
 
-msgid "Download PDF"
-msgstr ""
-
 msgid "Cancel & return to Inbox"
 msgstr "Avbryt & återgå till inkorgen"
 
@@ -1928,6 +1918,9 @@ msgstr "Anv�nd f�rs�ttsblad"
 
 msgid "Faxes Per Page"
 msgstr "faxes per page"
+
+msgid "Archive Faxes Per Page"
+msgstr ""
 
 #, fuzzy
 msgid "Change Password"
@@ -2060,9 +2053,6 @@ msgstr "ENHET:"
 
 msgid "Prev"
 msgstr "Föregående"
-
-msgid "Next"
-msgstr "Nästa"
 
 msgid "PDF"
 msgstr "PDF"
@@ -2267,6 +2257,51 @@ msgstr ""
 msgid "Please enter a valid number."
 msgstr ""
 
+msgid "January"
+msgstr ""
+
+msgid "February"
+msgstr ""
+
+msgid "March"
+msgstr ""
+
+msgid "April"
+msgstr ""
+
+msgid "May"
+msgstr ""
+
+msgid "June"
+msgstr ""
+
+msgid "July"
+msgstr ""
+
+msgid "August"
+msgstr ""
+
+msgid "September"
+msgstr ""
+
+msgid "October"
+msgstr ""
+
+msgid "November"
+msgstr ""
+
+msgid "December"
+msgstr ""
+
+msgid "Both sent and received faxes"
+msgstr ""
+
+msgid "Only sent faxes"
+msgstr ""
+
+msgid "Only received faxes"
+msgstr ""
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr ""
@@ -2433,4 +2468,64 @@ msgstr ""
 
 #~ msgid "Please find the attached facsimile document."
 #~ msgstr ""
+
+#~ msgid "results"
+#~ msgstr "Reset"
+
+#~ msgid "result"
+#~ msgstr "Reset"
+
+#~ msgid "Keyword"
+#~ msgstr "Keyword"
+
+#~ msgid "Invoices / Orders"
+#~ msgstr "Fakturor / beställningar"
+
+#~ msgid "Legal / Contracts"
+#~ msgstr "Kontakter"
+
+#~ msgid "From Date"
+#~ msgstr "Rotera Fax"
+
+#~ msgid "To Date"
+#~ msgstr "Rotera Fax"
+
+#~ msgid "Sent & Received"
+#~ msgstr "Skickat & mottaget"
+
+#~ msgid "Received only"
+#~ msgstr "Endast mottagna"
+
+#~ msgid "Sent only"
+#~ msgstr "Endast skickade"
+
+#~ msgid "Results"
+#~ msgstr "Reset"
+
+#~ msgid "records"
+#~ msgstr "poster"
+
+#~ msgid "record"
+#~ msgstr "post"
+
+#~ msgid "No results found"
+#~ msgstr "Inga resultat hittades"
+
+#~ msgid "Try adjusting your search terms or date range."
+#~ msgstr "Försök att justera sökorden eller datumintervallet."
+
+#~ msgid "Search the Archive"
+#~ msgstr "Sök i arkivet"
+
+#~ msgid "Enter a keyword or filter above and click Search to find fax records."
+#~ msgstr ""
+#~ "Ange ett nyckelord eller filter ovan "
+#~ "och klicka på Sök för att hitta"
+#~ " faxposter."
+
+#~ msgid "Showing"
+#~ msgstr "Visar"
+
+#~ msgid "of"
+#~ msgstr "av"
 

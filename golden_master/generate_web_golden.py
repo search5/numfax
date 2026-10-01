@@ -361,7 +361,7 @@ SCENARIOS = [
     {
         "id": "W13_archive_res",
         "description": "Archive search results table with pagination",
-        "route": "/archive?search=test",
+        "route": "/archive?kw=test",
         "method": "GET",
         "expected_status": 200,
         "contract": {

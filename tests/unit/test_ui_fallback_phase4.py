@@ -77,6 +77,7 @@ class TestUIFallbackPhase4(unittest.TestCase):
                 "description": None,
             }
         ]
+        mock_arc.get_num_faxes.return_value = 1
         mock_arc_cls.return_value = mock_arc
 
         mock_ab = MagicMock()

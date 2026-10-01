@@ -57,7 +57,7 @@
     </button>
     {% endif %}
     <span class="ml-auto text-sm text-slate-400">
-      {{ _('Showing') }} {{ faxes|length }} {{ _('of') }} {{ total_faxes or faxes|length }}
+      {% if pages %}{{ first_shown }} - {{ last_shown }} {% endif %}({{ total_faxes }} {{ _('faxes') if total_faxes != 1 else _('fax') }})
     </span>
   </div>
 
@@ -213,11 +213,19 @@
     <!-- Pagination -->
     <div class="border-t border-slate-100 px-5 py-3 flex items-center justify-between bg-slate-50/50">
       <p class="text-sm text-slate-500">
-        {{ faxes|length }} {{ _('of') }} {{ total_faxes or faxes|length }} {{ _('faxes') }}
+        {% if pages %}{{ first_shown }} - {{ last_shown }} {% endif %}({{ total_faxes }} {{ _('faxes') if total_faxes != 1 else _('fax') }})
       </p>
-      <div class="flex items-center gap-1">
-        <button class="w-8 h-8 flex items-center justify-center rounded-lg text-sm font-bold bg-blue-600 text-white">1</button>
-      </div>
+      {% if pages %}
+      {% set extra = ('&pagelimit=' ~ page_limit_param) if page_limit_param else '' %}
+      <nav class="paging flex items-center gap-1" aria-label="{{ _('Pages') }}">
+        {% if page > 0 %}<a href="/inbox?pageindex={{ page - 1 }}{{ extra }}" class="w-8 h-8 flex items-center justify-center rounded-lg text-sm text-slate-600 hover:bg-slate-100" title="{{ _('Previous') }}">&lsaquo;</a>{% endif %}
+        {% for p in range(pages) %}
+          {% if p == page %}<span class="w-8 h-8 flex items-center justify-center rounded-lg text-sm font-bold bg-blue-600 text-white">{{ p + 1 }}</span>
+          {% else %}<a href="/inbox?pageindex={{ p }}{{ extra }}" class="w-8 h-8 flex items-center justify-center rounded-lg text-sm text-slate-600 hover:bg-slate-100">{{ p + 1 }}</a>{% endif %}
+        {% endfor %}
+        {% if page < pages - 1 %}<a href="/inbox?pageindex={{ page + 1 }}{{ extra }}" class="w-8 h-8 flex items-center justify-center rounded-lg text-sm text-slate-600 hover:bg-slate-100" title="{{ _('Next') }}">&rsaquo;</a>{% endif %}
+      </nav>
+      {% endif %}
     </div>
   </div>
 

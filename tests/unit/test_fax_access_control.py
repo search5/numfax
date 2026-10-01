@@ -182,7 +182,7 @@ def test_the_archive_search_shows_only_what_the_user_may_see(world):
     names = {fid: key for key, fid in world.fax.items()}
 
     def found(user):
-        text = _login(world, user).get("/archive?sentrecvd=*").text
+        text = _login(world, user).get("/archive?kw=&sentrecvd=*&start_day=*&start_month=*&start_year=*&end_day=*&end_month=*&end_year=*").text
         return {names[int(fid)] for fid in re.findall(r'id="faxid_(\d+)"', text)}
 
     assert found("root") == {"A", "B", "C", "S"}

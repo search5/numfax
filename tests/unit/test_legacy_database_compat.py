@@ -206,7 +206,7 @@ def test_the_web_application_serves_a_legacy_database(adopted):
 
     client = webtest.TestApp(create_app(**{"sqlalchemy.url": adopted.url}), extra_environ={"HTTP_HOST": "example.com"})
     assert client.post("/login", {"username": "olduser", "password": "password", "_submit_check": "1"}).status_int == 302
-    for path in ("/inbox", "/archive?sentrecvd=*", "/addressbook", "/addressbook/edit?cid=2", "/distrolist", "/outbox",
+    for path in ("/inbox", "/archive?kw=&sentrecvd=*", "/addressbook", "/addressbook/edit?cid=2", "/distrolist", "/outbox",
                  "/settings", "/ajax/inbox"):
         assert client.get(path, expect_errors=True).status_int == 200, path
 

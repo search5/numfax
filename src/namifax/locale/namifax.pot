@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 23:44+0900\n"
+"POT-Creation-Date: 2026-10-02 00:06+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -987,12 +987,6 @@ msgstr ""
 msgid "Search all sent and received fax records by date, company, or fax number."
 msgstr ""
 
-msgid "results"
-msgstr ""
-
-msgid "result"
-msgstr ""
-
 msgid "Search Filters"
 msgstr ""
 
@@ -1001,37 +995,10 @@ msgid ""
 "criteria."
 msgstr ""
 
-msgid "Keyword"
+msgid "Company search"
 msgstr ""
 
-msgid "Company, number, notes..."
-msgstr ""
-
-msgid "All Categories"
-msgstr ""
-
-msgid "Invoices / Orders"
-msgstr ""
-
-msgid "Legal / Contracts"
-msgstr ""
-
-msgid "From Date"
-msgstr ""
-
-msgid "To Date"
-msgstr ""
-
-msgid "Direction"
-msgstr ""
-
-msgid "Sent & Received"
-msgstr ""
-
-msgid "Received only"
-msgstr ""
-
-msgid "Sent only"
+msgid "Company list"
 msgstr ""
 
 msgid "Fax ID"
@@ -1040,40 +1007,80 @@ msgstr ""
 msgid "e.g. 104"
 msgstr ""
 
-msgid "Results"
+msgid "Keywords"
 msgstr ""
 
-msgid "records"
+msgid "Company, number, notes..."
 msgstr ""
 
-msgid "record"
+msgid "All Categories"
 msgstr ""
 
-msgid "Sender"
+msgid "User"
+msgstr ""
+
+msgid "Start Date"
+msgstr ""
+
+msgid "End Date"
+msgstr ""
+
+msgid "Direction"
+msgstr ""
+
+#, python-format
+msgid "Total %(n)d results found."
 msgstr ""
 
 msgid "Pages"
 msgstr ""
 
-msgid "View"
+msgid "Download PDF"
+msgstr ""
+
+msgid "Reply to fax"
 msgstr ""
 
 msgid "Re-send"
 msgstr ""
 
-msgid "No results found"
+msgid "Email PDF"
 msgstr ""
 
-msgid "Try adjusting your search terms or date range."
+msgid "Add note to fax"
+msgstr ""
+
+msgid "Note"
+msgstr ""
+
+msgid "Delete fax"
+msgstr ""
+
+msgid "Select"
+msgstr ""
+
+msgid "Assign company name"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
+msgid "Received"
+msgstr ""
+
+msgid "Sent"
+msgstr ""
+
+msgid "No results were found"
 msgstr ""
 
 msgid "Reset filters"
 msgstr ""
 
-msgid "Search the Archive"
+msgid "Previous"
 msgstr ""
 
-msgid "Enter a keyword or filter above and click Search to find fax records."
+msgid "Next"
 msgstr ""
 
 msgid "Name the sender"
@@ -1294,25 +1301,22 @@ msgstr ""
 msgid "Delete Selected"
 msgstr ""
 
-msgid "Showing"
-msgstr ""
-
-msgid "of"
-msgstr ""
-
-msgid "Select"
+msgid "fax"
 msgstr ""
 
 msgid "Preview"
 msgstr ""
 
-msgid "Received"
+msgid "Sender"
 msgstr ""
 
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
 msgid "Unknown Sender"
+msgstr ""
+
+msgid "View"
 msgstr ""
 
 msgid "Reply"
@@ -1543,9 +1547,6 @@ msgstr ""
 msgid "Job ID"
 msgstr ""
 
-msgid "User"
-msgstr ""
-
 msgid "Dials"
 msgstr ""
 
@@ -1726,9 +1727,6 @@ msgstr ""
 msgid "The original fax is sent along."
 msgstr ""
 
-msgid "Download PDF"
-msgstr ""
-
 msgid "Cancel & return to Inbox"
 msgstr ""
 
@@ -1777,6 +1775,9 @@ msgid "Default Cover Page"
 msgstr ""
 
 msgid "Faxes Per Page"
+msgstr ""
+
+msgid "Archive Faxes Per Page"
 msgstr ""
 
 msgid "Change Password"
@@ -1903,9 +1904,6 @@ msgid "DEVICE:"
 msgstr ""
 
 msgid "Prev"
-msgstr ""
-
-msgid "Next"
 msgstr ""
 
 msgid "PDF"
@@ -2107,6 +2105,51 @@ msgid "You cannot delete the last superuser."
 msgstr ""
 
 msgid "Please enter a valid number."
+msgstr ""
+
+msgid "January"
+msgstr ""
+
+msgid "February"
+msgstr ""
+
+msgid "March"
+msgstr ""
+
+msgid "April"
+msgstr ""
+
+msgid "May"
+msgstr ""
+
+msgid "June"
+msgstr ""
+
+msgid "July"
+msgstr ""
+
+msgid "August"
+msgstr ""
+
+msgid "September"
+msgstr ""
+
+msgid "October"
+msgstr ""
+
+msgid "November"
+msgstr ""
+
+msgid "December"
+msgstr ""
+
+msgid "Both sent and received faxes"
+msgstr ""
+
+msgid "Only sent faxes"
+msgstr ""
+
+msgid "Only received faxes"
 msgstr ""
 
 #, python-format

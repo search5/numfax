@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: sMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 23:44+0900\n"
+"POT-Creation-Date: 2026-10-02 00:06+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sr\n"
@@ -1070,14 +1070,6 @@ msgstr ""
 " faksa."
 
 #, fuzzy
-msgid "results"
-msgstr "Reset"
-
-#, fuzzy
-msgid "result"
-msgstr "Reset"
-
-#, fuzzy
 msgid "Search Filters"
 msgstr "Pretraga"
 
@@ -1088,43 +1080,11 @@ msgstr ""
 "Ostavite filtere prazne za pretragu svih zapisa. Sužavajte rezultate "
 "dodavanjem više kriterijuma."
 
-msgid "Keyword"
-msgstr "Ključna reč"
-
-msgid "Company, number, notes..."
+msgid "Company search"
 msgstr ""
 
-#, fuzzy
-msgid "All Categories"
-msgstr "Vidljive faks kategorije"
-
-msgid "Invoices / Orders"
-msgstr "Fakture / Narudžbine"
-
-#, fuzzy
-msgid "Legal / Contracts"
-msgstr "Kontakti"
-
-#, fuzzy
-msgid "From Date"
-msgstr "Rotiraj Fax"
-
-#, fuzzy
-msgid "To Date"
-msgstr "Rotiraj Fax"
-
-#, fuzzy
-msgid "Direction"
-msgstr "DID/DTMF grupe ruta"
-
-msgid "Sent & Received"
-msgstr "Poslati i primljeni"
-
-msgid "Received only"
-msgstr "Samo primljeni"
-
-msgid "Sent only"
-msgstr "Samo poslati"
+msgid "Company list"
+msgstr ""
 
 #, fuzzy
 msgid "Fax ID"
@@ -1133,45 +1093,85 @@ msgstr "Fax Modems"
 msgid "e.g. 104"
 msgstr ""
 
+msgid "Keywords"
+msgstr ""
+
+msgid "Company, number, notes..."
+msgstr ""
+
 #, fuzzy
-msgid "Results"
-msgstr "Reset"
+msgid "All Categories"
+msgstr "Vidljive faks kategorije"
 
-msgid "records"
-msgstr "zapisa"
+msgid "User"
+msgstr ""
 
-msgid "record"
-msgstr "zapis"
+msgid "Start Date"
+msgstr ""
 
-msgid "Sender"
-msgstr "Pošiljaoc"
+msgid "End Date"
+msgstr ""
+
+#, fuzzy
+msgid "Direction"
+msgstr "DID/DTMF grupe ruta"
+
+#, python-format
+msgid "Total %(n)d results found."
+msgstr ""
 
 msgid "Pages"
 msgstr "Strane"
 
-msgid "View"
-msgstr "Pogledaj Fax"
+msgid "Download PDF"
+msgstr ""
+
+msgid "Reply to fax"
+msgstr ""
 
 #, fuzzy
 msgid "Re-send"
 msgstr "Pošalji"
 
-msgid "No results found"
-msgstr "Nema pronađenih rezultata"
+msgid "Email PDF"
+msgstr ""
 
-msgid "Try adjusting your search terms or date range."
-msgstr "Pokušajte sa prilagođavanjem parametara pretrage ili raspona datuma."
+msgid "Add note to fax"
+msgstr ""
+
+msgid "Note"
+msgstr ""
+
+msgid "Delete fax"
+msgstr ""
+
+msgid "Select"
+msgstr "Izaberi"
+
+msgid "Assign company name"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
+#, fuzzy
+msgid "Received"
+msgstr "Arhiviraj"
+
+msgid "Sent"
+msgstr ""
+
+msgid "No results were found"
+msgstr ""
 
 msgid "Reset filters"
 msgstr "Resetuj filtere"
 
-msgid "Search the Archive"
-msgstr "Pretraži arhivu"
-
-msgid "Enter a keyword or filter above and click Search to find fax records."
+msgid "Previous"
 msgstr ""
-"Unesite ključnu reč ili filter iznad i kliknite na Pretraga za "
-"pronalaženje zapisa faksova."
+
+msgid "Next"
+msgstr "Sledeća"
 
 msgid "Name the sender"
 msgstr ""
@@ -1400,28 +1400,24 @@ msgstr "Arhiviraj"
 msgid "Delete Selected"
 msgstr "Obriši izabrano"
 
-msgid "Showing"
-msgstr "Prikazano"
-
-msgid "of"
-msgstr "od"
-
-msgid "Select"
-msgstr "Izaberi"
+msgid "fax"
+msgstr ""
 
 #, fuzzy
 msgid "Preview"
 msgstr "Pogledaj Fax"
 
-#, fuzzy
-msgid "Received"
-msgstr "Arhiviraj"
+msgid "Sender"
+msgstr "Pošiljaoc"
 
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
 msgid "Unknown Sender"
 msgstr ""
+
+msgid "View"
+msgstr "Pogledaj Fax"
 
 msgid "Reply"
 msgstr "Odgovori na FAX"
@@ -1671,9 +1667,6 @@ msgstr "zadatak u toku"
 msgid "Job ID"
 msgstr "ID zadatka"
 
-msgid "User"
-msgstr ""
-
 msgid "Dials"
 msgstr ""
 
@@ -1872,9 +1865,6 @@ msgstr "Obavesti pri ponovnom pokušaju"
 msgid "The original fax is sent along."
 msgstr ""
 
-msgid "Download PDF"
-msgstr ""
-
 msgid "Cancel & return to Inbox"
 msgstr "Otkaži i vrati se u Prijemno sanduče"
 
@@ -1927,6 +1917,9 @@ msgstr "Koristi naslovnu stranicu"
 
 msgid "Faxes Per Page"
 msgstr "faxes per page"
+
+msgid "Archive Faxes Per Page"
+msgstr ""
 
 #, fuzzy
 msgid "Change Password"
@@ -2059,9 +2052,6 @@ msgstr "UREĐAJ:"
 
 msgid "Prev"
 msgstr "Prethodna"
-
-msgid "Next"
-msgstr "Sledeća"
 
 msgid "PDF"
 msgstr "PDF"
@@ -2266,6 +2256,51 @@ msgstr ""
 msgid "Please enter a valid number."
 msgstr ""
 
+msgid "January"
+msgstr ""
+
+msgid "February"
+msgstr ""
+
+msgid "March"
+msgstr ""
+
+msgid "April"
+msgstr ""
+
+msgid "May"
+msgstr ""
+
+msgid "June"
+msgstr ""
+
+msgid "July"
+msgstr ""
+
+msgid "August"
+msgstr ""
+
+msgid "September"
+msgstr ""
+
+msgid "October"
+msgstr ""
+
+msgid "November"
+msgstr ""
+
+msgid "December"
+msgstr ""
+
+msgid "Both sent and received faxes"
+msgstr ""
+
+msgid "Only sent faxes"
+msgstr ""
+
+msgid "Only received faxes"
+msgstr ""
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr ""
@@ -2428,4 +2463,64 @@ msgstr ""
 
 #~ msgid "Please find the attached facsimile document."
 #~ msgstr ""
+
+#~ msgid "results"
+#~ msgstr "Reset"
+
+#~ msgid "result"
+#~ msgstr "Reset"
+
+#~ msgid "Keyword"
+#~ msgstr "Ključna reč"
+
+#~ msgid "Invoices / Orders"
+#~ msgstr "Fakture / Narudžbine"
+
+#~ msgid "Legal / Contracts"
+#~ msgstr "Kontakti"
+
+#~ msgid "From Date"
+#~ msgstr "Rotiraj Fax"
+
+#~ msgid "To Date"
+#~ msgstr "Rotiraj Fax"
+
+#~ msgid "Sent & Received"
+#~ msgstr "Poslati i primljeni"
+
+#~ msgid "Received only"
+#~ msgstr "Samo primljeni"
+
+#~ msgid "Sent only"
+#~ msgstr "Samo poslati"
+
+#~ msgid "Results"
+#~ msgstr "Reset"
+
+#~ msgid "records"
+#~ msgstr "zapisa"
+
+#~ msgid "record"
+#~ msgstr "zapis"
+
+#~ msgid "No results found"
+#~ msgstr "Nema pronađenih rezultata"
+
+#~ msgid "Try adjusting your search terms or date range."
+#~ msgstr "Pokušajte sa prilagođavanjem parametara pretrage ili raspona datuma."
+
+#~ msgid "Search the Archive"
+#~ msgstr "Pretraži arhivu"
+
+#~ msgid "Enter a keyword or filter above and click Search to find fax records."
+#~ msgstr ""
+#~ "Unesite ključnu reč ili filter iznad "
+#~ "i kliknite na Pretraga za pronalaženje"
+#~ " zapisa faksova."
+
+#~ msgid "Showing"
+#~ msgstr "Prikazano"
+
+#~ msgid "of"
+#~ msgstr "od"
 

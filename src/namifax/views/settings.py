@@ -4,7 +4,21 @@ from __future__ import annotations
 
 from pyramid.view import view_config
 
+from namifax.common.validators import is_valid_email
+from namifax.i18n import _
+from namifax.services.covers import Covers
 from namifax.services.user_account import AFUserAccount
+
+FAXES_PER_PAGE = ["10", "15", "20", "25", "30", "50", "100"]
+
+
+def _cover_choices(session):
+    covers = Covers(db=session)
+    found = []
+    for file in covers.get_covers() or []:
+        if covers.load_cover(file):
+            found.append((str(covers.get_cover_id()), covers.get_title() or file))
+    return found
 
 
 @view_config(route_name="settings", renderer="namifax:templates/settings.jinja2", permission="view")
@@ -34,6 +48,9 @@ def settings_view(request):
             "user_tsi": user_account.dbdata.get("user_tsi") or "",
             "email_sig": user_account.dbdata.get("email_sig") or "",
             "language": user_account.dbdata.get("language") or "en",
+            "coverpage_id": str(user_account.dbdata.get("coverpage_id") or ""),
+            "faxperpageinbox": str(user_account.dbdata.get("faxperpageinbox") or "10"),
+            "faxperpagearchive": str(user_account.dbdata.get("faxperpagearchive") or "30"),
         }
     else:
         profile_data = {
@@ -46,6 +63,7 @@ def settings_view(request):
             "user_tsi": identity.get("user_tsi", "ENTERPRISE-HQ"),
             "email_sig": identity.get("email_sig", "-- \nBest regards,\nNamiFAX Administrator"),
             "language": identity.get("language", "en"),
+            "coverpage_id": "", "faxperpageinbox": "10", "faxperpagearchive": "30",
         }
 
     # Determine current language from cookie, session, profile, or identity
@@ -83,9 +101,24 @@ def settings_view(request):
         # Handle profile fields update
         if not error:
             selected_lang = params.get("language", current_lang)
+            name = (params.get("name", profile_data["name"]) or "").strip()
+            email = (params.get("email", profile_data["email"]) or "").strip()
+            if not name:
+                error = _("Please enter a name")
+            elif not is_valid_email(email):
+                error = _("Please enter a valid e-mail address.")
+            elif user_loaded and not user_account.set_email(email):
+                error = user_account.get_error() or _("Please enter a valid e-mail address.")
+
+        if not error:
+            def per_page(field, default):
+                value = (params.get(field) or "").strip()
+                return value if value in FAXES_PER_PAGE else default
+
+            cover = (params.get("coverpage_id") or "").strip()
             profile_data.update({
-                "name": params.get("name", profile_data["name"]),
-                "email": params.get("email", profile_data["email"]),
+                "name": name,
+                "email": email,
                 "from_company": params.get("from_company", ""),
                 "from_location": params.get("from_location", ""),
                 "from_voicenumber": params.get("from_voicenumber", ""),
@@ -93,10 +126,17 @@ def settings_view(request):
                 "user_tsi": params.get("user_tsi", ""),
                 "email_sig": params.get("email_sig", ""),
                 "language": selected_lang,
+                "coverpage_id": cover if cover.isdigit() else "",
+                "faxperpageinbox": per_page("faxperpageinbox", profile_data["faxperpageinbox"]),
+                "faxperpagearchive": per_page("faxperpagearchive", profile_data["faxperpagearchive"]),
             })
 
             if user_loaded:
-                user_account.dbdata.update(profile_data)
+                user_account.dbdata.update(
+                    profile_data,
+                    coverpage_id=int(profile_data["coverpage_id"]) if profile_data["coverpage_id"] else None,
+                    faxperpageinbox=int(profile_data["faxperpageinbox"]),
+                    faxperpagearchive=int(profile_data["faxperpagearchive"]))
                 if not user_account.user_update():
                     error = user_account.get_error() or "Failed to update profile."
 
@@ -130,6 +170,8 @@ def settings_view(request):
         "message": message,
         "error": error,
         "user_profile": profile_data,
+        "covers": _cover_choices(request.dbsession),
+        "per_page": FAXES_PER_PAGE,
         "totp_enabled": totp_enabled,
         "recovery_codes_left": recovery_codes_left,
         "csrf_token": request.session.get_csrf_token(),

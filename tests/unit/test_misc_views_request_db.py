@@ -73,12 +73,17 @@ def test_webauthn_auth_verify_uses_request_db():
 
 # --- archive / sendfax / outbox -----------------------------------------------
 
-def test_archive_view_uses_request_db():
-    req = _request(params={"search": "acme"})
+def test_archive_view_uses_request_db(as_superuser):
+    req = _request(params={"kw": "acme"})
     arc, cat = MagicMock(name="FaxPDFArchive"), MagicMock(name="FaxPDFCategory")
     modems = MagicMock(return_value=[])
-    with patch.object(archive_mod, "FaxPDFArchive", arc), patch.object(archive_mod, "FaxPDFCategory", cat), \
-            patch.object(archive_mod, "get_all_admin_modems", modems), contextlib.suppress(Exception):
+    arc.return_value.search_archive.return_value = 0
+    arc.return_value.next_archive_entry.return_value = None
+    cat.return_value.get_categories.return_value = []
+    with patch.object(archive_mod, "AFUserAccount", MagicMock()), patch.object(archive_mod, "AFAddressBook", MagicMock()), \
+            patch.object(archive_mod, "FaxPDFArchive", arc), patch.object(archive_mod, "FaxPDFCategory", cat), \
+            patch.object(archive_mod, "get_all_admin_modems", modems), patch.object(archive_mod, "page_size", MagicMock(return_value=30)), \
+            contextlib.suppress(Exception):
         archive_mod.archive_view(req)
     _assert_all_db(_calls(arc), req, "archive_view", attr="dbsession")
     assert modems.call_args.args[0] is req.dbsession  # modems are ORM-backed

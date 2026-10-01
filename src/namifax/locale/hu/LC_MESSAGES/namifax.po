@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: hMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 23:44+0900\n"
+"POT-Creation-Date: 2026-10-02 00:06+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hu\n"
@@ -1072,14 +1072,6 @@ msgstr ""
 "vagy faxszám alapján."
 
 #, fuzzy
-msgid "results"
-msgstr "Reset"
-
-#, fuzzy
-msgid "result"
-msgstr "Reset"
-
-#, fuzzy
 msgid "Search Filters"
 msgstr "Keresés"
 
@@ -1090,43 +1082,11 @@ msgstr ""
 "Hagyja üresen a szűrőket az összes rekord közötti kereséshez. Szűkítse a "
 "találatokat további feltételek megadásával."
 
-msgid "Keyword"
-msgstr "Keyword"
-
-msgid "Company, number, notes..."
+msgid "Company search"
 msgstr ""
 
-#, fuzzy
-msgid "All Categories"
-msgstr "Megtekinthető fax kategóriák"
-
-msgid "Invoices / Orders"
-msgstr "Számlák / Megrendelések"
-
-#, fuzzy
-msgid "Legal / Contracts"
-msgstr "Kontaktok"
-
-#, fuzzy
-msgid "From Date"
-msgstr "Fax forgatása"
-
-#, fuzzy
-msgid "To Date"
-msgstr "Fax forgatása"
-
-#, fuzzy
-msgid "Direction"
-msgstr "DID/DTMF útvonal csoportok"
-
-msgid "Sent & Received"
-msgstr "Elküldött és fogadott"
-
-msgid "Received only"
-msgstr "Csak fogadott"
-
-msgid "Sent only"
-msgstr "Csak elküldött"
+msgid "Company list"
+msgstr ""
 
 #, fuzzy
 msgid "Fax ID"
@@ -1135,45 +1095,85 @@ msgstr "Fax Modems"
 msgid "e.g. 104"
 msgstr ""
 
+msgid "Keywords"
+msgstr ""
+
+msgid "Company, number, notes..."
+msgstr ""
+
 #, fuzzy
-msgid "Results"
-msgstr "Reset"
+msgid "All Categories"
+msgstr "Megtekinthető fax kategóriák"
 
-msgid "records"
-msgstr "rekord"
+msgid "User"
+msgstr ""
 
-msgid "record"
-msgstr "rekord"
+msgid "Start Date"
+msgstr ""
 
-msgid "Sender"
-msgstr "Sender"
+msgid "End Date"
+msgstr ""
+
+#, fuzzy
+msgid "Direction"
+msgstr "DID/DTMF útvonal csoportok"
+
+#, python-format
+msgid "Total %(n)d results found."
+msgstr ""
 
 msgid "Pages"
 msgstr "Oldalak"
 
-msgid "View"
-msgstr "Fax megtekintése"
+msgid "Download PDF"
+msgstr ""
+
+msgid "Reply to fax"
+msgstr ""
 
 #, fuzzy
 msgid "Re-send"
 msgstr "Küldés"
 
-msgid "No results found"
-msgstr "Nincs találat"
+msgid "Email PDF"
+msgstr ""
 
-msgid "Try adjusting your search terms or date range."
-msgstr "Próbálja módosítani a keresési kifejezéseket vagy a dátumtartományt."
+msgid "Add note to fax"
+msgstr ""
+
+msgid "Note"
+msgstr ""
+
+msgid "Delete fax"
+msgstr ""
+
+msgid "Select"
+msgstr "Kiválaszt"
+
+msgid "Assign company name"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
+#, fuzzy
+msgid "Received"
+msgstr "Archívum"
+
+msgid "Sent"
+msgstr ""
+
+msgid "No results were found"
+msgstr ""
 
 msgid "Reset filters"
 msgstr "Szűrők visszaállítása"
 
-msgid "Search the Archive"
-msgstr "Keresés az archívumban"
-
-msgid "Enter a keyword or filter above and click Search to find fax records."
+msgid "Previous"
 msgstr ""
-"Adjon meg egy kulcsszót vagy szűrőt fent, majd kattintson a Keresés "
-"gombra a faxrekordok megkereséséhez."
+
+msgid "Next"
+msgstr "Következő"
 
 msgid "Name the sender"
 msgstr ""
@@ -1406,28 +1406,24 @@ msgstr "Archívum"
 msgid "Delete Selected"
 msgstr "Kijelöltek törlése"
 
-msgid "Showing"
-msgstr "Megjelenítés:"
-
-msgid "of"
-msgstr "of"
-
-msgid "Select"
-msgstr "Kiválaszt"
+msgid "fax"
+msgstr ""
 
 #, fuzzy
 msgid "Preview"
 msgstr "Fax megtekintése"
 
-#, fuzzy
-msgid "Received"
-msgstr "Archívum"
+msgid "Sender"
+msgstr "Sender"
 
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
 msgid "Unknown Sender"
 msgstr ""
+
+msgid "View"
+msgstr "Fax megtekintése"
 
 msgid "Reply"
 msgstr "Válasz a faxra"
@@ -1678,9 +1674,6 @@ msgstr "folyamatban lévő feladat"
 msgid "Job ID"
 msgstr "Feladat azonosítója"
 
-msgid "User"
-msgstr ""
-
 msgid "Dials"
 msgstr ""
 
@@ -1879,9 +1872,6 @@ msgstr "Értesítés újrapróbálkozáskor"
 msgid "The original fax is sent along."
 msgstr ""
 
-msgid "Download PDF"
-msgstr ""
-
 msgid "Cancel & return to Inbox"
 msgstr "Mégse és visszatérés a Beérkező fiókhoz"
 
@@ -1934,6 +1924,9 @@ msgstr "Fedőlap használata"
 
 msgid "Faxes Per Page"
 msgstr "faxes per page"
+
+msgid "Archive Faxes Per Page"
+msgstr ""
 
 #, fuzzy
 msgid "Change Password"
@@ -2066,9 +2059,6 @@ msgstr "ESZKÖZ:"
 
 msgid "Prev"
 msgstr "Előző"
-
-msgid "Next"
-msgstr "Következő"
 
 msgid "PDF"
 msgstr "PDF"
@@ -2273,6 +2263,51 @@ msgstr ""
 msgid "Please enter a valid number."
 msgstr ""
 
+msgid "January"
+msgstr ""
+
+msgid "February"
+msgstr ""
+
+msgid "March"
+msgstr ""
+
+msgid "April"
+msgstr ""
+
+msgid "May"
+msgstr ""
+
+msgid "June"
+msgstr ""
+
+msgid "July"
+msgstr ""
+
+msgid "August"
+msgstr ""
+
+msgid "September"
+msgstr ""
+
+msgid "October"
+msgstr ""
+
+msgid "November"
+msgstr ""
+
+msgid "December"
+msgstr ""
+
+msgid "Both sent and received faxes"
+msgstr ""
+
+msgid "Only sent faxes"
+msgstr ""
+
+msgid "Only received faxes"
+msgstr ""
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr ""
@@ -2437,4 +2472,64 @@ msgstr ""
 
 #~ msgid "Please find the attached facsimile document."
 #~ msgstr ""
+
+#~ msgid "results"
+#~ msgstr "Reset"
+
+#~ msgid "result"
+#~ msgstr "Reset"
+
+#~ msgid "Keyword"
+#~ msgstr "Keyword"
+
+#~ msgid "Invoices / Orders"
+#~ msgstr "Számlák / Megrendelések"
+
+#~ msgid "Legal / Contracts"
+#~ msgstr "Kontaktok"
+
+#~ msgid "From Date"
+#~ msgstr "Fax forgatása"
+
+#~ msgid "To Date"
+#~ msgstr "Fax forgatása"
+
+#~ msgid "Sent & Received"
+#~ msgstr "Elküldött és fogadott"
+
+#~ msgid "Received only"
+#~ msgstr "Csak fogadott"
+
+#~ msgid "Sent only"
+#~ msgstr "Csak elküldött"
+
+#~ msgid "Results"
+#~ msgstr "Reset"
+
+#~ msgid "records"
+#~ msgstr "rekord"
+
+#~ msgid "record"
+#~ msgstr "rekord"
+
+#~ msgid "No results found"
+#~ msgstr "Nincs találat"
+
+#~ msgid "Try adjusting your search terms or date range."
+#~ msgstr "Próbálja módosítani a keresési kifejezéseket vagy a dátumtartományt."
+
+#~ msgid "Search the Archive"
+#~ msgstr "Keresés az archívumban"
+
+#~ msgid "Enter a keyword or filter above and click Search to find fax records."
+#~ msgstr ""
+#~ "Adjon meg egy kulcsszót vagy szűrőt "
+#~ "fent, majd kattintson a Keresés gombra"
+#~ " a faxrekordok megkereséséhez."
+
+#~ msgid "Showing"
+#~ msgstr "Megjelenítés:"
+
+#~ msgid "of"
+#~ msgstr "of"
 

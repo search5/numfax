@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: jMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 23:44+0900\n"
+"POT-Creation-Date: 2026-10-02 00:06+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -1040,14 +1040,6 @@ msgid "Search all sent and received fax records by date, company, or fax number.
 msgstr "日付、会社名、またはFAX番号別にすべての送受信FAXレコードを検索します。"
 
 #, fuzzy
-msgid "results"
-msgstr "Reset"
-
-#, fuzzy
-msgid "result"
-msgstr "Reset"
-
-#, fuzzy
 msgid "Search Filters"
 msgstr "検索"
 
@@ -1056,43 +1048,11 @@ msgid ""
 "criteria."
 msgstr "すべてのレコードを検索するにはフィルターを空のままにします。条件を追加して結果を絞り込むことができます。"
 
-msgid "Keyword"
-msgstr "キーワード"
-
-msgid "Company, number, notes..."
+msgid "Company search"
 msgstr ""
 
-#, fuzzy
-msgid "All Categories"
-msgstr "FAXカテゴリを閲覧"
-
-msgid "Invoices / Orders"
-msgstr "請求書 / 発注書"
-
-#, fuzzy
-msgid "Legal / Contracts"
-msgstr "アドレス帳"
-
-#, fuzzy
-msgid "From Date"
-msgstr "FAXの回転"
-
-#, fuzzy
-msgid "To Date"
-msgstr "FAXの回転"
-
-#, fuzzy
-msgid "Direction"
-msgstr "DID/DTMF ルートグループ"
-
-msgid "Sent & Received"
-msgstr "送受信すべて"
-
-msgid "Received only"
-msgstr "受信のみ"
-
-msgid "Sent only"
-msgstr "送信のみ"
+msgid "Company list"
+msgstr ""
 
 #, fuzzy
 msgid "Fax ID"
@@ -1101,43 +1061,85 @@ msgstr "Fax Modems"
 msgid "e.g. 104"
 msgstr ""
 
+msgid "Keywords"
+msgstr ""
+
+msgid "Company, number, notes..."
+msgstr ""
+
 #, fuzzy
-msgid "Results"
-msgstr "Reset"
+msgid "All Categories"
+msgstr "FAXカテゴリを閲覧"
 
-msgid "records"
-msgstr "件のレコード"
+msgid "User"
+msgstr ""
 
-msgid "record"
-msgstr "件のレコード"
+msgid "Start Date"
+msgstr ""
 
-msgid "Sender"
-msgstr "送信先"
+msgid "End Date"
+msgstr ""
+
+#, fuzzy
+msgid "Direction"
+msgstr "DID/DTMF ルートグループ"
+
+#, python-format
+msgid "Total %(n)d results found."
+msgstr ""
 
 msgid "Pages"
 msgstr "ページ"
 
-msgid "View"
-msgstr "FAXの閲覧"
+msgid "Download PDF"
+msgstr ""
+
+msgid "Reply to fax"
+msgstr ""
 
 #, fuzzy
 msgid "Re-send"
 msgstr "送信"
 
-msgid "No results found"
-msgstr "検索結果が見つかりません"
+msgid "Email PDF"
+msgstr ""
 
-msgid "Try adjusting your search terms or date range."
-msgstr "検索キーワードまたは日付範囲を調整してみてください。"
+msgid "Add note to fax"
+msgstr ""
+
+msgid "Note"
+msgstr ""
+
+msgid "Delete fax"
+msgstr ""
+
+msgid "Select"
+msgstr "タイトル"
+
+msgid "Assign company name"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
+#, fuzzy
+msgid "Received"
+msgstr "送信履歴"
+
+msgid "Sent"
+msgstr ""
+
+msgid "No results were found"
+msgstr ""
 
 msgid "Reset filters"
 msgstr "フィルターをリセット"
 
-msgid "Search the Archive"
-msgstr "アーカイブを検索"
+msgid "Previous"
+msgstr ""
 
-msgid "Enter a keyword or filter above and click Search to find fax records."
-msgstr "上記のキーワードまたはフィルターを入力し、「検索」をクリックしてFAXレコードを検索します。"
+msgid "Next"
+msgstr "次へ"
 
 msgid "Name the sender"
 msgstr ""
@@ -1364,28 +1366,24 @@ msgstr "送信履歴"
 msgid "Delete Selected"
 msgstr "選択項目を削除"
 
-msgid "Showing"
-msgstr "表示中:"
-
-msgid "of"
-msgstr "/"
-
-msgid "Select"
-msgstr "タイトル"
+msgid "fax"
+msgstr ""
 
 #, fuzzy
 msgid "Preview"
 msgstr "FAXの閲覧"
 
-#, fuzzy
-msgid "Received"
-msgstr "送信履歴"
+msgid "Sender"
+msgstr "送信先"
 
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
 msgid "Unknown Sender"
 msgstr ""
+
+msgid "View"
+msgstr "FAXの閲覧"
 
 msgid "Reply"
 msgstr "FAXの返信"
@@ -1624,9 +1622,6 @@ msgstr "件のジョブが進行中"
 msgid "Job ID"
 msgstr "ジョブID"
 
-msgid "User"
-msgstr ""
-
 msgid "Dials"
 msgstr ""
 
@@ -1818,9 +1813,6 @@ msgstr "再試行時に通知"
 msgid "The original fax is sent along."
 msgstr ""
 
-msgid "Download PDF"
-msgstr ""
-
 msgid "Cancel & return to Inbox"
 msgstr "キャンセルして受信トレイに戻る"
 
@@ -1873,6 +1865,9 @@ msgstr "送信状を使う"
 
 msgid "Faxes Per Page"
 msgstr "faxes per page"
+
+msgid "Archive Faxes Per Page"
+msgstr ""
 
 #, fuzzy
 msgid "Change Password"
@@ -2004,9 +1999,6 @@ msgstr "デバイス:"
 
 msgid "Prev"
 msgstr "前へ"
-
-msgid "Next"
-msgstr "次へ"
 
 msgid "PDF"
 msgstr "PDF"
@@ -2211,6 +2203,51 @@ msgstr ""
 msgid "Please enter a valid number."
 msgstr ""
 
+msgid "January"
+msgstr ""
+
+msgid "February"
+msgstr ""
+
+msgid "March"
+msgstr ""
+
+msgid "April"
+msgstr ""
+
+msgid "May"
+msgstr ""
+
+msgid "June"
+msgstr ""
+
+msgid "July"
+msgstr ""
+
+msgid "August"
+msgstr ""
+
+msgid "September"
+msgstr ""
+
+msgid "October"
+msgstr ""
+
+msgid "November"
+msgstr ""
+
+msgid "December"
+msgstr ""
+
+msgid "Both sent and received faxes"
+msgstr ""
+
+msgid "Only sent faxes"
+msgstr ""
+
+msgid "Only received faxes"
+msgstr ""
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr ""
@@ -2363,4 +2400,61 @@ msgstr ""
 
 #~ msgid "Please find the attached facsimile document."
 #~ msgstr ""
+
+#~ msgid "results"
+#~ msgstr "Reset"
+
+#~ msgid "result"
+#~ msgstr "Reset"
+
+#~ msgid "Keyword"
+#~ msgstr "キーワード"
+
+#~ msgid "Invoices / Orders"
+#~ msgstr "請求書 / 発注書"
+
+#~ msgid "Legal / Contracts"
+#~ msgstr "アドレス帳"
+
+#~ msgid "From Date"
+#~ msgstr "FAXの回転"
+
+#~ msgid "To Date"
+#~ msgstr "FAXの回転"
+
+#~ msgid "Sent & Received"
+#~ msgstr "送受信すべて"
+
+#~ msgid "Received only"
+#~ msgstr "受信のみ"
+
+#~ msgid "Sent only"
+#~ msgstr "送信のみ"
+
+#~ msgid "Results"
+#~ msgstr "Reset"
+
+#~ msgid "records"
+#~ msgstr "件のレコード"
+
+#~ msgid "record"
+#~ msgstr "件のレコード"
+
+#~ msgid "No results found"
+#~ msgstr "検索結果が見つかりません"
+
+#~ msgid "Try adjusting your search terms or date range."
+#~ msgstr "検索キーワードまたは日付範囲を調整してみてください。"
+
+#~ msgid "Search the Archive"
+#~ msgstr "アーカイブを検索"
+
+#~ msgid "Enter a keyword or filter above and click Search to find fax records."
+#~ msgstr "上記のキーワードまたはフィルターを入力し、「検索」をクリックしてFAXレコードを検索します。"
+
+#~ msgid "Showing"
+#~ msgstr "表示中:"
+
+#~ msgid "of"
+#~ msgstr "/"
 

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: eMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 23:44+0900\n"
+"POT-Creation-Date: 2026-10-02 00:06+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -1078,14 +1078,6 @@ msgstr ""
 " o número de fax."
 
 #, fuzzy
-msgid "results"
-msgstr "Reset"
-
-#, fuzzy
-msgid "result"
-msgstr "Reset"
-
-#, fuzzy
 msgid "Search Filters"
 msgstr "Buscar"
 
@@ -1096,43 +1088,11 @@ msgstr ""
 "Deje los filtros vacíos para buscar todos los registros. Limite los "
 "resultados agregando más criterios."
 
-msgid "Keyword"
-msgstr "Keyword"
-
-msgid "Company, number, notes..."
+msgid "Company search"
 msgstr ""
 
-#, fuzzy
-msgid "All Categories"
-msgstr "Categorías de fax visibles"
-
-msgid "Invoices / Orders"
-msgstr "Facturas / Pedidos"
-
-#, fuzzy
-msgid "Legal / Contracts"
-msgstr "Contactos"
-
-#, fuzzy
-msgid "From Date"
-msgstr "Rotar Fax"
-
-#, fuzzy
-msgid "To Date"
-msgstr "Rotar Fax"
-
-#, fuzzy
-msgid "Direction"
-msgstr "DID/DTMF Enrutar grupos"
-
-msgid "Sent & Received"
-msgstr "Enviados y recibidos"
-
-msgid "Received only"
-msgstr "Solo recibidos"
-
-msgid "Sent only"
-msgstr "Solo enviados"
+msgid "Company list"
+msgstr ""
 
 #, fuzzy
 msgid "Fax ID"
@@ -1141,45 +1101,85 @@ msgstr "Fax Modems"
 msgid "e.g. 104"
 msgstr ""
 
+msgid "Keywords"
+msgstr ""
+
+msgid "Company, number, notes..."
+msgstr ""
+
 #, fuzzy
-msgid "Results"
-msgstr "Reset"
+msgid "All Categories"
+msgstr "Categorías de fax visibles"
 
-msgid "records"
-msgstr "registros"
+msgid "User"
+msgstr ""
 
-msgid "record"
-msgstr "registro"
+msgid "Start Date"
+msgstr ""
 
-msgid "Sender"
-msgstr "Sender"
+msgid "End Date"
+msgstr ""
+
+#, fuzzy
+msgid "Direction"
+msgstr "DID/DTMF Enrutar grupos"
+
+#, python-format
+msgid "Total %(n)d results found."
+msgstr ""
 
 msgid "Pages"
 msgstr "Páginas"
 
-msgid "View"
-msgstr "Ver Fax"
+msgid "Download PDF"
+msgstr ""
+
+msgid "Reply to fax"
+msgstr ""
 
 #, fuzzy
 msgid "Re-send"
 msgstr "Enviar"
 
-msgid "No results found"
-msgstr "No se encontraron resultados"
+msgid "Email PDF"
+msgstr ""
 
-msgid "Try adjusting your search terms or date range."
-msgstr "Intente ajustar sus términos de búsqueda o el rango de fechas."
+msgid "Add note to fax"
+msgstr ""
+
+msgid "Note"
+msgstr ""
+
+msgid "Delete fax"
+msgstr ""
+
+msgid "Select"
+msgstr "Seleccionar"
+
+msgid "Assign company name"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
+#, fuzzy
+msgid "Received"
+msgstr "Archivo"
+
+msgid "Sent"
+msgstr ""
+
+msgid "No results were found"
+msgstr ""
 
 msgid "Reset filters"
 msgstr "Restablecer filtros"
 
-msgid "Search the Archive"
-msgstr "Buscar en el archivo"
-
-msgid "Enter a keyword or filter above and click Search to find fax records."
+msgid "Previous"
 msgstr ""
-"Ingrese una palabra clave o filtro arriba y haga clic en Buscar para "
-"encontrar registros de fax."
+
+msgid "Next"
+msgstr "Sig"
 
 msgid "Name the sender"
 msgstr ""
@@ -1416,28 +1416,24 @@ msgstr "Archivo"
 msgid "Delete Selected"
 msgstr "Eliminar seleccionados"
 
-msgid "Showing"
-msgstr "Mostrando"
-
-msgid "of"
-msgstr "de"
-
-msgid "Select"
-msgstr "Seleccionar"
+msgid "fax"
+msgstr ""
 
 #, fuzzy
 msgid "Preview"
 msgstr "Ver Fax"
 
-#, fuzzy
-msgid "Received"
-msgstr "Archivo"
+msgid "Sender"
+msgstr "Sender"
 
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
 msgid "Unknown Sender"
 msgstr ""
+
+msgid "View"
+msgstr "Ver Fax"
 
 msgid "Reply"
 msgstr "Responder al fax"
@@ -1688,9 +1684,6 @@ msgstr "trabajo en curso"
 msgid "Job ID"
 msgstr "ID de trabajo"
 
-msgid "User"
-msgstr ""
-
 msgid "Dials"
 msgstr ""
 
@@ -1889,9 +1882,6 @@ msgstr "Notificar al reintentar"
 msgid "The original fax is sent along."
 msgstr ""
 
-msgid "Download PDF"
-msgstr ""
-
 msgid "Cancel & return to Inbox"
 msgstr "Cancelar y volver a la bandeja de entrada"
 
@@ -1948,6 +1938,9 @@ msgstr "Usar página de portada"
 
 msgid "Faxes Per Page"
 msgstr "faxes per page"
+
+msgid "Archive Faxes Per Page"
+msgstr ""
 
 #, fuzzy
 msgid "Change Password"
@@ -2080,9 +2073,6 @@ msgstr "DISPOSITIVO:"
 
 msgid "Prev"
 msgstr "Ant"
-
-msgid "Next"
-msgstr "Sig"
 
 msgid "PDF"
 msgstr "PDF"
@@ -2287,6 +2277,51 @@ msgstr ""
 msgid "Please enter a valid number."
 msgstr ""
 
+msgid "January"
+msgstr ""
+
+msgid "February"
+msgstr ""
+
+msgid "March"
+msgstr ""
+
+msgid "April"
+msgstr ""
+
+msgid "May"
+msgstr ""
+
+msgid "June"
+msgstr ""
+
+msgid "July"
+msgstr ""
+
+msgid "August"
+msgstr ""
+
+msgid "September"
+msgstr ""
+
+msgid "October"
+msgstr ""
+
+msgid "November"
+msgstr ""
+
+msgid "December"
+msgstr ""
+
+msgid "Both sent and received faxes"
+msgstr ""
+
+msgid "Only sent faxes"
+msgstr ""
+
+msgid "Only received faxes"
+msgstr ""
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr ""
@@ -2455,4 +2490,64 @@ msgstr ""
 
 #~ msgid "Please find the attached facsimile document."
 #~ msgstr ""
+
+#~ msgid "results"
+#~ msgstr "Reset"
+
+#~ msgid "result"
+#~ msgstr "Reset"
+
+#~ msgid "Keyword"
+#~ msgstr "Keyword"
+
+#~ msgid "Invoices / Orders"
+#~ msgstr "Facturas / Pedidos"
+
+#~ msgid "Legal / Contracts"
+#~ msgstr "Contactos"
+
+#~ msgid "From Date"
+#~ msgstr "Rotar Fax"
+
+#~ msgid "To Date"
+#~ msgstr "Rotar Fax"
+
+#~ msgid "Sent & Received"
+#~ msgstr "Enviados y recibidos"
+
+#~ msgid "Received only"
+#~ msgstr "Solo recibidos"
+
+#~ msgid "Sent only"
+#~ msgstr "Solo enviados"
+
+#~ msgid "Results"
+#~ msgstr "Reset"
+
+#~ msgid "records"
+#~ msgstr "registros"
+
+#~ msgid "record"
+#~ msgstr "registro"
+
+#~ msgid "No results found"
+#~ msgstr "No se encontraron resultados"
+
+#~ msgid "Try adjusting your search terms or date range."
+#~ msgstr "Intente ajustar sus términos de búsqueda o el rango de fechas."
+
+#~ msgid "Search the Archive"
+#~ msgstr "Buscar en el archivo"
+
+#~ msgid "Enter a keyword or filter above and click Search to find fax records."
+#~ msgstr ""
+#~ "Ingrese una palabra clave o filtro "
+#~ "arriba y haga clic en Buscar para"
+#~ " encontrar registros de fax."
+
+#~ msgid "Showing"
+#~ msgstr "Mostrando"
+
+#~ msgid "of"
+#~ msgstr "de"
 

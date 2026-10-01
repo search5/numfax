@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: aMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 23:44+0900\n"
+"POT-Creation-Date: 2026-10-02 00:06+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -1062,14 +1062,6 @@ msgstr ""
 " الفاكس."
 
 #, fuzzy
-msgid "results"
-msgstr "Reset"
-
-#, fuzzy
-msgid "result"
-msgstr "Reset"
-
-#, fuzzy
 msgid "Search Filters"
 msgstr "بحث"
 
@@ -1080,43 +1072,11 @@ msgstr ""
 "اترك عوامل التصفية فارغة للبحث في جميع السجلات. ضيّق النتائج بإضافة "
 "المزيد من المعايير."
 
-msgid "Keyword"
-msgstr "Keyword"
-
-msgid "Company, number, notes..."
+msgid "Company search"
 msgstr ""
 
-#, fuzzy
-msgid "All Categories"
-msgstr "عرض فئات الفاكس"
-
-msgid "Invoices / Orders"
-msgstr "الفواتير / الطلبات"
-
-#, fuzzy
-msgid "Legal / Contracts"
-msgstr "يتصل بـ"
-
-#, fuzzy
-msgid "From Date"
-msgstr "تدوير الفاكس"
-
-#, fuzzy
-msgid "To Date"
-msgstr "تدوير الفاكس"
-
-#, fuzzy
-msgid "Direction"
-msgstr "DID/DTMF Route groups"
-
-msgid "Sent & Received"
-msgstr "المرسلة والمستلمة"
-
-msgid "Received only"
-msgstr "المستلمة فقط"
-
-msgid "Sent only"
-msgstr "المرسلة فقط"
+msgid "Company list"
+msgstr ""
 
 #, fuzzy
 msgid "Fax ID"
@@ -1125,45 +1085,85 @@ msgstr "Fax Modems"
 msgid "e.g. 104"
 msgstr ""
 
+msgid "Keywords"
+msgstr ""
+
+msgid "Company, number, notes..."
+msgstr ""
+
 #, fuzzy
-msgid "Results"
-msgstr "Reset"
+msgid "All Categories"
+msgstr "عرض فئات الفاكس"
 
-msgid "records"
-msgstr "سجلات"
+msgid "User"
+msgstr ""
 
-msgid "record"
-msgstr "سجل"
+msgid "Start Date"
+msgstr ""
 
-msgid "Sender"
-msgstr "Sender"
+msgid "End Date"
+msgstr ""
+
+#, fuzzy
+msgid "Direction"
+msgstr "DID/DTMF Route groups"
+
+#, python-format
+msgid "Total %(n)d results found."
+msgstr ""
 
 msgid "Pages"
 msgstr "صفحات"
 
-msgid "View"
-msgstr "استعرض الفاكس"
+msgid "Download PDF"
+msgstr ""
+
+msgid "Reply to fax"
+msgstr ""
 
 #, fuzzy
 msgid "Re-send"
 msgstr "ارسال"
 
-msgid "No results found"
-msgstr "لم يتم العثور على نتائج"
+msgid "Email PDF"
+msgstr ""
 
-msgid "Try adjusting your search terms or date range."
-msgstr "حاول تعديل مصطلحات البحث أو النطاق الزمني."
+msgid "Add note to fax"
+msgstr ""
+
+msgid "Note"
+msgstr ""
+
+msgid "Delete fax"
+msgstr ""
+
+msgid "Select"
+msgstr "اختيار"
+
+msgid "Assign company name"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
+#, fuzzy
+msgid "Received"
+msgstr "ارشيف"
+
+msgid "Sent"
+msgstr ""
+
+msgid "No results were found"
+msgstr ""
 
 msgid "Reset filters"
 msgstr "إعادة تعيين عوامل التصفية"
 
-msgid "Search the Archive"
-msgstr "البحث في الأرشيف"
-
-msgid "Enter a keyword or filter above and click Search to find fax records."
+msgid "Previous"
 msgstr ""
-"أدخل كلمة مفتاحية أو عامل تصفية أعلاه وانقر فوق بحث للعثور على سجلات "
-"الفاكس."
+
+msgid "Next"
+msgstr "التالي"
 
 msgid "Name the sender"
 msgstr ""
@@ -1392,28 +1392,24 @@ msgstr "ارشيف"
 msgid "Delete Selected"
 msgstr "حذف المحدد"
 
-msgid "Showing"
-msgstr "عرض"
-
-msgid "of"
-msgstr "من"
-
-msgid "Select"
-msgstr "اختيار"
+msgid "fax"
+msgstr ""
 
 #, fuzzy
 msgid "Preview"
 msgstr "استعرض الفاكس"
 
-#, fuzzy
-msgid "Received"
-msgstr "ارشيف"
+msgid "Sender"
+msgstr "Sender"
 
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
 msgid "Unknown Sender"
 msgstr ""
+
+msgid "View"
+msgstr "استعرض الفاكس"
 
 msgid "Reply"
 msgstr "الرد على فاكس"
@@ -1659,9 +1655,6 @@ msgstr "مهمة قيد التقدم"
 msgid "Job ID"
 msgstr "معرف المهمة"
 
-msgid "User"
-msgstr ""
-
 msgid "Dials"
 msgstr ""
 
@@ -1858,9 +1851,6 @@ msgstr "إشعار عند إعادة المحاولة"
 msgid "The original fax is sent along."
 msgstr ""
 
-msgid "Download PDF"
-msgstr ""
-
 msgid "Cancel & return to Inbox"
 msgstr "إلغاء والعودة إلى البريد الوارد"
 
@@ -1913,6 +1903,9 @@ msgstr "استخدام صفحة مقدمة"
 
 msgid "Faxes Per Page"
 msgstr "faxes per page"
+
+msgid "Archive Faxes Per Page"
+msgstr ""
 
 #, fuzzy
 msgid "Change Password"
@@ -2045,9 +2038,6 @@ msgstr "الجهاز:"
 
 msgid "Prev"
 msgstr "السابق"
-
-msgid "Next"
-msgstr "التالي"
 
 msgid "PDF"
 msgstr "PDF"
@@ -2252,6 +2242,51 @@ msgstr ""
 msgid "Please enter a valid number."
 msgstr ""
 
+msgid "January"
+msgstr ""
+
+msgid "February"
+msgstr ""
+
+msgid "March"
+msgstr ""
+
+msgid "April"
+msgstr ""
+
+msgid "May"
+msgstr ""
+
+msgid "June"
+msgstr ""
+
+msgid "July"
+msgstr ""
+
+msgid "August"
+msgstr ""
+
+msgid "September"
+msgstr ""
+
+msgid "October"
+msgstr ""
+
+msgid "November"
+msgstr ""
+
+msgid "December"
+msgstr ""
+
+msgid "Both sent and received faxes"
+msgstr ""
+
+msgid "Only sent faxes"
+msgstr ""
+
+msgid "Only received faxes"
+msgstr ""
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr ""
@@ -2411,4 +2446,64 @@ msgstr ""
 
 #~ msgid "Please find the attached facsimile document."
 #~ msgstr ""
+
+#~ msgid "results"
+#~ msgstr "Reset"
+
+#~ msgid "result"
+#~ msgstr "Reset"
+
+#~ msgid "Keyword"
+#~ msgstr "Keyword"
+
+#~ msgid "Invoices / Orders"
+#~ msgstr "الفواتير / الطلبات"
+
+#~ msgid "Legal / Contracts"
+#~ msgstr "يتصل بـ"
+
+#~ msgid "From Date"
+#~ msgstr "تدوير الفاكس"
+
+#~ msgid "To Date"
+#~ msgstr "تدوير الفاكس"
+
+#~ msgid "Sent & Received"
+#~ msgstr "المرسلة والمستلمة"
+
+#~ msgid "Received only"
+#~ msgstr "المستلمة فقط"
+
+#~ msgid "Sent only"
+#~ msgstr "المرسلة فقط"
+
+#~ msgid "Results"
+#~ msgstr "Reset"
+
+#~ msgid "records"
+#~ msgstr "سجلات"
+
+#~ msgid "record"
+#~ msgstr "سجل"
+
+#~ msgid "No results found"
+#~ msgstr "لم يتم العثور على نتائج"
+
+#~ msgid "Try adjusting your search terms or date range."
+#~ msgstr "حاول تعديل مصطلحات البحث أو النطاق الزمني."
+
+#~ msgid "Search the Archive"
+#~ msgstr "البحث في الأرشيف"
+
+#~ msgid "Enter a keyword or filter above and click Search to find fax records."
+#~ msgstr ""
+#~ "أدخل كلمة مفتاحية أو عامل تصفية "
+#~ "أعلاه وانقر فوق بحث للعثور على "
+#~ "سجلات الفاكس."
+
+#~ msgid "Showing"
+#~ msgstr "عرض"
+
+#~ msgid "of"
+#~ msgstr "من"
 

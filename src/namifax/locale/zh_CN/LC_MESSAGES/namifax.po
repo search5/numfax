@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: zh_CMIME-Version: 1.Content-"
 "Type: text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 23:44+0900\n"
+"POT-Creation-Date: 2026-10-02 00:06+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1038,14 +1038,6 @@ msgid "Search all sent and received fax records by date, company, or fax number.
 msgstr "按日期、企业或传真号码搜索所有已发送和已接收的传真记录。"
 
 #, fuzzy
-msgid "results"
-msgstr "Reset"
-
-#, fuzzy
-msgid "result"
-msgstr "Reset"
-
-#, fuzzy
 msgid "Search Filters"
 msgstr "搜索"
 
@@ -1054,43 +1046,11 @@ msgid ""
 "criteria."
 msgstr "留空筛选条件以搜索所有记录。添加更多条件可缩小搜索范围。"
 
-msgid "Keyword"
-msgstr "Keyword"
-
-msgid "Company, number, notes..."
+msgid "Company search"
 msgstr ""
 
-#, fuzzy
-msgid "All Categories"
-msgstr "允许查看的传真类别"
-
-msgid "Invoices / Orders"
-msgstr "发票 / 订单"
-
-#, fuzzy
-msgid "Legal / Contracts"
-msgstr "联系人"
-
-#, fuzzy
-msgid "From Date"
-msgstr "旋转传真"
-
-#, fuzzy
-msgid "To Date"
-msgstr "旋转传真"
-
-#, fuzzy
-msgid "Direction"
-msgstr "DID/DTMF Route groups"
-
-msgid "Sent & Received"
-msgstr "发送与接收"
-
-msgid "Received only"
-msgstr "仅接收"
-
-msgid "Sent only"
-msgstr "仅发送"
+msgid "Company list"
+msgstr ""
 
 #, fuzzy
 msgid "Fax ID"
@@ -1099,43 +1059,85 @@ msgstr "Fax Modems"
 msgid "e.g. 104"
 msgstr ""
 
+msgid "Keywords"
+msgstr ""
+
+msgid "Company, number, notes..."
+msgstr ""
+
 #, fuzzy
-msgid "Results"
-msgstr "Reset"
+msgid "All Categories"
+msgstr "允许查看的传真类别"
 
-msgid "records"
-msgstr "条记录"
+msgid "User"
+msgstr ""
 
-msgid "record"
-msgstr "条记录"
+msgid "Start Date"
+msgstr ""
 
-msgid "Sender"
-msgstr "Sender"
+msgid "End Date"
+msgstr ""
+
+#, fuzzy
+msgid "Direction"
+msgstr "DID/DTMF Route groups"
+
+#, python-format
+msgid "Total %(n)d results found."
+msgstr ""
 
 msgid "Pages"
 msgstr "页数"
 
-msgid "View"
-msgstr "查看传真"
+msgid "Download PDF"
+msgstr ""
+
+msgid "Reply to fax"
+msgstr ""
 
 #, fuzzy
 msgid "Re-send"
 msgstr "发送"
 
-msgid "No results found"
-msgstr "未找到结果"
+msgid "Email PDF"
+msgstr ""
 
-msgid "Try adjusting your search terms or date range."
-msgstr "请尝试调整搜索词或日期范围。"
+msgid "Add note to fax"
+msgstr ""
+
+msgid "Note"
+msgstr ""
+
+msgid "Delete fax"
+msgstr ""
+
+msgid "Select"
+msgstr "选择"
+
+msgid "Assign company name"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
+#, fuzzy
+msgid "Received"
+msgstr "档案柜"
+
+msgid "Sent"
+msgstr ""
+
+msgid "No results were found"
+msgstr ""
 
 msgid "Reset filters"
 msgstr "重置筛选器"
 
-msgid "Search the Archive"
-msgstr "搜索归档"
+msgid "Previous"
+msgstr ""
 
-msgid "Enter a keyword or filter above and click Search to find fax records."
-msgstr "在上方输入关键词或筛选条件，然后点击“搜索”以查找传真记录。"
+msgid "Next"
+msgstr "下一页"
 
 msgid "Name the sender"
 msgstr ""
@@ -1362,28 +1364,24 @@ msgstr "档案柜"
 msgid "Delete Selected"
 msgstr "删除所选"
 
-msgid "Showing"
-msgstr "显示"
-
-msgid "of"
-msgstr "/"
-
-msgid "Select"
-msgstr "选择"
+msgid "fax"
+msgstr ""
 
 #, fuzzy
 msgid "Preview"
 msgstr "查看传真"
 
-#, fuzzy
-msgid "Received"
-msgstr "档案柜"
+msgid "Sender"
+msgstr "Sender"
 
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
 
 msgid "Unknown Sender"
 msgstr ""
+
+msgid "View"
+msgstr "查看传真"
 
 msgid "Reply"
 msgstr "回复传真"
@@ -1620,9 +1618,6 @@ msgstr "个进行中的任务"
 msgid "Job ID"
 msgstr "任务ID"
 
-msgid "User"
-msgstr ""
-
 msgid "Dials"
 msgstr ""
 
@@ -1812,9 +1807,6 @@ msgstr "重试时通知"
 msgid "The original fax is sent along."
 msgstr ""
 
-msgid "Download PDF"
-msgstr ""
-
 msgid "Cancel & return to Inbox"
 msgstr "取消并返回收件箱"
 
@@ -1867,6 +1859,9 @@ msgstr "使用传真封面"
 
 msgid "Faxes Per Page"
 msgstr "faxes per page"
+
+msgid "Archive Faxes Per Page"
+msgstr ""
 
 #, fuzzy
 msgid "Change Password"
@@ -1996,9 +1991,6 @@ msgstr "设备:"
 
 msgid "Prev"
 msgstr "上一页"
-
-msgid "Next"
-msgstr "下一页"
 
 msgid "PDF"
 msgstr "PDF"
@@ -2203,6 +2195,51 @@ msgstr ""
 msgid "Please enter a valid number."
 msgstr ""
 
+msgid "January"
+msgstr ""
+
+msgid "February"
+msgstr ""
+
+msgid "March"
+msgstr ""
+
+msgid "April"
+msgstr ""
+
+msgid "May"
+msgstr ""
+
+msgid "June"
+msgstr ""
+
+msgid "July"
+msgstr ""
+
+msgid "August"
+msgstr ""
+
+msgid "September"
+msgstr ""
+
+msgid "October"
+msgstr ""
+
+msgid "November"
+msgstr ""
+
+msgid "December"
+msgstr ""
+
+msgid "Both sent and received faxes"
+msgstr ""
+
+msgid "Only sent faxes"
+msgstr ""
+
+msgid "Only received faxes"
+msgstr ""
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr ""
@@ -2353,4 +2390,61 @@ msgstr ""
 
 #~ msgid "Please find the attached facsimile document."
 #~ msgstr ""
+
+#~ msgid "results"
+#~ msgstr "Reset"
+
+#~ msgid "result"
+#~ msgstr "Reset"
+
+#~ msgid "Keyword"
+#~ msgstr "Keyword"
+
+#~ msgid "Invoices / Orders"
+#~ msgstr "发票 / 订单"
+
+#~ msgid "Legal / Contracts"
+#~ msgstr "联系人"
+
+#~ msgid "From Date"
+#~ msgstr "旋转传真"
+
+#~ msgid "To Date"
+#~ msgstr "旋转传真"
+
+#~ msgid "Sent & Received"
+#~ msgstr "发送与接收"
+
+#~ msgid "Received only"
+#~ msgstr "仅接收"
+
+#~ msgid "Sent only"
+#~ msgstr "仅发送"
+
+#~ msgid "Results"
+#~ msgstr "Reset"
+
+#~ msgid "records"
+#~ msgstr "条记录"
+
+#~ msgid "record"
+#~ msgstr "条记录"
+
+#~ msgid "No results found"
+#~ msgstr "未找到结果"
+
+#~ msgid "Try adjusting your search terms or date range."
+#~ msgstr "请尝试调整搜索词或日期范围。"
+
+#~ msgid "Search the Archive"
+#~ msgstr "搜索归档"
+
+#~ msgid "Enter a keyword or filter above and click Search to find fax records."
+#~ msgstr "在上方输入关键词或筛选条件，然后点击“搜索”以查找传真记录。"
+
+#~ msgid "Showing"
+#~ msgstr "显示"
+
+#~ msgid "of"
+#~ msgstr "/"
 

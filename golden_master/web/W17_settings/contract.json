@@ -7,6 +7,54 @@
       "action": "/settings",
       "inputs": [
         {
+          "name": "name",
+          "type": "text"
+        },
+        {
+          "name": "email",
+          "type": "email"
+        },
+        {
+          "name": "from_company",
+          "type": "text"
+        },
+        {
+          "name": "from_location",
+          "type": "text"
+        },
+        {
+          "name": "from_voicenumber",
+          "type": "text"
+        },
+        {
+          "name": "from_faxnumber",
+          "type": "text"
+        },
+        {
+          "name": "user_tsi",
+          "type": "text"
+        },
+        {
+          "name": "email_sig",
+          "type": "textarea"
+        },
+        {
+          "name": "language",
+          "type": "select"
+        },
+        {
+          "name": "coverpage_id",
+          "type": "select"
+        },
+        {
+          "name": "faxperpageinbox",
+          "type": "select"
+        },
+        {
+          "name": "faxperpagearchive",
+          "type": "select"
+        },
+        {
           "name": "old_password",
           "type": "password"
         },
@@ -17,8 +65,14 @@
         {
           "name": "confirm_password",
           "type": "password"
+        },
+        {
+          "name": "_submit_check",
+          "type": "hidden",
+          "value": "1"
         }
-      ]
+      ],
+      "submit_button": true
     }
   ],
   "required_text": [
@@ -32,7 +86,7 @@
         "index": 0,
         "action": "/settings",
         "method": "POST",
-        "inputs_count": 15,
+        "inputs_count": 16,
         "buttons_count": 1,
         "field_sequence": [
           {
@@ -110,6 +164,13 @@
             "tag": "select",
             "type": "select",
             "id": "faxperpageinbox",
+            "required": false
+          },
+          {
+            "name": "faxperpagearchive",
+            "tag": "select",
+            "type": "select",
+            "id": "faxperpagearchive",
             "required": false
           },
           {
