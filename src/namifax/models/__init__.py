@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import os
+import zope.sqlalchemy
 from sqlalchemy.orm import configure_mappers, sessionmaker
 
-from namifax.models.meta import Base
+from namifax.models.meta import Base  # noqa: F401
 
 # Ensure all entities are registered to Base
 from namifax.models import entities  # noqa: F401
@@ -25,9 +26,37 @@ def get_session_factory(engine):
     return sessionmaker(bind=engine, expire_on_commit=False)
 
 
+def get_tm_session(session_factory, transaction_manager, request=None):
+    """Get a ``sqlalchemy.orm.Session`` joined to ``transaction_manager``.
+
+    With ``pyramid_tm`` the session is committed or aborted with the request. Scripts must
+    wrap it themselves::
+
+        import transaction
+
+        with transaction.manager:
+            dbsession = get_tm_session(session_factory, transaction.manager)
+
+    The active request, if any, is stored in ``session.info["request"]``.
+    """
+    dbsession = session_factory(info={"request": request})
+    zope.sqlalchemy.register(dbsession, transaction_manager=transaction_manager)
+    return dbsession
+
+
 def includeme(config):
     """Pyramid extension hook: config.include('namifax.models')."""
     settings = config.get_settings()
+
+    # Use ``pyramid_tm`` to hook the transaction lifecycle to the request. The manager hook must
+    # be set before the include because pyramid_tm reads it while being configured.
+    settings["tm.manager_hook"] = "pyramid_tm.explicit_manager"
+    config.include("pyramid_tm")
+
+    # Retry a request when transient exceptions (e.g. serialization failures) occur.
+    config.include("pyramid_retry")
+
+    # hook to share the dbengine fixture in testing
     engine = settings.get("dbengine")
     if not engine:
         engine = get_engine(settings)
@@ -47,20 +76,13 @@ def includeme(config):
 
     config.add_request_method(db, "db", reify=True)
 
-    # Try integrating pyramid_tm if installed
-    try:
-        import zope.sqlalchemy
-        config.include("pyramid_tm")
-        settings["tm.manager_hook"] = "pyramid_tm.explicit_manager"
-
-        def dbsession(request):
-            session = session_factory(info={"request": request})
-            zope.sqlalchemy.register(session, transaction_manager=request.tm)
-            return session
-    except ImportError:
-        def dbsession(request):
-            session = session_factory(info={"request": request})
-            request.add_finished_callback(lambda req: session.close())
-            return session
+    # make request.dbsession available for use in Pyramid
+    def dbsession(request):
+        # hook to share the dbsession fixture in testing
+        session = request.environ.get("app.dbsession")
+        if session is None:
+            # request.tm is the transaction manager used by pyramid_tm
+            session = get_tm_session(session_factory, request.tm, request=request)
+        return session
 
     config.add_request_method(dbsession, reify=True)
