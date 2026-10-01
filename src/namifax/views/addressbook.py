@@ -157,7 +157,7 @@ def emailbook_edit_view(request):
             try:
                 eid_val = int(eid)
                 from namifax.db.repository import MDBOData
-                repo = MDBOData("AddressBookEmail")
+                repo = MDBOData("AddressBookEmail", db=request.db)
                 repo.data.set_id(eid_val)
                 repo.update_entry({"contact_name": contact_name, "contact_email": contact_email})
             except Exception:
@@ -176,7 +176,7 @@ def emailbook_edit_view(request):
     if contact_id:
         try:
             from namifax.db.repository import MDBOData
-            repo = MDBOData("AddressBookEmail")
+            repo = MDBOData("AddressBookEmail", db=request.db)
             cid_int = int(contact_id)
             rec = repo.find({"abookemail_id": cid_int}) or repo.find({"email_id": cid_int})
             if rec:

@@ -138,7 +138,7 @@ class SAMLService:
         email = attributes.get("email") or (name_id if "@" in name_id else f"{username}@local")
         display_name = attributes.get("displayName") or attributes.get("name") or username
 
-        user = AFUserAccount()
+        user = AFUserAccount(db=self.db)
         if user.load_by_username(username):
             return user
 
