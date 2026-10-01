@@ -825,7 +825,7 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 | C3 | `cli/cron.py`: `run_cron(..., *, db=None)` — 필요한 작업(-i/-d/-p)이 있을 때만 지연 오픈, 한 번 열어 공유 | `[COMPLETE]` | `tests/unit/test_cli_cron_db.py` 4개 |
 | C4 | `cli/dynconf.py`, `phb.py`, `user.py`, `faxcover.py`: 동일 패턴. `faxcover`는 연결 없는 `DatabaseEngine()`과 존재하지 않는 `reduce_single` 인자 때문에 발신자 조회가 항상 조용히 실패하던 결함을 `query()`+`get_records()`로 수정 | `[COMPLETE]` | `tests/unit/test_cli_misc_db.py` 9개, 전체 544 통과 |
 | C5 | `main.py` `serve_main`: `get_default_engine()` 제거 → `cli_db()`로 스키마 보장, Pyramid 앱 생성 실패를 stderr에 기록한 뒤 폴백 | `[COMPLETE]` | `tests/unit/test_serve_main_db.py` 2개, 전체 546 통과 |
-| C6 | `ocr-import`, `create-thumbnails`, `import-users`, `reroute` 등 `namifax` 명령이 호출하는 `avantfax.cli.*` — `namifax.cli`에 대응 모듈이 없음 | `[NEEDS_CLARIFICATION]` | 13.3 참조 |
+| C6 (P2) | `namifax.cli`에 `ocr_import`, `create_thumbnails`, `import_users`, `import_blacklist`, `reroute` 이식(`main(args, *, db=None)` + `cli_db()`), `main.py` 디스패치를 `namifax.cli.*`로 전환. `ocr_import`는 항상 `""`을 반환하던 스텁 `ocr_faxcontent` 대신 `common.helpers.ocr_faxcontent`(실제 OCR) 사용 | `[COMPLETE]` | `tests/unit/test_cli_batch_tools_db.py` 17개, 전체 565 통과. `import_archive`는 결함 F4-19의 스텁이라 이식하지 않음 |
 | F | `Repository` 폴백 제거 및 `get_default_engine` 삭제는 13.2(web/*)·13.3(avantfax 복사본) 결정 이후 | `[BLOCKED]` | 현재 `get_default_engine`을 쓰는 곳: `db/repository.py`(namifax·avantfax), `namifax.web.*`, `avantfax.*` 전체 |
 
 ### 13.1 루프 3에서 발견된 기존 결함 (미해결, 별도 처리 필요)
@@ -845,3 +845,7 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 - `namifax` 명령 `ocr-import`, `create-thumbnails`, `import-users`, `import-blacklist`, `reroute`는 `namifax.cli`에 대응 모듈이 없어 `avantfax.cli.*`를 직접 호출한다(`main.py:174-190`). 이 모듈들은 `FaxPDFArchive()`, `AFUserAccount()`, `FaxModem()`을 `db` 없이 만든다.
 - `avantfax.db.engine.get_default_engine`은 `namifax`의 것을 위임 호출하는 shim이라, `namifax`의 전역 엔진을 지우면 `avantfax.*`가 전부 깨진다.
 - `[NEEDS_CLARIFICATION]` `avantfax` 복사본을 제거(테스트를 `namifax`로 이전, 누락된 5개 CLI를 `namifax.cli`로 이식)할지, 유지할지 결정 필요.
+
+### 13.4 P2 관찰 사항
+- `DynConf`와 `DynamicConfig` 두 테이블이 스키마에 공존하며 초기화 시 한 번 단방향 동기화된다(`schema.py:270-275`). 서비스(`DynamicConfig` 서비스, `import_blacklist`)는 `DynConf`만 쓰므로 `DynamicConfig` 테이블에 직접 넣은 행은 서비스에 보이지 않는다. 정리 대상.
+- `namifax.main`이 모듈 이름이자 `namifax/__init__.py`의 `main = create_app` 함수 이름이다. `from namifax import main`의 결과는 임포트 순서에 따라 달라진다(paste 진입점 `main = "namifax:main"` 때문). 테스트는 `importlib.import_module("namifax.main")`을 사용한다.

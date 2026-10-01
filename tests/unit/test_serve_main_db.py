@@ -6,7 +6,9 @@ from contextlib import contextmanager
 from unittest.mock import MagicMock, patch
 
 import namifax.db.engine as engine_mod
-from namifax import main as main_mod
+import importlib
+
+main_mod = importlib.import_module("namifax.main")  # `namifax.main` is also a function name in the package
 
 
 def _serve(monkeypatch, make_app):

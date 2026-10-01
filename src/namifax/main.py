@@ -171,23 +171,23 @@ def main(argv: list[str] | None = None) -> int:
         return run_phb()
 
     elif cmd in ("ocr-import", "ocr_import"):
-        from avantfax.cli import ocr_import
+        from namifax.cli import ocr_import
         return ocr_import.main(sub_args)
 
     elif cmd in ("create-thumbnails", "create_thumbnails"):
-        from avantfax.cli import create_thumbnails
+        from namifax.cli import create_thumbnails
         return create_thumbnails.main(sub_args)
 
     elif cmd in ("import-users", "import_users"):
-        from avantfax.cli import import_users
+        from namifax.cli import import_users
         return import_users.main(sub_args)
 
     elif cmd in ("import-blacklist", "import_blacklist"):
-        from avantfax.cli import import_blacklist
+        from namifax.cli import import_blacklist
         return import_blacklist.main(sub_args)
 
     elif cmd == "reroute":
-        from avantfax.cli import reroute
+        from namifax.cli import reroute
         return reroute.main(sub_args)
 
     elif cmd == "i18n":
