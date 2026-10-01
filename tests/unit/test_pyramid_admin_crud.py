@@ -18,8 +18,9 @@ from namifax.views.distrolist import distrolist_edit_view
 
 
 @pytest.fixture
-def dummy_request():
+def dummy_request(seeded_db):
     request = testing.DummyRequest()
+    request.db = seeded_db
     request.__dict__["identity"] = {"username": "admin", "is_admin": True, "superuser": True}
     return request
 
@@ -340,7 +341,7 @@ def test_admin_dynconf_post_delete(dummy_request):
 def test_admin_fax2email_get_selected(dummy_request):
     """Verify loading selected company forwarding rule for editing."""
     dummy_request.params = {"c_id": "1"}
-    with patch("avantfax.services.addressbook.AFAddressBook") as mock_cls:
+    with patch("namifax.services.addressbook.AFAddressBook") as mock_cls:
         inst = MagicMock()
         inst.loadbycid.return_value = True
         inst.get_company.return_value = "Acme Corp"
@@ -364,7 +365,7 @@ def test_admin_fax2email_post_save_edit(dummy_request):
         "printer": "lp2",
         "_submit_check": "1",
     }
-    with patch("avantfax.services.addressbook.AFAddressBook") as mock_cls:
+    with patch("namifax.services.addressbook.AFAddressBook") as mock_cls:
         inst = MagicMock()
         inst.loadbycid.return_value = True
         inst.loadbyfaxnumid.return_value = True
@@ -385,7 +386,7 @@ def test_admin_fax2email_post_delete(dummy_request):
         "c_id": "999",
         "_submit_check": "1",
     }
-    with patch("avantfax.services.addressbook.AFAddressBook") as mock_cls:
+    with patch("namifax.services.addressbook.AFAddressBook") as mock_cls:
         inst = MagicMock()
         inst.delete_cid.return_value = True
         mock_cls.return_value = inst

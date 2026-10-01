@@ -3,22 +3,23 @@
 from __future__ import annotations
 
 import os
+from typing import Any
 
 from pyramid.httpexceptions import HTTPFound, HTTPForbidden
 from pyramid.view import view_config
 
-from avantfax.services.barcode import BarcodeRouting
-from avantfax.services.categories import FaxPDFCategory
-from avantfax.services.covers import Covers
-from avantfax.services.did import DIDRouting
-from avantfax.services.dynconf import DynamicConfig
+from namifax.services.barcode import BarcodeRouting
+from namifax.services.categories import FaxPDFCategory
+from namifax.services.covers import Covers
+from namifax.services.did import DIDRouting
+from namifax.services.dynconf import DynamicConfig
 from namifax.i18n import _
 
-def get_all_admin_users() -> list[dict[str, Any]]:
+def get_all_admin_users(db: Any = None) -> list[dict[str, Any]]:
     """Retrieve users directly from database."""
     try:
         from namifax.services.user_account import AFUserAccount
-        svc = AFUserAccount()
+        svc = AFUserAccount(db=db)
         rows = svc.list_accounts()
         if rows:
             users_list = []
@@ -75,8 +76,8 @@ def get_all_admin_modems(db: Any = None) -> list[dict[str, Any]]:
 def admin_dashboard_view(request):
     """Admin Dashboard and server overview."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    users = get_all_admin_users()
-    modems = get_all_admin_modems()
+    users = get_all_admin_users(request.db)
+    modems = get_all_admin_modems(request.db)
 
     if "Authorization" in request.headers or "application/json" in request.headers.get("Accept", ""):
         from pyramid.response import Response
@@ -105,7 +106,7 @@ def admin_users_view(request):
             if uid and str(uid) != "1":
                 try:
                     from namifax.services.user_account import AFUserAccount
-                    svc = AFUserAccount()
+                    svc = AFUserAccount(db=request.db)
                     svc.remove(int(uid))
                 except Exception:
                     pass
@@ -124,7 +125,7 @@ def admin_users_view(request):
         if name and username:
             try:
                 from namifax.services.user_account import AFUserAccount
-                svc = AFUserAccount()
+                svc = AFUserAccount(db=request.db)
                 if uid:
                     if svc.load(int(uid)):
                         svc.set_username(username)
@@ -153,7 +154,7 @@ def admin_users_view(request):
 
             return HTTPFound(location=request.route_url("admin_users"))
 
-    users = get_all_admin_users()
+    users = get_all_admin_users(request.db)
     uid = request.params.get("uid")
     selected_user = None
     if uid:
@@ -161,13 +162,13 @@ def admin_users_view(request):
         if not selected_user and str(uid) == "1" and users:
             selected_user = users[0]
 
-    did = DIDRouting()
+    did = DIDRouting(db=request.db)
     try:
         did_routes = did.list_all()
     except Exception:
         did_routes = []
 
-    fc = FaxPDFCategory()
+    fc = FaxPDFCategory(db=request.db)
     try:
         categories = fc.get_categories() or []
     except Exception:
@@ -181,7 +182,7 @@ def admin_users_view(request):
         "users": users,
         "selected_user": selected_user or {"name": "", "username": "", "email": "", "is_admin": False, "superuser": False, "can_del": False, "any_modem": True},
         "did_routes": did_routes,
-        "modem_devices": get_all_admin_modems(),
+        "modem_devices": get_all_admin_modems(request.db),
         "categories": categories,
     }
 
@@ -203,7 +204,7 @@ def admin_modems_view(request):
             if devid:
                 try:
                     from namifax.services.modem import FaxModem
-                    svc = FaxModem()
+                    svc = FaxModem(db=request.db)
                     svc.delete_device(int(devid))
                 except Exception:
                     pass
@@ -212,7 +213,7 @@ def admin_modems_view(request):
         if device and alias:
             try:
                 from namifax.services.modem import FaxModem
-                svc = FaxModem()
+                svc = FaxModem(db=request.db)
                 if devid and svc.loadbyid(int(devid)):
                     svc.set_alias(alias)
                     svc.set_contact(contact)
@@ -232,7 +233,7 @@ def admin_modems_view(request):
 
             return HTTPFound(location=request.route_url("admin_modems"))
 
-    modems = get_all_admin_modems()
+    modems = get_all_admin_modems(request.db)
     devid = request.params.get("devid")
     device_param = request.params.get("device")
     selected_modem = None
@@ -256,8 +257,8 @@ def admin_modems_view(request):
 def admin_routing_did_view(request):
     """Admin DID inbound routing configuration and full CRUD management."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    did = DIDRouting()
-    fc = FaxPDFCategory()
+    did = DIDRouting(db=request.db)
+    fc = FaxPDFCategory(db=request.db)
     message = None
     error = None
 
@@ -352,11 +353,11 @@ def admin_routing_did_view(request):
     }
 
 
-def get_all_syslogs(kw: str = "", day: str = "", month: str = "", year: str = "") -> list[dict[str, Any]]:
+def get_all_syslogs(kw: str = "", day: str = "", month: str = "", year: str = "", db: Any = None) -> list[dict[str, Any]]:
     """Retrieve system logs directly from database."""
     try:
         from namifax.db.repository import MDBOData
-        repo = MDBOData("SysLog")
+        repo = MDBOData("SysLog", db=db)
         clauses = []
         if kw:
             clauses.append(f"logtext LIKE {repo.quote(f'%{kw}%')}")
@@ -402,7 +403,7 @@ def admin_system_logs_view(request):
     month = request.params.get("month", "")
     year = request.params.get("year", "")
 
-    logs = get_all_syslogs(kw=kw, day=day, month=month, year=year)
+    logs = get_all_syslogs(kw=kw, day=day, month=month, year=year, db=request.db)
 
     return {
         "title": "NamiFAX - Admin - System Logs",
@@ -424,7 +425,7 @@ def admin_system_logs_view(request):
 def admin_covers_view(request):
     """Admin configure cover page templates and CRUD."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    cv = Covers()
+    cv = Covers(db=request.db)
     message = None
     error = None
 
@@ -511,7 +512,7 @@ def admin_covers_view(request):
 def admin_categories_view(request):
     """Admin fax categories manager."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    fc = FaxPDFCategory()
+    fc = FaxPDFCategory(db=request.db)
     message = None
     error = None
 
@@ -576,7 +577,7 @@ def admin_categories_view(request):
 def admin_barcodes_view(request):
     """Admin configure barcode routing and CRUD."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    bc = BarcodeRouting()
+    bc = BarcodeRouting(db=request.db)
     message = None
     error = None
 
@@ -646,7 +647,7 @@ def admin_barcodes_view(request):
 def admin_dynconf_view(request):
     """Admin dynamic configuration / blacklist."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    dc = DynamicConfig()
+    dc = DynamicConfig(db=request.db)
     message = None
     error = None
 
@@ -705,7 +706,7 @@ def admin_dynconf_view(request):
 
     try:
         from namifax.services.modem import FaxModem
-        fm = FaxModem()
+        fm = FaxModem(db=request.db)
         modems = fm.get_modems() or ["ttyS0"]
     except Exception:
         modems = ["ttyS0"]
@@ -727,10 +728,10 @@ def admin_dynconf_view(request):
 def admin_fax2email_view(request):
     """Admin fax to email forwarding configuration."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    from avantfax.services.addressbook import AFAddressBook
-    from avantfax.services.categories import FaxPDFCategory
-    ab = AFAddressBook()
-    fc = FaxPDFCategory()
+    from namifax.services.addressbook import AFAddressBook
+    from namifax.services.categories import FaxPDFCategory
+    ab = AFAddressBook(db=request.db)
+    fc = FaxPDFCategory(db=request.db)
     message = None
     error = None
 
@@ -791,7 +792,7 @@ def admin_fax2email_view(request):
     if companies:
         for c in companies:
             cid_val = c.get("ab_id") or c.get("abook_id")
-            ab_temp = AFAddressBook()
+            ab_temp = AFAddressBook(db=request.db)
             ab_temp.loadbycid(cid_val)
             fns = ab_temp.get_faxnums()
             email_val = fns[0].get("email", "") if fns else ""
