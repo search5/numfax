@@ -72,4 +72,7 @@ markers = [
     "serverdb: runs against a throw-away database on a real PostgreSQL, MySQL or MariaDB server (see tests/conftest.py; skipped when the server URL is not configured)",
 ]
 testpaths = ["tests"]
+# a single test that has not finished after 180 s dumps every thread's stack to stderr (and the run goes on), so a stall
+# shows where it is stuck instead of just hanging
+faulthandler_timeout = 180
 pythonpath = [".", "src"]
