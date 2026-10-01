@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: jMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:42+0900\n"
+"POT-Creation-Date: 2026-10-02 00:46+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -30,6 +30,12 @@ msgstr "検索"
 #, fuzzy
 msgid "New Company"
 msgstr "会社名"
+
+msgid "Email Book"
+msgstr "メールアドレス帳"
+
+msgid "Distribution Lists"
+msgstr "宛先リスト"
 
 #, fuzzy
 msgid "Company / Name"
@@ -1159,8 +1165,14 @@ msgstr ""
 msgid "faxes"
 msgstr "FAX"
 
-msgid "Distribution Lists"
-msgstr "宛先リスト"
+msgid "No contacts found"
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "Close"
+msgstr "閉じる"
 
 msgid "Organize recipient groups for mass fax broadcasting and notifications."
 msgstr "FAX一斉同報送信および通知用の宛先グループを整理します。"
@@ -1241,9 +1253,6 @@ msgstr ""
 msgid "Changes saved"
 msgstr ""
 
-msgid "Add"
-msgstr ""
-
 msgid "Back"
 msgstr ""
 
@@ -1253,9 +1262,6 @@ msgstr "電子メールアドレス"
 
 msgid "Manage email recipients, transmission routing, and contacts directory."
 msgstr "メールの宛先、送信ルーティング、および連絡先ディレクトリを管理します。"
-
-msgid "Email Book"
-msgstr "メールアドレス帳"
 
 #, fuzzy
 msgid "New Contact"
@@ -1562,6 +1568,9 @@ msgstr ""
 msgid "Recipients"
 msgstr "宛先"
 
+msgid "Choose from contacts"
+msgstr ""
+
 msgid "CC"
 msgstr ""
 
@@ -1608,14 +1617,8 @@ msgstr "会社名"
 msgid "Pages:"
 msgstr "ページ数:"
 
-msgid "Status:"
-msgstr "ステータス:"
-
-msgid "Transmitted Successfully (OK)"
-msgstr "送信完了 (OK)"
-
-msgid "Close"
-msgstr "閉じる"
+msgid "Fax Number:"
+msgstr ""
 
 msgid "Database unavailable"
 msgstr ""
@@ -1732,6 +1735,9 @@ msgid "Destination Number"
 msgstr "FAX番号"
 
 msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
+msgstr ""
+
+msgid "Choose a distribution list"
 msgstr ""
 
 msgid "To send to multiple recipients at once, separate numbers with a semicolon."
@@ -2245,6 +2251,12 @@ msgstr ""
 msgid "Email failed to send"
 msgstr ""
 
+msgid "Fax Contacts"
+msgstr ""
+
+msgid "Email Contacts"
+msgstr ""
+
 msgid "The fax document was not found."
 msgstr ""
 
@@ -2514,4 +2526,10 @@ msgstr ""
 
 #~ msgid "Auto-select recommended"
 #~ msgstr "自動選択を推奨"
+
+#~ msgid "Status:"
+#~ msgstr "ステータス:"
+
+#~ msgid "Transmitted Successfully (OK)"
+#~ msgstr "送信完了 (OK)"
 

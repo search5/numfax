@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: pt_BMIME-Version: 1.Content-"
 "Type: text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:42+0900\n"
+"POT-Creation-Date: 2026-10-02 00:46+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: pt_BR\n"
@@ -30,6 +30,12 @@ msgstr "Pesquisar"
 #, fuzzy
 msgid "New Company"
 msgstr "Companhia"
+
+msgid "Email Book"
+msgstr "Catálogo de e-mails"
+
+msgid "Distribution Lists"
+msgstr "Listas de Distribui&ccedil;&atilde;o"
 
 #, fuzzy
 msgid "Company / Name"
@@ -1195,8 +1201,14 @@ msgstr ""
 msgid "faxes"
 msgstr "faxes"
 
-msgid "Distribution Lists"
-msgstr "Listas de Distribui&ccedil;&atilde;o"
+msgid "No contacts found"
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "Close"
+msgstr "Fechar"
 
 msgid "Organize recipient groups for mass fax broadcasting and notifications."
 msgstr ""
@@ -1281,9 +1293,6 @@ msgstr ""
 msgid "Changes saved"
 msgstr ""
 
-msgid "Add"
-msgstr ""
-
 msgid "Back"
 msgstr ""
 
@@ -1295,9 +1304,6 @@ msgid "Manage email recipients, transmission routing, and contacts directory."
 msgstr ""
 "Gerenciar destinatários de e-mail, roteamento de transmissão e diretório "
 "de contatos."
-
-msgid "Email Book"
-msgstr "Catálogo de e-mails"
 
 #, fuzzy
 msgid "New Contact"
@@ -1617,6 +1623,9 @@ msgstr ""
 msgid "Recipients"
 msgstr "Destinatários"
 
+msgid "Choose from contacts"
+msgstr ""
+
 msgid "CC"
 msgstr ""
 
@@ -1663,14 +1672,8 @@ msgstr "Companhia"
 msgid "Pages:"
 msgstr "Páginas:"
 
-msgid "Status:"
-msgstr "Status:"
-
-msgid "Transmitted Successfully (OK)"
-msgstr "Transmitido com sucesso (OK)"
-
-msgid "Close"
-msgstr "Fechar"
+msgid "Fax Number:"
+msgstr ""
 
 msgid "Database unavailable"
 msgstr ""
@@ -1793,6 +1796,9 @@ msgid "Destination Number"
 msgstr "Número de Fax"
 
 msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
+msgstr ""
+
+msgid "Choose a distribution list"
 msgstr ""
 
 msgid "To send to multiple recipients at once, separate numbers with a semicolon."
@@ -2313,6 +2319,12 @@ msgstr ""
 msgid "Email failed to send"
 msgstr ""
 
+msgid "Fax Contacts"
+msgstr ""
+
+msgid "Email Contacts"
+msgstr ""
+
 msgid "The fax document was not found."
 msgstr ""
 
@@ -2599,4 +2611,10 @@ msgstr ""
 
 #~ msgid "Auto-select recommended"
 #~ msgstr "Seleção automática recomendada"
+
+#~ msgid "Status:"
+#~ msgstr "Status:"
+
+#~ msgid "Transmitted Successfully (OK)"
+#~ msgstr "Transmitido com sucesso (OK)"
 

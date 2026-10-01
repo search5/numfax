@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:42+0900\n"
+"POT-Creation-Date: 2026-10-02 00:46+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,6 +30,12 @@ msgid "Search"
 msgstr ""
 
 msgid "New Company"
+msgstr ""
+
+msgid "Email Book"
+msgstr ""
+
+msgid "Distribution Lists"
 msgstr ""
 
 msgid "Company / Name"
@@ -1101,7 +1107,13 @@ msgstr ""
 msgid "faxes"
 msgstr ""
 
-msgid "Distribution Lists"
+msgid "No contacts found"
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "Close"
 msgstr ""
 
 msgid "Organize recipient groups for mass fax broadcasting and notifications."
@@ -1182,9 +1194,6 @@ msgstr ""
 msgid "Changes saved"
 msgstr ""
 
-msgid "Add"
-msgstr ""
-
 msgid "Back"
 msgstr ""
 
@@ -1192,9 +1201,6 @@ msgid "Email Address Book"
 msgstr ""
 
 msgid "Manage email recipients, transmission routing, and contacts directory."
-msgstr ""
-
-msgid "Email Book"
 msgstr ""
 
 msgid "New Contact"
@@ -1489,6 +1495,9 @@ msgstr ""
 msgid "Recipients"
 msgstr ""
 
+msgid "Choose from contacts"
+msgstr ""
+
 msgid "CC"
 msgstr ""
 
@@ -1534,13 +1543,7 @@ msgstr ""
 msgid "Pages:"
 msgstr ""
 
-msgid "Status:"
-msgstr ""
-
-msgid "Transmitted Successfully (OK)"
-msgstr ""
-
-msgid "Close"
+msgid "Fax Number:"
 msgstr ""
 
 msgid "Database unavailable"
@@ -1651,6 +1654,9 @@ msgid "Destination Number"
 msgstr ""
 
 msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
+msgstr ""
+
+msgid "Choose a distribution list"
 msgstr ""
 
 msgid "To send to multiple recipients at once, separate numbers with a semicolon."
@@ -2150,6 +2156,12 @@ msgid ""
 msgstr ""
 
 msgid "Email failed to send"
+msgstr ""
+
+msgid "Fax Contacts"
+msgstr ""
+
+msgid "Email Contacts"
 msgstr ""
 
 msgid "The fax document was not found."

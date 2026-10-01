@@ -249,12 +249,16 @@ def modal_txreport_view(request):
     company = ""
     date_val = ""
     pages_val = 0
+    faxnum = ""
+    has_image = False
 
     arc = ArchiveIn(db=request.dbsession)
     try:
         if fid and str(fid).isdigit() and load_fax(request, arc, fid, action="txreport"):
             date_val = arc.get_archstamp() or ""
             pages_val = arc.get_pages() or 0
+            faxnum = arc.get_origfaxnum() or ""
+            has_image = True
             cid = arc.get_companyid()
             if cid:
                 ab = AFAddressBook(db=request.dbsession)
@@ -272,4 +276,6 @@ def modal_txreport_view(request):
         "company": company,
         "date": date_val,
         "pages": pages_val,
+        "faxnum": faxnum,
+        "has_image": has_image,
     }

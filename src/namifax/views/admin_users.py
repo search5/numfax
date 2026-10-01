@@ -17,6 +17,7 @@ from pyramid.view import view_config
 from namifax.common.helpers import send_mail
 from namifax.common.validators import is_valid_email
 from namifax.i18n import _
+from namifax.services import hylafax_users
 from namifax.services.covers import Covers
 from namifax.services.did import DIDRouting
 from namifax.services.categories import FaxPDFCategory
@@ -202,8 +203,11 @@ def _edit(request, svc: AFUserAccount, v: dict):
     errors = []
     if not svc.load(int(v["uid"])):
         return [_("The user does not exist.")], False
+    previous = str(svc.dbdata.get("username") or "")
     if not svc.set_username(v["username"]):
         errors.append(svc.get_error())
+    elif previous and previous != v["username"]:
+        hylafax_users.remove_user(previous)                       # the old name no longer belongs to this account
     if not svc.set_email(v["email"]):
         errors.append(svc.get_error())
     _apply(svc, v)

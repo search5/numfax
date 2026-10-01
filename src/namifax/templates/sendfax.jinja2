@@ -59,6 +59,10 @@
                  placeholder="{{ _('e.g. +1-555-0199  —  separate multiple numbers with semicolons') }}"
                  class="w-full border border-slate-300 rounded-lg px-4 py-3 text-sm font-mono text-slate-900 bg-white
                         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
+          <p class="text-xs mt-1.5 flex gap-3">
+            <a href="/helper/faxcontacts?target=faxnumber" onclick="window.open(this.href, 'picker', 'width=520,height=560'); return false;" class="text-blue-600 hover:underline">{{ _('Choose from contacts') }}</a>
+            <a href="/helper/distrocontacts?target=faxnumber" onclick="window.open(this.href, 'picker', 'width=520,height=560'); return false;" class="text-blue-600 hover:underline">{{ _('Choose a distribution list') }}</a>
+          </p>
           <p class="text-xs text-slate-400 mt-1.5">
             💡 {{ _('To send to multiple recipients at once, separate numbers with a semicolon.') }}
             {{ _('Saved contacts are available in the') }} <a href="/addressbook" class="text-blue-600 hover:underline">{{ _('Address Book') }}</a>.

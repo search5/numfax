@@ -5,9 +5,6 @@ from pyramid import testing
 import pytest
 
 from namifax.views.helpers import (
-    popup_distro_contacts,
-    popup_fax_contacts,
-    popup_email_contacts,
     upload_email_contacts,
     upload_fax_contacts,
 )
@@ -24,31 +21,10 @@ def dummy_request(seeded_db, dbsession):
 
 
 
-def test_popup_distro_contacts_get(dummy_request):
-    """Verify GET renders distro contacts selector popup."""
-    res = popup_distro_contacts(dummy_request)
-    assert res.status_code == 200
-    assert "Distribution Contacts" in res.text
-    assert 'name="regexp"' in res.text
-    assert 'name="dl_id"' in res.text
 
 
-def test_popup_fax_contacts_get(dummy_request):
-    """Verify GET renders fax contacts selector popup."""
-    res = popup_fax_contacts(dummy_request)
-    assert res.status_code == 200
-    assert "Fax Contacts" in res.text
-    assert 'name="regexp"' in res.text
-    assert 'name="myselect"' in res.text
 
 
-def test_popup_email_contacts_get(dummy_request):
-    """Verify GET renders email contacts selector popup."""
-    res = popup_email_contacts(dummy_request)
-    assert res.status_code == 200
-    assert "Email Contacts" in res.text
-    assert 'name="regexp"' in res.text
-    assert 'name="abookemail_id"' in res.text
 
 
 def test_upload_email_contacts_get(dummy_request):
@@ -67,3 +43,11 @@ def test_upload_fax_contacts_get(dummy_request):
     assert "Upload Fax Contacts" in res.text
     assert 'type="file"' in res.text
     assert 'name="catid"' in res.text
+
+
+@pytest.mark.parametrize("path,title", [("/helper/distrocontacts", "Distribution Contacts"), ("/helper/faxcontacts", "Fax Contacts"),
+                                         ("/helper/emailcontacts", "Email Contacts")])
+def test_the_contact_pickers_render(testapp, path, title):
+    testapp.post("/login", {"username": "admin", "password": "password", "_submit_check": "1"})
+    res = testapp.get(path)
+    assert res.status_int == 200 and title in res.text and 'name="regexp"' in res.text

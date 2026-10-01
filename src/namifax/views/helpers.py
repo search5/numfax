@@ -1,10 +1,12 @@
 """NamiFAX popup helper dialogs and vCard upload views matching legacy NamiFAX."""
 
 import html
+import re
 from pyramid.httpexceptions import HTTPFound
 from pyramid.response import Response
 from pyramid.view import view_config
 
+from namifax.i18n import _
 from namifax.services.addressbook import AFAddressBook
 from namifax.services.categories import FaxPDFCategory
 from namifax.services.distro import DistributionList
@@ -48,139 +50,55 @@ def popup_distrolist_helper(request):
             "added": added, "error": error}
 
 
+def _target(request) -> str:
+    """The id of the field to fill in the opening window; anything but a plain id is dropped."""
+    value = (request.params.get("target") or "").strip()
+    return value if re.fullmatch(r"[A-Za-z][A-Za-z0-9_\-]{0,40}", value) else ""
+
+
+def _picker(request, *, title, heading, action, options, separator, fetch=""):
+    from pyramid.renderers import render_to_response
+
+    return render_to_response("namifax:templates/contact_picker.jinja2", {
+        "title": title, "heading": heading, "action": action, "options": options, "separator": separator, "fetch": fetch,
+        "target": _target(request), "query": (request.params.get("regexp") or "").strip()}, request=request)
+
+
 @view_config(route_name="popup_distro_contacts", permission="view")
 def popup_distro_contacts(request):
-    """Distro contacts selector popup matching distrocontacts.php."""
-    dl = DistributionList(db=request.dbsession)
-    options_html = []
-
-    try:
-        groups = dl.get_distrolists()
-        if groups:
-            for g in groups:
-                gid = g.get("dl_id", 1)
-                gname = g.get("listname", "")
-                options_html.append(f'          <option value="{gid}">{html.escape(gname)}</option>')
-    except Exception:
-        pass
-
-    select_content = "\n".join(options_html)
-
-    html_content = f"""<!DOCTYPE html>
-<html>
-<head><title>- NamiFAX - Distribution Contacts</title></head>
-<body class="bg-slate-50 text-slate-800 p-4">
-  <div class="max-w-md mx-auto bg-white p-4 rounded shadow border border-slate-200">
-    <h2 class="text-base font-bold text-sky-900 mb-3">Distribution Contacts</h2>
-    <form name="myform" class="space-y-3">
-      <div>
-        <label for="regexp" class="block text-xs font-semibold mb-1">Search:</label>
-        <input type="text" name="regexp" id="regexp" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" />
-      </div>
-      <div>
-        <select name="dl_id" id="dl_id" size="6" class="w-full border border-slate-300 rounded p-1 text-sm">
-{select_content}
-        </select>
-      </div>
-      <div class="pt-2 flex justify-end space-x-2">
-        <input type="button" name="add" value="Add" class="px-3 py-1 bg-sky-800 text-white rounded text-sm cursor-pointer hover:bg-sky-700" />
-        <input type="button" value="Close Window" onclick="window.close()" class="px-3 py-1 bg-slate-200 text-slate-700 rounded text-sm cursor-pointer hover:bg-slate-300" />
-      </div>
-    </form>
-  </div>
-</body>
-</html>"""
-    return Response(html_content, content_type="text/html")
+    """Pick distribution lists: their fax numbers are put into the field that opened this window (distrocontacts.php)."""
+    query = (request.params.get("regexp") or "").strip().lower()
+    options = []
+    for group in DistributionList(db=request.dbsession).get_distrolists() or []:
+        name = str(group.get("listname", ""))
+        if not query or query in name.lower():
+            options.append((group.get("dl_id"), name))
+    return _picker(request, title="- NamiFAX - Distribution Contacts", heading=str(_("Distribution Lists")),
+                   action="/helper/distrocontacts", options=options, separator="; ", fetch="/ajax/dlist?dl_id=")
 
 
 @view_config(route_name="popup_fax_contacts", permission="view")
 def popup_fax_contacts(request):
-    """Fax contacts selector popup matching faxcontacts.php."""
-    ab = AFAddressBook(db=request.dbsession)
-    options_html = []
-
-    try:
-        companies = ab.get_companies()
-        if companies:
-            for c in companies:
-                cid = c.get("ab_id") or c.get("abook_id") or 1
-                cname = c.get("company", "")
-                faxnum = c.get("faxnum") or c.get("faxnumber") or ""
-                label = f"{cname} - {faxnum}" if faxnum else cname
-                options_html.append(f'          <option value="{cid}">{html.escape(label)}</option>')
-    except Exception:
-        pass
-
-    select_content = "\n".join(options_html)
-
-    html_content = f"""<!DOCTYPE html>
-<html>
-<head><title>- NamiFAX - Fax Contacts</title></head>
-<body class="bg-slate-50 text-slate-800 p-4">
-  <div class="max-w-md mx-auto bg-white p-4 rounded shadow border border-slate-200">
-    <h2 class="text-base font-bold text-sky-900 mb-3">Fax Contacts</h2>
-    <form name="myform" class="space-y-3">
-      <div>
-        <label for="regexp" class="block text-xs font-semibold mb-1">Search:</label>
-        <input type="text" name="regexp" id="regexp" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" />
-      </div>
-      <div>
-        <select name="myselect" id="myselect" size="6" class="w-full border border-slate-300 rounded p-1 text-sm">
-{select_content}
-        </select>
-      </div>
-      <div class="pt-2 flex justify-end space-x-2">
-        <input type="button" name="add" value="Add" class="px-3 py-1 bg-sky-800 text-white rounded text-sm cursor-pointer hover:bg-sky-700" />
-        <input type="button" value="Close Window" onclick="window.close()" class="px-3 py-1 bg-slate-200 text-slate-700 rounded text-sm cursor-pointer hover:bg-slate-300" />
-      </div>
-    </form>
-  </div>
-</body>
-</html>"""
-    return Response(html_content, content_type="text/html")
+    """Pick fax numbers of the address book (faxcontacts.php), shown as "Company - number"."""
+    query = (request.params.get("regexp") or "").strip()
+    book = AFAddressBook(db=request.dbsession)
+    numbers = book.numbers_by_company() if query else {}
+    options = []
+    for company in (book.search_companies(query) if query else []):
+        for number in numbers.get(company.get("abook_id"), []):
+            options.append((number["faxnumber"], f"{company.get('company')} - {number['faxnumber']}"))
+    return _picker(request, title="- NamiFAX - Fax Contacts", heading=str(_("Fax Contacts")), action="/helper/faxcontacts",
+                   options=options, separator="; ")
 
 
 @view_config(route_name="popup_email_contacts", permission="view")
 def popup_email_contacts(request):
-    """Email contacts selector popup matching emailcontacts.php."""
-    ab = AFAddressBook(db=request.dbsession)
-    options_html = []
-
-    try:
-        contacts = ab.get_contacts()
-        if contacts:
-            for eid, cstr in contacts.items():
-                options_html.append(f'          <option value="{eid}">{html.escape(cstr)}</option>')
-    except Exception:
-        pass
-
-    select_content = "\n".join(options_html)
-
-    html_content = f"""<!DOCTYPE html>
-<html>
-<head><title>- NamiFAX - Email Contacts</title></head>
-<body class="bg-slate-50 text-slate-800 p-4">
-  <div class="max-w-md mx-auto bg-white p-4 rounded shadow border border-slate-200">
-    <h2 class="text-base font-bold text-sky-900 mb-3">Email Contacts</h2>
-    <form name="myform" class="space-y-3">
-      <div>
-        <label for="regexp" class="block text-xs font-semibold mb-1">Search:</label>
-        <input type="text" name="regexp" id="regexp" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" />
-      </div>
-      <div>
-        <select name="abookemail_id" id="abookemail_id" size="6" class="w-full border border-slate-300 rounded p-1 text-sm">
-{select_content}
-        </select>
-      </div>
-      <div class="pt-2 flex justify-end space-x-2">
-        <input type="button" name="add" value="Add" class="px-3 py-1 bg-sky-800 text-white rounded text-sm cursor-pointer hover:bg-sky-700" />
-        <input type="button" value="Close Window" onclick="window.close()" class="px-3 py-1 bg-slate-200 text-slate-700 rounded text-sm cursor-pointer hover:bg-slate-300" />
-      </div>
-    </form>
-  </div>
-</body>
-</html>"""
-    return Response(html_content, content_type="text/html")
+    """Pick e-mail contacts (emailcontacts.php), as ``"Name" <address>``."""
+    query = (request.params.get("regexp") or "").strip().lower()
+    options = [(entry, entry) for entry in (AFAddressBook(db=request.dbsession).get_contacts() or {}).values()
+               if not query or query in entry.lower()]
+    return _picker(request, title="- NamiFAX - Email Contacts", heading=str(_("Email Contacts")), action="/helper/emailcontacts",
+                   options=options, separator=", ")
 
 
 def _vcard_lines(request) -> tuple[list[str] | None, str | None]:

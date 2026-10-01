@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: sMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:42+0900\n"
+"POT-Creation-Date: 2026-10-02 00:46+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: sr\n"
@@ -31,6 +31,12 @@ msgstr "Pretraga"
 #, fuzzy
 msgid "New Company"
 msgstr "Kompanija"
+
+msgid "Email Book"
+msgstr "E-mail adresar"
+
+msgid "Distribution Lists"
+msgstr "Lista dostave"
 
 #, fuzzy
 msgid "Company / Name"
@@ -1191,8 +1197,14 @@ msgstr ""
 msgid "faxes"
 msgstr "faksovi"
 
-msgid "Distribution Lists"
-msgstr "Lista dostave"
+msgid "No contacts found"
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "Close"
+msgstr "Zatvori"
 
 msgid "Organize recipient groups for mass fax broadcasting and notifications."
 msgstr "Organizujte grupe primalaca za masovno emitovanje faksova i obaveštenja."
@@ -1273,9 +1285,6 @@ msgstr ""
 msgid "Changes saved"
 msgstr ""
 
-msgid "Add"
-msgstr ""
-
 msgid "Back"
 msgstr ""
 
@@ -1285,9 +1294,6 @@ msgstr "E-mail adrese"
 
 msgid "Manage email recipients, transmission routing, and contacts directory."
 msgstr "Upravljanje e-mail primaocima, usmeravanjem prenosa i adresarom."
-
-msgid "Email Book"
-msgstr "E-mail adresar"
 
 #, fuzzy
 msgid "New Contact"
@@ -1605,6 +1611,9 @@ msgstr ""
 msgid "Recipients"
 msgstr "Primaoci"
 
+msgid "Choose from contacts"
+msgstr ""
+
 msgid "CC"
 msgstr ""
 
@@ -1651,14 +1660,8 @@ msgstr "Kompanija"
 msgid "Pages:"
 msgstr "Stranica:"
 
-msgid "Status:"
-msgstr "Status:"
-
-msgid "Transmitted Successfully (OK)"
-msgstr "Uspešno preneto (OK)"
-
-msgid "Close"
-msgstr "Zatvori"
+msgid "Fax Number:"
+msgstr ""
 
 msgid "Database unavailable"
 msgstr ""
@@ -1782,6 +1785,9 @@ msgid "Destination Number"
 msgstr "Broij faksa"
 
 msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
+msgstr ""
+
+msgid "Choose a distribution list"
 msgstr ""
 
 msgid "To send to multiple recipients at once, separate numbers with a semicolon."
@@ -2298,6 +2304,12 @@ msgstr ""
 msgid "Email failed to send"
 msgstr ""
 
+msgid "Fax Contacts"
+msgstr ""
+
+msgid "Email Contacts"
+msgstr ""
+
 msgid "The fax document was not found."
 msgstr ""
 
@@ -2580,4 +2592,10 @@ msgstr ""
 
 #~ msgid "Auto-select recommended"
 #~ msgstr "Preporučuje se automatski izbor"
+
+#~ msgid "Status:"
+#~ msgstr "Status:"
+
+#~ msgid "Transmitted Successfully (OK)"
+#~ msgstr "Uspešno preneto (OK)"
 

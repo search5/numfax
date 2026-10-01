@@ -79,6 +79,14 @@ def _add_page_counters(event) -> None:
 
             count = ArchiveIn(db=request.dbsession).get_num_faxes(access.devices, access.categories, access.did_routing)
             event["num_inbox"] = count or None
+        if event.get("user_full_name") is None:
+            from sqlalchemy import select
+
+            from namifax.models import UserAccount
+
+            who = request.identity or {}
+            event["user_full_name"] = request.dbsession.execute(
+                select(UserAccount.name).where(UserAccount.uid == (who.get("user_id") or who.get("uid") or 0))).scalar()
         if event.get("modem_devices") is None:
             event["modem_devices"] = list((access.configured_modems if access.superuser else access.modems) or [])
     except Exception:

@@ -105,7 +105,7 @@
               {{ current_user.username[0] }}
             </div>
             <div class="hidden sm:block">
-              <div class="text-sm font-semibold text-slate-900 leading-tight">{{ current_user.username }}</div>
+              <div class="text-sm font-semibold text-slate-900 leading-tight" title="{{ current_user.username }}">{{ user_full_name or current_user.username }}{% if current_user.superuser %} <span data-superuser class="ml-1 px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 text-[10px] font-bold uppercase">{{ _('Superuser') }}</span>{% endif %}</div>
               <div class="flex items-center gap-2 text-xs text-slate-400">
                 <a href="/settings" class="hover:text-blue-600 transition-colors">{{ _('Settings') }}</a>
                 <span>·</span>
@@ -159,6 +159,7 @@
   </footer>
 
   <script src="/static/js/notify.js" defer></script>
+  <script src="/static/js/livefilter.js" defer></script>
   {% block extra_scripts %}{% endblock %}
 </body>
 </html>

@@ -8,9 +8,6 @@ import pytest
 from namifax.views.helpers import (
     upload_email_contacts,
     upload_fax_contacts,
-    popup_distro_contacts,
-    popup_fax_contacts,
-    popup_email_contacts,
 )
 from namifax.views.ajax import (
     ajax_modem_status,
@@ -78,16 +75,6 @@ def test_upload_fax_contacts_vcard_post(dummy_request):
         assert res.status_code == 200
 
 
-def test_popup_helpers_render(dummy_request):
-    """Verify popup helper dialogs render properly."""
-    res_distro = popup_distro_contacts(dummy_request)
-    assert res_distro.status_code == 200
-
-    res_fax = popup_fax_contacts(dummy_request)
-    assert res_fax.status_code == 200
-
-    res_email = popup_email_contacts(dummy_request)
-    assert res_email.status_code == 200
 
 
 def test_ajax_inbox_count_view(dummy_request):

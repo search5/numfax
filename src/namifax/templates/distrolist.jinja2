@@ -21,10 +21,11 @@
 
     <!-- Navigation Chips & Primary Action -->
     <div class="flex items-center space-x-2">
-      <div class="inline-flex rounded-lg border border-slate-200 bg-slate-50 p-0.5 text-xs font-semibold mr-2">
+      <nav class="book-menu inline-flex rounded-lg border border-slate-200 bg-slate-50 p-0.5 text-xs font-semibold mr-2">
+        <a href="/emailbook" class="px-3 py-1 rounded-md text-slate-600 hover:text-slate-900 transition">{{ _('Email Book') }}</a>
         <a href="/addressbook" class="px-3 py-1 rounded-md text-slate-600 hover:text-slate-900 transition">{{ _('Address Book') }}</a>
         <a href="/distrolist" class="px-3 py-1 rounded-md bg-white text-sky-800 shadow-2xs font-bold">{{ _('Distribution Lists') }}</a>
-      </div>
+      </nav>
       <a href="/distrolist/edit" class="inline-flex items-center space-x-1.5 px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg text-xs font-bold shadow-2xs transition">
         <span>+ {{ _('Create List') }}</span>
       </a>
@@ -40,9 +41,10 @@
         <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">{{ _('Saved Distribution Lists') }}</h3>
       </div>
       
-      <div class="divide-y divide-slate-100 border border-slate-200/80 rounded-xl overflow-hidden text-xs max-h-[500px] overflow-y-auto">
+      <input type="text" data-live-filter="#list-picker" placeholder="{{ _('Search') }}" class="w-full border border-slate-300 rounded-lg px-3 py-1.5 text-xs bg-white" />
+      <div id="list-picker" class="divide-y divide-slate-100 border border-slate-200/80 rounded-xl overflow-hidden text-xs max-h-[500px] overflow-y-auto">
         {% for dl in distrolists %}
-          <a href="/distrolist?dl_id={{ dl.dl_id }}" class="block p-3 hover:bg-slate-50 transition {% if selected_list and selected_list.dl_id == dl.dl_id %}bg-sky-50/70 border-l-4 border-sky-600{% endif %}">
+          <a data-filter-item href="/distrolist?dl_id={{ dl.dl_id }}" class="block p-3 hover:bg-slate-50 transition {% if selected_list and selected_list.dl_id == dl.dl_id %}bg-sky-50/70 border-l-4 border-sky-600{% endif %}">
             <div class="flex justify-between items-center">
               <div>
                 <span class="font-bold text-slate-900 block">{{ dl.listname }}</span>

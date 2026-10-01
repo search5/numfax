@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: kMIME-Version: 1.Content-Type: text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:42+0900\n"
+"POT-Creation-Date: 2026-10-02 00:46+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ko\n"
@@ -28,6 +28,12 @@ msgstr "검색"
 
 msgid "New Company"
 msgstr "새 회사 추가"
+
+msgid "Email Book"
+msgstr "이메일 주소록"
+
+msgid "Distribution Lists"
+msgstr "배포 그룹"
 
 msgid "Company / Name"
 msgstr "회사명 / 수신자"
@@ -1053,8 +1059,14 @@ msgstr "선택한 팩스를 삭제하시겠습니까?"
 msgid "faxes"
 msgstr "개의 팩스"
 
-msgid "Distribution Lists"
-msgstr "배포 그룹"
+msgid "No contacts found"
+msgstr "연락처가 없습니다"
+
+msgid "Add"
+msgstr "추가"
+
+msgid "Close"
+msgstr "닫기"
 
 msgid "Organize recipient groups for mass fax broadcasting and notifications."
 msgstr "대량 팩스 동보 발송 및 알림을 위한 수신자 그룹을 구성합니다."
@@ -1134,9 +1146,6 @@ msgstr "그룹에 연락처 추가"
 msgid "Changes saved"
 msgstr "변경 사항을 저장했습니다"
 
-msgid "Add"
-msgstr "추가"
-
 msgid "Back"
 msgstr "뒤로"
 
@@ -1145,9 +1154,6 @@ msgstr "이메일 주소록"
 
 msgid "Manage email recipients, transmission routing, and contacts directory."
 msgstr "이메일 수신자, 전송 라우팅 및 연락처 디렉터리를 관리합니다."
-
-msgid "Email Book"
-msgstr "이메일 주소록"
 
 msgid "New Contact"
 msgstr "새 연락처"
@@ -1428,6 +1434,9 @@ msgstr "보낸 사람"
 msgid "Recipients"
 msgstr "수신자"
 
+msgid "Choose from contacts"
+msgstr "연락처에서 선택"
+
 msgid "CC"
 msgstr "참조"
 
@@ -1473,14 +1482,8 @@ msgstr "회사:"
 msgid "Pages:"
 msgstr "페이지 수:"
 
-msgid "Status:"
-msgstr "상태:"
-
-msgid "Transmitted Successfully (OK)"
-msgstr "정상 전송 완료 (OK)"
-
-msgid "Close"
-msgstr "닫기"
+msgid "Fax Number:"
+msgstr "팩스 번호:"
 
 msgid "Database unavailable"
 msgstr "데이터베이스에 연결할 수 없습니다"
@@ -1583,6 +1586,9 @@ msgstr "수신 팩스 번호"
 
 msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
 msgstr "예: +82-2-555-0199  —  여러 번호는 세미콜론(;)으로 구분"
+
+msgid "Choose a distribution list"
+msgstr "배포 그룹 선택"
 
 msgid "To send to multiple recipients at once, separate numbers with a semicolon."
 msgstr "여러 수신자에게 동시에 보내려면 번호를 세미콜론(;)으로 구분하십시오."
@@ -2076,6 +2082,12 @@ msgstr ""
 msgid "Email failed to send"
 msgstr "이메일을 보내지 못했습니다"
 
+msgid "Fax Contacts"
+msgstr "팩스 연락처"
+
+msgid "Email Contacts"
+msgstr "이메일 연락처"
+
 msgid "The fax document was not found."
 msgstr "팩스 문서를 찾을 수 없습니다."
 
@@ -2339,4 +2351,10 @@ msgstr "비밀번호가 올바르지 않습니다."
 
 #~ msgid "Auto-select recommended"
 #~ msgstr "자동 선택 권장"
+
+#~ msgid "Status:"
+#~ msgstr "상태:"
+
+#~ msgid "Transmitted Successfully (OK)"
+#~ msgstr "정상 전송 완료 (OK)"
 

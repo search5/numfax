@@ -15,7 +15,7 @@
     </div>
     <div class="flex items-center gap-2">
       <form action="/addressbook" method="get" class="flex items-center gap-2">
-        <input type="text" name="q" value="{{ query or '' }}"
+        <input type="text" name="q" data-live-filter="#contact-table" value="{{ query or '' }}"
                placeholder="{{ _('Company or fax number...') }}"
                class="border border-slate-300 rounded-lg pl-4 pr-4 py-2 text-sm text-slate-900 bg-white
                       focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm w-52" />
@@ -34,10 +34,16 @@
     </div>
   </div>
 
+  <nav class="book-menu inline-flex rounded-lg border border-slate-200 bg-slate-50 p-0.5 text-xs font-semibold self-start">
+    <a href="/emailbook" class="px-3 py-1 rounded-md text-slate-600 hover:text-slate-900 transition">{{ _('Email Book') }}</a>
+    <a href="/addressbook" class="px-3 py-1 rounded-md bg-white text-sky-800 shadow-2xs font-bold">{{ _('Address Book') }}</a>
+    <a href="/distrolist" class="px-3 py-1 rounded-md text-slate-600 hover:text-slate-900 transition">{{ _('Distribution Lists') }}</a>
+  </nav>
+
   <!-- Contact List -->
   <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
     <div class="overflow-x-auto">
-      <table class="w-full text-left">
+      <table id="contact-table" class="w-full text-left">
         <thead>
           <tr class="border-b border-slate-100 bg-slate-50/80">
             <th class="py-3 px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">{{ _('Company / Name') }}</th>

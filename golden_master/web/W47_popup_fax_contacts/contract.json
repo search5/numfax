@@ -3,74 +3,57 @@
   "title": "- AvantFAX - Fax Contacts",
   "forms": [
     {
+      "method": "get",
+      "action": "/helper/faxcontacts",
       "inputs": [
+        {
+          "name": "target",
+          "type": "hidden"
+        },
         {
           "name": "regexp",
           "type": "text"
-        },
-        {
-          "name": "myselect",
-          "type": "select"
         }
-      ]
+      ],
+      "submit_button": true
     }
   ],
   "required_text": [
     "Search",
     "Add",
-    "Close Window"
+    "Close"
   ],
   "form_structure": {
     "total_forms": 1,
     "forms": [
       {
         "index": 0,
-        "action": "",
+        "action": "/helper/faxcontacts",
         "method": "GET",
-        "inputs_count": 4,
-        "buttons_count": 2,
+        "inputs_count": 2,
+        "buttons_count": 1,
         "field_sequence": [
+          {
+            "name": "target",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
           {
             "name": "regexp",
             "tag": "input",
             "type": "text",
             "id": "regexp",
             "required": false
-          },
-          {
-            "name": "myselect",
-            "tag": "select",
-            "type": "select",
-            "id": "myselect",
-            "required": false
-          },
-          {
-            "name": "add",
-            "tag": "input",
-            "type": "button",
-            "id": "",
-            "required": false
-          },
-          {
-            "name": "",
-            "tag": "input",
-            "type": "button",
-            "id": "",
-            "required": false
           }
         ],
         "button_sequence": [
           {
-            "tag": "input",
-            "type": "button",
-            "name": "add",
-            "text": "Add"
-          },
-          {
-            "tag": "input",
-            "type": "button",
+            "tag": "button",
+            "type": "submit",
             "name": "",
-            "text": "Close Window"
+            "text": "Search"
           }
         ]
       }

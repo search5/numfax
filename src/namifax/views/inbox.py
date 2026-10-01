@@ -53,6 +53,29 @@ def _sender(ab: AFAddressBook, r: dict) -> dict:
     return out
 
 
+def _line_names(request, rows):
+    """A function giving the line (modem alias, or DID group when routing by DID) a received fax came in on."""
+    from namifax.services.did import DIDRouting
+    from namifax.services.modem import FaxModem
+
+    modems, routes = FaxModem(db=request.dbsession), DIDRouting(db=request.dbsession)
+    cache: dict = {}
+
+    def name(row: dict) -> str:
+        key = (row.get("modemdev"), row.get("didr_id"))
+        if key not in cache:
+            label = row.get("modemdev") or ""
+            if label and modems.load_device(label) and modems.get_alias():
+                label = f"{modems.get_alias()} ({label})"
+            did = row.get("didr_id")
+            if did and routes.loadbyid(did) and routes.get_alias():
+                label = f"{label} · {routes.get_alias()}".strip(" ·")
+            cache[key] = label
+        return cache[key]
+
+    return name
+
+
 def _inbox_row(ab: AFAddressBook, r: dict) -> dict:
     who = _sender(ab, r)
     return {
@@ -65,6 +88,7 @@ def _inbox_row(ab: AFAddressBook, r: dict) -> dict:
         "origfaxnum": r.get("origfaxnum") or "-",
         "archstamp": r.get("archstamp") or "",
         "modemdev": r.get("modemdev") or "",
+        "line": r.get("_line") or r.get("modemdev") or "",
         "pages": r.get("pages") or 1,
         "description": r.get("description") or "",
     }
@@ -116,7 +140,9 @@ def inbox_view(request):
                               enable_did_routing=access.did_routing)
         if rows:
             ab = AFAddressBook(db=request.dbsession)
+            names = _line_names(request, rows)
             for r in rows:
+                r["_line"] = names(r)
                 faxes.append(_inbox_row(ab, r))
 
     if "Authorization" in request.headers or "application/json" in request.headers.get("Accept", ""):

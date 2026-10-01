@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: hMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:42+0900\n"
+"POT-Creation-Date: 2026-10-02 00:46+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hu\n"
@@ -30,6 +30,12 @@ msgstr "Keresés"
 #, fuzzy
 msgid "New Company"
 msgstr "Cég"
+
+msgid "Email Book"
+msgstr "E-mail címjegyzék"
+
+msgid "Distribution Lists"
+msgstr "Disztribúciós listák"
 
 #, fuzzy
 msgid "Company / Name"
@@ -1193,8 +1199,14 @@ msgstr ""
 msgid "faxes"
 msgstr "fax"
 
-msgid "Distribution Lists"
-msgstr "Disztribúciós listák"
+msgid "No contacts found"
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "Close"
+msgstr "Bezárás"
 
 msgid "Organize recipient groups for mass fax broadcasting and notifications."
 msgstr "Címzettcsoportok rendszerezése tömeges faxküldéshez és értesítésekhez."
@@ -1277,9 +1289,6 @@ msgstr ""
 msgid "Changes saved"
 msgstr ""
 
-msgid "Add"
-msgstr ""
-
 msgid "Back"
 msgstr ""
 
@@ -1289,9 +1298,6 @@ msgstr "Email Címek"
 
 msgid "Manage email recipients, transmission routing, and contacts directory."
 msgstr "E-mail címzettek, átviteli útvonalak és névjegyzék kezelése."
-
-msgid "Email Book"
-msgstr "E-mail címjegyzék"
 
 #, fuzzy
 msgid "New Contact"
@@ -1611,6 +1617,9 @@ msgstr ""
 msgid "Recipients"
 msgstr "Címzettek"
 
+msgid "Choose from contacts"
+msgstr ""
+
 msgid "CC"
 msgstr ""
 
@@ -1657,14 +1666,8 @@ msgstr "Cég"
 msgid "Pages:"
 msgstr "Oldalak száma:"
 
-msgid "Status:"
-msgstr "Állapot:"
-
-msgid "Transmitted Successfully (OK)"
-msgstr "Sikeresen továbbítva (OK)"
-
-msgid "Close"
-msgstr "Bezárás"
+msgid "Fax Number:"
+msgstr ""
 
 msgid "Database unavailable"
 msgstr ""
@@ -1789,6 +1792,9 @@ msgid "Destination Number"
 msgstr "Fax szám"
 
 msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
+msgstr ""
+
+msgid "Choose a distribution list"
 msgstr ""
 
 msgid "To send to multiple recipients at once, separate numbers with a semicolon."
@@ -2305,6 +2311,12 @@ msgstr ""
 msgid "Email failed to send"
 msgstr ""
 
+msgid "Fax Contacts"
+msgstr ""
+
+msgid "Email Contacts"
+msgstr ""
+
 msgid "The fax document was not found."
 msgstr ""
 
@@ -2589,4 +2601,10 @@ msgstr ""
 
 #~ msgid "Auto-select recommended"
 #~ msgstr "Automatikus választás ajánlott"
+
+#~ msgid "Status:"
+#~ msgstr "Állapot:"
+
+#~ msgid "Transmitted Successfully (OK)"
+#~ msgstr "Sikeresen továbbítva (OK)"
 

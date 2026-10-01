@@ -21,11 +21,11 @@
 
     <!-- Navigation Chips & Primary Action -->
     <div class="flex items-center space-x-2">
-      <div class="inline-flex rounded-lg border border-slate-200 bg-slate-50 p-0.5 text-xs font-semibold mr-2">
+      <nav class="book-menu inline-flex rounded-lg border border-slate-200 bg-slate-50 p-0.5 text-xs font-semibold mr-2">
+        <a href="/emailbook" class="px-3 py-1 rounded-md bg-white text-sky-800 shadow-2xs font-bold">{{ _('Email Book') }}</a>
         <a href="/addressbook" class="px-3 py-1 rounded-md text-slate-600 hover:text-slate-900 transition">{{ _('Address Book') }}</a>
         <a href="/distrolist" class="px-3 py-1 rounded-md text-slate-600 hover:text-slate-900 transition">{{ _('Distribution Lists') }}</a>
-        <a href="/emailbook" class="px-3 py-1 rounded-md bg-white text-sky-800 shadow-2xs font-bold">{{ _('Email Book') }}</a>
-      </div>
+      </nav>
       <a href="/emailbook/edit" class="inline-flex items-center space-x-1.5 px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg text-xs font-bold shadow-2xs transition">
         <span>+ {{ _('New Contact') }}</span>
       </a>
@@ -34,7 +34,7 @@
 
   <form action="/emailbook" method="get" class="flex items-center gap-2 text-xs">
     <label for="q" class="font-semibold text-slate-700">{{ _('Search') }}:</label>
-    <input type="text" name="q" id="q" value="{{ query or '' }}" class="border border-slate-300 rounded-lg px-3 py-1.5 bg-white text-slate-900 w-64" />
+    <input type="text" name="q" id="q" data-live-filter="#email-table" value="{{ query or '' }}" class="border border-slate-300 rounded-lg px-3 py-1.5 bg-white text-slate-900 w-64" />
     <button type="submit" class="px-3 py-1.5 bg-white hover:bg-slate-50 border border-slate-300 rounded-lg font-semibold text-slate-700">{{ _('Search') }}</button>
   </form>
 
@@ -51,7 +51,7 @@
     </div>
 
     <div class="overflow-x-auto">
-      <table class="min-w-full divide-y divide-slate-100 text-xs">
+      <table id="email-table" class="min-w-full divide-y divide-slate-100 text-xs">
         <thead class="bg-slate-50 text-slate-500 font-bold uppercase tracking-wider text-[11px]">
           <tr>
             <th class="px-5 py-3 text-left">{{ _('Contact Name') }}</th>

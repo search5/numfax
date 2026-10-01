@@ -125,6 +125,7 @@
 
             <td class="py-4 px-4 align-middle whitespace-nowrap text-sm text-slate-600">
               {{ fax.archstamp or '—' }}
+              {% if fax.line %}<div data-line-of="{{ fax.id }}" class="text-[11px] text-slate-400 font-mono">{{ fax.line }}</div>{% endif %}
             </td>
 
             <td class="py-4 px-3 align-middle text-center">

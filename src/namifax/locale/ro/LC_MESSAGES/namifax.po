@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: rMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:42+0900\n"
+"POT-Creation-Date: 2026-10-02 00:46+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ro\n"
@@ -33,6 +33,12 @@ msgstr "Cauta"
 #, fuzzy
 msgid "New Company"
 msgstr "Firma"
+
+msgid "Email Book"
+msgstr "Agendă de e-mail"
+
+msgid "Distribution Lists"
+msgstr "Distribution Lists"
 
 #, fuzzy
 msgid "Company / Name"
@@ -1202,8 +1208,14 @@ msgstr ""
 msgid "faxes"
 msgstr "faxuri"
 
-msgid "Distribution Lists"
-msgstr "Distribution Lists"
+msgid "No contacts found"
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "Close"
+msgstr "Închidere"
 
 msgid "Organize recipient groups for mass fax broadcasting and notifications."
 msgstr ""
@@ -1288,9 +1300,6 @@ msgstr ""
 msgid "Changes saved"
 msgstr ""
 
-msgid "Add"
-msgstr ""
-
 msgid "Back"
 msgstr ""
 
@@ -1302,9 +1311,6 @@ msgid "Manage email recipients, transmission routing, and contacts directory."
 msgstr ""
 "Gestionați destinatarii de e-mail, rutarea transmisiilor și directorul de"
 " contacte."
-
-msgid "Email Book"
-msgstr "Agendă de e-mail"
 
 #, fuzzy
 msgid "New Contact"
@@ -1624,6 +1630,9 @@ msgstr ""
 msgid "Recipients"
 msgstr "Destinatari"
 
+msgid "Choose from contacts"
+msgstr ""
+
 msgid "CC"
 msgstr ""
 
@@ -1670,14 +1679,8 @@ msgstr "Firma"
 msgid "Pages:"
 msgstr "Pagini:"
 
-msgid "Status:"
-msgstr "Stare:"
-
-msgid "Transmitted Successfully (OK)"
-msgstr "Transmis cu succes (OK)"
-
-msgid "Close"
-msgstr "Închidere"
+msgid "Fax Number:"
+msgstr ""
 
 msgid "Database unavailable"
 msgstr ""
@@ -1802,6 +1805,9 @@ msgid "Destination Number"
 msgstr "Numar de fax"
 
 msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
+msgstr ""
+
+msgid "Choose a distribution list"
 msgstr ""
 
 msgid "To send to multiple recipients at once, separate numbers with a semicolon."
@@ -2324,6 +2330,12 @@ msgstr ""
 msgid "Email failed to send"
 msgstr ""
 
+msgid "Fax Contacts"
+msgstr ""
+
+msgid "Email Contacts"
+msgstr ""
+
 msgid "The fax document was not found."
 msgstr ""
 
@@ -2612,4 +2624,10 @@ msgstr ""
 
 #~ msgid "Auto-select recommended"
 #~ msgstr "Se recomandă selecția automată"
+
+#~ msgid "Status:"
+#~ msgstr "Stare:"
+
+#~ msgid "Transmitted Successfully (OK)"
+#~ msgstr "Transmis cu succes (OK)"
 

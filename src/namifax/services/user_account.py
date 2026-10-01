@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional, Tuple
 
 from namifax.db.repository import MDBOData
+from namifax.services import hylafax_users
 from namifax.services.user_passwords import AFUserPasswords
 
 
@@ -135,6 +136,7 @@ class AFUserAccount:
             # Log initial password
             if self.uid:
                 self.userpasswords.log_password(pwdxemail, self.uid)
+            hylafax_users.add_user(self.uid, str(self.dbdata.get("username") or ""), pwdxemail)
             return True
 
         self.error = "Account creation failed"
@@ -185,6 +187,7 @@ class AFUserAccount:
 
         if self.useraccount.update_entry(self.dbdata):
             self.userpasswords.log_password(pwd, self.uid)
+            hylafax_users.change_password(self.uid, str(self.dbdata.get("username") or ""), pwd)
             return True
 
         self.error = "Failed to update password"
@@ -219,6 +222,7 @@ class AFUserAccount:
         self.dbdata["wasreset"] = 1
 
         if self.useraccount.update_entry(self.dbdata):
+            hylafax_users.change_password(self.uid, str(self.dbdata.get("username") or ""), new_pwd)
             return True, new_pwd
 
         self.error = f"Error resetting password for {found.username}"
@@ -492,8 +496,10 @@ class AFUserAccount:
             "username": f"deleted.{userid}",
             "password": "",
         }
+        username = str(self.dbdata.get("username") or "")           # (the real name, before the placeholder is stored)
         self.useraccount.update_entry(soft_del)
         self.userpasswords.clear_hashes(userid)
+        hylafax_users.remove_user(username)
         return True
 
     # Getters and Setters for permissions
