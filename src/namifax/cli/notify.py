@@ -11,7 +11,7 @@ import datetime
 import os
 import re
 import sys
-from typing import Sequence
+from typing import Any, Sequence
 
 # Ensure src directory is on sys.path
 SRC_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
@@ -28,6 +28,7 @@ from namifax.common.helpers import (
     pdf_preview,
     send_mail,
 )
+from namifax.db.provider import cli_db
 from namifax.services.addressbook import AFAddressBook
 from namifax.services.archive_out import ArchiveOut
 from namifax.services.user_account import AFUserAccount
@@ -60,7 +61,7 @@ LANG = {
 }
 
 
-def run_notify(argv: Sequence[str] | None = None) -> int:
+def run_notify(argv: Sequence[str] | None = None, *, db: Any = None) -> int:
     """Execute HylaFAX notification handler."""
     args = list(argv) if argv is not None else list(sys.argv)
 
@@ -68,14 +69,22 @@ def run_notify(argv: Sequence[str] | None = None) -> int:
         print("Usage: notify.php qfile why jobtime [nextTry]")
         return 0
 
+    if not os.path.exists(args[1]):
+        print(f"{args[1]} doesn't exist")
+        return 0
+
+    if db is not None:
+        return _process_notify(args, db)
+    with cli_db() as opened:
+        return _process_notify(args, opened)
+
+
+def _process_notify(args: list[str], db: Any) -> int:
+    """Process one HylaFAX notification using the given database engine."""
     qfile = args[1]
     why = args[2]
     jobtime = args[3] if len(args) >= 4 else None
     next_try = args[4] if len(args) >= 5 else None
-
-    if not os.path.exists(qfile):
-        print(f"{qfile} doesn't exist")
-        return 0
 
     avantfaxlog(f"notify> Executing: {qfile} {why} {jobtime} {next_try} ({len(args)})", echo=False)
 
@@ -157,7 +166,7 @@ def run_notify(argv: Sequence[str] | None = None) -> int:
         to_company = external
 
     # AddressBook lookup & creation
-    addressbook = AFAddressBook()
+    addressbook = AFAddressBook(db=db)
     cid = 0
     if addressbook.loadbyfaxnum(external):
         # Multiple companies check
@@ -189,7 +198,7 @@ def run_notify(argv: Sequence[str] | None = None) -> int:
 
     # Sender lookup
     from_email = get_admin_email()
-    user = AFUserAccount()
+    user = AFUserAccount(db=db)
     user_id = 0
     to_email = mailaddr
 
@@ -276,7 +285,7 @@ def run_notify(argv: Sequence[str] | None = None) -> int:
 
         pdf_preview(faxpath)
 
-        outbox = ArchiveOut()
+        outbox = ArchiveOut(db=db)
         pages_int = int(totpages) if totpages.isdigit() else 0
         if outbox.create(faxpath, user_id, cid, external, pages_int):
             text += f"\nFax ID: {outbox.get_fid()}\n{LANG['PN_PAGES']}: {totpages}\n"
