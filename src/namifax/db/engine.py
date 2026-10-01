@@ -224,6 +224,9 @@ class DatabaseEngine:
         """Quote literal string safely."""
         if string is None:
             return "NULL"
+        if isinstance(string, bool):
+            # a bool is a number in SQL; str(False) would store the (truthy) text 'False'
+            return "1" if string else "0"
         text = str(string)
         if self.dialect in ("mysql", "mariadb"):
             # backslash is an escape character in MySQL string literals: escape it first, otherwise

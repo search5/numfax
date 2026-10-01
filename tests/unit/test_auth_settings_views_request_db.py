@@ -19,6 +19,7 @@ class _Request(testing.DummyRequest):
 def _request(method="GET", params=None, session=None):
     req = _Request()
     req.db = object()
+    req.dbsession = object()
     req.method = method
     req.params = params or {}
     req.POST = req.params
@@ -41,17 +42,17 @@ def _run(view, req):
     return user_cls, totp_cls
 
 
-def _assert_db(mock_cls, req, positional=False):
+def _assert_db(mock_cls, req, positional=False, attr="db"):
     assert mock_cls.call_args_list, f"{mock_cls._mock_name} was never built"
     for call in mock_cls.call_args_list:
         passed = call.args[0] if positional and call.args else call.kwargs.get("db")
-        assert passed is req.db
+        assert passed is getattr(req, attr)
 
 
 def test_login_post_builds_account_and_totp_with_request_db():
     req = _request("POST", {"username": "admin", "password": "pw"})
     user_cls, totp_cls = _run(auth_mod.login_post_view, req)
-    _assert_db(user_cls, req)
+    _assert_db(user_cls, req, attr="dbsession")  # the account is ORM-backed
     _assert_db(totp_cls, req, positional=True)
 
 
@@ -64,7 +65,7 @@ def test_login_totp_post_builds_totp_with_request_db():
 def test_settings_view_builds_account_and_totp_with_request_db():
     req = _request()
     user_cls, totp_cls = _run(settings_mod.settings_view, req)
-    _assert_db(user_cls, req)
+    _assert_db(user_cls, req, attr="dbsession")  # the account is ORM-backed
     _assert_db(totp_cls, req, positional=True)
 
 

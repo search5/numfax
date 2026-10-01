@@ -34,7 +34,7 @@ def login_post_view(request):
     password = params.get("password", "")
 
     # Check credentials using AFUserAccount service
-    user = AFUserAccount(db=request.db)
+    user = AFUserAccount(db=request.dbsession)
     is_valid = False
 
     remote_ip = getattr(request, "remote_addr", None) or "127.0.0.1"

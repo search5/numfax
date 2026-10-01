@@ -12,18 +12,19 @@ from namifax.views.auth import login_post_view
 from namifax.views.admin import get_all_syslogs
 
 
+from linked_db import close_linked, linked_db
+
+
 class TestSecurityAuditPhase1(unittest.TestCase):
     """Test suite covering Phase 1 security audit fixes (AUDIT-01, AUDIT-02, AUDIT-03, AUDIT-18)."""
 
     def setUp(self):
         self.config = testing.setUp()
-        self.db = DatabaseEngine()
-        self.db.connect_sqlite(":memory:")
-        init_database_tables(self.db)
+        self.db, self.session = linked_db()
 
     def tearDown(self):
         testing.tearDown()
-        self.db.disconnect()
+        close_linked(self.db, self.session)
 
     # =========================================================================
     # AUDIT-01: Admin Authentication Backdoor Removal
@@ -38,6 +39,7 @@ class TestSecurityAuditPhase1(unittest.TestCase):
         req_old = testing.DummyRequest(post={"username": "admin", "password": "password"})
         req_old.method = "POST"
         req_old.db = self.db
+        req_old.dbsession = self.session
 
         with patch("namifax.views.auth.AFUserAccount", return_value=AFUserAccount(db=self.db)):
             res_old = login_post_view(req_old)
@@ -50,6 +52,7 @@ class TestSecurityAuditPhase1(unittest.TestCase):
         req_new = testing.DummyRequest(post={"username": "admin", "password": "NewSecret123!"})
         req_new.method = "POST"
         req_new.db = self.db
+        req_new.dbsession = self.session
 
         with patch("namifax.views.auth.AFUserAccount", return_value=AFUserAccount(db=self.db)):
             res_new = login_post_view(req_new)
@@ -67,6 +70,7 @@ class TestSecurityAuditPhase1(unittest.TestCase):
         req = testing.DummyRequest(post={"username": "admin", "password": "password"})
         req.method = "POST"
         req.db = self.db
+        req.dbsession = self.session
 
         with patch("namifax.views.auth.AFUserAccount", return_value=AFUserAccount(db=self.db)):
             res = login_post_view(req)

@@ -32,20 +32,27 @@ def test_import_users_creates_accounts_in_injected_db(tmp_path, seeded_db):
 def test_import_users_usage_and_missing_file_do_not_open_db(tmp_path):
     from namifax.cli import import_users
 
-    with patch.object(import_users, "cli_db", side_effect=AssertionError("must not open DB")):
+    with patch.object(import_users, "cli_session", side_effect=AssertionError("must not open DB")):
         assert import_users.main([]) == 0
         assert import_users.main([str(tmp_path / "nope")]) == 1
 
 
-def test_import_users_opens_cli_db_once(tmp_path, seeded_db):
+def test_import_users_opens_one_cli_session(tmp_path):
+    from linked_db import close_linked, linked_db
     from namifax.cli import import_users
 
     f = tmp_path / "users.txt"
     f.write_text("A B\ta1\tSecret123!\ta1@x.test\nC D\tc1\tSecret123!\tc1@x.test\n")
     calls = []
-    with patch.object(import_users, "cli_db", _fake_cli_db(seeded_db, calls)):
-        assert import_users.main([str(f)]) == 0
-    assert calls == [1]
+    db, session = linked_db()
+    try:
+        with patch.object(import_users, "cli_session", _fake_cli_db(session, calls)):
+            assert import_users.main([str(f)]) == 0
+        assert calls == [1]
+        db.query("SELECT username FROM UserAccount WHERE username IN ('a1', 'c1') ORDER BY username")
+        assert [r["username"] for r in db.get_records()] == ["a1", "c1"]
+    finally:
+        close_linked(db, session)
 
 
 # --- import_blacklist -----------------------------------------------------------

@@ -25,11 +25,15 @@ def md5_hash(text: str) -> str:
 
 
 class AFUserAccount:
-    """Core User Account Domain Service managing user profiles, authentication, authorization, and password policies."""
+    """Core User Account Domain Service managing user profiles, authentication, authorization, and password policies.
+
+    ``db`` is a SQLAlchemy ``Session`` (portable across SQLite, MySQL, MariaDB and PostgreSQL) or the legacy
+    ``DatabaseEngine``.
+    """
 
     def __init__(
         self,
-        db: Optional[DatabaseEngine] = None,
+        db: Any = None,
         user_passwords: Optional[AFUserPasswords] = None,
     ) -> None:
         self.db = db
@@ -136,9 +140,7 @@ class AFUserAccount:
         return False
 
     def list_accounts(self) -> List[Dict[str, Any]]:
-        query = "SELECT * FROM UserAccount WHERE deleted is null OR deleted = 0 ORDER BY name"
-        rows = self.useraccount.query(query, reduce_single=False)
-        return rows if isinstance(rows, list) else []
+        return [r for r in self.useraccount.select(order_by="name") if not r.get("deleted")]
 
     def update(self) -> bool:
         if not self.uid:
@@ -241,14 +243,6 @@ class AFUserAccount:
         data = self.useraccount.find(creds)
         if isinstance(data, list) and data:
             data = data[0]
-
-        if not data:
-            plain_creds: Dict[str, Any] = {"username": username, "password": password}
-            if admin:
-                plain_creds["is_admin"] = 1
-            plain_data = self.useraccount.find(plain_creds)
-            if isinstance(plain_data, list) and plain_data:
-                data = plain_data[0]
 
         if data:
             if data.get("acc_enabled") in (1, True, "1"):
@@ -381,15 +375,17 @@ class AFUserAccount:
             self.error = f"Error deleting account {userid}: Not found"
             return False
 
-        # Soft delete
+        # Soft delete. The legacy code set username, email and password to NULL, which the NOT NULL columns
+        # (and strict MySQL) reject, so nothing was ever deleted. A placeholder that is unique per account frees
+        # the real username and address for reuse and can never match a login (no password hash is empty).
         soft_del = {
             "uid": userid,
             "deleted": 1,
             "acc_enabled": 0,
             "wasreset": 1,
-            "email": None,
-            "username": None,
-            "password": None,
+            "email": f"deleted.{userid}@invalid.invalid",
+            "username": f"deleted.{userid}",
+            "password": "",
         }
         self.useraccount.update_entry(soft_del)
         self.userpasswords.clear_hashes(userid)
@@ -449,12 +445,8 @@ class AFUserAccount:
             self.error = "Invalid username format"
             return False
 
-        qname = self.useraccount.quote(username)
-        quid = self.useraccount.quote(self.uid)
-        exists = self.useraccount.query(
-            f"SELECT uid FROM UserAccount WHERE username = {qname} AND uid != {quid}"
-        )
-        if exists:
+        others = self.useraccount.find({"username": username}, reduce_single=False) or []
+        if any(int(r["uid"]) != int(self.uid) for r in others):
             self.error = "Username already in use"
             return False
 
@@ -465,12 +457,8 @@ class AFUserAccount:
         if not self.uid:
             return False
 
-        qemail = self.useraccount.quote(email)
-        quid = self.useraccount.quote(self.uid)
-        exists = self.useraccount.query(
-            f"SELECT uid FROM UserAccount WHERE email = {qemail} AND uid != {quid}"
-        )
-        if exists:
+        others = self.useraccount.find({"email": email}, reduce_single=False) or []
+        if any(int(r["uid"]) != int(self.uid) for r in others):
             self.error = "Email already in use"
             return False
 

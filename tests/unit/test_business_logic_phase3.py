@@ -18,6 +18,7 @@ from pyramid import testing
 import pytest
 from PIL import Image
 
+from linked_db import close_linked, linked_db
 from namifax.db.engine import DatabaseEngine
 from namifax.db.schema import init_database_tables
 from namifax.services.user_account import AFUserAccount
@@ -31,11 +32,16 @@ from namifax.services.printer import process_inbound_print_job
 
 
 @pytest.fixture
-def memory_db():
-    engine = DatabaseEngine()
-    engine.connect_sqlite(":memory:")
-    init_database_tables(engine)
-    return engine
+def linked():
+    """Legacy engine and ORM session over one in-memory database."""
+    pair = linked_db()
+    yield pair
+    close_linked(*pair)
+
+
+@pytest.fixture
+def memory_db(linked):
+    return linked[0]
 
 
 class MockRequest(testing.DummyRequest):
@@ -53,10 +59,10 @@ class MockRequest(testing.DummyRequest):
 
 
 @pytest.fixture
-def dummy_request(memory_db, dbsession):
+def dummy_request(memory_db, linked):
     request = MockRequest()
     request.db = memory_db
-    request.dbsession = dbsession
+    request.dbsession = linked[1]
     request.identity = {
         "uid": 1,
         "username": "admin",

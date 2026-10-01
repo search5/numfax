@@ -145,7 +145,7 @@ class NamiFaxSecurityPolicy:
         """Set cookie headers on login."""
         token = kw.get("token", "")
         if not token:
-            user = AFUserAccount(db=request.db)
+            user = AFUserAccount(db=request.dbsession)
             if user.load_username(userid):
                 sess = self.session_manager.create_session(
                     user_id=user.get_uid(),

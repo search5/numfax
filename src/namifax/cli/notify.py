@@ -203,7 +203,7 @@ def _process_notify(args: list[str], db: Any, session: Any) -> int:
 
     # Sender lookup
     from_email = get_admin_email()
-    user = AFUserAccount(db=db)
+    user = AFUserAccount(db=session)
     user_id = 0
     to_email = mailaddr
 

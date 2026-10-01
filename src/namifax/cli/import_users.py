@@ -10,11 +10,11 @@ import sys
 
 from typing import Any
 
-from namifax.db.provider import cli_db
+from namifax.db.provider import cli_session
 from namifax.services.user_account import AFUserAccount
 
 
-def main(args=None, *, db: Any = None):
+def main(args=None, *, db: Any = None, session: Any = None):
     if args is None:
         args = sys.argv[1:]
 
@@ -35,9 +35,9 @@ NOTE: Be sure to set $AVANTFAX_SERVERNAME in includes/local_config.php before ru
     with open(filename, "r", encoding="utf-8", errors="ignore") as f:
         lines = f.readlines()
 
-    if db is not None:
-        return _import_users(lines, db)
-    with cli_db() as opened:
+    if db is not None or session is not None:
+        return _import_users(lines, session if session is not None else db)
+    with cli_session(ensure_schema=True) as opened:
         return _import_users(lines, opened)
 
 

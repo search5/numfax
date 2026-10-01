@@ -7,12 +7,12 @@ from datetime import datetime
 import sys
 from typing import Any, Sequence
 
-from namifax.db.provider import cli_db
+from namifax.db.provider import cli_unit
 from namifax.db.schema import init_database_tables
 from namifax.services.user_account import AFUserAccount
 
 
-def run_createuser(argv: Sequence[str] | None = None, *, db: Any = None) -> int:
+def run_createuser(argv: Sequence[str] | None = None, *, db: Any = None, session: Any = None) -> int:
     parser = argparse.ArgumentParser(
         prog="namifax createuser",
         description="Create or update a NamiFAX user account",
@@ -26,18 +26,18 @@ def run_createuser(argv: Sequence[str] | None = None, *, db: Any = None) -> int:
 
     args = parser.parse_args(argv)
 
-    if db is not None:
-        return _create_user(args, db)
-    with cli_db() as opened:
-        return _create_user(args, opened)
+    if db is not None or session is not None:
+        return _create_user(args, db if db is not None else session, session if session is not None else db)
+    with cli_unit() as unit:
+        return _create_user(args, unit.db, unit.session)
 
 
-def _create_user(args: argparse.Namespace, engine: Any) -> int:
-    """Create or update the requested account on the given database engine."""
+def _create_user(args: argparse.Namespace, engine: Any, session: Any) -> int:
+    """Create or update the requested account: ``engine`` initialises the schema, ``session`` holds the account."""
     # Ensure DB is initialized
     init_database_tables(engine)
 
-    user_svc = AFUserAccount(db=engine)
+    user_svc = AFUserAccount(db=session)
 
     # Check if username already exists
     if user_svc.load_username(args.username):

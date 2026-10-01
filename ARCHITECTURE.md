@@ -946,7 +946,8 @@ Pyramid cookiecutter starter(2.1-branch, jinja2 + sqlalchemy)를 임시 디렉�
 | 3 | `DistroList` | `[ORM]` | 0011 | `DistributionList`. `lastmod_date`(레거시 `TIMESTAMP` 자동 갱신)를 ORM이 삽입·수정 시 채움 |
 | 3 | `UserPasswords` | `[ORM]` | 0012 | 레거시 컬럼(`upid`, `pwdhash`)으로 정정. 비밀번호 이력이 처음으로 동작(14.12) |
 | 3 | `AddressBook`, `AddressBookFAX`, `AddressBookEmail` | `[ORM]` | 0013~0015 | 레거시 기본키(`abook_id`, `abookfax_id`, `abookemail_id`). 포트의 중복 컬럼 제거. 웹 뷰·`faxrcvd`·`notify`·`phb` 전환 |
-| 3 | `UserAccount`, `UserTOTP`, `UserWebAuthnCredentials`, `FaxOCR` | `[LEGACY]` | - | 3d. 인증 경로 |
+| 3 | `UserAccount` | `[ORM]` | 0016 | 3d-1. 플래그 8개는 `LegacyBoolean`(14.13). 웹 뷰·`security`·`createuser`·`import_users`·`notify`가 Session 사용. `FaxQueue`/`saml`/`bridge_cli`는 레거시 엔진 경유(동작은 동일) |
+| 3 | `UserTOTP`, `UserWebAuthnCredentials`, `FaxOCR` | `[LEGACY]` | - | 3d-2. `FaxOCR`/`UserWebAuthnCredentials`는 MySQL 전용 DDL 정정 필요 |
 | 4 | `FaxArchive` 외 | `[LEGACY]` | - | |
 
 **공통 규칙 (이번 라운드에서 재확인)**
@@ -1041,3 +1042,15 @@ SQLite·MySQL은 오름차순에서 NULL을 먼저, PostgreSQL은 나중에 둔�
 **저장소 계층에 추가된 공통 메서드**: `delete_where`, `update_where`, `search_text`(두 구현 모두). 호출자는 조건이 비어 있거나 `None`이면 아무 행도 건드리지 않는 안전한 동작을 기대할 수 있다.
 
 **남은 raw SQL**: `services/archive_base.py:210`의 `FaxArchive` 검색은 `AddressBookFAX`를 `LEFT JOIN`하는 긴 문자열 SQL이다. PostgreSQL에서는 인용되지 않은 혼합 대소문자 테이블명 때문에 실패하므로 그룹 4(`FaxArchive`)에서 함께 변환한다.
+
+### 14.13 UserAccount(3d-1)에서 발견·수정한 결함
+| 결함 | 근거 | 수정 |
+| :--- | :--- | :--- |
+| **불리언이 문자열 `'False'`로 저장됨 → 권한 상승 위험** | 레거시 엔진 `quote()`가 `str(False)`를 인용해 `superuser`, `can_del`, `pwd_reuse`, `any_modem` 등에 텍스트 `'False'`를 저장. ORM `Boolean`은 비어 있지 않은 텍스트를 참으로 읽으므로 `createuser`/`import_users`로 만든 일반 계정이 ORM 경로에서 **슈퍼유저·삭제 권한 보유**로 읽힘 | ① `quote(bool)`은 `1`/`0`. ② 모델은 `LegacyBoolean`: 드라이버 원시 값을 직접 읽고(`'False'`→거짓, 알 수 없는 문자열→거짓) DDL·쓰기는 일반 `Boolean`과 동일. ③ `init_database_tables`가 텍스트로 저장된 기존 행을 0/1로 복구(SQLite, 멱등, 텍스트인 값만) |
+| **저장된 비밀번호 해시가 비밀번호로 통용** | `login()`이 MD5 비교에 실패하면 입력값을 *평문 그대로* 컬럼과 비교하는 대체 경로가 있었음. DB에서 해시가 유출되면 그 해시 자체로 로그인 가능(pass-the-hash)하고, 평문 저장 행도 허용 | 대체 경로 삭제. 로그인은 `md5(입력) == 저장값`만 허용 |
+| **계정 삭제가 반영되지 않음** | `remove()`가 `username`/`email`/`password`를 NULL로 갱신하는데 세 컬럼 모두 `NOT NULL`이라 갱신 전체가 실패(엄격 모드 MySQL, PostgreSQL, 새 SQLite DDL). 삭제된 계정이 그대로 로그인 가능 | 계정별로 고유한 자리표시값(`deleted.<uid>`, `deleted.<uid>@invalid.invalid`, 빈 비밀번호)으로 갱신. 실제 이름·주소는 재사용 가능, 어떤 해시와도 일치하지 않아 로그인 불가 |
+| 중복 검사의 문자열 SQL | `set_username`/`set_email`이 인용한 값을 SQL에 끼워 넣고 `uid != ...` 비교 | `find()` 후 다른 `uid`가 있는지 확인 |
+
+**테스트 정리**: `tests/unit/linked_db.py`는 레거시 엔진과 ORM 세션이 한 연결을 공유하는 쌍을 만든다. 레거시 엔진으로 데이터를 만든 뒤 뷰(이제 세션을 사용)를 검사하는 기존 테스트에 쓴다. `test_user_account.py::test_remove_account`는 결함이 있던 동작(`username IS NULL`)을 기대값으로 고정하고 있었으므로 새 동작으로 고쳤다.
+
+**남은 항목**: 평문 비밀번호가 들어 있던 기존 계정이 있다면 이제 로그인할 수 없다(해시로 바꾸는 `reset_password` 필요). 기본 `admin`/`password` 시드는 기존 NEEDS_CLARIFICATION 그대로.

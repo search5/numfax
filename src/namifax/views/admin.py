@@ -76,7 +76,7 @@ def get_all_admin_modems(db: Any = None) -> list[dict[str, Any]]:
 def admin_dashboard_view(request):
     """Admin Dashboard and server overview."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    users = get_all_admin_users(request.db)
+    users = get_all_admin_users(request.dbsession)
     modems = get_all_admin_modems(request.dbsession)
 
     if "Authorization" in request.headers or "application/json" in request.headers.get("Accept", ""):
@@ -106,7 +106,7 @@ def admin_users_view(request):
             if uid and str(uid) != "1":
                 try:
                     from namifax.services.user_account import AFUserAccount
-                    svc = AFUserAccount(db=request.db)
+                    svc = AFUserAccount(db=request.dbsession)
                     svc.remove(int(uid))
                 except Exception:
                     pass
@@ -125,7 +125,7 @@ def admin_users_view(request):
         if name and username:
             try:
                 from namifax.services.user_account import AFUserAccount
-                svc = AFUserAccount(db=request.db)
+                svc = AFUserAccount(db=request.dbsession)
                 if uid:
                     if svc.load(int(uid)):
                         svc.set_username(username)
@@ -154,7 +154,7 @@ def admin_users_view(request):
 
             return HTTPFound(location=request.route_url("admin_users"))
 
-    users = get_all_admin_users(request.db)
+    users = get_all_admin_users(request.dbsession)
     uid = request.params.get("uid")
     selected_user = None
     if uid:

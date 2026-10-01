@@ -15,7 +15,7 @@ def settings_view(request):
     error = None
 
     db = request.db
-    user_account = AFUserAccount(db=db)
+    user_account = AFUserAccount(db=request.dbsession)
     user_loaded = False
 
     uid = identity.get("uid")

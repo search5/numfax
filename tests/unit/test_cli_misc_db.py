@@ -68,11 +68,21 @@ def test_createuser_creates_account_in_injected_db(seeded_db):
     assert seeded_db.get_records() == [{"username": "carol"}]
 
 
-def test_createuser_opens_cli_db(seeded_db):
+def test_createuser_opens_one_shared_unit():
+    from types import SimpleNamespace
+
+    from linked_db import close_linked, linked_db
+
     calls = []
-    with patch.object(user_mod, "cli_db", _fake_cli_db(seeded_db, calls)):
-        assert user_mod.run_createuser(["-u", "dave", "-p", "Secret123!", "-e", "d@x.test"]) == 0
-    assert calls == [1]
+    db, session = linked_db()
+    try:
+        with patch.object(user_mod, "cli_unit", _fake_cli_db(SimpleNamespace(db=db, session=session), calls)):
+            assert user_mod.run_createuser(["-u", "dave", "-p", "Secret123!", "-e", "d@x.test"]) == 0
+        assert calls == [1]
+        db.query("SELECT username, is_admin FROM UserAccount WHERE username = 'dave'")
+        assert db.get_records() == [{"username": "dave", "is_admin": 1}]
+    finally:
+        close_linked(db, session)
 
 
 # --- faxcover -------------------------------------------------------------------

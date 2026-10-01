@@ -194,8 +194,10 @@ class TestAFUserAccount(unittest.TestCase):
         rec = self.engine.get_records()[0]
         self.assertEqual(rec["deleted"], 1)
         self.assertEqual(rec["acc_enabled"], 0)
-        self.assertIsNone(rec["username"])
-        self.assertIsNone(rec["email"])
+        # username/email are NOT NULL: a unique placeholder frees the real name and address for reuse
+        self.assertEqual(rec["username"], f"deleted.{uid}")
+        self.assertEqual(rec["email"], f"deleted.{uid}@invalid.invalid")
+        self.assertEqual(rec["password"], "")
 
     def test_devices_and_routes_serialization(self):
         self.user_svc.create({

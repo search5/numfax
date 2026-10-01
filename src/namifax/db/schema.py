@@ -210,9 +210,27 @@ def init_database_tables(db: DatabaseEngine) -> bool:
     _migrate_address_book_keys(db)
     _apply_schema_migrations(db)
     _backfill_alias_columns(db)
+    _normalize_boolean_flags(db)
     seed_database_if_empty(db)
     _backfill_alias_columns(db)  # rows created by the seed
     return True
+
+
+_USER_ACCOUNT_FLAGS = ("superuser", "can_del", "pwd_reuse", "is_admin", "wasreset", "acc_enabled", "deleted", "any_modem")
+
+
+def _normalize_boolean_flags(db: DatabaseEngine) -> None:
+    """Turn flags the old code stored as the text 'True'/'False' back into 0/1 (SQLite; idempotent).
+
+    Text is only converted where it really is text, so correct rows are not touched.
+    """
+    if getattr(db, "dialect", "sqlite") != "sqlite":
+        return
+    for flag in _USER_ACCOUNT_FLAGS:
+        db.query(
+            f"UPDATE UserAccount SET {flag} = CASE WHEN lower({flag}) IN ('1', 'true', 't', 'yes', 'y', 'on') "
+            f"THEN 1 ELSE 0 END WHERE typeof({flag}) = 'text'"
+        )
 
 
 def _backfill_alias_columns(db: DatabaseEngine) -> None:

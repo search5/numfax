@@ -34,11 +34,11 @@ def _calls(*mocks):
     return [c for m in mocks for c in m.call_args_list]
 
 
-def _assert_all_db(calls, req, label):
+def _assert_all_db(calls, req, label, attr="db"):
     assert calls, f"{label}: nothing was built"
     for call in calls:
         passed = call.kwargs.get("db", call.args[0] if call.args else None)
-        assert passed is req.db, f"{label}: built without request.db"
+        assert passed is getattr(req, attr), f"{label}: built without request.{attr}"
 
 
 # --- webauthn -----------------------------------------------------------------
@@ -47,7 +47,7 @@ def test_webauthn_current_user_uses_request_db():
     req = _request(session={"username": "admin"})
     with patch.object(webauthn_mod, "AFUserAccount") as cls:
         webauthn_mod._get_current_user(req)
-    _assert_all_db(_calls(cls), req, "_get_current_user")
+    _assert_all_db(_calls(cls), req, "_get_current_user", attr="dbsession")  # the account is ORM-backed
 
 
 def test_webauthn_auth_options_uses_request_db():
@@ -56,7 +56,7 @@ def test_webauthn_auth_options_uses_request_db():
             patch.object(webauthn_mod, "_get_webauthn_service", MagicMock()), \
             contextlib.suppress(Exception):
         webauthn_mod.webauthn_auth_options_view(req)
-    _assert_all_db(_calls(cls), req, "webauthn_auth_options_view")
+    _assert_all_db(_calls(cls), req, "webauthn_auth_options_view", attr="dbsession")  # the account is ORM-backed
 
 
 def test_webauthn_auth_verify_uses_request_db():
@@ -68,7 +68,7 @@ def test_webauthn_auth_verify_uses_request_db():
             patch.object(webauthn_mod, "_get_webauthn_service", MagicMock(return_value=svc)), \
             contextlib.suppress(Exception):
         webauthn_mod.webauthn_auth_verify_view(req)
-    _assert_all_db(_calls(cls), req, "webauthn_auth_verify_view")
+    _assert_all_db(_calls(cls), req, "webauthn_auth_verify_view", attr="dbsession")  # the account is ORM-backed
 
 
 # --- archive / sendfax / outbox -----------------------------------------------

@@ -2,8 +2,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 from pyramid import testing
 from pyramid.httpexceptions import HTTPFound
-from namifax.db.engine import DatabaseEngine
-from namifax.db.schema import init_database_tables
+from linked_db import close_linked, linked_db
 from namifax.services.totp import TotpService
 from namifax.views.auth import login_post_view, login_totp_view
 
@@ -11,9 +10,7 @@ from namifax.views.auth import login_post_view, login_totp_view
 class TestPyramidTotpAuth(unittest.TestCase):
     def setUp(self):
         self.config = testing.setUp()
-        self.db = DatabaseEngine()
-        self.db.connect_sqlite(":memory:")
-        init_database_tables(self.db)
+        self.db, self.session = linked_db()
 
         # Create user
         self.db.query("INSERT INTO UserAccount (username, password, email, is_admin) VALUES ('bob', 'hashedpw', 'bob@test.com', 1)")
@@ -27,6 +24,7 @@ class TestPyramidTotpAuth(unittest.TestCase):
 
     def tearDown(self):
         testing.tearDown()
+        close_linked(self.db, self.session)
 
     @patch("namifax.views.auth.AFUserAccount")
     def test_login_redirects_to_totp_if_enabled(self, mock_account_cls):
@@ -40,6 +38,7 @@ class TestPyramidTotpAuth(unittest.TestCase):
         req = testing.DummyRequest(post={"username": "bob", "password": "password"})
         req.method = "POST"
         req.db = self.db
+        req.dbsession = self.session
 
         res = login_post_view(req)
         self.assertIsInstance(res, HTTPFound)
@@ -51,6 +50,7 @@ class TestPyramidTotpAuth(unittest.TestCase):
         req.method = "POST"
         req.session["2fa_pending_uid"] = self.uid
         req.db = self.db
+        req.dbsession = self.session
 
         with patch.object(TotpService, "verify_user_login", return_value=True):
             res = login_totp_view(req)
@@ -64,6 +64,7 @@ class TestPyramidTotpAuth(unittest.TestCase):
         req.method = "POST"
         req.session["2fa_pending_uid"] = self.uid
         req.db = self.db
+        req.dbsession = self.session
 
         with patch.object(TotpService, "verify_user_login", return_value=False):
             res = login_totp_view(req)

@@ -22,6 +22,7 @@ from namifax.models.modems import Modems  # noqa: F401
 from namifax.models.didroute import DIDRoute  # noqa: F401
 from namifax.models.barcoderoute import BarcodeRoute  # noqa: F401
 from namifax.models.systemsettings import SystemSettings  # noqa: F401
+from namifax.models.useraccount import UserAccount  # noqa: F401
 from namifax.models.userpasswords import UserPasswords  # noqa: F401
 
 configure_mappers()

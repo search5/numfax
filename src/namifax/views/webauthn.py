@@ -23,7 +23,7 @@ def _get_current_user(request: Request) -> AFUserAccount | None:
         username = request.session.get("username")
     if not username:
         return None
-    user = AFUserAccount(db=request.db)
+    user = AFUserAccount(db=request.dbsession)
     if user.load_by_username(username):
         return user
     return None
@@ -86,7 +86,7 @@ def webauthn_auth_options_view(request: Request) -> Response:
     username = request.params.get("username")
     uid = None
     if username:
-        u = AFUserAccount(db=request.db)
+        u = AFUserAccount(db=request.dbsession)
         if u.load_by_username(username):
             uid = u.get_uid()
 
@@ -123,7 +123,7 @@ def webauthn_auth_verify_view(request: Request) -> Response:
 
         # Login session
         uid = cred_row["uid"]
-        user = AFUserAccount(db=request.db)
+        user = AFUserAccount(db=request.dbsession)
         if user.load_by_id(uid):
             username = user.get_username()
             if hasattr(request, "session"):
