@@ -169,7 +169,7 @@ def sendfax_view(request):
             "priority_list": ["*"] + [str(n) for n in range(0, 255, 10)],
             "hours": [f"{n:02d}" for n in range(24)], "minutes": [f"{n:02d}" for n in range(60)],
             "default_tsi": account.get("user_tsi") or "", "lines": lines, "superuser": superuser,
-            "max_upload": upload_check.max_label(),
+            "max_upload": upload_check.max_label(), "max_upload_bytes": upload_check.max_bytes(),
         }
 
     # "Reply to fax": the fax being answered must exist and the user must have the right to it, else the plain page

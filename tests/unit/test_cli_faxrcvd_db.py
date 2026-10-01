@@ -15,7 +15,7 @@ def _run(tmp_path, **kwargs):
     classes["AFAddressBook"].return_value.find_or_create_number.return_value = (1, 1, "found")
     classes["ArchiveIn"].return_value.create.return_value = True
     classes["ArchiveIn"].return_value.get_fid.return_value = 7
-    with patch.multiple(mod, **classes), \
+    with patch.dict("os.environ", {"ENABLE_OCR_SUPPORT": "1"}), patch.multiple(mod, **classes), \
             patch.object(mod, "faxinfo", return_value={"Sender": "1", "Pages": "1", "Received": "2026:10:01 10:00:00"}), \
             patch.object(mod, "tiff2pdf"), patch.object(mod, "copy_tiff", return_value=True), patch.object(mod, "static_preview"), patch.object(mod, "send_mail"), \
             patch.object(mod, "bardecode", return_value=None), \

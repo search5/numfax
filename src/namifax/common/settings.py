@@ -66,3 +66,55 @@ def papersize() -> str:
 
 def dpi() -> int:
     return number("DPI", 200)
+
+
+def callid_index(kind: str) -> int:
+    """Which CallID line of the fax holds the caller number (``CIDNumber``), the caller name (``CIDName``) or the dialled number
+    (``DIDNum``): the original's $CALLIDn_CIDNumber / _CIDName / _DIDNum, here CALLIDN_CIDNUMBER and so on."""
+    defaults = {"CIDNumber": 1, "CIDName": 2, "DIDNum": 3}
+    return number(f"CALLIDN_{kind.upper()}", defaults[kind])
+
+
+def hylafax_bin() -> str:
+    return f"{hylaspool()}/bin"
+
+
+def bardecode_enabled() -> bool:
+    return flag("ENABLE_BARDECODE_SUPPORT", False)
+
+
+def bardecode_binary() -> str:
+    return text("BARDECODE_BINARY", f"{hylafax_bin()}/bardecode")
+
+
+def bardecode_command() -> str:
+    return text("BARDECODE_COMMAND", f"{bardecode_binary()} -t any -f %s")
+
+
+def ocr_enabled() -> bool:
+    return flag("ENABLE_OCR_SUPPORT", False)
+
+
+def ocr_binary() -> str:
+    return text("OCR_BINARY", "/usr/local/bin/tesseract")
+
+
+def ocr_command() -> str:
+    return text("OCR_COMMAND", f"{ocr_binary()} %s %s -l %s")
+
+
+def ocr_language() -> str:
+    return text("OCR_LANGUAGE", "eng")
+
+
+_ENCODINGS = {"base64encoding": "base64", "base64": "base64", "quotedprintableencoding": "quoted-printable",
+              "quoted-printable": "quoted-printable", "8bit": "8bit", "8bitencoding": "8bit", "7bit": "7bit", "7bitencoding": "7bit"}
+
+
+def email_encoding(part: str) -> str:
+    """The transfer encoding of the text or HTML part (``EMAIL_ENCODING_TEXT`` / ``_HTML``); Base64 like the original."""
+    return _ENCODINGS.get(text(f"EMAIL_ENCODING_{part.upper()}", "Base64Encoding").lower(), "base64")
+
+
+def email_charset() -> str:
+    return text("EMAIL_ENCODING_CHARSET", "UTF-8").lower()

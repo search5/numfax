@@ -7,6 +7,7 @@ import os
 import re
 import smtplib
 import uuid
+from namifax.common import settings
 from email.message import EmailMessage
 from pathlib import Path
 from typing import Any, Sequence
@@ -115,13 +116,13 @@ class MailerService:
         full_text = text
         if self.email_sig_text:
             full_text = f"{text}\n\n\n\n{self.email_sig_text}"
-        msg.set_content(full_text)
+        msg.set_content(full_text, charset=settings.email_charset(), cte=settings.email_encoding("TEXT"))
 
         # HTML alternative body
         converted = text.replace("\n", "<br />")
         sig_html = f"<br /><br />{self.email_sig_html}" if self.email_sig_html else ""
         html_body = f"<html><body>{converted}{sig_html}</body></html>"
-        msg.add_alternative(html_body, subtype="html")
+        msg.add_alternative(html_body, subtype="html", charset=settings.email_charset(), cte=settings.email_encoding("HTML"))
 
         self._current_message = msg
 
@@ -196,7 +197,7 @@ class MailerService:
             if html is not None:
                 tags = "".join(f'<br /><img src="cid:{img["cid"]}" alt="" />' for img in self._embedded_images)
                 body = html.get_content().replace("</body>", f"{tags}</body>", 1)
-                html.set_content(body, subtype="html")
+                html.set_content(body, subtype="html", charset=settings.email_charset(), cte=settings.email_encoding("HTML"))
                 for img in self._embedded_images:
                     html.add_related(img["data"], maintype=img["maintype"], subtype=img["subtype"], cid=f"<{img['cid']}>")
 

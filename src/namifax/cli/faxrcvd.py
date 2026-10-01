@@ -65,6 +65,19 @@ LANG = {
 }
 
 
+def caller_from(finfo: dict, cid_number: str, cid_name: str, did_num: str) -> tuple[str, str, str]:
+    """The caller number, name and dialled number: what the command line gave, else the CallID lines the settings point at."""
+    def line(kind: str) -> str:
+        value = finfo.get(f"CallID{settings.callid_index(kind)}")
+        return value if value and value != "<NONE>" else ""
+
+    return cid_number or line("CIDNumber"), cid_name or line("CIDName"), did_num or line("DIDNum")
+
+
+def ocr_wanted() -> bool:
+    return settings.ocr_enabled()
+
+
 def run_faxrcvd(argv: Sequence[str] | None = None, *, session: Any = None) -> int:
     """Execute HylaFAX inbound fax received handler.
 
@@ -115,12 +128,7 @@ def _process_faxrcvd(args: list[str], session: Any) -> int:
     pages = int(finfo.get("Pages", 1))
     recv_date = finfo.get("Received", datetime.datetime.now().strftime("%Y:%m:%d %H:%M:%S"))
 
-    if not cid_number and "CallID1" in finfo and finfo["CallID1"] != "<NONE>":
-        cid_number = finfo["CallID1"]
-    if not cid_name and "CallID2" in finfo and finfo["CallID2"] != "<NONE>":
-        cid_name = finfo["CallID2"]
-    if not did_num and "CallID3" in finfo and finfo["CallID3"] != "<NONE>":
-        did_num = finfo["CallID3"]
+    cid_number, cid_name, did_num = caller_from(finfo, cid_number, cid_name, did_num)
 
     company_name = cid_name if cid_name else sender
     company_fax = cid_number if cid_number else sender
@@ -186,13 +194,14 @@ def _process_faxrcvd(args: list[str], session: Any) -> int:
         avantfaxlog(f"faxrcvd> Inserted {faxpath} from {company_name} to Inbox", echo=False)
         if ENABLE_FAX_ANNOTATION:                                       # the fax id on every page of the PDF
             annotate_fax(faxfile, f"FaxID: {faxid}", pdffile, gravity=ANN_GRAVITY)
-        try:
-            from namifax.services.ocr import OcrService
+        if ocr_wanted():                                                # the original indexes only when OCR is switched on
+            try:
+                from namifax.services.ocr import OcrService
 
-            faxname = os.path.basename(faxfile)
-            OcrService(db=session).index_fax(fax_file=faxname, tiff_path=faxfile, fax_id=faxid)
-        except Exception as e:
-            avantfaxlog(f"faxrcvd> OCR indexing failed for {faxfile}: {e}", echo=False)
+                faxname = os.path.basename(faxfile)
+                OcrService(db=session).index_fax(fax_file=faxname, tiff_path=faxfile, fax_id=faxid)
+            except Exception as e:
+                avantfaxlog(f"faxrcvd> OCR indexing failed for {faxfile}: {e}", echo=False)
 
     # Routing Priorities: DID/Modem -> Fax2Email -> Barcode
     printer = PRINTERNAME

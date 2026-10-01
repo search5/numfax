@@ -201,7 +201,8 @@ def test_settings_view_password_change(dummy_request, memory_db):
 # ---------------------------------------------------------------------------
 # AUDIT-15: helpers.py ocr_faxcontent & bardecode
 # ---------------------------------------------------------------------------
-def test_ocr_faxcontent_existing_file(tmp_path):
+def test_ocr_faxcontent_existing_file(tmp_path, monkeypatch):
+    monkeypatch.setenv("ENABLE_OCR_SUPPORT", "1")
     """Verify ocr_faxcontent extracts text using OcrService when file exists."""
     img_path = str(tmp_path / "test_ocr.tif")
     # Create simple 1x1 image
@@ -217,7 +218,8 @@ def test_ocr_faxcontent_existing_file(tmp_path):
     assert ocr_faxcontent(str(tmp_path / "non_existent.tif")) is None
 
 
-def test_bardecode_helper(tmp_path):
+def test_bardecode_helper(tmp_path, monkeypatch):
+    monkeypatch.setenv("ENABLE_BARDECODE_SUPPORT", "1")
     """Verify bardecode returns None for non-existent file and attempts decode on existing file."""
     assert bardecode(str(tmp_path / "non_existent.tif")) is None
 
@@ -225,7 +227,7 @@ def test_bardecode_helper(tmp_path):
     img = Image.new("RGB", (100, 100), color="white")
     img.save(img_path)
 
-    with patch("shutil.which", return_value="/usr/bin/bardecode"), \
+    with patch("os.path.exists", return_value=True), \
          patch("subprocess.run") as mock_run:
         mock_run.return_value = MagicMock(returncode=0, stdout="BARCODE-9999\n")
         assert bardecode(img_path) == "BARCODE-9999"
@@ -234,7 +236,8 @@ def test_bardecode_helper(tmp_path):
 # ---------------------------------------------------------------------------
 # AUDIT-16: faxrcvd.py OCR Indexing without NameError
 # ---------------------------------------------------------------------------
-def test_faxrcvd_ocr_index_logic(tmp_path):
+def test_faxrcvd_ocr_index_logic(tmp_path, monkeypatch):
+    monkeypatch.setenv("ENABLE_OCR_SUPPORT", "1")
     """Verify faxrcvd indexing executes without NameError on faxname."""
     from namifax.cli.faxrcvd import run_faxrcvd
 

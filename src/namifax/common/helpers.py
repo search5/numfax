@@ -4,6 +4,7 @@ import html
 import os
 import re
 import secrets
+import shlex
 import shutil
 import string
 import subprocess
@@ -608,54 +609,69 @@ def _read_tiff(path: str) -> Dict[str, Any]:
 
 
 def bardecode(filename: str) -> Optional[str]:
-    """Decode barcode from fax image file matching legacy AvantFAX bardecode."""
-    if not filename or not os.path.exists(filename):
+    """The barcode of a fax (the original's bardecode()): only when ENABLE_BARDECODE_SUPPORT is on, through BARDECODE_COMMAND
+    (``%s`` is the file; no shell is involved), else through zbar when that is installed."""
+    from namifax.common import settings as cfg
+
+    if not cfg.bardecode_enabled() or not filename or not os.path.exists(filename):
         return None
 
-    bin_path = os.environ.get("BARDECODE_BINARY") or shutil.which("bardecode") or shutil.which("zbarimg")
-    if not bin_path and os.path.exists("/var/spool/hylafax/bin/bardecode"):
-        bin_path = "/var/spool/hylafax/bin/bardecode"
-
-    if bin_path and (os.path.exists(bin_path) or shutil.which(bin_path)):
+    binary = cfg.bardecode_binary()
+    if os.path.exists(binary):
         try:
-            if "bardecode" in os.path.basename(bin_path):
-                cmd = [bin_path, "-t", "any", "-f", filename]
-            else:
-                cmd = [bin_path, "--raw", "-q", filename]
-            proc = subprocess.run(cmd, capture_output=True, text=True, check=False)
+            argv = [filename if part == "%s" else part for part in shlex.split(cfg.bardecode_command())]
+            argv = [a.replace("%s", filename) for a in argv]
+            proc = subprocess.run(argv, capture_output=True, text=True, check=False, timeout=60)
             if proc.returncode == 0 and proc.stdout.strip():
                 return proc.stdout.strip()
-        except Exception:
+        except (OSError, subprocess.SubprocessError, ValueError):
             pass
+        return None
 
-    # Fallback to pyzbar if available
-    try:
-        from PIL import Image
-        from pyzbar.pyzbar import decode as zbar_decode
-
-        with Image.open(filename) as img:
-            decoded = zbar_decode(img)
-            if decoded:
-                return decoded[0].data.decode("utf-8", errors="ignore").strip()
-    except Exception:
-        pass
-
+    zbar = cfg.binary("zbarimg")
+    if zbar:
+        try:
+            proc = subprocess.run([zbar, "--raw", "-q", filename], capture_output=True, text=True, check=False, timeout=60)
+            if proc.returncode == 0 and proc.stdout.strip():
+                return proc.stdout.strip()
+        except (OSError, subprocess.SubprocessError):
+            pass
     return None
 
 
 def ocr_faxcontent(filename: str) -> Optional[str]:
-    """Extract OCR text from fax image file using OcrService."""
-    if not filename or not os.path.exists(filename):
+    """The text of a fax (the original's ocr_faxcontent()): only when ENABLE_OCR_SUPPORT is on, through OCR_COMMAND
+    (input file, output base name, language) when OCR_BINARY exists, else through Tesseract's Python binding."""
+    from namifax.common import settings as cfg
+
+    if not cfg.ocr_enabled() or not filename or not os.path.exists(filename):
         return None
+
+    language = cfg.ocr_language()
+    if os.path.exists(cfg.ocr_binary()):
+        with tempfile.TemporaryDirectory() as work:
+            base = os.path.join(work, "ocr")
+            try:
+                template = shlex.split(cfg.ocr_command())
+                values = iter([filename, base, language])
+                argv = []
+                for part in template:
+                    while "%s" in part:
+                        part = part.replace("%s", next(values, ""), 1)
+                    argv.append(part)
+                subprocess.run(argv, capture_output=True, check=False, timeout=600)
+                with open(base + ".txt", "r", encoding="utf-8", errors="replace") as handle:
+                    return handle.read().strip() or None
+            except (OSError, subprocess.SubprocessError, ValueError):
+                return None
 
     try:
         from namifax.services.ocr import OcrService
 
-        ocr = OcrService()
+        ocr = OcrService(lang=language)
         res = ocr.extract_text_from_tiff(filename)
         if res.get("success") and res.get("text"):
             return str(res["text"]).strip()
-
         txt = ocr.extract_text_from_image(filename)
         return txt.strip() if txt else None
     except Exception:

@@ -49,7 +49,7 @@ class TestMailerService(unittest.TestCase):
         self.assertEqual(msg["Subject"], "New Fax")
 
         # Verify multipart content
-        body = str(msg)
+        body = msg.get_body(("plain",)).get_content() + msg.get_body(("html",)).get_content()    # (bodies are Base64 by default)
         self.assertIn("Fax received from 123456", body)
         self.assertIn("AvantFAX Fax Server", body)
         self.assertIn("<br />", body)

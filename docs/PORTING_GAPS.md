@@ -21,7 +21,7 @@
 | A8 ✅ | 받은·보관 팩스의 "발신자" 링크가 `/addressbook?search=`인데 주소록은 `q`만 읽어서 검색이 적용되지 않는다 | **[확인]** `views/addressbook.py:50` |
 | A9 ✅ | 팩스 메일 보내기: 팩스를 못 불러와도 **첨부 없이 그냥 보낸다**. CC/BCC, 파일 이름, 분류·"보낸 뒤 보관", 발신자 표시, 서명(`email_sig`), 주소록 선택, 제목 기본값(회사명)이 없다 | **[확인]** 첨부 없이 전송은 코드로 확인. 나머지 **[보고]** |
 | A10 ✅ | 환경설정이 표지 선택·받은/보관 팩스 쪽당 개수를 저장하지 않고(고정 `standard/urgent`, 10/20/50), 이메일 형식·중복 검사가 서버에 없다 | **[확인]** `views/settings.py`에 `coverpage`/`faxperpage` 없음 |
-| A11 ✅ | (회선 제한, 업로드 검사, 작업 번호 안내, 슈퍼유저 전용 필드, 연락처·배포 그룹 선택 창, 표지 자동 채우기(`prefillto`)는 처리됨; 표지 접기·다중 파일 목록 같은 화면 꾸밈만 남음) 이전 내용: 연락처·배포 그룹 선택이 동작하지 않는다(팝업 도우미가 연결되지 않음), 표지 접기·다중 파일 목록 UI·자동 채우기(`prefillto`) 없음 | **[보고]** (회선 제한, 업로드 검사) |
+| A11 ✅ | (회선 제한, 업로드 검사, 작업 번호 안내, 슈퍼유저 전용 필드, 연락처·배포 그룹 선택 창, 표지 자동 채우기(`prefillto`)는 처리됨; 표지 접기와 다중 파일 목록도 처리됨) 이전 내용: 연락처·배포 그룹 선택이 동작하지 않는다(팝업 도우미가 연결되지 않음), 표지 접기·다중 파일 목록 UI·자동 채우기(`prefillto`) 없음 | **[보고]** (회선 제한, 업로드 검사) |
 | A12 ✅ | 배포 그룹: 구성원 추가·제거가 동작하지 않고(버튼에 동작 없음), 구성원 표시가 "업체 - 번호"로 풀리지 않고 저장된 값 그대로 나온다. 오류는 삼킨다 | **[보고]** |
 | A13 ✅ | 환경설정의 TSI는 슈퍼유저 전용, 카테고리 선택 등 일부 권한 제한이 없다. 주소록 카테고리도 모두에게 보인다 | **[보고]** (가벼움) |
 
@@ -64,10 +64,10 @@
 | E1 ✅ | 수신 팩스 **자동 인쇄**(`PRINTFAXRCVD`, `PRINTCMD` …)가 없다. 인쇄할 프린터를 계산만 하고 실행하지 않는다 | **[확인]** `cli/faxrcvd.py`에 실행 코드 없음 |
 | E2 ✅ | `notify`가 `loadbyfaxnum`의 결과(항상 참인 튜플)로 분기해, 새 수신자 번호의 업체·번호가 만들어지지 않고 `ArchiveOut.companyid`가 비며 여러 업체 번호 처리도 동작하지 않는다(수신 쪽은 이미 고침) | **[확인]** `cli/notify.py:174` |
 | E3 ✅ | `faxinfo`가 TIFF가 아닌 파일에 가짜 값(`Sender 00000000`)을 돌려줘 수신 훅의 "손상 파일" 검사가 무력화된다 | **[보고]** |
-| E4 ✅ | (PS/PDF 변환·합치기, 변환 실패 시 중단, 복사 실패 시 중단, 팩스 ID 주석, `TIFF_TO_G4` 처리됨; PS는 Ghostscript 필요) | **[보고]** |
+| E4 ✅ | (PS/PDF 변환·합치기, 변환 실패 시 중단, 복사 실패 시 중단, 팩스 ID 주석, `TIFF_TO_G4` 처리됨; PS는 Ghostscript 필요하며 리눅스 컨테이너의 실제 `gs`로 확인함) | **[보고]** |
 | E5 ✅ | faxcover: HTML 표지(`html2ps`, `USE_HTML_COVERPAGE`)와 `NUM_PAGES_FOLLOW` 없음(시드의 HTML 표지는 쓸 수 없음), 치환값의 PostScript 이스케이프 없음(이름·제목에 괄호나 한글이 있으면 PS가 깨질 수 있음), `-C` 확장자 검사 없음 | **[보고]** |
 | E6 ◐ | (`ARCHIVEFAX2EMAIL`, `FAXRCVD_INCLUDE_PDF`, `AUTOCONFDID`, 날짜 형식은 원본 기본값으로 처리됨; `WWWUSER`는 Debian 웹 사용자 `www-data`라 그대로 둠) 이전 내용: 기본값이 원본과 반대: `ARCHIVEFAX2EMAIL`, `FAXRCVD_INCLUDE_PDF`, `AUTOCONFDID`(원본 true), 날짜 형식(`FAXCOVER_DATE_FORMAT`, 메일 제목), `WWWUSER` | **[보고]** (일부는 운영 문서에 기록) |
-| E7 ◐ | (`HYLASPOOL`, `BINARYDIR`, 날짜 형식, `PAPERSIZE`/`DPI`, 썸네일 크기 `PREV_TN`/`PREV_SP`는 `common/settings.py`로 처리됨) 남은 것: `HYLAFAX_PREFIX`, `CALLIDn_*` 순서, 바코드·OCR 명령·언어, `EMAIL_ENCODING_*`, `RESTRICTED_USER_MODE`·`INBOX_LIST_MODEM` 켜는 법, `SHOW_ALL_CONTACTS`(부분), `SENDFAX_*`, `MAX/MIN_*_SIZE`. 이전 내용: 같은 이름 설정이 없는 것: HylaFAX 경로(`BINARYDIR`, `HYLAFAX_PREFIX`, `HYLASPOOL`), `CALLIDn_*` 순서, 바코드·OCR 사용 여부와 명령·언어, `EMAIL_ENCODING_*`, `EMAIL_DATE_FORMAT`, `PAPERSIZE`, `DPI`, 썸네일 크기, `RESTRICTED_USER_MODE`·`INBOX_LIST_MODEM`(코드는 있으나 켤 방법이 없음), `SHOW_ALL_CONTACTS`, `SENDFAX_*`, `DEFAULT_FAXES_PER_PAGE_*`, `MAX/MIN_*_SIZE` | **[보고]** |
+| E7 ◐ | (`HYLASPOOL`, `BINARYDIR`, 날짜 형식, `PAPERSIZE`/`DPI`, 썸네일 크기 `PREV_TN`/`PREV_SP`는 `common/settings.py`로 처리됨) (`CALLIDN_*` 순서, 바코드·OCR 켜기·명령·언어, `EMAIL_ENCODING_*`도 처리됨) 남은 것: `RESTRICTED_USER_MODE`·`INBOX_LIST_MODEM` 켜는 법, `SHOW_ALL_CONTACTS`(부분), `SENDFAX_*`, `MAX/MIN_*_SIZE`. 이전 내용: 같은 이름 설정이 없는 것: HylaFAX 경로(`BINARYDIR`, `HYLAFAX_PREFIX`, `HYLASPOOL`), `CALLIDn_*` 순서, 바코드·OCR 사용 여부와 명령·언어, `EMAIL_ENCODING_*`, `EMAIL_DATE_FORMAT`, `PAPERSIZE`, `DPI`, 썸네일 크기, `RESTRICTED_USER_MODE`·`INBOX_LIST_MODEM`(코드는 있으나 켤 방법이 없음), `SHOW_ALL_CONTACTS`, `SENDFAX_*`, `DEFAULT_FAXES_PER_PAGE_*`, `MAX/MIN_*_SIZE` | **[보고]** |
 | E8 ✅ | (dynconf 시스템 로그, 훅마다 마이그레이션하지 않는 단축, 보존 기간 정리용 cron 안내는 `docs/INSTALL_HYLAFAX.md`와 `deploy/cron.d/namifax`에 처리됨) 이전 내용: 내장 스케줄러는 임시 파일 정리만 돌리고 보존 기간 정리(`-i`/`-d`)는 별도 cron이 필요한데 안내가 없다. 훅이 호출될 때마다 스키마 검사·마이그레이션(DDL)을 시도한다(벨마다 호출되는 dynconf 포함) | **[보고]** |
 | E9 ✅ | 업로드 검사 클래스(`FileUpload`)가 어디에서도 쓰이지 않는다(보내기·vCard는 형식·크기를 서버에서 검사하지 않음) | **[보고]** |
 | E10 ✅ | 새 DB의 기본 표지가 `standard.ps`/`urgent.ps`인데 실제 파일은 `cover.ps`, `cover-letter.ps`, `coverpage.html`이라 가리키는 파일이 없다. 원본에 없는 카테고리 General/Invoices/Legal을 시드한다 | **[확인]** `db/seed.py:34`, 정적 파일 목록 |
