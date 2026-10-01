@@ -65,7 +65,7 @@ class TestCLINotify(unittest.TestCase):
                 
                 # Mock address book
                 ab_inst = MagicMock()
-                ab_inst.loadbyfaxnum.return_value = False
+                ab_inst.find_or_create_number.return_value = (1, 10, "created")
                 ab_inst.create.return_value = True
                 ab_inst.create_faxnumid.return_value = True
                 ab_inst.get_companyid.return_value = 10

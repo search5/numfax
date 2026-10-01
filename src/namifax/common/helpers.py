@@ -348,27 +348,73 @@ def send_mail(
 
 
 def convert2pdf(path: str, convertfiles: Sequence[str]) -> bool:
-    """Convert PS/TIFF/PDF files into unified PDF matching legacy convert2pdf."""
+    """Turn the files of a fax into one ``fax.pdf`` in ``path`` (the original's convert2pdf).
+
+    TIFFs become pages directly, PostScript goes through Ghostscript, PDFs are taken as they are; the cover page (a name with
+    "cover") is first, then the other PDFs, the PostScript and the TIFFs. A file that cannot be converted fails the whole call
+    (and no half-made PDF is left) instead of being left out. Files that do not exist are skipped.
+    """
+    from io import BytesIO
+
+    from pypdf import PdfReader, PdfWriter
+
     os.makedirs(path, exist_ok=True)
     pdffile = os.path.join(path, "fax.pdf")
-
-    images: List[Image.Image] = []
-    for f in convertfiles:
-        if not os.path.exists(f):
+    tiffs, postscripts, covers, pdfs = [], [], [], []
+    for name in convertfiles:
+        if not os.path.exists(name):
             continue
-        try:
-            with Image.open(f) as img:
+        lower = name.lower()
+        if re.search(r"\.tiff?$", lower):
+            tiffs.append(name)
+        elif re.search(r"\.ps$", lower):
+            postscripts.append(name)
+        elif "cover" in os.path.basename(lower):
+            covers.append(name)
+        else:
+            pdfs.append(name)
+    if not (tiffs or postscripts or covers or pdfs):
+        return False
+
+    writer = PdfWriter()
+    temporary: List[str] = []
+    try:
+        for name in [*covers, *pdfs]:
+            for page in PdfReader(name).pages:
+                writer.add_page(page)
+        if postscripts:
+            gs = os.environ.get("GS") or shutil.which("gs")
+            if not gs:
+                return False
+            out = tmpfilename(".pdf")
+            temporary.append(out)
+            argv = [gs, "-dCompatibilityLevel=1.4", "-dSAFER", "-q", "-dNOPAUSE", "-dBATCH", "-sDEVICE=pdfwrite",
+                    f"-sOutputFile={out}", "-f", *postscripts]
+            if subprocess.run(argv, capture_output=True, check=False).returncode != 0:
+                return False
+            for page in PdfReader(out).pages:
+                writer.add_page(page)
+        for name in tiffs:
+            with Image.open(name) as img:
+                frames = []
                 for i in range(getattr(img, "n_frames", 1)):
                     img.seek(i)
-                    images.append(img.convert("RGB"))
-        except Exception:
-            pass
-
-    if images:
-        images[0].save(pdffile, save_all=True, append_images=images[1:], format="PDF")
+                    frames.append(img.convert("RGB"))
+            buffer = BytesIO()
+            frames[0].save(buffer, save_all=True, append_images=frames[1:], format="PDF", resolution=200)
+            for page in PdfReader(BytesIO(buffer.getvalue())).pages:
+                writer.add_page(page)
+        with open(pdffile, "wb") as out_file:
+            writer.write(out_file)
         return True
-
-    return False
+    except Exception:
+        if os.path.exists(pdffile):
+            os.remove(pdffile)
+        return False
+    finally:
+        for name in temporary:
+            if os.path.exists(name):
+                os.remove(name)
 
 
 def pdf_preview(path: str) -> bool:
@@ -448,52 +494,55 @@ def static_preview(path: str, pages: int = 1) -> bool:
 
 
 def faxinfo(path: str) -> Optional[Dict[str, Any]]:
-    """Inspect TIFF fax file headers matching legacy faxinfo semantics."""
+    """What is known about a received fax (the original's faxinfo()): ``Sender``, ``Pages``, ``Received`` and the caller ids.
+
+    HylaFAX's own ``faxinfo -n`` is asked when it is installed, else the TIFF is read directly. An unknown sender becomes the
+    reserved number, a SIP suffix is cut from the caller id, and a file that is not a fax (or lacks a sender, page count or date)
+    answers None so that the caller can report it as corrupted.
+    """
+    from namifax.services.addressbook import RESERVED_FAX_NUM
+
     if not os.path.exists(path):
         return None
 
-    import datetime
-    import subprocess
-
-    # 1. Try native HylaFAX faxinfo binary if available
-    try:
-        proc = subprocess.run(
-            ["faxinfo", "-n", path],
-            capture_output=True,
-            text=True,
-            timeout=5,
-        )
-        if proc.returncode == 0 and proc.stdout:
-            values: Dict[str, Any] = {}
-            for line in proc.stdout.splitlines():
+    values: Dict[str, Any] = {}
+    binary = os.environ.get("FAXINFO") or shutil.which("faxinfo")
+    if binary:
+        try:
+            proc = subprocess.run([binary, "-n", path], capture_output=True, text=True, timeout=10, check=False)
+            for line in (proc.stdout or "").splitlines():
                 if ":" in line:
-                    k, v = line.split(":", 1)
-                    values[k.strip()] = v.strip()
-            if "Pages" in values and "Received" in values:
-                return values
-    except Exception:
-        pass
+                    key, value = line.split(":", 1)
+                    values[key.strip()] = value.strip()
+        except (OSError, subprocess.SubprocessError):
+            values = {}
+    if not values:
+        values = _read_tiff(path)
+    if not values:
+        return None
 
-    # 2. Pillow-based robust inspection fallback
+    if re.search(r"unknown|unspecified", values.get("Sender", ""), re.I) or not values.get("Sender"):
+        values["Sender"] = RESERVED_FAX_NUM
+    if values.get("CallID1") and "@" in values["CallID1"]:
+        values["CallID1"] = values["CallID1"].split("@", 1)[0]          # strip the SIP host
+    return values if values.get("Sender") and values.get("Pages") and values.get("Received") else None
+
+
+def _read_tiff(path: str) -> Dict[str, Any]:
+    """The fax facts a TIFF carries itself: its pages, its date and (page name tag) the sending station; {} if it is no TIFF."""
+    import datetime
+
     try:
         with Image.open(path) as img:
-            num_pages = getattr(img, "n_frames", 1)
-            mtime = os.path.getmtime(path)
-            dt = datetime.datetime.fromtimestamp(mtime)
-            recv_str = dt.strftime("%Y:%m:%d %H:%M:%S")
-
-            return {
-                "Sender": "00000000",
-                "Pages": num_pages,
-                "Received": recv_str,
-                "CallID1": "00000000",
-            }
+            if img.format != "TIFF":
+                return {}
+            tags = getattr(img, "tag_v2", {})
+            stamp = tags.get(306)                                        # DateTime, "YYYY:MM:DD HH:MM:SS"
+            if not (isinstance(stamp, str) and re.fullmatch(r"\d{4}:\d\d:\d\d \d\d:\d\d:\d\d", stamp.strip())):
+                stamp = datetime.datetime.fromtimestamp(os.path.getmtime(path)).strftime("%Y:%m:%d %H:%M:%S")
+            return {"Sender": str(tags.get(285) or "").strip(), "Pages": str(getattr(img, "n_frames", 1)), "Received": stamp.strip()}
     except Exception:
-        return {
-            "Sender": "00000000",
-            "Pages": 1,
-            "Received": datetime.datetime.now().strftime("%Y:%m:%d %H:%M:%S"),
-        }
+        return {}
 
 
 def bardecode(filename: str) -> Optional[str]:

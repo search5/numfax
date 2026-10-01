@@ -169,36 +169,27 @@ def _process_notify(args: list[str], session: Any) -> int:
     if not to_company:
         to_company = external
 
-    # AddressBook lookup & creation
+    # AddressBook lookup & creation: the receiver is registered when the number is new (the original notify.php)
     addressbook = AFAddressBook(db=session)
-    cid = 0
-    if addressbook.loadbyfaxnum(external):
-        # Multiple companies check
-        if getattr(addressbook, "is_multiple", False):
-            cid = 0
-            avantfaxlog("notify> Found fax number with multiple companies", echo=False)
-        else:
-            cid = addressbook.get_companyid()
-            addressbook.inc_faxto()
+    faxnumid, cid, outcome = addressbook.find_or_create_number(external, to_company)
+    cid = cid or 0
+    if outcome == "multiple":
+        avantfaxlog("notify> Found fax number with multiple companies", echo=False)
+    elif outcome in ("created", "company_exists"):
+        addressbook.save_settings({
+            "description": None,
+            "faxcatid": None,
+            "to_person": to_person,
+            "to_location": to_location,
+            "to_voicenumber": to_voice,
+        })
+        addressbook.inc_faxto()
+        avantfaxlog(f"notify> Created company '{external}' with cid '{cid}'", echo=False)
+    elif outcome == "found":
+        addressbook.inc_faxto()
     else:
-        if addressbook.create(to_company):
-            if addressbook.create_faxnumid(external):
-                addressbook.save_settings({
-                    "description": None,
-                    "faxcatid": None,
-                    "to_person": to_person,
-                    "to_location": to_location,
-                    "to_voicenumber": to_voice,
-                })
-                cid = addressbook.get_companyid()
-                addressbook.inc_faxto()
-                avantfaxlog(f"notify> Created company '{external}' with cid '{cid}'", echo=False)
-            else:
-                cid = 0
-                avantfaxlog(f"notify> FAILED to create faxnumid for '{external}'", echo=False)
-        else:
-            cid = 0
-            avantfaxlog(f"notify> FAILED to create company '{external}'", echo=False)
+        cid = 0
+        avantfaxlog(f"notify> FAILED to register '{external}': {addressbook.get_error()}", echo=False)
 
     # Sender lookup
     from_email = get_admin_email()
