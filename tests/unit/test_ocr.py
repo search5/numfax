@@ -39,30 +39,4 @@ def test_extract_text_from_tiff(tmp_path):
         assert "First Page Content" in result["text"]
         assert "Second Page Invoice" in result["text"]
 
-def test_index_fax():
-    svc = OcrService()
-    mock_db = MagicMock()
-    with patch.object(svc, "db", mock_db):
-        with patch.object(svc, "extract_text_from_tiff", return_value={"text": "Invoice #9999", "pages": 1, "success": True}):
-            success = svc.index_fax(fax_file="fax_001.tif", tiff_path="/tmp/fax_001.tif", fax_id=42)
-            assert success is True
-            mock_db.query.assert_called()
-
-def test_search_faxes():
-    svc = OcrService()
-    mock_db = MagicMock()
-    mock_db.query.return_value = [
-        {
-            "id": 1,
-            "fax_id": 42,
-            "fax_file": "fax_001.tif",
-            "ocr_text": "Company Statement: Invoice #9999 is paid in full.",
-            "page_count": 1,
-            "created_at": "2026-10-01 00:00:00",
-        }
-    ]
-    with patch.object(svc, "db", mock_db):
-        results = svc.search_faxes(keyword="Invoice")
-        assert len(results) == 1
-        assert results[0]["fax_id"] == 42
-        assert "Invoice #9999" in results[0]["snippet"]
+# indexing and searching run against a real session in test_ocr_orm.py

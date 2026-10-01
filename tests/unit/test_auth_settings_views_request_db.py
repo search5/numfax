@@ -53,20 +53,20 @@ def test_login_post_builds_account_and_totp_with_request_db():
     req = _request("POST", {"username": "admin", "password": "pw"})
     user_cls, totp_cls = _run(auth_mod.login_post_view, req)
     _assert_db(user_cls, req, attr="dbsession")  # the account is ORM-backed
-    _assert_db(totp_cls, req, positional=True)
+    _assert_db(totp_cls, req, positional=True, attr="dbsession")
 
 
 def test_login_totp_post_builds_totp_with_request_db():
     req = _request("POST", {"code": "123456"}, session={"2fa_pending_uid": 1, "2fa_pending_username": "admin"})
     _, totp_cls = _run(auth_mod.login_totp_view, req)
-    _assert_db(totp_cls, req, positional=True)
+    _assert_db(totp_cls, req, positional=True, attr="dbsession")
 
 
 def test_settings_view_builds_account_and_totp_with_request_db():
     req = _request()
     user_cls, totp_cls = _run(settings_mod.settings_view, req)
     _assert_db(user_cls, req, attr="dbsession")  # the account is ORM-backed
-    _assert_db(totp_cls, req, positional=True)
+    _assert_db(totp_cls, req, positional=True, attr="dbsession")
 
 
 @pytest.mark.parametrize("view", [auth_mod.login_post_view, settings_mod.settings_view])

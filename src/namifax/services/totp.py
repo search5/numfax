@@ -2,14 +2,18 @@ import secrets
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 import pyotp
-from namifax.db.engine import DatabaseEngine, resolve_db
+from namifax.db.repository import Repository
 
 
 class TotpService:
     """RFC 6238 Time-based One-Time Password (TOTP) two-factor authentication service."""
 
-    def __init__(self, db: Optional[DatabaseEngine] = None) -> None:
-        self.db = resolve_db(db, "TotpService")
+    def __init__(self, db: Any = None) -> None:
+        from namifax.db.engine import resolve_db
+
+        self.db = db if not hasattr(db, "execute") else db   # a Session is used as is
+        if db is None:
+            self.db = resolve_db(None, "TotpService")
 
     @staticmethod
     def generate_secret() -> str:
@@ -30,13 +34,15 @@ class TotpService:
         totp = pyotp.TOTP(secret)
         return totp.verify(code.strip())
 
+    def _rows(self, uid: int) -> Any:
+        return Repository("UserTOTP", db=self.db)
+
     def is_totp_enabled(self, uid: int) -> bool:
         """Check whether 2FA is currently active for the given user ID."""
-        res = self.db.query(f"SELECT is_enabled FROM UserTOTP WHERE uid = {int(uid)}")
-        records = self.db.get_records() if res.executed else []
-        if records:
-            return bool(records[0].get("is_enabled"))
-        return False
+        row = self._rows(uid).find({"uid": int(uid)})
+        if isinstance(row, list):
+            row = row[0] if row else None
+        return bool(row and _flag(row.get("is_enabled")))
 
     def enable_totp(self, uid: int, secret: str, code: str) -> Dict[str, Any]:
         """Validate challenge code, persist configuration, and generate 8 emergency recovery codes."""
@@ -45,17 +51,12 @@ class TotpService:
 
         # Generate 8 single-use recovery codes (e.g., 8-char uppercase hex)
         backup_codes = [secrets.token_hex(4).upper() for _ in range(8)]
-        codes_str = ",".join(backup_codes)
-        now_str = datetime.now().isoformat()
-
-        # Delete existing if any, then insert
-        self.db.query(f"DELETE FROM UserTOTP WHERE uid = {int(uid)}")
-        sql = (
-            f"INSERT INTO UserTOTP (uid, secret_key, is_enabled, backup_codes, created_at) "
-            f"VALUES ({int(uid)}, {self.db.quote(secret)}, 1, {self.db.quote(codes_str)}, {self.db.quote(now_str)})"
-        )
-        self.db.query(sql)
-
+        repo = self._rows(uid)
+        repo.delete_where({"uid": int(uid)})
+        repo.new_entry({
+            "uid": int(uid), "secret_key": secret, "is_enabled": 1,
+            "backup_codes": ",".join(backup_codes), "created_at": datetime.now().isoformat(),
+        })
         return {
             "success": True,
             "backup_codes": backup_codes,
@@ -64,20 +65,16 @@ class TotpService:
 
     def disable_totp(self, uid: int) -> bool:
         """Disable two-factor authentication for the given user."""
-        res = self.db.query(f"DELETE FROM UserTOTP WHERE uid = {int(uid)}")
-        return res.executed
+        self._rows(uid).delete_where({"uid": int(uid)})
+        return True
 
     def verify_user_login(self, uid: int, code: str) -> bool:
         """Verify user login challenge via TOTP code or single-use backup recovery code."""
-        res = self.db.query(
-            f"SELECT secret_key, is_enabled, backup_codes FROM UserTOTP WHERE uid = {int(uid)}"
-        )
-        records = self.db.get_records() if res.executed else []
-        if not records:
-            return True
-
-        row = records[0]
-        if not row.get("is_enabled"):
+        repo = self._rows(uid)
+        row = repo.find({"uid": int(uid)})
+        if isinstance(row, list):
+            row = row[0] if row else None
+        if not row or not _flag(row.get("is_enabled")):
             return True
 
         secret = row.get("secret_key")
@@ -87,15 +84,18 @@ class TotpService:
         if secret and self.verify_code(secret, clean_code):
             return True
 
-        # 2. Backup emergency recovery code check
-        raw_backups = row.get("backup_codes") or ""
-        codes = [c.strip().upper() for c in raw_backups.split(",") if c.strip()]
+        # 2. Backup emergency recovery code check (each code works once)
+        codes = [c.strip().upper() for c in (row.get("backup_codes") or "").split(",") if c.strip()]
         if clean_code.upper() in codes:
             codes.remove(clean_code.upper())
-            updated_str = ",".join(codes)
-            self.db.query(
-                f"UPDATE UserTOTP SET backup_codes = {self.db.quote(updated_str)} WHERE uid = {int(uid)}"
-            )
+            repo.update_where({"uid": int(uid)}, {"backup_codes": ",".join(codes)})
             return True
 
         return False
+
+
+def _flag(value: Any) -> bool:
+    """The legacy engine may hand back 0/1 or text; unknown text is off."""
+    if isinstance(value, str):
+        return value.strip().lower() in ("1", "true", "t", "yes")
+    return bool(value)

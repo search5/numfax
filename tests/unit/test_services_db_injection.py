@@ -60,9 +60,10 @@ def test_saml_view_factory_passes_request_db(db):
     assert _get_saml_service(req).db is db
 
 
-def test_webauthn_view_factory_passes_request_db(db):
+def test_webauthn_view_factory_passes_request_dbsession(db):
     from namifax.views.webauthn import _get_webauthn_service
 
     req = testing.DummyRequest()
     req.db = db
-    assert _get_webauthn_service(req).db is db
+    req.dbsession = object()
+    assert _get_webauthn_service(req).db is req.dbsession

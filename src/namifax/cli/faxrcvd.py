@@ -180,7 +180,7 @@ def _process_faxrcvd(args: list[str], db: Any, session: Any) -> int:
             from namifax.services.ocr import OcrService
 
             faxname = os.path.basename(faxfile)
-            OcrService(db=db).index_fax(fax_file=faxname, tiff_path=faxfile, fax_id=faxid)
+            OcrService(db=session).index_fax(fax_file=faxname, tiff_path=faxfile, fax_id=faxid)
         except Exception as e:
             avantfaxlog(f"faxrcvd> OCR indexing failed for {faxfile}: {e}", echo=False)
 

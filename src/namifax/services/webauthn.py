@@ -18,7 +18,10 @@ from webauthn.helpers.structs import (
     UserVerificationRequirement,
 )
 
-from namifax.db.engine import DatabaseEngine, resolve_db
+from sqlalchemy import delete, select, update
+
+from namifax.db.engine import resolve_db
+from namifax.models.userwebauthn import UserWebAuthnCredentials
 
 @dataclass
 class WebAuthnCredential:
@@ -39,34 +42,12 @@ class WebAuthnService:
         rp_id: str = "localhost",
         rp_name: str = "NamiFAX Enterprise",
         origin: str = "http://localhost:8000",
-        db: DatabaseEngine | None = None,
+        db: Any = None,
     ) -> None:
         self.rp_id = rp_id
         self.rp_name = rp_name
         self.origin = origin
         self.db = resolve_db(db, "WebAuthnService")
-        if db is not None:
-            self._ensure_table_exists()
-
-    def _ensure_table_exists(self) -> None:
-        create_sql = """
-        CREATE TABLE IF NOT EXISTS UserWebAuthnCredentials (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            uid INT NOT NULL,
-            credential_id VARCHAR(255) NOT NULL UNIQUE,
-            public_key TEXT NOT NULL,
-            sign_count INT DEFAULT 0,
-            transports VARCHAR(100) DEFAULT NULL,
-            device_name VARCHAR(100) NOT NULL,
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-            last_used_at DATETIME NULL,
-            INDEX idx_webauthn_uid (uid)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-        """
-        try:
-            self.db.query(create_sql)
-        except Exception:
-            pass
 
     def generate_registration_options(
         self,
@@ -118,21 +99,10 @@ class WebAuthnService:
         """Generate options for navigator.credentials.get()."""
         allow_creds = []
         if user_id:
-            try:
-                rows = self.db.query(
-                    f"SELECT credential_id, transports FROM UserWebAuthnCredentials WHERE uid = {int(user_id)}"
-                )
-                if rows:
-                    for row in rows:
-                        cid = row.get("credential_id")
-                        if cid:
-                            allow_creds.append(
-                                PublicKeyCredentialDescriptor(
-                                    id=base64url_to_bytes(cid) if isinstance(cid, str) else cid
-                                )
-                            )
-            except Exception:
-                pass
+            for cred in self.list_credentials(int(user_id)):
+                cid = cred.credential_id
+                if cid:
+                    allow_creds.append(PublicKeyCredentialDescriptor(id=base64url_to_bytes(cid)))
 
         raw_options = webauthn.generate_authentication_options(
             rp_id=self.rp_id,
@@ -174,87 +144,52 @@ class WebAuthnService:
         transports: list[str] | str | None = None,
     ) -> WebAuthnCredential:
         """Save a new WebAuthn credential in database."""
-        if isinstance(transports, list):
-            transports_str = ",".join(transports)
-        else:
-            transports_str = transports or ""
+        transports_str = ",".join(transports) if isinstance(transports, list) else (transports or "")
+        row = UserWebAuthnCredentials(
+            uid=int(uid), credential_id=credential_id, public_key=public_key, sign_count=int(sign_count),
+            transports=transports_str, device_name=device_name, created_at=_now(),
+        )
+        self.db.add(row)
+        self.db.flush()
+        return self._credential(row)
 
-        q_cid = self.db.quote(credential_id)
-        q_pk = self.db.quote(public_key)
-        q_name = self.db.quote(device_name)
-        q_tr = self.db.quote(transports_str)
-
-        sql = f"""
-        INSERT INTO UserWebAuthnCredentials (uid, credential_id, public_key, sign_count, transports, device_name)
-        VALUES ({int(uid)}, {q_cid}, {q_pk}, {int(sign_count)}, {q_tr}, {q_name})
-        """
-        self.db.query(sql)
-
+    @staticmethod
+    def _credential(row: Any) -> WebAuthnCredential:
         return WebAuthnCredential(
-            id=0,
-            uid=uid,
-            credential_id=credential_id,
-            device_name=device_name,
-            created_at=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            sign_count=sign_count,
-            transports=transports_str,
+            id=row.id, uid=row.uid, credential_id=row.credential_id, device_name=row.device_name,
+            created_at=row.created_at or "", last_used_at=row.last_used_at or None,
+            sign_count=row.sign_count or 0, transports=row.transports,
         )
 
     def list_credentials(self, uid: int) -> list[WebAuthnCredential]:
-        """List all active credentials registered by a user."""
-        try:
-            rows = self.db.query(
-                f"SELECT id, uid, credential_id, device_name, created_at, last_used_at, sign_count, transports "
-                f"FROM UserWebAuthnCredentials WHERE uid = {int(uid)} ORDER BY id DESC"
-            )
-            if not rows:
-                return []
-            return [
-                WebAuthnCredential(
-                    id=row.get("id", 0),
-                    uid=row.get("uid", uid),
-                    credential_id=row.get("credential_id", ""),
-                    device_name=row.get("device_name", "Security Key"),
-                    created_at=str(row.get("created_at", "")),
-                    last_used_at=str(row.get("last_used_at", "")) if row.get("last_used_at") else None,
-                    sign_count=row.get("sign_count", 0),
-                    transports=row.get("transports"),
-                )
-                for row in rows
-            ]
-        except Exception:
-            return []
+        """List all active credentials registered by a user, newest first."""
+        rows = self.db.execute(
+            select(UserWebAuthnCredentials).where(UserWebAuthnCredentials.uid == int(uid))
+            .order_by(UserWebAuthnCredentials.id.desc())
+        ).scalars().all()
+        return [self._credential(r) for r in rows]
 
     def delete_credential(self, uid: int, credential_db_id: int) -> bool:
-        """Delete a credential registered by user."""
-        try:
-            self.db.query(
-                f"DELETE FROM UserWebAuthnCredentials WHERE id = {int(credential_db_id)} AND uid = {int(uid)}"
-            )
-            return True
-        except Exception:
-            return False
+        """Delete a credential registered by the user (another user's id removes nothing)."""
+        self.db.execute(delete(UserWebAuthnCredentials).where(
+            UserWebAuthnCredentials.id == int(credential_db_id), UserWebAuthnCredentials.uid == int(uid)))
+        return True
 
     def get_credential_by_id(self, credential_id: str) -> dict[str, Any] | None:
         """Fetch credential row by base64url credential_id."""
-        try:
-            q_cid = self.db.quote(credential_id)
-            rows = self.db.query(
-                f"SELECT * FROM UserWebAuthnCredentials WHERE credential_id = {q_cid} LIMIT 1"
-            )
-            if rows:
-                return rows[0]
+        row = self.db.execute(
+            select(UserWebAuthnCredentials).where(UserWebAuthnCredentials.credential_id == credential_id)
+        ).scalars().first()
+        if row is None:
             return None
-        except Exception:
-            return None
+        return {c.name: getattr(row, c.key) for c in UserWebAuthnCredentials.__table__.columns}
 
     def update_sign_count(self, credential_id: str, new_sign_count: int) -> None:
         """Update sign count and last used timestamp."""
-        try:
-            q_cid = self.db.quote(credential_id)
-            self.db.query(
-                f"UPDATE UserWebAuthnCredentials SET sign_count = {int(new_sign_count)}, "
-                f"last_used_at = NOW() WHERE credential_id = {q_cid}"
-            )
-        except Exception:
-            pass
+        self.db.execute(update(UserWebAuthnCredentials).where(
+            UserWebAuthnCredentials.credential_id == credential_id
+        ).values(sign_count=int(new_sign_count), last_used_at=_now()))
+
+
+def _now() -> str:
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")

@@ -35,7 +35,7 @@ def test_each_service_gets_the_kind_of_database_it_uses(tmp_path):
         c.kwargs.get("db") is session for c in classes["AFAddressBook"].call_args_list)
     assert classes["ArchiveIn"].call_args_list and all(
         c.kwargs.get("db") is db for c in classes["ArchiveIn"].call_args_list)
-    assert ocr.call_args.kwargs.get("db") is db
+    assert ocr.call_args.kwargs.get("db") is session   # the OCR index is ORM-backed
 
 
 def test_a_single_injected_database_serves_both_roles(tmp_path):

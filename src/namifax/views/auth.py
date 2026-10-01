@@ -55,7 +55,7 @@ def login_post_view(request):
     # Check 2FA requirement
     from namifax.services.totp import TotpService
     db = request.db
-    totp_svc = TotpService(db)
+    totp_svc = TotpService(request.dbsession)
     uid = getattr(user, "get_uid", lambda: None)() or getattr(user, "uid", None)
     if uid and totp_svc.is_totp_enabled(uid):
         request.session["2fa_pending_uid"] = uid
@@ -96,7 +96,7 @@ def login_totp_view(request):
         code = params.get("code", "").strip()
         from namifax.services.totp import TotpService
         db = request.db
-        totp_svc = TotpService(db)
+        totp_svc = TotpService(request.dbsession)
 
         if totp_svc.verify_user_login(pending_uid, code):
             username = request.session.pop("2fa_pending_username", "user")

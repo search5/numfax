@@ -947,7 +947,9 @@ Pyramid cookiecutter starter(2.1-branch, jinja2 + sqlalchemy)를 임시 디렉�
 | 3 | `UserPasswords` | `[ORM]` | 0012 | 레거시 컬럼(`upid`, `pwdhash`)으로 정정. 비밀번호 이력이 처음으로 동작(14.12) |
 | 3 | `AddressBook`, `AddressBookFAX`, `AddressBookEmail` | `[ORM]` | 0013~0015 | 레거시 기본키(`abook_id`, `abookfax_id`, `abookemail_id`). 포트의 중복 컬럼 제거. 웹 뷰·`faxrcvd`·`notify`·`phb` 전환 |
 | 3 | `UserAccount` | `[ORM]` | 0016 | 3d-1. 플래그 8개는 `LegacyBoolean`(14.13). 웹 뷰·`security`·`createuser`·`import_users`·`notify`가 Session 사용. `FaxQueue`/`saml`/`bridge_cli`는 레거시 엔진 경유(동작은 동일) |
-| 3 | `UserTOTP`, `UserWebAuthnCredentials`, `FaxOCR` | `[LEGACY]` | - | 3d-2. `FaxOCR`/`UserWebAuthnCredentials`는 MySQL 전용 DDL 정정 필요 |
+| 3 | `UserTOTP` | `[ORM]` | 0017 | 3d-2. `TotpService`는 세션·레거시 엔진 양쪽 지원. 뷰는 Session |
+| 3 | `UserWebAuthnCredentials` | `[ORM]` | 0018 | 3d-2. 서비스는 Session 전용. SQLite DDL 추가(기존엔 MySQL 전용) |
+| 3 | `FaxOCR` | `[ORM]` | 0019 | 3d-2. 서비스는 Session 전용, `ocr_text`는 MySQL/MariaDB에서 `LONGTEXT`. `faxrcvd`가 세션으로 색인 |
 | 4 | `FaxArchive` 외 | `[LEGACY]` | - | |
 
 **공통 규칙 (이번 라운드에서 재확인)**
@@ -1054,3 +1056,14 @@ SQLite·MySQL은 오름차순에서 NULL을 먼저, PostgreSQL은 나중에 둔�
 **테스트 정리**: `tests/unit/linked_db.py`는 레거시 엔진과 ORM 세션이 한 연결을 공유하는 쌍을 만든다. 레거시 엔진으로 데이터를 만든 뒤 뷰(이제 세션을 사용)를 검사하는 기존 테스트에 쓴다. `test_user_account.py::test_remove_account`는 결함이 있던 동작(`username IS NULL`)을 기대값으로 고정하고 있었으므로 새 동작으로 고쳤다.
 
 **남은 항목**: 평문 비밀번호가 들어 있던 기존 계정이 있다면 이제 로그인할 수 없다(해시로 바꾸는 `reset_password` 필요). 기본 `admin`/`password` 시드는 기존 NEEDS_CLARIFICATION 그대로.
+
+### 14.14 3d-2에서 발견·수정한 결함 (패스키·OCR이 SQLite에서 동작하지 않았음)
+| 결함 | 근거 | 수정 |
+| :--- | :--- | :--- |
+| **패스키 저장소가 SQLite에서 동작 안 함** | `UserWebAuthnCredentials` DDL이 MySQL 전용(`AUTO_INCREMENT`, `ENGINE=InnoDB`, `NOW()`)이고 예외를 삼켜서 테이블이 생성되지 않음. 또 `db.query()`가 행이 아니라 결과 객체를 돌려주는데 서비스는 행 목록으로 반복해 `list_credentials`와 로그인용 허용 목록이 항상 비어 있었음. `save_credential`은 id를 항상 0으로 반환 | 모델·리비전·SQLite DDL 추가. 서비스는 ORM 전용으로 재작성(실제 id 반환, 타 사용자의 id로는 삭제 불가, 갱신 시각은 앱에서 설정) |
+| **OCR 색인이 한 번도 저장되지 않음** | 같은 이유로 테이블이 없고, `existing = db.query(...)`가 항상 참이라 INSERT 없이 UPDATE만 실행. `faxrcvd`는 예외를 로그로만 남김 | ORM 전용으로 재작성: 있으면 갱신, 없으면 추가 |
+| OCR 검색의 와일드카드 | 키워드를 `LIKE %kw%`에 그대로 넣어 `%`, `_`가 와일드카드 | `like_pattern` + `ESCAPE '!'` |
+
+**저장소 계층**: `OrmRepository.new_entry`는 자동 증가가 아닌 기본키(`UserTOTP.uid`)를 호출자가 준 값으로 저장한다.
+**테스트 정리**: 서비스가 반환 형태를 잘못 가정한 목(mock) 테스트(`db.query`가 리스트를 반환)는 실제 세션 테스트(`test_webauthn_orm`, `test_ocr_orm`, `test_totp_orm`)로 대체했다.
+**그룹 3 완료.** 남은 모델링 대상은 그룹 4(`FaxArchive` 등)이며, 이후 비 SQLite DB에서 앱이 기동되도록 레거시 `init_database_tables`를 Alembic으로 대체한다.

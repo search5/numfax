@@ -193,6 +193,29 @@ SCHEMA_STATEMENTS = [
         backup_codes TEXT,
         created_at TEXT
     );""",
+    """CREATE TABLE IF NOT EXISTS UserWebAuthnCredentials (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        uid INTEGER NOT NULL,
+        credential_id VARCHAR(255) NOT NULL UNIQUE,
+        public_key TEXT NOT NULL,
+        sign_count INTEGER DEFAULT 0,
+        transports VARCHAR(100),
+        device_name VARCHAR(100) NOT NULL,
+        created_at VARCHAR(32),
+        last_used_at VARCHAR(32)
+    );""",
+    """CREATE INDEX IF NOT EXISTS ix_UserWebAuthnCredentials_uid ON UserWebAuthnCredentials (uid);""",
+    """CREATE TABLE IF NOT EXISTS FaxOCR (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        fax_id INTEGER,
+        fax_file VARCHAR(255) NOT NULL,
+        ocr_text TEXT NOT NULL,
+        page_count INTEGER DEFAULT 1,
+        confidence FLOAT DEFAULT 0.0,
+        created_at VARCHAR(32)
+    );""",
+    """CREATE INDEX IF NOT EXISTS ix_FaxOCR_fax_id ON FaxOCR (fax_id);""",
+    """CREATE INDEX IF NOT EXISTS ix_FaxOCR_fax_file ON FaxOCR (fax_file);""",
     """CREATE TABLE IF NOT EXISTS SystemConfig (
         key TEXT PRIMARY KEY,
         value TEXT

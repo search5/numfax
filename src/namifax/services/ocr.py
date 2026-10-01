@@ -5,35 +5,20 @@ from typing import Any
 from PIL import Image
 import pytesseract
 
-from namifax.db.engine import DatabaseEngine, resolve_db
+from datetime import datetime
+
+from sqlalchemy import func, select
+
+from namifax.db.engine import resolve_db
+from namifax.db.textsearch import ESCAPE_CHAR, like_pattern
+from namifax.models.faxocr import FaxOCR
 
 class OcrService:
     """Enterprise Fax OCR Text Extraction & Full-Text Search service."""
 
-    def __init__(self, lang: str = "eng", db: DatabaseEngine | None = None) -> None:
+    def __init__(self, lang: str = "eng", db: Any = None) -> None:
         self.lang = lang
         self.db = resolve_db(db, "OcrService")
-        if db is not None:
-            self._ensure_table_exists()
-
-    def _ensure_table_exists(self) -> None:
-        create_sql = """
-        CREATE TABLE IF NOT EXISTS FaxOCR (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            fax_id INT NULL,
-            fax_file VARCHAR(255) NOT NULL,
-            ocr_text LONGTEXT NOT NULL,
-            page_count INT DEFAULT 1,
-            confidence FLOAT DEFAULT 0.0,
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-            INDEX idx_fax_ocr_file (fax_file),
-            INDEX idx_fax_ocr_faxid (fax_id)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-        """
-        try:
-            self.db.query(create_sql)
-        except Exception:
-            pass
 
     def extract_text_from_image(self, image: Image.Image | str) -> str:
         """Extract text from a single image or file path using Tesseract."""
@@ -86,37 +71,18 @@ class OcrService:
         text = res.get("text", "")
         pages = res.get("pages", 1)
 
-        q_file = self.db.quote(fax_file)
-        q_text = self.db.quote(text)
-        fid_val = f"{int(fax_id)}" if fax_id is not None else "NULL"
-
-        # Check existing row
-        existing = self.db.query(f"SELECT id FROM FaxOCR WHERE fax_file = {q_file} LIMIT 1")
-        if existing:
-            update_sql = f"""
-            UPDATE FaxOCR SET ocr_text = {q_text}, page_count = {int(pages)}, fax_id = {fid_val}
-            WHERE fax_file = {q_file}
-            """
-            self.db.query(update_sql)
-        else:
-            insert_sql = f"""
-            INSERT INTO FaxOCR (fax_id, fax_file, ocr_text, page_count)
-            VALUES ({fid_val}, {q_file}, {q_text}, {int(pages)})
-            """
-            self.db.query(insert_sql)
-
+        row = self.db.execute(select(FaxOCR).where(FaxOCR.fax_file == fax_file)).scalars().first()
+        if row is None:
+            row = FaxOCR(fax_file=fax_file, created_at=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+            self.db.add(row)
+        row.ocr_text, row.page_count = text, int(pages)
+        row.fax_id = int(fax_id) if fax_id is not None else None
+        self.db.flush()
         return True
 
     def get_ocr_text(self, fax_file: str) -> str | None:
         """Retrieve stored OCR text for a fax file."""
-        try:
-            q_file = self.db.quote(fax_file)
-            rows = self.db.query(f"SELECT ocr_text FROM FaxOCR WHERE fax_file = {q_file} LIMIT 1")
-            if rows:
-                return rows[0].get("ocr_text")
-            return None
-        except Exception:
-            return None
+        return self.db.execute(select(FaxOCR.ocr_text).where(FaxOCR.fax_file == fax_file)).scalars().first()
 
     def search_faxes(self, keyword: str, limit: int = 50) -> list[dict[str, Any]]:
         """Search indexed faxes by text keyword."""
@@ -124,38 +90,27 @@ class OcrService:
         if not keyword:
             return []
 
-        try:
-            q_kw = self.db.quote(f"%{keyword}%")
-            sql = f"""
-            SELECT id, fax_id, fax_file, ocr_text, page_count, created_at
-            FROM FaxOCR
-            WHERE ocr_text LIKE {q_kw}
-            ORDER BY id DESC
-            LIMIT {int(limit)}
-            """
-            rows = self.db.query(sql)
-            if not rows:
-                return []
+        rows = self.db.execute(
+            select(FaxOCR).where(func.lower(FaxOCR.ocr_text).like(like_pattern(keyword), escape=ESCAPE_CHAR))
+            .order_by(FaxOCR.id.desc()).limit(int(limit))
+        ).scalars().all()
 
-            results = []
-            for r in rows:
-                full_text = r.get("ocr_text", "")
-                idx = full_text.lower().find(keyword.lower())
-                if idx >= 0:
-                    start = max(0, idx - 40)
-                    end = min(len(full_text), idx + len(keyword) + 40)
-                    snippet = f"...{full_text[start:end]}..."
-                else:
-                    snippet = full_text[:80] + ("..." if len(full_text) > 80 else "")
-
-                results.append({
-                    "id": r.get("id"),
-                    "fax_id": r.get("fax_id"),
-                    "fax_file": r.get("fax_file"),
-                    "snippet": snippet,
-                    "page_count": r.get("page_count", 1),
-                    "created_at": str(r.get("created_at")),
-                })
-            return results
-        except Exception:
-            return []
+        results = []
+        for r in rows:
+            full_text = r.ocr_text or ""
+            idx = full_text.lower().find(keyword.lower())
+            if idx >= 0:
+                start = max(0, idx - 40)
+                end = min(len(full_text), idx + len(keyword) + 40)
+                snippet = f"...{full_text[start:end]}..."
+            else:
+                snippet = full_text[:80] + ("..." if len(full_text) > 80 else "")
+            results.append({
+                "id": r.id,
+                "fax_id": r.fax_id,
+                "fax_file": r.fax_file,
+                "snippet": snippet,
+                "page_count": r.page_count if r.page_count is not None else 1,
+                "created_at": str(r.created_at),
+            })
+        return results

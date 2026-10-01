@@ -116,7 +116,7 @@ def settings_view(request):
     if identity and identity.get("uid"):
         try:
             from namifax.services.totp import TotpService
-            totp_enabled = TotpService(request.db).is_totp_enabled(identity["uid"])
+            totp_enabled = TotpService(request.dbsession).is_totp_enabled(identity["uid"])
         except Exception:
             pass
 
