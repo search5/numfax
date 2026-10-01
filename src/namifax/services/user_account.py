@@ -317,12 +317,38 @@ class AFUserAccount:
         masked = "XXXXXX" + (password or "")[-3:]                  # never the whole password
         self._log(f"class UserAccount> failed login attempt for '{username}' pwd: '{masked}' from IP: '{remote_ip}'")
 
+    def login_alternate_auth(
+        self,
+        username: str,
+        password: str,
+        admin: bool = False,
+        remote_ip: str = "127.0.0.1",
+    ) -> bool:
+        """Log in with the system password (PAM, pwauth...) of an account that exists in AvantFAX (the original's
+        login_alternate_auth). The reason for a refusal is left in ``get_error()``."""
+        import os
+
+        from namifax.auth import alternate
+
+        authenticator = alternate.backend()
+        name = os.environ.get("ALTERNATE_AUTH_CLASS", "PAMAuth")
+        if authenticator is None or not authenticator.login(username, password):
+            self._log(f"class UserAccount> failed '{name}' login attempt for user '{username}' from IP: '{remote_ip}'")
+            self.error = "Incorrect username or password"
+            self.logged_in = False
+            return False
+        return self._login_known_user(username, admin, remote_ip, f"'{name}' login successful")
+
     def login_webauth(
         self,
         username: str,
         admin: bool = False,
         remote_ip: str = "127.0.0.1",
     ) -> bool:
+        """Log in a user the web server has already authenticated (REMOTE_USER)."""
+        return self._login_known_user(username, admin, remote_ip, "Alternate Login successful")
+
+    def _login_known_user(self, username: str, admin: bool, remote_ip: str, success_text: str) -> bool:
         creds: Dict[str, Any] = {"username": username}
         if admin:
             creds["is_admin"] = 1
@@ -333,6 +359,7 @@ class AFUserAccount:
 
         if data:
             if data.get("acc_enabled") in (1, True, "1"):
+                self._log(f"class UserAccount> {success_text} for user '{username}' from IP: '{remote_ip}'")
                 self.logged_in = True
                 if data.get("is_admin") in (1, True, "1"):
                     self.admin_logged_in = True
@@ -348,10 +375,12 @@ class AFUserAccount:
             else:
                 self.logged_in = False
                 self.error = "Account is disabled"
+                self._log(f"class UserAccount> failed login attempt for user '{username}' from IP: '{remote_ip}' (account disabled)")
                 return False
 
         self.logged_in = False
         self.error = f"User '{username}' not found for web authentication"
+        self._log(f"class UserAccount> failed login attempt for user '{username}' from IP: '{remote_ip}' (no such account)")
         return False
 
     def load(self, userid: int) -> bool:

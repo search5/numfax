@@ -20,11 +20,21 @@ def login_get_view(request):
     """Render login page with NamiFAX visual structure."""
     if request.identity:
         return HTTPFound(location=request.route_url("inbox"))
+
+    error = None
+    from namifax.auth import alternate
+
+    remote_user = (request.environ.get("REMOTE_USER") or "").strip()
+    if alternate.webserver_login() and remote_user:                 # the web server has authenticated this person
+        account = AFUserAccount(db=request.dbsession)
+        if account.login_webauth(remote_user, remote_ip=getattr(request, "remote_addr", None) or "127.0.0.1"):
+            return _finish_login(request, account.get_uid(), remote_user)
+        error = account.get_error()
     return {
         "title": "- NamiFAX - Login",
         "server_name": "NamiFAX Server 3.3.5",
         "username": "",
-        "error": None,
+        "error": error,
         "current_user": None,
     }
 
@@ -44,17 +54,34 @@ def login_post_view(request):
     is_valid = False
 
     remote_ip = getattr(request, "remote_addr", None) or "127.0.0.1"
-    # Authenticate credentials strictly via AFUserAccount
-    if user.login(username, password, remote_ip=remote_ip):
-        is_valid = True
+    from namifax.auth import alternate
+
+    # The system password first when that is configured; the account's own password when it is not, or may follow
+    alt_error = None
+    if alternate.enabled():
+        if user.login_alternate_auth(username, password, remote_ip=remote_ip):
+            is_valid = True
+        else:
+            alt_error = user.get_error()
+    if not is_valid and (not alternate.enabled() or alternate.fallback()):
+        if user.login(username, password, remote_ip=remote_ip):
+            is_valid = True
+        alt_error = None if is_valid else user.get_error()
 
     if not is_valid:
         request.response.status_code = 200
+        problem = alt_error or user.get_error()
+        if problem == "Account is disabled":
+            message = _("Account is disabled")
+        elif problem and problem.startswith("User '"):
+            message = problem                                    # a system user without an AvantFAX account
+        else:
+            message = "Invalid username or password"
         return {
             "title": "- NamiFAX - Login",
             "server_name": "NamiFAX Server 3.3.5",
             "username": username,
-            "error": _("Account is disabled") if user.get_error() == "Account is disabled" else "Invalid username or password",
+            "error": message,
             "current_user": None,
         }
 
