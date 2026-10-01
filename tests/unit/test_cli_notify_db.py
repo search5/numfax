@@ -18,7 +18,7 @@ def _run(tmp_path, **kwargs):
     qfile.write_text(QFILE)
     classes = {n: MagicMock(name=n) for n in ("AFAddressBook", "AFUserAccount", "ArchiveOut")}
     ab = classes["AFAddressBook"].return_value
-    ab.loadbyfaxnum.return_value = False
+    ab.find_or_create_number.return_value = (1, 10, "created")
     ab.create.return_value = True
     ab.create_faxnumid.return_value = True
     ab.get_companyid.return_value = 10
