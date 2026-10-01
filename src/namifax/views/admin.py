@@ -353,44 +353,13 @@ def admin_routing_did_view(request):
     }
 
 
-def get_all_syslogs(kw: str = "", day: str = "", month: str = "", year: str = "", db: Any = None) -> list[dict[str, Any]]:
-    """Retrieve system logs directly from database."""
-    try:
-        from namifax.db.repository import MDBOData
-        repo = MDBOData("SysLog", db=db)
-        clauses = []
-        if kw:
-            clauses.append(f"logtext LIKE {repo.quote(f'%{kw}%')}")
+def get_all_syslogs(kw: str = "", day: str = "", month: str = "", year: str = "", session: Any = None) -> list[dict[str, Any]]:
+    """Retrieve system logs from the database through an ORM session (empty without a session)."""
+    if session is None:
+        return []
+    from namifax.services.syslog import SysLogService
 
-        date_part = ""
-        if day and month and year and day != "*" and month != "*" and year != "*":
-            d_val = f"{int(day):02d}" if day.isdigit() else day
-            m_val = f"{int(month):02d}" if month.isdigit() else month
-            date_part = f"{year}-{m_val}-{d_val}"
-        elif month and year and month != "*" and year != "*":
-            m_val = f"{int(month):02d}" if month.isdigit() else month
-            date_part = f"{year}-{m_val}"
-        elif year and year != "*":
-            date_part = f"{year}"
-
-        if date_part:
-            clauses.append(f"logdate LIKE {repo.quote(f'{date_part}%')}")
-
-        where_clause = " WHERE " + " AND ".join(clauses) if clauses else ""
-        query = f"SELECT logdate, logtext FROM SysLog{where_clause} ORDER BY logdate DESC LIMIT 100"
-        rows = repo.query(query, reduce_single=False)
-        if rows and isinstance(rows, list):
-            result = []
-            for r in rows:
-                result.append({
-                    "logdate": str(r.get("logdate", "")),
-                    "logtext": str(r.get("logtext", "")),
-                })
-            return result
-    except Exception:
-        pass
-
-    return []
+    return SysLogService(session).search(kw=kw, day=day, month=month, year=year)
 
 
 @view_config(route_name="admin_system_logs", renderer="namifax:templates/admin_system_logs.jinja2", permission="admin")
@@ -403,7 +372,7 @@ def admin_system_logs_view(request):
     month = request.params.get("month", "")
     year = request.params.get("year", "")
 
-    logs = get_all_syslogs(kw=kw, day=day, month=month, year=year, db=request.db)
+    logs = get_all_syslogs(kw=kw, day=day, month=month, year=year, session=request.dbsession)
 
     return {
         "title": "NamiFAX - Admin - System Logs",

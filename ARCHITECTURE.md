@@ -936,7 +936,7 @@ Pyramid cookiecutter starter(2.1-branch, jinja2 + sqlalchemy)를 임시 디렉�
 | 1 | `SystemConfig` | `[ORM]` | 0001 | 파일럿. storage/saml 뷰 |
 | 1 | `SystemSettings` | `[ORM]` | 0002 | SMTP 단일 행(id=1). `SmtpSettingsService(Session)`, `MailerService.from_settings(session)`. 참고: `common/helpers.send_mail`은 DB의 SMTP 설정을 쓰지 않고 `MailerService`를 직접 만든다(저장한 설정이 실제 발송에 반영되지 않음) |
 | 1 | `NetworkPrinters` | `[ORM]` | 0003 | `NetworkPrinterService(Session)`, 자동 증가 PK는 방언별 DDL로 생성. `delete_printer`는 삭제된 행이 있었는지를 반환(이전에는 항상 True). `process_inbound_print_job`의 미사용 `db` 인자는 유지 |
-| 1 | `SysLog` | `[LEGACY]` | - | |
+| 1 | `SysLog` | `[ORM]` | 0004 | `SysLogService(Session).search`. `logdate`는 ISO 텍스트 `String(32)`로 유지(날짜 접두어 `LIKE`가 PostgreSQL의 timestamp에서는 불가). 키워드는 모든 DB에서 대소문자 무시 부분 일치이고 `%`/`_`는 리터럴(이전에는 와일드카드). 조회 오류를 삼키지 않음(이전에는 `except Exception`으로 빈 목록). 관찰: `avantfaxlog()`는 OS syslog에만 쓰고 이 테이블에는 쓰지 않아, 관리자 로그 화면은 시드 2행만 보여 준다 |
 | 2 | `Modems`, `DIDRoute`, `BarcodeRoute`, `FaxCategory`, `CoverPages`, `DynConf`(+`DynamicConfig` 정리) | `[LEGACY]` | - | |
 | 3 | `UserAccount`, `UserPasswords`, `UserTOTP`, `AddressBook*`, `DistroList`, `UserWebAuthnCredentials`, `FaxOCR` | `[LEGACY]` | - | `AddressBook` `ab_id`/`abook_id` 불일치를 모델화하며 정리 |
 | 4 | `FaxArchive` 외 | `[LEGACY]` | - | |
@@ -946,3 +946,9 @@ Pyramid cookiecutter starter(2.1-branch, jinja2 + sqlalchemy)를 임시 디렉�
 - `tests/conftest.py`: `alembic_cfg`(개인 사본 Alembic 설정), `server_db_url`(서버별 임시 DB), `dbsession`/`tm`/`app_request` 픽스처.
 - `tests/unit/test_migrations_match_models.py`가 마이그레이션 결과와 모델의 불일치를 모든 서버에서 잡는다. 모델을 추가할 때는 리비전을 함께 추가해야 통과한다.
 - 모듈을 ORM으로 옮기면 `DatabaseEngine`을 임포트하던 감사 테스트(`test_security_audit_phase1::test_audit_18`)의 대상 목록에서 그 모듈을 뺀다.
+
+### 14.5 그룹 1 완료 요약
+- 모델 4개(`SystemConfig`, `SystemSettings`, `NetworkPrinters`, `SysLog`), Alembic 리비전 `0001`~`0004`, 서비스 `SystemConfigService`, `SmtpSettingsService`, `NetworkPrinterService`, `SysLogService`가 모두 `Session`을 주입받는다.
+- 뷰 `admin_storage/saml/smtp/printers/system_logs`는 `request.dbsession`을 쓴다. 이 뷰들에서 `request.db`와 문자열 조립 SQL, SQLite 전용 구문이 사라졌다.
+- 검증: SQLite(자동) + PostgreSQL 16 + MySQL 8.4 + MariaDB 11.8(`pytest -m serverdb`). 마이그레이션-모델 드리프트 검사가 모든 서버에서 통과한다.
+- 반복해서 확인된 패턴: (1) 서버 DB 테스트는 모델 기반 쿼리만 쓴다(혼합 대소문자 테이블명과 PostgreSQL). (2) 레거시 SQLite 스키마와 공존하도록 모든 리비전은 `has_table`로 멱등하다. (3) 서비스는 세션 없이 생성하면 첫 사용에서 `RuntimeError`.

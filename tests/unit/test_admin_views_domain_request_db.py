@@ -47,6 +47,7 @@ def test_view_builds_domain_objects_with_request_db(name, method, params):
     req = testing.DummyRequest()
     req.__dict__["identity"] = {"username": "admin", "uid": 1, "is_admin": True, "superuser": True}
     req.db = object()
+    req.dbsession = object()
     req.method = method
     req.params = params
     req.route_url = MagicMock(return_value="/x")
@@ -62,7 +63,10 @@ def test_view_builds_domain_objects_with_request_db(name, method, params):
             assert call.kwargs.get("db") is req.db, f"{name}: {cls._mock_name or cls} built without request.db"
     for hname, helper in helpers.items():
         for call in helper.call_args_list:
-            passed = call.kwargs.get("db", call.args[0] if (call.args and hname != "get_all_syslogs") else None)
+            if hname == "get_all_syslogs":  # ORM-backed: takes the request session
+                assert call.kwargs.get("session") is req.dbsession, f"{name}: {hname} called without request.dbsession"
+                continue
+            passed = call.kwargs.get("db", call.args[0] if call.args else None)
             assert passed is req.db, f"{name}: {hname} called without request.db"
     assert any(c.call_args_list for c in classes) or any(h.call_args_list for h in helpers.values()), \
         f"{name} used no domain objects"
@@ -75,10 +79,3 @@ def test_get_all_admin_users_uses_given_db():
         admin_mod.get_all_admin_users(db)
     assert cls.call_args.kwargs.get("db") is db
 
-
-def test_get_all_syslogs_uses_given_db():
-    db = object()
-    with patch("namifax.db.repository.MDBOData") as cls:
-        cls.return_value.quote.side_effect = lambda v: f"'{v}'"
-        admin_mod.get_all_syslogs(kw="x", db=db)
-    assert cls.call_args.kwargs.get("db") is db

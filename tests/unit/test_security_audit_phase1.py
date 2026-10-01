@@ -169,25 +169,36 @@ class TestSecurityAuditPhase1(unittest.TestCase):
     # AUDIT-03: System Logs SQL Injection Prevention
     # =========================================================================
     def test_get_all_syslogs_handles_sql_injection_payload(self):
-        """Verify get_all_syslogs escapes quotes and avoids SQL syntax errors or injections."""
-        # Insert known log
-        self.db.query("INSERT INTO SysLog (logdate, logtext) VALUES ('2026-10-01 10:00:00', 'Legitimate security test log')")
+        """Verify get_all_syslogs treats quotes and injection payloads as plain data."""
+        from sqlalchemy.orm import Session
 
-        # Attack payload in kw
-        malicious_kw = "' OR '1'='1"
-        rows = get_all_syslogs(kw=malicious_kw, db=self.db)
-        # Should safely search for the literal string and return 0 results
-        self.assertEqual(len(rows), 0)
+        import namifax.models  # noqa: F401  (registers every model)
+        from namifax.db.provider import create_sa_engine
+        from namifax.models import SysLog
+        from namifax.models.meta import Base
 
-        # Legitimate search should find the record
-        legit_rows = get_all_syslogs(kw="security test", db=self.db)
-        self.assertEqual(len(legit_rows), 1)
-        self.assertEqual(legit_rows[0]["logtext"], "Legitimate security test log")
+        engine = create_sa_engine("sqlite://")
+        Base.metadata.create_all(engine)
+        with Session(engine) as session:
+            session.add(SysLog(logdate="2026-10-01 10:00:00", logtext="Legitimate security test log"))
+            session.flush()
 
-        # Attack payload in date parts
-        malicious_day = "01' OR '1'='1"
-        date_rows = get_all_syslogs(day=malicious_day, month="10", year="2026", db=self.db)
-        self.assertEqual(len(date_rows), 0)
+            # Attack payload in kw
+            malicious_kw = "' OR '1'='1"
+            rows = get_all_syslogs(kw=malicious_kw, session=session)
+            # Should safely search for the literal string and return 0 results
+            self.assertEqual(len(rows), 0)
+
+            # Legitimate search should find the record
+            legit_rows = get_all_syslogs(kw="security test", session=session)
+            self.assertEqual(len(legit_rows), 1)
+            self.assertEqual(legit_rows[0]["logtext"], "Legitimate security test log")
+
+            # Attack payload in date parts
+            malicious_day = "01' OR '1'='1"
+            date_rows = get_all_syslogs(day=malicious_day, month="10", year="2026", session=session)
+            self.assertEqual(len(date_rows), 0)
+        engine.dispose()
 
     # =========================================================================
     # AUDIT-18: Package Import Path Verification
