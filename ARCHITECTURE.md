@@ -826,12 +826,14 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 
 | 순서 | SQLite | MySQL / MariaDB / PostgreSQL |
 | :--- | :--- | :--- |
+| 0 | 이 DB가 **새 DB인지** 판단(`UserAccount` 테이블이 없으면 새 DB) | 같음 |
 | 1 | 이전 버전이 만든 테이블 보정(`db/sqlite_upgrade.py`): 옛 테이블 이름(`DIDRouting`→`DIDRoute`, `FaxPDFCategory`→`FaxCategory`), `UserPasswords` 컬럼 이름, 주소록 키 재구성(`ab_id`→`abook_id`, id·연결 보존), 누락 컬럼 추가, 별칭 컬럼 채움, 텍스트 불리언(`'False'`) 정리. 새 DB에서는 아무 일도 하지 않음 | — |
-| 2 | `alembic upgrade head`(없는 테이블만 만들고, 있는 테이블은 건드리지 않음) | 같음 |
-| 3 | 기본 데이터(팩스 카테고리 3, 표지 2) + **새 DB(사용자 없음)에 한해 데모 데이터**(`db/seed.py`) | 기본 데이터만. **데모 계정을 만들지 않는다** |
+| 2 | **기존 테이블 채택**(`db/adopt.py`): 모델에 있고 테이블에 없는 컬럼·인덱스를 추가하고 좁은 컬럼(`UserAccount.last_ip`)을 넓힘. 지우거나 바꾸지 않음 | 같음 |
+| 3 | `alembic upgrade head`(없는 테이블만 만들고, 있는 테이블은 건드리지 않음) | 같음 |
+| 4 | 기본 데이터(팩스 카테고리 3, 표지 2)는 **새 DB에만**. 데모 데이터는 `NAMIFAX_DEMO_DATA=1`(또는 ini `demo.data = true`)이고 사용자가 없는 SQLite일 때만(`db/seed.py`) | 기본 데이터는 새 DB에만. **데모 계정은 어떤 설정에서도 만들지 않는다** |
 
 * 시드는 매 기동마다 실행되므로 **이미 있는 데이터를 바꾸지 않는다**(비어 있는 테이블에만 넣음).
-* 첫 관리자(서버 DB): `namifax createuser`.
+* 첫 관리자: `namifax createuser`(비밀번호는 `-p`, 환경변수 `NAMIFAX_NEW_USER_PASSWORD`, 또는 터미널 입력. **내장 기본 비밀번호는 없음**, 최소 8자). 이미 있는 계정에 쓰면 비밀번호를 재설정한다.
 * 여러 워커가 빈 DB를 동시에 처음 기동하면 마이그레이션이 경합할 수 있다. 첫 기동은 한 프로세스로 하거나 배포 단계에서 `alembic upgrade head`를 먼저 실행한다.
 
 ### 17.3 테이블·모델·리비전
@@ -872,14 +874,37 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 * **2FA(TOTP)**: 사용자가 설정 화면에서 직접 켜고 끈다(CSRF 토큰, 끄기·복구 코드 재발급은 비밀번호/코드 필요). 틀린 코드는 DB에 집계하고(확인 전에 원자적 증가) 5회 실패 시 15분 잠근다. 복구 코드는 `XXXXX-XXXXX`(약 49비트), 솔트된 scrypt 해시만 저장하며 1회용이다. 분실 시 `namifax reset-2fa <사용자>`.
 * **SAML**: 기존 계정은 IdP가 단언한 이메일로만 찾는다(NameID 앞부분으로 찾지 않음). JIT로 만든 계정은 관리자가 아니고 임의 비밀번호를 쓰지 않는다. `RelayState`는 이 사이트의 경로만 허용. SAML 로그인은 2FA 단계를 거치지 않는다(IdP가 인증을 책임진다는 가정).
 * **비밀값 암호화**(`common/secretbox.py`): 클라우드 `secret_key`, SMTP 비밀번호, TOTP 시드를 `enc:v1:` Fernet 토큰으로 저장. 키는 `NAMIFAX_SECRET_KEY`/ini `secret.key`(쉼표로 여러 개면 키 교체). **키가 없으면 평문 저장을 거부**한다. 기존 평문은 읽을 수 있고 `namifax encrypt-secrets`가 변환한다. 복호화 불가 시 SMTP는 "없음", TOTP는 로그인 거부(fail closed).
+* **비밀번호 변경 강제**(레거시와 같은 규칙): 관리자가 초기화한 계정(`wasreset`), 만료일(`pwdexpire`, `pwdcycle`)이 지난 계정, 한 번도 로그인하지 않은 계정은 올바른 비밀번호로 로그인해도 인증 쿠키를 받지 못하고 `/pwdexpired`로 간다. 거기서 이전 비밀번호와 새 비밀번호(8자 이상, 이력에 없는 것)를 입력하면 변경 후 로그인이 이어진다(2FA가 있으면 코드 단계가 그다음). 요청에 사용자명이 없으므로 다른 사람의 비밀번호는 바꿀 수 없다. SAML·패스키 로그인은 IdP/기기가 인증을 책임지므로 대상이 아니다.
 * 로그인 비밀번호는 레거시 호환 MD5(해시이므로 되돌릴 수 없음)다. 저장된 해시를 비밀번호로 쓸 수 없다.
+
+### 17.5a 기존 AvantFAX 설치 이전 (기존 사용자 호환)
+
+원본 AvantFAX(3.x, MySQL/MariaDB)가 만든 DB를 **그대로** 쓴다. 이전은 추가만 하고 지우거나 바꾸지 않으므로 원본 PHP 앱이 같은 DB를 계속 쓸 수 있다(되돌리기 쉬움).
+
+| 원본과 다른 점 | 처리 |
+| :--- | :--- |
+| 이 앱의 새 테이블(`SystemConfig`, `SystemSettings`, `NetworkPrinters`, `UserTOTP`, `UserWebAuthnCredentials`, `FaxOCR`, `alembic_version`) | Alembic이 만든다 |
+| 원본 테이블에 없는 컬럼(주소록 확장 컬럼, 3.2.x 이하에 없는 컬럼 등) | `db/adopt.py`가 추가(NULL 허용 또는 기본값) |
+| 원본 3.3.4+의 `AddressBookFAX.to_address/to_zip/to_city`(NOT NULL, 기본값 없음) | 모델에 포함하고 항상 값(`''`)을 넣는다(없으면 엄격 모드 MySQL에서 저장 실패) |
+| `TIMESTAMP`/`DATE` 컬럼(`SysLog.logdate`, `FaxArchive.archstamp`, `UserAccount.last_login` 등) | 컬럼은 그대로 두고 `IsoText` 타입이 읽을 때 `YYYY-MM-DD HH:MM:SS`로 변환 |
+| `UserAccount.last_ip VARCHAR(15)`(IPv6가 들어가지 않음) | 45자로 확장 |
+| 모델이 선언한 인덱스(아카이브 검색용)가 원본에 없음 | 없으면 만든다(큰 `FaxArchive`는 첫 기동이 느릴 수 있음) |
+| 원본은 팩스 경로를 웹 루트 기준 상대 경로로 저장(`/faxes/2012/...`) | `AVANTFAX_INSTALLDIR`(원본 설치 디렉터리)로 실제 위치를 찾는다. 새 팩스도 같은 형식으로 저장 |
+| 비밀번호는 MD5 32자 | 그대로 로그인 가능. `wasreset` 계정(원본 설치 직후의 `admin`/`password` 포함)은 첫 로그인에서 변경 강제 |
+| 기본 팩스 카테고리·표지 | 기존 DB에는 **추가하지 않는다**(새 DB에만) |
+
+**절차**: ① DB 백업. ② `DATABASE_URL`(예: `mysql+pymysql://user:pw@host/avantfax`), `AVANTFAX_INSTALLDIR`, `AVANTFAX_ARCHIVE`(원본의 `faxes/` 경로), `NAMIFAX_SESSION_SECRET`, `NAMIFAX_SECRET_KEY` 설정. ③ 한 프로세스로 처음 기동(또는 `alembic upgrade head`를 먼저 실행). ④ 로그인해 받은함·아카이브·주소록 확인. ⑤ SMTP 비밀번호·클라우드 키를 이미 평문으로 갖고 있다면 `namifax encrypt-secrets`.
+
+**검증**: `tests/unit/test_legacy_database_compat.py`가 실제 MySQL 8.4와 MariaDB 11에 원본 설치 SQL(`legacy/create_tables.sql` + 업데이트 스크립트)로 3.3.5와 3.2.0 DB를 만들어 위 항목을 확인한다(기존 행 보존, 두 번째 기동에서 변화 없음, 모든 모델 컬럼 존재, 원본 컬럼 타입 유지, 로그인, 날짜, IPv6, 주소록, 팩스 수신·검색, 웹 페이지, 상대 경로 다운로드).
+
+**알려진 한계**: 원본의 주소록 화면은 팩스번호별 상세(담당자, 주소 등)를 편집했지만 이 앱의 편집 화면은 회사명과 번호만 다룬다. 원본 데이터는 보존되고 읽히며(예: 팩스 보내기 화면의 수신자 자동 채움), 편집 화면은 후속 과제다. 원본의 PHP 세션·로그인 쿠키는 이어지지 않으므로 이전 후 모든 사용자는 다시 로그인한다.
 
 ### 17.6 명령과 설정
 
 | 명령 | 용도 |
 | :--- | :--- |
 | `namifax serve` / `scheduler` | 웹 서비스(+APScheduler) / 스케줄러만 |
-| `namifax createuser` | 사용자 생성·갱신(서버 DB의 첫 관리자) |
+| `namifax createuser` | 사용자 생성·비밀번호 재설정(첫 관리자). 비밀번호는 `-p`, `NAMIFAX_NEW_USER_PASSWORD`, 터미널 입력 중 하나 |
 | `namifax reset-2fa <사용자>` | 2FA 등록 삭제 |
 | `namifax encrypt-secrets` | 평문 비밀값 암호화, 평문 복구 코드 해시화(여러 번 실행해도 안전) |
 | `namifax import-archive <경로> <카테고리> [--user-id N --modem DEV --callid CallID1]` | 기존 HylaFAX/AvantFAX 팩스 아카이브 가져오기(`recvd/`, `sent/`) |
@@ -904,9 +929,9 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 
 ### 17.9 열린 항목 (`[NEEDS_CLARIFICATION]`)
 
-1. **SQLite 새 DB의 데모 계정**: 사용자가 없는 SQLite DB는 기동 시 `admin`/`password`, `operator`/`password`와 샘플 데이터를 만든다. 운영 SQLite라면 위험하다. 서버 DB처럼 데모 데이터를 선택(옵트인)으로 바꿀 것인지 결정이 필요하다. `namifax createuser`의 기본 비밀번호(`admin1234!`)도 같은 문제다.
-2. **기존 AvantFAX MySQL DB에 연결할 때의 날짜 컬럼**: 레거시는 `TIMESTAMP`, 이 앱은 ISO 텍스트 컬럼을 기대한다. 기존 DB를 그대로 쓰려면 컬럼 변환 절차가 필요하다.
-3. SAML 로그인이 2FA를 거치지 않는 것이 의도된 정책인지 확인이 필요하다.
+1. ~~SQLite 새 DB의 데모 계정~~ → **해결**: 데모 데이터는 옵트인이고 `createuser`에 내장 비밀번호가 없다(17.2).
+2. ~~기존 AvantFAX MySQL DB 연결~~ → **해결**: 17.5a.
+1. SAML 로그인이 2FA를 거치지 않는 것이 의도된 정책인지 확인이 필요하다.
 
 ---
 
@@ -939,4 +964,8 @@ DB 계층을 옮기는 동안 기존 코드의 실제 결함이 많이 드러났
 | 메일·로그 | SMTP 설정이 실제 발송에 쓰이지 않음, `avantfaxlog`가 SysLog에 기록하지 않음 | DB 설정 사용, SysLog 기록 | `8c609d3`, `66ce56b` |
 | 시작 | 모든 테이블을 먼저 만들어 `DIDRouting`→`DIDRoute` 이름 변경이 실행되지 않음 | 순서 수정 | `29d9fc6` |
 | 호환 | `SysLog` 기본키 이름이 레거시(`syslogid`)와 다름 | 리비전 0023 | `1420b8f` |
+| 호환 | 원본 3.3.4+ DB에 저장하면 `to_address` 등 NOT NULL 컬럼 때문에 주소록 저장 실패, 주소 정보를 읽지 못함 | 모델에 컬럼 추가, 리비전 0024 | `e622ffa` |
+| 호환 | 원본 DB에서 주소록이 `Unknown column`으로 실패, `TIMESTAMP`/`DATE`를 날짜 문자열로 읽지 못함, 상대 경로 팩스를 못 찾음, 기존 DB에 기본 카테고리를 끼워 넣음, IPv6 로그인이 `last_ip(15)`에서 실패 | 기존 테이블 채택, `IsoText`, `AVANTFAX_INSTALLDIR`, 새 DB에만 기본 데이터, 컬럼 확장 | `e622ffa` |
+| 보안 | 비밀번호 변경 강제가 없음(SEC-05): `pwdexpired` 처리가 스텁이라 초기화된 계정·만료 계정·최초 로그인이 그대로 들어옴 | 로그인에서 변경 페이지로 보내고 변경 후 로그인 | `e622ffa` |
+| 보안 | 새 SQLite DB가 `admin`/`password`를 만들고 `createuser`에 기본 비밀번호가 있음, 이미 있는 계정의 비밀번호를 재설정할 수 없음 | 데모 옵트인, 비밀번호 필수, 재설정 | `e622ffa` |
 | 도구 | `import_archive`가 스텁(F4-19) | 이식, 경로 기준 분류(원본의 부분 문자열 매칭·경로 덮어쓰기 결함 수정) | `1420b8f` |
