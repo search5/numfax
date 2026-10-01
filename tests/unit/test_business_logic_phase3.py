@@ -360,25 +360,6 @@ def test_dispatch_sendfax_with_binary():
 
 
 # ---------------------------------------------------------------------------
-# AUDIT-11: admin_system_func_view Backup Generation
-# ---------------------------------------------------------------------------
-def test_admin_system_func_backup_creates_archive(dummy_request, tmp_path, monkeypatch):
-    """Verify action=='backup' creates real tar.gz backup file on disk."""
-    backup_dir = str(tmp_path / "backup")
-    monkeypatch.setenv("NAMIFAX_BACKUP_DIR", backup_dir)
-    dummy_request.method = "POST"
-    dummy_request.params = {"action": "backup", "_submit_check": "1"}
-
-    res = admin_system_func_view(dummy_request)
-    assert res["message"] is not None
-    assert "Backup archive successfully created" in res["message"]
-    # Check that backup file actually exists on disk
-    files = os.listdir(backup_dir)
-    assert len(files) >= 1
-    assert any(f.endswith(".tar.gz") for f in files)
-
-
-# ---------------------------------------------------------------------------
 # AUDIT-13: printer.py Process Inbound Print Job File Persistence
 # ---------------------------------------------------------------------------
 def test_printer_inbound_persists_print_file(tmp_path, monkeypatch):

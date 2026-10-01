@@ -27,9 +27,6 @@ HELPERS = ["get_all_admin_users", "get_all_admin_modems", "get_all_syslogs"]
 
 CASES = [
     ("admin_dashboard_view", "GET", {}),
-    ("admin_users_view", "GET", {}),
-    ("admin_users_view", "POST", {"delete": "1", "uid": "2"}),
-    ("admin_users_view", "POST", {"name": "N", "username": "u", "password": "p"}),
     ("admin_modems_view", "GET", {}),
     ("admin_modems_view", "POST", {"delete": "1", "devid": "1"}),
     ("admin_modems_view", "POST", {"device": "ttyS1", "alias": "a"}),

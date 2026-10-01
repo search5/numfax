@@ -73,34 +73,48 @@
         </h3>
       </div>
 
+      {% if message %}<div class="p-3 bg-emerald-950/60 border border-emerald-500/40 rounded-lg text-emerald-300 text-xs">{{ message }}</div>{% endif %}
+      {% if error %}<div class="p-3 bg-rose-950/60 border border-rose-500/40 rounded-lg text-rose-300 text-xs">{{ error }}</div>{% endif %}
       <form action="/admin/modems" method="post" class="space-y-4 text-xs">
         <div>
           <label for="device" class="block font-semibold text-slate-300 text-xs mb-1.5">{{ _('Device') }} *</label>
-          <input type="text" name="device" id="device" value="{{ selected_modem.device or '' }}" required placeholder="{{ _('e.g. ttyS0') }}" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white font-mono focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition" />
+          <input type="text" name="device" id="device" value="{{ selected_modem.device or '' }}" required placeholder="{{ _('e.g. ttyS0') }}" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition font-mono" />
         </div>
-
         <div>
           <label for="alias" class="block font-semibold text-slate-300 text-xs mb-1.5">{{ _('Alias') }} *</label>
           <input type="text" name="alias" id="alias" value="{{ selected_modem.alias or '' }}" required placeholder="{{ _('e.g. Main Inbound Line') }}" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition" />
         </div>
-
         <div>
           <label for="contact" class="block font-semibold text-slate-300 text-xs mb-1.5">{{ _('Contact Email') }}</label>
-          <input type="email" name="contact" id="contact" value="{{ selected_modem.contact or '' }}" placeholder="operator@namifax.local" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white font-mono focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition" />
+          <input type="text" name="contact" id="contact" value="{{ selected_modem.contact or '' }}" placeholder="operator@namifax.local" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition font-mono" />
         </div>
-
         <div>
           <label for="printer" class="block font-semibold text-slate-300 text-xs mb-1.5">{{ _('Printer') }}</label>
-          <input type="text" name="printer" id="printer" value="{{ selected_modem.printer or '' }}" placeholder="lp0" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white font-mono focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition" />
+          <input type="text" name="printer" id="printer" value="{{ selected_modem.printer or '' }}" placeholder="lp0" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition font-mono" />
+        </div>
+        <div>
+          <label for="category" class="block font-semibold text-slate-300 text-xs mb-1.5">{{ _('Category') }}</label>
+          <select name="faxcatid" id="category" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition">
+            <option value=""></option>
+            {% for cid, cname in categories %}<option value="{{ cid }}" {% if selected_modem.faxcatid|string == cid %}selected{% endif %}>{{ cname }}</option>{% endfor %}
+          </select>
         </div>
 
+        {% if selected_modem.devid %}
+        <input type="hidden" name="devid" value="{{ selected_modem.devid }}" />
+        <input type="hidden" name="device2" value="{{ selected_modem.device }}" />
+        {% endif %}
         <input type="hidden" name="_submit_check" value="1" />
 
-        <div class="pt-3 border-t border-slate-800 flex items-center justify-end space-x-3">
-          <a href="/admin/modems" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg font-semibold text-xs transition">{{ _('Reset') }}</a>
-          <button type="submit" class="px-6 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold text-xs shadow-2xs transition">
-            {{ _('Save Modem') }}
-          </button>
+        <div class="pt-3 border-t border-slate-800 flex items-center justify-between">
+          {% if selected_modem.devid %}
+          <button type="submit" name="delete" value="1" class="px-4 py-2 bg-rose-900 hover:bg-rose-800 text-white rounded-lg font-bold text-xs transition" onclick="return confirm('{{ _('Are you sure you want to delete this modem?') }}')">{{ _('Delete') }}</button>
+          {% else %}<span></span>{% endif %}
+          <div class="space-x-2">
+            <a href="/admin/modems" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg font-semibold text-xs transition">{{ _('Cancel') }}</a>
+            {% if selected_modem.devid %}<button type="submit" name="save" value="1" class="px-6 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold text-xs shadow-2xs transition">{{ _('Save') }}</button>
+            {% else %}<button type="submit" name="create" value="1" class="px-6 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold text-xs shadow-2xs transition">{{ _('Create') }}</button>{% endif %}
+          </div>
         </div>
       </form>
     </div>

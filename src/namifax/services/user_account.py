@@ -101,8 +101,10 @@ class AFUserAccount:
 
         # Password handling
         raw_pwd = self.dbdata.get("password")
+        self.generated_password: Optional[str] = None
         if not raw_pwd:
             pwdxemail = genpasswd()
+            self.generated_password = pwdxemail                # (the caller mails it; it is never stored in clear)
             self.dbdata["password"] = md5_hash(pwdxemail)
             self.dbdata["wasreset"] = 1
         else:

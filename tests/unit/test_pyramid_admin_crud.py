@@ -12,7 +12,6 @@ from namifax.views.admin import (
     admin_fax2email_view,
     admin_routing_did_view,
     admin_system_func_view,
-    admin_users_view,
 )
 from namifax.views.distrolist import distrolist_edit_view
 from request_identity import set_identity
@@ -340,21 +339,8 @@ def test_admin_dynconf_post_delete(dummy_request):
         assert "removed" in res["message"]
 
 
-def test_admin_users_get_selected(dummy_request):
-    """Verify loading selected user account for editing."""
-    dummy_request.params = {"uid": "1"}
-    res = admin_users_view(dummy_request)
-    assert res["selected_user"] is not None
-    assert res["selected_user"]["username"] == "admin"
 
 
-def test_admin_users_post_delete(dummy_request):
-    """Verify deleting a user account via POST delete."""
-    dummy_request.method = "POST"
-    dummy_request.params = {"delete": "1", "uid": "999", "_submit_check": "1"}
-    dummy_request.route_url = MagicMock(return_value="/admin/users")
-    res = admin_users_view(dummy_request)
-    assert res.status_code == 302
 
 
 def test_distrolist_edit_get_selected(dummy_request):

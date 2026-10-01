@@ -4,29 +4,35 @@
   "forms": [
     {
       "method": "post",
+      "action": "/admin/barcodes?barcode_id=1",
       "inputs": [
         {
           "name": "barcode",
-          "type": "text",
-          "required": true
+          "type": "text"
         },
         {
           "name": "alias",
-          "type": "text",
-          "required": true
+          "type": "text"
         },
         {
-          "name": "contact"
+          "name": "contact",
+          "type": "email"
         },
         {
-          "name": "printer"
+          "name": "printer",
+          "type": "text"
         },
         {
-          "name": "barcode_id",
-          "type": "hidden"
+          "name": "faxcatid",
+          "type": "select"
         },
         {
           "name": "_submit_check",
+          "type": "hidden",
+          "value": "1"
+        },
+        {
+          "name": "barcode_id",
           "type": "hidden"
         }
       ],
@@ -46,7 +52,7 @@
         "index": 0,
         "action": "/admin/barcodes?barcode_id=1",
         "method": "POST",
-        "inputs_count": 6,
+        "inputs_count": 7,
         "buttons_count": 2,
         "field_sequence": [
           {
@@ -75,6 +81,13 @@
             "tag": "input",
             "type": "text",
             "id": "printer",
+            "required": false
+          },
+          {
+            "name": "faxcatid",
+            "tag": "select",
+            "type": "select",
+            "id": "faxcatid",
             "required": false
           },
           {

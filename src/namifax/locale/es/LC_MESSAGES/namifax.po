@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: eMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 21:51+0900\n"
+"POT-Creation-Date: 2026-10-01 23:03+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -547,12 +547,11 @@ msgstr ""
 msgid "e.g. Main Inbound Line"
 msgstr ""
 
-msgid "Reset"
-msgstr "Reset"
+msgid "Are you sure you want to delete this modem?"
+msgstr ""
 
-#, fuzzy
-msgid "Save Modem"
-msgstr "Fax Modems"
+msgid "Create"
+msgstr ""
 
 msgid "Appliance Note:"
 msgstr "Nota del appliance:"
@@ -648,6 +647,9 @@ msgstr ""
 
 msgid "-- None --"
 msgstr "-- Ninguno --"
+
+msgid "Reset"
+msgstr "Reset"
 
 msgid ""
 "DID (Direct Inward Dialing) routing automatically redirects incoming "
@@ -943,6 +945,12 @@ msgstr ""
 "Las transmisiones y los eventos del servidor se transmitirán aquí en "
 "tiempo real."
 
+msgid "Delete User"
+msgstr ""
+
+msgid "Are you sure you want to delete the user"
+msgstr ""
+
 msgid "Manage system operator credentials, access permissions, and route mapping"
 msgstr ""
 "Administrar credenciales de operadores del sistema, permisos de acceso y "
@@ -950,6 +958,9 @@ msgstr ""
 
 msgid "Create New User"
 msgstr "Crear nuevo usuario"
+
+msgid "Last IP"
+msgstr ""
 
 msgid "Superuser"
 msgstr "Superusuario"
@@ -963,8 +974,23 @@ msgstr "Sí"
 msgid "NO"
 msgstr "No"
 
-msgid "Configure User:"
-msgstr "Configurar usuario:"
+msgid "users"
+msgstr ""
+
+msgid "user"
+msgstr ""
+
+msgid "Modify User"
+msgstr ""
+
+msgid "New User"
+msgstr ""
+
+msgid "User details saved"
+msgstr ""
+
+msgid "Account enabled"
+msgstr ""
 
 msgid "Full Name"
 msgstr "Nombre completo"
@@ -972,8 +998,47 @@ msgstr "Nombre completo"
 msgid "Password"
 msgstr "contraseña"
 
+msgid "Leave empty to keep the current password (a new user is sent a random one)"
+msgstr ""
+
 msgid "Email Address"
 msgstr "Dirección de correo electrónico"
+
+msgid "Password expiration cycle"
+msgstr ""
+
+msgid "Language"
+msgstr ""
+
+msgid "Password can be reused"
+msgstr ""
+
+msgid "My Company"
+msgstr ""
+
+msgid "My Location"
+msgstr ""
+
+msgid "My Voice Number"
+msgstr ""
+
+msgid "My Fax Number"
+msgstr ""
+
+msgid "TSI ID"
+msgstr ""
+
+msgid "Select Cover Page"
+msgstr ""
+
+msgid "New fax sound"
+msgstr ""
+
+msgid "Inbox shows"
+msgstr ""
+
+msgid "Archive shows"
+msgstr ""
 
 msgid "Permissions & Capabilities"
 msgstr "Permisos y capacidades"
@@ -990,9 +1055,18 @@ msgstr "Puede eliminar faxes"
 msgid "Send on Any Modem"
 msgstr "Enviar en cualquier módem"
 
+msgid "You must first create a DID/DTMF group"
+msgstr ""
+
+msgid "You must first create a modem"
+msgstr ""
+
 #, fuzzy
 msgid "Categories"
 msgstr "Categorías de fax visibles"
+
+msgid "You must first create a category"
+msgstr ""
 
 #, fuzzy
 msgid "Archive Search"
@@ -1115,6 +1189,12 @@ msgstr "Seleccionar registro de contacto"
 
 msgid "Or type a new company name"
 msgstr ""
+
+msgid "Delete selected faxes?"
+msgstr ""
+
+msgid "faxes"
+msgstr "faxes"
 
 msgid "Distribution Lists"
 msgstr "Listas de distribución"
@@ -1377,9 +1457,6 @@ msgstr "Rotar Fax"
 msgid "Download TIFF"
 msgstr "Descargar TIFF"
 
-msgid "faxes"
-msgstr "faxes"
-
 msgid "0 FAXES"
 msgstr "0 FAXES"
 
@@ -1519,22 +1596,31 @@ msgstr "Enviar Fax"
 msgid "Dispatch PDF document attachment to email recipients"
 msgstr "Enviar archivo adjunto en formato PDF a los destinatarios de correo"
 
+msgid "Back"
+msgstr ""
+
+msgid "From"
+msgstr ""
+
 msgid "Recipients"
 msgstr "Destinatarios"
 
-msgid "recipient@example.com (comma separated)"
+msgid "CC"
+msgstr ""
+
+msgid "BCC"
 msgstr ""
 
 msgid "Subject"
 msgstr "Asunto"
 
-msgid "NamiFAX Transmission Document"
+msgid "PDF file name"
 msgstr ""
 
 msgid "Message"
 msgstr "Mensaje"
 
-msgid "Please find the attached facsimile document."
+msgid "Archive fax"
 msgstr ""
 
 msgid "Send"
@@ -1788,9 +1874,6 @@ msgstr "Categorías de fax visibles"
 
 msgid "Retries automatically on busy signal."
 msgstr "Reintenta automáticamente si la línea está ocupada."
-
-msgid "TSI ID"
-msgstr ""
 
 msgid "Notify on retry"
 msgstr "Notificar al reintentar"
@@ -2059,6 +2142,24 @@ msgstr ""
 msgid "You are not allowed to delete contacts."
 msgstr ""
 
+msgid "Modem deleted"
+msgstr ""
+
+msgid "Please enter an alias"
+msgstr ""
+
+msgid "Modem updated"
+msgstr ""
+
+msgid "Please enter a device name"
+msgstr ""
+
+msgid "This modem already exists"
+msgstr ""
+
+msgid "Modem created"
+msgstr ""
+
 msgid "Cover page template removed successfully"
 msgstr ""
 
@@ -2089,6 +2190,21 @@ msgstr ""
 msgid "Fax to Email settings saved"
 msgstr ""
 
+msgid "The system is rebooting. Please wait..."
+msgstr ""
+
+msgid "The system is shutting down. Please wait..."
+msgstr ""
+
+msgid "The command could not be run"
+msgstr ""
+
+msgid "There is no fax archive folder to download."
+msgstr ""
+
+msgid "The database dump could not be made"
+msgstr ""
+
 msgid "Access denied. Superadmin permission required."
 msgstr ""
 
@@ -2113,6 +2229,53 @@ msgstr ""
 msgid "SAML 2.0 configuration saved successfully."
 msgstr ""
 
+msgid "Catch All"
+msgstr ""
+
+msgid "Never"
+msgstr ""
+
+msgid "Every 3 Months"
+msgstr ""
+
+msgid "Every 6 Months"
+msgstr ""
+
+msgid "Please enter a name"
+msgstr ""
+
+msgid "You must enter a username"
+msgstr ""
+
+msgid "Non-alphanumeric characters are not allowed in username."
+msgstr ""
+
+#, python-format
+msgid ""
+"Hello %(name)s,\n"
+"\n"
+"This email contains your username and password to log into NamiFAX "
+"(%(url)s)\n"
+"\n"
+"Username - %(username)s\n"
+"Password - %(password)s\n"
+"\n"
+"Please do not respond to this message as it is automatically generated "
+"and is for information purposes only"
+msgstr ""
+
+msgid "New User Details"
+msgstr ""
+
+msgid "The user does not exist."
+msgstr ""
+
+msgid "You cannot delete your own account."
+msgstr ""
+
+msgid "You cannot delete the last superuser."
+msgstr ""
+
 msgid "Please enter a valid number."
 msgstr ""
 
@@ -2135,6 +2298,15 @@ msgid ""
 msgstr ""
 
 msgid "Email failed to send"
+msgstr ""
+
+msgid "The fax document was not found."
+msgstr ""
+
+msgid "Failed to send email"
+msgstr ""
+
+msgid "Email sent successfully"
 msgstr ""
 
 msgid "Your session has expired. Reload the page and try again."
@@ -2260,4 +2432,19 @@ msgstr ""
 #~ "Para enviar a varios destinatarios a "
 #~ "la vez, separe los números con una"
 #~ " coma."
+
+#~ msgid "Save Modem"
+#~ msgstr "Fax Modems"
+
+#~ msgid "Configure User:"
+#~ msgstr "Configurar usuario:"
+
+#~ msgid "recipient@example.com (comma separated)"
+#~ msgstr ""
+
+#~ msgid "NamiFAX Transmission Document"
+#~ msgstr ""
+
+#~ msgid "Please find the attached facsimile document."
+#~ msgstr ""
 

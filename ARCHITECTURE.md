@@ -641,7 +641,7 @@ Pyramid 뷰 컨트롤러는 Jinja2 템플릿에 다음 표준 컨텍스트 딕�
 | **주소록** | 배포 그룹 관리 | `distrolist.php`, `distrolist_edit.php` | `views/distrolist.py`, `templates/distrolist*.jinja2` | `[COMPLETE]` | 동보 전송 그룹 관리 인터페이스, 멤버 추가/제거 및 2단 분할 레이아웃 완료 |
 | **설정** | 개인 계정 설정 | `settings.php`, `settings.tpl` | `views/settings.py`, `templates/settings.jinja2` | `[COMPLETE]` | 비밀번호 변경, 발신처 정보(전화/팩스/TSI), 이메일 서명, 환경설정 완비 |
 | **관리자** | 관리자 대시보드 | `admin/index.php`, `admin.tpl` | `views/admin.py`, `templates/admin.jinja2` | `[COMPLETE]` | 시스템 현황 및 요약 위젯, 모뎀 상태 패널 완료 |
-| **관리자** | 사용자 관리 | `admin/users.php`, `users.tpl` | `views/admin.py`, `templates/admin_users.jinja2`| `[COMPLETE]` | 사용자 계정 및 권한 제어 UI 완료 |
+| **관리자** | 사용자 관리 | `admin/users.php`, `users.tpl` | `views/admin_users.py`, `templates/admin_users.jinja2`, `admin_user_delete.jinja2` | `[COMPLETE]` | 원본의 모든 필드(회선·DID·카테고리 배정, 비밀번호 주기, 발신자 정보 등), 무작위 비밀번호 메일, 삭제 확인(자기 자신·마지막 슈퍼유저 보호) |
 | **관리자** | 모뎀 장치 관리 | `admin/modems.php`, `conf_modems.tpl` | `views/admin.py`, `templates/admin_modems.jinja2`| `[COMPLETE]` | 모뎀 회선 및 카테고리 바인딩 완료 |
 | **관리자** | DID 라우팅 관리 | `admin/did.php`, `conf_didroute.tpl` | `views/admin.py`, `templates/admin_routing_did.jinja2` | `[COMPLETE]` | DID 수신 규칙 설정 및 폼 계약 완료 |
 | **관리자** | 시스템 로그 조회 | `admin/system_logs.php`, `system_logs.tpl` | `views/admin.py`, `templates/admin_system_logs.jinja2` | `[COMPLETE]` | 감사 로그 검색 툴바 및 테이블 완료 |
@@ -650,7 +650,7 @@ Pyramid 뷰 컨트롤러는 Jinja2 템플릿에 다음 표준 컨텍스트 딕�
 | **관리자** | 카테고리 관리 | `admin/categories.php`, `fax_categories.tpl` | `views/admin.py`, `templates/admin_categories.jinja2`| `[COMPLETE]` | 팩스 카테고리 태그 관리 완료 (W26) |
 | **관리자** | 블랙리스트 관리 | `admin/dynconf.php`, `conf_dynconf.tpl` | `views/admin.py`, `templates/admin_dynconf.jinja2`| `[COMPLETE]` | 발신번호 수신거부 규칙 설정 완료 (W28) |
 | **관리자** | 회사별 이메일 포워딩| `admin/fax2email.php`, `conf_fax2email.tpl` | `views/admin.py`, `templates/admin_fax2email.jinja2` | `[COMPLETE]` | 팩스 수신 즉시 이메일 직접 전달 설정 (W29) |
-| **관리자** | 시스템 제어 | `admin/system_func.php`, `system_func.tpl` | `views/admin.py`, `templates/admin_sysfunc.jinja2` | `[COMPLETE]` | 시스템 제어(재부팅, 백업) 버튼 폼 완료 (W30) |
+| **관리자** | 시스템 제어 | `admin/system_func.php`, `system_func.tpl` | `views/admin.py`, `templates/admin_sysfunc.jinja2` | `[COMPLETE]` | 재부팅·종료(`NAMIFAX_REBOOT_CMD`/`NAMIFAX_SHUTDOWN_CMD`로 변경 가능), 팩스 보관소 tar.gz·DB 덤프(SQLite/MySQL/PostgreSQL) 내려받기 — `services/sysfunc.py` (W30) |
 | **모달** | 팩스 이메일 전달 | `email.php`, `email.tpl` | `views/modals.py`, `templates/modal_email.jinja2` | `[COMPLETE]` | 수신 팩스 이메일 포워딩 다이얼로그 (W31) |
 | **모달** | 회사명 할당 | `assign.php`, `assign.tpl` | `views/modals.py`, `templates/modal_assign.jinja2` | `[COMPLETE]` | 팩스 수신처 회사 자동 매칭 다이얼로그 (W32) |
 | **모달** | 메모 등록 | `set_note.php`, `set_note.tpl` | `views/modals.py`, `templates/modal_note.jinja2` | `[COMPLETE]` | 수신 팩스 설명 및 주석 작성 다이얼로그 (W33) |
@@ -767,7 +767,7 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 
 ### 16.2 웹 뷰 계층 DB 서비스 전면 연동
 - **관리자 뷰 계층 (`views/admin.py`)**:
-  - `admin_users_view`: `AFUserAccount` 서비스를 연동하여 사용자 계정 CRUD(`list_accounts`, `create`, `update`, `remove`) DB 연동.
+  - `admin_users_view`(`views/admin_users.py`로 이동): `AFUserAccount` 서비스를 연동하여 사용자 계정 CRUD(`list_accounts`, `create`, `update`, `remove`) DB 연동.
   - `admin_modems_view`: `FaxModem` 서비스를 연동하여 모뎀 장치 CRUD 및 `faxstat` 상태 연동.
 - **주소록 및 배포 목록 뷰 (`views/addressbook.py`, `views/distrolist.py`)**:
   - `addressbook_list_view` / `addressbook_edit_view`: `AFAddressBook` 서비스를 연동하여 회사 및 팩스번호 CRUD DB 연동.

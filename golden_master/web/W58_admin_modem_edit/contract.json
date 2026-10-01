@@ -4,26 +4,40 @@
   "forms": [
     {
       "method": "post",
+      "action": "/admin/modems",
       "inputs": [
         {
           "name": "device",
-          "type": "text",
-          "required": true
+          "type": "text"
         },
         {
           "name": "alias",
-          "type": "text",
-          "required": true
+          "type": "text"
         },
         {
-          "name": "contact"
+          "name": "contact",
+          "type": "text"
         },
         {
-          "name": "printer"
+          "name": "printer",
+          "type": "text"
+        },
+        {
+          "name": "faxcatid",
+          "type": "select"
+        },
+        {
+          "name": "devid",
+          "type": "hidden"
+        },
+        {
+          "name": "device2",
+          "type": "hidden"
         },
         {
           "name": "_submit_check",
-          "type": "hidden"
+          "type": "hidden",
+          "value": "1"
         }
       ],
       "submit_button": true
@@ -41,8 +55,8 @@
         "index": 0,
         "action": "/admin/modems",
         "method": "POST",
-        "inputs_count": 5,
-        "buttons_count": 1,
+        "inputs_count": 8,
+        "buttons_count": 2,
         "field_sequence": [
           {
             "name": "device",
@@ -61,7 +75,7 @@
           {
             "name": "contact",
             "tag": "input",
-            "type": "email",
+            "type": "text",
             "id": "contact",
             "required": false
           },
@@ -70,6 +84,27 @@
             "tag": "input",
             "type": "text",
             "id": "printer",
+            "required": false
+          },
+          {
+            "name": "faxcatid",
+            "tag": "select",
+            "type": "select",
+            "id": "category",
+            "required": false
+          },
+          {
+            "name": "devid",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "device2",
+            "tag": "input",
+            "type": "hidden",
+            "id": "",
             "required": false
           },
           {
@@ -84,8 +119,14 @@
           {
             "tag": "button",
             "type": "submit",
-            "name": "",
-            "text": "Save Modem"
+            "name": "delete",
+            "text": "Delete"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "save",
+            "text": "Save"
           }
         ]
       }

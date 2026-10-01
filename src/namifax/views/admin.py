@@ -95,160 +95,65 @@ def admin_dashboard_view(request):
     }
 
 
-@view_config(route_name="admin_users", renderer="namifax:templates/admin_users.jinja2", permission="admin")
-def admin_users_view(request):
-    """Admin user account management matching legacy admin/users.php semantics."""
-    identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-
-    if request.method == "POST":
-        if request.params.get("delete"):
-            uid = request.params.get("uid")
-            if uid and str(uid) != "1":
-                try:
-                    from namifax.services.user_account import AFUserAccount
-                    svc = AFUserAccount(db=request.dbsession)
-                    svc.remove(int(uid))
-                except Exception:
-                    pass
-            return HTTPFound(location=request.route_url("admin_users"))
-
-        uid = request.params.get("uid")
-        name = request.params.get("name", "").strip()
-        username = request.params.get("username", "").strip()
-        email = request.params.get("email", "").strip()
-        password = request.params.get("password", "").strip()
-        superuser = bool(request.params.get("superuser"))
-        is_admin = bool(request.params.get("is_admin"))
-        can_del = bool(request.params.get("can_del"))
-        any_modem = bool(request.params.get("any_modem", True))
-
-        if name and username:
-            try:
-                from namifax.services.user_account import AFUserAccount
-                svc = AFUserAccount(db=request.dbsession)
-                if uid:
-                    if svc.load(int(uid)):
-                        svc.set_username(username)
-                        svc.set_email(email)
-                        svc.dbdata["name"] = name
-                        svc.dbdata["superuser"] = int(superuser)
-                        svc.dbdata["is_admin"] = int(is_admin)
-                        svc.dbdata["can_del"] = int(can_del)
-                        svc.dbdata["any_modem"] = int(any_modem)
-                        if password:
-                            svc.change_password(password)
-                        svc.update()
-                else:
-                    svc.create({
-                        "name": name,
-                        "username": username,
-                        "email": email,
-                        "password": password or "password",
-                        "superuser": int(superuser),
-                        "is_admin": int(is_admin),
-                        "can_del": int(can_del),
-                        "any_modem": int(any_modem),
-                    })
-            except Exception:
-                pass
-
-            return HTTPFound(location=request.route_url("admin_users"))
-
-    users = get_all_admin_users(request.dbsession)
-    uid = request.params.get("uid")
-    selected_user = None
-    if uid:
-        selected_user = next((u for u in users if str(u.get("uid")) == str(uid)), None)
-        if not selected_user and str(uid) == "1" and users:
-            selected_user = users[0]
-
-    did = DIDRouting(db=request.dbsession)
-    try:
-        did_routes = did.list_all()
-    except Exception:
-        did_routes = []
-
-    fc = FaxPDFCategory(db=request.dbsession)
-    try:
-        categories = fc.get_categories() or []
-    except Exception:
-        categories = []
-
-    return {
-        "title": "NamiFAX - Admin - Users",
-        "current_user": identity,
-        "active_tab": "admin",
-        "active_admin": "users",
-        "users": users,
-        "selected_user": selected_user or {"name": "", "username": "", "email": "", "is_admin": False, "superuser": False, "can_del": False, "any_modem": True},
-        "did_routes": did_routes,
-        "modem_devices": get_all_admin_modems(request.dbsession),
-        "categories": categories,
-    }
-
-
 @view_config(route_name="admin_modems", renderer="namifax:templates/admin_modems.jinja2", permission="admin")
 def admin_modems_view(request):
-    """Admin fax modem line devices configuration and settings form."""
+    """Fax modem lines: create, save and delete, with a category and a message for each outcome (the original conf_modems)."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
+    from namifax.services.modem import FaxModem
+
+    fm = FaxModem(db=request.dbsession)
+    message = error = None
+    selected_devid = None
+
     if request.method == "POST":
-        device = request.params.get("device", "").strip()
-        alias = request.params.get("alias", "").strip()
-        contact = request.params.get("contact", "").strip()
-        printer = request.params.get("printer", "").strip()
-        faxcatid = request.params.get("faxcatid")
-        faxcatid_val = int(faxcatid) if faxcatid and str(faxcatid).isdigit() else None
-        devid = request.params.get("devid")
-
-        if request.params.get("delete"):
-            if devid:
-                try:
-                    from namifax.services.modem import FaxModem
-                    svc = FaxModem(db=request.dbsession)
-                    svc.delete_device(int(devid))
-                except Exception:
-                    pass
-            return HTTPFound(location=request.route_url("admin_modems"))
-
-        if device and alias:
-            try:
-                from namifax.services.modem import FaxModem
-                svc = FaxModem(db=request.dbsession)
-                if devid and svc.loadbyid(int(devid)):
-                    svc.set_alias(alias)
-                    svc.set_contact(contact)
-                    svc.set_printer(printer)
-                    if faxcatid_val is not None:
-                        svc.set_faxcatid(faxcatid_val)
-                elif svc.load_device(device):
-                    svc.set_alias(alias)
-                    svc.set_contact(contact)
-                    svc.set_printer(printer)
-                    if faxcatid_val is not None:
-                        svc.set_faxcatid(faxcatid_val)
+        post = request.POST
+        device, alias = (post.get("device") or "").strip(), (post.get("alias") or "").strip()
+        contact, printer = (post.get("contact") or "").strip(), (post.get("printer") or "").strip()
+        faxcat = (post.get("faxcatid") or "").strip()
+        faxcatid = int(faxcat) if faxcat.isdigit() else None
+        devid = (post.get("devid") or "").strip()
+        if devid.isdigit():
+            selected_devid = int(devid)
+            if post.get("delete"):
+                if fm.delete_device(int(devid)):
+                    message, selected_devid = _("Modem deleted"), None
                 else:
-                    svc.create(device=device, alias=alias, contact=contact, printer=printer, faxcatid=faxcatid_val)
-            except Exception:
-                pass
-
-            return HTTPFound(location=request.route_url("admin_modems"))
+                    error = fm.get_error()
+            elif post.get("save"):
+                if not alias:
+                    error = _("Please enter an alias")
+                elif fm.load_device((post.get("device2") or device).strip()):
+                    fm.set_contact(contact)
+                    fm.set_printer(printer)
+                    fm.set_faxcatid(faxcatid)
+                    fm.set_alias(alias)
+                    message = _("Modem updated")
+                else:
+                    error = fm.get_error()
+        elif not device:
+            error = _("Please enter a device name")
+        elif not alias:
+            error = _("Please enter an alias")
+        elif fm.load_device(device):
+            error = _("This modem already exists")
+        elif fm.create(device=device, alias=alias, contact=contact, printer=printer, faxcatid=faxcatid):
+            message = _("Modem created")
+        else:
+            error = fm.get_error()
+    else:
+        raw = (request.params.get("devid") or "").strip()
+        selected_devid = int(raw) if raw.isdigit() else None
+        if not selected_devid and request.params.get("device"):
+            if fm.load_device(request.params["device"]):
+                selected_devid = fm.devid
 
     modems = get_all_admin_modems(request.dbsession)
-    devid = request.params.get("devid")
-    device_param = request.params.get("device")
-    selected_modem = None
-    if devid:
-        selected_modem = next((m for m in modems if str(m.get("devid")) == str(devid)), None)
-    elif device_param:
-        selected_modem = next((m for m in modems if m.get("device") == device_param), None)
-
+    selected = next((m for m in modems if m.get("devid") == selected_devid), None) if selected_devid else None
+    categories = [(str(c["catid"]), c["name"]) for c in FaxPDFCategory(db=request.dbsession).get_categories() or []]
     return {
-        "title": "NamiFAX - Admin - Modems",
-        "current_user": identity,
-        "active_tab": "admin",
-        "active_admin": "modems",
-        "modems": modems,
-        "selected_modem": selected_modem or {"device": "", "alias": "", "contact": "", "printer": ""},
+        "title": "NamiFAX - Admin - Modems", "current_user": identity, "active_tab": "admin", "active_admin": "modems",
+        "modems": modems, "categories": categories, "message": message, "error": error,
+        "selected_modem": selected or {"device": "", "alias": "", "contact": "", "printer": "", "faxcatid": None},
     }
 
 
@@ -366,11 +271,16 @@ def get_all_syslogs(kw: str = "", day: str = "", month: str = "", year: str = ""
 @view_config(route_name="admin_syslog", renderer="namifax:templates/admin_system_logs.jinja2", permission="admin")
 def admin_system_logs_view(request):
     """Admin system events and HylaFAX audit log viewer with keyword and date filter."""
+    import datetime
+
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    kw = request.params.get("kw", "").strip()
-    day = request.params.get("day", "")
-    month = request.params.get("month", "")
-    year = request.params.get("year", "")
+    searched = "_submit_check" in request.params
+    today = datetime.date.today()
+    if searched:
+        kw = request.params.get("kw", "").strip()
+        day, month, year = (request.params.get(n, "") for n in ("day", "month", "year"))
+    else:                                                       # the original lists the day's events until a search is made
+        kw, day, month, year = "", f"{today.day:02d}", f"{today.month:02d}", str(today.year)
 
     logs = get_all_syslogs(kw=kw, day=day, month=month, year=year, session=request.dbsession)
 
@@ -386,7 +296,7 @@ def admin_system_logs_view(request):
         "year": year,
         "days": [f"{d:02d}" for d in range(1, 32)],
         "months": [f"{m:02d}" for m in range(1, 13)],
-        "years": ["2024", "2025", "2026", "2027"],
+        "years": [str(y) for y in range(2004, today.year + 2)],
     }
 
 
@@ -494,6 +404,8 @@ def admin_categories_view(request):
 
         if request.params.get("delete") and cid:
             if fc.delete_category(cid):
+                from namifax.services.archive_base import FaxPDFArchive
+                FaxPDFArchive(db=request.dbsession).remove_category(cid)         # the faxes that had it no longer point to it
                 message = "Fax category deleted successfully"
                 selected_id = None
             else:
@@ -558,6 +470,8 @@ def admin_barcodes_view(request):
         alias = request.params.get("alias", "").strip()
         contact = request.params.get("contact", "").strip()
         printer = request.params.get("printer", "").strip()
+        faxcat = (request.params.get("faxcatid") or "").strip()
+        faxcatid = int(faxcat) if faxcat.isdigit() else None
         barcode_id = request.params.get("barcode_id")
         bid = int(barcode_id) if barcode_id and str(barcode_id).isdigit() else selected_id
 
@@ -573,11 +487,12 @@ def admin_barcodes_view(request):
                 bc.set_alias(alias)
                 bc.set_contact(contact)
                 bc.set_printer(printer)
+                bc.set_faxcatid(faxcatid)
                 message = "Barcode routing rule updated"
             else:
                 error = bc.error or "Failed to update barcode route"
         elif request.params.get("create") or not bid:
-            if barcode and alias and bc.create(barcode, alias=alias, contact=contact, printer=printer):
+            if barcode and alias and bc.create(barcode, alias=alias, contact=contact, printer=printer, faxcatid=faxcatid):
                 message = "Barcode routing rule created"
             else:
                 error = bc.error or "Barcode and Alias are required"
@@ -594,6 +509,7 @@ def admin_barcodes_view(request):
                     "alias": bc.get_alias(),
                     "contact": bc.get_contact() or "",
                     "printer": bc.get_printer() or "",
+                    "faxcatid": bc.faxcatid,
                 }
         except Exception:
             pass
@@ -607,6 +523,7 @@ def admin_barcodes_view(request):
         "active_admin": "barcodes",
         "barcodes": barcodes,
         "selected_barcode": selected_barcode,
+        "categories": [(str(c["catid"]), c["name"]) for c in FaxPDFCategory(db=request.dbsession).get_categories() or []],
         "message": message,
         "error": error,
     }
@@ -676,9 +593,11 @@ def admin_dynconf_view(request):
     try:
         from namifax.services.modem import FaxModem
         fm = FaxModem(db=request.dbsession)
-        modems = fm.get_modems() or ["ttyS0"]
+        modems = []
+        for device in fm.get_modems() or []:
+            modems.append((device, f"{fm.get_alias()} ({device})" if fm.load_device(device) and fm.get_alias() else device))
     except Exception:
-        modems = ["ttyS0"]
+        modems = []
 
     return {
         "title": "NamiFAX - Admin - Dynamic Configuration",
@@ -788,44 +707,77 @@ def admin_fax2email_view(request):
 @view_config(route_name="admin_system_func", renderer="namifax:templates/admin_sysfunc.jinja2", permission="admin")
 @view_config(route_name="admin_sysfunc", renderer="namifax:templates/admin_sysfunc.jinja2", permission="admin")
 def admin_system_func_view(request):
-    """Admin system functions control panel."""
+    """System functions: reboot, shut down, download the fax archive or a database dump (the original system_func.php)."""
     import datetime
-    import io
-    import tarfile
+    import shutil
+    import subprocess
     import tempfile
 
+    from pyramid.response import FileIter, Response
+
+    from namifax.services import sysfunc
+
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    message = None
-    if request.method == "POST":
-        action = request.params.get("action")
-        if action == "backup":
-            backup_dir = os.environ.get("NAMIFAX_BACKUP_DIR") or "/var/spool/hylafax/backup"
+    message = error = None
+
+    def download(path: str, name: str, content_type: str):
+        """Send a temporary file and remove it afterwards."""
+        def chunks():
             try:
-                os.makedirs(backup_dir, exist_ok=True)
-            except OSError:
-                backup_dir = os.path.join(os.environ.get("NAMIFAX_TMPDIR") or tempfile.gettempdir(), "namifax_backup")
-                os.makedirs(backup_dir, exist_ok=True)
+                yield from FileIter(open(path, "rb"))
+            finally:
+                os.unlink(path)
 
-            ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-            archive_filename = f"namifax_backup_{ts}.tar.gz"
-            archive_path = os.path.join(backup_dir, archive_filename)
+        response = Response(content_type=content_type, app_iter=chunks(), content_length=os.path.getsize(path))
+        response.headers["Content-Disposition"] = f'attachment; filename="{name}"'
+        return response
 
-            with tarfile.open(archive_path, "w:gz") as tar:
-                manifest_content = f"NamiFAX System Backup\nGenerated: {datetime.datetime.now().isoformat()}\n".encode("utf-8")
-                ti = tarfile.TarInfo(name="backup_manifest.txt")
-                ti.size = len(manifest_content)
-                ti.mtime = int(datetime.datetime.now().timestamp())
-                tar.addfile(ti, io.BytesIO(manifest_content))
+    if request.method == "POST":
+        post = request.POST
+        today = datetime.date.today().strftime("%Y%m%d")
+        if post.get("reboot") or post.get("shutdown"):
+            command = sysfunc.reboot_command() if post.get("reboot") else sysfunc.shutdown_command()
+            try:
+                subprocess.Popen(command)
+                message = _("The system is rebooting. Please wait...") if post.get("reboot") else \
+                    _("The system is shutting down. Please wait...")
+            except OSError as exc:
+                error = f"{_('The command could not be run')}: {exc}"
+        elif post.get("download_ar"):
+            handle, path = tempfile.mkstemp(prefix="namifax-archive-", suffix=".tar.gz")
+            os.close(handle)
+            if sysfunc.write_archive(path):
+                return download(path, f"avantfax-archive-{today}.tar.gz", "application/gzip")
+            os.unlink(path)
+            error = _("There is no fax archive folder to download.")
+        elif post.get("download_db"):
+            handle, path = tempfile.mkstemp(prefix="namifax-schema-", suffix=".sql.gz")
+            os.close(handle)
+            url = request.dbsession.get_bind().url
+            try:
+                if sysfunc.is_sqlite(url):
+                    sysfunc.write_sqlite_dump(url.database, path)
+                else:
+                    import gzip
 
-            message = f"Backup archive successfully created in {backup_dir} ({archive_filename})"
-        elif action == "reboot":
-            message = "System reboot signal sent to host"
+                    argv, env = sysfunc.dump_command(url)
+                    proc = subprocess.Popen(argv, stdout=subprocess.PIPE, env=env)
+                    with gzip.open(path, "wb", compresslevel=9) as target:
+                        shutil.copyfileobj(proc.stdout, target)
+                    if proc.wait() != 0:
+                        raise OSError(f"{argv[0]} exited with {proc.returncode}")
+                return download(path, f"avantfax-schema-{today}.sql.gz", "application/gzip")
+            except (OSError, ValueError) as exc:
+                os.unlink(path)
+                error = f"{_('The database dump could not be made')}: {exc}"
+
     return {
         "title": "NamiFAX - Admin - System Functions",
         "current_user": identity,
         "active_tab": "admin",
         "active_admin": "sysfunc",
         "message": message,
+        "error": error,
     }
 
 

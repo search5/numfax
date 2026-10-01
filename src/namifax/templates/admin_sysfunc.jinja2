@@ -44,6 +44,9 @@
     </div>
   </div>
 
+  {% if message %}<div class="p-3 bg-emerald-950/60 border border-emerald-500/40 rounded-lg text-emerald-300 text-xs">{{ message }}</div>{% endif %}
+  {% if error %}<div class="p-3 bg-rose-950/60 border border-rose-500/40 rounded-lg text-rose-300 text-xs">{{ error }}</div>{% endif %}
+
   <!-- Strict Form Contract Container -->
   <form action="/admin/system_func" method="post" id="sysfunc-form" class="space-y-6">
     <input type="hidden" name="_submit_check" value="1" />

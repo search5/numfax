@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: eMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 21:51+0900\n"
+"POT-Creation-Date: 2026-10-01 23:03+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: el\n"
@@ -547,12 +547,11 @@ msgstr ""
 msgid "e.g. Main Inbound Line"
 msgstr ""
 
-msgid "Reset"
-msgstr "Reset"
+msgid "Are you sure you want to delete this modem?"
+msgstr ""
 
-#, fuzzy
-msgid "Save Modem"
-msgstr "Fax Modems"
+msgid "Create"
+msgstr ""
 
 msgid "Appliance Note:"
 msgstr "Σημείωση συσκευής:"
@@ -648,6 +647,9 @@ msgstr ""
 
 msgid "-- None --"
 msgstr "-- Κανένα --"
+
+msgid "Reset"
+msgstr "Reset"
 
 msgid ""
 "DID (Direct Inward Dialing) routing automatically redirects incoming "
@@ -945,6 +947,12 @@ msgstr ""
 "Οι μεταδόσεις και τα συμβάντα διακομιστή θα μεταδίδονται εδώ σε "
 "πραγματικό χρόνο."
 
+msgid "Delete User"
+msgstr ""
+
+msgid "Are you sure you want to delete the user"
+msgstr ""
+
 msgid "Manage system operator credentials, access permissions, and route mapping"
 msgstr ""
 "Διαχείριση διαπιστευτηρίων χειριστών συστήματος, δικαιωμάτων πρόσβασης "
@@ -952,6 +960,9 @@ msgstr ""
 
 msgid "Create New User"
 msgstr "Δημιουργία νέου χρήστη"
+
+msgid "Last IP"
+msgstr ""
 
 msgid "Superuser"
 msgstr "Υπερχρήστης"
@@ -965,8 +976,23 @@ msgstr "Ναι"
 msgid "NO"
 msgstr "Όχι"
 
-msgid "Configure User:"
-msgstr "Διαμόρφωση χρήστη:"
+msgid "users"
+msgstr ""
+
+msgid "user"
+msgstr ""
+
+msgid "Modify User"
+msgstr ""
+
+msgid "New User"
+msgstr ""
+
+msgid "User details saved"
+msgstr ""
+
+msgid "Account enabled"
+msgstr ""
 
 msgid "Full Name"
 msgstr "Πλήρες όνομα"
@@ -974,8 +1000,47 @@ msgstr "Πλήρες όνομα"
 msgid "Password"
 msgstr "συνθηματικό"
 
+msgid "Leave empty to keep the current password (a new user is sent a random one)"
+msgstr ""
+
 msgid "Email Address"
 msgstr "Διεύθυνση Email"
+
+msgid "Password expiration cycle"
+msgstr ""
+
+msgid "Language"
+msgstr ""
+
+msgid "Password can be reused"
+msgstr ""
+
+msgid "My Company"
+msgstr ""
+
+msgid "My Location"
+msgstr ""
+
+msgid "My Voice Number"
+msgstr ""
+
+msgid "My Fax Number"
+msgstr ""
+
+msgid "TSI ID"
+msgstr ""
+
+msgid "Select Cover Page"
+msgstr ""
+
+msgid "New fax sound"
+msgstr ""
+
+msgid "Inbox shows"
+msgstr ""
+
+msgid "Archive shows"
+msgstr ""
 
 msgid "Permissions & Capabilities"
 msgstr "Δικαιώματα & Δυνατότητες"
@@ -992,9 +1057,18 @@ msgstr "Δυνατότητα διαγραφής φαξ"
 msgid "Send on Any Modem"
 msgstr "Αποστολή μέσω οποιουδήποτε μόντεμ"
 
+msgid "You must first create a DID/DTMF group"
+msgstr ""
+
+msgid "You must first create a modem"
+msgstr ""
+
 #, fuzzy
 msgid "Categories"
 msgstr "Προβολή κατηγοριών φαξ"
+
+msgid "You must first create a category"
+msgstr ""
 
 #, fuzzy
 msgid "Archive Search"
@@ -1117,6 +1191,12 @@ msgstr "Επιλογή εγγραφής επαφής"
 
 msgid "Or type a new company name"
 msgstr ""
+
+msgid "Delete selected faxes?"
+msgstr ""
+
+msgid "faxes"
+msgstr "φαξ"
 
 msgid "Distribution Lists"
 msgstr "Λίστες διανομής"
@@ -1373,9 +1453,6 @@ msgstr "Περιστροφή φαξ"
 msgid "Download TIFF"
 msgstr "Λήψη TIFF"
 
-msgid "faxes"
-msgstr "φαξ"
-
 msgid "0 FAXES"
 msgstr "0 ΦΑΞ"
 
@@ -1517,22 +1594,31 @@ msgstr "Νέο φαξ"
 msgid "Dispatch PDF document attachment to email recipients"
 msgstr "Αποστολή συνημμένου εγγράφου PDF σε παραλήπτες email"
 
+msgid "Back"
+msgstr ""
+
+msgid "From"
+msgstr ""
+
 msgid "Recipients"
 msgstr "Παραλήπτες"
 
-msgid "recipient@example.com (comma separated)"
+msgid "CC"
+msgstr ""
+
+msgid "BCC"
 msgstr ""
 
 msgid "Subject"
 msgstr "Θέμα"
 
-msgid "NamiFAX Transmission Document"
+msgid "PDF file name"
 msgstr ""
 
 msgid "Message"
 msgstr "Μήνυμα"
 
-msgid "Please find the attached facsimile document."
+msgid "Archive fax"
 msgstr ""
 
 msgid "Send"
@@ -1787,9 +1873,6 @@ msgstr "Προβολή κατηγοριών φαξ"
 
 msgid "Retries automatically on busy signal."
 msgstr "Αυτόματη επανάληψη σε περίπτωση σήματος κατειλημμένου."
-
-msgid "TSI ID"
-msgstr ""
 
 msgid "Notify on retry"
 msgstr "Ειδοποίηση κατά την επανάληψη"
@@ -2056,6 +2139,24 @@ msgstr ""
 msgid "You are not allowed to delete contacts."
 msgstr ""
 
+msgid "Modem deleted"
+msgstr ""
+
+msgid "Please enter an alias"
+msgstr ""
+
+msgid "Modem updated"
+msgstr ""
+
+msgid "Please enter a device name"
+msgstr ""
+
+msgid "This modem already exists"
+msgstr ""
+
+msgid "Modem created"
+msgstr ""
+
 msgid "Cover page template removed successfully"
 msgstr ""
 
@@ -2086,6 +2187,21 @@ msgstr ""
 msgid "Fax to Email settings saved"
 msgstr ""
 
+msgid "The system is rebooting. Please wait..."
+msgstr ""
+
+msgid "The system is shutting down. Please wait..."
+msgstr ""
+
+msgid "The command could not be run"
+msgstr ""
+
+msgid "There is no fax archive folder to download."
+msgstr ""
+
+msgid "The database dump could not be made"
+msgstr ""
+
 msgid "Access denied. Superadmin permission required."
 msgstr ""
 
@@ -2110,6 +2226,53 @@ msgstr ""
 msgid "SAML 2.0 configuration saved successfully."
 msgstr ""
 
+msgid "Catch All"
+msgstr ""
+
+msgid "Never"
+msgstr ""
+
+msgid "Every 3 Months"
+msgstr ""
+
+msgid "Every 6 Months"
+msgstr ""
+
+msgid "Please enter a name"
+msgstr ""
+
+msgid "You must enter a username"
+msgstr ""
+
+msgid "Non-alphanumeric characters are not allowed in username."
+msgstr ""
+
+#, python-format
+msgid ""
+"Hello %(name)s,\n"
+"\n"
+"This email contains your username and password to log into NamiFAX "
+"(%(url)s)\n"
+"\n"
+"Username - %(username)s\n"
+"Password - %(password)s\n"
+"\n"
+"Please do not respond to this message as it is automatically generated "
+"and is for information purposes only"
+msgstr ""
+
+msgid "New User Details"
+msgstr ""
+
+msgid "The user does not exist."
+msgstr ""
+
+msgid "You cannot delete your own account."
+msgstr ""
+
+msgid "You cannot delete the last superuser."
+msgstr ""
+
 msgid "Please enter a valid number."
 msgstr ""
 
@@ -2132,6 +2295,15 @@ msgid ""
 msgstr ""
 
 msgid "Email failed to send"
+msgstr ""
+
+msgid "The fax document was not found."
+msgstr ""
+
+msgid "Failed to send email"
+msgstr ""
+
+msgid "Email sent successfully"
 msgstr ""
 
 msgid "Your session has expired. Reload the page and try again."
@@ -2255,4 +2427,19 @@ msgstr ""
 #~ "Για αποστολή σε πολλούς παραλήπτες "
 #~ "ταυτόχρονα, διαχωρίστε τους αριθμούς με "
 #~ "κόμμα."
+
+#~ msgid "Save Modem"
+#~ msgstr "Fax Modems"
+
+#~ msgid "Configure User:"
+#~ msgstr "Διαμόρφωση χρήστη:"
+
+#~ msgid "recipient@example.com (comma separated)"
+#~ msgstr ""
+
+#~ msgid "NamiFAX Transmission Document"
+#~ msgstr ""
+
+#~ msgid "Please find the attached facsimile document."
+#~ msgstr ""
 

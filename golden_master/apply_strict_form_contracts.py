@@ -31,13 +31,13 @@ DYNAMIC_STATE_DEFS = {
     "W19_admin_users": {
         "superuser_rights": {
             "trigger_selector": "input[name='superuser']",
-            "affected_inputs": ["didrouting[]", "modemdevs[]", "faxcats[]"]
+            "affected_inputs": ["modemdevs[]", "faxcats[]"]
         }
     },
     "W64_admin_user_edit": {
         "superuser_rights": {
             "trigger_selector": "input[name='superuser']",
-            "affected_inputs": ["didrouting[]", "modemdevs[]", "faxcats[]"]
+            "affected_inputs": ["modemdevs[]", "faxcats[]"]
         },
         "delete_action": {
             "trigger_selector": "button[name='delete']",

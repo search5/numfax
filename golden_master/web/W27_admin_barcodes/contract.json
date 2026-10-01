@@ -16,11 +16,15 @@
         },
         {
           "name": "contact",
-          "type": "text"
+          "type": "email"
         },
         {
           "name": "printer",
           "type": "text"
+        },
+        {
+          "name": "faxcatid",
+          "type": "select"
         },
         {
           "name": "_submit_check",
@@ -43,7 +47,7 @@
         "index": 0,
         "action": "/admin/barcodes",
         "method": "POST",
-        "inputs_count": 5,
+        "inputs_count": 6,
         "buttons_count": 1,
         "field_sequence": [
           {
@@ -72,6 +76,13 @@
             "tag": "input",
             "type": "text",
             "id": "printer",
+            "required": false
+          },
+          {
+            "name": "faxcatid",
+            "tag": "select",
+            "type": "select",
+            "id": "faxcatid",
             "required": false
           },
           {

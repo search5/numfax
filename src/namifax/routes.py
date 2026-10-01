@@ -36,6 +36,7 @@ def includeme(config):
     # Admin only routes (permission: 'admin')
     config.add_route("admin", "/admin")
     config.add_route("admin_users", "/admin/users")
+    config.add_route("admin_user_delete", "/admin/users/delete")
     config.add_route("admin_modems", "/admin/modems")
     config.add_route("admin_routing_did", "/admin/routing/did")
     config.add_route("admin_did", "/admin/did")

@@ -161,7 +161,7 @@ def test_view_lists_and_filters(admin_call, dbsession):
 
     dbsession.execute(text("DELETE FROM SysLog"))
     _add(dbsession, ("2026-10-01 10:00:00", "alpha event"), ("2026-09-01 10:00:00", "beta event"))
-    res = admin_call(admin_system_logs_view, "POST", {"kw": "event", "year": "2026", "month": "10"})
+    res = admin_call(admin_system_logs_view, "POST", {"kw": "event", "year": "2026", "month": "10", "_submit_check": "1"})
     assert [r["logtext"] for r in res["logs"]] == ["alpha event"]
     assert (res["kw"], res["year"], res["month"]) == ("event", "2026", "10")
 

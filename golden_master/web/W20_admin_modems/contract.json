@@ -8,21 +8,23 @@
       "inputs": [
         {
           "name": "device",
-          "type": "text",
-          "required": true
+          "type": "text"
         },
         {
           "name": "alias",
-          "type": "text",
-          "required": true
+          "type": "text"
         },
         {
           "name": "contact",
-          "type": "email"
+          "type": "text"
         },
         {
           "name": "printer",
           "type": "text"
+        },
+        {
+          "name": "faxcatid",
+          "type": "select"
         },
         {
           "name": "_submit_check",
@@ -50,7 +52,7 @@
         "index": 0,
         "action": "/admin/modems",
         "method": "POST",
-        "inputs_count": 5,
+        "inputs_count": 6,
         "buttons_count": 1,
         "field_sequence": [
           {
@@ -70,7 +72,7 @@
           {
             "name": "contact",
             "tag": "input",
-            "type": "email",
+            "type": "text",
             "id": "contact",
             "required": false
           },
@@ -79,6 +81,13 @@
             "tag": "input",
             "type": "text",
             "id": "printer",
+            "required": false
+          },
+          {
+            "name": "faxcatid",
+            "tag": "select",
+            "type": "select",
+            "id": "category",
             "required": false
           },
           {
@@ -93,8 +102,8 @@
           {
             "tag": "button",
             "type": "submit",
-            "name": "",
-            "text": "Save Modem"
+            "name": "create",
+            "text": "Create"
           }
         ]
       }

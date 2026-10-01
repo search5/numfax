@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: jMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-01 21:51+0900\n"
+"POT-Creation-Date: 2026-10-01 23:03+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -531,12 +531,11 @@ msgstr ""
 msgid "e.g. Main Inbound Line"
 msgstr ""
 
-msgid "Reset"
-msgstr "Reset"
+msgid "Are you sure you want to delete this modem?"
+msgstr ""
 
-#, fuzzy
-msgid "Save Modem"
-msgstr "Fax Modems"
+msgid "Create"
+msgstr ""
 
 msgid "Appliance Note:"
 msgstr "アプライアンスの注記:"
@@ -627,6 +626,9 @@ msgstr ""
 
 msgid "-- None --"
 msgstr "-- なし --"
+
+msgid "Reset"
+msgstr "Reset"
 
 msgid ""
 "DID (Direct Inward Dialing) routing automatically redirects incoming "
@@ -909,11 +911,20 @@ msgstr "条件に一致するシステムログが見つかりませんでした
 msgid "Transmissions and server events will be streamed here in real time."
 msgstr "送信履歴およびサーバーイベントがここにリアルタイムで配信されます。"
 
+msgid "Delete User"
+msgstr ""
+
+msgid "Are you sure you want to delete the user"
+msgstr ""
+
 msgid "Manage system operator credentials, access permissions, and route mapping"
 msgstr "システムオペレーターの認証情報、アクセス権限、およびルーティングマッピングを管理します"
 
 msgid "Create New User"
 msgstr "新規ユーザーを作成"
+
+msgid "Last IP"
+msgstr ""
 
 msgid "Superuser"
 msgstr "スーパーユーザー"
@@ -927,8 +938,23 @@ msgstr "はい"
 msgid "NO"
 msgstr "いいえ"
 
-msgid "Configure User:"
-msgstr "ユーザー設定:"
+msgid "users"
+msgstr ""
+
+msgid "user"
+msgstr ""
+
+msgid "Modify User"
+msgstr ""
+
+msgid "New User"
+msgstr ""
+
+msgid "User details saved"
+msgstr ""
+
+msgid "Account enabled"
+msgstr ""
 
 msgid "Full Name"
 msgstr "氏名"
@@ -936,8 +962,47 @@ msgstr "氏名"
 msgid "Password"
 msgstr "パスワード"
 
+msgid "Leave empty to keep the current password (a new user is sent a random one)"
+msgstr ""
+
 msgid "Email Address"
 msgstr "メールアドレス"
+
+msgid "Password expiration cycle"
+msgstr ""
+
+msgid "Language"
+msgstr ""
+
+msgid "Password can be reused"
+msgstr ""
+
+msgid "My Company"
+msgstr ""
+
+msgid "My Location"
+msgstr ""
+
+msgid "My Voice Number"
+msgstr ""
+
+msgid "My Fax Number"
+msgstr ""
+
+msgid "TSI ID"
+msgstr ""
+
+msgid "Select Cover Page"
+msgstr ""
+
+msgid "New fax sound"
+msgstr ""
+
+msgid "Inbox shows"
+msgstr ""
+
+msgid "Archive shows"
+msgstr ""
 
 msgid "Permissions & Capabilities"
 msgstr "権限と機能"
@@ -954,9 +1019,18 @@ msgstr "FAXの削除権限"
 msgid "Send on Any Modem"
 msgstr "すべてのモデムから送信可能"
 
+msgid "You must first create a DID/DTMF group"
+msgstr ""
+
+msgid "You must first create a modem"
+msgstr ""
+
 #, fuzzy
 msgid "Categories"
 msgstr "FAXカテゴリを閲覧"
+
+msgid "You must first create a category"
+msgstr ""
 
 #, fuzzy
 msgid "Archive Search"
@@ -1073,6 +1147,12 @@ msgstr "連絡先レコードを選択"
 
 msgid "Or type a new company name"
 msgstr ""
+
+msgid "Delete selected faxes?"
+msgstr ""
+
+msgid "faxes"
+msgstr "FAX"
 
 msgid "Distribution Lists"
 msgstr "宛先リスト"
@@ -1325,9 +1405,6 @@ msgstr "FAXの回転"
 msgid "Download TIFF"
 msgstr "TIFFをダウンロード"
 
-msgid "faxes"
-msgstr "FAX"
-
 msgid "0 FAXES"
 msgstr "FAX 0件"
 
@@ -1458,22 +1535,31 @@ msgstr "FAXの送信"
 msgid "Dispatch PDF document attachment to email recipients"
 msgstr "PDFドキュメント添付ファイルをメール受信者に配信します"
 
+msgid "Back"
+msgstr ""
+
+msgid "From"
+msgstr ""
+
 msgid "Recipients"
 msgstr "宛先"
 
-msgid "recipient@example.com (comma separated)"
+msgid "CC"
+msgstr ""
+
+msgid "BCC"
 msgstr ""
 
 msgid "Subject"
 msgstr "タイトル"
 
-msgid "NamiFAX Transmission Document"
+msgid "PDF file name"
 msgstr ""
 
 msgid "Message"
 msgstr "メッセージ"
 
-msgid "Please find the attached facsimile document."
+msgid "Archive fax"
 msgstr ""
 
 msgid "Send"
@@ -1717,9 +1803,6 @@ msgstr "FAXカテゴリを閲覧"
 
 msgid "Retries automatically on busy signal."
 msgstr "話し中の場合は自動的に再試行します。"
-
-msgid "TSI ID"
-msgstr ""
 
 msgid "Notify on retry"
 msgstr "再試行時に通知"
@@ -1983,6 +2066,24 @@ msgstr ""
 msgid "You are not allowed to delete contacts."
 msgstr ""
 
+msgid "Modem deleted"
+msgstr ""
+
+msgid "Please enter an alias"
+msgstr ""
+
+msgid "Modem updated"
+msgstr ""
+
+msgid "Please enter a device name"
+msgstr ""
+
+msgid "This modem already exists"
+msgstr ""
+
+msgid "Modem created"
+msgstr ""
+
 msgid "Cover page template removed successfully"
 msgstr ""
 
@@ -2013,6 +2114,21 @@ msgstr ""
 msgid "Fax to Email settings saved"
 msgstr ""
 
+msgid "The system is rebooting. Please wait..."
+msgstr ""
+
+msgid "The system is shutting down. Please wait..."
+msgstr ""
+
+msgid "The command could not be run"
+msgstr ""
+
+msgid "There is no fax archive folder to download."
+msgstr ""
+
+msgid "The database dump could not be made"
+msgstr ""
+
 msgid "Access denied. Superadmin permission required."
 msgstr ""
 
@@ -2037,6 +2153,53 @@ msgstr ""
 msgid "SAML 2.0 configuration saved successfully."
 msgstr ""
 
+msgid "Catch All"
+msgstr ""
+
+msgid "Never"
+msgstr ""
+
+msgid "Every 3 Months"
+msgstr ""
+
+msgid "Every 6 Months"
+msgstr ""
+
+msgid "Please enter a name"
+msgstr ""
+
+msgid "You must enter a username"
+msgstr ""
+
+msgid "Non-alphanumeric characters are not allowed in username."
+msgstr ""
+
+#, python-format
+msgid ""
+"Hello %(name)s,\n"
+"\n"
+"This email contains your username and password to log into NamiFAX "
+"(%(url)s)\n"
+"\n"
+"Username - %(username)s\n"
+"Password - %(password)s\n"
+"\n"
+"Please do not respond to this message as it is automatically generated "
+"and is for information purposes only"
+msgstr ""
+
+msgid "New User Details"
+msgstr ""
+
+msgid "The user does not exist."
+msgstr ""
+
+msgid "You cannot delete your own account."
+msgstr ""
+
+msgid "You cannot delete the last superuser."
+msgstr ""
+
 msgid "Please enter a valid number."
 msgstr ""
 
@@ -2059,6 +2222,15 @@ msgid ""
 msgstr ""
 
 msgid "Email failed to send"
+msgstr ""
+
+msgid "The fax document was not found."
+msgstr ""
+
+msgid "Failed to send email"
+msgstr ""
+
+msgid "Email sent successfully"
 msgstr ""
 
 msgid "Your session has expired. Reload the page and try again."
@@ -2168,4 +2340,19 @@ msgstr ""
 
 #~ msgid "To send to multiple recipients at once, separate numbers with a comma."
 #~ msgstr "複数の宛先に一度に送信する場合は、番号をカンマで区切ります。"
+
+#~ msgid "Save Modem"
+#~ msgstr "Fax Modems"
+
+#~ msgid "Configure User:"
+#~ msgstr "ユーザー設定:"
+
+#~ msgid "recipient@example.com (comma separated)"
+#~ msgstr ""
+
+#~ msgid "NamiFAX Transmission Document"
+#~ msgstr ""
+
+#~ msgid "Please find the attached facsimile document."
+#~ msgstr ""
 

@@ -4,15 +4,95 @@
   "forms": [
     {
       "method": "post",
+      "action": "/admin/users",
       "inputs": [
         {
-          "name": "name"
+          "name": "acc_enabled",
+          "type": "checkbox"
         },
         {
-          "name": "username"
+          "name": "name",
+          "type": "text"
         },
         {
-          "name": "email"
+          "name": "username",
+          "type": "text"
+        },
+        {
+          "name": "password",
+          "type": "password"
+        },
+        {
+          "name": "email",
+          "type": "text"
+        },
+        {
+          "name": "pwdcycle",
+          "type": "select"
+        },
+        {
+          "name": "language",
+          "type": "select"
+        },
+        {
+          "name": "pwd_reuse",
+          "type": "checkbox"
+        },
+        {
+          "name": "from_company",
+          "type": "text"
+        },
+        {
+          "name": "from_location",
+          "type": "text"
+        },
+        {
+          "name": "from_voicenumber",
+          "type": "text"
+        },
+        {
+          "name": "from_faxnumber",
+          "type": "text"
+        },
+        {
+          "name": "user_tsi",
+          "type": "text"
+        },
+        {
+          "name": "coverpage_id",
+          "type": "select"
+        },
+        {
+          "name": "faxperpageinbox",
+          "type": "select"
+        },
+        {
+          "name": "faxperpagearchive",
+          "type": "select"
+        },
+        {
+          "name": "is_admin",
+          "type": "checkbox"
+        },
+        {
+          "name": "superuser",
+          "type": "checkbox"
+        },
+        {
+          "name": "can_del",
+          "type": "checkbox"
+        },
+        {
+          "name": "any_modem",
+          "type": "checkbox"
+        },
+        {
+          "name": "modemdevs[]",
+          "type": "checkbox"
+        },
+        {
+          "name": "faxcats[]",
+          "type": "checkbox"
         },
         {
           "name": "uid",
@@ -20,14 +100,15 @@
         },
         {
           "name": "_submit_check",
-          "type": "hidden"
+          "type": "hidden",
+          "value": "1"
         }
       ],
       "submit_button": true
     }
   ],
   "required_text": [
-    "Configure User",
+    "Modify User",
     "Save",
     "Delete"
   ],
@@ -38,22 +119,29 @@
         "index": 0,
         "action": "/admin/users",
         "method": "POST",
-        "inputs_count": 16,
+        "inputs_count": 27,
         "buttons_count": 2,
         "field_sequence": [
+          {
+            "name": "acc_enabled",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "acc_enabled",
+            "required": false
+          },
           {
             "name": "name",
             "tag": "input",
             "type": "text",
             "id": "name",
-            "required": true
+            "required": false
           },
           {
             "name": "username",
             "tag": "input",
             "type": "text",
             "id": "username",
-            "required": true
+            "required": false
           },
           {
             "name": "password",
@@ -65,9 +153,86 @@
           {
             "name": "email",
             "tag": "input",
-            "type": "email",
+            "type": "text",
             "id": "email",
-            "required": true
+            "required": false
+          },
+          {
+            "name": "pwdcycle",
+            "tag": "select",
+            "type": "select",
+            "id": "pwdcycle",
+            "required": false
+          },
+          {
+            "name": "language",
+            "tag": "select",
+            "type": "select",
+            "id": "language",
+            "required": false
+          },
+          {
+            "name": "pwd_reuse",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "from_company",
+            "tag": "input",
+            "type": "text",
+            "id": "from_company",
+            "required": false
+          },
+          {
+            "name": "from_location",
+            "tag": "input",
+            "type": "text",
+            "id": "from_location",
+            "required": false
+          },
+          {
+            "name": "from_voicenumber",
+            "tag": "input",
+            "type": "text",
+            "id": "from_voicenumber",
+            "required": false
+          },
+          {
+            "name": "from_faxnumber",
+            "tag": "input",
+            "type": "text",
+            "id": "from_faxnumber",
+            "required": false
+          },
+          {
+            "name": "user_tsi",
+            "tag": "input",
+            "type": "text",
+            "id": "user_tsi",
+            "required": false
+          },
+          {
+            "name": "coverpage_id",
+            "tag": "select",
+            "type": "select",
+            "id": "coverpage_id",
+            "required": false
+          },
+          {
+            "name": "faxperpageinbox",
+            "tag": "select",
+            "type": "select",
+            "id": "faxperpageinbox",
+            "required": false
+          },
+          {
+            "name": "faxperpagearchive",
+            "tag": "select",
+            "type": "select",
+            "id": "faxperpagearchive",
+            "required": false
           },
           {
             "name": "is_admin",
@@ -98,20 +263,6 @@
             "required": false
           },
           {
-            "name": "didrouting[]",
-            "tag": "input",
-            "type": "checkbox",
-            "id": "",
-            "required": false
-          },
-          {
-            "name": "didrouting[]",
-            "tag": "input",
-            "type": "checkbox",
-            "id": "",
-            "required": false
-          },
-          {
             "name": "modemdevs[]",
             "tag": "input",
             "type": "checkbox",
@@ -120,6 +271,13 @@
           },
           {
             "name": "modemdevs[]",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "",
+            "required": false
+          },
+          {
+            "name": "faxcats[]",
             "tag": "input",
             "type": "checkbox",
             "id": "",
@@ -159,12 +317,12 @@
             "tag": "button",
             "type": "submit",
             "name": "delete",
-            "text": "Delete"
+            "text": "Delete User"
           },
           {
             "tag": "button",
             "type": "submit",
-            "name": "save",
+            "name": "",
             "text": "Save"
           }
         ]
@@ -175,7 +333,6 @@
     "superuser_rights": {
       "trigger_selector": "input[name='superuser']",
       "affected_inputs": [
-        "didrouting[]",
         "modemdevs[]",
         "faxcats[]"
       ]

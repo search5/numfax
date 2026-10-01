@@ -101,6 +101,13 @@
           <label for="printer" class="block font-semibold text-slate-300 text-xs mb-1.5">{{ _('Printer') }}</label>
           <input type="text" name="printer" id="printer" value="{{ selected_barcode.printer if selected_barcode else '' }}" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white font-mono focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition" />
         </div>
+        <div>
+          <label for="faxcatid" class="block font-semibold text-slate-300 text-xs mb-1.5">{{ _('Category') }}</label>
+          <select name="faxcatid" id="faxcatid" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition">
+            <option value=""></option>
+            {% for cid, cname in categories %}<option value="{{ cid }}" {% if selected_barcode and selected_barcode.faxcatid|string == cid %}selected{% endif %}>{{ cname }}</option>{% endfor %}
+          </select>
+        </div>
 
         <input type="hidden" name="_submit_check" value="1" />
         {% if selected_barcode %}
