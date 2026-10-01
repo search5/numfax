@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import re
 from typing import Any
 
@@ -15,6 +16,11 @@ DEFAULT_LANG = {
     "NAME_MISSING": "Please enter a name",
     "REGWARN_MAIL_EXISTS": "A contact with that e-mail address already exists",
 }
+
+
+# The original installer creates a company and a fax number with this placeholder: the faxes of a deleted company are
+# moved to it so that they are not lost. It is not shown in lists.
+RESERVED_FAX_NUM = os.environ.get("AVANTFAX_RESERVED_FAX_NUM", "XXXXXXX")
 
 
 def clean_faxnum(faxnum: str | None) -> str:
@@ -96,13 +102,58 @@ class AFAddressBook:
         self.abook_id = None
         return False
 
+    def _reserved_ids(self) -> set[int]:
+        rows = self.addressbookfax.find({"faxnumber": RESERVED_FAX_NUM}, reduce_single=False)
+        return {int(r["abook_id"]) for r in (rows if isinstance(rows, list) else []) if r.get("abook_id") is not None}
+
     def get_companies(self, with_reserved: bool = False) -> list[dict[str, Any]]:
-        """Return all companies ordered by company name."""
-        return self.addressbook.select(order_by="company")
+        """Return all companies ordered by company name (without the reserved placeholder unless asked)."""
+        rows = self.addressbook.select(order_by="company")
+        if with_reserved:
+            return rows
+        hidden = self._reserved_ids()
+        return [r for r in rows if r.get("abook_id") not in hidden]
 
     def search_companies(self, query: str) -> list[dict[str, Any]]:
         """Search companies matching query string."""
-        return self.addressbook.search_text("company", query, order_by="company")
+        hidden = self._reserved_ids()
+        return [r for r in self.addressbook.search_text("company", query, order_by="company")
+                if r.get("abook_id") not in hidden]
+
+    def numbers_by_company(self) -> dict[int, list[dict[str, Any]]]:
+        """Every fax number, grouped by company, oldest first."""
+        grouped: dict[int, list[dict[str, Any]]] = {}
+        for row in self.addressbookfax.select(order_by="abookfax_id"):
+            grouped.setdefault(row.get("abook_id"), []).append(row)
+        return grouped
+
+    def reserved_company_id(self, create: bool = False) -> int | None:
+        """The placeholder company that keeps the faxes of deleted companies (made on demand)."""
+        ids = sorted(self._reserved_ids())
+        if ids:
+            return ids[0]
+        if not create:
+            return None
+        if not self.addressbook.new_entry({"company": RESERVED_FAX_NUM}):
+            return None
+        cid = self.addressbook.get_id()
+        self.addressbookfax.new_entry({"abook_id": cid, "faxnumber": RESERVED_FAX_NUM})   # as stored, not cleaned
+        return cid
+
+    def delete_company(self, cid: int | None) -> bool:
+        """Delete a company and its numbers; its faxes stay in the archive under the reserved entry."""
+        from namifax.services.archive_base import FaxPDFArchive
+
+        if not cid or not self.addressbook.find({"abook_id": cid}):
+            self.error = "No such company"
+            return False
+        reserved = self.reserved_company_id(create=True)
+        if reserved is None or int(cid) == int(reserved):
+            self.error = "The reserved entry cannot be deleted"
+            return False
+        FaxPDFArchive(db=self.db).reassign(int(cid), int(reserved))
+        self.delete_companyfaxids(cid)
+        return self.delete_cid(cid)
 
     def totalfaxes(self) -> tuple[int, int] | None:
         """Return (faxfrom, faxto) counts for loaded fax number."""

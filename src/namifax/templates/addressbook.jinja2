@@ -51,12 +51,12 @@
             {% for c in companies %}
             <tr class="hover:bg-slate-50 transition-colors group">
               <td class="py-4 px-4">
-                <a href="/addressbook/edit?id={{ c.id }}"
+                <a href="/addressbook/edit?abook_id={{ c.id }}"
                    class="font-semibold text-slate-900 hover:text-blue-700 hover:underline transition-colors text-sm">
                   {{ c.company }}
                 </a>
               </td>
-              <td class="py-4 px-4 font-mono text-sm text-slate-700">{{ c.faxnumber or '—' }}</td>
+              <td class="py-4 px-4 font-mono text-sm text-slate-700">{% if c.numbers %}{% for n in c.numbers %}<div>{{ n }}</div>{% endfor %}{% else %}—{% endif %}</td>
               <td class="py-4 px-4 text-sm text-slate-600">
                 {% if c.email %}
                   <a href="mailto:{{ c.email }}" class="text-blue-600 hover:underline transition-colors">{{ c.email }}</a>
@@ -73,7 +73,7 @@
                     </svg>
                     {{ _('Send Fax') }}
                   </a>
-                  <a href="/addressbook/edit?id={{ c.id }}"
+                  <a href="/addressbook/edit?abook_id={{ c.id }}"
                      class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 rounded-lg text-xs font-medium shadow-sm transition-colors">
                     {{ _('Edit') }}
                   </a>

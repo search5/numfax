@@ -30,7 +30,7 @@ def test_addressbook_edit_get_and_post(authenticated_app):
     assert res.status_code == 200
     assert "Company Name" in res.text
     assert "Fax Number" in res.text
-    assert "Email" in res.text
+    assert 'name="new_to_address"' in res.text           # every fax number carries its contact and address details
 
     # Post new company
     post_res = authenticated_app.post(

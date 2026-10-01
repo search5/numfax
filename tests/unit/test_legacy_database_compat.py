@@ -237,3 +237,31 @@ def test_new_faxes_are_stored_relative_to_the_install_directory_like_the_origina
         arc = ArchiveIn(db=s)
         assert arc.create(str(tmp_path / "faxes/2026/03/04/5557001/00123"), 1, "5557001", "ttyS0", 1, "2026-03-04 10:11:12")
         assert arc.dbdata["faxpath"] == "/faxes/2026/03/04/5557001/00123"
+
+
+def test_the_address_book_edit_page_edits_legacy_companies_and_numbers(adopted):
+    import webtest
+    from sqlalchemy import select
+
+    from namifax import create_app
+    from namifax.models import AddressBook, AddressBookFAX
+
+    client = webtest.TestApp(create_app(**{"sqlalchemy.url": adopted.url}), extra_environ={"HTTP_HOST": "example.com"})
+    client.post("/login", {"username": "olduser", "password": "password", "_submit_check": "1"})
+    page = client.get("/addressbook/edit?abook_id=2")                          # the company the sample data holds
+    assert 'value="Legacy Corp"' in page.text and "5550001" in page.text and "Kim" in page.text
+    assert "Legacy Corp" in client.get("/addressbook").text and "XXXXXXX" not in client.get("/addressbook").text
+
+    import re
+
+    row_id = re.search(r'name="abookfax_id" value="(\d+)"', page.text).group(1)
+    client.post("/addressbook/edit", {
+        "_submit_check": "1", "save": "1", "abook_id": "2", "company": "Legacy Corporation",
+        "abookfax_id": [row_id], "faxnumber": ["5550001"], "description": ["main"], "faxcatid": [""], "to_person": ["Kim"],
+        "to_location": ["Busan"], "to_voicenumber": ["051-1"], "to_address": ["2 Harbor Rd"], "to_zip": ["48000"],
+        "to_city": ["Busan"], "new_faxnum": "5550009", "new_to_city": "Daegu",
+    })
+    with Session(adopted.engine) as s:
+        assert s.execute(select(AddressBook.company).where(AddressBook.abook_id == 2)).scalar() == "Legacy Corporation"
+        numbers = list(s.execute(select(AddressBookFAX).where(AddressBookFAX.abook_id == 2).order_by(AddressBookFAX.abookfax_id)).scalars())
+        assert [(n.faxnumber, n.to_city, n.to_address) for n in numbers] == [("5550001", "Busan", "2 Harbor Rd"), ("5550009", "Daegu", "")]
