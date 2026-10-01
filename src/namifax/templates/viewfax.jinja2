@@ -42,12 +42,16 @@
         </a>
       {% endif %}
       
-      <a href="/faxes/rotate/{{ fid or 1 }}" title="Rotate Fax 90&deg;" class="px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-semibold border border-slate-300 shadow-2xs transition inline-flex items-center space-x-1.5">
+      <form method="post" action="/faxes/rotate/{{ fid or 1 }}" class="inline">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+        <input type="hidden" name="redirect" value="viewfax" />
+        <button type="submit" title="Rotate Fax 90&deg;" class="px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-semibold border border-slate-300 shadow-2xs transition inline-flex items-center space-x-1.5">
         <svg class="w-3.5 h-3.5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
         </svg>
         <span>{{ _('Rotate') }}</span>
-      </a>
+      </button>
+      </form>
       
       <a href="/faxes/download/{{ fid or 1 }}" title="Download PDF" class="px-3 py-1.5 bg-sky-50 hover:bg-sky-100 text-sky-800 rounded-lg text-xs font-bold border border-sky-200 shadow-2xs transition inline-flex items-center space-x-1.5">
         <svg class="w-3.5 h-3.5 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">

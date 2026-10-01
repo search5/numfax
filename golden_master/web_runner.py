@@ -135,7 +135,12 @@ def _verify_all_scenarios(target_scenario: str | None = None) -> int:
                     # (like the original, a fax needs a file or a cover page to be sent)
                     post_data = {"to_person": "Receiver", "faxnumber": "1234567", "coverpage": "1", "whichcover": "cover.ps",
                                  "_submit_check": "1"}
-                
+
+                if meta.get("csrf_from"):
+                    # a request that changes data carries the CSRF token of a page of this session, like the browser's form
+                    token_page = BeautifulSoup(test_client.get(meta["csrf_from"]).text, "html.parser")
+                    post_data = {**meta.get("params", {}), "csrf_token": token_page.find("input", {"name": "csrf_token"})["value"]}
+
                 res = test_client.post(route, post_data, headers=headers, expect_errors=True)
             else:
                 errors.append(f"Unsupported method: {method}")

@@ -4,9 +4,9 @@
   "method": "POST",
   "params": {
     "fid": "1",
-    "faxnumid": "1",
-    "_submit_check": "1"
+    "faxnumid": "1"
   },
-  "description": "Set company on fax and redirect matching legacy setcompany.php",
-  "implemented": true
+  "description": "Set company on fax and redirect matching legacy setcompany.php (a POST with the CSRF token)",
+  "implemented": true,
+  "csrf_from": "/inbox"
 }

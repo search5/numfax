@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import os
 
-from pyramid.httpexceptions import HTTPFound, HTTPNotFound
+from pyramid.csrf import check_csrf_token
+from pyramid.httpexceptions import HTTPFound, HTTPMethodNotAllowed, HTTPNotFound
 from pyramid.response import Response
 from pyramid.view import view_config
 
@@ -64,6 +65,7 @@ def inbox_view(request):
         "total_faxes": len(faxes),
         "num_inbox": len(faxes),
         "modem_list": modem_list,
+        "csrf_token": request.session.get_csrf_token(),
     }
 
 
@@ -109,6 +111,7 @@ def viewfax_view(request):
         "archstamp": archstamp,
         "modemdev": modemdev,
         "company": company,
+        "csrf_token": request.session.get_csrf_token(),
     }
 
 
@@ -142,8 +145,16 @@ def fax_download_view(request):
 @view_config(route_name="fax_rotate", renderer="json", permission="view")
 @view_config(route_name="rotate", renderer="json", permission="view")
 def fax_rotate_view(request):
-    """Rotate fax pages by 90 degrees matching legacy rotate.php."""
-    fid = request.matchdict.get("fid") or request.params.get("fid", "1")
+    """Rotate fax pages by 90 degrees (the original rotate.php).
+
+    It changes the fax, so it is a POST with the session's CSRF token. (The original rotated through a link, which any
+    other web page could make a signed-in user follow.)
+    """
+    if request.method != "POST":
+        raise HTTPMethodNotAllowed("Rotating a fax needs a POST.", headers={"Allow": "POST"})
+    check_csrf_token(request)                                  # raises a 400 for a missing or wrong token
+
+    fid = request.matchdict.get("fid") or request.POST.get("fid", "")
     arc = ArchiveIn(db=request.dbsession)
     try:
         if fid and load_fax(request, arc, fid, action="rotate"):
@@ -151,16 +162,27 @@ def fax_rotate_view(request):
     except Exception:
         pass
 
-    if request.params.get("redirect") == "inbox":
+    back = request.POST.get("redirect")
+    if back == "inbox":
         return HTTPFound(location=request.route_url("inbox"))
+    if back == "viewfax" and str(fid).isdigit():
+        return HTTPFound(location=request.route_url("viewfax", _query={"fid": fid}))
     return {"status": "ok", "fid": str(fid), "rotation": 90}
 
 
 @view_config(route_name="setcompany", permission="view")
 def setcompany_view(request):
-    """Assign faxnumid to received fax matching legacy setcompany.php."""
-    fid = request.params.get("fid", "1")
-    faxnumid = request.params.get("faxnumid")
+    """Assign a company (a fax number of the address book) to a received fax (the original setcompany.php).
+
+    A POST with the session's CSRF token, like the original's form (the original asked for a POST too, but accepted
+    nothing about where it came from).
+    """
+    if request.method != "POST":
+        raise HTTPMethodNotAllowed("Assigning a company needs a POST.", headers={"Allow": "POST"})
+    check_csrf_token(request)
+
+    fid = request.POST.get("fid", "")
+    faxnumid = request.POST.get("faxnumid")
 
     if fid and faxnumid:
         arc = ArchiveIn(db=request.dbsession)

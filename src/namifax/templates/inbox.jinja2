@@ -157,10 +157,14 @@
                      class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
                     <img src="/static/images/note.png" alt="" class="w-4 h-4 shrink-0" /> {{ _('Add Note') }}
                   </a>
-                  <a href="/faxes/rotate/{{ fax.id }}"
-                     class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
-                    <img src="/static/images/rotate.png" alt="" class="w-4 h-4 shrink-0" /> {{ _('Rotate') }}
-                  </a>
+                  <form method="post" action="/faxes/rotate/{{ fax.id }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+                    <input type="hidden" name="redirect" value="inbox" />
+                    <button type="submit"
+                            class="w-full text-left flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
+                      <img src="/static/images/rotate.png" alt="" class="w-4 h-4 shrink-0" /> {{ _('Rotate') }}
+                    </button>
+                  </form>
                   <a href="/faxes/download/{{ fax.id }}?format=tiff"
                      class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
                     <img src="/static/images/tiff.png" alt="" class="w-4 h-4 shrink-0" /> {{ _('Download TIFF') }}
