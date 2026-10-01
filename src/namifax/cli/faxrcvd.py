@@ -171,7 +171,7 @@ def _process_faxrcvd(args: list[str], db: Any, session: Any) -> int:
                 didr_id = didr.get_didr_id()
 
     # ArchiveIn
-    inbox = ArchiveIn(db=db)
+    inbox = ArchiveIn(db=session)
     faxid = None
     if inbox.create(faxpath, faxnumid, company_fax, modemdev, pages, f"{day} {hour}", didr_id):
         faxid = inbox.get_fid()

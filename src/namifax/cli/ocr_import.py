@@ -11,7 +11,7 @@ import sys
 from typing import Any
 
 from namifax.common.helpers import ocr_faxcontent
-from namifax.db.provider import cli_db
+from namifax.db.provider import cli_session
 from namifax.services.archive_base import FaxPDFArchive
 
 ENABLE_OCR_SUPPORT = os.environ.get("ENABLE_OCR_SUPPORT", "0") in ("1", "true", "True")
@@ -27,7 +27,7 @@ def main(args=None, *, db: Any = None):
 
     if db is not None:
         return _ocr_import(db)
-    with cli_db() as opened:
+    with cli_session(ensure_schema=True) as opened:
         return _ocr_import(opened)
 
 

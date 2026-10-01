@@ -24,7 +24,7 @@ def _run(tmp_path, **kwargs):
 
 
 def test_each_service_gets_the_kind_of_database_it_uses(tmp_path):
-    """Modems, DID and barcode routes are ORM-backed (session); the others still use the legacy engine."""
+    """Modems, DID routes, the address book, the archive and OCR are ORM-backed (session)."""
     db, session = object(), object()
     code, classes, ocr = _run(tmp_path, db=db, session=session)
     assert code == 0
@@ -34,7 +34,7 @@ def test_each_service_gets_the_kind_of_database_it_uses(tmp_path):
     assert classes["AFAddressBook"].call_args_list and all(
         c.kwargs.get("db") is session for c in classes["AFAddressBook"].call_args_list)
     assert classes["ArchiveIn"].call_args_list and all(
-        c.kwargs.get("db") is db for c in classes["ArchiveIn"].call_args_list)
+        c.kwargs.get("db") is session for c in classes["ArchiveIn"].call_args_list)   # the archive is ORM-backed
     assert ocr.call_args.kwargs.get("db") is session   # the OCR index is ORM-backed
 
 
@@ -61,7 +61,7 @@ def test_without_injection_one_shared_unit_is_opened(tmp_path):
         code, classes, _ = _run(tmp_path)
     assert code == 0 and calls == [1]
     assert classes["FaxModem"].call_args.kwargs.get("db") is unit.session
-    assert classes["ArchiveIn"].call_args.kwargs.get("db") is unit.db
+    assert classes["ArchiveIn"].call_args.kwargs.get("db") is unit.session
 
 
 def test_usage_does_not_open_a_database():

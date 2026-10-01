@@ -27,7 +27,7 @@ def modal_email_view(request):
         msg = request.params.get("msg", "").strip()
 
         if emails:
-            arc = ArchiveIn(db=request.db)
+            arc = ArchiveIn(db=request.dbsession)
             pdf_path = None
             thumb_path = None
             try:
@@ -78,7 +78,7 @@ def modal_assign_view(request):
     if request.method == "POST":
         myselect = request.params.get("myselect")
         regexp = request.params.get("regexp", "").strip()
-        arc = ArchiveIn(db=request.db)
+        arc = ArchiveIn(db=request.dbsession)
 
         if myselect:
             try:
@@ -125,7 +125,7 @@ def modal_note_view(request):
 
     if request.method == "POST":
         desc = request.params.get("description", "").strip()
-        arc = ArchiveIn(db=request.db)
+        arc = ArchiveIn(db=request.dbsession)
         try:
             if fid and arc.load_fax(int(fid)):
                 arc.set_note(description=desc, category=None, userid=identity.get("uid", 1))
@@ -150,7 +150,7 @@ def modal_delete_view(request):
     status = None
 
     if request.method == "POST":
-        arc = ArchiveIn(db=request.db)
+        arc = ArchiveIn(db=request.dbsession)
         try:
             if fid and arc.delete_fax(int(fid)):
                 status = "deleted"
@@ -211,7 +211,7 @@ def modal_txreport_view(request):
     date_val = ""
     pages_val = 0
 
-    arc = ArchiveIn(db=request.db)
+    arc = ArchiveIn(db=request.dbsession)
     try:
         if fid and str(fid).isdigit() and arc.load_fax(int(fid)):
             date_val = arc.get_archstamp() or ""

@@ -41,7 +41,7 @@ def test_each_service_gets_the_kind_of_database_it_uses(tmp_path):
     db, session = object(), object()
     code, classes = _run(tmp_path, db=db, session=session)
     assert code == 0
-    for name, expected in (("AFAddressBook", session), ("AFUserAccount", session), ("ArchiveOut", db)):
+    for name, expected in (("AFAddressBook", session), ("AFUserAccount", session), ("ArchiveOut", session)):
         assert classes[name].call_args_list, f"{name} not built"
         assert all(c.kwargs.get("db") is expected for c in classes[name].call_args_list), name
 

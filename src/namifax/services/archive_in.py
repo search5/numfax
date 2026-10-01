@@ -120,13 +120,8 @@ class ArchiveIn(FaxPDFArchive):
     def prune_inbox(self, days: int) -> int:
         """Archive inbox faxes older than given number of days."""
         cutoff = (datetime.now() - timedelta(days=days)).strftime("%Y-%m-%d 00:00:00")
-        query = f"SELECT fid FROM FaxArchive WHERE inbox = 1 AND archstamp < {self.faxarchive.quote(cutoff)}"
-        results = self.faxarchive.query(query, reduce_single=False)
-
         archived = 0
-        if isinstance(results, list):
-            for row in results:
-                fid = row.get("fid")
-                if fid and self.set_archivebox(fid):
-                    archived += 1
+        for fid in self._fids_older_than(cutoff, inbox=1):
+            if fid and self.set_archivebox(fid):
+                archived += 1
         return archived

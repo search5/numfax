@@ -128,7 +128,7 @@ def test_ocr_import_disabled_does_not_open_db(capsys):
     from namifax.cli import ocr_import
 
     with patch.object(ocr_import, "ENABLE_OCR_SUPPORT", False), \
-            patch.object(ocr_import, "cli_db", side_effect=AssertionError("must not open DB")):
+            patch.object(ocr_import, "cli_session", side_effect=AssertionError("must not open DB")):
         assert ocr_import.main([]) == 0
     assert "ENABLE_OCR_SUPPORT" in capsys.readouterr().out
 
@@ -166,7 +166,7 @@ def test_create_thumbnails_opens_cli_db():
     opened, calls = object(), []
     arc = MagicMock(name="FaxPDFArchive")
     arc.return_value.search_archive.return_value = 0
-    with patch.object(create_thumbnails, "cli_db", _fake_cli_db(opened, calls)), \
+    with patch.object(create_thumbnails, "cli_session", _fake_cli_db(opened, calls)), \
             patch.object(create_thumbnails, "FaxPDFArchive", arc):
         create_thumbnails.main([])
     assert calls == [1] and arc.call_args.kwargs.get("db") is opened

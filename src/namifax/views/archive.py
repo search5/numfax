@@ -6,6 +6,7 @@ from typing import Any
 
 from pyramid.view import view_config
 
+from namifax.services.addressbook import AFAddressBook
 from namifax.services.archive_base import FaxPDFArchive
 from namifax.services.categories import FaxPDFCategory
 from namifax.views.admin import get_all_admin_modems
@@ -26,7 +27,7 @@ def archive_view(request):
 
     if search_q or faxid_q or category_q or sentrecvd_q or date_from_q or date_to_q:
         try:
-            fa = FaxPDFArchive(db=request.db)
+            fa = FaxPDFArchive(db=request.dbsession)
             criteria = {
                 "keywords": search_q or None,
                 "faxid": int(faxid_q) if faxid_q.isdigit() else None,
@@ -38,18 +39,28 @@ def archive_view(request):
             }
             num_found = fa.search_archive(criteria)
             if num_found > 0:
+                ab = AFAddressBook(db=request.dbsession)
                 while True:
                     fid = fa.next_archive_entry()
                     if not fid:
                         break
+                    # the search only yields ids: load each fax, then name its company from the address book
+                    fax = FaxPDFArchive(db=request.dbsession)
+                    if not fax.load_fax(fid):
+                        continue
+                    company = None
+                    if fax.get_companyid() and ab.loadbycid(fax.get_companyid()):
+                        company = ab.get_company()
+                    if not company and fax.get_faxnumid() and ab.loadbyfaxnumid(fax.get_faxnumid()):
+                        company = ab.get_company()
                     results.append({
                         "id": fid,
-                        "company": fa.get_company() or "Unknown",
-                        "origfaxnum": fa.get_origfaxnum() or "-",
-                        "description": fa.get_description() or "Archived Fax",
-                        "date": fa.get_archstamp() or "-",
-                        "pages": fa.get_pages() or 1,
-                        "category": str(fa.get_faxcatid() or "General"),
+                        "company": company or "Unknown",
+                        "origfaxnum": fax.get_origfaxnum() or "-",
+                        "description": fax.get_description() or "Archived Fax",
+                        "date": fax.get_archstamp() or "-",
+                        "pages": fax.get_pages() or 1,
+                        "category": str(fax.get_faxcatid() or "General"),
                     })
         except Exception:
             pass

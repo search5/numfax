@@ -11,7 +11,7 @@ import sys
 from typing import Any
 
 from namifax.common.helpers import pdf_preview
-from namifax.db.provider import cli_db
+from namifax.db.provider import cli_session
 from namifax.services.archive_base import FaxPDFArchive, PREVIMG, PREVIMGSFX
 
 
@@ -21,7 +21,7 @@ def main(args=None, *, db: Any = None):
 
     if db is not None:
         return _create_thumbnails(db)
-    with cli_db() as opened:
+    with cli_session(ensure_schema=True) as opened:
         return _create_thumbnails(opened)
 
 

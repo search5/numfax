@@ -45,7 +45,7 @@ def ajax_modem_status(request):
 @view_config(route_name="ajax_inbox")
 def ajax_inbox_count(request):
     """Unread inbox count poller matching legacy ajaxinbox.php."""
-    arc = ArchiveIn(db=request.db)
+    arc = ArchiveIn(db=request.dbsession)
     count = 0
     try:
         count = arc.get_num_faxes(inbox=True) or 0
@@ -179,7 +179,7 @@ def ajax_archive_fax(request):
     """Archive fax endpoint matching legacy ajaxarchivefax.php."""
     fid = request.params.get("fid") or request.params.get("fids")
     if fid:
-        arc = ArchiveIn(db=request.db)
+        arc = ArchiveIn(db=request.dbsession)
         try:
             for item in str(fid).split(","):
                 if item.strip():
@@ -256,7 +256,7 @@ def ajax_deletefaxes_view(request):
     fids = request.params.get("fids", "")
     if request.method == "POST":
         if fids:
-            arc = ArchiveIn(db=request.db)
+            arc = ArchiveIn(db=request.dbsession)
             for fid in fids.split(","):
                 try:
                     if fid.strip():

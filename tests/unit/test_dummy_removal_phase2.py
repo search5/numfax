@@ -58,6 +58,7 @@ class TestDummyRemovalPhase2(unittest.TestCase):
         """Verify that requesting fid=1 serves the real disk file with 200 OK."""
         req = testing.DummyRequest()
         req.db = self.db
+        req.dbsession = self.session
         req.matchdict = {"fid": "1"}
         req.params = {"format": "pdf"}
 

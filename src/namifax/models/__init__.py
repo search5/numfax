@@ -24,6 +24,7 @@ from namifax.models.barcoderoute import BarcodeRoute  # noqa: F401
 from namifax.models.systemsettings import SystemSettings  # noqa: F401
 from namifax.models.useraccount import UserAccount  # noqa: F401
 from namifax.models.faxocr import FaxOCR  # noqa: F401
+from namifax.models.faxarchive import FaxArchive  # noqa: F401
 from namifax.models.usertotp import UserTOTP  # noqa: F401
 from namifax.models.userwebauthn import UserWebAuthnCredentials  # noqa: F401
 from namifax.models.userpasswords import UserPasswords  # noqa: F401

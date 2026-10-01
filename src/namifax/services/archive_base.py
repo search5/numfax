@@ -4,8 +4,10 @@ import re
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
 
-from namifax.db.engine import DatabaseEngine
+from sqlalchemy.orm import Session
+
 from namifax.db.repository import MDBOData
+from namifax.services import archive_orm
 
 
 PDFNAME = "fax.pdf"
@@ -27,11 +29,13 @@ class FaxPDFArchive:
 
     def __init__(
         self,
-        db: Optional[DatabaseEngine] = None,
+        db: Any = None,
         installdir: str = "",
         date_format: str = DEFAULT_ARCHIVE_DATE_FORMAT,
     ) -> None:
         self.db = db
+        self._orm = isinstance(db, Session)     # a session: portable ORM queries; else the legacy SQL
+        self._route_filters: List[Any] = []
         self.installdir = installdir
         self.date_format = date_format
 
@@ -107,6 +111,9 @@ class FaxPDFArchive:
         faxcats: Optional[List[Any]] = None,
         enable_did_routing: bool = False,
     ) -> None:
+        if self._orm:
+            self._route_filters = archive_orm.inbox_filters(devices, faxcats, enable_did_routing)
+            return
         myroutes = []
         mycategories = []
 
@@ -148,6 +155,8 @@ class FaxPDFArchive:
         enable_did_routing: bool = False,
     ) -> int:
         self.viewable_devices(devices, faxcats, enable_did_routing)
+        if self._orm:
+            return archive_orm.count_inbox(self.db, self._route_filters)
         query = f"SELECT fid FROM FaxArchive WHERE inbox = 1 {self.sqlroutes}"
         results = self.faxarchive.query(query, reduce_single=False)
         return len(results) if isinstance(results, list) else 0
@@ -157,8 +166,7 @@ class FaxPDFArchive:
             self.error = "No fid loaded"
             return None
 
-        query = f"SELECT fid FROM FaxArchive WHERE inbox = 1 {self.sqlroutes} ORDER BY fid DESC"
-        results = self.faxarchive.query(query, reduce_single=False)
+        results = self._inbox_fids()
         fid = None
 
         if isinstance(results, list):
@@ -174,8 +182,7 @@ class FaxPDFArchive:
             self.error = "No fid loaded"
             return None
 
-        query = f"SELECT fid FROM FaxArchive WHERE inbox = 1 {self.sqlroutes} ORDER BY fid DESC"
-        results = self.faxarchive.query(query, reduce_single=False)
+        results = self._inbox_fids()
         is_next = False
 
         if isinstance(results, list):
@@ -186,7 +193,18 @@ class FaxPDFArchive:
                     is_next = True
         return None
 
+    def _inbox_fids(self) -> List[Dict[str, Any]]:
+        """Visible inbox fids, newest first, as ``[{"fid": n}]``."""
+        if self._orm:
+            return [{"fid": f} for f in archive_orm.inbox_fids(self.db, self._route_filters)]
+        results = self.faxarchive.query(
+            f"SELECT fid FROM FaxArchive WHERE inbox = 1 {self.sqlroutes} ORDER BY fid DESC", reduce_single=False)
+        return results if isinstance(results, list) else []
+
     def search_archive(self, criteria: Dict[str, Any]) -> int:
+        if self._orm:
+            numrows, self.archive_results = archive_orm.search(self.db, criteria)
+            return numrows
         enable_did_routing = criteria.get("enable_did_routing", False)
         restricted_user_mode = criteria.get("restricted_user_mode", False)
         superuser = criteria.get("superuser", False)
@@ -373,8 +391,11 @@ class FaxPDFArchive:
             index = 0
         offset = index * limit
 
-        query = f"SELECT FaxArchive.* FROM FaxArchive WHERE inbox = 1 {self.sqlroutes} ORDER BY {order_by} LIMIT {offset}, {limit}"
-        rows = self.faxarchive.query(query, reduce_single=False)
+        if self._orm:
+            rows = archive_orm.list_inbox(self.db, self._route_filters, offset, limit, order_by_modem)
+        else:
+            query = f"SELECT FaxArchive.* FROM FaxArchive WHERE inbox = 1 {self.sqlroutes} ORDER BY {order_by} LIMIT {offset}, {limit}"
+            rows = self.faxarchive.query(query, reduce_single=False)
         if not isinstance(rows, list):
             return []
 
@@ -387,7 +408,7 @@ class FaxPDFArchive:
             self.error = "No faxid to load"
             return False
 
-        row = self.faxarchive.query(f"SELECT * FROM FaxArchive WHERE fid = {self.faxarchive.quote(faxid)}", reduce_single=True)
+        row = self.faxarchive.find({"fid": faxid}, reduce_single=True)
         if isinstance(row, dict):
             self.load_vals(row)
             return True
@@ -412,10 +433,8 @@ class FaxPDFArchive:
             self.error = "No valid catid sent"
             return False
 
-        res = self.faxarchive.query(
-            f"UPDATE FaxArchive SET faxcatid = NULL WHERE faxcatid = {self.faxarchive.quote(catid)}"
-        )
-        return res is not None
+        self.faxarchive.update_where({"faxcatid": catid}, {"faxcatid": None})
+        return True
 
     def set_note(self, description: str, category: Optional[int], userid: int) -> bool:
         if "fid" not in self.dbdata:
@@ -486,18 +505,19 @@ class FaxPDFArchive:
 
     def prune_archive(self, days: int) -> int:
         cutoff = (datetime.now() - timedelta(days=days)).strftime("%Y-%m-%d 00:00:00")
-        results = self.faxarchive.query(
-            f"SELECT fid FROM FaxArchive WHERE archstamp < {self.faxarchive.quote(cutoff)}",
-            reduce_single=False,
-        )
         count = 0
-        if isinstance(results, list):
-            for row in results:
-                fid = row.get("fid")
-                if fid:
-                    self.delete_fax(fid)
-                    count += 1
+        for fid in self._fids_older_than(cutoff):
+            if fid:
+                self.delete_fax(fid)
+                count += 1
         return count
+
+    def _fids_older_than(self, cutoff: str, inbox: Optional[int] = None) -> List[int]:
+        if self._orm:
+            return archive_orm.fids_older_than(self.db, cutoff, inbox)
+        where = f"archstamp < {self.faxarchive.quote(cutoff)}" + (f" AND inbox = {int(inbox)}" if inbox is not None else "")
+        results = self.faxarchive.query(f"SELECT fid FROM FaxArchive WHERE {where}", reduce_single=False)
+        return [r.get("fid") for r in results] if isinstance(results, list) else []
 
     def set_faxnumid(self, id: int) -> bool:
         if "fid" not in self.dbdata:
@@ -525,10 +545,8 @@ class FaxPDFArchive:
         if not newcid or not oldcid:
             return False
 
-        qnew = self.faxarchive.quote(newcid)
-        qold = self.faxarchive.quote(oldcid)
-        res = self.faxarchive.query(f"UPDATE FaxArchive SET companyid = {qnew} WHERE companyid = {qold}")
-        return res is not None
+        self.faxarchive.update_where({"companyid": oldcid}, {"companyid": newcid})
+        return True
 
     def create_fax(
         self,

@@ -80,7 +80,7 @@ def test_archive_view_uses_request_db():
     with patch.object(archive_mod, "FaxPDFArchive", arc), patch.object(archive_mod, "FaxPDFCategory", cat), \
             patch.object(archive_mod, "get_all_admin_modems", modems), contextlib.suppress(Exception):
         archive_mod.archive_view(req)
-    _assert_all_db(_calls(arc), req, "archive_view")
+    _assert_all_db(_calls(arc), req, "archive_view", attr="dbsession")
     assert modems.call_args.args[0] is req.dbsession  # modems are ORM-backed
     assert cat.call_args.kwargs.get("db") is req.dbsession  # ORM-backed: the request session
     assert arc.call_args_list and modems.call_args_list

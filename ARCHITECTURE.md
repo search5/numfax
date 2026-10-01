@@ -1067,3 +1067,21 @@ SQLite·MySQL은 오름차순에서 NULL을 먼저, PostgreSQL은 나중에 둔�
 **저장소 계층**: `OrmRepository.new_entry`는 자동 증가가 아닌 기본키(`UserTOTP.uid`)를 호출자가 준 값으로 저장한다.
 **테스트 정리**: 서비스가 반환 형태를 잘못 가정한 목(mock) 테스트(`db.query`가 리스트를 반환)는 실제 세션 테스트(`test_webauthn_orm`, `test_ocr_orm`, `test_totp_orm`)로 대체했다.
 **그룹 3 완료.** 남은 모델링 대상은 그룹 4(`FaxArchive` 등)이며, 이후 비 SQLite DB에서 앱이 기동되도록 레거시 `init_database_tables`를 Alembic으로 대체한다.
+
+### 14.15 그룹 4: FaxArchive (0020)
+`FaxArchive`는 레거시 17개 컬럼만 모델화했다(날짜는 ISO 텍스트, `inbox`는 정수). 포트의 SQLite 테이블에 있는 임의 컬럼(`company`, `faxnum`, `cid_name`, `status` 등)은 건드리지 않고 매핑하지도 않는다.
+
+**이중 경로**: `FaxPDFArchive`는 Session을 받으면 `services/archive_orm.py`의 ORM 쿼리를, 레거시 엔진을 받으면 기존 SQL을 쓴다(레거시 경로는 최종 정리 단계에서 제거). 간단한 조회·변경(`load_fax`, `remove_category`, `reassign`, `create_fax` 등)은 두 경로 모두 저장소 메서드(`find`, `update_where`, `new_entry`)를 쓴다.
+
+**검증**: `tests/unit/test_fax_archive_orm.py`는 같은 12행을 레거시 엔진과 Session에 넣고 검색 조건 표(보낸/받은/전체/기타 × 슈퍼유저 여부 × 모뎀·DID·카테고리·제한 모드, 기간, 키워드, 회사, 페이지)를 돌려 **두 경로의 결과(건수와 fid 순서)가 같음**을 확인한다. 같은 표를 PostgreSQL·MySQL·MariaDB에서 돌려 SQLite 레거시 결과와 비교한다.
+
+**이식 가능하도록 바꾼 부분**: `LIMIT a, b`(MySQL/SQLite 전용)→`LIMIT/OFFSET`; 정수 컬럼과 `''` 비교 제거(PostgreSQL 오류), 라우트 목록의 `didr_id = ''`는 아무것도 일치시키지 않음; 인박스의 `ORDER BY modemdev`는 NULL을 항상 먼저; 키워드는 `lower()+LIKE+ESCAPE`(대소문자 무시, `%`/`_`는 리터럴); 날짜 접두 검색은 `startswith(autoescape)`.
+
+**의도적으로 레거시와 달라진 동작**: 비슈퍼유저가 사용자 ID나 라우트 없이 "기타/전체" 검색을 하면 레거시는 `userid = None` 같은 잘못된 SQL을 만들어 결과 0건이었으나, ORM 경로는 해당 조건을 거짓으로 취급해 나머지 조건으로 검색한다(테스트로 정의).
+
+| 결함 | 근거 | 수정 |
+| :--- | :--- | :--- |
+| **웹 아카이브 검색 결과가 항상 비어 있음** | `archive_view`가 `FaxPDFArchive`에 없는 `get_company()`를 호출하고 그 `AttributeError`를 `except Exception: pass`가 삼킴. 또 검색은 fid만 돌려주는데 각 팩스를 `load_fax`하지 않음 | fid마다 `load_fax`로 읽고, 회사는 `companyid`→`faxnumid` 순서로 주소록에서 찾음(없으면 "Unknown") |
+| 인박스 회사명 폴백 | `r.get("company")`는 레거시에 없는 포트 전용 컬럼. ORM 행에는 없음 | 주소록 조회만 사용(시드 행은 `companyid`로 연결되어 영향 없음) |
+
+**남은 레거시 경로**: `cron`/`StorageLifecycleService`(레거시에 없는 `FaxArchive.lastmod` 컬럼을 참조하는 포트 전용 기능 — 별도 확인 필요), `bridge_cli`, `FaxQueue`/`saml`의 `AFUserAccount`.

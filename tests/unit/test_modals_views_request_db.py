@@ -42,6 +42,6 @@ def test_view_builds_domain_objects_with_request_db(name, method, params):
 
     assert arc_cls.call_args_list + ab_cls.call_args_list, f"{name} built no domain objects"
     for call in arc_cls.call_args_list:
-        assert call.kwargs.get("db") is req.db, f"{name}: ArchiveIn built without request.db"
+        assert call.kwargs.get("db") is req.dbsession, f"{name}: ArchiveIn built without request.dbsession"
     for call in ab_cls.call_args_list:          # the address book is ORM-backed
         assert call.kwargs.get("db") is req.dbsession, f"{name}: AFAddressBook built without request.dbsession"

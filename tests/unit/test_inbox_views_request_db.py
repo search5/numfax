@@ -42,7 +42,7 @@ def test_view_builds_domain_objects_with_request_db(name, kwargs, attrs):
         getattr(inbox_mod, name)(req)
 
     assert arc_cls.called, f"{name} did not build ArchiveIn"
-    for cls, expected in ((arc_cls, req.db), (ab_cls, req.dbsession)):   # the address book is ORM-backed
+    for cls, expected in ((arc_cls, req.dbsession), (ab_cls, req.dbsession)):   # both are ORM-backed
         for call in cls.call_args_list:
             assert call.kwargs.get("db") is expected, f"{name}: {cls._mock_name} built with the wrong database"
 
@@ -54,15 +54,17 @@ def test_inbox_view_lists_rows_from_the_app_database_not_the_global_one(tmp_path
     app = create_app(**{"sqlalchemy.url": f"sqlite:///{db_file}"})
     con = sqlite3.connect(db_file)
     try:
-        con.execute("UPDATE FaxArchive SET company='Isolated Co', companyid=NULL, faxnumid=NULL")
+        con.execute("UPDATE AddressBook SET company='Isolated Co'")
         con.commit()
     finally:
         con.close()
 
     env = prepare(registry=app.registry)
+    env["request"].tm.begin()               # outside the pyramid_tm tween the transaction is started by hand
     try:
         res = inbox_mod.inbox_view(env["request"])
     finally:
+        env["request"].tm.abort()
         env["closer"]()
 
     assert res["total_faxes"] >= 1
