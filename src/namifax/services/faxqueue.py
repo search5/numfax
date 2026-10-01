@@ -65,8 +65,10 @@ class FaxQueue:
         faxmail_user: str = "faxmail",
         www_user: str = "www-data",
         auto_process: bool = True,
+        db: Any = None,
     ) -> None:
         self.user_account = user_account
+        self.db = db
         self.faxsendq_cmd = faxsendq_cmd
         self.faxdoneq_cmd = faxdoneq_cmd
         self.faxrm_cmd = faxrm_cmd
@@ -108,7 +110,7 @@ class FaxQueue:
 
     def get_queue(self) -> List[Dict[str, Any]]:
         """Return queue decorated with resolved user display names."""
-        user_svc = self.user_account or AFUserAccount()
+        user_svc = self.user_account or AFUserAccount(db=self.db)
         ret = []
 
         for q in self.queue:
@@ -132,7 +134,7 @@ class FaxQueue:
 
     def list_owner(self, owner: str) -> List[Dict[str, Any]]:
         """Filter queue for specific owner or corresponding faxmail address."""
-        user_svc = self.user_account or AFUserAccount()
+        user_svc = self.user_account or AFUserAccount(db=self.db)
         ret = []
 
         for q in self.queue:
