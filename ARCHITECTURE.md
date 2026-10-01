@@ -811,7 +811,14 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 | V3 | `views/ajax.py` 9개 뷰: `ArchiveIn/AFAddressBook/FaxModem/DistributionList(db=request.db)`, `get_all_admin_modems(request.db)` | `[COMPLETE]` | `tests/unit/test_ajax_views_request_db.py` 9개, 공용 `tests/conftest.py::seeded_db` 도입(전역 DB 시드 의존 제거), 전체 462 통과. `FaxQueue()`는 C 단계 |
 | V4 | `views/admin.py` 도메인 관리 뷰(users/modems/did/logs/covers/categories/barcodes/dynconf/fax2email): 클래스 19곳 `db=request.db`, 헬퍼 `get_all_admin_users/get_all_syslogs(db)`, 임포트를 `avantfax.services.*`→`namifax.services.*`로 통일 | `[COMPLETE]` | `tests/unit/test_admin_views_domain_request_db.py` 16개, 전체 478 통과 |
 | V5 | `views/helpers.py` 팝업·vCard 업로드 뷰 6개: `AFAddressBook/FaxPDFCategory/DistributionList(db=request.db)` | `[COMPLETE]` | `tests/unit/test_helpers_views_request_db.py` 7개, 전체 485 통과 |
-| V6~ | 나머지 웹 뷰를 모듈 단위로 `request.db` 주입: `helpers`(5), `addressbook`(5), `webauthn`(3), `archive`/`auth`/`settings`/`outbox`/`sendfax`, `security.py`, `web/views/*` | `[PENDING]` | 호출처를 모두 바꾸기 전에 폴백을 제거하면 뷰 약 70곳이 깨지므로 폴백 제거는 맨 마지막 |
+| V6 | `views/distrolist.py`: `DistributionList(db=request.db)` 5곳 + `get_all_distrolists(db)` | `[COMPLETE]` | `tests/unit/test_distrolist_views_request_db.py` 7개, 전체 492 통과 |
+| V7 | `views/addressbook.py`: `AFAddressBook(db=request.db)` 5곳 + `get_all_companies(db)` | `[COMPLETE]` | `tests/unit/test_addressbook_views_request_db.py` 10개, 전체 502 통과 |
+| V8 | `views/auth.py`(login/login_totp), `views/settings.py`: `getattr(request,"db",None)` → `request.db`, `AFUserAccount(db=request.db)` | `[COMPLETE]` | `tests/unit/test_auth_settings_views_request_db.py` 5개, 전체 507 통과. `forgot`/`pwdexpired` 뷰는 DB를 쓰지 않는 스텁(별도 확인 필요) |
+| V9 | `views/webauthn.py`(3), `archive.py`, `sendfax.py`, `outbox.py`: `request.db` 주입 | `[COMPLETE]` | `tests/unit/test_misc_views_request_db.py` 6개, 전체 513 통과 |
+| V10 | `security.py` `NamiFaxSecurityPolicy.remember()`: `AFUserAccount(db=request.db)` | `[COMPLETE]` | `tests/unit/test_security_policy_request_db.py` 1개, 전체 514 통과 |
+| V11 | `services/faxqueue.py`에 `db` 인자 추가(내부 `AFUserAccount(db=self.db)`), `views/ajax·modals·outbox`는 `FaxQueue(db=request.db)` | `[COMPLETE]` | `tests/unit/test_faxqueue_db_injection.py` 4개, 전체 518 통과 |
+| V12 | `views/addressbook.py` emailbook `MDBOData(..., db=request.db)` 2곳, `SAMLService.provision_or_get_user`의 `AFUserAccount(db=self.db)` | `[COMPLETE]` | `tests/unit/test_remaining_web_db_injection.py` 3개, 전체 521 통과 |
+| V-audit | 웹 계층 AST 전수 점검: `views/*`, `security.py`, 웹 경로 서비스는 모두 주입 완료 | `[COMPLETE]` | 잔여: ① `common/helpers.py` `OcrService()`는 텍스트 추출 전용이라 DB 불필요(유지) ② `cli/*`(C 단계) ③ `db/bridge_cli.py` `FaxQueue`(C/F) ④ `web/*` 폴백 앱(13.2 결정 대기) |
 | C1~ | CLI별 `cli_db()`(provider.py) 컨텍스트로 엔진 생성 후 명시 주입: `faxrcvd`(4), `notify`(3), `cron`(2), `phb`, `dynconf`, `user`, `faxcover`, `services/faxqueue` | `[PENDING]` | CLI는 request가 없으므로 `request.db` 사용 불가. 웹과 동일한 `resolve_database_url` 규칙 사용 |
 | F | `Repository`의 `get_default_engine()` 폴백을 `resolve_db`로 교체, `get_default_engine` shim화/삭제, `bridge_cli._GLOBAL_ENGINE` 정리, 테스트 격리 픽스처 | `[PENDING]` | 보관해 둔 `test_repository_db_injection.py`(전역 엔진 미생성 검증)를 이 루프에서 복원 |
 
