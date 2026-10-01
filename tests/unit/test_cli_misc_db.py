@@ -86,7 +86,7 @@ def test_createuser_opens_one_cli_session():
 # --- faxcover -------------------------------------------------------------------
 
 def _cover(tmp_path, argv, **kwargs):
-    tpl = tmp_path / "cover.tpl"
+    tpl = tmp_path / "cover.ps"
     tpl.write_text("x")
     with patch.object(faxcover_mod, "process_template", return_value=[]) as proc, \
             patch.object(faxcover_mod, "avantfaxlog"):

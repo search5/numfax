@@ -52,7 +52,7 @@ class TestUIFallbackPhase4(unittest.TestCase):
         req = MockRequest()
         req.identity = {"username": "admin", "is_admin": True}
 
-        with patch("namifax.views.sendfax.AFUserAccount"), patch("namifax.views.sendfax.get_all_admin_modems", return_value=[]):
+        with patch("namifax.views.sendfax.AFUserAccount"), patch("namifax.views.sendfax.FaxModem"):
             res = sendfax_view(req)
         self.assertIsInstance(res, dict)
         self.assertEqual(res.get("cover_list"), [])

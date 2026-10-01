@@ -22,6 +22,7 @@ if SRC_DIR not in sys.path:
 
 from namifax.common.helpers import (
     avantfaxlog,
+    decode_entity,
     invalid_email,
     rem_nl,
 )
@@ -46,22 +47,47 @@ FROM_COMPANY = os.environ.get("FROM_COMPANY", "")
 FROM_LOCATION = os.environ.get("FROM_LOCATION", "")
 FROM_VOICENUMBER = os.environ.get("FROM_VOICENUMBER", "")
 FROM_FAXNUMBER = os.environ.get("FROM_FAXNUMBER", "")
+USE_HTML_COVERPAGE = os.environ.get("USE_HTML_COVERPAGE", "0") in ("1", "true", "True")
+NUM_PAGES_FOLLOW = os.environ.get("NUM_PAGES_FOLLOW", "0") in ("1", "true", "True")
+HTML2PS = os.environ.get("HTML2PS", "html2ps")
 
 
-def process_template(template_path: str, match: str, values: Dict[str, Any]) -> List[str]:
-    """Substitute XXXX-key tokens in template file."""
+def ps_text(value: Any) -> str:
+    """Text made safe inside a PostScript string: ``\\``, ``(`` and ``)`` escaped, newlines dropped, accented letters as the
+    octal codes of the Mac Roman encoding the original's unaccent() used, anything the font cannot show as ``?``."""
+    text = decode_entity(str(value)) if value is not None else ""
+    out = []
+    for ch in text.replace("\r", "").replace("\n", " "):
+        if ch in "\\()":
+            out.append("\\" + ch)
+        elif ord(ch) < 128:
+            out.append(ch)
+        else:
+            try:
+                out.append("\\%03o" % ch.encode("mac_roman")[0])
+            except UnicodeEncodeError:
+                out.append("?")
+    return "".join(out)
+
+
+def process_template(template_path: str, match: str, values: Dict[str, Any], *, html: bool = False,
+                     raw: Sequence[str] = ()) -> List[str]:
+    """Substitute every ``XXXX-symbol`` of the template with its value (exact symbol names; unknown ones become empty)."""
+    import html as htmllib
+
     if not os.path.exists(template_path):
         return []
+    symbol = re.compile(re.escape(match) + r"([A-Za-z0-9_]+(?:-[A-Za-z0-9_]+)*)")
+    convert = (lambda v: htmllib.escape(str(v))) if html else ps_text
 
-    lines: List[str] = []
-    with open(template_path, "r", encoding="utf-8", errors="replace") as f:
-        for line in f:
-            for k, v in values.items():
-                token = f"{match}{k}"
-                if token in line:
-                    line = line.replace(token, str(v) if v is not None else "")
-            lines.append(line)
-    return lines
+    def swap(found: "re.Match[str]") -> str:
+        value = values.get(found.group(1))
+        if value is None:
+            return ""
+        return str(value) if found.group(1) in raw else convert(value)
+
+    with open(template_path, "r", encoding="utf-8", errors="replace") as handle:
+        return [symbol.sub(swap, line) for line in handle]
 
 
 def _first_row(db: Any, columns: list, **where: Any) -> Dict[str, Any] | None:
@@ -124,11 +150,20 @@ def run_faxcover(argv: Sequence[str] | None = None, *, db: Any = None) -> int:
     except Exception:
         pass
 
-    # Template selection
+    # Template selection: a .ps file, or an .html file when HTML cover pages are allowed
     coverpage_file = os.path.join(INSTALLDIR, "images", COVERPAGE_FILE)
+    using_html = False
     if "-C" in opt_dict:
-        custom_c = opt_dict["-C"]
-        coverpage_file = custom_c if os.path.exists(custom_c) else os.path.join(INSTALLDIR, "images", custom_c)
+        wanted = opt_dict["-C"]
+        wanted = wanted if os.path.exists(wanted) else os.path.join(INSTALLDIR, "images", wanted)
+        kind = os.path.splitext(wanted)[1].lower()
+        if kind in (".html", ".htm"):
+            if USE_HTML_COVERPAGE:
+                coverpage_file, using_html = wanted, True
+        elif kind == ".ps":
+            coverpage_file = wanted
+    elif os.path.splitext(coverpage_file)[1].lower() in (".html", ".htm") and USE_HTML_COVERPAGE:
+        using_html = True
 
     date_fmt = opt_dict.get("-D", FAXCOVER_DATE_FORMAT)
     try:
@@ -164,15 +199,36 @@ def run_faxcover(argv: Sequence[str] | None = None, *, db: Any = None) -> int:
             values[parts[0].strip()] = parts[1].strip().strip("'")
     fax_comments = re.sub(r"{([^}]*)}", "", fax_comments)
 
+    if NUM_PAGES_FOLLOW and str(values.get("page-count") or "").isdigit():
+        values["page-count"] = str(int(values["page-count"]) + 1)          # the cover page counts too
+
+    if using_html:
+        import html as htmllib
+        import subprocess
+        import tempfile
+
+        values["comments"] = htmllib.escape(fax_comments).replace("\n", "<br />")
+        page = "".join(process_template(coverpage_file, COVERPAGE_MATCH, values, html=True, raw=("comments",)))
+        with tempfile.NamedTemporaryFile("w", suffix=".html", delete=False, encoding="utf-8") as handle:
+            handle.write(page)
+            name = handle.name
+        try:
+            result = subprocess.run([HTML2PS, name], capture_output=True, check=False)
+        except OSError as err:
+            sys.stderr.write(f"faxcover: cannot run {HTML2PS}: {err}\n")
+            return 1
+        finally:
+            os.remove(name)
+        sys.stdout.write(result.stdout.decode("utf-8", errors="replace"))
+        return 0 if result.returncode == 0 else 1
+
     maxlen = int(opt_dict.get("-z", CPAGE_LINELEN))
     if fax_comments:
-        wrapped_lines = textwrap.wrap(fax_comments, width=maxlen)
-        for idx, line in enumerate(wrapped_lines):
+        for idx, line in enumerate(textwrap.wrap(fax_comments, width=maxlen)):
             values[f"comments{idx}"] = rem_nl(line)
 
     if os.path.exists(coverpage_file):
-        tpl = process_template(coverpage_file, COVERPAGE_MATCH, values)
-        sys.stdout.write("".join(tpl))
+        sys.stdout.write("".join(process_template(coverpage_file, COVERPAGE_MATCH, values)))
 
     return 0
 
