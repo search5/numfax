@@ -208,7 +208,7 @@ def test_server_database_repository_behaviour(monkeypatch, server_db_url, alembi
             repo.data.set_id(repo.get_id())
             assert repo.delete_entry() is True and repo.find({"name": "renamed"}, reduce_single=False) == []
 
-            for name in ("Acme Corp", "100% Fax", "100 Fax", "file_name", "fileXname"):
+            for name in ("Acme Corp", "100% Fax", "100 Fax", "file_name", "fileXname", "한글 'q' \\x"):   # rollback above dropped the earlier rows
                 repo.new_entry({"name": name})
             found = lambda text: [r["name"] for r in repo.search_text("name", text, order_by="name")]  # noqa: E731
             assert found("ACME") == ["Acme Corp"] and found("acm corp") == ["Acme Corp"] and found("corp acm") == []
