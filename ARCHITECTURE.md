@@ -805,7 +805,8 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 | 루프 | 범위 | 상태 | 비고 |
 | :---: | :--- | :---: | :--- |
 | 1 | `db/provider.py`, `DatabaseEngine.from_connection`, `create_app`, `request.db` | `[COMPLETE]` | `tests/unit/test_db_injection.py` 11개, 전체 413 통과 |
-| 2 | `views/*`의 `getattr(request,"db",None)` 및 `DatabaseEngine()` 직접 생성(admin 4곳) 정리 | `[PENDING]` | |
+| 2 | `views/admin.py` smtp/printers/storage/saml 4개 뷰: `DatabaseEngine()` 폴백 및 `db_engine` 우회 제거, `request.db` 직접 사용 | `[COMPLETE]` | `tests/unit/test_admin_views_request_db.py` 9개, 전체 422 통과 |
+| 2b | `views/auth.py`, `views/settings.py` 의 `getattr(request,"db",None)` → `request.db` (서비스 폴백과 함께) | `[PENDING]` | 서비스 생성자 변경(루프 3)과 맞물려 있음 |
 | 3 | `services/*` (`DatabaseEngine()` 기본 생성 9곳) 생성자 주입 필수화 | `[PENDING]` | |
 | 4 | `db/repository.py`, `cli/*`, `main.py` 의 `get_default_engine()` 제거 | `[PENDING]` | |
 | 5 | `bridge_cli._GLOBAL_ENGINE`, 테스트 롤백/격리 픽스처, `get_default_engine` shim화 | `[PENDING]` | |

@@ -901,17 +901,7 @@ def admin_smtp_view(request):
     if not is_admin:
         raise HTTPForbidden(_("Access denied. Superadmin permission required."))
 
-    db = getattr(request, "db", None)
-    db_engine = getattr(request, "db_engine", None)
-    if not db:
-        from namifax.db.engine import DatabaseEngine
-        db = DatabaseEngine()
-        if db_engine:
-            # If a custom engine was provided
-            try:
-                db._conn = db_engine.raw_connection().connection
-            except Exception:
-                pass
+    db = request.db
 
     from namifax.services.smtp_settings import SmtpSettingsService, SmtpConfig
     service = SmtpSettingsService(db)
@@ -985,10 +975,7 @@ def admin_printers_view(request):
     if not is_admin:
         raise HTTPForbidden(_("Access denied. Superadmin permission required."))
 
-    db = getattr(request, "db", None)
-    if not db:
-        from namifax.db.engine import DatabaseEngine
-        db = DatabaseEngine()
+    db = request.db
 
     from namifax.services.printer import NetworkPrinterService
     service = NetworkPrinterService(db)
@@ -1058,10 +1045,7 @@ def admin_storage_view(request):
     if not is_admin:
         raise HTTPForbidden(_("Access denied. Superadmin permission required."))
 
-    db = getattr(request, "db", None)
-    if not db:
-        from namifax.db.engine import DatabaseEngine
-        db = DatabaseEngine()
+    db = request.db
 
     from namifax.services.cloud_storage import StorageConfig, CloudStorageManager
     from namifax.services.storage_lifecycle import StorageLifecyclePolicy, StorageLifecycleService
@@ -1177,10 +1161,7 @@ def admin_saml_view(request):
     if not is_admin:
         raise HTTPForbidden(_("Access denied. Superadmin permission required."))
 
-    db = getattr(request, "db", None)
-    if not db:
-        from namifax.db.engine import DatabaseEngine
-        db = DatabaseEngine()
+    db = request.db
 
     from namifax.services.saml import SAMLSettings, SAMLService
 
