@@ -20,6 +20,7 @@ SRC_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 if SRC_DIR not in sys.path:
     sys.path.insert(0, SRC_DIR)
 
+from namifax.common import settings
 from namifax.services import printing
 from namifax.services.printing import print_received
 from namifax.common.helpers import (
@@ -42,13 +43,13 @@ from namifax.services.barcode import BarcodeRouting
 from namifax.services.did import DIDRouting
 from namifax.services.modem import FaxModem
 
-ARCHIVE = os.environ.get("AVANTFAX_ARCHIVE", "/var/spool/hylafax/archive")
+ARCHIVE = settings.archive_dir()
 ENABLE_DID_ROUTING = os.environ.get("ENABLE_DID_ROUTING", "0") in ("1", "true", "True")
-AUTOCONFDID = os.environ.get("AUTOCONFDID", "0") in ("1", "true", "True")
+AUTOCONFDID = settings.flag("AUTOCONFDID", True)
 ENABLE_FAX_ANNOTATION = os.environ.get("ENABLE_FAX_ANNOTATION", "0") in ("1", "true", "True")
 FAXRCVD_INCLUDE_THUMBNAIL = os.environ.get("FAXRCVD_INCLUDE_THUMBNAIL", "1") in ("1", "true", "True")
-FAXRCVD_INCLUDE_PDF = os.environ.get("FAXRCVD_INCLUDE_PDF", "0") in ("1", "true", "True")
-ARCHIVEFAX2EMAIL = os.environ.get("ARCHIVEFAX2EMAIL", "0") in ("1", "true", "True")
+FAXRCVD_INCLUDE_PDF = settings.flag("FAXRCVD_INCLUDE_PDF", True)
+ARCHIVEFAX2EMAIL = settings.flag("ARCHIVEFAX2EMAIL", True)
 PRINTFAXRCVD = os.environ.get("PRINTFAXRCVD", "0") in ("1", "true", "True")
 PRINTERNAME = os.environ.get("PRINTERNAME", "")
 
@@ -256,7 +257,7 @@ def _process_faxrcvd(args: list[str], session: Any) -> int:
     # Email notification
     company = addressbook.get_company() or company_name
     from_email = get_admin_email()
-    now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    now_str = datetime.datetime.now().strftime(settings.email_date_format())
     subject = f"fax: {company} {now_str}"
     text = f"{LANG['FROM']}: {company}"
 

@@ -10,8 +10,8 @@ from typing import Optional
 
 from PIL import Image
 
-PAGE_WIDTH = 750          # the original's PREV_SP
-THUMB_WIDTH = 80          # the original's PREV_TN
+from namifax.common import settings
+
 PREVIMG, PREVIMGSFX, THUMBNAIL, TIFFNAME = "page", ".png", "thumb.png", "fax.tif"
 
 
@@ -35,10 +35,10 @@ def render_previews(folder: str) -> int:
     with Image.open(tiff) as img:
         for i in range(getattr(img, "n_frames", 1)):
             img.seek(i)
-            page = _scaled(img, PAGE_WIDTH)
+            page = _scaled(img, settings.number("PREV_SP", 750))
             page.save(page_path(folder, i), format="PNG")
             if i == 0:
-                _scaled(img, THUMB_WIDTH).save(os.path.join(folder, THUMBNAIL), format="PNG")
+                _scaled(img, settings.number("PREV_TN", 80)).save(os.path.join(folder, THUMBNAIL), format="PNG")
             count += 1
     return count
 

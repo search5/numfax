@@ -14,6 +14,8 @@ from typing import Any, Dict, List, Optional, Sequence
 
 from PIL import Image
 
+from namifax.common.settings import binary as settings_binary
+
 
 DEFAULT_ADMIN_EMAIL = "admin@localhost"
 
@@ -383,7 +385,7 @@ def convert2pdf(path: str, convertfiles: Sequence[str]) -> bool:
             for page in PdfReader(name).pages:
                 writer.add_page(page)
         if postscripts:
-            gs = os.environ.get("GS") or shutil.which("gs")
+            gs = settings_binary("gs")
             if not gs:
                 return False
             out = tmpfilename(".pdf")
@@ -506,7 +508,7 @@ def faxinfo(path: str) -> Optional[Dict[str, Any]]:
         return None
 
     values: Dict[str, Any] = {}
-    binary = os.environ.get("FAXINFO") or shutil.which("faxinfo")
+    binary = settings_binary("faxinfo")
     if binary:
         try:
             proc = subprocess.run([binary, "-n", path], capture_output=True, text=True, timeout=10, check=False)

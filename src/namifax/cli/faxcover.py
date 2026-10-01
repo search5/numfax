@@ -20,6 +20,7 @@ SRC_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 if SRC_DIR not in sys.path:
     sys.path.insert(0, SRC_DIR)
 
+from namifax.common import settings
 from namifax.common.helpers import (
     avantfaxlog,
     decode_entity,
@@ -42,14 +43,14 @@ INSTALLDIR = os.environ.get("AVANTFAX_INSTALLDIR", "/var/www/avantfax")
 COVERPAGE_FILE = os.environ.get("COVERPAGE_FILE", "cover.ps")
 COVERPAGE_MATCH = os.environ.get("COVERPAGE_MATCH", "XXXX-")
 CPAGE_LINELEN = int(os.environ.get("CPAGE_LINELEN", "80"))
-FAXCOVER_DATE_FORMAT = os.environ.get("FAXCOVER_DATE_FORMAT", "%Y-%m-%d %H:%M:%S")
+FAXCOVER_DATE_FORMAT = settings.faxcover_date_format()
 FROM_COMPANY = os.environ.get("FROM_COMPANY", "")
 FROM_LOCATION = os.environ.get("FROM_LOCATION", "")
 FROM_VOICENUMBER = os.environ.get("FROM_VOICENUMBER", "")
 FROM_FAXNUMBER = os.environ.get("FROM_FAXNUMBER", "")
 USE_HTML_COVERPAGE = os.environ.get("USE_HTML_COVERPAGE", "0") in ("1", "true", "True")
 NUM_PAGES_FOLLOW = os.environ.get("NUM_PAGES_FOLLOW", "0") in ("1", "true", "True")
-HTML2PS = os.environ.get("HTML2PS", "html2ps")
+HTML2PS = settings.binary("html2ps") or "html2ps"
 
 
 def ps_text(value: Any) -> str:

@@ -17,6 +17,7 @@ from pyramid.view import view_config
 from namifax.services.addressbook import RESERVED_FAX_NUM, AFAddressBook
 from namifax.services.archive_in import ArchiveIn
 from namifax.services.covers import Covers
+from namifax.common import settings
 from namifax.i18n import _
 from namifax.services import upload_check
 from namifax.services.modem import FaxModem
@@ -53,7 +54,7 @@ def dispatch_sendfax(send: SendRequest, sender: Sender) -> dict[str, Any]:
     except NothingToSend:
         return {"success": False, "error": "Select a file to send, or ask for a cover page."}
 
-    sendfax_bin = shutil.which("sendfax")
+    sendfax_bin = settings.binary("sendfax")
     if not sendfax_bin:
         if _simulation_wanted():
             return {"success": True, "jobid": str(uuid.uuid4().int)[:6], "destination": send.destinations.strip(),

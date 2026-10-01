@@ -39,7 +39,10 @@ def ensure_schema(engine: Engine, settings: Optional[Mapping[str, Any]] = None) 
 
         # a database is new when it has none of the application's tables; only then does it get default records
         # (an installation that already has data keeps exactly what it has)
-        fresh = "UserAccount" not in sa.inspect(engine).get_table_names()
+        tables = sa.inspect(engine).get_table_names()
+        fresh = "UserAccount" not in tables
+        if not fresh and _at_head(engine, tables):
+            return                                                    # nothing to migrate (the hooks call this on every fax)
         if engine.dialect.name == "sqlite":
             from namifax.db.sqlite_upgrade import upgrade_existing_sqlite
 
@@ -59,6 +62,25 @@ def ensure_schema(engine: Engine, settings: Optional[Mapping[str, Any]] = None) 
             session.commit()
     except Exception as exc:
         raise RuntimeError(f"Database initialisation failed: {exc}") from exc
+
+
+def _at_head(engine: Engine, tables: list) -> bool:
+    """Is the database already at the newest Alembic revision?"""
+    if "alembic_version" not in tables:
+        return False
+    try:
+        import sqlalchemy as sa
+        from alembic.config import Config
+        from alembic.script import ScriptDirectory
+
+        cfg = Config()
+        cfg.set_main_option("script_location", "namifax:alembic")
+        heads = set(ScriptDirectory.from_config(cfg).get_heads())
+        with engine.connect() as connection:
+            current = {row[0] for row in connection.execute(sa.text("SELECT version_num FROM alembic_version"))}
+        return bool(current) and current == heads
+    except Exception:
+        return False
 
 
 def upgrade_to_head(engine: Engine) -> None:

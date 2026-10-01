@@ -19,7 +19,9 @@ if SRC_DIR not in sys.path:
 from namifax.db.provider import cli_session
 from namifax.services.addressbook import AFAddressBook
 
-DEFAULT_PHONEBOOK_PATH = os.environ.get("PHONEBOOK", "/var/spool/hylafax/etc/phonebook")
+from namifax.common import settings  # noqa: E402
+
+DEFAULT_PHONEBOOK_PATH = settings.phonebook_path()
 
 
 def generate_phonebook_content(addressbook: AFAddressBook) -> str:

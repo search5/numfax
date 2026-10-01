@@ -16,7 +16,8 @@ SRC_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 if SRC_DIR not in sys.path:
     sys.path.insert(0, SRC_DIR)
 
-from namifax.db.provider import cli_session
+from namifax.common.helpers import avantfaxlog
+from namifax.db.provider import cli_session, use_session
 from namifax.services.dynconf import DynamicConfig
 
 
@@ -48,12 +49,17 @@ def run_dynconf(argv: Sequence[str], dc: DynamicConfig | None = None, *, db: Any
                 return _dynconf_lookup(DynamicConfig(db=opened), device, callid1)
         dc = DynamicConfig(db=db)
 
+    if db is not None:
+        with use_session(db):                       # the log lines go to the same session
+            return _dynconf_lookup(dc, device, callid1)
     return _dynconf_lookup(dc, device, callid1)
 
 
 def _dynconf_lookup(dc: DynamicConfig, device: str, callid1: str) -> int:
     """Lookup CallID1 in DynamicConfig table; if exists, reject call."""
+    avantfaxlog(f"dynconf> checking CallID1 {callid1} on device {device}", echo=False)
     if dc.lookup(device, callid1):
+        avantfaxlog(f"dynconf> rejecting {callid1} on device {device}", echo=False)
         print("RejectCall: true")
 
     return 0

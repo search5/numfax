@@ -30,12 +30,13 @@ from namifax.common.helpers import (
 )
 from namifax.db.provider import cli_session, use_session
 from namifax.services.addressbook import AFAddressBook
+from namifax.common import settings
 from namifax.services.archive_out import ArchiveOut
 from namifax.services.user_account import AFUserAccount
 
 FAXMAILUSER = os.environ.get("FAXMAILUSER", "faxmail")
-WWWUSER = os.environ.get("WWWUSER", "www-data")
-ARCHIVE_SENT = os.environ.get("ARCHIVE_SENT", "/var/spool/hylafax/sent")
+WWWUSER = os.environ.get("WWWUSER", "www-data")      # (the original says "apache"; this is the Debian/Ubuntu web user)
+ARCHIVE_SENT = settings.sent_dir()
 TMPDIR = os.environ.get("AVANTFAX_TMPDIR", "/tmp/avantfax/")
 NOTIFY_ON_SUCCESS = os.environ.get("NOTIFY_ON_SUCCESS", "1") in ("1", "true", "True")
 NOTIFY_INCLUDE_PDF = os.environ.get("NOTIFY_INCLUDE_PDF", "0") in ("1", "true", "True")
@@ -212,7 +213,7 @@ def _process_notify(args: list[str], session: Any) -> int:
             to_email = mailaddr
 
     company = addressbook.get_company() or external
-    now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    now_str = datetime.datetime.now().strftime(settings.email_date_format())
     subject = f"fax: {company} {now_str}"
     text = f"{LANG['TO']}: {company}"
 

@@ -47,9 +47,14 @@ def _import_users(lines: list[str], db: Any) -> int:
         "username": None,
         "password": None,
         "email": None,
+        "email_sig": None,
+        "from_company": os.environ.get("FROM_COMPANY", ""),
+        "from_location": os.environ.get("FROM_LOCATION", ""),
+        "from_voicenumber": os.environ.get("FROM_VOICENUMBER", ""),
+        "from_faxnumber": os.environ.get("FROM_FAXNUMBER", ""),
         "superuser": 0,
         "can_del": 0,
-        "language": "en",
+        "language": os.environ.get("NAMIFAX_DEFAULT_LANGUAGE", "en"),
         "pwdcycle": 0,
         "pwd_reuse": 0,
         "is_admin": 0,
@@ -61,8 +66,9 @@ def _import_users(lines: list[str], db: Any) -> int:
         if not line:
             continue
 
-        parts = line.split("\t")
+        parts = line.split("\t", 3)
         if len(parts) < 4:
+            print(f"Error> {parts[0]}: expected name, username, password and email separated by tabs")
             continue
 
         name, username, password, email = parts[0], parts[1], parts[2], parts[3]

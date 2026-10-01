@@ -12,6 +12,8 @@ from typing import Optional, Tuple
 
 from sqlalchemy.engine import URL
 
+from namifax.common import settings
+
 
 def reboot_command() -> list[str]:
     return shlex.split(os.environ.get("NAMIFAX_REBOOT_CMD") or "sudo /sbin/reboot")
@@ -23,8 +25,8 @@ def shutdown_command() -> list[str]:
 
 def archive_folders() -> list[str]:
     """The received and the sent fax archive folders that exist (the original's $ARCHIVE and $ARCHIVE_SENT)."""
-    received = os.environ.get("AVANTFAX_ARCHIVE", "/var/spool/hylafax/archive")
-    sent = os.environ.get("ARCHIVE_SENT") or os.environ.get("AVANTFAX_ARCHIVE_SENT") or ""
+    received = settings.archive_dir()
+    sent = os.environ.get("AVANTFAX_ARCHIVE_SENT") or settings.sent_dir()
     return [p for p in (received, sent) if p and os.path.isdir(p)]
 
 

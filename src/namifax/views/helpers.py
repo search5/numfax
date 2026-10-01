@@ -188,7 +188,11 @@ def _vcard_lines(request) -> tuple[list[str] | None, str | None]:
     upload = request.POST.get("upload")
     if upload is None or not hasattr(upload, "file"):
         return None, None
-    content = upload.file.read()
+    from namifax.services import upload_check
+
+    content = upload.file.read(upload_check.max_bytes() + 1)
+    if len(content) > upload_check.max_bytes():
+        return None, upload_check.OVER_LIMIT
     text = content.decode("utf-8", errors="replace") if isinstance(content, bytes) else str(content)
     if not text.strip():
         return None, None
