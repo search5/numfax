@@ -20,7 +20,7 @@ def inbox_view(request):
 
     faxes = []
     if not request.params.get("empty"):
-        arc = ArchiveIn()
+        arc = ArchiveIn(db=request.db)
         superuser = bool(identity.get("superuser") or identity.get("is_admin"))
         devices = None if superuser else identity.get("modemdevs")
         if isinstance(devices, str):
@@ -28,7 +28,7 @@ def inbox_view(request):
 
         rows = arc.list_inbox(devices=devices)
         if rows:
-            ab = AFAddressBook()
+            ab = AFAddressBook(db=request.db)
             for r in rows:
                 fid = r.get("fid")
                 cname = None
@@ -57,7 +57,7 @@ def inbox_view(request):
     if "Authorization" in request.headers or "application/json" in request.headers.get("Accept", ""):
         return Response(json_body={"items": faxes, "total_count": len(faxes)}, content_type="application/json")
 
-    modem_list = get_all_admin_modems()
+    modem_list = get_all_admin_modems(request.db)
 
     return {
         "title": "- NamiFAX - Inbox",
@@ -81,21 +81,21 @@ def viewfax_view(request):
     company = ""
 
     try:
-        arc = ArchiveIn()
+        arc = ArchiveIn(db=request.db)
         if fid.isdigit() and arc.load_fax(int(fid)):
             pages = arc.get_pages() or 1
             archstamp = arc.get_archstamp() or ""
             modemdev = arc.get_modemdev() or ""
             if arc.get_companyid():
                 try:
-                    ab = AFAddressBook()
+                    ab = AFAddressBook(db=request.db)
                     if ab.loadbycid(arc.get_companyid()):
                         company = ab.get_company()
                 except Exception:
                     pass
             if not company and arc.get_faxnumid():
                 try:
-                    ab = AFAddressBook()
+                    ab = AFAddressBook(db=request.db)
                     if ab.loadbyfaxnumid(arc.get_faxnumid()):
                         company = ab.get_company()
                 except Exception:
@@ -125,7 +125,7 @@ def fax_download_view(request):
     # Attempt to locate actual archived fax file on disk
     file_bytes: bytes | None = None
     try:
-        arc = ArchiveIn()
+        arc = ArchiveIn(db=request.db)
         if arc.load_fax(int(fid)):
             file_path = arc.get_pdfpath() if fmt == "pdf" else arc.get_tiffpath()
             if file_path and os.path.exists(file_path):
@@ -147,7 +147,7 @@ def fax_download_view(request):
 def fax_rotate_view(request):
     """Rotate fax pages by 90 degrees matching legacy rotate.php."""
     fid = request.matchdict.get("fid") or request.params.get("fid", "1")
-    arc = ArchiveIn()
+    arc = ArchiveIn(db=request.db)
     try:
         if fid and arc.load_fax(int(fid)):
             arc.rotate_fax()
@@ -166,8 +166,8 @@ def setcompany_view(request):
     faxnumid = request.params.get("faxnumid")
 
     if fid and faxnumid:
-        arc = ArchiveIn()
-        ab = AFAddressBook()
+        arc = ArchiveIn(db=request.db)
+        ab = AFAddressBook(db=request.db)
         try:
             if arc.load_fax(int(fid)):
                 arc.set_faxnumid(int(faxnumid))

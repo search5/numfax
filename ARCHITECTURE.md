@@ -806,10 +806,10 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 | :---: | :--- | :---: | :--- |
 | 1 | `db/provider.py`, `DatabaseEngine.from_connection`, `create_app`, `request.db` | `[COMPLETE]` | `tests/unit/test_db_injection.py` 11개, 전체 413 통과 |
 | 2 | `views/admin.py` smtp/printers/storage/saml 4개 뷰: `DatabaseEngine()` 폴백 및 `db_engine` 우회 제거, `request.db` 직접 사용 | `[COMPLETE]` | `tests/unit/test_admin_views_request_db.py` 9개, 전체 422 통과 |
-| 2b | `views/auth.py`, `views/settings.py` 의 `getattr(request,"db",None)` → `request.db` (서비스 폴백과 함께) | `[PENDING]` | 서비스 생성자 변경(루프 3)과 맞물려 있음 |
-| 3 | `services/*` 8개(smtp/printer/storage_lifecycle/cover_studio/totp/saml/ocr/webauthn): 암묵적 `DatabaseEngine()` 제거, `db` 주입 + 미주입 시 첫 사용에서 `RuntimeError`(`MissingDatabase`), saml/ocr/webauthn에 `db` 인자 추가, `views/saml`·`views/webauthn`은 `request.db` 전달 | `[COMPLETE]` | `tests/unit/test_services_db_injection.py`, 전체 441 통과. `cli/faxrcvd`는 임시로 `get_default_engine()` 명시 전달(루프 4에서 교체) |
-| 4 | `db/repository.py`, `cli/*`, `main.py` 의 `get_default_engine()` 제거 | `[PENDING]` | |
-| 5 | `bridge_cli._GLOBAL_ENGINE`, 테스트 롤백/격리 픽스처, `get_default_engine` shim화 | `[PENDING]` | |
+| V1 | `views/inbox.py` 5개 뷰 + 공유 헬퍼 `get_all_admin_modems(db)`: `ArchiveIn/AFAddressBook(db=request.db)` | `[COMPLETE]` | `tests/unit/test_inbox_views_request_db.py` 6개, 전체 447 통과 |
+| V2~ | 나머지 웹 뷰를 모듈 단위로 `request.db` 주입: `modals`(8), `ajax`(7), `admin`(9), `helpers`(5), `addressbook`(5), `webauthn`(3), `archive`/`auth`/`settings`/`outbox`/`sendfax`, `security.py`, `web/views/*` | `[PENDING]` | 호출처를 모두 바꾸기 전에 폴백을 제거하면 뷰 약 70곳이 깨지므로 폴백 제거는 맨 마지막 |
+| C1~ | CLI별 `cli_db()`(provider.py) 컨텍스트로 엔진 생성 후 명시 주입: `faxrcvd`(4), `notify`(3), `cron`(2), `phb`, `dynconf`, `user`, `faxcover`, `services/faxqueue` | `[PENDING]` | CLI는 request가 없으므로 `request.db` 사용 불가. 웹과 동일한 `resolve_database_url` 규칙 사용 |
+| F | `Repository`의 `get_default_engine()` 폴백을 `resolve_db`로 교체, `get_default_engine` shim화/삭제, `bridge_cli._GLOBAL_ENGINE` 정리, 테스트 격리 픽스처 | `[PENDING]` | 보관해 둔 `test_repository_db_injection.py`(전역 엔진 미생성 검증)를 이 루프에서 복원 |
 
 ### 13.1 루프 3에서 발견된 기존 결함 (미해결, 별도 처리 필요)
 - `[NEEDS_CLARIFICATION]` `services/ocr.py`(`FaxOCR`), `services/webauthn.py`(`UserWebAuthnCredentials`)의 `CREATE TABLE`이 MySQL 전용 DDL(`AUTO_INCREMENT`, `INDEX`, `ENGINE=InnoDB`)이고 `db/schema.py`에도 없다. SQLite에서는 `try/except: pass`로 가려진 채 테이블이 생성되지 않는다. 운영 DB가 MySQL/SQLite 중 무엇인지 확정 후 `schema.py`로 이관 필요.

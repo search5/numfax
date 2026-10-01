@@ -84,6 +84,7 @@ class TestUIFallbackPhase4(unittest.TestCase):
         mock_ab_cls.return_value = mock_ab
 
         req = MockRequest()
+        req.db = MagicMock()
         req.identity = {"username": "admin", "is_admin": True}
 
         res = inbox_view(req)

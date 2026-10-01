@@ -19,6 +19,7 @@ def dummy_request():
 
 def test_rotate_view(dummy_request):
     """Verify fax rotate triggers ArchiveIn.rotate_fax."""
+    dummy_request.db = MagicMock()
     dummy_request.params = {"fid": "42"}
     with patch("namifax.views.inbox.ArchiveIn") as mock_arc_cls:
         inst = MagicMock()
@@ -34,6 +35,7 @@ def test_rotate_view(dummy_request):
 
 def test_setcompany_view(dummy_request):
     """Verify setcompany assigns faxnumid and increments counter."""
+    dummy_request.db = MagicMock()
     dummy_request.method = "POST"
     dummy_request.params = {"fid": "42", "faxnumid": "10"}
     with patch("namifax.views.inbox.ArchiveIn") as mock_arc_cls, \

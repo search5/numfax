@@ -45,6 +45,7 @@ class TestDummyRemovalPhase2(unittest.TestCase):
     def test_fax_download_real_fid_1_serves_actual_pdf(self):
         """Verify that requesting fid=1 serves the real disk file with 200 OK."""
         req = testing.DummyRequest()
+        req.db = self.db
         req.matchdict = {"fid": "1"}
         req.params = {"format": "pdf"}
 

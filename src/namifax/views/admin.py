@@ -43,11 +43,11 @@ def get_all_admin_users() -> list[dict[str, Any]]:
     return []
 
 
-def get_all_admin_modems() -> list[dict[str, Any]]:
+def get_all_admin_modems(db: Any = None) -> list[dict[str, Any]]:
     """Retrieve modems directly from database."""
     try:
         from namifax.services.modem import FaxModem
-        svc = FaxModem()
+        svc = FaxModem(db=db)
         rows = svc.list_all()
         if rows:
             modems_list = []
