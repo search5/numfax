@@ -47,7 +47,7 @@
         "index": 0,
         "action": "/sendfax",
         "method": "POST",
-        "inputs_count": 13,
+        "inputs_count": 24,
         "buttons_count": 1,
         "field_sequence": [
           {
@@ -72,10 +72,52 @@
             "required": false
           },
           {
+            "name": "to_location",
+            "tag": "input",
+            "type": "text",
+            "id": "to_location",
+            "required": false
+          },
+          {
+            "name": "to_voicenumber",
+            "tag": "input",
+            "type": "text",
+            "id": "to_voicenumber",
+            "required": false
+          },
+          {
+            "name": "to_address",
+            "tag": "input",
+            "type": "text",
+            "id": "to_address",
+            "required": false
+          },
+          {
+            "name": "to_city",
+            "tag": "input",
+            "type": "text",
+            "id": "to_city",
+            "required": false
+          },
+          {
+            "name": "to_zip",
+            "tag": "input",
+            "type": "text",
+            "id": "to_zip",
+            "required": false
+          },
+          {
             "name": "regarding",
             "tag": "input",
             "type": "text",
             "id": "regarding",
+            "required": false
+          },
+          {
+            "name": "file",
+            "tag": "input",
+            "type": "file",
+            "id": "file",
             "required": false
           },
           {
@@ -121,17 +163,52 @@
             "required": false
           },
           {
+            "name": "killtime",
+            "tag": "input",
+            "type": "text",
+            "id": "killtime",
+            "required": false
+          },
+          {
+            "name": "killtime_unit",
+            "tag": "select",
+            "type": "select",
+            "id": "killtime_unit",
+            "required": false
+          },
+          {
+            "name": "sendtime",
+            "tag": "input",
+            "type": "checkbox",
+            "id": "sendtime",
+            "required": false
+          },
+          {
+            "name": "sendtimeHour",
+            "tag": "select",
+            "type": "select",
+            "id": "sendtimeHour",
+            "required": false
+          },
+          {
+            "name": "sendtimeMin",
+            "tag": "select",
+            "type": "select",
+            "id": "sendtimeMin",
+            "required": false
+          },
+          {
+            "name": "user_tsi",
+            "tag": "input",
+            "type": "text",
+            "id": "user_tsi",
+            "required": false
+          },
+          {
             "name": "notify_requeue",
             "tag": "input",
             "type": "checkbox",
             "id": "notify_requeue",
-            "required": false
-          },
-          {
-            "name": "file",
-            "tag": "input",
-            "type": "file",
-            "id": "file",
             "required": false
           },
           {

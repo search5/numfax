@@ -56,7 +56,7 @@
           <input type="text" name="faxnumber" id="faxnumber"
                  value="{{ form_data.faxnumber or form_data.destinations or '' }}"
                  required autofocus
-                 placeholder="e.g. +1-555-0199  —  separate multiple numbers with commas"
+                 placeholder="e.g. +1-555-0199  —  separate multiple numbers with semicolons"
                  class="w-full border border-slate-300 rounded-lg px-4 py-3 text-sm font-mono text-slate-900 bg-white
                         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
           <p class="text-xs text-slate-400 mt-1.5">
@@ -85,6 +85,29 @@
                    placeholder="e.g. Acme Corporation"
                    class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white
                           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="to_location" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('Location') }} <span class="text-xs font-normal text-slate-400">{{ _('optional') }}</span></label>
+            <input type="text" name="to_location" id="to_location" value="{{ form_data.to_location or '' }}" class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
+          </div>
+          <div>
+            <label for="to_voicenumber" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('Voice Number') }} <span class="text-xs font-normal text-slate-400">{{ _('optional') }}</span></label>
+            <input type="text" name="to_voicenumber" id="to_voicenumber" value="{{ form_data.to_voicenumber or '' }}" class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
+          </div>
+          <div>
+            <label for="to_address" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('Address') }} <span class="text-xs font-normal text-slate-400">{{ _('optional') }}</span></label>
+            <input type="text" name="to_address" id="to_address" value="{{ form_data.to_address or '' }}" class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
+          </div>
+          <div>
+            <label for="to_city" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('City') }} <span class="text-xs font-normal text-slate-400">{{ _('optional') }}</span></label>
+            <input type="text" name="to_city" id="to_city" value="{{ form_data.to_city or '' }}" class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
+          </div>
+          <div>
+            <label for="to_zip" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('Zip') }} <span class="text-xs font-normal text-slate-400">{{ _('optional') }}</span></label>
+            <input type="text" name="to_zip" id="to_zip" value="{{ form_data.to_zip or '' }}" class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
           </div>
         </div>
 
@@ -121,7 +144,7 @@
           </div>
           <p class="text-sm font-semibold text-slate-700 group-hover:text-blue-700 transition-colors" id="file-label">{{ _('Click to select a file') }}</p>
           <p class="text-xs text-slate-400 mt-1">{{ _('Supported: PDF, TIFF, PostScript, TXT · Max 10 MB') }}</p>
-          <input type="file" name="file" id="file" class="sr-only" accept=".pdf,.tif,.tiff,.ps,.txt" />
+          <input type="file" name="file" id="file" multiple class="sr-only" accept=".pdf,.tif,.tiff,.ps,.txt" />
         </label>
         <p class="text-xs text-slate-400 mt-2">
           💡 {{ _('PDF is the most commonly used format. Convert Word or Excel files to PDF before attaching.') }}
@@ -153,9 +176,8 @@
           <select name="whichcover" id="whichcover"
                   class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white
                          focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm">
-            <option value="standard" {% if form_data.whichcover == 'standard' or not form_data.whichcover %}selected{% endif %}>{{ _('Standard (Default)') }}</option>
-            <option value="urgent"   {% if form_data.whichcover == 'urgent' %}selected{% endif %}>{{ _('Urgent') }}</option>
-            <option value="confidential" {% if form_data.whichcover == 'confidential' %}selected{% endif %}>{{ _('Confidential') }}</option>
+            {% for file, title in cover_list %}<option value="{{ file }}" {% if (form_data.whichcover or default_cover) == file %}selected{% endif %}>{{ title }}</option>
+            {% else %}<option value="">{{ _('No cover pages are set up') }}</option>{% endfor %}
           </select>
         </div>
 
@@ -207,19 +229,43 @@
           <select name="priority" id="priority"
                   class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white
                          focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm">
-            <option value="normal" {% if form_data.priority == 'normal' or not form_data.priority %}selected{% endif %}>{{ _('Normal') }}</option>
-            <option value="low"    {% if form_data.priority == 'low' %}selected{% endif %}>{{ _('Low') }}</option>
-            <option value="high"   {% if form_data.priority == 'high' %}selected{% endif %}>{{ _('High (Urgent)') }}</option>
+            {% for p in priority_list %}<option value="{{ p }}" {% if (form_data.priority or '*') == p %}selected{% endif %}>{{ '' if p == '*' else p }}</option>{% endfor %}
           </select>
         </div>
 
         <div>
           <label for="numtries" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('Max Retries') }}</label>
           <input type="number" name="numtries" id="numtries"
-                 value="{{ form_data.numtries or 3 }}" min="1" max="10"
+                 value="{{ form_data.numtries or '' }}" min="1" max="10"
                  class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white
                         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
           <p class="text-xs text-slate-400 mt-1">{{ _('Retries automatically on busy signal.') }}</p>
+        </div>
+
+        <div>
+          <label for="killtime" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('Expire after') }}</label>
+          <div class="flex gap-2">
+            <input type="text" name="killtime" id="killtime" value="{{ form_data.killtime or '' }}" class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm w-20" />
+            <select name="killtime_unit" id="killtime_unit" class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm">
+              {% for unit, label in (('minutes', _('Minutes')), ('hours', _('Hours')), ('days', _('Days'))) %}<option value="{{ unit }}" {% if (form_data.killtime_unit or 'hours') == unit %}selected{% endif %}>{{ label }}</option>{% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="inline-flex items-center gap-2 text-sm font-semibold text-slate-800 mb-1">
+            <input type="checkbox" name="sendtime" id="sendtime" value="1" {% if form_data.sendtime %}checked{% endif %} class="w-4 h-4 rounded border-slate-300 text-blue-600" />
+            {{ _('Schedule Send Time') }}
+          </label>
+          <div class="flex gap-2">
+            <select name="sendtimeHour" id="sendtimeHour" class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm">{% for h in hours %}<option value="{{ h }}" {% if form_data.sendtimeHour == h %}selected{% endif %}>{{ h }}</option>{% endfor %}</select>
+            <select name="sendtimeMin" id="sendtimeMin" class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm">{% for m in minutes %}<option value="{{ m }}" {% if form_data.sendtimeMin == m %}selected{% endif %}>{{ m }}</option>{% endfor %}</select>
+          </div>
+        </div>
+
+        <div>
+          <label for="user_tsi" class="block text-sm font-semibold text-slate-800 mb-1">{{ _('TSI ID') }}</label>
+          <input type="text" name="user_tsi" id="user_tsi" value="{{ form_data.user_tsi if form_data.user_tsi is defined and form_data.user_tsi is not none else default_tsi }}" class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow shadow-sm" />
         </div>
 
         <div class="flex items-end pb-1">

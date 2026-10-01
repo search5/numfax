@@ -92,3 +92,51 @@ def test_a_superuser_sees_every_inbox_fax(world):
     access = FaxAccess.for_request(_Request(world, "root"))
     rows = ArchiveIn(db=world).list_inbox(devices=access.devices, faxcats=access.categories)
     assert [r["fid"] for r in rows] == [7, 6, 5]
+
+
+# --- DID routing switched on (ENABLE_DID_ROUTING) -------------------------------------------------------------------------------
+# Recorded from the original with $ENABLE_DID_ROUTING = true. The accounts have no modem at all, only DID routes, so a port
+# that kept filtering by modem would show nobody anything. The fax modems and routes deliberately disagree (fax 3 came in
+# on ttyS1 but route 1).
+
+# fid: (inbox, modemdev, didr_id, faxcatid, sent_by)
+DID_FAXES = {
+    1: (0, "ttyS0", 1, None, None), 2: (0, "ttyS0", 2, None, None), 3: (0, "ttyS1", 1, 2, None), 4: (0, None, None, None, "alice"),
+    5: (1, "ttyS0", 1, None, None), 6: (1, "ttyS0", 2, None, None), 7: (1, "ttyS1", 1, 2, None), 8: (0, None, None, None, "carl"),
+    9: (0, "ttyS1", 2, 2, None),
+}
+# username: (didrouting, faxcats, superuser)
+DID_USERS = {"alice": ("1", "1", 0), "bob": ("2", None, 0), "carl": (None, None, 0), "dan": ("1", None, 0),
+             "root": (None, None, 1), "erin": (None, "2", 0), "fay": ("1", "2", 0)}
+DID_INBOX = {"alice": [5], "bob": [6], "carl": [], "dan": [5], "erin": [], "fay": [7, 5], "root": [7, 6, 5]}   # root: the configured routes
+
+
+@pytest.fixture
+def did_world(dbsession, monkeypatch):
+    monkeypatch.setenv("ENABLE_DID_ROUTING", "1")
+    dbsession.execute(FaxArchive.__table__.delete())
+    uids = {}
+    for name, (routes, cats, superuser) in DID_USERS.items():
+        svc = AFUserAccount(db=dbsession)
+        assert svc.create({"username": name, "password": "Secret123!", "email": f"{name}@x.test", "name": name,
+                           "last_login": "2026-01-01 10:00:00", "acc_enabled": 1, "didrouting": routes, "faxcats": cats,
+                           "superuser": superuser}), svc.error
+        uids[name] = svc.get_uid()
+    for fid, (inbox, modem, route, cat, sender) in DID_FAXES.items():
+        dbsession.add(FaxArchive(fid=fid, faxpath=f"/f/{fid}", pages=1, inbox=inbox, archstamp="2026-03-01 10:00:00",
+                                 modemdev=modem, didr_id=route, faxcatid=cat, userid=uids[sender] if sender else 0))
+    dbsession.flush()
+    return dbsession
+
+
+@pytest.mark.parametrize("user,sentrecvd", sorted(ARCHIVE), ids=[f"{u}-{s or 'default'}" for u, s in sorted(ARCHIVE)])
+def test_archive_search_with_did_routing_matches_the_original(did_world, user, sentrecvd):
+    assert _search(did_world, user, sentrecvd) == ARCHIVE[(user, sentrecvd)]      # the same lists as with modems
+
+
+@pytest.mark.parametrize("user", sorted(DID_INBOX))
+def test_inbox_with_did_routing_matches_the_original(did_world, user):
+    access = FaxAccess.for_request(_Request(did_world, user))
+    inbox = ArchiveIn(db=did_world)
+    rows = inbox.list_inbox(devices=access.devices, faxcats=access.categories, enable_did_routing=access.did_routing)
+    assert [r["fid"] for r in rows] == DID_INBOX[user]

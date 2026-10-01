@@ -92,7 +92,7 @@ def test_sendfax_view_uses_request_db():
     covers.return_value.get_covers.return_value = []
     modems = MagicMock(return_value=[])
     with patch.object(sendfax_mod, "Covers", covers), patch.object(sendfax_mod, "get_all_admin_modems", modems), \
-            contextlib.suppress(Exception):
+            patch.object(sendfax_mod, "AFUserAccount", MagicMock()), contextlib.suppress(Exception):
         sendfax_mod.sendfax_view(req)
     assert modems.call_args.args[0] is req.dbsession  # modems are ORM-backed
     assert covers.call_args.kwargs.get("db") is req.dbsession  # ORM-backed: the request session

@@ -52,12 +52,11 @@ class TestUIFallbackPhase4(unittest.TestCase):
         req = MockRequest()
         req.identity = {"username": "admin", "is_admin": True}
 
-        res = sendfax_view(req)
+        with patch("namifax.views.sendfax.AFUserAccount"), patch("namifax.views.sendfax.get_all_admin_modems", return_value=[]):
+            res = sendfax_view(req)
         self.assertIsInstance(res, dict)
-        self.assertEqual(res.get("cover_names"), [])
-        self.assertNotIn("standard", res.get("cover_names"))
-        self.assertNotIn("urgent", res.get("cover_names"))
-        self.assertNotIn("confidential", res.get("cover_names"))
+        self.assertEqual(res.get("cover_list"), [])
+        self.assertEqual(res.get("default_cover"), "")
 
     # =========================================================================
     # AUDIT-09: inbox and viewfax fallback removal

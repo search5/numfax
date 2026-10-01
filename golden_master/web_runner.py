@@ -132,7 +132,9 @@ def _verify_all_scenarios(target_scenario: str | None = None) -> int:
                 elif s_id == "W10_sendfax_err":
                     post_data = {"faxnumber": "", "_submit_check": "1"}
                 elif s_id == "W11_sendfax_post":
-                    post_data = {"to_person": "Receiver", "faxnumber": "1234567", "_submit_check": "1"}
+                    # (like the original, a fax needs a file or a cover page to be sent)
+                    post_data = {"to_person": "Receiver", "faxnumber": "1234567", "coverpage": "1", "whichcover": "cover.ps",
+                                 "_submit_check": "1"}
                 
                 res = test_client.post(route, post_data, headers=headers, expect_errors=True)
             else:

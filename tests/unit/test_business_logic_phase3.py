@@ -25,6 +25,7 @@ from namifax.views.settings import settings_view
 from namifax.common.helpers import ocr_faxcontent, bardecode
 from namifax.views.outbox import outbox_view
 from namifax.services.faxqueue import FaxQueue
+from namifax.services.sendfax_command import Sender, SendRequest
 from namifax.views.sendfax import dispatch_sendfax, sendfax_view
 from namifax.views.admin import admin_system_func_view
 from namifax.services.printer import process_inbound_print_job
@@ -318,7 +319,7 @@ def test_dispatch_sendfax_simulation_mode(monkeypatch):
     """Verify dispatch_sendfax uses simulation when sendfax binary is absent."""
     monkeypatch.setenv("NAMIFAX_QUEUE_SIMULATION", "1")
     with patch("shutil.which", return_value=None):
-        res = dispatch_sendfax(destinations="02-123-4567", files=[])
+        res = dispatch_sendfax(SendRequest(destinations="02-123-4567", coverpage=True), Sender())
         assert res["success"] is True
         assert res["simulated"] is True
         assert "jobid" in res
@@ -330,7 +331,7 @@ def test_dispatch_sendfax_binary_not_found_without_simulation(monkeypatch):
     monkeypatch.delenv("PYTEST_CURRENT_TEST", raising=False)
     with patch("shutil.which", return_value=None), \
          patch("os.path.exists", return_value=True):
-        res = dispatch_sendfax(destinations="02-123-4567", files=[])
+        res = dispatch_sendfax(SendRequest(destinations="02-123-4567", coverpage=True), Sender())
         assert res["success"] is False
         assert "not found" in res["error"].lower()
 
@@ -341,10 +342,8 @@ def test_dispatch_sendfax_with_binary():
          patch("subprocess.run") as mock_run:
         mock_run.return_value = MagicMock(returncode=0, stdout="jobid 554", stderr="")
         res = dispatch_sendfax(
-            destinations="02-123-4567",
-            files=["/tmp/doc.pdf"],
-            to_person="John Doe",
-            to_company="Acme",
+            SendRequest(destinations="02-123-4567", files=["/tmp/doc.pdf"], to_person="John Doe", to_company="Acme"),
+            Sender(username="admin"),
         )
         assert res["success"] is True
         mock_run.assert_called_once()

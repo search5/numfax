@@ -21,8 +21,8 @@ def sent(world):
     """Captures what the page would hand to HylaFAX instead of running it."""
     calls = []
 
-    def fake(**kw):
-        calls.append(kw)
+    def fake(send, sender):
+        calls.append(send)
         return {"success": True}
 
     with patch("namifax.views.sendfax.dispatch_sendfax", fake):
@@ -93,7 +93,7 @@ def test_a_superuser_may_reply_to_any_fax(world):
 def test_sending_attaches_the_original_pdf(world, sent):
     res = _login(world, "alice").post("/sendfax", {"_submit_check": "1", "faxnumber": "5550100", "refax": str(world.fax["A"])})
     assert res.status_int == 302
-    assert len(sent) == 1 and sent[0]["files"][0].endswith("/A/fax.pdf")
+    assert len(sent) == 1 and sent[0].files[0].endswith("/A/fax.pdf")
 
 
 def test_sending_without_the_right_does_not_attach_or_send(world, sent):
@@ -103,7 +103,7 @@ def test_sending_without_the_right_does_not_attach_or_send(world, sent):
 
 def test_a_plain_send_still_works_without_refax(world, sent):
     _login(world, "alice").post("/sendfax", {"_submit_check": "1", "faxnumber": "5550100"})
-    assert len(sent) == 1 and sent[0]["files"] == []
+    assert len(sent) == 1 and sent[0].files == []
 
 
 # --- the outbox must not feed job numbers into the fax-reply parameter ---------------------------------------------------------
