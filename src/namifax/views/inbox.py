@@ -11,6 +11,7 @@ from pyramid.view import view_config
 from namifax.services.addressbook import AFAddressBook
 from namifax.services.archive_in import ArchiveIn
 from namifax.views.admin import get_all_admin_modems
+from namifax.views.fax_rights import fax_access, load_fax
 
 
 @view_config(route_name="inbox", renderer="namifax:templates/inbox.jinja2", permission="view")
@@ -21,12 +22,8 @@ def inbox_view(request):
     faxes = []
     if not request.params.get("empty"):
         arc = ArchiveIn(db=request.dbsession)
-        superuser = bool(identity.get("superuser") or identity.get("is_admin"))
-        devices = None if superuser else identity.get("modemdevs")
-        if isinstance(devices, str):
-            devices = [d.strip() for d in devices.split(",") if d.strip()]
-
-        rows = arc.list_inbox(devices=devices)
+        access = fax_access(request)
+        rows = arc.list_inbox(devices=access.devices, faxcats=access.categories, enable_did_routing=access.did_routing)
         if rows:
             ab = AFAddressBook(db=request.dbsession)
             for r in rows:
@@ -82,7 +79,7 @@ def viewfax_view(request):
 
     try:
         arc = ArchiveIn(db=request.dbsession)
-        if fid.isdigit() and arc.load_fax(int(fid)):
+        if fid.isdigit() and load_fax(request, arc, fid, action="viewfax"):
             pages = arc.get_pages() or 1
             archstamp = arc.get_archstamp() or ""
             modemdev = arc.get_modemdev() or ""
@@ -126,7 +123,7 @@ def fax_download_view(request):
     file_bytes: bytes | None = None
     try:
         arc = ArchiveIn(db=request.dbsession)
-        if arc.load_fax(int(fid)):
+        if load_fax(request, arc, fid, action="download"):
             file_path = arc.get_pdfpath() if fmt == "pdf" else arc.get_tiffpath()
             if file_path and os.path.exists(file_path):
                 with open(file_path, "rb") as f:
@@ -149,7 +146,7 @@ def fax_rotate_view(request):
     fid = request.matchdict.get("fid") or request.params.get("fid", "1")
     arc = ArchiveIn(db=request.dbsession)
     try:
-        if fid and arc.load_fax(int(fid)):
+        if fid and load_fax(request, arc, fid, action="rotate"):
             arc.rotate_fax()
     except Exception:
         pass
@@ -169,7 +166,7 @@ def setcompany_view(request):
         arc = ArchiveIn(db=request.dbsession)
         ab = AFAddressBook(db=request.dbsession)
         try:
-            if arc.load_fax(int(fid)):
+            if load_fax(request, arc, fid, action="setcompany"):
                 arc.set_faxnumid(int(faxnumid))
             if ab.loadbyfaxnumid(int(faxnumid)):
                 ab.inc_faxfrom()

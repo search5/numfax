@@ -21,7 +21,7 @@ CASES = [
 
 
 @pytest.mark.parametrize("name,method,params", CASES, ids=[f"{c[0]}-{c[1]}" for c in CASES])
-def test_view_builds_domain_objects_with_request_db(name, method, params):
+def test_view_builds_domain_objects_with_request_db(name, method, params, as_superuser):
     req = testing.DummyRequest()
     req.__dict__["identity"] = {"username": "admin", "uid": 1, "is_admin": True, "superuser": True}
     req.db = object()

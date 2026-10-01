@@ -10,6 +10,7 @@ from namifax.services.addressbook import AFAddressBook
 from namifax.services.archive_base import FaxPDFArchive
 from namifax.services.categories import FaxPDFCategory
 from namifax.views.admin import get_all_admin_modems
+from namifax.views.fax_rights import fax_access
 
 
 @view_config(route_name="archive", renderer="namifax:templates/archive.jinja2", permission="view")
@@ -24,8 +25,9 @@ def archive_view(request):
     date_to_q = request.params.get("date_to", "")
 
     results: list[dict[str, Any]] = []
+    searched = bool(search_q or faxid_q or category_q or sentrecvd_q or date_from_q or date_to_q)
 
-    if search_q or faxid_q or category_q or sentrecvd_q or date_from_q or date_to_q:
+    if searched:
         try:
             fa = FaxPDFArchive(db=request.dbsession)
             criteria = {
@@ -35,7 +37,8 @@ def archive_view(request):
                 "sentrecvd": sentrecvd_q or None,
                 "start_date": date_from_q or None,
                 "end_date": date_to_q or None,
-                "superuser": identity.get("is_admin", False),
+                "userid": None if fax_access(request).superuser else fax_access(request).uid,
+                **fax_access(request).search_rights(),
             }
             num_found = fa.search_archive(criteria)
             if num_found > 0:
@@ -80,6 +83,7 @@ def archive_view(request):
         "date_from": date_from_q,
         "date_to": date_to_q,
         "results": results,
+        "searched": searched,
         "categories": categories,
         "modem_list": get_all_admin_modems(request.dbsession),
     }

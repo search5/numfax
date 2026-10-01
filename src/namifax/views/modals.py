@@ -2,12 +2,14 @@
 
 from __future__ import annotations
 
+from pyramid.httpexceptions import HTTPForbidden
 from pyramid.view import view_config
 
 from namifax.services.addressbook import AFAddressBook
 from namifax.services.archive_in import ArchiveIn
 from namifax.services.faxqueue import FaxQueue
 from namifax.common.helpers import send_mail
+from namifax.views.fax_rights import fax_access, load_fax
 
 
 @view_config(route_name="modal_email", renderer="namifax:templates/modal_email.jinja2", permission="view")
@@ -31,7 +33,7 @@ def modal_email_view(request):
             pdf_path = None
             thumb_path = None
             try:
-                if arc.load_fax(int(fid)):
+                if load_fax(request, arc, fid, action="email"):
                     pdf_path = arc.get_pdfpath()
                     thumb_path = arc.get_thumbnail()
             except (ValueError, TypeError):
@@ -127,7 +129,7 @@ def modal_note_view(request):
         desc = request.params.get("description", "").strip()
         arc = ArchiveIn(db=request.dbsession)
         try:
-            if fid and arc.load_fax(int(fid)):
+            if fid and load_fax(request, arc, fid, action="set_note"):
                 arc.set_note(description=desc, category=None, userid=identity.get("uid", 1))
                 message = "Note saved successfully"
         except (ValueError, TypeError):
@@ -149,10 +151,13 @@ def modal_delete_view(request):
     fid = request.params.get("fid", "1")
     status = None
 
+    if not fax_access(request).can_del and not fax_access(request).superuser:
+        raise HTTPForbidden("You may not delete faxes.")
+
     if request.method == "POST":
         arc = ArchiveIn(db=request.dbsession)
         try:
-            if fid and arc.delete_fax(int(fid)):
+            if fid and load_fax(request, arc, fid, action="delete", delete=True) and arc.delete_fax():
                 status = "deleted"
         except (ValueError, TypeError):
             pass
@@ -213,7 +218,7 @@ def modal_txreport_view(request):
 
     arc = ArchiveIn(db=request.dbsession)
     try:
-        if fid and str(fid).isdigit() and arc.load_fax(int(fid)):
+        if fid and str(fid).isdigit() and load_fax(request, arc, fid, action="txreport"):
             date_val = arc.get_archstamp() or ""
             pages_val = arc.get_pages() or 0
             cid = arc.get_companyid()

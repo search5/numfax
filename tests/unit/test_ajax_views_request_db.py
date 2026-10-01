@@ -25,7 +25,7 @@ CLASSES = ["ArchiveIn", "AFAddressBook", "FaxModem", "DistributionList"]
 
 
 @pytest.mark.parametrize("name,method,params", CASES, ids=[c[0] for c in CASES])
-def test_view_builds_domain_objects_with_request_db(name, method, params):
+def test_view_builds_domain_objects_with_request_db(name, method, params, as_superuser):
     req = testing.DummyRequest()
     req.session = {"user_id": 1, "username": "admin", "is_admin": True, "superuser": True}
     req.db = object()

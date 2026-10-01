@@ -1,6 +1,7 @@
 """NamiFAX asynchronous AJAX API views matching legacy ajax/*.php."""
 
 import html
+from pyramid.httpexceptions import HTTPForbidden
 from pyramid.response import Response
 from pyramid.view import view_config
 
@@ -10,6 +11,7 @@ from namifax.services.distro import DistributionList
 from namifax.services.faxqueue import FaxQueue
 from namifax.services.modem import FaxModem
 from namifax.views.admin import get_all_admin_modems
+from namifax.views.fax_rights import fax_access, load_fax
 
 
 @view_config(route_name="ajax_modemstatus", permission="view")
@@ -48,7 +50,8 @@ def ajax_inbox_count(request):
     arc = ArchiveIn(db=request.dbsession)
     count = 0
     try:
-        count = arc.get_num_faxes(inbox=True) or 0
+        access = fax_access(request)
+        count = arc.get_num_faxes(access.devices, access.categories, access.did_routing) or 0
     except Exception:
         count = 0
     return Response(str(count), content_type="text/plain")
@@ -180,12 +183,9 @@ def ajax_archive_fax(request):
     fid = request.params.get("fid") or request.params.get("fids")
     if fid:
         arc = ArchiveIn(db=request.dbsession)
-        try:
-            for item in str(fid).split(","):
-                if item.strip():
-                    arc.set_archivebox(int(item.strip()))
-        except (ValueError, TypeError):
-            pass
+        for item in str(fid).split(","):
+            if item.strip() and load_fax(request, arc, item.strip(), action="ajaxarchivefax"):
+                arc.set_archivebox(int(item.strip()))
     return Response("", status_code=200)
 
 
@@ -254,15 +254,15 @@ def ajax_faxalter(request):
 def ajax_deletefaxes_view(request):
     """Batch delete faxes dialog and action matching legacy ajaxdeletefaxes.php."""
     fids = request.params.get("fids", "")
+    access = fax_access(request)
+    if not (access.can_del or access.superuser):
+        raise HTTPForbidden("You may not delete faxes.")
     if request.method == "POST":
         if fids:
             arc = ArchiveIn(db=request.dbsession)
             for fid in fids.split(","):
-                try:
-                    if fid.strip():
-                        arc.delete_fax(int(fid.strip()))
-                except Exception:
-                    pass
+                if fid.strip() and load_fax(request, arc, fid.strip(), action="ajaxdeletefaxes", delete=True):
+                    arc.delete_fax()
         return Response("", status_code=200)
 
     html = f"""<!DOCTYPE html>

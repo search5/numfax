@@ -260,3 +260,15 @@ def legacy_db(request, monkeypatch):
     with admin.connect() as conn:
         conn.execute(sa.text(f"DROP DATABASE IF EXISTS `{name}`"))
     admin.dispose()
+
+
+@pytest.fixture
+def as_superuser(monkeypatch):
+    """Views check the signed-in user's fax rights in the database; this makes them see a superuser.
+
+    For tests that call a view directly with a stand-in request (there is no login behind it).
+    """
+    from namifax.services.fax_access import FaxAccess
+
+    monkeypatch.setattr(FaxAccess, "for_request",
+                        classmethod(lambda cls, request: cls(uid=1, username="admin", superuser=True, can_del=True)))

@@ -4,6 +4,7 @@ import os
 import shutil
 import tempfile
 import unittest
+from unittest.mock import patch
 from pyramid import testing
 from pyramid.httpexceptions import HTTPNotFound
 
@@ -48,7 +49,10 @@ class TestDummyRemovalPhase2(unittest.TestCase):
         req.matchdict = {"fid": "1"}
         req.params = {"format": "pdf"}
 
-        res = fax_download_view(req)
+        from namifax.services.fax_access import FaxAccess
+
+        with patch.object(FaxAccess, "for_request", classmethod(lambda cls, r: cls(uid=1, username="admin", superuser=True))):
+            res = fax_download_view(req)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.content_type, "application/pdf")
         # Ensure it does NOT contain the legacy synthetic stub marker

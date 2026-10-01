@@ -2,9 +2,13 @@
 
 from __future__ import annotations
 
+import pytest
 from pyramid import testing
 
 from namifax.views.archive import archive_view
+
+
+pytestmark = pytest.mark.usefixtures("as_superuser")
 
 
 def _request(dbsession, **params):

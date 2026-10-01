@@ -114,6 +114,10 @@ def _search_conditions(c: Dict[str, Any]) -> List[Any]:
             conds.append(or_(cats, *alt))
         elif target is not None and cats is None:
             conds.append(or_(target, *alt))
+        else:
+            # No modem/route and no category on the account. The original adds no condition here, so such an account
+            # saw every fax in the archive (its inbox shows none): it now sees only what it sent itself.
+            conds.append(or_(*alt) if alt else false())
 
     if sentrecvd == "s":
         conds.append(by_user if userid else F.userid.is_not(None))

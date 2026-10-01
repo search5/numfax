@@ -22,7 +22,7 @@ def dummy_request():
     return request
 
 
-def test_modal_delete_post(dummy_request):
+def test_modal_delete_post(dummy_request, as_superuser):
     """Verify fax deletion via modal POST."""
     dummy_request.method = "POST"
     dummy_request.params = {"fid": "42", "_submit_check": "1"}
@@ -31,7 +31,8 @@ def test_modal_delete_post(dummy_request):
         inst.delete_fax.return_value = True
         mock_cls.return_value = inst
         res = modal_delete_view(dummy_request)
-        inst.delete_fax.assert_called_with(42)
+        inst.load_fax.assert_called_with(42)
+        inst.delete_fax.assert_called_once_with()
         assert res.get("title") == "- NamiFAX - Delete Fax" or res.get("status") == "deleted"
 
 

@@ -47,7 +47,7 @@ def test_view_builds_domain_objects_with_request_db(name, kwargs, attrs):
             assert call.kwargs.get("db") is expected, f"{name}: {cls._mock_name} built with the wrong database"
 
 
-def test_inbox_view_lists_rows_from_the_app_database_not_the_global_one(tmp_path):
+def test_inbox_view_lists_rows_from_the_app_database_not_the_global_one(tmp_path, as_superuser):
     from namifax import create_app
 
     db_file = tmp_path / "isolated.db"
