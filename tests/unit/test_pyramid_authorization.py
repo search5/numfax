@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../.
 
 from namifax import create_app as pyramid_app_factory
 from namifax.security import NamiFaxSecurityPolicy
-from namifax.web.session import SessionManager
+from namifax.sessions import SessionManager
 
 
 class TestPyramidAuthorization(unittest.TestCase):

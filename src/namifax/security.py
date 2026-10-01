@@ -50,7 +50,7 @@ except ImportError:
         return decorator
 
 from namifax.services.user_account import AFUserAccount
-from namifax.web.session import SessionManager
+from namifax.sessions import SessionManager
 
 
 class RootContext:

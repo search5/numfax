@@ -9,7 +9,7 @@ from unittest.mock import MagicMock
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
 from namifax.security import NamiFaxSecurityPolicy, RootContext
-from namifax.web.session import SessionManager
+from namifax.sessions import SessionManager
 
 
 class MockRequest:
