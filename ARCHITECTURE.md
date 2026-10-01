@@ -884,7 +884,7 @@ Pyramid cookiecutter starter(2.1-branch, jinja2 + sqlalchemy)를 임시 디렉�
 | B0-3 | `src/namifax/alembic/{env.py,script.py.mako,versions/}` + ini의 `[alembic] script_location = namifax:alembic`. `env.py`는 앱과 같은 `resolve_database_url`로 DB를 정하고 `Base.metadata`를 대상으로 함 | `[COMPLETE]` | `tests/unit/test_alembic_wiring.py` 6개, 실제 `alembic -c development.ini current/heads` 확인 |
 | B0-4 | starter 스타일 픽스처 `dbengine`, `app`, `tm`(doomed), `dbsession`, `testapp`, `app_request`, `dummy_request`, `dummy_config` (테스트별 격리 DB에 바인딩) | `[COMPLETE]` | `tests/unit/test_orm_fixtures.py` 6개 |
 | B0-5 | `request.db`가 `pyramid_tm` tween 아래(`environ["tm.active"]`)에서는 `request.dbsession`의 커넥션·트랜잭션을 공유(`DatabaseEngine.from_connection(..., managed=True, on_change=mark_changed)`). tween 밖(스크립트, `prepare`)에서는 기존처럼 독립 커넥션 + 쓰기마다 commit | `[COMPLETE]` | `tests/unit/test_request_db_shared_session.py` 11개(실제 tween, 롤백, E2E 로그인+SMTP 저장), 전체 597 통과 |
-| B0-6 | 가장 작은 모듈(`SysLog` 등)의 ORM 모델 + `request.dbsession` 파일럿 | `[PENDING]` | 운영 DB 종류(MySQL/SQLite) 확정 필요 |
+| B0-6 | 가장 작은 모듈의 ORM 모델 + `request.dbsession` 파일럿 | `[PENDING]` | 운영 DB 확정: SQLite, MySQL, MariaDB, PostgreSQL 모두 지원 필요 → 14.2 |
 
 ### 14.1 B0에서 확정된 계약
 - **zope.sqlalchemy는 변경이 감지된 세션만 커밋한다.** ORM flush는 자동으로 변경을 표시하지만 `session.execute(text(...))` 같은 raw SQL은 `zope.sqlalchemy.mark_changed(session)`를 호출하지 않으면 요청 끝에 **롤백**된다. 그래서 `request.db`(raw 커서)의 모든 성공한 쓰기는 `on_change`로 `mark_changed`를 호출한다.
@@ -892,3 +892,12 @@ Pyramid cookiecutter starter(2.1-branch, jinja2 + sqlalchemy)를 임시 디렉�
 - 요청이 예외로 끝나면 `request.db`로 쓴 변경도 함께 롤백된다(이전에는 쓰기마다 즉시 commit이라 부분 반영이 가능했음).
 - explicit 매니저는 호출자가 `begin()`해야 한다(tween이 요청마다 수행). tween 없이 `prepare()`로 만든 요청에서 `request.dbsession`을 쓰려면 먼저 `request.tm.begin()`이 필요하다.
 - `namifax.main`은 모듈 이름이자 패키지의 `main = create_app` 함수 이름이다(13.4 참조).
+
+### 14.2 다중 DB 지원 조사 결과 (운영 DB: SQLite, MySQL, MariaDB, PostgreSQL)
+측정은 로컬 PostgreSQL 컨테이너에 임시 DB를 만들어 수행하고 삭제했다.
+- **현재 SQLite 외 DB에서는 시작 자체가 불가능하다.** `init_database_tables`의 DDL 20개가 PostgreSQL에서 전부 실패한다(`AUTOINCREMENT`). 이전에는 이 실패 반환값을 `create_app`/`cli_db`가 무시해 테이블이 없는 채로 정상 기동한 것처럼 보였다 → **fail-fast로 수정**(`RuntimeError: Database initialisation failed`).
+- SQLite 전용 구문 분포(`src/namifax`): `INSERT OR REPLACE/IGNORE` 23곳(`db/schema.py` 21, `views/admin.py` 2), `AUTOINCREMENT` 20곳, `sqlite_master`/`PRAGMA` 5곳, `ALTER TABLE ... ADD COLUMN`을 예외 무시로 감싼 마이그레이션 7곳. 반대로 MySQL 전용 DDL(`AUTO_INCREMENT`, `ENGINE=InnoDB`)이 `services/ocr.py`, `services/webauthn.py`에 있고 `NOW()`도 쓴다.
+- **문자열 이스케이프 결함(보안)**: 74곳이 f-string SQL에 `DatabaseEngine.quote()`를 쓰는데 작은따옴표만 이중화했다. MySQL/MariaDB는 기본 설정에서 역슬래시가 이스케이프 문자라 `\'`로 리터럴을 조기 종료시킬 수 있다 → **`quote()`를 방언별로 처리**(mysql/mariadb는 역슬래시 먼저 이스케이프). 파라미터 바인딩을 쓰는 쿼리는 3곳뿐이다.
+- 결론: DB 이식성은 모델(SQLAlchemy 타입, 바인딩 파라미터, `merge`/upsert, `func.now()`)과 Alembic 마이그레이션으로만 확보할 수 있다. 따라서 B 트랙은 선택이 아니라 다중 DB 지원의 **전제 조건**이다. 모델이 없는 테이블이 남아 있는 동안 비 SQLite DB는 지원되지 않는다.
+- 파일럿 후보: `SystemConfig`(key/value). `views/admin.py`의 storage/saml 뷰가 `INSERT OR REPLACE`(SQLite 전용)로 쓰고 있어, ORM `merge`로 바꾸면 이식성 결함 1건이 실제로 해소된다.
+- 모델 작성 규칙: 방언 중립 타입만 사용(`String(n)`, `Integer`, `Text`, `DateTime`), `mysql_length` 등 방언 옵션은 `with_variant`/조건부로만, 예약어 컬럼(`key` 등)은 SQLAlchemy 인용에 맡김, Alembic 마이그레이션은 `op.create_table`/`batch_alter_table`로 방언 중립 작성.

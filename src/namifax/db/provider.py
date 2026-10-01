@@ -39,7 +39,7 @@ def create_sa_engine(url: str) -> Engine:
 
 def open_db(engine: Engine) -> DatabaseEngine:
     """Borrow a pooled connection wrapped as a DatabaseEngine (disconnect() returns it)."""
-    return DatabaseEngine.from_connection(engine.raw_connection())
+    return DatabaseEngine.from_connection(engine.raw_connection(), dialect=engine.dialect.name)
 
 
 @contextmanager
@@ -59,7 +59,8 @@ def cli_db(
         if ensure_schema:
             from namifax.db.schema import init_database_tables
 
-            init_database_tables(db)
+            if not init_database_tables(db):
+                raise RuntimeError(f"Database initialisation failed: {db.get_error()}")
         yield db
     finally:
         db.disconnect()

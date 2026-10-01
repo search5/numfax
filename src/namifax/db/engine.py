@@ -38,6 +38,8 @@ class DatabaseEngine:
         self._last_insert_id: int | None = None
         self._affected_rows: int = 0
         self._error: str | None = None
+        # SQL dialect name (SQLAlchemy naming: sqlite, mysql, mariadb, postgresql); drives quote()
+        self.dialect: str = "sqlite"
         # managed: the connection and its transaction belong to someone else (e.g. pyramid_tm)
         self._managed: bool = False
         self._on_change: Any = None
@@ -56,6 +58,7 @@ class DatabaseEngine:
     ) -> bool:
         """Establish database connection."""
         self._error = None
+        self.dialect = "mariadb" if db_engine == "mariadb" else "mysql"
         try:
             if db_engine == "sqlite":
                 return self.connect_sqlite(db_name)
@@ -91,6 +94,7 @@ class DatabaseEngine:
         *,
         managed: bool = False,
         on_change: Any = None,
+        dialect: str = "sqlite",
     ) -> "DatabaseEngine":
         """Wrap an already-open DBAPI connection (e.g. a pooled SQLAlchemy raw connection).
 
@@ -104,11 +108,13 @@ class DatabaseEngine:
         db._cursor = conn.cursor()
         db._managed = managed
         db._on_change = on_change
+        db.dialect = dialect
         return db
 
     def connect_sqlite(self, path: str = ":memory:") -> bool:
         """Connect to SQLite database for testing and embedded deployment."""
         self._error = None
+        self.dialect = "sqlite"
         try:
             self._conn = sqlite3.connect(path, check_same_thread=False)
             self._conn.row_factory = sqlite3.Row
@@ -218,7 +224,12 @@ class DatabaseEngine:
         """Quote literal string safely."""
         if string is None:
             return "NULL"
-        escaped = str(string).replace("'", "''")
+        text = str(string)
+        if self.dialect in ("mysql", "mariadb"):
+            # backslash is an escape character in MySQL string literals: escape it first, otherwise
+            # a trailing \' would end the literal early (SQL injection).
+            text = text.replace("\\", "\\\\")
+        escaped = text.replace("'", "''")
         return f"'{escaped}'"
 
     def gen_xml(

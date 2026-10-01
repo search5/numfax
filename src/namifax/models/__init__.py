@@ -84,6 +84,7 @@ def includeme(config):
                 session.connection().connection,
                 managed=True,
                 on_change=lambda: zope.sqlalchemy.mark_changed(session),
+                dialect=request.registry["dbengine"].dialect.name,
             )
             request.add_finished_callback(lambda req: shared.disconnect())
             return shared
