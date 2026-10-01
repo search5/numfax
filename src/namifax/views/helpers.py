@@ -13,8 +13,8 @@ from namifax.services.distro import DistributionList
 def popup_distrolist_helper(request):
     """Distribution list contact multi-select helper popup matching distrolist_helper.php."""
     dl_id = request.params.get("dl_id", "1")
-    ab = AFAddressBook()
-    dl = DistributionList()
+    ab = AFAddressBook(db=request.db)
+    dl = DistributionList(db=request.db)
 
     if request.method == "POST":
         myselect = request.params.getall("myselect[]") or request.params.getall("myselect")
@@ -72,7 +72,7 @@ def popup_distrolist_helper(request):
 @view_config(route_name="popup_distro_contacts")
 def popup_distro_contacts(request):
     """Distro contacts selector popup matching distrocontacts.php."""
-    dl = DistributionList()
+    dl = DistributionList(db=request.db)
     options_html = []
 
     try:
@@ -117,7 +117,7 @@ def popup_distro_contacts(request):
 @view_config(route_name="popup_fax_contacts")
 def popup_fax_contacts(request):
     """Fax contacts selector popup matching faxcontacts.php."""
-    ab = AFAddressBook()
+    ab = AFAddressBook(db=request.db)
     options_html = []
 
     try:
@@ -164,7 +164,7 @@ def popup_fax_contacts(request):
 @view_config(route_name="popup_email_contacts")
 def popup_email_contacts(request):
     """Email contacts selector popup matching emailcontacts.php."""
-    ab = AFAddressBook()
+    ab = AFAddressBook(db=request.db)
     options_html = []
 
     try:
@@ -214,7 +214,7 @@ def upload_email_contacts(request):
             content = upload_file.file.read()
             lines = content.decode("utf-8", errors="ignore").splitlines() if isinstance(content, bytes) else str(content).splitlines()
 
-            ab = AFAddressBook()
+            ab = AFAddressBook(db=request.db)
             current_name = None
             for line in lines:
                 line = line.strip()
@@ -265,7 +265,7 @@ def upload_fax_contacts(request):
             content = upload_file.file.read()
             lines = content.decode("utf-8", errors="ignore").splitlines() if isinstance(content, bytes) else str(content).splitlines()
 
-            ab = AFAddressBook()
+            ab = AFAddressBook(db=request.db)
             current_name = None
             current_org = None
             current_work = None
@@ -295,7 +295,7 @@ def upload_fax_contacts(request):
 
     category_options = []
     try:
-        cats = FaxPDFCategory().get_categories() or []
+        cats = FaxPDFCategory(db=request.db).get_categories() or []
         for cat in cats:
             cid = cat.get("catid")
             cname = html.escape(str(cat.get("name", "")))

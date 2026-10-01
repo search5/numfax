@@ -18,6 +18,7 @@ class MockRequest(testing.DummyRequest):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._mock_identity = None
+        self.db = MagicMock()
 
     @property
     def identity(self):
