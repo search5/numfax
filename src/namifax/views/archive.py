@@ -26,7 +26,7 @@ def archive_view(request):
 
     if search_q or faxid_q or category_q or sentrecvd_q or date_from_q or date_to_q:
         try:
-            fa = FaxPDFArchive()
+            fa = FaxPDFArchive(db=request.db)
             criteria = {
                 "keywords": search_q or None,
                 "faxid": int(faxid_q) if faxid_q.isdigit() else None,
@@ -55,7 +55,7 @@ def archive_view(request):
             pass
 
     # Retrieve categories
-    cat_svc = FaxPDFCategory()
+    cat_svc = FaxPDFCategory(db=request.db)
     categories = cat_svc.get_categories() or []
 
     return {
@@ -70,5 +70,5 @@ def archive_view(request):
         "date_to": date_to_q,
         "results": results,
         "categories": categories,
-        "modem_list": get_all_admin_modems(),
+        "modem_list": get_all_admin_modems(request.db),
     }
