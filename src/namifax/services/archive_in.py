@@ -67,8 +67,7 @@ class ArchiveIn(FaxPDFArchive):
             self.error = "Not in inbox"
             return False
 
-        faxpath = self.dbdata.get("faxpath", "").lstrip("/")
-        full_dir = os.path.join(self.installdir, faxpath)
+        full_dir = self._on_disk(self.dbdata.get("faxpath", ""))
         tiff_file = os.path.join(full_dir, TIFFNAME)
         thumb_file = os.path.join(full_dir, THUMBNAIL)
 

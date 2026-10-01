@@ -56,10 +56,10 @@ def seed_demo_records(session: Session) -> None:
         session.add_all([
             UserAccount(uid=1, name="System Administrator", username="admin", password=md5_of_password,
                         email="admin@namifax.local", superuser=True, is_admin=True, can_del=True, any_modem=True,
-                        acc_enabled=True),
+                        acc_enabled=True, last_login="2026-09-29 09:00:00"),   # (no forced password change)
             UserAccount(uid=2, name="Operator User", username="operator", password=md5_of_password,
                         email="operator@namifax.local", superuser=False, is_admin=False, can_del=False,
-                        any_modem=True, acc_enabled=True),
+                        any_modem=True, acc_enabled=True, last_login="2026-09-29 09:00:00"),
         ])
 
     if _count(session, Modems) < 2:

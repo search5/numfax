@@ -28,7 +28,7 @@ def test_models_use_the_legacy_primary_keys_and_leave_out_the_port_duplicates():
     assert [c.name for c in email.primary_key.columns] == ["abookemail_id"]
     assert {"abook_id", "company"} <= set(ab.c.keys()) and "ab_id" not in ab.c
     assert {"abookfax_id", "abook_id", "faxnumber", "email", "description", "to_person", "to_location",
-            "to_voicenumber", "faxcatid", "faxfrom", "faxto", "printer"} == set(fax.c.keys())
+            "to_voicenumber", "to_address", "to_zip", "to_city", "faxcatid", "faxfrom", "faxto", "printer"} == set(fax.c.keys())
     assert set(email.c.keys()) == {"abookemail_id", "abook_id", "contact_name", "contact_email"}
     assert isinstance(ab.c.company.type, String) and ab.c.company.type.length == 255
     assert not fax.c.faxnumber.nullable and not email.c.contact_email.nullable

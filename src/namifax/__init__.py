@@ -43,7 +43,7 @@ def create_app(global_config=None, **settings):
 
         # Initialize DB tables and seed data on the injected engine
         from namifax.db.bootstrap import ensure_schema
-        ensure_schema(config.registry["dbengine"])
+        ensure_schema(config.registry["dbengine"], settings)
 
         config.include(".routes")
 

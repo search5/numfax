@@ -40,6 +40,11 @@ class AddressBookFAX(Base):
     to_person: Mapped[Optional[str]] = mapped_column(String(255))
     to_location: Mapped[Optional[str]] = mapped_column(String(255))
     to_voicenumber: Mapped[Optional[str]] = mapped_column(String(255))
+    # street address, zip and city of the contact (the original added them in 3.3.4 as NOT NULL columns without a
+    # default, so a row must always carry a value)
+    to_address: Mapped[str] = mapped_column(String(50), nullable=False, default="", server_default="")
+    to_zip: Mapped[str] = mapped_column(String(16), nullable=False, default="", server_default="")
+    to_city: Mapped[str] = mapped_column(String(50), nullable=False, default="", server_default="")
     faxcatid: Mapped[Optional[int]] = mapped_column(Integer)
     faxfrom: Mapped[Optional[int]] = mapped_column(Integer, server_default="0")
     faxto: Mapped[Optional[int]] = mapped_column(Integer, server_default="0")

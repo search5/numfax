@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import argparse
+import getpass
+import os
 from datetime import datetime
 import sys
 from typing import Any, Sequence
@@ -17,7 +19,8 @@ def run_createuser(argv: Sequence[str] | None = None, *, session: Any = None) ->
         description="Create or update a NamiFAX user account",
     )
     parser.add_argument("-u", "--username", default="admin", help="Username (default: admin)")
-    parser.add_argument("-p", "--password", default="admin1234!", help="Password (default: admin1234!)")
+    parser.add_argument("-p", "--password", default=None,
+                        help="Password (otherwise NAMIFAX_NEW_USER_PASSWORD, or you are asked; there is no default)")
     parser.add_argument("-e", "--email", default="admin@namifax.local", help="Email address")
     parser.add_argument("-n", "--name", default="Administrator", help="Full name")
     parser.add_argument("--admin", action="store_true", default=True, help="Grant admin & superuser privileges")
@@ -25,10 +28,33 @@ def run_createuser(argv: Sequence[str] | None = None, *, session: Any = None) ->
 
     args = parser.parse_args(argv)
 
+    args.password = _password(args.password)
+    if args.password is None:
+        return 2
+
     if session is not None:
         return _create_user(args, session)
     with cli_session(ensure_schema=True) as opened:
         return _create_user(args, opened)
+
+
+def _password(given: str | None) -> str | None:
+    """The password to set: the option, the environment, or a prompt for a person. None (after a message) if unusable."""
+    password = given or os.environ.get("NAMIFAX_NEW_USER_PASSWORD")
+    if not password:
+        if not sys.stdin.isatty():
+            print("[!] A password is required: use -p, set NAMIFAX_NEW_USER_PASSWORD, or run this in a terminal to be asked.")
+            return None
+        password = getpass.getpass("Password: ")
+        if getpass.getpass("Repeat password: ") != password:
+            print("[!] The passwords do not match.")
+            return None
+    from namifax.services.user_account import MIN_PASSWD_SIZE
+
+    if len(password) < MIN_PASSWD_SIZE:
+        print(f"[!] The password must be at least {MIN_PASSWD_SIZE} characters long.")
+        return None
+    return password
 
 
 def run_reset_2fa(argv: Sequence[str] | None = None, *, session: Any = None) -> int:
@@ -61,7 +87,9 @@ def _create_user(args: argparse.Namespace, session: Any) -> int:
     # Check if username already exists
     if user_svc.load_username(args.username):
         print(f"[*] User '{args.username}' already exists. Updating credentials...")
-        user_svc.set_newpassword(args.password, args.password)
+        if not user_svc.change_password(args.password):
+            print(f"[!] The password was not changed: {user_svc.get_error()}")
+            return 1
         now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         user_svc.useraccount.update_entry({
             "uid": user_svc.get_uid(),

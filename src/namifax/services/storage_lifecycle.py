@@ -82,7 +82,7 @@ class StorageLifecycleService:
             arc = FaxPDFArchive(db=self.db)
             if not arc.load_fax(fid):
                 continue
-            faxpath = arc.dbdata.get("faxpath") or ""
+            faxpath = arc._on_disk(arc.dbdata.get("faxpath") or "") if arc.dbdata.get("faxpath") else ""
 
             if use_remote and self.storage_provider and hasattr(self.storage_provider, "delete_fax"):
                 try:

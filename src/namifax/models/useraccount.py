@@ -8,7 +8,7 @@ from sqlalchemy import Integer, String, Text, false, true
 from sqlalchemy.orm import Mapped, mapped_column
 
 from namifax.models.meta import Base
-from namifax.models.types import LegacyBoolean
+from namifax.models.types import LegacyBoolean, IsoText
 
 
 class UserAccount(Base):
@@ -33,14 +33,14 @@ class UserAccount(Base):
     faxperpagearchive: Mapped[Optional[int]] = mapped_column(Integer, server_default="10")
     superuser: Mapped[Optional[bool]] = mapped_column(LegacyBoolean, server_default=false())
     can_del: Mapped[Optional[bool]] = mapped_column(LegacyBoolean, server_default=false())
-    last_mod: Mapped[Optional[str]] = mapped_column(String(32))
-    last_login: Mapped[Optional[str]] = mapped_column(String(32))
+    last_mod: Mapped[Optional[str]] = mapped_column(IsoText(32))
+    last_login: Mapped[Optional[str]] = mapped_column(IsoText(32))
     last_ip: Mapped[Optional[str]] = mapped_column(String(45))            # long enough for IPv6
     language: Mapped[Optional[str]] = mapped_column(String(16), server_default="en")
     modemdevs: Mapped[Optional[str]] = mapped_column(Text)
     didrouting: Mapped[Optional[str]] = mapped_column(Text)
     faxcats: Mapped[Optional[str]] = mapped_column(Text)
-    pwdexpire: Mapped[Optional[str]] = mapped_column(String(32))
+    pwdexpire: Mapped[Optional[str]] = mapped_column(IsoText(32))
     pwdcycle: Mapped[Optional[int]] = mapped_column(Integer, server_default="0")
     pwd_reuse: Mapped[Optional[bool]] = mapped_column(LegacyBoolean, server_default=false())
     is_admin: Mapped[Optional[bool]] = mapped_column(LegacyBoolean, server_default=false())

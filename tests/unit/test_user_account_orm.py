@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from namifax.models.types import IsoText
+
 from datetime import datetime, timedelta
 
 import alembic.command
@@ -37,7 +39,7 @@ def test_model_maps_the_legacy_table():
     assert t.c.username.unique is True and t.c.username.type.length == 64
     assert t.c.email.type.length == 255 and t.c.password.type.length == 64
     for name in ("last_mod", "last_login", "pwdexpire"):              # ISO text, readable on every database
-        assert isinstance(t.c[name].type, String) and t.c[name].type.length == 32, name
+        assert isinstance(t.c[name].type, (String, IsoText)) and t.c[name].type.length == 32, name
 
 
 @pytest.mark.parametrize("dialect", [sqlite.dialect(), mysql.dialect(), MariaDBDialect(), postgresql.dialect()],

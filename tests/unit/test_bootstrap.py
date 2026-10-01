@@ -113,8 +113,12 @@ def test_the_application_runs_on_the_server_database(server_db_url):
         s.commit()
 
     client = webtest.TestApp(app, extra_environ={"HTTP_HOST": "example.com"})
+    # a new account must choose its own password before it gets in (the original AvantFAX does the same)
     res = client.post("/login", {"username": "boss", "password": "Secret123!", "_submit_check": "1"})
-    assert res.status_int in (302, 303) and "/login" not in res.headers["Location"], res.text[:300]
+    assert res.status_int == 302 and res.headers["Location"].endswith("/pwdexpired"), res.text[:300]
+    assert client.get("/inbox", expect_errors=True).status_int != 200
+    res = client.post("/pwdexpired", {"oldpwd": "Secret123!", "newpwd": "My-own-password-9", "conpwd": "My-own-password-9"})
+    assert res.status_int == 302 and res.headers["Location"].endswith("/inbox"), res.text[:300]
     bad = []
     for path in ("/inbox", "/archive", "/archive?sentrecvd=*", "/addressbook", "/distrolist", "/outbox", "/sendfax",
                  "/settings", "/admin", "/admin/users", "/admin/modems", "/admin/routing/did", "/admin/barcodes",
@@ -134,7 +138,8 @@ def test_the_application_runs_on_the_server_database(server_db_url):
 
     with Session(engine) as s:
         two = AFUserAccount(db=s)
-        assert two.create({"username": "twofa", "password": "Secret123!", "email": "twofa@x.test", "acc_enabled": 1})
+        assert two.create({"username": "twofa", "password": "Secret123!", "email": "twofa@x.test", "acc_enabled": 1,
+                            "last_login": "2026-01-01 10:00:00"})
         t = TotpService(s)
         with patch.object(t, "verify_code", return_value=True):
             codes = t.enable_totp(two.uid, t.generate_secret(), "123456")["backup_codes"]

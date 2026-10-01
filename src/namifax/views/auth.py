@@ -26,6 +26,9 @@ def login_get_view(request):
     }
 
 
+_PWD_PENDING = "pwd_change_pending"
+
+
 @view_config(route_name="login", renderer="namifax:templates/login.jinja2", request_method="POST", permission="public")
 def login_post_view(request):
     """Authenticate user and redirect or re-render login page on failure."""
@@ -52,10 +55,21 @@ def login_post_view(request):
             "current_user": None,
         }
 
-    # Check 2FA requirement
+    uid = getattr(user, "get_uid", lambda: None)() or getattr(user, "uid", None)
+
+    # An account that was reset, has expired or has never been used must choose a new password first. The login
+    # cookie is not issued until it has (the second factor, if any, comes after that).
+    if uid and user.is_expired():
+        request.session[_PWD_PENDING] = {"uid": int(uid), "username": username}
+        return HTTPFound(location=request.route_url("pwdexpired"))
+
+    return _finish_login(request, uid, username)
+
+
+def _finish_login(request, uid, username):
+    """Second factor if the account has one, otherwise the login cookie."""
     from namifax.services.totp import TotpService
     totp_svc = TotpService(request.dbsession)
-    uid = getattr(user, "get_uid", lambda: None)() or getattr(user, "uid", None)
     if uid and totp_svc.is_totp_enabled(uid):
         request.session["2fa_pending_uid"] = uid
         request.session["2fa_pending_username"] = username
@@ -152,36 +166,44 @@ def forgot_post_view(request):
     }
 
 
+def _pwd_page(error=None):
+    return {"title": "- NamiFAX - Password Expired", "error": error}
+
+
 @view_config(route_name="pwdexpired", renderer="namifax:templates/pwdexpired.jinja2", request_method="GET", permission="public")
 def pwdexpired_get_view(request):
-    """Render password expired force change page."""
-    return {
-        "title": "- NamiFAX - Password Expired",
-        "error": None,
-    }
+    """The page an account lands on after a correct login when it has to choose a new password."""
+    if not request.session.get(_PWD_PENDING):
+        return HTTPFound(location=request.route_url("login"))
+    return _pwd_page()
 
 
 @view_config(route_name="pwdexpired", renderer="namifax:templates/pwdexpired.jinja2", request_method="POST", permission="public")
 def pwdexpired_post_view(request):
-    """Process expired password update."""
-    params = request.params
-    oldpwd = params.get("oldpwd", "")
-    newpwd = params.get("newpwd", "")
-    conpwd = params.get("conpwd", "")
+    """Change the password of the account that just logged in, then finish the login.
 
+    Only the account parked here by ``login_post_view`` can be changed: the request carries no user name.
+    """
+    pending = request.session.get(_PWD_PENDING)
+    if not pending:
+        return HTTPFound(location=request.route_url("login"))
+
+    params = request.POST
+    oldpwd, newpwd, conpwd = params.get("oldpwd", ""), params.get("newpwd", ""), params.get("conpwd", "")
     if not oldpwd or not newpwd or not conpwd:
-        return {
-            "title": "- NamiFAX - Password Expired",
-            "error": "All fields are required.",
-        }
+        return _pwd_page("All fields are required.")
     if newpwd != conpwd:
-        return {
-            "title": "- NamiFAX - Password Expired",
-            "error": "New passwords do not match.",
-        }
+        return _pwd_page("New passwords do not match.")
 
-    # Success: redirect to login
-    return HTTPFound(location=request.route_url("login"))
+    user = AFUserAccount(db=request.dbsession)
+    if not user.load(pending["uid"]):
+        request.session.pop(_PWD_PENDING, None)
+        return HTTPFound(location=request.route_url("login"))
+    if not user.set_newpassword(oldpwd, newpwd):
+        return _pwd_page(user.get_error() or "The password could not be changed.")
+
+    request.session.pop(_PWD_PENDING, None)
+    return _finish_login(request, pending["uid"], pending["username"])
 
 
 @view_config(route_name="logout", permission="public")

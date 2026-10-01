@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from namifax.models.types import IsoText
+
 from pathlib import Path
 
 import alembic.command
@@ -35,7 +37,7 @@ def test_model_maps_the_legacy_table():
     assert set(t.c.keys()) == {"syslogid", "logdate", "logtext"}
     assert isinstance(t.c.syslogid.type, Integer) and t.c.syslogid.autoincrement is True
     # ISO text, not DateTime: the viewer filters by prefix (LIKE), which PostgreSQL does not allow on timestamps
-    assert isinstance(t.c.logdate.type, String) and t.c.logdate.type.length == 32 and not t.c.logdate.nullable
+    assert isinstance(t.c.logdate.type, (String, IsoText)) and t.c.logdate.type.length == 32 and not t.c.logdate.nullable
     assert isinstance(t.c.logtext.type, Text) and not t.c.logtext.nullable
 
 

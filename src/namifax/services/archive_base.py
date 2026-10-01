@@ -32,7 +32,9 @@ class FaxPDFArchive:
     ) -> None:
         self.db = db
         self._route_filters: List[Any] = []
-        self.installdir = installdir
+        # Faxes of an installation made by the original AvantFAX are stored relative to its web root (``/faxes/2012/...``);
+        # AVANTFAX_INSTALLDIR says where that is. Without it a stored path is used as it is.
+        self.installdir = (installdir or os.environ.get("AVANTFAX_INSTALLDIR", "")).rstrip("/")
         self.date_format = date_format
 
         self.faxarchive = MDBOData("FaxArchive", db=self.db)
@@ -270,7 +272,7 @@ class FaxPDFArchive:
         # Remove thumbnail, tiff, pdf
         for fpath in [self.thumbnail, self.tiffpath, self.pdfpath]:
             if fpath:
-                full_p = self._on_disk(fpath)
+                full_p = fpath
                 if os.path.exists(full_p):
                     try:
                         os.remove(full_p)
@@ -378,15 +380,16 @@ class FaxPDFArchive:
 
         self.dbdata = raw
         faxpath = self.dbdata.get("faxpath") or ""
+        folder = self._on_disk(faxpath) if faxpath else ""          # where the files really are
 
-        self.pdfpath = os.path.join(faxpath, PDFNAME)
-        self.thumbnail = os.path.join(faxpath, THUMBNAIL)
-        self.tiffpath = os.path.join(faxpath, TIFFNAME)
+        self.pdfpath = os.path.join(folder, PDFNAME)
+        self.thumbnail = os.path.join(folder, THUMBNAIL)
+        self.tiffpath = os.path.join(folder, TIFFNAME)
 
         self.faximages = []
         pages = self.dbdata.get("pages") or 0
         for i in range(pages):
-            self.faximages.append(os.path.join(faxpath, f"{PREVIMG}{i}{PREVIMGSFX}"))
+            self.faximages.append(os.path.join(folder, f"{PREVIMG}{i}{PREVIMGSFX}"))
 
     def _format_row_dates(self, row: Dict[str, Any]) -> None:
         for col in ["archstamp", "lastmoddate", "lastoperation"]:

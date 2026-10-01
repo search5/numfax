@@ -32,6 +32,7 @@ def _run(view, req):
     user_cls, totp_cls = MagicMock(name="AFUserAccount"), MagicMock(name="TotpService")
     user_cls.return_value.login.return_value = True
     user_cls.return_value.load.return_value = True
+    user_cls.return_value.is_expired.return_value = False
     user_cls.return_value.dbdata = {}
     totp_cls.return_value.is_totp_enabled.return_value = False
     with patch.object(auth_mod, "AFUserAccount", user_cls), \

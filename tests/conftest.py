@@ -31,6 +31,12 @@ def seeded_db():
 
 
 @pytest.fixture(autouse=True)
+def _demo_data(monkeypatch):
+    """Most tests rely on the sample accounts and rows; the tests of the default (off) behaviour remove the switch."""
+    monkeypatch.setenv("NAMIFAX_DEMO_DATA", "1")
+
+
+@pytest.fixture(autouse=True)
 def _secret_key(monkeypatch):
     """A fixed key so credentials can be stored in any test (tests of the missing-key case remove it)."""
     monkeypatch.setenv("NAMIFAX_SECRET_KEY", "test-only-passphrase-for-the-suite")
@@ -188,3 +194,69 @@ def admin_call(app, tm, dbsession):
             request.session = {"is_superadmin": True, "is_admin": True, "username": "admin"}
             return view(request)
     return call
+
+
+# --- a database created by the original AvantFAX (MySQL / MariaDB only) --------------------------------------
+# Built from the original installer's SQL (legacy/create_tables.sql) plus its later update scripts, with a few
+# rows written the way the original application wrote them. ``3.3.5`` is a current installation, ``3.2.0`` an old one.
+LEGACY_ROOT = Path(__file__).resolve().parents[1] / "legacy"
+LEGACY_VERSIONS = {"3.3.5": ["db-update-334.sql"], "3.2.0": []}
+
+
+def _legacy_statements(path):
+    sql = "\n".join(l for l in path.read_text().splitlines() if not l.strip().startswith("--"))
+    return [part.strip() for part in sql.split(";") if part.strip()]
+
+
+LEGACY_SAMPLE_ROWS = [
+    "INSERT INTO UserAccount SET name='Old User', username='olduser', password='5f4dcc3b5aa765d61d8327deb882cf99', "
+    "email='old@corp.test', acc_enabled=TRUE, last_login='2025-12-31 23:59:58', last_ip='10.1.2.3', pwdexpire='2027-01-31', "
+    "pwdcycle=90, language='ko', modemdevs='ttyS0|ttyS1', faxperpageinbox=25",
+    "INSERT INTO AddressBook SET company='Legacy Corp'",
+    "INSERT INTO AddressBookFAX SET abook_id=2, faxnumber='5550001', description='main', to_person='Kim'{extra}",
+    "INSERT INTO AddressBookEmail SET abook_id=2, contact_name='Kim', contact_email='kim@legacy.test'",
+    "INSERT INTO FaxCategory SET name='Invoices'",
+    "INSERT INTO Modems SET device='ttyS0', alias='Modem 1'",
+    "INSERT INTO DistroList SET listname='Board', listdata='5550001', lastmod_date='2025-11-30 08:15:00', lastmod_user=1",
+    "INSERT INTO SysLog SET logdate='2025-12-24 18:30:00', logtext='legacy log line'",
+    "INSERT INTO FaxArchive SET faxnumid=1, faxpath='/faxes/2012/01/02/5550001/00007', pages=2, "
+    "archstamp='2012-01-02 03:04:05', lastoperation='2012-01-02 03:04:05', modemdev='ttyS0', origfaxnum='5550001', inbox=1",
+    "INSERT INTO FaxArchive SET faxnumid=1, faxpath='/faxes/2011/05/06/5550001/00003', pages=1, "
+    "archstamp='2011-05-06 07:08:09', modemdev='ttyS0', origfaxnum='5550001', inbox=0, description='old fax'",
+]
+
+
+class LegacyDatabase:
+    def __init__(self, url, engine, version):
+        self.url, self.engine, self.version = url, engine, version
+
+
+@pytest.fixture(params=[("mysql", "3.3.5"), ("mysql", "3.2.0"), ("mariadb", "3.3.5"), ("mariadb", "3.2.0")],
+                ids=lambda p: f"{p[0]}-{p[1]}")
+def legacy_db(request, monkeypatch):
+    """A MySQL/MariaDB database as the original AvantFAX leaves it (skipped when the server is not configured)."""
+    kind, version = request.param
+    base = os.environ.get(SERVER_DB_ENV[kind])
+    if not base:
+        pytest.skip(f"{SERVER_DB_ENV[kind]} not set")
+    name = f"nami_legacy_{uuid.uuid4().hex[:8]}"
+    admin = sa.create_engine(base, isolation_level="AUTOCOMMIT")
+    with admin.connect() as conn:
+        conn.execute(sa.text(f"CREATE DATABASE `{name}` CHARACTER SET utf8mb4"))
+    url = sa.engine.make_url(base).set(database=name).render_as_string(hide_password=False)
+    engine = sa.create_engine(url)
+    with engine.begin() as conn:
+        for statement in _legacy_statements(LEGACY_ROOT / "create_tables.sql"):
+            conn.execute(sa.text(statement))
+        for script in LEGACY_VERSIONS[version]:
+            for statement in _legacy_statements(LEGACY_ROOT / script):
+                conn.execute(sa.text(statement))
+        extra = ", to_address='', to_zip='', to_city=''" if version == "3.3.5" else ""   # NOT NULL since 3.3.4
+        for statement in LEGACY_SAMPLE_ROWS:
+            conn.execute(sa.text(statement.replace("{extra}", extra)))
+    monkeypatch.setenv("DATABASE_URL", url)
+    yield LegacyDatabase(url, engine, version)
+    engine.dispose()
+    with admin.connect() as conn:
+        conn.execute(sa.text(f"DROP DATABASE IF EXISTS `{name}`"))
+    admin.dispose()

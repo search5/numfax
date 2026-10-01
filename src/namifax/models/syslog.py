@@ -6,6 +6,7 @@ from sqlalchemy import Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from namifax.models.meta import Base
+from namifax.models.types import IsoText
 
 
 class SysLog(Base):
@@ -17,5 +18,5 @@ class SysLog(Base):
     # ISO text 'YYYY-MM-DD HH:MM:SS' (the legacy column is TEXT). It stays text because the viewer filters
     # by date prefix with LIKE, which PostgreSQL does not allow on timestamp columns, and ISO text sorts
     # chronologically on every database.
-    logdate: Mapped[str] = mapped_column(String(32), nullable=False)
+    logdate: Mapped[str] = mapped_column(IsoText(32), nullable=False)
     logtext: Mapped[str] = mapped_column(Text, nullable=False)

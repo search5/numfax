@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from namifax.models.types import IsoText
+
 import re
 
 import alembic.command
@@ -23,7 +25,7 @@ def test_model_maps_the_legacy_table():
     assert isinstance(t.c.dl_id.type, Integer) and t.c.dl_id.autoincrement is True
     assert isinstance(t.c.listname.type, String) and t.c.listname.type.length == 255 and not t.c.listname.nullable
     assert isinstance(t.c.listdata.type, Text) and t.c.listdata.nullable
-    assert isinstance(t.c.lastmod_date.type, String) and t.c.lastmod_date.type.length == 32
+    assert isinstance(t.c.lastmod_date.type, (String, IsoText)) and t.c.lastmod_date.type.length == 32
     assert isinstance(t.c.lastmod_user.type, Integer) and t.c.lastmod_user.nullable
 
 

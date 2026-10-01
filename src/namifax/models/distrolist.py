@@ -9,6 +9,7 @@ from sqlalchemy import Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from namifax.models.meta import Base
+from namifax.models.types import IsoText
 
 
 def _now() -> str:
@@ -24,5 +25,5 @@ class DistroList(Base):
     listdata: Mapped[Optional[str]] = mapped_column(Text)
     # The legacy column was a MySQL TIMESTAMP that updated itself on every change. ISO text keeps existing
     # rows readable on every database, and the ORM maintains it on insert and update.
-    lastmod_date: Mapped[Optional[str]] = mapped_column(String(32), default=_now, onupdate=_now)
+    lastmod_date: Mapped[Optional[str]] = mapped_column(IsoText(32), default=_now, onupdate=_now)
     lastmod_user: Mapped[Optional[int]] = mapped_column(Integer)

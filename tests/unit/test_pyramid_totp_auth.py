@@ -13,7 +13,7 @@ class TestPyramidTotpAuth(unittest.TestCase):
         self.db, self.session = linked_db()
 
         # Create user
-        self.db.query("INSERT INTO UserAccount (username, password, email, is_admin) VALUES ('bob', 'hashedpw', 'bob@test.com', 1)")
+        self.db.query("INSERT INTO UserAccount (username, password, email, is_admin, last_login) VALUES ('bob', 'hashedpw', 'bob@test.com', 1, '2026-01-01 10:00:00')")
         self.uid = self.db.get_insert_id()
 
         # Enable 2FA for bob
@@ -33,6 +33,7 @@ class TestPyramidTotpAuth(unittest.TestCase):
         mock_account.verify_password.return_value = True
         mock_account.get_uid.return_value = self.uid
         mock_account.get_username.return_value = "bob"
+        mock_account.is_expired.return_value = False
         mock_account_cls.return_value = mock_account
 
         req = testing.DummyRequest(post={"username": "bob", "password": "password"})

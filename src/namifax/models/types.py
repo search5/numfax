@@ -4,7 +4,9 @@ from __future__ import annotations
 
 from typing import Any
 
-from sqlalchemy import Boolean
+from datetime import date, datetime
+
+from sqlalchemy import Boolean, String
 from sqlalchemy.types import TypeDecorator
 
 _TRUE = {"1", "true", "t", "yes", "y", "on"}
@@ -32,3 +34,29 @@ class LegacyBoolean(TypeDecorator):
     def result_processor(self, dialect: Any, coltype: Any):
         # bypass the Boolean result processor, which would already have turned 'False' into True
         return lambda value: self.process_result_value(value, dialect)
+
+
+class IsoText(TypeDecorator):
+    """A date/time kept as ISO text (``YYYY-MM-DD HH:MM:SS`` / ``YYYY-MM-DD``) whatever the column is in the database.
+
+    A database written by the original AvantFAX has real ``TIMESTAMP``/``DATE`` columns, which the driver reads as
+    ``datetime``/``date`` objects; databases made by this application use ``VARCHAR``. The application works with ISO
+    text everywhere (prefix searches, sorting, display), so values are converted on the way in and out.
+    """
+
+    impl = String
+    cache_ok = True
+
+    def process_bind_param(self, value: Any, dialect: Any) -> Any:
+        if isinstance(value, datetime):
+            return value.strftime("%Y-%m-%d %H:%M:%S")
+        if isinstance(value, date):
+            return value.isoformat()
+        return value
+
+    def process_result_value(self, value: Any, dialect: Any) -> Any:
+        if isinstance(value, datetime):
+            return value.strftime("%Y-%m-%d %H:%M:%S")
+        if isinstance(value, date):
+            return value.isoformat()
+        return value

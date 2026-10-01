@@ -8,6 +8,7 @@ from sqlalchemy import Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from namifax.models.meta import Base
+from namifax.models.types import IsoText
 
 
 class FaxArchive(Base):
@@ -24,10 +25,10 @@ class FaxArchive(Base):
     faxcatid: Mapped[Optional[int]] = mapped_column(Integer)
     didr_id: Mapped[Optional[int]] = mapped_column(Integer)
     description: Mapped[Optional[str]] = mapped_column(Text)
-    lastoperation: Mapped[Optional[str]] = mapped_column(String(32))
+    lastoperation: Mapped[Optional[str]] = mapped_column(IsoText(32))
     lastmoduser: Mapped[Optional[int]] = mapped_column(Integer)
-    lastmoddate: Mapped[Optional[str]] = mapped_column(String(32))
-    archstamp: Mapped[Optional[str]] = mapped_column(String(32), index=True)
+    lastmoddate: Mapped[Optional[str]] = mapped_column(IsoText(32))
+    archstamp: Mapped[Optional[str]] = mapped_column(IsoText(32), index=True)
     modemdev: Mapped[Optional[str]] = mapped_column(String(64))
     userid: Mapped[Optional[int]] = mapped_column(Integer, index=True)
     origfaxnum: Mapped[Optional[str]] = mapped_column(String(32))
