@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: hMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:12+0900\n"
+"POT-Creation-Date: 2026-10-02 00:21+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hu\n"
@@ -1217,6 +1217,9 @@ msgstr "Lista neve"
 msgid "e.g. Executive Sales Team"
 msgstr ""
 
+msgid "Save name"
+msgstr ""
+
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "Csoporttagok (Névjegyek és faxszámok)"
 
@@ -1224,24 +1227,17 @@ msgstr "Csoporttagok (Névjegyek és faxszámok)"
 msgid "contacts assigned"
 msgstr "Kontaktok"
 
-msgid "Remove"
-msgstr "Eltávolítás"
-
 msgid "No contacts assigned to this list yet."
 msgstr "Még nincsenek névjegyek rendelve ehhez a listához."
-
-msgid "Add contact name or fax number..."
-msgstr ""
 
 msgid "Add Member"
 msgstr "Tag hozzáadása"
 
-msgid "Delete List"
-msgstr "Lista törlése"
+msgid "Remove selected"
+msgstr ""
 
-#, fuzzy
-msgid "Save Changes"
-msgstr "Cover Pages"
+msgid "Delete this distribution list?"
+msgstr ""
 
 msgid "Edit Distribution List"
 msgstr "Terjesztési lista szerkesztése"
@@ -1271,6 +1267,18 @@ msgstr "Lista azonosítója:"
 
 msgid "No contacts in this list."
 msgstr "Nincsenek névjegyek ezen a listán."
+
+msgid "Add contacts to the list"
+msgstr ""
+
+msgid "Changes saved"
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "Back"
+msgstr ""
 
 #, fuzzy
 msgid "Email Address Book"
@@ -1588,9 +1596,6 @@ msgstr "Fax küldés"
 msgid "Dispatch PDF document attachment to email recipients"
 msgstr "Csatolt PDF dokumentum elküldése e-mail címzetteknek"
 
-msgid "Back"
-msgstr ""
-
 msgid "From"
 msgstr ""
 
@@ -1816,8 +1821,11 @@ msgstr "Csatolja a továbbítani kívánt fájlt."
 msgid "Click to select a file"
 msgstr "Kattintson a fájl kiválasztásához"
 
-msgid "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
-msgstr "Támogatott: PDF, TIFF, PostScript, TXT · Max. 10 MB"
+msgid "Supported: PDF, TIFF, PostScript, TXT"
+msgstr ""
+
+msgid "Max"
+msgstr ""
 
 msgid ""
 "PDF is the most commonly used format. Convert Word or Excel files to PDF "
@@ -1846,11 +1854,8 @@ msgstr ""
 msgid "Send via Line"
 msgstr "Küldés vonalon keresztül"
 
-msgid "Auto-select recommended"
-msgstr "Automatikus választás ajánlott"
-
-msgid "Any Available Line (Auto)"
-msgstr "Bármely elérhető vonal (Automatikus)"
+msgid "No modems configured"
+msgstr ""
 
 #, fuzzy
 msgid "Cover Comments"
@@ -2019,6 +2024,9 @@ msgid ""
 "No Passkeys registered yet. Click Register to add Touch ID or a security "
 "key."
 msgstr ""
+
+msgid "Remove"
+msgstr "Eltávolítás"
 
 msgid ""
 "1. Scan this code with Google Authenticator, Authy or another RFC 6238 "
@@ -2300,6 +2308,18 @@ msgstr ""
 msgid "Invalid job number."
 msgstr ""
 
+msgid "Any Available Line (Auto)"
+msgstr "Bármely elérhető vonal (Automatikus)"
+
+msgid "You may not use this line."
+msgstr ""
+
+msgid "Your fax has been successfully queued to be faxed."
+msgstr ""
+
+msgid "Job"
+msgstr ""
+
 msgid "The code is not valid."
 msgstr ""
 
@@ -2542,4 +2562,19 @@ msgstr ""
 
 #~ msgid "Archive ID:"
 #~ msgstr "Archívum"
+
+#~ msgid "Add contact name or fax number..."
+#~ msgstr ""
+
+#~ msgid "Delete List"
+#~ msgstr "Lista törlése"
+
+#~ msgid "Save Changes"
+#~ msgstr "Cover Pages"
+
+#~ msgid "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
+#~ msgstr "Támogatott: PDF, TIFF, PostScript, TXT · Max. 10 MB"
+
+#~ msgid "Auto-select recommended"
+#~ msgstr "Automatikus választás ajánlott"
 

@@ -8,7 +8,6 @@ import pytest
 from namifax.views.helpers import (
     upload_email_contacts,
     upload_fax_contacts,
-    popup_distrolist_helper,
     popup_distro_contacts,
     popup_fax_contacts,
     popup_email_contacts,
@@ -81,10 +80,6 @@ def test_upload_fax_contacts_vcard_post(dummy_request):
 
 def test_popup_helpers_render(dummy_request):
     """Verify popup helper dialogs render properly."""
-    res_helper = popup_distrolist_helper(dummy_request)
-    assert res_helper.status_code == 200
-    assert "Distribution List Helper" in res_helper.text
-
     res_distro = popup_distro_contacts(dummy_request)
     assert res_distro.status_code == 200
 

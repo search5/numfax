@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: kMIME-Version: 1.Content-Type: text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:12+0900\n"
+"POT-Creation-Date: 2026-10-02 00:21+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ko\n"
@@ -1077,29 +1077,26 @@ msgstr "그룹명"
 msgid "e.g. Executive Sales Team"
 msgstr "예: 영업 임원 그룹"
 
+msgid "Save name"
+msgstr "이름 저장"
+
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "그룹 구성원 (연락처 및 팩스 번호)"
 
 msgid "contacts assigned"
 msgstr "개의 연락처 지정됨"
 
-msgid "Remove"
-msgstr "삭제"
-
 msgid "No contacts assigned to this list yet."
 msgstr "아직 이 그룹에 지정된 연락처가 없습니다."
-
-msgid "Add contact name or fax number..."
-msgstr "연락처 이름이나 팩스 번호를 추가..."
 
 msgid "Add Member"
 msgstr "구성원 추가"
 
-msgid "Delete List"
-msgstr "그룹 삭제"
+msgid "Remove selected"
+msgstr "선택 항목 제거"
 
-msgid "Save Changes"
-msgstr "변경사항 저장"
+msgid "Delete this distribution list?"
+msgstr "이 배포 그룹을 삭제하시겠습니까?"
 
 msgid "Edit Distribution List"
 msgstr "배포 그룹 편집"
@@ -1127,6 +1124,18 @@ msgstr "그룹 ID:"
 
 msgid "No contacts in this list."
 msgstr "이 그룹에 연락처가 없습니다."
+
+msgid "Add contacts to the list"
+msgstr "그룹에 연락처 추가"
+
+msgid "Changes saved"
+msgstr "변경 사항을 저장했습니다"
+
+msgid "Add"
+msgstr "추가"
+
+msgid "Back"
+msgstr "뒤로"
 
 msgid "Email Address Book"
 msgstr "이메일 주소록"
@@ -1404,9 +1413,6 @@ msgstr "이메일로 팩스 전송"
 msgid "Dispatch PDF document attachment to email recipients"
 msgstr "PDF 문서 첨부 파일을 이메일 수신자에게 발송합니다."
 
-msgid "Back"
-msgstr "뒤로"
-
 msgid "From"
 msgstr "보낸 사람"
 
@@ -1608,8 +1614,11 @@ msgstr "전송할 파일을 첨부하세요."
 msgid "Click to select a file"
 msgstr "클릭하여 파일 선택"
 
-msgid "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
-msgstr "지원 형식: PDF, TIFF, PostScript, TXT · 최대 10 MB"
+msgid "Supported: PDF, TIFF, PostScript, TXT"
+msgstr "지원 형식: PDF, TIFF, PostScript, TXT"
+
+msgid "Max"
+msgstr "최대"
 
 msgid "PDF is the most commonly used format. Convert Word or Excel files to PDF before attaching."
 msgstr "PDF가 가장 권장되는 형식입니다. Word나 Excel 파일은 PDF로 변환 후 첨부하세요."
@@ -1632,11 +1641,8 @@ msgstr "설정된 표지가 없습니다"
 msgid "Send via Line"
 msgstr "발신 회선 선택"
 
-msgid "Auto-select recommended"
-msgstr "자동 선택 권장"
-
-msgid "Any Available Line (Auto)"
-msgstr "사용 가능한 모든 회선 (자동)"
+msgid "No modems configured"
+msgstr "설정된 모뎀이 없습니다"
 
 msgid "Cover Comments"
 msgstr "표지 전달 내용"
@@ -1784,6 +1790,9 @@ msgstr "등록된 패스키가 없습니다."
 
 msgid "No Passkeys registered yet. Click Register to add Touch ID or a security key."
 msgstr "등록된 패스키가 없습니다. 등록을 눌러 Touch ID나 보안 키를 추가하십시오."
+
+msgid "Remove"
+msgstr "삭제"
 
 msgid "1. Scan this code with Google Authenticator, Authy or another RFC 6238 app, or type the key by hand."
 msgstr "1. Google Authenticator, Authy 등 RFC 6238 앱으로 이 코드를 스캔하거나 키를 직접 입력하십시오."
@@ -2070,6 +2079,18 @@ msgstr "세션이 만료되었습니다. 페이지를 새로 고친 뒤 다시 �
 msgid "Invalid job number."
 msgstr "작업 번호가 올바르지 않습니다."
 
+msgid "Any Available Line (Auto)"
+msgstr "사용 가능한 모든 회선 (자동)"
+
+msgid "You may not use this line."
+msgstr "이 회선은 사용할 수 없습니다."
+
+msgid "Your fax has been successfully queued to be faxed."
+msgstr "팩스를 전송 대기열에 넣었습니다."
+
+msgid "Job"
+msgstr "작업"
+
 msgid "The code is not valid."
 msgstr "코드가 올바르지 않습니다."
 
@@ -2291,4 +2312,19 @@ msgstr "비밀번호가 올바르지 않습니다."
 
 #~ msgid "Archive ID:"
 #~ msgstr "보관 ID:"
+
+#~ msgid "Add contact name or fax number..."
+#~ msgstr "연락처 이름이나 팩스 번호를 추가..."
+
+#~ msgid "Delete List"
+#~ msgstr "그룹 삭제"
+
+#~ msgid "Save Changes"
+#~ msgstr "변경사항 저장"
+
+#~ msgid "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
+#~ msgstr "지원 형식: PDF, TIFF, PostScript, TXT · 최대 10 MB"
+
+#~ msgid "Auto-select recommended"
+#~ msgstr "자동 선택 권장"
 

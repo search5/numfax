@@ -9,7 +9,7 @@ from namifax.views.inbox import inbox_view, viewfax_view
 from namifax.views.admin import get_all_admin_modems
 from namifax.views.addressbook import addressbook_edit_view
 from namifax.views.distrolist import distrolist_edit_view
-from namifax.views.helpers import popup_fax_contacts, popup_distrolist_helper, upload_fax_contacts
+from namifax.views.helpers import popup_fax_contacts, upload_fax_contacts
 
 
 class MockRequest(testing.DummyRequest):
@@ -208,21 +208,6 @@ class TestUIFallbackPhase4(unittest.TestCase):
 
         req = MockRequest()
         res = popup_fax_contacts(req)
-        html = res.text
-        self.assertNotIn("1234567", html)
-        self.assertIn("NoFax Corp", html)
-
-    @patch("namifax.views.helpers.AFAddressBook")
-    def test_helpers_distro_helper_no_1234567_fallback(self, mock_ab_cls):
-        """Verify that popup_distrolist_helper does not inject '1234567' when faxnum is empty."""
-        mock_ab = MagicMock()
-        mock_ab.get_companies.return_value = [
-            {"ab_id": 5, "company": "NoFax Corp", "faxnum": None, "faxnumber": None}
-        ]
-        mock_ab_cls.return_value = mock_ab
-
-        req = MockRequest()
-        res = popup_distrolist_helper(req)
         html = res.text
         self.assertNotIn("1234567", html)
         self.assertIn("NoFax Corp", html)

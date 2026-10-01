@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: jMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:12+0900\n"
+"POT-Creation-Date: 2026-10-02 00:21+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -1183,6 +1183,9 @@ msgstr "リスト名"
 msgid "e.g. Executive Sales Team"
 msgstr ""
 
+msgid "Save name"
+msgstr ""
+
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "グループメンバー (連絡先およびFAX番号)"
 
@@ -1190,24 +1193,17 @@ msgstr "グループメンバー (連絡先およびFAX番号)"
 msgid "contacts assigned"
 msgstr "アドレス帳"
 
-msgid "Remove"
-msgstr "削除"
-
 msgid "No contacts assigned to this list yet."
 msgstr "このリストに割り当てられた連絡先はまだありません。"
-
-msgid "Add contact name or fax number..."
-msgstr ""
 
 msgid "Add Member"
 msgstr "メンバーを追加"
 
-msgid "Delete List"
-msgstr "削除リスト"
+msgid "Remove selected"
+msgstr ""
 
-#, fuzzy
-msgid "Save Changes"
-msgstr "Cover Pages"
+msgid "Delete this distribution list?"
+msgstr ""
 
 msgid "Edit Distribution List"
 msgstr "配信リストを編集"
@@ -1235,6 +1231,18 @@ msgstr "リストID:"
 
 msgid "No contacts in this list."
 msgstr "このリストに連絡先はありません。"
+
+msgid "Add contacts to the list"
+msgstr ""
+
+msgid "Changes saved"
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "Back"
+msgstr ""
 
 #, fuzzy
 msgid "Email Address Book"
@@ -1539,9 +1547,6 @@ msgstr "FAXの送信"
 msgid "Dispatch PDF document attachment to email recipients"
 msgstr "PDFドキュメント添付ファイルをメール受信者に配信します"
 
-msgid "Back"
-msgstr ""
-
 msgid "From"
 msgstr ""
 
@@ -1759,8 +1764,11 @@ msgstr "送信するファイルを添付してください。"
 msgid "Click to select a file"
 msgstr "クリックしてファイルを選択"
 
-msgid "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
-msgstr "サポート形式: PDF, TIFF, PostScript, TXT · 最大 10 MB"
+msgid "Supported: PDF, TIFF, PostScript, TXT"
+msgstr ""
+
+msgid "Max"
+msgstr ""
 
 msgid ""
 "PDF is the most commonly used format. Convert Word or Excel files to PDF "
@@ -1787,11 +1795,8 @@ msgstr ""
 msgid "Send via Line"
 msgstr "送信回線"
 
-msgid "Auto-select recommended"
-msgstr "自動選択を推奨"
-
-msgid "Any Available Line (Auto)"
-msgstr "利用可能な任意の回線 (自動)"
+msgid "No modems configured"
+msgstr ""
 
 #, fuzzy
 msgid "Cover Comments"
@@ -1959,6 +1964,9 @@ msgid ""
 "No Passkeys registered yet. Click Register to add Touch ID or a security "
 "key."
 msgstr ""
+
+msgid "Remove"
+msgstr "削除"
 
 msgid ""
 "1. Scan this code with Google Authenticator, Authy or another RFC 6238 "
@@ -2240,6 +2248,18 @@ msgstr ""
 msgid "Invalid job number."
 msgstr ""
 
+msgid "Any Available Line (Auto)"
+msgstr "利用可能な任意の回線 (自動)"
+
+msgid "You may not use this line."
+msgstr ""
+
+msgid "Your fax has been successfully queued to be faxed."
+msgstr ""
+
+msgid "Job"
+msgstr ""
+
 msgid "The code is not valid."
 msgstr ""
 
@@ -2467,4 +2487,19 @@ msgstr ""
 
 #~ msgid "Archive ID:"
 #~ msgstr "送信履歴"
+
+#~ msgid "Add contact name or fax number..."
+#~ msgstr ""
+
+#~ msgid "Delete List"
+#~ msgstr "削除リスト"
+
+#~ msgid "Save Changes"
+#~ msgstr "Cover Pages"
+
+#~ msgid "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
+#~ msgstr "サポート形式: PDF, TIFF, PostScript, TXT · 最大 10 MB"
+
+#~ msgid "Auto-select recommended"
+#~ msgstr "自動選択を推奨"
 

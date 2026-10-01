@@ -20,6 +20,8 @@ SRC_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 if SRC_DIR not in sys.path:
     sys.path.insert(0, SRC_DIR)
 
+from namifax.services import printing
+from namifax.services.printing import print_received
 from namifax.common.helpers import (
     hylafax_date_to_iso,
     avantfaxlog,
@@ -272,6 +274,14 @@ def _process_faxrcvd(args: list[str], session: Any) -> int:
             inbox.set_archivebox(faxid)
         if send_mail(email_recipient, from_email, subject, text, file=pdf_att, embedd=thumb_att):
             avantfaxlog(f"faxrcvd> Fax sent to {email_type} contact {email_recipient}", echo=False)
+
+    # Printing support
+    if printing.enabled():
+        avantfaxlog(f"faxrcvd> Sending fax to {printer_type} printer {printer}", echo=True)
+        print_received(tiff_file, pdffile, printer)
+        if printer_type == "Fax2Email" and ARCHIVEFAX2EMAIL and faxid:
+            print("Archiving fax")
+            inbox.set_archivebox(faxid)
 
     return 0
 

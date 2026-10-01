@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:12+0900\n"
+"POT-Creation-Date: 2026-10-02 00:21+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1125,28 +1125,25 @@ msgstr ""
 msgid "e.g. Executive Sales Team"
 msgstr ""
 
+msgid "Save name"
+msgstr ""
+
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr ""
 
 msgid "contacts assigned"
 msgstr ""
 
-msgid "Remove"
-msgstr ""
-
 msgid "No contacts assigned to this list yet."
-msgstr ""
-
-msgid "Add contact name or fax number..."
 msgstr ""
 
 msgid "Add Member"
 msgstr ""
 
-msgid "Delete List"
+msgid "Remove selected"
 msgstr ""
 
-msgid "Save Changes"
+msgid "Delete this distribution list?"
 msgstr ""
 
 msgid "Edit Distribution List"
@@ -1174,6 +1171,18 @@ msgid "List ID:"
 msgstr ""
 
 msgid "No contacts in this list."
+msgstr ""
+
+msgid "Add contacts to the list"
+msgstr ""
+
+msgid "Changes saved"
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "Back"
 msgstr ""
 
 msgid "Email Address Book"
@@ -1465,9 +1474,6 @@ msgstr ""
 msgid "Dispatch PDF document attachment to email recipients"
 msgstr ""
 
-msgid "Back"
-msgstr ""
-
 msgid "From"
 msgstr ""
 
@@ -1677,7 +1683,10 @@ msgstr ""
 msgid "Click to select a file"
 msgstr ""
 
-msgid "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
+msgid "Supported: PDF, TIFF, PostScript, TXT"
+msgstr ""
+
+msgid "Max"
 msgstr ""
 
 msgid ""
@@ -1703,10 +1712,7 @@ msgstr ""
 msgid "Send via Line"
 msgstr ""
 
-msgid "Auto-select recommended"
-msgstr ""
-
-msgid "Any Available Line (Auto)"
+msgid "No modems configured"
 msgstr ""
 
 msgid "Cover Comments"
@@ -1864,6 +1870,9 @@ msgstr ""
 msgid ""
 "No Passkeys registered yet. Click Register to add Touch ID or a security "
 "key."
+msgstr ""
+
+msgid "Remove"
 msgstr ""
 
 msgid ""
@@ -2144,6 +2153,18 @@ msgid "Your session has expired. Reload the page and try again."
 msgstr ""
 
 msgid "Invalid job number."
+msgstr ""
+
+msgid "Any Available Line (Auto)"
+msgstr ""
+
+msgid "You may not use this line."
+msgstr ""
+
+msgid "Your fax has been successfully queued to be faxed."
+msgstr ""
+
+msgid "Job"
 msgstr ""
 
 msgid "The code is not valid."

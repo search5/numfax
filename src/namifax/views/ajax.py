@@ -165,13 +165,12 @@ def ajax_distrolist_faxes(request):
     """Distribution list fax numbers matching legacy ajaxdlist.php."""
     dl_id = request.GET.get("dl_id", "").strip()
     dl = DistributionList(db=request.dbsession)
-    faxes_str = ""
+    faxes_str = "Invalid list id"
 
     try:
         if dl_id.isdigit() and dl.load_list(int(dl_id)):
-            entries = dl.list_entries()
-            if entries:
-                faxes_str = "; ".join(entries)
+            numbers = [e.split("|", 1)[1] for e in dl.list_entries() if "|" in e]      # entries are "<id>|<number>"
+            faxes_str = "; ".join(numbers)
     except Exception:
         pass
 

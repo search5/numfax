@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: cMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:12+0900\n"
+"POT-Creation-Date: 2026-10-02 00:21+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: cs\n"
@@ -1214,6 +1214,9 @@ msgstr "Název seznamu"
 msgid "e.g. Executive Sales Team"
 msgstr ""
 
+msgid "Save name"
+msgstr ""
+
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "Členové skupiny (kontakty a faxová čísla)"
 
@@ -1221,24 +1224,17 @@ msgstr "Členové skupiny (kontakty a faxová čísla)"
 msgid "contacts assigned"
 msgstr "Kontakty"
 
-msgid "Remove"
-msgstr "Odebrat"
-
 msgid "No contacts assigned to this list yet."
 msgstr "K tomuto seznamu zatím nejsou přiřazeny žádné kontakty."
-
-msgid "Add contact name or fax number..."
-msgstr ""
 
 msgid "Add Member"
 msgstr "Přidat člena"
 
-msgid "Delete List"
-msgstr "Smazat seznam"
+msgid "Remove selected"
+msgstr ""
 
-#, fuzzy
-msgid "Save Changes"
-msgstr "Cover Pages"
+msgid "Delete this distribution list?"
+msgstr ""
 
 msgid "Edit Distribution List"
 msgstr "Upravit distribuční seznam"
@@ -1266,6 +1262,18 @@ msgstr "ID seznamu:"
 
 msgid "No contacts in this list."
 msgstr "V tomto seznamu nejsou žádné kontakty."
+
+msgid "Add contacts to the list"
+msgstr ""
+
+msgid "Changes saved"
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "Back"
+msgstr ""
 
 #, fuzzy
 msgid "Email Address Book"
@@ -1581,9 +1589,6 @@ msgstr "Poslat Fax"
 msgid "Dispatch PDF document attachment to email recipients"
 msgstr "Odeslat přílohu dokumentu PDF příjemcům e-mailu"
 
-msgid "Back"
-msgstr ""
-
 msgid "From"
 msgstr ""
 
@@ -1806,8 +1811,11 @@ msgstr "Připojte soubor, který chcete přenést."
 msgid "Click to select a file"
 msgstr "Kliknutím vyberte soubor"
 
-msgid "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
-msgstr "Podporováno: PDF, TIFF, PostScript, TXT · Max 10 MB"
+msgid "Supported: PDF, TIFF, PostScript, TXT"
+msgstr ""
+
+msgid "Max"
+msgstr ""
 
 msgid ""
 "PDF is the most commonly used format. Convert Word or Excel files to PDF "
@@ -1836,11 +1844,8 @@ msgstr ""
 msgid "Send via Line"
 msgstr "Odeslat přes linku"
 
-msgid "Auto-select recommended"
-msgstr "Doporučeno automatické vybrání"
-
-msgid "Any Available Line (Auto)"
-msgstr "Jakákoli dostupná linka (automaticky)"
+msgid "No modems configured"
+msgstr ""
 
 #, fuzzy
 msgid "Cover Comments"
@@ -2011,6 +2016,9 @@ msgid ""
 "No Passkeys registered yet. Click Register to add Touch ID or a security "
 "key."
 msgstr ""
+
+msgid "Remove"
+msgstr "Odebrat"
 
 msgid ""
 "1. Scan this code with Google Authenticator, Authy or another RFC 6238 "
@@ -2292,6 +2300,18 @@ msgstr ""
 msgid "Invalid job number."
 msgstr ""
 
+msgid "Any Available Line (Auto)"
+msgstr "Jakákoli dostupná linka (automaticky)"
+
+msgid "You may not use this line."
+msgstr ""
+
+msgid "Your fax has been successfully queued to be faxed."
+msgstr ""
+
+msgid "Job"
+msgstr ""
+
 msgid "The code is not valid."
 msgstr ""
 
@@ -2531,4 +2551,19 @@ msgstr ""
 
 #~ msgid "Archive ID:"
 #~ msgstr "Archiv"
+
+#~ msgid "Add contact name or fax number..."
+#~ msgstr ""
+
+#~ msgid "Delete List"
+#~ msgstr "Smazat seznam"
+
+#~ msgid "Save Changes"
+#~ msgstr "Cover Pages"
+
+#~ msgid "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
+#~ msgstr "Podporováno: PDF, TIFF, PostScript, TXT · Max 10 MB"
+
+#~ msgid "Auto-select recommended"
+#~ msgstr "Doporučeno automatické vybrání"
 

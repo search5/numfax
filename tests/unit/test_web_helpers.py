@@ -5,7 +5,6 @@ from pyramid import testing
 import pytest
 
 from namifax.views.helpers import (
-    popup_distrolist_helper,
     popup_distro_contacts,
     popup_fax_contacts,
     popup_email_contacts,
@@ -23,14 +22,6 @@ def dummy_request(seeded_db, dbsession):
     return request
 
 
-def test_popup_distrolist_helper_get(dummy_request):
-    """Verify GET renders distribution list helper popup form."""
-    dummy_request.GET["dl_id"] = "1"
-    res = popup_distrolist_helper(dummy_request)
-    assert res.status_code == 200
-    assert "Distribution List Helper" in res.text
-    assert 'name="regexp"' in res.text
-    assert 'name="myselect[]"' in res.text
 
 
 def test_popup_distro_contacts_get(dummy_request):

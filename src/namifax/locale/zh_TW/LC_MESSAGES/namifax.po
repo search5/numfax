@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: zh_TMIME-Version: 1.Content-"
 "Type: text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:12+0900\n"
+"POT-Creation-Date: 2026-10-02 00:21+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_TW\n"
@@ -1181,6 +1181,9 @@ msgstr "列表名稱"
 msgid "e.g. Executive Sales Team"
 msgstr ""
 
+msgid "Save name"
+msgstr ""
+
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "群組成員（聯絡人與傳真號碼）"
 
@@ -1188,24 +1191,17 @@ msgstr "群組成員（聯絡人與傳真號碼）"
 msgid "contacts assigned"
 msgstr "聯絡人"
 
-msgid "Remove"
-msgstr "移除"
-
 msgid "No contacts assigned to this list yet."
 msgstr "此清單中尚未指派任何聯絡人。"
-
-msgid "Add contact name or fax number..."
-msgstr ""
 
 msgid "Add Member"
 msgstr "新增成員"
 
-msgid "Delete List"
-msgstr "刪除列表"
+msgid "Remove selected"
+msgstr ""
 
-#, fuzzy
-msgid "Save Changes"
-msgstr "Cover Pages"
+msgid "Delete this distribution list?"
+msgstr ""
 
 msgid "Edit Distribution List"
 msgstr "編輯發送清單"
@@ -1233,6 +1229,18 @@ msgstr "清單ID:"
 
 msgid "No contacts in this list."
 msgstr "此清單中沒有聯絡人。"
+
+msgid "Add contacts to the list"
+msgstr ""
+
+msgid "Changes saved"
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "Back"
+msgstr ""
 
 #, fuzzy
 msgid "Email Address Book"
@@ -1535,9 +1543,6 @@ msgstr "傳送傳真"
 msgid "Dispatch PDF document attachment to email recipients"
 msgstr "將PDF文件附件發送給電子郵件收件者"
 
-msgid "Back"
-msgstr ""
-
 msgid "From"
 msgstr ""
 
@@ -1753,8 +1758,11 @@ msgstr "附加要發送的檔案。"
 msgid "Click to select a file"
 msgstr "按一下選取檔案"
 
-msgid "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
-msgstr "支援格式: PDF, TIFF, PostScript, TXT · 最大 10 MB"
+msgid "Supported: PDF, TIFF, PostScript, TXT"
+msgstr ""
+
+msgid "Max"
+msgstr ""
 
 msgid ""
 "PDF is the most commonly used format. Convert Word or Excel files to PDF "
@@ -1781,11 +1789,8 @@ msgstr ""
 msgid "Send via Line"
 msgstr "發送線路"
 
-msgid "Auto-select recommended"
-msgstr "建議自動選取"
-
-msgid "Any Available Line (Auto)"
-msgstr "任意可用線路 (自動)"
+msgid "No modems configured"
+msgstr ""
 
 #, fuzzy
 msgid "Cover Comments"
@@ -1951,6 +1956,9 @@ msgid ""
 "No Passkeys registered yet. Click Register to add Touch ID or a security "
 "key."
 msgstr ""
+
+msgid "Remove"
+msgstr "移除"
 
 msgid ""
 "1. Scan this code with Google Authenticator, Authy or another RFC 6238 "
@@ -2232,6 +2240,18 @@ msgstr ""
 msgid "Invalid job number."
 msgstr ""
 
+msgid "Any Available Line (Auto)"
+msgstr "任意可用線路 (自動)"
+
+msgid "You may not use this line."
+msgstr ""
+
+msgid "Your fax has been successfully queued to be faxed."
+msgstr ""
+
+msgid "Job"
+msgstr ""
+
 msgid "The code is not valid."
 msgstr ""
 
@@ -2457,4 +2477,19 @@ msgstr ""
 
 #~ msgid "Archive ID:"
 #~ msgstr "檔案櫃"
+
+#~ msgid "Add contact name or fax number..."
+#~ msgstr ""
+
+#~ msgid "Delete List"
+#~ msgstr "刪除列表"
+
+#~ msgid "Save Changes"
+#~ msgstr "Cover Pages"
+
+#~ msgid "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
+#~ msgstr "支援格式: PDF, TIFF, PostScript, TXT · 最大 10 MB"
+
+#~ msgid "Auto-select recommended"
+#~ msgstr "建議自動選取"
 

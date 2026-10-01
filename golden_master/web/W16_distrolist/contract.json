@@ -15,8 +15,8 @@
         "index": 0,
         "action": "/distrolist/edit",
         "method": "POST",
-        "inputs_count": 4,
-        "buttons_count": 4,
+        "inputs_count": 3,
+        "buttons_count": 3,
         "field_sequence": [
           {
             "name": "listname",
@@ -24,13 +24,6 @@
             "type": "text",
             "id": "listname",
             "required": true
-          },
-          {
-            "name": "",
-            "tag": "input",
-            "type": "text",
-            "id": "",
-            "required": false
           },
           {
             "name": "dl_id",
@@ -50,30 +43,46 @@
         "button_sequence": [
           {
             "tag": "button",
-            "type": "button",
-            "name": "",
-            "text": "Remove"
-          },
-          {
-            "tag": "button",
-            "type": "button",
-            "name": "",
-            "text": "Remove"
-          },
-          {
-            "tag": "button",
-            "type": "button",
-            "name": "",
-            "text": "Add Member"
+            "type": "submit",
+            "name": "savename",
+            "text": "Save name"
           },
           {
             "tag": "button",
             "type": "submit",
-            "name": "",
-            "text": "Save Changes"
+            "name": "remove",
+            "text": "Remove selected"
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "delete",
+            "text": "Delete"
           }
         ]
       }
     ]
-  }
+  },
+  "forms": [
+    {
+      "method": "post",
+      "action": "/distrolist/edit",
+      "inputs": [
+        {
+          "name": "listname",
+          "type": "text"
+        },
+        {
+          "name": "dl_id",
+          "type": "hidden"
+        },
+        {
+          "name": "_submit_check",
+          "type": "hidden",
+          "value": "1"
+        }
+      ],
+      "submit_button": true
+    }
+  ]
 }

@@ -1,6 +1,7 @@
 """NamiFAX popup helper dialogs and vCard upload views matching legacy NamiFAX."""
 
 import html
+from pyramid.httpexceptions import HTTPFound
 from pyramid.response import Response
 from pyramid.view import view_config
 
@@ -9,64 +10,42 @@ from namifax.services.categories import FaxPDFCategory
 from namifax.services.distro import DistributionList
 
 
-@view_config(route_name="popup_distrolist_helper", permission="view")
+@view_config(route_name="popup_distrolist_helper", renderer="namifax:templates/distrolist_helper.jinja2", permission="view")
 def popup_distrolist_helper(request):
-    """Distribution list contact multi-select helper popup matching distrolist_helper.php."""
-    dl_id = request.params.get("dl_id", "1")
-    ab = AFAddressBook(db=request.dbsession)
+    """Add address-book fax numbers to a distribution list (the original distrolist_helper.php).
+
+    The search box lists the fax numbers of the companies that match; the chosen ones are added as ``<id>|<number>``.
+    """
+    import os
+
+    dl_id = (request.params.get("dl_id") or "").strip()
     dl = DistributionList(db=request.dbsession)
+    if not dl_id.isdigit() or not dl.load_list(int(dl_id)):
+        raise HTTPFound(location=request.route_url("distrolist"))
 
+    added = False
+    error = None
     if request.method == "POST":
-        myselect = request.params.getall("myselect[]") or request.params.getall("myselect")
-        if myselect and dl_id.isdigit():
-            try:
-                if dl.load_list(int(dl_id)):
-                    dl.add_entries(myselect)
-            except Exception:
-                pass
+        chosen = request.POST.getall("myselect[]") or request.POST.getall("myselect")
+        who = (request.identity or {}).get("user_id") or (request.identity or {}).get("uid")
+        dl.set_moduser(int(who) if who else None)
+        if dl.add_entries([c for c in chosen if c.split("|", 1)[0].isdigit()]):
+            added = True
+        else:
+            error = dl.get_error()
 
-    options_html = []
-    try:
-        companies = ab.get_companies()
-        if companies:
-            for c in companies:
-                cid = c.get("ab_id") or c.get("abook_id") or 1
-                cname = c.get("company", "")
-                faxnum = c.get("faxnum") or c.get("faxnumber") or ""
-                label = f"{cname} - {faxnum}" if faxnum else cname
-                options_html.append(f'          <option value="{cid}">{html.escape(label)}</option>')
-    except Exception:
-        pass
-
-    select_content = "\n".join(options_html)
-
-    html_content = f"""<!DOCTYPE html>
-<html>
-<head><title>- NamiFAX - Distribution List Helper</title></head>
-<body class="bg-slate-50 text-slate-800 p-4">
-  <div class="max-w-md mx-auto bg-white p-4 rounded shadow border border-slate-200">
-    <h2 class="text-base font-bold text-sky-900 mb-3">Distribution List Helper</h2>
-    <form action="/helper/distrolist" method="post" class="space-y-3">
-      <div>
-        <label for="regexp" class="block text-xs font-semibold mb-1">Search:</label>
-        <input type="text" name="regexp" id="regexp" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" />
-      </div>
-      <div>
-        <select name="myselect[]" id="myselect" multiple="multiple" size="6" class="w-full border border-slate-300 rounded p-1 text-sm">
-{select_content}
-        </select>
-      </div>
-      <input type="hidden" name="dl_id" value="{html.escape(str(dl_id))}" />
-      <input type="hidden" name="_submit_check" value="1" />
-      <div class="pt-2 flex justify-end space-x-2">
-        <input type="submit" name="add" value="Add" class="px-3 py-1 bg-sky-800 text-white rounded text-sm cursor-pointer hover:bg-sky-700" />
-        <input type="button" value="Close Window" onclick="window.close()" class="px-3 py-1 bg-slate-200 text-slate-700 rounded text-sm cursor-pointer hover:bg-slate-300" />
-      </div>
-    </form>
-  </div>
-</body>
-</html>"""
-    return Response(html_content, content_type="text/html")
+    query = (request.params.get("regexp") or "").strip()
+    show_all = os.environ.get("SHOW_ALL_CONTACTS", "0") in ("1", "true", "True")
+    options = []
+    if query or show_all:
+        book = AFAddressBook(db=request.dbsession)
+        numbers = book.numbers_by_company()
+        for company in (book.search_companies(query) if query else book.get_companies()):
+            for number in numbers.get(company.get("abook_id"), []):
+                options.append({"value": f"{number['abookfax_id']}|{number['faxnumber']}",
+                                "label": f"{company.get('company')} - {number['faxnumber']}"})
+    return {"title": "- NamiFAX - Distribution List Helper", "dl_id": dl_id, "query": query, "options": options,
+            "added": added, "error": error}
 
 
 @view_config(route_name="popup_distro_contacts", permission="view")

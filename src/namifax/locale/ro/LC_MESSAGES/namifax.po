@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: rMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:12+0900\n"
+"POT-Creation-Date: 2026-10-02 00:21+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ro\n"
@@ -1228,6 +1228,9 @@ msgstr "List name"
 msgid "e.g. Executive Sales Team"
 msgstr ""
 
+msgid "Save name"
+msgstr ""
+
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "Membri grup (Contacte și numere de fax)"
 
@@ -1235,24 +1238,17 @@ msgstr "Membri grup (Contacte și numere de fax)"
 msgid "contacts assigned"
 msgstr "Contacte"
 
-msgid "Remove"
-msgstr "Eliminare"
-
 msgid "No contacts assigned to this list yet."
 msgstr "Niciun contact alocat acestei liste încă."
-
-msgid "Add contact name or fax number..."
-msgstr ""
 
 msgid "Add Member"
 msgstr "Adăugare membru"
 
-msgid "Delete List"
-msgstr "Delete list"
+msgid "Remove selected"
+msgstr ""
 
-#, fuzzy
-msgid "Save Changes"
-msgstr "Cover Pages"
+msgid "Delete this distribution list?"
+msgstr ""
 
 msgid "Edit Distribution List"
 msgstr "Editare listă de distribuție"
@@ -1282,6 +1278,18 @@ msgstr "ID listă:"
 
 msgid "No contacts in this list."
 msgstr "Niciun contact în această listă."
+
+msgid "Add contacts to the list"
+msgstr ""
+
+msgid "Changes saved"
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "Back"
+msgstr ""
 
 #, fuzzy
 msgid "Email Address Book"
@@ -1601,9 +1609,6 @@ msgstr "Trimite Fax"
 msgid "Dispatch PDF document attachment to email recipients"
 msgstr "Trimitere atașament document PDF către destinatarii de e-mail"
 
-msgid "Back"
-msgstr ""
-
 msgid "From"
 msgstr ""
 
@@ -1829,8 +1834,11 @@ msgstr "Atașați fișierul pe care doriți să îl transmiteți."
 msgid "Click to select a file"
 msgstr "Faceți clic pentru a selecta un fișier"
 
-msgid "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
-msgstr "Acceptat: PDF, TIFF, PostScript, TXT · Max 10 MB"
+msgid "Supported: PDF, TIFF, PostScript, TXT"
+msgstr ""
+
+msgid "Max"
+msgstr ""
 
 msgid ""
 "PDF is the most commonly used format. Convert Word or Excel files to PDF "
@@ -1861,11 +1869,8 @@ msgstr ""
 msgid "Send via Line"
 msgstr "Trimitere prin linia"
 
-msgid "Auto-select recommended"
-msgstr "Se recomandă selecția automată"
-
-msgid "Any Available Line (Auto)"
-msgstr "Orice linie disponibilă (Auto)"
+msgid "No modems configured"
+msgstr ""
 
 #, fuzzy
 msgid "Cover Comments"
@@ -2038,6 +2043,9 @@ msgid ""
 "No Passkeys registered yet. Click Register to add Touch ID or a security "
 "key."
 msgstr ""
+
+msgid "Remove"
+msgstr "Eliminare"
 
 msgid ""
 "1. Scan this code with Google Authenticator, Authy or another RFC 6238 "
@@ -2319,6 +2327,18 @@ msgstr ""
 msgid "Invalid job number."
 msgstr ""
 
+msgid "Any Available Line (Auto)"
+msgstr "Orice linie disponibilă (Auto)"
+
+msgid "You may not use this line."
+msgstr ""
+
+msgid "Your fax has been successfully queued to be faxed."
+msgstr ""
+
+msgid "Job"
+msgstr ""
+
 msgid "The code is not valid."
 msgstr ""
 
@@ -2565,4 +2585,19 @@ msgstr ""
 
 #~ msgid "Archive ID:"
 #~ msgstr "Arhiva"
+
+#~ msgid "Add contact name or fax number..."
+#~ msgstr ""
+
+#~ msgid "Delete List"
+#~ msgstr "Delete list"
+
+#~ msgid "Save Changes"
+#~ msgstr "Cover Pages"
+
+#~ msgid "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
+#~ msgstr "Acceptat: PDF, TIFF, PostScript, TXT · Max 10 MB"
+
+#~ msgid "Auto-select recommended"
+#~ msgstr "Se recomandă selecția automată"
 

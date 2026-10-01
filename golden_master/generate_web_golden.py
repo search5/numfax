@@ -1156,7 +1156,7 @@ SCENARIOS = [
     {
         "id": "W45_popup_distro_helper",
         "description": "Popup helper dialog to select contacts for distribution list",
-        "route": "/helper/distrolist",
+        "route": "/helper/distrolist?dl_id=1",
         "method": "GET",
         "expected_status": 200,
         "contract": {
@@ -1165,7 +1165,7 @@ SCENARIOS = [
             "forms": [
                 {
                     "method": "post",
-                    "action": "/helper/distrolist",
+                    "action": "/helper/distrolist?dl_id=1",
                     "inputs": [
                         {"name": "regexp", "type": "text"},
                         {"name": "myselect[]", "type": "select"},
@@ -1177,7 +1177,7 @@ SCENARIOS = [
             ],
             "required_text": ["Search", "Add", "Close Window"]
         },
-        "html_content": """<!DOCTYPE html><html><head><title>- AvantFAX - Distribution List Helper</title></head><body><form action="/helper/distrolist" method="post"><p><label for="regexp">Search:</label><input type="text" name="regexp" id="regexp" /></p><select name="myselect[]" id="myselect" multiple="multiple"></select><input type="hidden" name="dl_id" value="1" /><input type="hidden" name="_submit_check" value="1" /><input type="submit" name="add" value="Add" /><input type="button" value="Close Window" /></form></body></html>"""
+        "html_content": """<!DOCTYPE html><html><head><title>- AvantFAX - Distribution List Helper</title></head><body><form action="/helper/distrolist?dl_id=1" method="post"><p><label for="regexp">Search:</label><input type="text" name="regexp" id="regexp" /></p><select name="myselect[]" id="myselect" multiple="multiple"></select><input type="hidden" name="dl_id" value="1" /><input type="hidden" name="_submit_check" value="1" /><input type="submit" name="add" value="Add" /><input type="button" value="Close Window" /></form></body></html>"""
     },
     {
         "id": "W46_popup_distro_contacts",

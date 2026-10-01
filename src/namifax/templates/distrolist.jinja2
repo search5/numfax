@@ -71,52 +71,50 @@
         {% endif %}
       </div>
 
+      {% if message %}<div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-700 text-xs">{{ message }}</div>{% endif %}
+      {% if error %}<div class="p-3 bg-rose-50 border border-rose-200 rounded-lg text-rose-700 text-xs">{{ error }}</div>{% endif %}
       <form action="/distrolist/edit" method="post" class="space-y-5 text-xs">
         <div>
           <label for="listname" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('List Name') }} *</label>
-          <input type="text" name="listname" id="listname" value="{{ selected_list.listname if selected_list else '' }}" required placeholder="{{ _('e.g. Executive Sales Team') }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" />
+          <div class="flex gap-2">
+            <input type="text" name="listname" id="listname" value="{{ selected_list.listname if selected_list else '' }}" required maxlength="100" placeholder="{{ _('e.g. Executive Sales Team') }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" />
+            {% if selected_list %}<button type="submit" name="savename" value="1" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg font-bold text-xs whitespace-nowrap transition">{{ _('Save name') }}</button>{% endif %}
+          </div>
         </div>
 
         {% if selected_list %}
           <div class="space-y-3">
             <div class="flex items-center justify-between">
-              <label class="block font-semibold text-slate-700 text-xs">{{ _('Group Members (Contacts & Fax Numbers)') }}</label>
+              <span class="block font-semibold text-slate-700 text-xs">{{ _('Group Members (Contacts & Fax Numbers)') }}</span>
               <span class="text-[11px] text-slate-500 font-mono font-medium">{{ selected_list.members|length }} {{ _('contacts assigned') }}</span>
             </div>
-            
-            <div class="border border-slate-200/90 rounded-xl divide-y divide-slate-100 max-h-64 overflow-y-auto bg-slate-50/30">
-              {% if selected_list.members and selected_list.members|length > 0 %}
-                {% for m in selected_list.members %}
-                  <div class="p-3 flex items-center justify-between hover:bg-white transition">
-                    <div>
-                      <span class="font-bold text-slate-800">{{ m.company }}</span>
-                      <span class="text-slate-500 font-mono ml-2">({{ m.faxnumber }})</span>
-                    </div>
-                    <button type="button" class="px-2.5 py-1 text-rose-600 hover:text-rose-700 hover:bg-rose-50 border border-transparent hover:border-rose-200 rounded font-semibold text-[11px] transition">{{ _('Remove') }}</button>
-                  </div>
-                {% endfor %}
+            <div class="border border-slate-200/90 rounded-xl divide-y divide-slate-100 max-h-72 overflow-y-auto bg-slate-50/30">
+              {% for m in selected_list.members %}
+                <label class="p-3 flex items-center gap-3 hover:bg-white transition cursor-pointer">
+                  <input type="checkbox" name="dl_list[]" value="{{ m.value }}" class="rounded border-slate-300 w-4 h-4" />
+                  <span><span class="font-bold text-slate-800">{{ m.company }}</span> - <span class="text-slate-600 font-mono">{{ m.faxnumber }}</span></span>
+                </label>
               {% else %}
                 <div class="p-6 text-center text-slate-400">{{ _('No contacts assigned to this list yet.') }}</div>
-              {% endif %}
+              {% endfor %}
             </div>
-          </div>
-
-          <!-- Add Member Subform (Strict 2nd text input + Add Member button) -->
-          <div class="p-3.5 bg-slate-50 border border-slate-200/80 rounded-xl flex items-center space-x-2">
-            <input type="text" placeholder="{{ _('Add contact name or fax number...') }}" class="flex-grow border border-slate-300 rounded-lg px-3 py-1.5 text-xs bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" />
-            <button type="button" class="px-4 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-lg font-bold text-xs transition">{{ _('Add Member') }}</button>
+            <div class="flex items-center gap-2">
+              <a href="/helper/distrolist?dl_id={{ selected_list.dl_id }}" class="px-4 py-2 bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 rounded-lg font-bold text-xs transition">{{ _('Add Member') }}</a>
+              <button type="submit" name="remove" value="1" class="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 rounded-lg font-semibold text-xs transition">{{ _('Remove selected') }}</button>
+            </div>
           </div>
         {% endif %}
 
-        <input type="hidden" name="dl_id" value="{{ selected_list.dl_id if selected_list else '' }}" />
+        {% if selected_list %}<input type="hidden" name="dl_id" value="{{ selected_list.dl_id }}" />{% endif %}
         <input type="hidden" name="_submit_check" value="1" />
 
-        <div class="pt-4 border-t border-slate-200 flex items-center justify-end space-x-3">
+        <div class="pt-4 border-t border-slate-200 flex items-center justify-between">
           {% if selected_list %}
-            <a href="/distrolist?dl_id={{ selected_list.dl_id }}&delete=1" onclick="return confirm('Delete this distribution list?')" class="px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-lg font-bold text-xs transition">{{ _('Delete List') }}</a>
-            <button type="submit" class="px-6 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold text-xs shadow-2xs transition">{{ _('Save Changes') }}</button>
+            <button type="submit" name="delete" value="1" onclick="return confirm('{{ _('Delete this distribution list?') }}')" class="px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-lg font-bold text-xs transition">{{ _('Delete') }}</button>
+            <span></span>
           {% else %}
-            <button type="submit" class="px-6 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold text-xs shadow-2xs transition">{{ _('Create List') }}</button>
+            <span></span>
+            <button type="submit" name="create" value="1" class="px-6 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-bold text-xs shadow-2xs transition">{{ _('Create List') }}</button>
           {% endif %}
         </div>
       </form>

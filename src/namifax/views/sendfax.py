@@ -23,7 +23,6 @@ from namifax.services.modem import FaxModem
 from namifax.services.sendfax_command import NothingToSend, Sender, SendRequest, build_plan
 from namifax.services.user_account import AFUserAccount
 from namifax.views.fax_rights import fax_access, load_fax
-from namifax.views.admin import get_all_admin_modems
 
 
 def _images_dir() -> str:
@@ -164,7 +163,7 @@ def sendfax_view(request):
     def page(form_data, error=None, original_fid=None):
         return {
             "title": "- NamiFAX - Send Fax", "current_user": identity, "active_tab": "sendfax", "error": error,
-            "form_data": form_data, "modem_list": get_all_admin_modems(request.dbsession), "cover_list": cover_list,
+            "form_data": form_data, "cover_list": cover_list,
             "default_cover": default_cover, "original_fid": original_fid,
             "priority_list": ["*"] + [str(n) for n in range(0, 255, 10)],
             "hours": [f"{n:02d}" for n in range(24)], "minutes": [f"{n:02d}" for n in range(60)],

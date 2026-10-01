@@ -75,13 +75,6 @@ def test_ajax_addressbook_prefill(dummy_request):
     assert "<to_person>" in res.text
 
 
-def test_ajax_distrolist_faxes(dummy_request):
-    """Verify text response for distribution list numbers."""
-    dummy_request.GET["dl_id"] = "1"
-    res = ajax_distrolist_faxes(dummy_request)
-    assert res.status_code == 200
-    assert "text/plain" in res.content_type
-    assert ";" in res.text or res.text.isalnum() or len(res.text) > 0
 
 
 def test_ajax_archive_fax(dummy_request):

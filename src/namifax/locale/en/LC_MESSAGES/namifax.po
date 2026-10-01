@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: eMIME-Version: 1.Content-Type: "
 "text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:12+0900\n"
+"POT-Creation-Date: 2026-10-02 00:21+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -1158,29 +1158,26 @@ msgstr "List Name"
 msgid "e.g. Executive Sales Team"
 msgstr ""
 
+msgid "Save name"
+msgstr ""
+
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "Group Members (Contacts & Fax Numbers)"
 
 msgid "contacts assigned"
 msgstr "contacts assigned"
 
-msgid "Remove"
-msgstr "Remove"
-
 msgid "No contacts assigned to this list yet."
 msgstr "No contacts assigned to this list yet."
-
-msgid "Add contact name or fax number..."
-msgstr ""
 
 msgid "Add Member"
 msgstr "Add Member"
 
-msgid "Delete List"
-msgstr "Delete List"
+msgid "Remove selected"
+msgstr ""
 
-msgid "Save Changes"
-msgstr "Save Changes"
+msgid "Delete this distribution list?"
+msgstr ""
 
 msgid "Edit Distribution List"
 msgstr "Edit Distribution List"
@@ -1208,6 +1205,18 @@ msgstr "List ID:"
 
 msgid "No contacts in this list."
 msgstr "No contacts in this list."
+
+msgid "Add contacts to the list"
+msgstr ""
+
+msgid "Changes saved"
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "Back"
+msgstr ""
 
 msgid "Email Address Book"
 msgstr "Email Address Book"
@@ -1508,9 +1517,6 @@ msgstr "Send Fax via Email"
 msgid "Dispatch PDF document attachment to email recipients"
 msgstr "Dispatch PDF document attachment to email recipients"
 
-msgid "Back"
-msgstr ""
-
 msgid "From"
 msgstr ""
 
@@ -1726,8 +1732,11 @@ msgstr "Attach the file you want to transmit."
 msgid "Click to select a file"
 msgstr "Click to select a file"
 
-msgid "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
-msgstr "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
+msgid "Supported: PDF, TIFF, PostScript, TXT"
+msgstr ""
+
+msgid "Max"
+msgstr ""
 
 msgid ""
 "PDF is the most commonly used format. Convert Word or Excel files to PDF "
@@ -1754,11 +1763,8 @@ msgstr ""
 msgid "Send via Line"
 msgstr "Send via Line"
 
-msgid "Auto-select recommended"
-msgstr "Auto-select recommended"
-
-msgid "Any Available Line (Auto)"
-msgstr "Any Available Line (Auto)"
+msgid "No modems configured"
+msgstr ""
 
 msgid "Cover Comments"
 msgstr "Cover Comments"
@@ -1918,6 +1924,9 @@ msgid ""
 "No Passkeys registered yet. Click Register to add Touch ID or a security "
 "key."
 msgstr ""
+
+msgid "Remove"
+msgstr "Remove"
 
 msgid ""
 "1. Scan this code with Google Authenticator, Authy or another RFC 6238 "
@@ -2199,6 +2208,18 @@ msgstr ""
 msgid "Invalid job number."
 msgstr ""
 
+msgid "Any Available Line (Auto)"
+msgstr "Any Available Line (Auto)"
+
+msgid "You may not use this line."
+msgstr ""
+
+msgid "Your fax has been successfully queued to be faxed."
+msgstr ""
+
+msgid "Job"
+msgstr ""
+
 msgid "The code is not valid."
 msgstr ""
 
@@ -2428,4 +2449,19 @@ msgstr ""
 
 #~ msgid "Archive ID:"
 #~ msgstr "Archive ID:"
+
+#~ msgid "Add contact name or fax number..."
+#~ msgstr ""
+
+#~ msgid "Delete List"
+#~ msgstr "Delete List"
+
+#~ msgid "Save Changes"
+#~ msgstr "Save Changes"
+
+#~ msgid "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
+#~ msgstr "Supported: PDF, TIFF, PostScript, TXT · Max 10 MB"
+
+#~ msgid "Auto-select recommended"
+#~ msgstr "Auto-select recommended"
 

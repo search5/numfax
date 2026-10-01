@@ -28,6 +28,7 @@
     </div>
   </div>
 
+  {% if error %}<div class="p-3 bg-rose-50 border border-rose-200 rounded-lg text-rose-700 text-xs">{{ error }}</div>{% endif %}
   <form action="/distrolist/edit" method="post" class="space-y-6 text-xs">
     {% if selected_list %}
       <input type="hidden" name="dl_id" value="{{ selected_list.dl_id }}" />

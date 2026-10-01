@@ -91,15 +91,15 @@ def test_archive_view_uses_request_db(as_superuser):
     assert arc.call_args_list and modems.call_args_list
 
 
-def test_sendfax_view_uses_request_db():
+def test_sendfax_view_uses_request_db(as_superuser):
     req = _request()
-    covers = MagicMock(name="Covers")
+    covers, modems = MagicMock(name="Covers"), MagicMock(name="FaxModem")
     covers.return_value.get_covers.return_value = []
-    modems = MagicMock(return_value=[])
-    with patch.object(sendfax_mod, "Covers", covers), patch.object(sendfax_mod, "get_all_admin_modems", modems), \
+    modems.return_value.get_modems.return_value = []
+    with patch.object(sendfax_mod, "Covers", covers), patch.object(sendfax_mod, "FaxModem", modems), \
             patch.object(sendfax_mod, "AFUserAccount", MagicMock()), contextlib.suppress(Exception):
         sendfax_mod.sendfax_view(req)
-    assert modems.call_args.args[0] is req.dbsession  # modems are ORM-backed
+    assert modems.call_args.kwargs.get("db") is req.dbsession  # ORM-backed
     assert covers.call_args.kwargs.get("db") is req.dbsession  # ORM-backed: the request session
     assert covers.call_args_list and modems.call_args_list
 

@@ -1,120 +1,99 @@
-"""NamiFAX Distribution Lists View Controllers."""
+"""Distribution lists (the original distrolist.php, distrolist_edit.php and distrolist_helper.php).
+
+A list holds address-book fax numbers as ``<abookfax_id>|<number>`` entries; the page shows them as "Company - number".
+"""
 
 from __future__ import annotations
 
 from typing import Any
 
 from pyramid.httpexceptions import HTTPFound
+from pyramid.renderers import render_to_response
 from pyramid.view import view_config
 
+from namifax.i18n import _
+from namifax.services.addressbook import RESERVED_FAX_NUM, AFAddressBook
 from namifax.services.distro import DistributionList
 
+
+def _members(db: Any, entries: list[str]) -> list[dict[str, str]]:
+    """Each ``fnid|number`` entry as ``{"value", "label"}``, sorted by label; an entry whose number is gone is left out."""
+    book = AFAddressBook(db=db)
+    found = []
+    for entry in entries:
+        fnid = entry.split("|", 1)[0]
+        if fnid.isdigit() and book.loadbyfaxnumid(int(fnid)):
+            company = book.get_company() or RESERVED_FAX_NUM
+            found.append({"value": entry, "label": f"{company} - {book.get_faxnumber()}",
+                          "company": company, "faxnumber": book.get_faxnumber()})
+    return sorted(found, key=lambda m: m["label"])
+
+
 def get_all_distrolists(db: Any = None) -> list[dict[str, Any]]:
-    """Retrieve distribution lists directly from database."""
+    """Every list with its members."""
     try:
         dl = DistributionList(db=db)
-        rows = dl.get_distrolists()
-        if rows:
-            result = []
-            for r in rows:
-                dl_id = r.get("dl_id")
-                lname = r.get("listname", "")
-                members: list[dict[str, str]] = []
-                if dl.load_list(dl_id):
-                    entries = dl.list_entries()
-                    for entry in entries:
-                        members.append({"company": entry, "faxnumber": entry})
-                result.append({
-                    "dl_id": dl_id,
-                    "listname": lname,
-                    "members_count": len(members),
-                    "members": members,
-                })
-            return result
+        result = []
+        for row in dl.get_distrolists() or []:
+            members: list[dict[str, str]] = []
+            if dl.load_list(row.get("dl_id")):
+                members = _members(db, dl.list_entries())
+            result.append({"dl_id": row.get("dl_id"), "listname": row.get("listname", ""),
+                           "members_count": len(members), "members": members})
+        return result
     except Exception:
-        pass
-    return []
+        return []
+
+
+def _page(request, selected_id, *, error=None, message=None):
+    lists = get_all_distrolists(request.dbsession)
+    selected = next((d for d in lists if str(d["dl_id"]) == str(selected_id)), None) if selected_id else None
+    return {
+        "title": "- NamiFAX - Distribution Lists",
+        "current_user": request.identity or {"username": "admin", "is_admin": True, "superuser": True},
+        "active_tab": "addressbook", "distrolists": lists, "selected_list": selected, "dl_id": selected_id,
+        "error": error, "message": message,
+    }
 
 
 @view_config(route_name="distrolist", renderer="namifax:templates/distrolist.jinja2", permission="view")
 def distrolist_view(request):
-    """Display distribution lists selection and management interface."""
-    identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    selected_id = request.params.get("dl_id")
-
-    # Handle deletion
-    if request.params.get("delete") and selected_id:
-        try:
-            dl = DistributionList(db=request.dbsession)
-            dl.delete_list(int(selected_id))
-        except Exception:
-            pass
-        return HTTPFound(location=request.route_url("distrolist"))
-
-    distrolists = get_all_distrolists(request.dbsession)
-    selected_list = None
-    if selected_id:
-        selected_list = next((d for d in distrolists if str(d["dl_id"]) == str(selected_id)), None)
-    elif distrolists:
-        selected_list = distrolists[0]
-
-    return {
-        "title": "- NamiFAX - Distribution Lists",
-        "current_user": identity,
-        "active_tab": "addressbook",
-        "distrolists": distrolists,
-        "selected_list": selected_list,
-    }
+    """The lists, and the members of the chosen one. (Deleting is a POST to the edit page.)"""
+    selected = request.params.get("dl_id")
+    lists = get_all_distrolists(request.dbsession)
+    if not selected and lists:
+        selected = lists[0]["dl_id"]
+    return _page(request, selected)
 
 
 @view_config(route_name="distrolist_edit", renderer="namifax:templates/distrolist_edit.jinja2", permission="view")
 def distrolist_edit_view(request):
-    """Display distribution list create / edit form."""
-    identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    dl_id = request.params.get("dl_id")
+    """Create, rename, empty or delete a list; the plain GET is the new-list form."""
+    dl_id = (request.params.get("dl_id") or "").strip()
+    page = _page(request, dl_id or None)
+    if request.method != "POST":
+        return page
 
-    if request.method == "POST":
-        if request.params.get("delete") and dl_id:
-            try:
-                dl = DistributionList(db=request.dbsession)
-                dl.delete_list(int(dl_id))
-            except Exception:
-                pass
-            return HTTPFound(location=request.route_url("distrolist"))
+    post = request.POST
+    dl = DistributionList(db=request.dbsession)
+    who = (request.identity or {}).get("user_id") or (request.identity or {}).get("uid")
+    dl.set_moduser(int(who) if who else None)
+    here = lambda i: HTTPFound(location=request.route_url("distrolist", _query={"dl_id": i}))      # noqa: E731
 
-        listname = request.params.get("listname", "").strip()
+    if post.get("delete") and dl_id.isdigit():
+        dl.delete_list(int(dl_id))
+        return HTTPFound(location=request.route_url("distrolist"))
 
-        if dl_id:
-            # Update existing list
-            try:
-                dl = DistributionList(db=request.dbsession)
-                if dl.load_list(int(dl_id)) and listname:
-                    dl.set_listname(listname)
-            except Exception:
-                pass
-            return HTTPFound(location=f"{request.route_url('distrolist')}?dl_id={dl_id}")
-        elif listname:
-            # Create new list
-            new_id = None
-            try:
-                dl = DistributionList(db=request.dbsession)
-                if dl.create(listname):
-                    new_id = dl.get_dl_id()
-            except Exception:
-                pass
+    name = (post.get("listname") or "").strip()
+    if not dl_id.isdigit():                                                       # a new list
+        if dl.create(name):
+            return here(dl.get_dl_id())
+        return render_to_response("namifax:templates/distrolist_edit.jinja2", {**page, "error": dl.get_error()}, request=request)
 
-            target_loc = f"{request.route_url('distrolist')}?dl_id={new_id}" if new_id else request.route_url("distrolist")
-            return HTTPFound(location=target_loc)
-
-    distrolists = get_all_distrolists(request.dbsession)
-    selected_list = None
-    if dl_id:
-        selected_list = next((d for d in distrolists if str(d.get("dl_id")) == str(dl_id)), None)
-
-    return {
-        "title": "NamiFAX - Distribution Lists",
-        "current_user": identity,
-        "active_tab": "addressbook",
-        "selected_list": selected_list,
-        "dl_id": dl_id,
-    }
+    if not dl.load_list(int(dl_id)):
+        return HTTPFound(location=request.route_url("distrolist"))
+    if post.get("remove"):
+        dl.remove_entries(post.getall("dl_list[]") or post.getall("dl_list"))
+    elif name and (post.get("savename") or post.get("save") or not post.get("refresh")):
+        dl.set_listname(name)
+    return here(dl_id)
