@@ -31,9 +31,9 @@ def test_model_maps_the_legacy_table():
 
     t = SysLog.__table__
     assert t.name == "SysLog"
-    assert [c.name for c in t.primary_key.columns] == ["log_id"]
-    assert set(t.c.keys()) == {"log_id", "logdate", "logtext"}
-    assert isinstance(t.c.log_id.type, Integer) and t.c.log_id.autoincrement is True
+    assert [c.name for c in t.primary_key.columns] == ["syslogid"]
+    assert set(t.c.keys()) == {"syslogid", "logdate", "logtext"}
+    assert isinstance(t.c.syslogid.type, Integer) and t.c.syslogid.autoincrement is True
     # ISO text, not DateTime: the viewer filters by prefix (LIKE), which PostgreSQL does not allow on timestamps
     assert isinstance(t.c.logdate.type, String) and t.c.logdate.type.length == 32 and not t.c.logdate.nullable
     assert isinstance(t.c.logtext.type, Text) and not t.c.logtext.nullable
@@ -44,7 +44,7 @@ def test_model_maps_the_legacy_table():
 def test_ddl_compiles_for_every_supported_database(dialect):
     from namifax.models import SysLog
 
-    assert "PRIMARY KEY (log_id)" in str(CreateTable(SysLog.__table__).compile(dialect=dialect))
+    assert "PRIMARY KEY (syslogid)" in str(CreateTable(SysLog.__table__).compile(dialect=dialect))
 
 
 # --- service ---------------------------------------------------------------------------

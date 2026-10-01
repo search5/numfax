@@ -28,7 +28,7 @@ from namifax.common.helpers import (
     pdf_preview,
     send_mail,
 )
-from namifax.db.provider import cli_session
+from namifax.db.provider import cli_session, use_session
 from namifax.services.addressbook import AFAddressBook
 from namifax.services.archive_out import ArchiveOut
 from namifax.services.user_account import AFUserAccount
@@ -77,7 +77,8 @@ def run_notify(argv: Sequence[str] | None = None, *, session: Any = None) -> int
         return 0
 
     if session is not None:
-        return _process_notify(args, session)
+        with use_session(session):
+            return _process_notify(args, session)
     with cli_session(ensure_schema=True) as opened:
         return _process_notify(args, opened)
 

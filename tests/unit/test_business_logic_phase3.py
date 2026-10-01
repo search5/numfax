@@ -244,7 +244,7 @@ def test_faxrcvd_ocr_index_logic(tmp_path):
     with patch("namifax.cli.faxrcvd.FaxModem") as mock_modem, \
          patch("namifax.cli.faxrcvd.faxinfo") as mock_finfo, \
          patch("namifax.cli.faxrcvd.ArchiveIn") as mock_in, \
-         patch("namifax.cli.faxrcvd.AFAddressBook"), \
+         patch("namifax.cli.faxrcvd.AFAddressBook") as mock_book, \
          patch("namifax.cli.faxrcvd.DIDRouting"), \
          patch("namifax.cli.faxrcvd.tiff2pdf"), \
          patch("namifax.cli.faxrcvd.static_preview"), \
@@ -252,6 +252,7 @@ def test_faxrcvd_ocr_index_logic(tmp_path):
          patch("namifax.services.ocr.OcrService.index_fax") as mock_index_fax:
 
         mock_finfo.return_value = {"Sender": "123456", "Pages": "1", "Received": "2026:10:01 10:00:00"}
+        mock_book.return_value.find_or_create_number.return_value = (1, 1, "found")
         inbox_inst = MagicMock()
         inbox_inst.create.return_value = True
         inbox_inst.get_fid.return_value = 99

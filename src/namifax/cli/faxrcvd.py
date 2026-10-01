@@ -21,6 +21,7 @@ if SRC_DIR not in sys.path:
     sys.path.insert(0, SRC_DIR)
 
 from namifax.common.helpers import (
+    hylafax_date_to_iso,
     avantfaxlog,
     bardecode,
     clean_faxnum,
@@ -32,7 +33,7 @@ from namifax.common.helpers import (
     static_preview,
     tiff2pdf,
 )
-from namifax.db.provider import cli_session
+from namifax.db.provider import cli_session, use_session
 from namifax.services.addressbook import AFAddressBook
 from namifax.services.archive_in import ArchiveIn
 from namifax.services.barcode import BarcodeRouting
@@ -69,7 +70,8 @@ def run_faxrcvd(argv: Sequence[str] | None = None, *, session: Any = None) -> in
         return 0
 
     if session is not None:
-        return _process_faxrcvd(args, session)
+        with use_session(session):
+            return _process_faxrcvd(args, session)
     with cli_session(ensure_schema=True) as opened:
         return _process_faxrcvd(args, opened)
 
@@ -147,17 +149,17 @@ def _process_faxrcvd(args: list[str], session: Any) -> int:
     static_preview(faxpath, pages)
 
     # AddressBook
+    # (loadbyfaxnum() answers with a tuple, which is always true: new senders were never registered)
     addressbook = AFAddressBook(db=session)
-    faxnumid = 0
-    if addressbook.loadbyfaxnum(company_fax):
-        faxnumid = addressbook.get_faxnumid()
+    faxnumid, _company_id, outcome = addressbook.find_or_create_number(company_fax, company_name)
+    if outcome == "multiple":
+        print("WARNING: Multiple results for faxnumber")
+    elif outcome in ("found", "created", "company_exists"):
         addressbook.inc_faxfrom()
+        if outcome != "found":
+            avantfaxlog(f"faxrcvd> Created fax number '{company_fax}' for company '{company_name}'", echo=False)
     else:
-        if addressbook.create(company_name):
-            addressbook.inc_faxfrom()
-            if addressbook.create_faxnumid(company_fax):
-                faxnumid = addressbook.get_faxnumid()
-                addressbook.inc_faxfrom()
+        avantfaxlog(f"faxrcvd> Couldn't register fax number '{company_fax}': {addressbook.get_error()}", echo=False)
 
     # DID Routing
     didr_id = 0
@@ -172,7 +174,7 @@ def _process_faxrcvd(args: list[str], session: Any) -> int:
     # ArchiveIn
     inbox = ArchiveIn(db=session)
     faxid = None
-    if inbox.create(faxpath, faxnumid, company_fax, modemdev, pages, f"{day} {hour}", didr_id):
+    if inbox.create(faxpath, faxnumid, company_fax, modemdev, pages, hylafax_date_to_iso(recv_date), didr_id):
         faxid = inbox.get_fid()
         avantfaxlog(f"faxrcvd> Inserted {faxpath} from {company_name} to Inbox", echo=False)
         try:

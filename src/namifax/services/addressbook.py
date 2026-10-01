@@ -250,6 +250,34 @@ class AFAddressBook:
         self.error = f"{template} '{clean_num}'"
         return False, False
 
+    def find_or_create_number(self, faxnumber: str | None, company: str | None = None) -> tuple[int, int | None, str]:
+        """Resolve a sender's fax number, registering it when it is new.
+
+        Returns ``(faxnumid, companyid, outcome)``; ``faxnumid`` is 0 when no single number applies.
+        ``outcome`` is ``found`` (an existing number), ``multiple`` (the number belongs to several companies, so none
+        is chosen), ``created`` (new company and number), ``company_exists`` (a company of that name existed and got
+        the number) or ``failed``. The loaded address book entry stays loaded, so its routing settings can be read.
+        """
+        found, multiple = self.loadbyfaxnum(faxnumber)
+        if found:
+            if multiple:
+                return 0, None, "multiple"
+            return self.get_faxnumid() or 0, self.abook_id, "found"
+
+        name = company or faxnumber
+        existing = self.addressbook.find({"company": name}, reduce_single=False) if name else None
+        if existing:
+            if not self.loadbycid(existing[0]["abook_id"]):
+                return 0, None, "failed"
+            outcome = "company_exists"
+        elif self.create(name):
+            outcome = "created"
+        else:
+            return 0, None, "failed"
+        if self.create_faxnumid(faxnumber):
+            return self.get_faxnumid() or 0, self.abook_id, outcome
+        return 0, self.abook_id, "failed"
+
     def reassign(self, newcid: int | None) -> bool:
         """Reassign fax numbers from current company to new company, then delete old company."""
         if not newcid or not self.abook_id:

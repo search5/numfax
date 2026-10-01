@@ -42,6 +42,7 @@ Available commands:
   serve              Start the HTTP / API web service (with integrated APScheduler)
   scheduler          Start the standalone background APScheduler daemon
   createuser         Create or update user account (ID / PW credentials)
+  import-archive     Import an existing HylaFAX/AvantFAX fax archive directory into the database
   reset-2fa          Turn off two-factor authentication for a user (lost device and recovery codes)
   encrypt-secrets    Encrypt stored credentials (cloud key, SMTP password, 2FA seeds) with NAMIFAX_SECRET_KEY
   dynconf            Execute HylaFAX dynamic configuration call filter
@@ -192,6 +193,10 @@ def main(argv: list[str] | None = None) -> int:
     elif cmd in ("import-blacklist", "import_blacklist"):
         from namifax.cli import import_blacklist
         return import_blacklist.main(sub_args)
+
+    elif cmd in ("import-archive", "import_archive"):
+        from namifax.cli import import_archive
+        return import_archive.main(sub_args)
 
     elif cmd in ("reset-2fa", "reset_2fa"):
         return run_reset_2fa(sub_args)

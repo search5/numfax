@@ -98,13 +98,11 @@ def test_avantfaxlog_never_raises_when_the_insert_fails(dbsession):
 
 def test_a_cli_hook_leaves_a_trace_in_the_admin_log(app, dbengine, tmp_path):
     """faxrcvd logs a missing TIFF; the line is stored where the System Logs page reads it."""
-    from unittest.mock import MagicMock
-
     from namifax.cli import faxrcvd
 
     missing = tmp_path / "gone.tif"
-    with patch.object(faxrcvd, "FaxModem"):
-        assert faxrcvd.run_faxrcvd(["faxrcvd.py", str(missing), "ttyS0", "comm1", "none"], session=MagicMock()) == 0
+    with patch.object(faxrcvd, "FaxModem"):          # run like the real hook: it opens its own session on the database
+        assert faxrcvd.run_faxrcvd(["faxrcvd.py", str(missing), "ttyS0", "comm1", "none"]) == 0
 
     with Session(dbengine) as session:
         assert any("not found" in r["logtext"] for r in _rows(session, kw="gone.tif"))

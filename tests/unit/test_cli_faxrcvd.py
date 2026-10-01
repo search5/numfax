@@ -78,6 +78,7 @@ class TestCLIFaxrcvd(unittest.TestCase):
                 ab_inst.get_category.return_value = None
                 ab_inst.get_printer.return_value = None
                 ab_inst.get_email.return_value = None
+                ab_inst.find_or_create_number.return_value = (1, 1, "found")
                 mock_ab.return_value = ab_inst
 
                 # Mock ArchiveIn

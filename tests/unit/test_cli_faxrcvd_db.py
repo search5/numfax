@@ -12,6 +12,7 @@ def _run(tmp_path, **kwargs):
     tiff = tmp_path / "fax00123.tif"
     tiff.write_bytes(b"mock tiff")
     classes = {n: MagicMock(name=n) for n in ("FaxModem", "AFAddressBook", "ArchiveIn", "DIDRouting", "BarcodeRouting")}
+    classes["AFAddressBook"].return_value.find_or_create_number.return_value = (1, 1, "found")
     classes["ArchiveIn"].return_value.create.return_value = True
     classes["ArchiveIn"].return_value.get_fid.return_value = 7
     with patch.multiple(mod, **classes), \

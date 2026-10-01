@@ -50,6 +50,16 @@ def active_session() -> Optional[Session]:
 
 
 @contextmanager
+def use_session(session: Session) -> Iterator[Session]:
+    """Make an already open session the active one for the block (``cli_session`` does this for its own)."""
+    token = _ACTIVE_SESSION.set(session)
+    try:
+        yield session
+    finally:
+        _ACTIVE_SESSION.reset(token)
+
+
+@contextmanager
 def cli_session(
     settings: Mapping[str, Any] | None = None,
     environ: Mapping[str, str] | None = None,

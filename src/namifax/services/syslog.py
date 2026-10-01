@@ -56,5 +56,5 @@ class SysLogService:
         prefix = self._date_prefix(day, month, year)
         if prefix:
             stmt = stmt.where(SysLog.logdate.startswith(prefix, autoescape=True))
-        stmt = stmt.order_by(SysLog.logdate.desc(), SysLog.log_id.desc()).limit(MAX_ROWS)
+        stmt = stmt.order_by(SysLog.logdate.desc(), SysLog.syslogid.desc()).limit(MAX_ROWS)
         return [{"logdate": str(r.logdate), "logtext": str(r.logtext)} for r in session.execute(stmt)]

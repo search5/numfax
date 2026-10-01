@@ -139,6 +139,23 @@ def tmpfilename(suffix: str = "") -> str:
     return path
 
 
+def hylafax_date_to_iso(value: Any) -> str:
+    """HylaFAX dates (``2026:10:01 10:05:09``, or the slash form used in archive paths) as ISO ``YYYY-MM-DD HH:MM:SS``.
+
+    An unreadable value becomes the current time rather than an unsortable string in the archive.
+    """
+    import datetime as _dt
+
+    match = re.match(r"^\s*(\d{4})[:/-](\d{2})[:/-](\d{2})(?:[ T](\d{2}):(\d{2}):(\d{2}))?", str(value or ""))
+    if match:
+        year, month, day, hour, minute, second = (int(g) if g else 0 for g in match.groups())
+        try:
+            return _dt.datetime(year, month, day, hour, minute, second).strftime("%Y-%m-%d %H:%M:%S")
+        except ValueError:
+            pass
+    return _dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+
 def mkdirs(path: str, mode: int = 0o777) -> bool:
     """Recursively create directories."""
     try:

@@ -9,10 +9,11 @@ from namifax.models.meta import Base
 
 
 class SysLog(Base):
-    # Table and column names are kept exactly as the legacy SQL spells them.
+    # Table and column names are kept exactly as the legacy SQL spells them (the key is syslogid; the port
+    # first called it log_id, which revision 0023 renames).
     __tablename__ = "SysLog"
 
-    log_id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    syslogid: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     # ISO text 'YYYY-MM-DD HH:MM:SS' (the legacy column is TEXT). It stays text because the viewer filters
     # by date prefix with LIKE, which PostgreSQL does not allow on timestamp columns, and ISO text sorts
     # chronologically on every database.
