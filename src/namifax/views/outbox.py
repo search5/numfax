@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from pyramid.csrf import check_csrf_token
 from pyramid.view import view_config
 
 from namifax.i18n import _
@@ -40,9 +41,14 @@ def outbox_view(request):
     fq = FaxQueue(auto_process=False, db=request.dbsession)
     flash_message = None
 
-    kill = (request.params.get("kill") or "").strip()
+    # Killing changes the queue, so it only happens for a POST that carries this session's CSRF token. (The original
+    # used a plain link, which any other web page could have made a signed-in user follow.)
+    kill = (request.POST.get("kill") or "").strip() if request.method == "POST" else ""
     if kill:
-        flash_message = _kill(fq, access, kill)
+        if check_csrf_token(request, raises=False):
+            flash_message = _kill(fq, access, kill)
+        else:
+            flash_message = _("Your session has expired. Reload the page and try again.")
 
     fq.process_queue()
     jobs = _with_companies(request, _visible(fq, access))
@@ -58,6 +64,7 @@ def outbox_view(request):
         "num_outbox": len(jobs),
         "queue_count": len(jobs) + len(failed_jobs),
         "flash_message": flash_message,
+        "csrf_token": request.session.get_csrf_token(),
         "modem_list": get_all_admin_modems(request.dbsession),
     }
 

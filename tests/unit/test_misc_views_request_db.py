@@ -101,6 +101,7 @@ def test_sendfax_view_uses_request_db():
 
 def test_outbox_view_passes_request_db_to_modem_helper(as_superuser):
     req = _request()
+    req.session = MagicMock()                                 # the page carries the session's CSRF token
     modems = MagicMock(return_value=[])
     with patch.object(outbox_mod, "FaxQueue", MagicMock()), patch.object(outbox_mod, "get_all_admin_modems", modems), \
             patch.object(outbox_mod, "AFAddressBook", MagicMock()), contextlib.suppress(Exception):

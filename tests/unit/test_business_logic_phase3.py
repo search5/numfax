@@ -283,8 +283,9 @@ def _queue_with_job(jid, owner, killed):
 
 def test_outbox_view_killjob_success(dummy_request, as_superuser):
     """Verify outbox_view sets success flash message when fq.killjob succeeds (for a job the user may see)."""
-    dummy_request.params = {"kill": "105"}
-    with patch("namifax.views.outbox.FaxQueue") as mock_fq_cls, patch("namifax.views.outbox.AFAddressBook"):
+    dummy_request.method, dummy_request.POST = "POST", {"kill": "105"}
+    with patch("namifax.views.outbox.FaxQueue") as mock_fq_cls, patch("namifax.views.outbox.AFAddressBook"), \
+            patch("namifax.views.outbox.check_csrf_token", return_value=True):
         fq_inst = mock_fq_cls.return_value = _queue_with_job("105", "bob", True)
 
         res = outbox_view(dummy_request)
@@ -294,8 +295,9 @@ def test_outbox_view_killjob_success(dummy_request, as_superuser):
 
 def test_outbox_view_killjob_failure(dummy_request, as_superuser):
     """Verify outbox_view sets failure flash message when fq.killjob fails."""
-    dummy_request.params = {"kill": "106"}
-    with patch("namifax.views.outbox.FaxQueue") as mock_fq_cls, patch("namifax.views.outbox.AFAddressBook"):
+    dummy_request.method, dummy_request.POST = "POST", {"kill": "106"}
+    with patch("namifax.views.outbox.FaxQueue") as mock_fq_cls, patch("namifax.views.outbox.AFAddressBook"), \
+            patch("namifax.views.outbox.check_csrf_token", return_value=True):
         mock_fq_cls.return_value = _queue_with_job("106", "bob", False)
 
         res = outbox_view(dummy_request)

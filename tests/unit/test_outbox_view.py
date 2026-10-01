@@ -89,6 +89,16 @@ def _login(testapp, username, password=PWD):
     return client
 
 
+def _kill(client, jid, token="page"):
+    """Press the Kill button: the form of the page, with the page's CSRF token (or the given one)."""
+    if token == "page":
+        token = client.get("/outbox").html.find("input", {"name": "csrf_token"})["value"]
+    data = {"kill": str(jid)}
+    if token is not None:
+        data["csrf_token"] = token
+    return client.post("/outbox", data, expect_errors=True)
+
+
 def _jids(page):
     return sorted(int(j) for j in __import__("re").findall(r'data-jid="(\d+)"', page.text))
 
@@ -148,13 +158,13 @@ def test_the_page_refreshes_itself_every_minute(testapp, people, hylafax):
 def test_a_waiting_job_can_be_modified_or_killed(testapp, people, hylafax):
     page = _login(testapp, "alice").get("/outbox")
     assert "/ajax/faxalter?jid=80&amp;owner=alice" in page.text or "/ajax/faxalter?jid=80&owner=alice" in page.text
-    assert "/outbox?kill=80" in page.text
+    assert page.html.find("input", {"name": "kill", "value": "80"}) is not None
 
 
 def test_a_failed_job_can_be_resubmitted_or_killed(testapp, people, hylafax):
     page = _login(testapp, "alice").get("/outbox")
     assert "jid=90&amp;r=1&amp;owner=alice" in page.text or "jid=90&r=1&owner=alice" in page.text
-    assert "/outbox?kill=90" in page.text
+    assert page.html.find("input", {"name": "kill", "value": "90"}) is not None
 
 
 def test_a_job_sent_by_mail_is_modified_in_the_name_of_its_owner(testapp, people, hylafax):
@@ -163,36 +173,68 @@ def test_a_job_sent_by_mail_is_modified_in_the_name_of_its_owner(testapp, people
 
 
 # --- killing -------------------------------------------------------------------------------------------------------------------
+# Killing changes the queue, so it is a POST with the page's CSRF token (the original used a plain link, which any other site
+# could have made a user click).
 
 def test_a_user_can_kill_their_own_job(testapp, people, hylafax):
-    _login(testapp, "alice").get("/outbox?kill=80")
+    _kill(_login(testapp, "alice"), 80)
     assert hylafax() == [{"cmd": "faxrm", "args": "80", "user": "alice"}]
 
 
 def test_a_user_cannot_kill_somebody_elses_job(testapp, people, hylafax):
-    page = _login(testapp, "alice").get("/outbox?kill=81")
+    page = _kill(_login(testapp, "alice"), 81)
     assert hylafax() == [] and "81" in page.text
 
 
 def test_a_superuser_kills_a_job_in_the_name_of_its_owner(testapp, people, hylafax):
-    _login(testapp, "admin", "password").get("/outbox?kill=81")
+    _kill(_login(testapp, "admin", "password"), 81)
     assert hylafax() == [{"cmd": "faxrm", "args": "81", "user": "bob"}]
 
 
 def test_a_failed_job_is_found_in_the_done_queue_and_killed(testapp, people, hylafax):
-    _login(testapp, "alice").get("/outbox?kill=90")
+    _kill(_login(testapp, "alice"), 90)
     assert hylafax() == [{"cmd": "faxrm", "args": "90", "user": "alice"}]
 
 
 def test_a_job_that_is_not_failed_is_not_removed_from_the_done_queue(testapp, people, hylafax):
-    _login(testapp, "alice").get("/outbox?kill=92")
+    _kill(_login(testapp, "alice"), 92)
     assert hylafax() == []
 
 
 @pytest.mark.parametrize("value", ["abc", "80; rm -rf /", "-1", ""])
 def test_the_job_number_must_be_a_number(testapp, people, hylafax, value):
-    _login(testapp, "admin", "password").get("/outbox", params={"kill": value})
+    _kill(_login(testapp, "admin", "password"), value)
     assert hylafax() == []
+
+
+def test_a_link_to_the_old_kill_address_removes_nothing(testapp, people, hylafax):
+    client = _login(testapp, "alice")
+    assert client.get("/outbox?kill=80").status_int == 200
+    assert hylafax() == []
+
+
+def test_a_post_without_the_token_removes_nothing(testapp, people, hylafax):
+    page = _kill(_login(testapp, "alice"), 80, token=None)
+    assert hylafax() == [] and "expired" in page.text.lower()
+
+
+def test_a_post_with_a_wrong_token_removes_nothing(testapp, people, hylafax):
+    _kill(_login(testapp, "alice"), 80, token="not-the-token")
+    assert hylafax() == []
+
+
+def test_the_token_of_another_session_is_refused(testapp, people, hylafax):
+    other = _login(testapp, "bob").get("/outbox").html.find("input", {"name": "csrf_token"})["value"]
+    _kill(_login(testapp, "alice"), 80, token=other)
+    assert hylafax() == []
+
+
+def test_the_kill_button_is_a_form_with_the_token(testapp, people, hylafax):
+    page = _login(testapp, "alice").get("/outbox")
+    form = page.html.find("input", {"name": "kill", "value": "80"}).find_parent("form")
+    assert form["method"].lower() == "post" and form["action"] == "/outbox"
+    assert form.find("input", {"name": "csrf_token"})["value"]
+    assert "/outbox?kill=" not in page.text
 
 
 def test_the_queue_needs_a_login(testapp, hylafax):

@@ -76,8 +76,12 @@
             <td class="py-3 px-4 text-right whitespace-nowrap">
               <a href="/ajax/faxalter?jid={{ j.jid }}&owner={{ j.owner|urlencode }}" title="{{ _('Modify Fax Job') }}"
                  class="inline-flex items-center px-3 py-1.5 bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-200 text-blue-700 rounded-lg text-xs font-semibold transition-colors">{{ _('Modify') }}</a>
-              <a href="/outbox?kill={{ j.jid }}" onclick="return confirm('{{ _('Kill job') }} {{ j.jid }}?')" title="{{ _('Kill job') }}"
-                 class="inline-flex items-center px-3 py-1.5 bg-white hover:bg-red-50 border border-slate-200 hover:border-red-200 text-red-600 rounded-lg text-xs font-semibold transition-colors">{{ _('Kill') }}</a>
+              <form method="post" action="/outbox" class="inline" onsubmit="return confirm('{{ _('Kill job') }} {{ j.jid }}?')">
+                <input type="hidden" name="kill" value="{{ j.jid }}" />
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+                <button type="submit" title="{{ _('Kill job') }}"
+                        class="inline-flex items-center px-3 py-1.5 bg-white hover:bg-red-50 border border-slate-200 hover:border-red-200 text-red-600 rounded-lg text-xs font-semibold transition-colors">{{ _('Kill') }}</button>
+              </form>
             </td>
           </tr>
           {% endfor %}
@@ -120,8 +124,12 @@
             <td class="py-3 px-4 text-right whitespace-nowrap">
               <a href="/ajax/faxalter?jid={{ j.jid }}&r=1&owner={{ j.owner|urlencode }}" title="{{ _('Modify Fax Job') }}"
                  class="inline-flex items-center px-3 py-1.5 bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-200 text-blue-700 rounded-lg text-xs font-semibold transition-colors">{{ _('Retry') }}</a>
-              <a href="/outbox?kill={{ j.jid }}" onclick="return confirm('{{ _('Kill job') }} {{ j.jid }}?')" title="{{ _('Kill job') }}"
-                 class="inline-flex items-center px-3 py-1.5 bg-white hover:bg-red-50 border border-slate-200 hover:border-red-200 text-red-600 rounded-lg text-xs font-semibold transition-colors">{{ _('Kill') }}</a>
+              <form method="post" action="/outbox" class="inline" onsubmit="return confirm('{{ _('Kill job') }} {{ j.jid }}?')">
+                <input type="hidden" name="kill" value="{{ j.jid }}" />
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+                <button type="submit" title="{{ _('Kill job') }}"
+                        class="inline-flex items-center px-3 py-1.5 bg-white hover:bg-red-50 border border-slate-200 hover:border-red-200 text-red-600 rounded-lg text-xs font-semibold transition-colors">{{ _('Kill') }}</button>
+              </form>
             </td>
           </tr>
           {% endfor %}
