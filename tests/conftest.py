@@ -78,7 +78,7 @@ def isolated_database(request, tmp_path, monkeypatch):
 # A doomed transaction manager and a session joined to it make every database write made through
 # ``request.dbsession`` disappear at the end of the test, without touching other tests.
 
-_BARE_TABLE = re.compile(r"\b(FROM|INTO|UPDATE|JOIN)(\s+)(?!\")([A-Z][A-Za-z0-9]*)\b")
+_BARE_TABLE = re.compile(r"\b(FROM|INTO|UPDATE|JOIN)(\s+)(?!\")(?!SET\b)([A-Z][A-Za-z0-9]*)\b")        # (not ``DO UPDATE SET``)
 _DDL = re.compile(r"\s*(CREATE|ALTER|DROP|COMMENT)\b", re.IGNORECASE)
 
 

@@ -49,12 +49,16 @@ class LoginThrottle:
 
         self.cfg = SystemConfigService(session)
 
-    def _load(self, key: str) -> dict[str, float]:
+    @staticmethod
+    def _parse(raw: str) -> dict[str, float]:
         try:
-            state = json.loads(self.cfg.get(key, "") or "{}")
+            state = json.loads(raw or "{}")
             return state if isinstance(state, dict) else {}
         except ValueError:
             return {}
+
+    def _load(self, key: str) -> dict[str, float]:
+        return self._parse(self.cfg.get(key, ""))
 
     def _keys(self, username: str, ip: str | None) -> list[tuple[str, int]]:
         keys = [(_key("user", username), max_failures())]
@@ -67,17 +71,23 @@ class LoginThrottle:
         return any(float(self._load(key).get("until") or 0) > now for key, _limit in self._keys(username, ip))
 
     def record_failure(self, username: str, ip: str | None = None) -> None:
+        """Count one failure. The counter is changed under a row lock (``locked_update``), so failures that arrive at the same
+        moment are all counted and none of them ends in an error; the user name is always locked before the address, so two
+        requests cannot wait for each other."""
         now, period = _now(), lock_seconds()
         for key, limit in self._keys(username, ip):
-            state = self._load(key)
-            if float(state.get("until") or 0) > now:
-                continue                                               # already locked: the clock is not extended
-            if not state.get("start") or now - float(state["start"]) > period:
-                state = {"n": 0, "start": now}                         # an old window (or an expired lock): start again
-            state["n"] = int(state.get("n", 0)) + 1
-            if state["n"] >= limit:
-                state["until"] = now + period
-            self.cfg.set(key, json.dumps(state))
+            def count(raw: str, limit: int = limit) -> str:
+                state = self._parse(raw)
+                if float(state.get("until") or 0) > now:
+                    return raw                                         # already locked: the clock is not extended
+                if not state.get("start") or now - float(state["start"]) > period:
+                    state = {"n": 0, "start": now}                     # an old window (or an expired lock): start again
+                state["n"] = int(state.get("n", 0)) + 1
+                if state["n"] >= limit:
+                    state["until"] = now + period
+                return json.dumps(state)
+
+            self.cfg.locked_update(key, count)
 
     def record_success(self, username: str) -> None:
         key = _key("user", username)
