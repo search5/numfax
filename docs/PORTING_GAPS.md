@@ -89,7 +89,7 @@
 | 웹 진입점 74개(`*.php` 36, `ajax/` 13, `admin/` 25) ↔ 라우트 | 이름으로 대응시켜 빠진 것이 없음을 확인했고, 이름만으로 불분명한 것(`rubrica*`, `no-database`, `file`·`pdf`, `archivefax`와 `ajaxarchivefax`)은 소스를 읽어 확인했다(나머지의 동작 동일성은 이 대조의 범위 밖). `rubrica.php`·`rubrica_edit.php`는 템플릿이 없고 링크되지 않는 죽은 코드라 제외(`ARCHITECTURE.md` 17.8에 기록). 관리자 전용 로그인 4개(`admin/index·check_login·logout·pwdexpired`)는 한 로그인에서 권한으로 나누기로 한 결정(C10) |
 | DB 테이블 14개(`create_tables.sql`, `db-update-*.sql`) ↔ 모델 | 테이블·컬럼 모두 있음(`UserAccount` 32/32, `FaxArchive` 17/17). 이식본에만 있는 6개는 새 기능(`FaxOCR`, `NetworkPrinters`, `SystemConfig`, `SystemSettings`, `UserTOTP`, `UserWebAuthnCredentials`) |
 | 명령줄·훅 14개(`includes/` 6, `tools/` 8) ↔ `namifax.cli` | `update_contacts`(2.x 이전 DB용, 지원하지 않기로 함)를 뺀 13개 모두 대응 |
-| 설정 변수 147개 ↔ 코드·문서 | 이름이 없는 약 70개 중 대부분은 대체됨(`AFDB_*`→`DATABASE_URL`, 테마 경로→Tailwind, `SMTP_*`·`SYSTEM_EMAIL_SIG_*`→관리자 SMTP 화면, 변환 도구 변수→Ghostscript 등, `SYSTEM_IP`→요청 주소). 아래 G1~G4가 실제 차이 |
+| 설정 변수 147개 ↔ 코드·문서 | 이름이 없는 약 70개 중 대부분은 대체됨(`AFDB_*`→`DATABASE_URL`, 테마 경로→Tailwind, `SMTP_*`·`SYSTEM_EMAIL_SIG_*`→관리자 SMTP 화면, 변환 도구 변수→Ghostscript 등, `SYSTEM_IP`→요청 주소). 아래 G1~G7이 실제 차이 |
 | 화면 문구 332개 ↔ `namifax.pot` | 144개가 문구 일치로는 찾아지지 않았으나 대부분 문구를 다르게 쓴 것이라 누락 개수로 보지 않음. 동작을 암시하는 문구(모뎀 상태, 오디오 선택, 비밀번호 재사용 등)만 골라 확인했고 추가 누락은 없었음 |
 
 **실제 차이** (G7만 열려 있음)
