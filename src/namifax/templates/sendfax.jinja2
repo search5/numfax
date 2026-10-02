@@ -51,7 +51,7 @@
       <div class="p-5 space-y-4">
         <div>
           <label for="faxnumber" class="block text-sm font-semibold text-slate-800 mb-1">
-            {{ _('Destination Number') }} <span class="text-red-500">*</span>
+            {{ _('Destination fax numbers') }} <span class="text-red-500">*</span>
           </label>
           <input type="text" name="faxnumber" id="faxnumber"
                  value="{{ form_data.faxnumber or form_data.destinations or '' }}"
@@ -278,7 +278,7 @@
             <input type="checkbox" name="notify_requeue" id="notify_requeue" value="1"
                    {% if form_data.notify_requeue %}checked{% endif %}
                    class="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
-            <span class="text-sm text-slate-700">{{ _('Notify on retry') }}</span>
+            <span class="text-sm text-slate-700">{{ _('Notify on requeue') }}</span>
           </label>
         </div>
       </div>

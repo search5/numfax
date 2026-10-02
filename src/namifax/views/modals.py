@@ -91,14 +91,14 @@ def modal_email_view(request):
                      altname=values["filename"] or None, embedd=arc.get_thumbnail(), cc=values["cc_emails"] or None,
                      bcc=values["bcc_emails"] or None, session=request.dbsession)
     if not sent:
-        return page(_("Failed to send email"))
+        return page(_("The email failed to send."))
 
     AFAddressBook(db=request.dbsession).create_contacts(values["emails"])
     if in_inbox and values["category"] in categories:
         arc.set_category(int(values["category"]), account.get_uid() or 0)
     if in_inbox and values["archive"]:
         arc.set_archivebox(int(fid))
-    return page(message=_("Email sent successfully"))
+    return page(message=_("The email was sent successfully."))
 
 
 @view_config(route_name="modal_assign", renderer="namifax:templates/modal_assign.jinja2", permission="view")
@@ -130,7 +130,7 @@ def modal_assign_view(request):
                 return HTTPFound(location=request.route_url("inbox"))
             error = ab.get_error()
         else:
-            error = _("Please enter a company name")
+            error = _("You must enter a company name")
 
     companies = [{"id": c.get("abook_id"), "name": c.get("company")}
                  for c in ab.get_companies() or [] if c.get("company") and c.get("abook_id") != cid]
@@ -168,7 +168,7 @@ def assignx_view(request):
             else:
                 error = book.get_error()
         else:
-            error = _("Please enter a company name")
+            error = _("You must enter a company name")
         if cid:
             arc.set_faxnumid(0)                       # no longer tied to the reserved number
             arc.set_companyid(cid)

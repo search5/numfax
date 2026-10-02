@@ -113,10 +113,6 @@ msgstr "Beskrivning"
 msgid "Category"
 msgstr "Kategori"
 
-#, fuzzy
-msgid "Attention Person"
-msgstr "To person"
-
 msgid "Location"
 msgstr ""
 
@@ -256,9 +252,8 @@ msgstr "Barcode Routing"
 msgid "Barcode:"
 msgstr "Barcode Routing"
 
-#, fuzzy
 msgid "Contact:"
-msgstr "Kontakter"
+msgstr "Kontakt"
 
 msgid "None"
 msgstr "Ingen"
@@ -421,7 +416,7 @@ msgid "Company Forwarding Rules"
 msgstr "Vidarebefordringsregler för företag"
 
 msgid "fax numbers"
-msgstr ""
+msgstr "Faxnummer"
 
 msgid "Email:"
 msgstr "E-post:"
@@ -558,7 +553,7 @@ msgid "Are you sure you want to delete this modem?"
 msgstr ""
 
 msgid "Create"
-msgstr ""
+msgstr "Skapa"
 
 msgid "Appliance Note:"
 msgstr "Enhetsanteckning:"
@@ -785,9 +780,8 @@ msgstr ""
 msgid "Sent automatically by NamiFAX Gateway."
 msgstr ""
 
-#, fuzzy
 msgid "Last updated"
-msgstr "Rotera Fax"
+msgstr "Senast uppdaterad"
 
 #, fuzzy
 msgid "Save Gateway Settings"
@@ -946,7 +940,7 @@ msgid "Transmissions and server events will be streamed here in real time."
 msgstr "Överföringar och serverhändelser strömmas här i realtid."
 
 msgid "Delete User"
-msgstr ""
+msgstr "Ta bort anv�ndare"
 
 msgid "Are you sure you want to delete the user"
 msgstr ""
@@ -960,7 +954,7 @@ msgid "Create New User"
 msgstr "Skapa ny användare"
 
 msgid "Last IP"
-msgstr ""
+msgstr "Senaste IP-adress"
 
 msgid "Superuser"
 msgstr "Superanvändare"
@@ -975,22 +969,16 @@ msgid "NO"
 msgstr "Nej"
 
 msgid "users"
-msgstr ""
+msgstr "Anv�ndare"
 
 msgid "user"
-msgstr ""
+msgstr "Anv�ndare"
 
 msgid "Modify User"
-msgstr ""
+msgstr "�ndra anv�ndare"
 
 msgid "New User"
-msgstr ""
-
-msgid "User details saved"
-msgstr ""
-
-msgid "Account enabled"
-msgstr ""
+msgstr "Ny anv�ndare"
 
 msgid "Full Name"
 msgstr "Fullständigt namn"
@@ -1008,7 +996,7 @@ msgid "Password expiration cycle"
 msgstr ""
 
 msgid "Language"
-msgstr ""
+msgstr "Spr�k"
 
 msgid "Password can be reused"
 msgstr ""
@@ -1034,12 +1022,6 @@ msgstr ""
 msgid "New fax sound"
 msgstr ""
 
-msgid "Inbox shows"
-msgstr ""
-
-msgid "Archive shows"
-msgstr ""
-
 msgid "Permissions & Capabilities"
 msgstr "Behörigheter & funktioner"
 
@@ -1048,9 +1030,6 @@ msgstr "Administratörskonsol"
 
 msgid "Superuser Rights"
 msgstr "Superanvändarbehörighet"
-
-msgid "Can Delete Faxes"
-msgstr "Kan radera fax"
 
 msgid "Send on Any Modem"
 msgstr "Skicka via valfritt modem"
@@ -1089,10 +1068,10 @@ msgstr ""
 " att lägga till fler kriterier."
 
 msgid "Company search"
-msgstr ""
+msgstr "F�retagss�kning"
 
 msgid "Company list"
-msgstr ""
+msgstr "F�retagslista"
 
 #, fuzzy
 msgid "Fax ID"
@@ -1102,7 +1081,7 @@ msgid "e.g. 104"
 msgstr ""
 
 msgid "Keywords"
-msgstr ""
+msgstr "S�kord"
 
 msgid "Company, number, notes..."
 msgstr ""
@@ -1112,7 +1091,7 @@ msgid "All Categories"
 msgstr "Visa faxkategorier"
 
 msgid "User"
-msgstr ""
+msgstr "Anv�ndare"
 
 msgid "Start Date"
 msgstr ""
@@ -1126,13 +1105,13 @@ msgstr "DID/DTMF Route groups"
 
 #, python-format
 msgid "Total %(n)d results found."
-msgstr ""
+msgstr "Hittade totalt %(n)d resultat."
 
 msgid "Pages"
 msgstr "Sidor"
 
 msgid "Download PDF"
-msgstr ""
+msgstr "Ladda ner PDF"
 
 msgid "Reply to fax"
 msgstr ""
@@ -1142,7 +1121,7 @@ msgid "Re-send"
 msgstr "Skicka"
 
 msgid "Email PDF"
-msgstr ""
+msgstr "E-posta PDF"
 
 msgid "Add note to fax"
 msgstr ""
@@ -1156,9 +1135,6 @@ msgstr ""
 msgid "Select"
 msgstr "V�lj"
 
-msgid "Assign company name"
-msgstr ""
-
 msgid "Unknown"
 msgstr ""
 
@@ -1170,7 +1146,7 @@ msgid "Sent"
 msgstr ""
 
 msgid "No results were found"
-msgstr ""
+msgstr "Hittade inga resultat"
 
 msgid "Reset filters"
 msgstr "Återställ filter"
@@ -1200,7 +1176,7 @@ msgid "No contacts found"
 msgstr ""
 
 msgid "Add"
-msgstr ""
+msgstr "L�gg till"
 
 msgid "Close"
 msgstr "Stäng"
@@ -1229,9 +1205,6 @@ msgstr "List name"
 msgid "e.g. Executive Sales Team"
 msgstr ""
 
-msgid "Save name"
-msgstr ""
-
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "Gruppmedlemmar (kontakter & faxnummer)"
 
@@ -1244,9 +1217,6 @@ msgstr "Inga kontakter har tilldelats denna lista än."
 
 msgid "Add Member"
 msgstr "Lägg till medlem"
-
-msgid "Remove selected"
-msgstr ""
 
 msgid "Delete this distribution list?"
 msgstr ""
@@ -1287,7 +1257,7 @@ msgid "Changes saved"
 msgstr ""
 
 msgid "Back"
-msgstr ""
+msgstr "[ Tillbaka ]"
 
 #, fuzzy
 msgid "Email Address Book"
@@ -1333,9 +1303,6 @@ msgid "Contact Profile Details"
 msgstr "Kontaktprofildetaljer"
 
 msgid "John Doe"
-msgstr ""
-
-msgid "Modify Fax Job"
 msgstr ""
 
 msgid "New Destination"
@@ -1394,10 +1361,10 @@ msgid ""
 msgstr ""
 
 msgid "E-mail address"
-msgstr ""
+msgstr "E-postadress"
 
 msgid "Send Password"
-msgstr ""
+msgstr "Skicka l�senord"
 
 msgid "Received faxes appear here automatically in real time."
 msgstr "Mottagna fax visas här automatiskt i realtid."
@@ -1407,9 +1374,6 @@ msgstr "fax"
 
 msgid "Fax"
 msgstr "Fax"
-
-msgid "Select All"
-msgstr "Markera alla"
 
 #, fuzzy
 msgid "Archive Selected"
@@ -1432,7 +1396,7 @@ msgid "Page"
 msgstr "Sida"
 
 msgid "of"
-msgstr ""
+msgstr "av"
 
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
@@ -1451,9 +1415,6 @@ msgstr "Arkiv"
 
 msgid "Email Fax"
 msgstr "E-posta fax"
-
-msgid "Add Note"
-msgstr "Lägg till anteckning"
 
 msgid "Rotate"
 msgstr "Rotera Fax"
@@ -1600,15 +1561,11 @@ msgstr "Är du säker på att du vill ta bort detta fax?"
 msgid "This operation will permanently purge the fax document archive."
 msgstr "Denna åtgärd kommer att permanent radera faxdokumentarkivet."
 
-#, fuzzy
-msgid "Send Fax via Email"
-msgstr "Skicka Fax"
-
 msgid "Dispatch PDF document attachment to email recipients"
 msgstr "Skicka PDF-dokumentbilaga till e-postmottagare"
 
 msgid "From"
-msgstr ""
+msgstr "Fr�n"
 
 msgid "Recipients"
 msgstr "Mottagare"
@@ -1626,7 +1583,7 @@ msgid "Subject"
 msgstr "�mne"
 
 msgid "PDF file name"
-msgstr ""
+msgstr "PDF:ens filnamn"
 
 msgid "Message"
 msgstr "Meddelande"
@@ -1655,15 +1612,14 @@ msgstr "Officiellt kvitto på faxleveransbekräftelse"
 msgid "Print"
 msgstr "Print"
 
-#, fuzzy
 msgid "Company:"
-msgstr "To company"
+msgstr "F�retag"
 
 msgid "Pages:"
 msgstr "Sidor:"
 
 msgid "Fax Number:"
-msgstr ""
+msgstr "Faxnummer"
 
 msgid "Database unavailable"
 msgstr ""
@@ -1783,9 +1739,6 @@ msgstr "Fax number"
 msgid "Enter the fax number and recipient details."
 msgstr "Ange faxnummer och mottagaruppgifter."
 
-msgid "Destination Number"
-msgstr "Fax number"
-
 msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
 msgstr ""
 
@@ -1865,7 +1818,7 @@ msgid "Send via Line"
 msgstr "Skicka via linje"
 
 msgid "No modems configured"
-msgstr ""
+msgstr "Inga modem konfigurerade"
 
 #, fuzzy
 msgid "Cover Comments"
@@ -1886,9 +1839,6 @@ msgstr "Visa faxkategorier"
 
 msgid "Retries automatically on busy signal."
 msgstr "Försöker automatiskt igen vid upptagetton."
-
-msgid "Notify on retry"
-msgstr "Avisera vid nytt försök"
 
 msgid "The original fax is sent along."
 msgstr ""
@@ -2069,16 +2019,16 @@ msgid "Back to settings"
 msgstr ""
 
 msgid "Previous fax"
-msgstr ""
+msgstr "F�reg�nde Fax"
 
 msgid "Prev"
 msgstr "Föregående"
 
 msgid "Next fax"
-msgstr ""
+msgstr "N�sta Fax"
 
 msgid "Rotate fax"
-msgstr ""
+msgstr "Rotera Fax"
 
 #, python-format
 msgid "Invalid fax number: %(number)s"
@@ -2087,37 +2037,16 @@ msgstr ""
 msgid "Address book entry saved."
 msgstr ""
 
-msgid "Please enter a company name"
-msgstr ""
-
 msgid "Please enter a valid fax number"
 msgstr ""
 
 msgid "You are not allowed to delete address book entries."
 msgstr ""
 
-msgid "Contact saved."
-msgstr ""
-
 msgid "You are not allowed to delete contacts."
 msgstr ""
 
-msgid "Modem deleted"
-msgstr ""
-
-msgid "Please enter an alias"
-msgstr ""
-
-msgid "Modem updated"
-msgstr ""
-
-msgid "Please enter a device name"
-msgstr ""
-
 msgid "This modem already exists"
-msgstr ""
-
-msgid "Modem created"
 msgstr ""
 
 msgid "January"
@@ -2162,9 +2091,6 @@ msgstr ""
 msgid "Failed to remove cover page template"
 msgstr ""
 
-msgid "Cover page template updated successfully"
-msgstr ""
-
 msgid "Failed to update cover page template"
 msgstr ""
 
@@ -2181,7 +2107,7 @@ msgid "The company and its fax numbers were deleted."
 msgstr ""
 
 msgid "Please enter a valid e-mail address."
-msgstr ""
+msgstr "Var v�nlig fyll i en giltig e-postadress"
 
 msgid "Fax to Email settings saved"
 msgstr ""
@@ -2237,14 +2163,11 @@ msgstr ""
 msgid "Every 6 Months"
 msgstr ""
 
-msgid "Please enter a name"
-msgstr ""
-
 msgid "You must enter a username"
 msgstr ""
 
 msgid "Non-alphanumeric characters are not allowed in username."
-msgstr ""
+msgstr "Anv�ndarnamnet f�r bara inneh�lla alfanumeriska tecken"
 
 #, python-format
 msgid ""
@@ -2261,7 +2184,7 @@ msgid ""
 msgstr ""
 
 msgid "New User Details"
-msgstr ""
+msgstr "Nya anv�ndaruppgifter"
 
 msgid "The user does not exist."
 msgstr ""
@@ -2276,13 +2199,13 @@ msgid "Please enter a valid number."
 msgstr ""
 
 msgid "Both sent and received faxes"
-msgstr ""
+msgstr "B�de skickade och mottagna fax"
 
 msgid "Only sent faxes"
-msgstr ""
+msgstr "Bara skickade fax"
 
 msgid "Only received faxes"
-msgstr ""
+msgstr "Bara mottagna fax"
 
 msgid "Account is disabled"
 msgstr ""
@@ -2304,9 +2227,13 @@ msgid ""
 "If this was an error just login with your new password and then change "
 "your password to what you would like it to be."
 msgstr ""
+"Anv�ndarkontot %(user)s har den h�r e-postadressen registrerad. En "
+"webanv�ndare p� %(ip)s har beg�rt ut ett nytt l�senord f�r anv�ndaren. "
+"Ditt nya l�senord �r: %(password)s Om n�got blivit fel kan du logga in "
+"med ditt nya l�senord och �ndra till ett du sj�lv vill ha."
 
 msgid "Email failed to send"
-msgstr ""
+msgstr "E-postmeddelandet gick inte att skicka"
 
 msgid "Fax Contacts"
 msgstr ""
@@ -2315,12 +2242,6 @@ msgid "Email Contacts"
 msgstr ""
 
 msgid "The fax document was not found."
-msgstr ""
-
-msgid "Failed to send email"
-msgstr ""
-
-msgid "Email sent successfully"
 msgstr ""
 
 msgid "Your session has expired. Reload the page and try again."
@@ -2349,6 +2270,85 @@ msgstr ""
 
 msgid "The password is not correct."
 msgstr ""
+
+msgid "Add a note"
+msgstr "L�gg till notering"
+
+msgid "Account active"
+msgstr "Kontot aktivt"
+
+msgid "The cover page was updated"
+msgstr ""
+
+msgid "The modem was created"
+msgstr "Modemet skapades"
+
+msgid "The modem was deleted"
+msgstr "Modemet uppdaterades"
+
+msgid "The modem was updated"
+msgstr "Modemet togs bort"
+
+msgid "Archive - show"
+msgstr ""
+
+msgid "Inbox - show"
+msgstr ""
+
+msgid "Assign a company name"
+msgstr "Tilldela ett f�retagsnamn"
+
+msgid "You must enter a company name"
+msgstr "Du m�ste mata in ett f�retagsnamn"
+
+msgid "Contact details saved"
+msgstr "Kontaktinfo sparades"
+
+msgid "Remove entries"
+msgstr ""
+
+msgid "Save list name"
+msgstr ""
+
+msgid "The email failed to send."
+msgstr "Misslyckades att skicka e-postmeddelandet."
+
+msgid "The email was sent successfully."
+msgstr "E-postmeddelandet skickades."
+
+msgid "Destination fax numbers"
+msgstr "Mottagande faxnummer"
+
+msgid "You must enter an alias"
+msgstr ""
+
+msgid "You must enter a device name"
+msgstr ""
+
+msgid "Modify Job"
+msgstr ""
+
+msgid "You must enter a name."
+msgstr "Du m�ste ange ett namn."
+
+msgid "Notify on requeue"
+msgstr "Avisera vid nytt försök"
+
+msgid "Forward fax via email"
+msgstr "Vidarebfordra fax via e-post"
+
+#, fuzzy
+msgid "To person"
+msgstr "To person"
+
+msgid "User can delete faxes"
+msgstr "Anv�ndaren kan ta bort fax"
+
+msgid "User settings have been saved."
+msgstr "Anv�ndarinst�llningarna sparades."
+
+msgid "Select All Faxes"
+msgstr "Markera alla"
 
 #~ msgid "High"
 #~ msgstr "High"

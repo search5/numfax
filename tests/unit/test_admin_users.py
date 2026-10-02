@@ -93,7 +93,7 @@ def test_the_did_routes_are_shown_only_when_did_routing_is_on(client, monkeypatc
 
 def test_a_new_user_without_a_password_gets_a_random_one_by_mail(client, dbsession, mails):
     res = _create(client)
-    assert "User details saved" in res.text
+    assert "User settings have been saved." in res.text
     (to, subject, text), = mails
     assert to == "newp@corp.test" and subject == "New User Details" and "newp" in text
     password = re.search(r"Password - (\S+)", text).group(1)
@@ -143,7 +143,7 @@ def test_unchecking_any_modem_is_remembered(client, dbsession, mails):
     _make(client, mails)
     assert _user(dbsession, "newp").any_modem
     res = _edit(client, dbsession, "newp", any_modem=False)
-    assert "User details saved" in res.text and not _user(dbsession, "newp").any_modem
+    assert "User settings have been saved." in res.text and not _user(dbsession, "newp").any_modem
 
 
 def test_a_disabled_account_must_choose_a_new_password_when_it_is_enabled_again(client, dbsession, mails):
@@ -165,7 +165,7 @@ def test_changing_the_password_cycle_sets_the_expiry_date(client, dbsession, mai
 def test_a_new_password_can_be_set_and_is_checked(client, dbsession, mails):
     _make(client, mails)
     assert "too short" in _edit(client, dbsession, "newp", password="abc").text
-    assert "User details saved" in _edit(client, dbsession, "newp", password="Another-pass-2").text
+    assert "User settings have been saved." in _edit(client, dbsession, "newp", password="Another-pass-2").text
 
 
 def test_the_email_signature_survives_an_edit(client, dbsession, mails):

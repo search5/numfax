@@ -94,7 +94,7 @@ msgid "Upload contacts file (vCard)"
 msgstr ""
 
 msgid "Upload"
-msgstr ""
+msgstr "Envoyer"
 
 msgid "Company"
 msgstr "Société"
@@ -115,12 +115,8 @@ msgstr "Description"
 msgid "Category"
 msgstr "Cat&eacute;gorie"
 
-#, fuzzy
-msgid "Attention Person"
-msgstr "A"
-
 msgid "Location"
-msgstr ""
+msgstr "Lieu"
 
 msgid "Voice Telephone"
 msgstr "Téléphone vocal"
@@ -254,13 +250,11 @@ msgstr "Barcode Routing"
 msgid "Barcode Routing Rules"
 msgstr "Barcode Routing"
 
-#, fuzzy
 msgid "Barcode:"
-msgstr "Barcode Routing"
+msgstr "Code barre"
 
-#, fuzzy
 msgid "Contact:"
-msgstr "Contacts"
+msgstr "Email"
 
 msgid "None"
 msgstr "Aucun"
@@ -425,7 +419,7 @@ msgid "Company Forwarding Rules"
 msgstr "Règles de transfert par entreprise"
 
 msgid "fax numbers"
-msgstr ""
+msgstr "Numéros de fax"
 
 msgid "Email:"
 msgstr "E-mail :"
@@ -562,7 +556,7 @@ msgid "Are you sure you want to delete this modem?"
 msgstr ""
 
 msgid "Create"
-msgstr ""
+msgstr "Créer"
 
 msgid "Appliance Note:"
 msgstr "Remarque sur l'appliance :"
@@ -790,9 +784,8 @@ msgstr ""
 msgid "Sent automatically by NamiFAX Gateway."
 msgstr ""
 
-#, fuzzy
 msgid "Last updated"
-msgstr "Faire pivoter le Fax"
+msgstr "Dernière mise à jour"
 
 #, fuzzy
 msgid "Save Gateway Settings"
@@ -959,7 +952,7 @@ msgstr ""
 "réel."
 
 msgid "Delete User"
-msgstr ""
+msgstr "Supprimer utilisateur"
 
 msgid "Are you sure you want to delete the user"
 msgstr ""
@@ -973,7 +966,7 @@ msgid "Create New User"
 msgstr "Créer un nouvel utilisateur"
 
 msgid "Last IP"
-msgstr ""
+msgstr "Dernière IP"
 
 msgid "Superuser"
 msgstr "Superutilisateur"
@@ -988,22 +981,16 @@ msgid "NO"
 msgstr "Non"
 
 msgid "users"
-msgstr ""
+msgstr "Utilisateurs"
 
 msgid "user"
-msgstr ""
+msgstr "Utilisateur"
 
 msgid "Modify User"
-msgstr ""
+msgstr "Modifier utilisateur"
 
 msgid "New User"
-msgstr ""
-
-msgid "User details saved"
-msgstr ""
-
-msgid "Account enabled"
-msgstr ""
+msgstr "Nouvel utilisateur"
 
 msgid "Full Name"
 msgstr "Nom complet"
@@ -1021,7 +1008,7 @@ msgid "Password expiration cycle"
 msgstr ""
 
 msgid "Language"
-msgstr ""
+msgstr "Langue"
 
 msgid "Password can be reused"
 msgstr ""
@@ -1039,18 +1026,12 @@ msgid "My Fax Number"
 msgstr ""
 
 msgid "TSI ID"
-msgstr ""
+msgstr "ID TSI"
 
 msgid "Select Cover Page"
-msgstr ""
+msgstr "Sélectionnez une page de garde"
 
 msgid "New fax sound"
-msgstr ""
-
-msgid "Inbox shows"
-msgstr ""
-
-msgid "Archive shows"
 msgstr ""
 
 msgid "Permissions & Capabilities"
@@ -1061,9 +1042,6 @@ msgstr "Console d'administration"
 
 msgid "Superuser Rights"
 msgstr "Droits de superutilisateur"
-
-msgid "Can Delete Faxes"
-msgstr "Peut supprimer des fax"
 
 msgid "Send on Any Modem"
 msgstr "Envoyer sur n'importe quel modem"
@@ -1102,10 +1080,10 @@ msgstr ""
 "Affinez les résultats en ajoutant d'autres critères."
 
 msgid "Company search"
-msgstr ""
+msgstr "Rechercher une entreprise"
 
 msgid "Company list"
-msgstr ""
+msgstr "Liste des entreprises"
 
 #, fuzzy
 msgid "Fax ID"
@@ -1115,7 +1093,7 @@ msgid "e.g. 104"
 msgstr ""
 
 msgid "Keywords"
-msgstr ""
+msgstr "Mots clés"
 
 msgid "Company, number, notes..."
 msgstr ""
@@ -1125,13 +1103,13 @@ msgid "All Categories"
 msgstr "Catégories de faxes visualisables"
 
 msgid "User"
-msgstr ""
+msgstr "Utilisateur"
 
 msgid "Start Date"
-msgstr ""
+msgstr "Date début"
 
 msgid "End Date"
-msgstr ""
+msgstr "Date fin"
 
 #, fuzzy
 msgid "Direction"
@@ -1139,23 +1117,23 @@ msgstr "Groupes de route DID/DTMF"
 
 #, python-format
 msgid "Total %(n)d results found."
-msgstr ""
+msgstr "Un total de %(n)d résultats trouvés."
 
 msgid "Pages"
 msgstr "Pages"
 
 msgid "Download PDF"
-msgstr ""
+msgstr "Télécharger au format PDF"
 
 msgid "Reply to fax"
-msgstr ""
+msgstr "Répondre au FAX"
 
 #, fuzzy
 msgid "Re-send"
 msgstr "Envoyer"
 
 msgid "Email PDF"
-msgstr ""
+msgstr "Envoyer le fichier PDF par email"
 
 msgid "Add note to fax"
 msgstr ""
@@ -1169,9 +1147,6 @@ msgstr ""
 msgid "Select"
 msgstr "S&eacute;lectionner"
 
-msgid "Assign company name"
-msgstr ""
-
 msgid "Unknown"
 msgstr ""
 
@@ -1183,7 +1158,7 @@ msgid "Sent"
 msgstr ""
 
 msgid "No results were found"
-msgstr ""
+msgstr "Aucun résultat correspondant"
 
 msgid "Reset filters"
 msgstr "Réinitialiser les filtres"
@@ -1213,7 +1188,7 @@ msgid "No contacts found"
 msgstr ""
 
 msgid "Add"
-msgstr ""
+msgstr "Ajouter"
 
 msgid "Close"
 msgstr "Fermer"
@@ -1244,9 +1219,6 @@ msgstr "Nom de la liste"
 msgid "e.g. Executive Sales Team"
 msgstr ""
 
-msgid "Save name"
-msgstr ""
-
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "Membres du groupe (contacts & numéros de fax)"
 
@@ -1260,11 +1232,8 @@ msgstr "Aucun contact n'est encore assigné à cette liste."
 msgid "Add Member"
 msgstr "Ajouter un membre"
 
-msgid "Remove selected"
-msgstr ""
-
 msgid "Delete this distribution list?"
-msgstr ""
+msgstr "Supprimer cette liste de distribution ?"
 
 msgid "Edit Distribution List"
 msgstr "Modifier la liste de diffusion"
@@ -1299,10 +1268,10 @@ msgid "Add contacts to the list"
 msgstr ""
 
 msgid "Changes saved"
-msgstr ""
+msgstr "Changements sauvegardés"
 
 msgid "Back"
-msgstr ""
+msgstr "[ Revenir ]"
 
 #, fuzzy
 msgid "Email Address Book"
@@ -1354,11 +1323,8 @@ msgstr "Détails du profil du contact"
 msgid "John Doe"
 msgstr ""
 
-msgid "Modify Fax Job"
-msgstr ""
-
 msgid "New Destination"
-msgstr ""
+msgstr "Nouvelle destination"
 
 msgid "Priority"
 msgstr "Priorité"
@@ -1367,22 +1333,22 @@ msgid "Modem / Device"
 msgstr ""
 
 msgid "Number of tries"
-msgstr ""
+msgstr "Nombre d'essais"
 
 msgid "Expire after"
 msgstr ""
 
 msgid "Now"
-msgstr ""
+msgstr "Maintenant"
 
 msgid "Minutes"
 msgstr ""
 
 msgid "Hours"
-msgstr ""
+msgstr "Heures"
 
 msgid "Days"
-msgstr ""
+msgstr "Jours"
 
 msgid "Schedule Send Time"
 msgstr ""
@@ -1413,10 +1379,10 @@ msgid ""
 msgstr ""
 
 msgid "E-mail address"
-msgstr ""
+msgstr "Adresse email"
 
 msgid "Send Password"
-msgstr ""
+msgstr "Envoyer mot de passe"
 
 msgid "Received faxes appear here automatically in real time."
 msgstr "Les fax reçus apparaissent ici automatiquement en temps réel."
@@ -1426,9 +1392,6 @@ msgstr "faxes"
 
 msgid "Fax"
 msgstr "Fax"
-
-msgid "Select All"
-msgstr "Tout sélectionner"
 
 #, fuzzy
 msgid "Archive Selected"
@@ -1451,7 +1414,7 @@ msgid "Page"
 msgstr "Page"
 
 msgid "of"
-msgstr ""
+msgstr "de"
 
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
@@ -1470,9 +1433,6 @@ msgstr "Archives "
 
 msgid "Email Fax"
 msgstr "Envoyer le fax par e-mail"
-
-msgid "Add Note"
-msgstr "Ajouter une note"
 
 msgid "Rotate"
 msgstr "Faire pivoter le Fax"
@@ -1623,15 +1583,11 @@ msgstr ""
 "Cette opération supprimera définitivement le document de l'archive des "
 "fax."
 
-#, fuzzy
-msgid "Send Fax via Email"
-msgstr "Faxer "
-
 msgid "Dispatch PDF document attachment to email recipients"
 msgstr "Envoyer la pièce jointe PDF aux destinataires par e-mail"
 
 msgid "From"
-msgstr ""
+msgstr "De"
 
 msgid "Recipients"
 msgstr "Destinataires"
@@ -1649,7 +1605,7 @@ msgid "Subject"
 msgstr "Objet"
 
 msgid "PDF file name"
-msgstr ""
+msgstr "Nom du fichier PDF"
 
 msgid "Message"
 msgstr "Message"
@@ -1717,7 +1673,7 @@ msgid "Job ID"
 msgstr "ID de tâche"
 
 msgid "Dials"
-msgstr ""
+msgstr "Appels"
 
 msgid "TTS"
 msgstr ""
@@ -1726,7 +1682,7 @@ msgid "Modify"
 msgstr ""
 
 msgid "Kill job"
-msgstr ""
+msgstr "Supprimer le travail"
 
 msgid "Kill"
 msgstr ""
@@ -1808,9 +1764,6 @@ msgstr "No de fax"
 msgid "Enter the fax number and recipient details."
 msgstr "Saisissez le numéro de fax et les détails du destinataire."
 
-msgid "Destination Number"
-msgstr "No de fax"
-
 msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
 msgstr ""
 
@@ -1833,7 +1786,7 @@ msgid "e.g. Jane Doe"
 msgstr ""
 
 msgid "Voice Number"
-msgstr ""
+msgstr "No de tél"
 
 msgid "Address"
 msgstr ""
@@ -1892,7 +1845,7 @@ msgid "Send via Line"
 msgstr "Envoyer via la ligne"
 
 msgid "No modems configured"
-msgstr ""
+msgstr "Aucun modem n’est configuré"
 
 #, fuzzy
 msgid "Cover Comments"
@@ -1913,9 +1866,6 @@ msgstr "Catégories de faxes visualisables"
 
 msgid "Retries automatically on busy signal."
 msgstr "Nouvelle tentative automatique en cas de signal occupé."
-
-msgid "Notify on retry"
-msgstr "Notifier lors d'une nouvelle tentative"
 
 msgid "The original fax is sent along."
 msgstr ""
@@ -2096,16 +2046,16 @@ msgid "Back to settings"
 msgstr ""
 
 msgid "Previous fax"
-msgstr ""
+msgstr "Fax précédent"
 
 msgid "Prev"
 msgstr "Préc"
 
 msgid "Next fax"
-msgstr ""
+msgstr "Fax Suivant"
 
 msgid "Rotate fax"
-msgstr ""
+msgstr "Faire pivoter le Fax"
 
 #, python-format
 msgid "Invalid fax number: %(number)s"
@@ -2114,37 +2064,16 @@ msgstr ""
 msgid "Address book entry saved."
 msgstr ""
 
-msgid "Please enter a company name"
-msgstr ""
-
 msgid "Please enter a valid fax number"
 msgstr ""
 
 msgid "You are not allowed to delete address book entries."
 msgstr ""
 
-msgid "Contact saved."
-msgstr ""
-
 msgid "You are not allowed to delete contacts."
 msgstr ""
 
-msgid "Modem deleted"
-msgstr ""
-
-msgid "Please enter an alias"
-msgstr ""
-
-msgid "Modem updated"
-msgstr ""
-
-msgid "Please enter a device name"
-msgstr ""
-
 msgid "This modem already exists"
-msgstr ""
-
-msgid "Modem created"
 msgstr ""
 
 msgid "January"
@@ -2189,9 +2118,6 @@ msgstr ""
 msgid "Failed to remove cover page template"
 msgstr ""
 
-msgid "Cover page template updated successfully"
-msgstr ""
-
 msgid "Failed to update cover page template"
 msgstr ""
 
@@ -2208,7 +2134,7 @@ msgid "The company and its fax numbers were deleted."
 msgstr ""
 
 msgid "Please enter a valid e-mail address."
-msgstr ""
+msgstr "Veuillez saisir une adresse email valide."
 
 msgid "Fax to Email settings saved"
 msgstr ""
@@ -2253,7 +2179,7 @@ msgid "SAML 2.0 configuration saved successfully."
 msgstr ""
 
 msgid "Catch All"
-msgstr ""
+msgstr "Attrape tout"
 
 msgid "Never"
 msgstr ""
@@ -2264,14 +2190,13 @@ msgstr ""
 msgid "Every 6 Months"
 msgstr ""
 
-msgid "Please enter a name"
-msgstr ""
-
 msgid "You must enter a username"
-msgstr ""
+msgstr "Vous devez spécifier un nom d'utilisateur"
 
 msgid "Non-alphanumeric characters are not allowed in username."
 msgstr ""
+"Les caractères non alphanumeriques ne sont pas autorisés pour les noms "
+"d’utilisateurs."
 
 #, python-format
 msgid ""
@@ -2288,7 +2213,7 @@ msgid ""
 msgstr ""
 
 msgid "New User Details"
-msgstr ""
+msgstr "Nouveaux détails d’utilisateur"
 
 msgid "The user does not exist."
 msgstr ""
@@ -2303,13 +2228,13 @@ msgid "Please enter a valid number."
 msgstr ""
 
 msgid "Both sent and received faxes"
-msgstr ""
+msgstr "Les faxes envoyés et reçus"
 
 msgid "Only sent faxes"
-msgstr ""
+msgstr "les faxes envoyés uniquement"
 
 msgid "Only received faxes"
-msgstr ""
+msgstr "Les faxes reçus uniquement"
 
 msgid "Account is disabled"
 msgstr ""
@@ -2331,9 +2256,14 @@ msgid ""
 "If this was an error just login with your new password and then change "
 "your password to what you would like it to be."
 msgstr ""
+"Le compte utilisateur %(user)s est associé avec cette adresse email. Un "
+"utilisateur web avec l’adresse %(ip)s vient de demander un nouveau mot de"
+" passe. Votre nouveau mot de passe est: %(password)s Si c’est une erreur "
+"connectez vous avec ce nouveau mot de passe puis changez le à votre "
+"convenance."
 
 msgid "Email failed to send"
-msgstr ""
+msgstr "L’envoi de l’email a échoué"
 
 msgid "Fax Contacts"
 msgstr ""
@@ -2342,12 +2272,6 @@ msgid "Email Contacts"
 msgstr ""
 
 msgid "The fax document was not found."
-msgstr ""
-
-msgid "Failed to send email"
-msgstr ""
-
-msgid "Email sent successfully"
 msgstr ""
 
 msgid "Your session has expired. Reload the page and try again."
@@ -2376,6 +2300,84 @@ msgstr ""
 
 msgid "The password is not correct."
 msgstr ""
+
+msgid "Add a note"
+msgstr "Ajouter une note"
+
+msgid "Account active"
+msgstr "Compte actif"
+
+msgid "The cover page was updated"
+msgstr "La page a été mise à jour"
+
+msgid "The modem was created"
+msgstr "Le modem a été créé"
+
+msgid "The modem was deleted"
+msgstr "Le modem a été supprimé"
+
+msgid "The modem was updated"
+msgstr "Le modem a été mis à jour"
+
+msgid "Archive - show"
+msgstr "Archive - Afficher"
+
+msgid "Inbox - show"
+msgstr "Boite de réception - Afficher"
+
+msgid "Assign a company name"
+msgstr "Attribuer un nom de société"
+
+msgid "You must enter a company name"
+msgstr "Vous devez entrer un nom de société"
+
+msgid "Contact details saved"
+msgstr "Détails du contact sauvegardés"
+
+msgid "Remove entries"
+msgstr "Supprimer des entrées"
+
+msgid "Save list name"
+msgstr "Sauvegarder le nom de la liste"
+
+msgid "The email failed to send."
+msgstr "L’envoi de l’email a échoué"
+
+msgid "The email was sent successfully."
+msgstr "L’email a été envoyé avec succès."
+
+msgid "Destination fax numbers"
+msgstr "Numéro de fax des destinataires"
+
+msgid "You must enter an alias"
+msgstr "Vous devez spécifier un alias"
+
+msgid "You must enter a device name"
+msgstr "Vous devez spécifier un nom de périphérique"
+
+msgid "Modify Job"
+msgstr "Modifier le travail"
+
+msgid "You must enter a name."
+msgstr "Vous devez entrer un nom."
+
+msgid "Notify on requeue"
+msgstr "Notifier les remises en file d'attente"
+
+msgid "Forward fax via email"
+msgstr "Faire suivre le fax par email"
+
+msgid "To person"
+msgstr "A"
+
+msgid "User can delete faxes"
+msgstr "L’utilisateur peut supprimer les faxes"
+
+msgid "User settings have been saved."
+msgstr "Les préférences de l’utilisateur ont été sauvegardées avec succès."
+
+msgid "Select All Faxes"
+msgstr "Sélectionner tous les Faxes"
 
 #~ msgid "High"
 #~ msgstr "High"

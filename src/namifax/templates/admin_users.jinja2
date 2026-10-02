@@ -122,12 +122,12 @@
       </h3>
     </div>
 
-    {% if saved %}<div class="p-3 bg-emerald-950/60 border border-emerald-500/40 rounded-lg text-emerald-300 text-xs">{{ _('User details saved') }}</div>{% endif %}
+    {% if saved %}<div class="p-3 bg-emerald-950/60 border border-emerald-500/40 rounded-lg text-emerald-300 text-xs">{{ _('User settings have been saved.') }}</div>{% endif %}
     {% if errors %}<div class="p-3 bg-rose-950/60 border border-rose-500/40 rounded-lg text-rose-300 text-xs"><ul class="list-disc ml-4">{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul></div>{% endif %}
 
     <form action="/admin/users" method="post" class="space-y-5 text-xs">
       {% if values.uid %}
-      <label class="inline-flex items-center gap-2 text-slate-200"><input type="checkbox" name="acc_enabled" id="acc_enabled" value="1" {% if values.acc_enabled %}checked{% endif %} class="rounded border-slate-700 bg-slate-800 text-sky-600 w-4 h-4" /> {{ _('Account enabled') }}</label>
+      <label class="inline-flex items-center gap-2 text-slate-200"><input type="checkbox" name="acc_enabled" id="acc_enabled" value="1" {% if values.acc_enabled %}checked{% endif %} class="rounded border-slate-700 bg-slate-800 text-sky-600 w-4 h-4" /> {{ _('Account active') }}</label>
       {% else %}<input type="hidden" name="acc_enabled" value="1" />{% endif %}
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -151,8 +151,8 @@
         {{ text('user_tsi', _('TSI ID'), values.user_tsi) }}
         {{ pick('coverpage_id', _('Select Cover Page'), [('', '')] + choices.covers, values.coverpage_id) }}
         {% if choices.audio %}{{ pick('audiofile', _('New fax sound'), [('', '')] + choices.audio, values.audiofile) }}{% endif %}
-        {{ pick('faxperpageinbox', _('Inbox shows'), choices.per_page, values.faxperpageinbox) }}
-        {{ pick('faxperpagearchive', _('Archive shows'), choices.per_page, values.faxperpagearchive) }}
+        {{ pick('faxperpageinbox', _('Inbox - show'), choices.per_page, values.faxperpageinbox) }}
+        {{ pick('faxperpagearchive', _('Archive - show'), choices.per_page, values.faxperpagearchive) }}
       </div>
 
       <div class="pt-3 border-t border-slate-800">
@@ -160,7 +160,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {{ check('is_admin', _('Administrator Console'), values.is_admin) }}
           {{ check('superuser', _('Superuser Rights'), values.superuser) }}
-          {{ check('can_del', _('Can Delete Faxes'), values.can_del) }}
+          {{ check('can_del', _('User can delete faxes'), values.can_del) }}
           {{ check('any_modem', _('Send on Any Modem'), values.any_modem) }}
         </div>
       </div>

@@ -101,7 +101,7 @@ msgstr "설명"
 msgid "Category"
 msgstr "카테고리"
 
-msgid "Attention Person"
+msgid "To person"
 msgstr "담당자"
 
 msgid "Location"
@@ -863,10 +863,10 @@ msgstr "사용자 수정"
 msgid "New User"
 msgstr "새 사용자"
 
-msgid "User details saved"
+msgid "User settings have been saved."
 msgstr "사용자 정보를 저장했습니다"
 
-msgid "Account enabled"
+msgid "Account active"
 msgstr "계정 사용"
 
 msgid "Full Name"
@@ -911,10 +911,10 @@ msgstr "표지 선택"
 msgid "New fax sound"
 msgstr "새 팩스 알림음"
 
-msgid "Inbox shows"
+msgid "Inbox - show"
 msgstr "받은 팩스함 쪽당 개수"
 
-msgid "Archive shows"
+msgid "Archive - show"
 msgstr "보관함 쪽당 개수"
 
 msgid "Permissions & Capabilities"
@@ -926,7 +926,7 @@ msgstr "관리자 콘솔"
 msgid "Superuser Rights"
 msgstr "최고 관리자 권한"
 
-msgid "Can Delete Faxes"
+msgid "User can delete faxes"
 msgstr "팩스 삭제 권한"
 
 msgid "Send on Any Modem"
@@ -1020,7 +1020,7 @@ msgstr "팩스 삭제"
 msgid "Select"
 msgstr "선택"
 
-msgid "Assign company name"
+msgid "Assign a company name"
 msgstr "업체 이름 지정"
 
 msgid "Unknown"
@@ -1092,7 +1092,7 @@ msgstr "그룹명"
 msgid "e.g. Executive Sales Team"
 msgstr "예: 영업 임원 그룹"
 
-msgid "Save name"
+msgid "Save list name"
 msgstr "이름 저장"
 
 msgid "Group Members (Contacts & Fax Numbers)"
@@ -1107,7 +1107,7 @@ msgstr "아직 이 그룹에 지정된 연락처가 없습니다."
 msgid "Add Member"
 msgstr "구성원 추가"
 
-msgid "Remove selected"
+msgid "Remove entries"
 msgstr "선택 항목 제거"
 
 msgid "Delete this distribution list?"
@@ -1188,7 +1188,7 @@ msgstr "연락처 프로필 세부정보"
 msgid "John Doe"
 msgstr "홍길동"
 
-msgid "Modify Fax Job"
+msgid "Modify Job"
 msgstr "팩스 작업 수정"
 
 msgid "New Destination"
@@ -1257,7 +1257,7 @@ msgstr "팩스"
 msgid "Fax"
 msgstr "팩스"
 
-msgid "Select All"
+msgid "Select All Faxes"
 msgstr "전체 선택"
 
 msgid "Archive Selected"
@@ -1299,7 +1299,7 @@ msgstr "보관함"
 msgid "Email Fax"
 msgstr "이메일로 팩스 전송"
 
-msgid "Add Note"
+msgid "Add a note"
 msgstr "메모 추가"
 
 msgid "Rotate"
@@ -1425,7 +1425,7 @@ msgstr "이 팩스를 삭제하시겠습니까?"
 msgid "This operation will permanently purge the fax document archive."
 msgstr "이 작업은 팩스 문서 보관 파일을 영구적으로 삭제합니다."
 
-msgid "Send Fax via Email"
+msgid "Forward fax via email"
 msgstr "이메일로 팩스 전송"
 
 msgid "Dispatch PDF document attachment to email recipients"
@@ -1584,7 +1584,7 @@ msgstr "수신처 및 수신자 정보"
 msgid "Enter the fax number and recipient details."
 msgstr "팩스 번호 및 수신자 정보를 입력하세요."
 
-msgid "Destination Number"
+msgid "Destination fax numbers"
 msgstr "수신 팩스 번호"
 
 msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
@@ -1680,7 +1680,7 @@ msgstr "최대 재시도 횟수"
 msgid "Retries automatically on busy signal."
 msgstr "통화 중일 경우 자동으로 재시도합니다."
 
-msgid "Notify on retry"
+msgid "Notify on requeue"
 msgstr "재시도 시 알림"
 
 msgid "The original fax is sent along."
@@ -1855,7 +1855,7 @@ msgstr "잘못된 팩스 번호: %(number)s"
 msgid "Address book entry saved."
 msgstr "주소록 항목을 저장했습니다."
 
-msgid "Please enter a company name"
+msgid "You must enter a company name"
 msgstr "회사 이름을 입력하십시오"
 
 msgid "Please enter a valid fax number"
@@ -1864,28 +1864,28 @@ msgstr "올바른 팩스 번호를 입력하십시오"
 msgid "You are not allowed to delete address book entries."
 msgstr "주소록 항목을 삭제할 권한이 없습니다."
 
-msgid "Contact saved."
+msgid "Contact details saved"
 msgstr "연락처를 저장했습니다."
 
 msgid "You are not allowed to delete contacts."
 msgstr "연락처를 삭제할 권한이 없습니다."
 
-msgid "Modem deleted"
+msgid "The modem was deleted"
 msgstr "모뎀을 삭제했습니다"
 
-msgid "Please enter an alias"
+msgid "You must enter an alias"
 msgstr "별칭을 입력하세요"
 
-msgid "Modem updated"
+msgid "The modem was updated"
 msgstr "모뎀을 수정했습니다"
 
-msgid "Please enter a device name"
+msgid "You must enter a device name"
 msgstr "장치 이름을 입력하세요"
 
 msgid "This modem already exists"
 msgstr "이미 있는 모뎀입니다"
 
-msgid "Modem created"
+msgid "The modem was created"
 msgstr "모뎀을 만들었습니다"
 
 msgid "January"
@@ -1930,7 +1930,7 @@ msgstr "표지 템플릿이 성공적으로 삭제되었습니다."
 msgid "Failed to remove cover page template"
 msgstr "표지 템플릿 삭제에 실패했습니다."
 
-msgid "Cover page template updated successfully"
+msgid "The cover page was updated"
 msgstr "표지 템플릿이 성공적으로 업데이트되었습니다."
 
 msgid "Failed to update cover page template"
@@ -2005,7 +2005,7 @@ msgstr "3개월마다"
 msgid "Every 6 Months"
 msgstr "6개월마다"
 
-msgid "Please enter a name"
+msgid "You must enter a name."
 msgstr "이름을 입력하세요"
 
 msgid "You must enter a username"
@@ -2094,10 +2094,10 @@ msgstr "이메일 연락처"
 msgid "The fax document was not found."
 msgstr "팩스 문서를 찾을 수 없습니다."
 
-msgid "Failed to send email"
+msgid "The email failed to send."
 msgstr "메일을 보내지 못했습니다"
 
-msgid "Email sent successfully"
+msgid "The email was sent successfully."
 msgstr "메일을 보냈습니다"
 
 msgid "Your session has expired. Reload the page and try again."

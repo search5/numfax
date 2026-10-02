@@ -111,12 +111,8 @@ msgstr "詳細資料"
 msgid "Category"
 msgstr "分類"
 
-#, fuzzy
-msgid "Attention Person"
-msgstr "收件者"
-
 msgid "Location"
-msgstr ""
+msgstr "所在地"
 
 msgid "Voice Telephone"
 msgstr "語音電話"
@@ -250,7 +246,6 @@ msgstr "Barcode Routing"
 msgid "Barcode:"
 msgstr "Barcode Routing"
 
-#, fuzzy
 msgid "Contact:"
 msgstr "聯絡人"
 
@@ -409,7 +404,7 @@ msgid "Company Forwarding Rules"
 msgstr "企業轉發規則"
 
 msgid "fax numbers"
-msgstr ""
+msgstr "傳真號碼"
 
 msgid "Email:"
 msgstr "電子郵件:"
@@ -544,7 +539,7 @@ msgid "Are you sure you want to delete this modem?"
 msgstr ""
 
 msgid "Create"
-msgstr ""
+msgstr "建立"
 
 msgid "Appliance Note:"
 msgstr "設備注意事項:"
@@ -763,9 +758,8 @@ msgstr ""
 msgid "Sent automatically by NamiFAX Gateway."
 msgstr ""
 
-#, fuzzy
 msgid "Last updated"
-msgstr "旋轉傳真"
+msgstr "最後修改日期"
 
 #, fuzzy
 msgid "Save Gateway Settings"
@@ -919,7 +913,7 @@ msgid "Transmissions and server events will be streamed here in real time."
 msgstr "傳輸記錄與伺服器事件將在此即時串流顯示。"
 
 msgid "Delete User"
-msgstr ""
+msgstr "刪除使用者"
 
 msgid "Are you sure you want to delete the user"
 msgstr ""
@@ -931,7 +925,7 @@ msgid "Create New User"
 msgstr "建立新使用者"
 
 msgid "Last IP"
-msgstr ""
+msgstr "最近一次登入的 IP"
 
 msgid "Superuser"
 msgstr "超級使用者"
@@ -946,22 +940,16 @@ msgid "NO"
 msgstr "否"
 
 msgid "users"
-msgstr ""
+msgstr "個使用者"
 
 msgid "user"
-msgstr ""
+msgstr "使用者"
 
 msgid "Modify User"
-msgstr ""
+msgstr "更改使用者"
 
 msgid "New User"
-msgstr ""
-
-msgid "User details saved"
-msgstr ""
-
-msgid "Account enabled"
-msgstr ""
+msgstr "新增使用者"
 
 msgid "Full Name"
 msgstr "姓名"
@@ -979,7 +967,7 @@ msgid "Password expiration cycle"
 msgstr ""
 
 msgid "Language"
-msgstr ""
+msgstr "語言"
 
 msgid "Password can be reused"
 msgstr ""
@@ -1005,12 +993,6 @@ msgstr ""
 msgid "New fax sound"
 msgstr ""
 
-msgid "Inbox shows"
-msgstr ""
-
-msgid "Archive shows"
-msgstr ""
-
 msgid "Permissions & Capabilities"
 msgstr "權限與功能"
 
@@ -1019,9 +1001,6 @@ msgstr "管理員控制台"
 
 msgid "Superuser Rights"
 msgstr "超級使用者權限"
-
-msgid "Can Delete Faxes"
-msgstr "可刪除傳真"
 
 msgid "Send on Any Modem"
 msgstr "允許使用任意數據機發送"
@@ -1056,10 +1035,10 @@ msgid ""
 msgstr "將篩選條件留空以搜尋所有記錄。新增更多條件可縮小搜尋範圍。"
 
 msgid "Company search"
-msgstr ""
+msgstr "搜尋公司"
 
 msgid "Company list"
-msgstr ""
+msgstr "公司列表"
 
 #, fuzzy
 msgid "Fax ID"
@@ -1069,7 +1048,7 @@ msgid "e.g. 104"
 msgstr ""
 
 msgid "Keywords"
-msgstr ""
+msgstr "關鍵字"
 
 msgid "Company, number, notes..."
 msgstr ""
@@ -1079,13 +1058,13 @@ msgid "All Categories"
 msgstr "允許檢視傳真類別"
 
 msgid "User"
-msgstr ""
+msgstr "使用者"
 
 msgid "Start Date"
-msgstr ""
+msgstr "開始日期"
 
 msgid "End Date"
-msgstr ""
+msgstr "結束日期"
 
 #, fuzzy
 msgid "Direction"
@@ -1093,23 +1072,23 @@ msgstr "DID/DTMF Route groups"
 
 #, python-format
 msgid "Total %(n)d results found."
-msgstr ""
+msgstr "共找到 %(n)d 條結果。"
 
 msgid "Pages"
 msgstr "頁數"
 
 msgid "Download PDF"
-msgstr ""
+msgstr "下載 PDF"
 
 msgid "Reply to fax"
-msgstr ""
+msgstr "回覆傳真"
 
 #, fuzzy
 msgid "Re-send"
 msgstr "傳送"
 
 msgid "Email PDF"
-msgstr ""
+msgstr "以 E-mail 傳送 PDF"
 
 msgid "Add note to fax"
 msgstr ""
@@ -1123,9 +1102,6 @@ msgstr ""
 msgid "Select"
 msgstr "選取"
 
-msgid "Assign company name"
-msgstr ""
-
 msgid "Unknown"
 msgstr ""
 
@@ -1137,7 +1113,7 @@ msgid "Sent"
 msgstr ""
 
 msgid "No results were found"
-msgstr ""
+msgstr "沒有找到結果"
 
 msgid "Reset filters"
 msgstr "重設篩選條件"
@@ -1167,7 +1143,7 @@ msgid "No contacts found"
 msgstr ""
 
 msgid "Add"
-msgstr ""
+msgstr "加上"
 
 msgid "Close"
 msgstr "關閉"
@@ -1196,9 +1172,6 @@ msgstr "列表名稱"
 msgid "e.g. Executive Sales Team"
 msgstr ""
 
-msgid "Save name"
-msgstr ""
-
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "群組成員（聯絡人與傳真號碼）"
 
@@ -1212,11 +1185,8 @@ msgstr "此清單中尚未指派任何聯絡人。"
 msgid "Add Member"
 msgstr "新增成員"
 
-msgid "Remove selected"
-msgstr ""
-
 msgid "Delete this distribution list?"
-msgstr ""
+msgstr "刪除這個群組傳送列表？"
 
 msgid "Edit Distribution List"
 msgstr "編輯發送清單"
@@ -1249,10 +1219,10 @@ msgid "Add contacts to the list"
 msgstr ""
 
 msgid "Changes saved"
-msgstr ""
+msgstr "變更已儲存"
 
 msgid "Back"
-msgstr ""
+msgstr "[ 返回 ]"
 
 #, fuzzy
 msgid "Email Address Book"
@@ -1296,9 +1266,6 @@ msgid "Contact Profile Details"
 msgstr "聯絡人資料詳細資料"
 
 msgid "John Doe"
-msgstr ""
-
-msgid "Modify Fax Job"
 msgstr ""
 
 msgid "New Destination"
@@ -1357,10 +1324,10 @@ msgid ""
 msgstr ""
 
 msgid "E-mail address"
-msgstr ""
+msgstr "E-mail 位址"
 
 msgid "Send Password"
-msgstr ""
+msgstr "傳送密碼"
 
 msgid "Received faxes appear here automatically in real time."
 msgstr "收到的傳真將在此即時自動顯示。"
@@ -1371,9 +1338,6 @@ msgstr "份傳真"
 msgid "Fax"
 msgstr "傳真"
 
-msgid "Select All"
-msgstr "全選"
-
 #, fuzzy
 msgid "Archive Selected"
 msgstr "檔案櫃"
@@ -1382,7 +1346,7 @@ msgid "Delete Selected"
 msgstr "刪除選取項目"
 
 msgid "fax"
-msgstr ""
+msgstr "傳真"
 
 #, fuzzy
 msgid "Preview"
@@ -1395,7 +1359,7 @@ msgid "Page"
 msgstr "頁碼"
 
 msgid "of"
-msgstr ""
+msgstr "/"
 
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
@@ -1414,9 +1378,6 @@ msgstr "檔案櫃"
 
 msgid "Email Fax"
 msgstr "以電子郵件傳送傳真"
-
-msgid "Add Note"
-msgstr "新增備忘錄"
 
 msgid "Rotate"
 msgstr "旋轉傳真"
@@ -1554,15 +1515,11 @@ msgstr "確定要刪除此傳真嗎？"
 msgid "This operation will permanently purge the fax document archive."
 msgstr "此操作將永久清除該傳真文件封存。"
 
-#, fuzzy
-msgid "Send Fax via Email"
-msgstr "傳送傳真"
-
 msgid "Dispatch PDF document attachment to email recipients"
 msgstr "將PDF文件附件發送給電子郵件收件者"
 
 msgid "From"
-msgstr ""
+msgstr "寄件者"
 
 msgid "Recipients"
 msgstr "收件者"
@@ -1580,7 +1537,7 @@ msgid "Subject"
 msgstr "主旨"
 
 msgid "PDF file name"
-msgstr ""
+msgstr "PDF 檔案名稱"
 
 msgid "Message"
 msgstr "訊息"
@@ -1609,7 +1566,6 @@ msgstr "官方傳真送達確認回條"
 msgid "Print"
 msgstr "Print"
 
-#, fuzzy
 msgid "Company:"
 msgstr "公司"
 
@@ -1617,7 +1573,7 @@ msgid "Pages:"
 msgstr "頁數:"
 
 msgid "Fax Number:"
-msgstr ""
+msgstr "傳真號碼"
 
 msgid "Database unavailable"
 msgstr ""
@@ -1645,7 +1601,7 @@ msgid "Job ID"
 msgstr "工作ID"
 
 msgid "Dials"
-msgstr ""
+msgstr "撥號次數"
 
 msgid "TTS"
 msgstr ""
@@ -1654,7 +1610,7 @@ msgid "Modify"
 msgstr ""
 
 msgid "Kill job"
-msgstr ""
+msgstr "刪除任務"
 
 msgid "Kill"
 msgstr ""
@@ -1728,9 +1684,6 @@ msgstr "傳真號碼"
 msgid "Enter the fax number and recipient details."
 msgstr "輸入傳真號碼和收件者詳細資訊。"
 
-msgid "Destination Number"
-msgstr "傳真號碼"
-
 msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
 msgstr ""
 
@@ -1753,7 +1706,7 @@ msgid "e.g. Jane Doe"
 msgstr ""
 
 msgid "Voice Number"
-msgstr ""
+msgstr "電話號碼"
 
 msgid "Address"
 msgstr ""
@@ -1808,7 +1761,7 @@ msgid "Send via Line"
 msgstr "發送線路"
 
 msgid "No modems configured"
-msgstr ""
+msgstr "尚未設定數據機"
 
 #, fuzzy
 msgid "Cover Comments"
@@ -1829,9 +1782,6 @@ msgstr "允許檢視傳真類別"
 
 msgid "Retries automatically on busy signal."
 msgstr "佔線時自動重試。"
-
-msgid "Notify on retry"
-msgstr "重試時通知"
 
 msgid "The original fax is sent along."
 msgstr ""
@@ -2007,16 +1957,16 @@ msgid "Back to settings"
 msgstr ""
 
 msgid "Previous fax"
-msgstr ""
+msgstr "上一份傳真"
 
 msgid "Prev"
 msgstr "上一頁"
 
 msgid "Next fax"
-msgstr ""
+msgstr "下一份傳真"
 
 msgid "Rotate fax"
-msgstr ""
+msgstr "旋轉傳真"
 
 #, python-format
 msgid "Invalid fax number: %(number)s"
@@ -2025,37 +1975,16 @@ msgstr ""
 msgid "Address book entry saved."
 msgstr ""
 
-msgid "Please enter a company name"
-msgstr ""
-
 msgid "Please enter a valid fax number"
 msgstr ""
 
 msgid "You are not allowed to delete address book entries."
 msgstr ""
 
-msgid "Contact saved."
-msgstr ""
-
 msgid "You are not allowed to delete contacts."
 msgstr ""
 
-msgid "Modem deleted"
-msgstr ""
-
-msgid "Please enter an alias"
-msgstr ""
-
-msgid "Modem updated"
-msgstr ""
-
-msgid "Please enter a device name"
-msgstr ""
-
 msgid "This modem already exists"
-msgstr ""
-
-msgid "Modem created"
 msgstr ""
 
 msgid "January"
@@ -2100,9 +2029,6 @@ msgstr ""
 msgid "Failed to remove cover page template"
 msgstr ""
 
-msgid "Cover page template updated successfully"
-msgstr ""
-
 msgid "Failed to update cover page template"
 msgstr ""
 
@@ -2119,7 +2045,7 @@ msgid "The company and its fax numbers were deleted."
 msgstr ""
 
 msgid "Please enter a valid e-mail address."
-msgstr ""
+msgstr "請輸入有效的 E-mail 位址。"
 
 msgid "Fax to Email settings saved"
 msgstr ""
@@ -2175,14 +2101,11 @@ msgstr ""
 msgid "Every 6 Months"
 msgstr ""
 
-msgid "Please enter a name"
-msgstr ""
-
 msgid "You must enter a username"
 msgstr ""
 
 msgid "Non-alphanumeric characters are not allowed in username."
-msgstr ""
+msgstr "使用者名稱不允許含有字母數字以外的字元。"
 
 #, python-format
 msgid ""
@@ -2199,7 +2122,7 @@ msgid ""
 msgstr ""
 
 msgid "New User Details"
-msgstr ""
+msgstr "新使用者詳細資料"
 
 msgid "The user does not exist."
 msgstr ""
@@ -2214,13 +2137,13 @@ msgid "Please enter a valid number."
 msgstr ""
 
 msgid "Both sent and received faxes"
-msgstr ""
+msgstr "包含已傳送和已接收的傳真"
 
 msgid "Only sent faxes"
-msgstr ""
+msgstr "只有我已傳送的傳真"
 
 msgid "Only received faxes"
-msgstr ""
+msgstr "只有已接收的傳真"
 
 msgid "Account is disabled"
 msgstr ""
@@ -2242,9 +2165,11 @@ msgid ""
 "If this was an error just login with your new password and then change "
 "your password to what you would like it to be."
 msgstr ""
+"使用者帳號 %(user)s 對應您的 E-mail 位址。%(ip)s 上的 web 使用者剛剛要求重寄新密碼。 您的新密碼是: "
+"%(password)s 如果這只是一個錯誤，請用新密碼登入後更改密碼。"
 
 msgid "Email failed to send"
-msgstr ""
+msgstr "E-mail 傳送失敗"
 
 msgid "Fax Contacts"
 msgstr ""
@@ -2253,12 +2178,6 @@ msgid "Email Contacts"
 msgstr ""
 
 msgid "The fax document was not found."
-msgstr ""
-
-msgid "Failed to send email"
-msgstr ""
-
-msgid "Email sent successfully"
 msgstr ""
 
 msgid "Your session has expired. Reload the page and try again."
@@ -2287,6 +2206,84 @@ msgstr ""
 
 msgid "The password is not correct."
 msgstr ""
+
+msgid "Add a note"
+msgstr "加上註解"
+
+msgid "Account active"
+msgstr "帳號有效"
+
+msgid "The cover page was updated"
+msgstr ""
+
+msgid "The modem was created"
+msgstr "數據機已建立"
+
+msgid "The modem was deleted"
+msgstr "數據機已刪除"
+
+msgid "The modem was updated"
+msgstr "數據機已更新"
+
+msgid "Archive - show"
+msgstr ""
+
+msgid "Inbox - show"
+msgstr ""
+
+msgid "Assign a company name"
+msgstr "指定公司名稱"
+
+msgid "You must enter a company name"
+msgstr "必須輸入公司名稱"
+
+msgid "Contact details saved"
+msgstr "聯絡人資訊已儲存"
+
+msgid "Remove entries"
+msgstr "刪除項目"
+
+msgid "Save list name"
+msgstr "儲存列表名稱"
+
+msgid "The email failed to send."
+msgstr "E-mail 傳送失敗"
+
+msgid "The email was sent successfully."
+msgstr "E-mail 傳送成功"
+
+msgid "Destination fax numbers"
+msgstr "收件者傳真號碼"
+
+msgid "You must enter an alias"
+msgstr ""
+
+msgid "You must enter a device name"
+msgstr ""
+
+msgid "Modify Job"
+msgstr ""
+
+msgid "You must enter a name."
+msgstr "必須輸入名字"
+
+msgid "Notify on requeue"
+msgstr "重試時通知"
+
+msgid "Forward fax via email"
+msgstr "透過 E-mail 轉發傳真"
+
+msgid "To person"
+msgstr "收件者"
+
+msgid "User can delete faxes"
+msgstr "使用者允許刪除傳真"
+
+msgid "User settings have been saved."
+msgstr "使用者設定已儲存."
+
+msgid "Select All Faxes"
+msgstr "全選"
 
 #~ msgid "High"
 #~ msgstr "High"

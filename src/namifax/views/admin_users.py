@@ -144,7 +144,7 @@ def _posted(post) -> dict:
 def _mistakes(values: dict) -> list[str]:
     errors = []
     if not values["name"]:
-        errors.append(_("Please enter a name"))
+        errors.append(_("You must enter a name."))
     if not values["username"]:
         errors.append(_("You must enter a username"))
     elif not re.fullmatch(r"[\.\w]+", values["username"]):

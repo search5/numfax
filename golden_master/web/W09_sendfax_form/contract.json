@@ -38,7 +38,7 @@
   ],
   "required_text": [
     "Send Fax",
-    "Destination Number"
+    "Destination fax numbers"
   ],
   "form_structure": {
     "total_forms": 1,

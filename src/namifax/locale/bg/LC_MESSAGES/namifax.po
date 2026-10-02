@@ -92,7 +92,7 @@ msgid "Upload contacts file (vCard)"
 msgstr ""
 
 msgid "Upload"
-msgstr ""
+msgstr "Добави"
 
 msgid "Company"
 msgstr "Фирма"
@@ -113,12 +113,8 @@ msgstr "Описание"
 msgid "Category"
 msgstr "Категория"
 
-#, fuzzy
-msgid "Attention Person"
-msgstr "До служител"
-
 msgid "Location"
-msgstr ""
+msgstr "Адрес"
 
 msgid "Voice Telephone"
 msgstr "Телефон"
@@ -252,13 +248,11 @@ msgstr "Barcode Routing"
 msgid "Barcode Routing Rules"
 msgstr "Barcode Routing"
 
-#, fuzzy
 msgid "Barcode:"
-msgstr "Barcode Routing"
+msgstr "Баркод"
 
-#, fuzzy
 msgid "Contact:"
-msgstr "Контакти"
+msgstr "Контакт"
 
 msgid "None"
 msgstr "Няма"
@@ -421,7 +415,7 @@ msgid "Company Forwarding Rules"
 msgstr "Правила за препращане на компанията"
 
 msgid "fax numbers"
-msgstr ""
+msgstr "Факс Номера"
 
 msgid "Email:"
 msgstr "Имейл:"
@@ -558,7 +552,7 @@ msgid "Are you sure you want to delete this modem?"
 msgstr ""
 
 msgid "Create"
-msgstr ""
+msgstr "Създай"
 
 msgid "Appliance Note:"
 msgstr "Бележка за устройството:"
@@ -785,9 +779,8 @@ msgstr ""
 msgid "Sent automatically by NamiFAX Gateway."
 msgstr ""
 
-#, fuzzy
 msgid "Last updated"
-msgstr "Завърти Факса"
+msgstr "Последно Обновяване"
 
 #, fuzzy
 msgid "Save Gateway Settings"
@@ -949,7 +942,7 @@ msgid "Transmissions and server events will be streamed here in real time."
 msgstr "Предаванията и сървърните събития ще се предават тук в реално време."
 
 msgid "Delete User"
-msgstr ""
+msgstr "Изтрий Потребител"
 
 msgid "Are you sure you want to delete the user"
 msgstr ""
@@ -963,7 +956,7 @@ msgid "Create New User"
 msgstr "Създаване на нов потребител"
 
 msgid "Last IP"
-msgstr ""
+msgstr "Последен IP Адрес"
 
 msgid "Superuser"
 msgstr "Суперпотребител"
@@ -978,22 +971,16 @@ msgid "NO"
 msgstr "Не"
 
 msgid "users"
-msgstr ""
+msgstr "Потребители"
 
 msgid "user"
-msgstr ""
+msgstr "Потребител"
 
 msgid "Modify User"
-msgstr ""
+msgstr "Редактирай Потребител"
 
 msgid "New User"
-msgstr ""
-
-msgid "User details saved"
-msgstr ""
-
-msgid "Account enabled"
-msgstr ""
+msgstr "Нов Потребител"
 
 msgid "Full Name"
 msgstr "Пълно име"
@@ -1011,7 +998,7 @@ msgid "Password expiration cycle"
 msgstr ""
 
 msgid "Language"
-msgstr ""
+msgstr "Език"
 
 msgid "Password can be reused"
 msgstr ""
@@ -1037,12 +1024,6 @@ msgstr ""
 msgid "New fax sound"
 msgstr ""
 
-msgid "Inbox shows"
-msgstr ""
-
-msgid "Archive shows"
-msgstr ""
-
 msgid "Permissions & Capabilities"
 msgstr "Права и възможности"
 
@@ -1051,9 +1032,6 @@ msgstr "Конзола на администратора"
 
 msgid "Superuser Rights"
 msgstr "Права на суперпотребител"
-
-msgid "Can Delete Faxes"
-msgstr "Може да изтрива факсове"
 
 msgid "Send on Any Modem"
 msgstr "Изпращане през всеки модем"
@@ -1092,10 +1070,10 @@ msgstr ""
 "резултатите, като добавите още критерии."
 
 msgid "Company search"
-msgstr ""
+msgstr "Търсене по Фирма"
 
 msgid "Company list"
-msgstr ""
+msgstr "Списък от Фирми"
 
 #, fuzzy
 msgid "Fax ID"
@@ -1105,7 +1083,7 @@ msgid "e.g. 104"
 msgstr ""
 
 msgid "Keywords"
-msgstr ""
+msgstr "Ключови думи"
 
 msgid "Company, number, notes..."
 msgstr ""
@@ -1115,13 +1093,13 @@ msgid "All Categories"
 msgstr "Достъп до факс-категории"
 
 msgid "User"
-msgstr ""
+msgstr "Потребител"
 
 msgid "Start Date"
-msgstr ""
+msgstr "От Дата"
 
 msgid "End Date"
-msgstr ""
+msgstr "До Дата"
 
 #, fuzzy
 msgid "Direction"
@@ -1129,16 +1107,16 @@ msgstr "DID/DTMF Групи с направления"
 
 #, python-format
 msgid "Total %(n)d results found."
-msgstr ""
+msgstr "Открити са %(n)d записа."
 
 msgid "Pages"
 msgstr "Страници"
 
 msgid "Download PDF"
-msgstr ""
+msgstr "Изтегли като PDF"
 
 msgid "Reply to fax"
-msgstr ""
+msgstr "Отговори на Факса"
 
 #, fuzzy
 msgid "Re-send"
@@ -1159,9 +1137,6 @@ msgstr ""
 msgid "Select"
 msgstr "Избери"
 
-msgid "Assign company name"
-msgstr ""
-
 msgid "Unknown"
 msgstr ""
 
@@ -1173,7 +1148,7 @@ msgid "Sent"
 msgstr ""
 
 msgid "No results were found"
-msgstr ""
+msgstr "Не са открити резултати"
 
 msgid "Reset filters"
 msgstr "Изчистване на филтрите"
@@ -1203,7 +1178,7 @@ msgid "No contacts found"
 msgstr ""
 
 msgid "Add"
-msgstr ""
+msgstr "Добави"
 
 msgid "Close"
 msgstr "Затваряне"
@@ -1234,9 +1209,6 @@ msgstr "Име на списъка"
 msgid "e.g. Executive Sales Team"
 msgstr ""
 
-msgid "Save name"
-msgstr ""
-
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "Членове на групата (Контакти и факс номера)"
 
@@ -1250,11 +1222,8 @@ msgstr "Все още няма назначени контакти към тоз
 msgid "Add Member"
 msgstr "Добавяне на член"
 
-msgid "Remove selected"
-msgstr ""
-
 msgid "Delete this distribution list?"
-msgstr ""
+msgstr "Изтриване на списъка?"
 
 msgid "Edit Distribution List"
 msgstr "Редактиране на списък за разпространение"
@@ -1287,10 +1256,10 @@ msgid "Add contacts to the list"
 msgstr ""
 
 msgid "Changes saved"
-msgstr ""
+msgstr "Промените са запазени"
 
 msgid "Back"
-msgstr ""
+msgstr "Обратно"
 
 #, fuzzy
 msgid "Email Address Book"
@@ -1342,11 +1311,8 @@ msgstr "Детайли за профила на контакта"
 msgid "John Doe"
 msgstr ""
 
-msgid "Modify Fax Job"
-msgstr ""
-
 msgid "New Destination"
-msgstr ""
+msgstr "Ново Направление"
 
 msgid "Priority"
 msgstr "Приоритет"
@@ -1355,22 +1321,22 @@ msgid "Modem / Device"
 msgstr ""
 
 msgid "Number of tries"
-msgstr ""
+msgstr "Брой опита"
 
 msgid "Expire after"
 msgstr ""
 
 msgid "Now"
-msgstr ""
+msgstr "Сега"
 
 msgid "Minutes"
-msgstr ""
+msgstr "Минути"
 
 msgid "Hours"
-msgstr ""
+msgstr "Часа"
 
 msgid "Days"
-msgstr ""
+msgstr "Дни"
 
 msgid "Schedule Send Time"
 msgstr ""
@@ -1401,10 +1367,10 @@ msgid ""
 msgstr ""
 
 msgid "E-mail address"
-msgstr ""
+msgstr "Email Адрес"
 
 msgid "Send Password"
-msgstr ""
+msgstr "Изпрати Паролата"
 
 msgid "Received faxes appear here automatically in real time."
 msgstr "Получените факсове се показват тук автоматично в реално време."
@@ -1415,9 +1381,6 @@ msgstr "факса"
 msgid "Fax"
 msgstr "Факс"
 
-msgid "Select All"
-msgstr "Избиране на всички"
-
 #, fuzzy
 msgid "Archive Selected"
 msgstr "Архив"
@@ -1426,7 +1389,7 @@ msgid "Delete Selected"
 msgstr "Изтриване на избраните"
 
 msgid "fax"
-msgstr ""
+msgstr "Факс"
 
 #, fuzzy
 msgid "Preview"
@@ -1439,7 +1402,7 @@ msgid "Page"
 msgstr "Страница"
 
 msgid "of"
-msgstr ""
+msgstr "от"
 
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
@@ -1458,9 +1421,6 @@ msgstr "Архив"
 
 msgid "Email Fax"
 msgstr "Изпращане на факс по имейл"
-
-msgid "Add Note"
-msgstr "Добавяне на бележка"
 
 msgid "Rotate"
 msgstr "Завърти Факса"
@@ -1609,15 +1569,11 @@ msgstr "Сигурни ли сте, че искате да изтриете то
 msgid "This operation will permanently purge the fax document archive."
 msgstr "Тази операция ще изтрие за постоянно факс документа от архива."
 
-#, fuzzy
-msgid "Send Fax via Email"
-msgstr "Изпрати"
-
 msgid "Dispatch PDF document attachment to email recipients"
 msgstr "Изпращане на прикачения PDF документ до имейл получатели"
 
 msgid "From"
-msgstr ""
+msgstr "От"
 
 msgid "Recipients"
 msgstr "Получатели"
@@ -1635,7 +1591,7 @@ msgid "Subject"
 msgstr "Тема"
 
 msgid "PDF file name"
-msgstr ""
+msgstr "Име на PDF файл"
 
 msgid "Message"
 msgstr "Съобщение"
@@ -1664,7 +1620,6 @@ msgstr "Официална разписка за потвърждение на �
 msgid "Print"
 msgstr "Печат"
 
-#, fuzzy
 msgid "Company:"
 msgstr "Фирма"
 
@@ -1703,7 +1658,7 @@ msgid "Job ID"
 msgstr "ID на задача"
 
 msgid "Dials"
-msgstr ""
+msgstr "Избран №"
 
 msgid "TTS"
 msgstr ""
@@ -1712,7 +1667,7 @@ msgid "Modify"
 msgstr ""
 
 msgid "Kill job"
-msgstr ""
+msgstr "Прекъсни изпълнението"
 
 msgid "Kill"
 msgstr ""
@@ -1793,9 +1748,6 @@ msgstr "Факс номер"
 msgid "Enter the fax number and recipient details."
 msgstr "Въведете факс номера и данните за получателя."
 
-msgid "Destination Number"
-msgstr "Факс номер"
-
 msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
 msgstr ""
 
@@ -1818,7 +1770,7 @@ msgid "e.g. Jane Doe"
 msgstr ""
 
 msgid "Voice Number"
-msgstr ""
+msgstr "Тел. номер"
 
 msgid "Address"
 msgstr ""
@@ -1875,7 +1827,7 @@ msgid "Send via Line"
 msgstr "Изпращане през линия"
 
 msgid "No modems configured"
-msgstr ""
+msgstr "Няма конфигурирани модеми"
 
 #, fuzzy
 msgid "Cover Comments"
@@ -1896,9 +1848,6 @@ msgstr "Достъп до факс-категории"
 
 msgid "Retries automatically on busy signal."
 msgstr "Автоматично повтаря при сигнал за заето."
-
-msgid "Notify on retry"
-msgstr "Известяване при повторен опит"
 
 msgid "The original fax is sent along."
 msgstr ""
@@ -2081,16 +2030,16 @@ msgid "Back to settings"
 msgstr ""
 
 msgid "Previous fax"
-msgstr ""
+msgstr "Предишен Факс"
 
 msgid "Prev"
 msgstr "Предишна"
 
 msgid "Next fax"
-msgstr ""
+msgstr "Следващ Факс"
 
 msgid "Rotate fax"
-msgstr ""
+msgstr "Завърти Факса"
 
 #, python-format
 msgid "Invalid fax number: %(number)s"
@@ -2099,37 +2048,16 @@ msgstr ""
 msgid "Address book entry saved."
 msgstr ""
 
-msgid "Please enter a company name"
-msgstr ""
-
 msgid "Please enter a valid fax number"
 msgstr ""
 
 msgid "You are not allowed to delete address book entries."
 msgstr ""
 
-msgid "Contact saved."
-msgstr ""
-
 msgid "You are not allowed to delete contacts."
 msgstr ""
 
-msgid "Modem deleted"
-msgstr ""
-
-msgid "Please enter an alias"
-msgstr ""
-
-msgid "Modem updated"
-msgstr ""
-
-msgid "Please enter a device name"
-msgstr ""
-
 msgid "This modem already exists"
-msgstr ""
-
-msgid "Modem created"
 msgstr ""
 
 msgid "January"
@@ -2174,9 +2102,6 @@ msgstr ""
 msgid "Failed to remove cover page template"
 msgstr ""
 
-msgid "Cover page template updated successfully"
-msgstr ""
-
 msgid "Failed to update cover page template"
 msgstr ""
 
@@ -2193,7 +2118,7 @@ msgid "The company and its fax numbers were deleted."
 msgstr ""
 
 msgid "Please enter a valid e-mail address."
-msgstr ""
+msgstr "Моля въведете валиден email !!!"
 
 msgid "Fax to Email settings saved"
 msgstr ""
@@ -2238,7 +2163,7 @@ msgid "SAML 2.0 configuration saved successfully."
 msgstr ""
 
 msgid "Catch All"
-msgstr ""
+msgstr "Хвани Всички"
 
 msgid "Never"
 msgstr ""
@@ -2249,14 +2174,11 @@ msgstr ""
 msgid "Every 6 Months"
 msgstr ""
 
-msgid "Please enter a name"
-msgstr ""
-
 msgid "You must enter a username"
-msgstr ""
+msgstr "Трябва да въведете потребителско име"
 
 msgid "Non-alphanumeric characters are not allowed in username."
-msgstr ""
+msgstr "Не се допускат специални символи в потребителското име"
 
 #, python-format
 msgid ""
@@ -2273,7 +2195,7 @@ msgid ""
 msgstr ""
 
 msgid "New User Details"
-msgstr ""
+msgstr "Данни за Нов Потребител"
 
 msgid "The user does not exist."
 msgstr ""
@@ -2288,13 +2210,13 @@ msgid "Please enter a valid number."
 msgstr ""
 
 msgid "Both sent and received faxes"
-msgstr ""
+msgstr "Всички"
 
 msgid "Only sent faxes"
-msgstr ""
+msgstr "Само изпратените"
 
 msgid "Only received faxes"
-msgstr ""
+msgstr "Само приетите"
 
 msgid "Account is disabled"
 msgstr ""
@@ -2316,9 +2238,13 @@ msgid ""
 "If this was an error just login with your new password and then change "
 "your password to what you would like it to be."
 msgstr ""
+"Потребителският акаунт %(user)s има въведен този email като адрес за "
+"контакти. Уеб потребител от IP адрес %(ip)s поиска изпращане на нова "
+"парола. Вашата нова парола е: %(password)s Ако това е било грешка просто "
+"влезте с вашата нова парола и я променете според желанието си."
 
 msgid "Email failed to send"
-msgstr ""
+msgstr "Изпращането на еmail не бе осъществено"
 
 msgid "Fax Contacts"
 msgstr ""
@@ -2327,12 +2253,6 @@ msgid "Email Contacts"
 msgstr ""
 
 msgid "The fax document was not found."
-msgstr ""
-
-msgid "Failed to send email"
-msgstr ""
-
-msgid "Email sent successfully"
 msgstr ""
 
 msgid "Your session has expired. Reload the page and try again."
@@ -2361,6 +2281,84 @@ msgstr ""
 
 msgid "The password is not correct."
 msgstr ""
+
+msgid "Add a note"
+msgstr "Добави бележки"
+
+msgid "Account active"
+msgstr "Акаунта е активен"
+
+msgid "The cover page was updated"
+msgstr ""
+
+msgid "The modem was created"
+msgstr "Модемът е добавен"
+
+msgid "The modem was deleted"
+msgstr "Модемът е изтрит"
+
+msgid "The modem was updated"
+msgstr "Модемът е обновен"
+
+msgid "Archive - show"
+msgstr ""
+
+msgid "Inbox - show"
+msgstr ""
+
+msgid "Assign a company name"
+msgstr "Задайте име на фирма"
+
+msgid "You must enter a company name"
+msgstr "Трябва да въведете име на фирма"
+
+msgid "Contact details saved"
+msgstr "Данните за контакта са запазени"
+
+msgid "Remove entries"
+msgstr "Изтриване"
+
+msgid "Save list name"
+msgstr "Запази името на списъка"
+
+msgid "The email failed to send."
+msgstr "Неуспешно изпращане на email."
+
+msgid "The email was sent successfully."
+msgstr "Успешно изпращане на email."
+
+msgid "Destination fax numbers"
+msgstr "Изпращане до номера"
+
+msgid "You must enter an alias"
+msgstr "Трябва да въведете псевдоним"
+
+msgid "You must enter a device name"
+msgstr "Трябва да въведете име на устройството"
+
+msgid "Modify Job"
+msgstr "Редактирай Задачата"
+
+msgid "You must enter a name."
+msgstr "Трябва да въведете име."
+
+msgid "Notify on requeue"
+msgstr "Известяване при поискване"
+
+msgid "Forward fax via email"
+msgstr "Препрати факса като email"
+
+msgid "To person"
+msgstr "До служител"
+
+msgid "User can delete faxes"
+msgstr "Потребителят има право да изтрива факсове от архива"
+
+msgid "User settings have been saved."
+msgstr "Промените са запазени."
+
+msgid "Select All Faxes"
+msgstr "Избиране на всички"
 
 #~ msgid "High"
 #~ msgstr "High"

@@ -164,7 +164,7 @@ def test_company_rules_rename_delete_and_listing(ab):
     for name in ("Zeta", "Alpha"):
         assert ab.create(name)
     assert ab.create("Alpha") is False and ab.error == "Company already exists"
-    assert ab.create("") is False and ab.error == "Please enter a company name"
+    assert ab.create("") is False and ab.error == "You must enter a company name"
     assert [c["company"] for c in ab.get_companies()] == ["Alpha", "Zeta"]
     cid = [c for c in ab.get_companies() if c["company"] == "Alpha"][0]["abook_id"]
     other = _fresh(ab)
@@ -241,7 +241,7 @@ def test_deleting_fax_numbers_and_reassigning_a_company(ab):
 
 def test_email_contacts(ab):
     assert ab.create_contact("Jo", "not-an-email") is False and ab.error == "Please enter a valid e-mail address."
-    assert ab.create_contact("", "jo@x.test") is False and ab.error == "Please enter a name"
+    assert ab.create_contact("", "jo@x.test") is False and ab.error == "You must enter a name."
     assert ab.create_contact("Zed", "zed@x.test") is True and ab.create_contact("Amy", "amy@x.test") is True
     assert ab.create_contact("Other", "amy@x.test") is False
     ab.create_contacts('Bob Marley <bob@x.test>; carol.smith@x.test; junk')

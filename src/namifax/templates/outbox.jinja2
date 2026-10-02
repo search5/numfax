@@ -74,7 +74,7 @@
             <td class="py-3 px-4 font-mono text-xs text-slate-600">{{ j.tts or '' }}</td>
             <td class="py-3 px-4 text-sm text-slate-700">{{ (j.status or '')|replace('_', ' ') }}</td>
             <td class="py-3 px-4 text-right whitespace-nowrap">
-              <a href="/ajax/faxalter?jid={{ j.jid }}&owner={{ j.owner|urlencode }}" title="{{ _('Modify Fax Job') }}"
+              <a href="/ajax/faxalter?jid={{ j.jid }}&owner={{ j.owner|urlencode }}" title="{{ _('Modify Job') }}"
                  class="inline-flex items-center px-3 py-1.5 bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-200 text-blue-700 rounded-lg text-xs font-semibold transition-colors">{{ _('Modify') }}</a>
               <form method="post" action="/outbox" class="inline" onsubmit="return confirm('{{ _('Kill job') }} {{ j.jid }}?')">
                 <input type="hidden" name="kill" value="{{ j.jid }}" />
@@ -122,7 +122,7 @@
             <td class="py-3 px-3 text-center font-mono text-xs text-slate-700">{{ j.dials }}</td>
             <td class="py-3 px-4 text-sm text-red-700 font-medium">{{ (j.status or '')|replace('_', ' ') }}</td>
             <td class="py-3 px-4 text-right whitespace-nowrap">
-              <a href="/ajax/faxalter?jid={{ j.jid }}&r=1&owner={{ j.owner|urlencode }}" title="{{ _('Modify Fax Job') }}"
+              <a href="/ajax/faxalter?jid={{ j.jid }}&r=1&owner={{ j.owner|urlencode }}" title="{{ _('Modify Job') }}"
                  class="inline-flex items-center px-3 py-1.5 bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-200 text-blue-700 rounded-lg text-xs font-semibold transition-colors">{{ _('Retry') }}</a>
               <form method="post" action="/outbox" class="inline" onsubmit="return confirm('{{ _('Kill job') }} {{ j.jid }}?')">
                 <input type="hidden" name="kill" value="{{ j.jid }}" />

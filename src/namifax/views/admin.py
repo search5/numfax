@@ -118,28 +118,28 @@ def admin_modems_view(request):
             selected_devid = int(devid)
             if post.get("delete"):
                 if fm.delete_device(int(devid)):
-                    message, selected_devid = _("Modem deleted"), None
+                    message, selected_devid = _("The modem was deleted"), None
                 else:
                     error = fm.get_error()
             elif post.get("save"):
                 if not alias:
-                    error = _("Please enter an alias")
+                    error = _("You must enter an alias")
                 elif fm.load_device((post.get("device2") or device).strip()):
                     fm.set_contact(contact)
                     fm.set_printer(printer)
                     fm.set_faxcatid(faxcatid)
                     fm.set_alias(alias)
-                    message = _("Modem updated")
+                    message = _("The modem was updated")
                 else:
                     error = fm.get_error()
         elif not device:
-            error = _("Please enter a device name")
+            error = _("You must enter a device name")
         elif not alias:
-            error = _("Please enter an alias")
+            error = _("You must enter an alias")
         elif fm.load_device(device):
             error = _("This modem already exists")
         elif fm.create(device=device, alias=alias, contact=contact, printer=printer, faxcatid=faxcatid):
-            message = _("Modem created")
+            message = _("The modem was created")
         else:
             error = fm.get_error()
     else:
@@ -336,7 +336,7 @@ def admin_covers_view(request):
                 filename = request.params.get("file", "").strip()
                 if filename:
                     cv.set_file(filename)
-                message = _("Cover page template updated successfully")
+                message = _("The cover page was updated")
             else:
                 error = cv.error or _("Failed to update cover page template")
         elif request.params.get("create") or not cid:
@@ -673,7 +673,7 @@ def admin_fax2email_view(request):
                     break
                 changes.append((int(raw), {"email": email, "printer": printer, "faxcatid": int(cat) if cat.isdigit() else None}))
             if not company and not error:
-                error = _("Please enter a company name")
+                error = _("You must enter a company name")
             if not error:
                 if ab.set_company(company):
                     for number_id, data in changes:

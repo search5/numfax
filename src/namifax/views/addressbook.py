@@ -189,7 +189,7 @@ def addressbook_edit_view(request):
     # ---- a new company -------------------------------------------------------------------------------------------
     if not cid:
         if not company_name:
-            return _page(request, account, error=_("Please enter a company name"), values=values)
+            return _page(request, account, error=_("You must enter a company name"), values=values)
         if not clean_faxnum(new_number):
             return _page(request, account, error=_("Please enter a valid fax number"), values=values)
         if not book.create(company_name):
@@ -212,7 +212,7 @@ def addressbook_edit_view(request):
         return _page(request, account, book=book, error=book.get_error())
 
     if not company_name:
-        return _page(request, account, book=book, error=_("Please enter a company name"), values=values)
+        return _page(request, account, book=book, error=_("You must enter a company name"), values=values)
     if not book.set_company(company_name):
         return _page(request, account, book=book, error=book.get_error(), values=values)
     problem = _save_numbers(book, post, allowed)
@@ -274,7 +274,7 @@ def emailbook_edit_view(request):
     if request.method != "POST":
         cid = _contact_id(request.params)
         if cid and book.load_contact_by_id(cid):
-            message = _("Contact saved.") if request.params.get("saved") else None
+            message = _("Contact details saved") if request.params.get("saved") else None
             return _contact_page(request, contact_of(book), message=message)
         return _contact_page(request, {"id": None, "name": "", "email": ""})
 

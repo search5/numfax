@@ -79,7 +79,7 @@ KO_TRANSLATIONS: dict[str, str] = {
     "Forward": "전달",
     "Assign": "지정",
     "Note": "메모",
-    "Add Note": "메모 추가",
+    "Add a note": "메모 추가",
     "Email Fax": "이메일로 팩스 전송",
     "Assign Company": "회사 지정",
     "Resend Fax": "팩스 재전송",
@@ -132,7 +132,7 @@ KO_TRANSLATIONS: dict[str, str] = {
 
     # Send Fax Form
     "Destination & Recipients": "수신처 및 수신자 정보",
-    "Destination Number": "수신 팩스 번호",
+    "Destination fax numbers": "수신 팩스 번호",
     "Enter the fax number and recipient details.": "팩스 번호 및 수신자 정보를 입력하세요.",
     "Fill in the details below and click Send.": "아래 세부 정보를 입력하고 전송 버튼을 누르세요.",
     "Attention To": "수신자명",
@@ -161,7 +161,7 @@ KO_TRANSLATIONS: dict[str, str] = {
     "All incoming faxes received across all active modem channels.": "모든 활성 모뎀 채널을 통해 수신된 팩스 내역입니다.",
     "No faxes in inbox": "받은 팩스가 없습니다",
     "Faxes received by your modems will appear here automatically.": "모뎀을 통해 수신된 팩스가 여기에 자동으로 표시됩니다.",
-    "Select All": "전체 선택",
+    "Select All Faxes": "전체 선택",
     "Deselect All": "전체 해제",
     "Delete Selected": "선택 항목 삭제",
     "Move Selected to Archive": "선택 항목 보관함으로 이동",
@@ -215,10 +215,10 @@ KO_TRANSLATIONS: dict[str, str] = {
     "Back to Contacts": "연락처 목록으로 돌아가기",
     "Primary Company Profile": "기본 회사 프로필",
     "Recipient Contact & Physical Address": "수신자 담당자 및 주소 정보",
-    "Attention Person": "담당자",
+    "To person": "담당자",
 
     # Modals
-    "Send Fax via Email": "이메일로 팩스 전송",
+    "Forward fax via email": "이메일로 팩스 전송",
     "Forward this fax as a PDF attachment to an email address.": "이 팩스를 PDF 첨부 파일로 이메일 주소에 전달합니다.",
     "Recipient Email": "수신 이메일",
     "Subject": "제목",
@@ -465,7 +465,7 @@ KO_TRANSLATIONS: dict[str, str] = {
     "Permissions & Capabilities": "권한 및 기능",
     "Administrator Console": "관리자 콘솔",
     "Superuser Rights": "최고 관리자 권한",
-    "Can Delete Faxes": "팩스 삭제 권한",
+    "User can delete faxes": "팩스 삭제 권한",
     "Send on Any Modem": "모든 모뎀 발신 권한",
     "Categories": "카테고리",
 
@@ -623,7 +623,7 @@ KO_TRANSLATIONS: dict[str, str] = {
     "High (Urgent)": "높음 (긴급)",
     "Max Retries": "최대 재시도 횟수",
     "Retries automatically on busy signal.": "통화 중일 경우 자동으로 재시도합니다.",
-    "Notify on retry": "재시도 시 알림",
+    "Notify on requeue": "재시도 시 알림",
     "Cancel & return to Inbox": "취소하고 받은 팩스함으로 이동",
 
     # Settings

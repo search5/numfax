@@ -115,12 +115,8 @@ msgstr "Açıklama"
 msgid "Category"
 msgstr "Kategori"
 
-#, fuzzy
-msgid "Attention Person"
-msgstr "Kime"
-
 msgid "Location"
-msgstr ""
+msgstr "Yeri"
 
 msgid "Voice Telephone"
 msgstr "Sesli Telefon"
@@ -258,9 +254,8 @@ msgstr "Barcode Routing"
 msgid "Barcode:"
 msgstr "Barcode Routing"
 
-#, fuzzy
 msgid "Contact:"
-msgstr "Adresler"
+msgstr "Adres"
 
 msgid "None"
 msgstr "Yok"
@@ -423,7 +418,7 @@ msgid "Company Forwarding Rules"
 msgstr "Şirket Yönlendirme Kuralları"
 
 msgid "fax numbers"
-msgstr ""
+msgstr "Faks Numaraları"
 
 msgid "Email:"
 msgstr "E-posta:"
@@ -560,7 +555,7 @@ msgid "Are you sure you want to delete this modem?"
 msgstr ""
 
 msgid "Create"
-msgstr ""
+msgstr "Oluştur"
 
 msgid "Appliance Note:"
 msgstr "Cihaz Notu:"
@@ -787,9 +782,8 @@ msgstr ""
 msgid "Sent automatically by NamiFAX Gateway."
 msgstr ""
 
-#, fuzzy
 msgid "Last updated"
-msgstr "Döndür"
+msgstr "Son Güncelleme"
 
 #, fuzzy
 msgid "Save Gateway Settings"
@@ -951,7 +945,7 @@ msgid "Transmissions and server events will be streamed here in real time."
 msgstr "İletimler ve sunucu olayları burada gerçek zamanlı olarak akıtılacaktır."
 
 msgid "Delete User"
-msgstr ""
+msgstr "Kullanıcı Sil"
 
 msgid "Are you sure you want to delete the user"
 msgstr ""
@@ -965,7 +959,7 @@ msgid "Create New User"
 msgstr "Yeni Kullanıcı Oluştur"
 
 msgid "Last IP"
-msgstr ""
+msgstr "Son erişilen IP"
 
 msgid "Superuser"
 msgstr "Süper Kullanıcı"
@@ -980,22 +974,16 @@ msgid "NO"
 msgstr "Hayır"
 
 msgid "users"
-msgstr ""
+msgstr "Kullanıcılar"
 
 msgid "user"
-msgstr ""
+msgstr "Kullanıcı"
 
 msgid "Modify User"
-msgstr ""
+msgstr "Kullanıcı Değiştir"
 
 msgid "New User"
-msgstr ""
-
-msgid "User details saved"
-msgstr ""
-
-msgid "Account enabled"
-msgstr ""
+msgstr "Yeni Kullanıcı"
 
 msgid "Full Name"
 msgstr "Ad Soyad"
@@ -1013,7 +1001,7 @@ msgid "Password expiration cycle"
 msgstr ""
 
 msgid "Language"
-msgstr ""
+msgstr "Dil"
 
 msgid "Password can be reused"
 msgstr ""
@@ -1039,12 +1027,6 @@ msgstr ""
 msgid "New fax sound"
 msgstr ""
 
-msgid "Inbox shows"
-msgstr ""
-
-msgid "Archive shows"
-msgstr ""
-
 msgid "Permissions & Capabilities"
 msgstr "İzinler ve Yetkiler"
 
@@ -1053,9 +1035,6 @@ msgstr "Yönetici Konsolu"
 
 msgid "Superuser Rights"
 msgstr "Süper Kullanıcı Hakları"
-
-msgid "Can Delete Faxes"
-msgstr "Faksları Silebilir"
 
 msgid "Send on Any Modem"
 msgstr "Herhangi Bir Modemden Gönder"
@@ -1094,10 +1073,10 @@ msgstr ""
 "ekleyerek sonuçları daraltın."
 
 msgid "Company search"
-msgstr ""
+msgstr "Kurum arama"
 
 msgid "Company list"
-msgstr ""
+msgstr "Kurum listesi"
 
 #, fuzzy
 msgid "Fax ID"
@@ -1107,7 +1086,7 @@ msgid "e.g. 104"
 msgstr ""
 
 msgid "Keywords"
-msgstr ""
+msgstr "Anahtar kelimeler"
 
 msgid "Company, number, notes..."
 msgstr ""
@@ -1117,13 +1096,13 @@ msgid "All Categories"
 msgstr "Bağlı grupları"
 
 msgid "User"
-msgstr ""
+msgstr "Kullanıcı"
 
 msgid "Start Date"
-msgstr ""
+msgstr "Başlangıç Tarihi"
 
 msgid "End Date"
-msgstr ""
+msgstr "Bitiş Tarihi"
 
 #, fuzzy
 msgid "Direction"
@@ -1131,23 +1110,23 @@ msgstr "DID/DTMF Route groups"
 
 #, python-format
 msgid "Total %(n)d results found."
-msgstr ""
+msgstr "Toplam %(n)d sonuç bulundu."
 
 msgid "Pages"
 msgstr "Sayfa"
 
 msgid "Download PDF"
-msgstr ""
+msgstr "PDF olarak indir"
 
 msgid "Reply to fax"
-msgstr ""
+msgstr "Faksı cevapla"
 
 #, fuzzy
 msgid "Re-send"
 msgstr "Gönder"
 
 msgid "Email PDF"
-msgstr ""
+msgstr "PDF olarak eposta at"
 
 msgid "Add note to fax"
 msgstr ""
@@ -1161,9 +1140,6 @@ msgstr ""
 msgid "Select"
 msgstr "Seç"
 
-msgid "Assign company name"
-msgstr ""
-
 msgid "Unknown"
 msgstr ""
 
@@ -1175,7 +1151,7 @@ msgid "Sent"
 msgstr ""
 
 msgid "No results were found"
-msgstr ""
+msgstr "Sonuç bulunamadı"
 
 msgid "Reset filters"
 msgstr "Filtreleri sıfırla"
@@ -1205,7 +1181,7 @@ msgid "No contacts found"
 msgstr ""
 
 msgid "Add"
-msgstr ""
+msgstr "Ekle"
 
 msgid "Close"
 msgstr "Kapat"
@@ -1234,9 +1210,6 @@ msgstr "Liste adı"
 msgid "e.g. Executive Sales Team"
 msgstr ""
 
-msgid "Save name"
-msgstr ""
-
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "Grup Üyeleri (Kişiler ve Faks Numaraları)"
 
@@ -1250,11 +1223,8 @@ msgstr "Bu listeye henüz kişi atanmadı."
 msgid "Add Member"
 msgstr "Üye Ekle"
 
-msgid "Remove selected"
-msgstr ""
-
 msgid "Delete this distribution list?"
-msgstr ""
+msgstr "Bu dağıtım listesi silinsin mi?"
 
 msgid "Edit Distribution List"
 msgstr "Dağıtım Listesini Düzenle"
@@ -1287,10 +1257,10 @@ msgid "Add contacts to the list"
 msgstr ""
 
 msgid "Changes saved"
-msgstr ""
+msgstr "Değişiklikler kaydedildi"
 
 msgid "Back"
-msgstr ""
+msgstr "[ Geri ]"
 
 #, fuzzy
 msgid "Email Address Book"
@@ -1336,9 +1306,6 @@ msgid "Contact Profile Details"
 msgstr "Kişi Profili Ayrıntıları"
 
 msgid "John Doe"
-msgstr ""
-
-msgid "Modify Fax Job"
 msgstr ""
 
 msgid "New Destination"
@@ -1397,10 +1364,10 @@ msgid ""
 msgstr ""
 
 msgid "E-mail address"
-msgstr ""
+msgstr "Eposta adresi"
 
 msgid "Send Password"
-msgstr ""
+msgstr "Şifre gönder"
 
 msgid "Received faxes appear here automatically in real time."
 msgstr "Alınan fakslar burada gerçek zamanlı olarak otomatik görünür."
@@ -1411,9 +1378,6 @@ msgstr "faks"
 msgid "Fax"
 msgstr "Faks"
 
-msgid "Select All"
-msgstr "Tümünü Seç"
-
 #, fuzzy
 msgid "Archive Selected"
 msgstr "Arşiv"
@@ -1422,7 +1386,7 @@ msgid "Delete Selected"
 msgstr "Seçilenleri Sil"
 
 msgid "fax"
-msgstr ""
+msgstr "Faks"
 
 #, fuzzy
 msgid "Preview"
@@ -1435,7 +1399,7 @@ msgid "Page"
 msgstr "Sayfa"
 
 msgid "of"
-msgstr ""
+msgstr "ile"
 
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
@@ -1454,9 +1418,6 @@ msgstr "Arşiv"
 
 msgid "Email Fax"
 msgstr "Faksı E-postayla Gönder"
-
-msgid "Add Note"
-msgstr "Not Ekle"
 
 msgid "Rotate"
 msgstr "Döndür"
@@ -1605,15 +1566,11 @@ msgstr "Bu faksı silmek istediğinizden emin misiniz?"
 msgid "This operation will permanently purge the fax document archive."
 msgstr "Bu işlem faks belgesi arşivini kalıcı olarak temizleyecektir."
 
-#, fuzzy
-msgid "Send Fax via Email"
-msgstr "Faks Gönder"
-
 msgid "Dispatch PDF document attachment to email recipients"
 msgstr "PDF belge ekini e-posta alıcılarına gönderin"
 
 msgid "From"
-msgstr ""
+msgstr "Kimden"
 
 msgid "Recipients"
 msgstr "Alıcılar"
@@ -1631,7 +1588,7 @@ msgid "Subject"
 msgstr "Konu"
 
 msgid "PDF file name"
-msgstr ""
+msgstr "PDF dosya adı"
 
 msgid "Message"
 msgstr "Mesaj"
@@ -1699,7 +1656,7 @@ msgid "Job ID"
 msgstr "İş Kimliği"
 
 msgid "Dials"
-msgstr ""
+msgstr "Aramalar"
 
 msgid "TTS"
 msgstr ""
@@ -1708,7 +1665,7 @@ msgid "Modify"
 msgstr ""
 
 msgid "Kill job"
-msgstr ""
+msgstr "Görevi sonlandır"
 
 msgid "Kill"
 msgstr ""
@@ -1789,9 +1746,6 @@ msgstr "Faks nosu"
 msgid "Enter the fax number and recipient details."
 msgstr "Faks numarasını ve alıcı ayrıntılarını girin."
 
-msgid "Destination Number"
-msgstr "Faks nosu"
-
 msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
 msgstr ""
 
@@ -1814,7 +1768,7 @@ msgid "e.g. Jane Doe"
 msgstr ""
 
 msgid "Voice Number"
-msgstr ""
+msgstr "Sesli nosu"
 
 msgid "Address"
 msgstr ""
@@ -1871,7 +1825,7 @@ msgid "Send via Line"
 msgstr "Hat üzerinden gönder"
 
 msgid "No modems configured"
-msgstr ""
+msgstr "Ayarlanmış bir modem yok"
 
 #, fuzzy
 msgid "Cover Comments"
@@ -1892,9 +1846,6 @@ msgstr "Bağlı grupları"
 
 msgid "Retries automatically on busy signal."
 msgstr "Meşgul sinyalinde otomatik olarak tekrar dener."
-
-msgid "Notify on retry"
-msgstr "Tekrar denemede bildir"
 
 msgid "The original fax is sent along."
 msgstr ""
@@ -2075,16 +2026,16 @@ msgid "Back to settings"
 msgstr ""
 
 msgid "Previous fax"
-msgstr ""
+msgstr "Önceki faks"
 
 msgid "Prev"
 msgstr "Önceki"
 
 msgid "Next fax"
-msgstr ""
+msgstr "Sonraki faks"
 
 msgid "Rotate fax"
-msgstr ""
+msgstr "Döndür"
 
 #, python-format
 msgid "Invalid fax number: %(number)s"
@@ -2093,37 +2044,16 @@ msgstr ""
 msgid "Address book entry saved."
 msgstr ""
 
-msgid "Please enter a company name"
-msgstr ""
-
 msgid "Please enter a valid fax number"
 msgstr ""
 
 msgid "You are not allowed to delete address book entries."
 msgstr ""
 
-msgid "Contact saved."
-msgstr ""
-
 msgid "You are not allowed to delete contacts."
 msgstr ""
 
-msgid "Modem deleted"
-msgstr ""
-
-msgid "Please enter an alias"
-msgstr ""
-
-msgid "Modem updated"
-msgstr ""
-
-msgid "Please enter a device name"
-msgstr ""
-
 msgid "This modem already exists"
-msgstr ""
-
-msgid "Modem created"
 msgstr ""
 
 msgid "January"
@@ -2168,9 +2098,6 @@ msgstr ""
 msgid "Failed to remove cover page template"
 msgstr ""
 
-msgid "Cover page template updated successfully"
-msgstr ""
-
 msgid "Failed to update cover page template"
 msgstr ""
 
@@ -2187,7 +2114,7 @@ msgid "The company and its fax numbers were deleted."
 msgstr ""
 
 msgid "Please enter a valid e-mail address."
-msgstr ""
+msgstr "Lütfen geçerli bir eposta adresi giriniz."
 
 msgid "Fax to Email settings saved"
 msgstr ""
@@ -2243,14 +2170,11 @@ msgstr ""
 msgid "Every 6 Months"
 msgstr ""
 
-msgid "Please enter a name"
-msgstr ""
-
 msgid "You must enter a username"
 msgstr ""
 
 msgid "Non-alphanumeric characters are not allowed in username."
-msgstr ""
+msgstr "Kullanıcı adında alfanümerik karakterler bulunamaz. �rnek: *?= v.b"
 
 #, python-format
 msgid ""
@@ -2267,7 +2191,7 @@ msgid ""
 msgstr ""
 
 msgid "New User Details"
-msgstr ""
+msgstr "Yeni Kullanıcı Detayları"
 
 msgid "The user does not exist."
 msgstr ""
@@ -2282,13 +2206,13 @@ msgid "Please enter a valid number."
 msgstr ""
 
 msgid "Both sent and received faxes"
-msgstr ""
+msgstr "Gönderilen ve gelen fakslar birlikte"
 
 msgid "Only sent faxes"
-msgstr ""
+msgstr "Sadece benim gönderdiğim fakslar"
 
 msgid "Only received faxes"
-msgstr ""
+msgstr "Sadece gelen fakslar"
 
 msgid "Account is disabled"
 msgstr ""
@@ -2310,9 +2234,13 @@ msgid ""
 "If this was an error just login with your new password and then change "
 "your password to what you would like it to be."
 msgstr ""
+"Sayın %(user)s; Hesabınızla bağlantılı, web kullanıcı %(ip)s olarak yeni "
+"bir şifre talebinde bulundunuz. Yeni şifreniz: %(password)s olmuştur. "
+"Eğer hatalı olarak bu talebi yaptıysanız yeni şifrenizle sisteme girin ve"
+" lütfen şifrenizi değiştirin."
 
 msgid "Email failed to send"
-msgstr ""
+msgstr "Eposta gönderimi başarısız oldu"
 
 msgid "Fax Contacts"
 msgstr ""
@@ -2321,12 +2249,6 @@ msgid "Email Contacts"
 msgstr ""
 
 msgid "The fax document was not found."
-msgstr ""
-
-msgid "Failed to send email"
-msgstr ""
-
-msgid "Email sent successfully"
 msgstr ""
 
 msgid "Your session has expired. Reload the page and try again."
@@ -2355,6 +2277,84 @@ msgstr ""
 
 msgid "The password is not correct."
 msgstr ""
+
+msgid "Add a note"
+msgstr "Not veya grup ekle"
+
+msgid "Account active"
+msgstr "Hesap kullanılabilir"
+
+msgid "The cover page was updated"
+msgstr ""
+
+msgid "The modem was created"
+msgstr "Modem oluşturuldu"
+
+msgid "The modem was deleted"
+msgstr "Modem silindi"
+
+msgid "The modem was updated"
+msgstr "Modem güncellendi"
+
+msgid "Archive - show"
+msgstr ""
+
+msgid "Inbox - show"
+msgstr ""
+
+msgid "Assign a company name"
+msgstr "Kurum adı atayınız"
+
+msgid "You must enter a company name"
+msgstr "Kurum adı girmelisiniz"
+
+msgid "Contact details saved"
+msgstr "Adres bilgileri kaydedildi"
+
+msgid "Remove entries"
+msgstr "Girişleri siliniz"
+
+msgid "Save list name"
+msgstr "Lİste adını kaydet"
+
+msgid "The email failed to send."
+msgstr "Eposta gönderiminde hata oluştu."
+
+msgid "The email was sent successfully."
+msgstr "Eposta başarıyla gönderildi."
+
+msgid "Destination fax numbers"
+msgstr "Alıcı faks numaraları"
+
+msgid "You must enter an alias"
+msgstr ""
+
+msgid "You must enter a device name"
+msgstr ""
+
+msgid "Modify Job"
+msgstr ""
+
+msgid "You must enter a name."
+msgstr "İsim girmelisiniz."
+
+msgid "Notify on requeue"
+msgstr "Tekrar denemede bildir"
+
+msgid "Forward fax via email"
+msgstr "Faksı eposta ile ilet"
+
+msgid "To person"
+msgstr "Kime"
+
+msgid "User can delete faxes"
+msgstr "Kullanıcı faksları silebilir"
+
+msgid "User settings have been saved."
+msgstr "Kullanıcı ayarları güncellendi."
+
+msgid "Select All Faxes"
+msgstr "Tümünü Seç"
 
 #~ msgid "High"
 #~ msgstr "High"

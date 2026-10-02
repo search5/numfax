@@ -36,7 +36,7 @@
   <div class="flex items-center gap-3 flex-wrap">
     <label class="inline-flex items-center gap-2 cursor-pointer text-sm text-slate-700 font-medium select-none">
       <input type="checkbox" id="selectAll" class="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
-      <span>{{ _('Select All') }}</span>
+      <span>{{ _('Select All Faxes') }}</span>
     </label>
     <div class="h-4 w-px bg-slate-300"></div>
     <form id="batchform" method="post" action="/ajax/archivefax"><input type="hidden" name="_submit_check" value="1" /></form>
@@ -185,7 +185,7 @@
                   </a>
                   <a href="/note?fid={{ fax.id }}"
                      class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
-                    <img src="/static/images/note.png" alt="" class="w-4 h-4 shrink-0" /> {{ _('Add Note') }}
+                    <img src="/static/images/note.png" alt="" class="w-4 h-4 shrink-0" /> {{ _('Add a note') }}
                   </a>
                   <form method="post" action="/faxes/rotate/{{ fax.id }}">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />

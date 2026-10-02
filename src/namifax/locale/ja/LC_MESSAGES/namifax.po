@@ -90,7 +90,7 @@ msgid "Upload contacts file (vCard)"
 msgstr ""
 
 msgid "Upload"
-msgstr ""
+msgstr "アップロード"
 
 msgid "Company"
 msgstr "会社名"
@@ -111,12 +111,8 @@ msgstr "詳細"
 msgid "Category"
 msgstr "カテゴリ"
 
-#, fuzzy
-msgid "Attention Person"
-msgstr "氏名"
-
 msgid "Location"
-msgstr ""
+msgstr "部署名"
 
 msgid "Voice Telephone"
 msgstr "電話番号"
@@ -246,13 +242,11 @@ msgstr "Barcode Routing"
 msgid "Barcode Routing Rules"
 msgstr "Barcode Routing"
 
-#, fuzzy
 msgid "Barcode:"
-msgstr "Barcode Routing"
+msgstr "バーコード"
 
-#, fuzzy
 msgid "Contact:"
-msgstr "アドレス帳"
+msgstr "コンタクト"
 
 msgid "None"
 msgstr "なし"
@@ -409,7 +403,7 @@ msgid "Company Forwarding Rules"
 msgstr "企業転送ルール"
 
 msgid "fax numbers"
-msgstr ""
+msgstr "FAX 番号"
 
 msgid "Email:"
 msgstr "メール:"
@@ -544,7 +538,7 @@ msgid "Are you sure you want to delete this modem?"
 msgstr ""
 
 msgid "Create"
-msgstr ""
+msgstr "新規作成"
 
 msgid "Appliance Note:"
 msgstr "アプライアンスの注記:"
@@ -765,9 +759,8 @@ msgstr ""
 msgid "Sent automatically by NamiFAX Gateway."
 msgstr ""
 
-#, fuzzy
 msgid "Last updated"
-msgstr "FAXの回転"
+msgstr "最終更新"
 
 #, fuzzy
 msgid "Save Gateway Settings"
@@ -921,7 +914,7 @@ msgid "Transmissions and server events will be streamed here in real time."
 msgstr "送信履歴およびサーバーイベントがここにリアルタイムで配信されます。"
 
 msgid "Delete User"
-msgstr ""
+msgstr "ユーザーの削除"
 
 msgid "Are you sure you want to delete the user"
 msgstr ""
@@ -933,7 +926,7 @@ msgid "Create New User"
 msgstr "新規ユーザーを作成"
 
 msgid "Last IP"
-msgstr ""
+msgstr "最終IPアドレス"
 
 msgid "Superuser"
 msgstr "スーパーユーザー"
@@ -948,22 +941,16 @@ msgid "NO"
 msgstr "いいえ"
 
 msgid "users"
-msgstr ""
+msgstr "ユーザー"
 
 msgid "user"
-msgstr ""
+msgstr "ユーザー"
 
 msgid "Modify User"
-msgstr ""
+msgstr "ユーザーの更新"
 
 msgid "New User"
-msgstr ""
-
-msgid "User details saved"
-msgstr ""
-
-msgid "Account enabled"
-msgstr ""
+msgstr "新しいユーザー"
 
 msgid "Full Name"
 msgstr "氏名"
@@ -981,7 +968,7 @@ msgid "Password expiration cycle"
 msgstr ""
 
 msgid "Language"
-msgstr ""
+msgstr "言語"
 
 msgid "Password can be reused"
 msgstr ""
@@ -999,18 +986,12 @@ msgid "My Fax Number"
 msgstr ""
 
 msgid "TSI ID"
-msgstr ""
+msgstr "発信元情報(TSI信号)"
 
 msgid "Select Cover Page"
 msgstr ""
 
 msgid "New fax sound"
-msgstr ""
-
-msgid "Inbox shows"
-msgstr ""
-
-msgid "Archive shows"
 msgstr ""
 
 msgid "Permissions & Capabilities"
@@ -1021,9 +1002,6 @@ msgstr "管理者コンソール"
 
 msgid "Superuser Rights"
 msgstr "スーパーユーザー権限"
-
-msgid "Can Delete Faxes"
-msgstr "FAXの削除権限"
 
 msgid "Send on Any Modem"
 msgstr "すべてのモデムから送信可能"
@@ -1058,10 +1036,10 @@ msgid ""
 msgstr "すべてのレコードを検索するにはフィルターを空のままにします。条件を追加して結果を絞り込むことができます。"
 
 msgid "Company search"
-msgstr ""
+msgstr "会社検索"
 
 msgid "Company list"
-msgstr ""
+msgstr "会社リスト"
 
 #, fuzzy
 msgid "Fax ID"
@@ -1071,7 +1049,7 @@ msgid "e.g. 104"
 msgstr ""
 
 msgid "Keywords"
-msgstr ""
+msgstr "キーワード"
 
 msgid "Company, number, notes..."
 msgstr ""
@@ -1081,13 +1059,13 @@ msgid "All Categories"
 msgstr "FAXカテゴリを閲覧"
 
 msgid "User"
-msgstr ""
+msgstr "ユーザー"
 
 msgid "Start Date"
-msgstr ""
+msgstr "開始日時"
 
 msgid "End Date"
-msgstr ""
+msgstr "終了日時"
 
 #, fuzzy
 msgid "Direction"
@@ -1095,23 +1073,23 @@ msgstr "DID/DTMF ルートグループ"
 
 #, python-format
 msgid "Total %(n)d results found."
-msgstr ""
+msgstr "合計 %(n)d 件見つかりました。"
 
 msgid "Pages"
 msgstr "ページ"
 
 msgid "Download PDF"
-msgstr ""
+msgstr "PDFをダウンロード"
 
 msgid "Reply to fax"
-msgstr ""
+msgstr "FAXの返信"
 
 #, fuzzy
 msgid "Re-send"
 msgstr "送信"
 
 msgid "Email PDF"
-msgstr ""
+msgstr "PDFを電子メールで送信"
 
 msgid "Add note to fax"
 msgstr ""
@@ -1125,9 +1103,6 @@ msgstr ""
 msgid "Select"
 msgstr "タイトル"
 
-msgid "Assign company name"
-msgstr ""
-
 msgid "Unknown"
 msgstr ""
 
@@ -1139,7 +1114,7 @@ msgid "Sent"
 msgstr ""
 
 msgid "No results were found"
-msgstr ""
+msgstr "見つかりませんでした。"
 
 msgid "Reset filters"
 msgstr "フィルターをリセット"
@@ -1169,7 +1144,7 @@ msgid "No contacts found"
 msgstr ""
 
 msgid "Add"
-msgstr ""
+msgstr "追加"
 
 msgid "Close"
 msgstr "閉じる"
@@ -1198,9 +1173,6 @@ msgstr "リスト名"
 msgid "e.g. Executive Sales Team"
 msgstr ""
 
-msgid "Save name"
-msgstr ""
-
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "グループメンバー (連絡先およびFAX番号)"
 
@@ -1214,11 +1186,8 @@ msgstr "このリストに割り当てられた連絡先はまだありません
 msgid "Add Member"
 msgstr "メンバーを追加"
 
-msgid "Remove selected"
-msgstr ""
-
 msgid "Delete this distribution list?"
-msgstr ""
+msgstr "この宛先リストを削除しますか?"
 
 msgid "Edit Distribution List"
 msgstr "配信リストを編集"
@@ -1251,10 +1220,10 @@ msgid "Add contacts to the list"
 msgstr ""
 
 msgid "Changes saved"
-msgstr ""
+msgstr "更新しました。"
 
 msgid "Back"
-msgstr ""
+msgstr "戻る"
 
 #, fuzzy
 msgid "Email Address Book"
@@ -1300,11 +1269,8 @@ msgstr "連絡先プロファイル詳細"
 msgid "John Doe"
 msgstr ""
 
-msgid "Modify Fax Job"
-msgstr ""
-
 msgid "New Destination"
-msgstr ""
+msgstr "新しい宛先"
 
 msgid "Priority"
 msgstr "優先度"
@@ -1313,22 +1279,22 @@ msgid "Modem / Device"
 msgstr ""
 
 msgid "Number of tries"
-msgstr ""
+msgstr "リトライ回数"
 
 msgid "Expire after"
 msgstr ""
 
 msgid "Now"
-msgstr ""
+msgstr "現在"
 
 msgid "Minutes"
-msgstr ""
+msgstr "分"
 
 msgid "Hours"
-msgstr ""
+msgstr "時"
 
 msgid "Days"
-msgstr ""
+msgstr "日"
 
 msgid "Schedule Send Time"
 msgstr ""
@@ -1359,10 +1325,10 @@ msgid ""
 msgstr ""
 
 msgid "E-mail address"
-msgstr ""
+msgstr "電子メールアドレス"
 
 msgid "Send Password"
-msgstr ""
+msgstr "パスワードの送信"
 
 msgid "Received faxes appear here automatically in real time."
 msgstr "受信したFAXはここにリアルタイムで自動的に表示されます。"
@@ -1373,9 +1339,6 @@ msgstr "FAX"
 msgid "Fax"
 msgstr "FAX"
 
-msgid "Select All"
-msgstr "すべて選択"
-
 #, fuzzy
 msgid "Archive Selected"
 msgstr "送信履歴"
@@ -1384,7 +1347,7 @@ msgid "Delete Selected"
 msgstr "選択項目を削除"
 
 msgid "fax"
-msgstr ""
+msgstr "FAX"
 
 #, fuzzy
 msgid "Preview"
@@ -1397,7 +1360,7 @@ msgid "Page"
 msgstr "ページ"
 
 msgid "of"
-msgstr ""
+msgstr "/"
 
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
@@ -1416,9 +1379,6 @@ msgstr "送信履歴"
 
 msgid "Email Fax"
 msgstr "FAXをメール送信"
-
-msgid "Add Note"
-msgstr "メモを追加"
 
 msgid "Rotate"
 msgstr "FAXの回転"
@@ -1558,15 +1518,11 @@ msgstr "このFAXを削除してもよろしいですか？"
 msgid "This operation will permanently purge the fax document archive."
 msgstr "この操作により、FAXドキュメントのアーカイブが完全に削除されます。"
 
-#, fuzzy
-msgid "Send Fax via Email"
-msgstr "FAXの送信"
-
 msgid "Dispatch PDF document attachment to email recipients"
 msgstr "PDFドキュメント添付ファイルをメール受信者に配信します"
 
 msgid "From"
-msgstr ""
+msgstr "発信元"
 
 msgid "Recipients"
 msgstr "宛先"
@@ -1584,7 +1540,7 @@ msgid "Subject"
 msgstr "タイトル"
 
 msgid "PDF file name"
-msgstr ""
+msgstr "PDF ファイル名"
 
 msgid "Message"
 msgstr "メッセージ"
@@ -1613,7 +1569,6 @@ msgstr "公式FAX送信確認証"
 msgid "Print"
 msgstr "印刷"
 
-#, fuzzy
 msgid "Company:"
 msgstr "会社名"
 
@@ -1649,7 +1604,7 @@ msgid "Job ID"
 msgstr "ジョブID"
 
 msgid "Dials"
-msgstr ""
+msgstr "番号"
 
 msgid "TTS"
 msgstr ""
@@ -1658,7 +1613,7 @@ msgid "Modify"
 msgstr ""
 
 msgid "Kill job"
-msgstr ""
+msgstr "削除ジョブ番号："
 
 msgid "Kill"
 msgstr ""
@@ -1734,9 +1689,6 @@ msgstr "FAX番号"
 msgid "Enter the fax number and recipient details."
 msgstr "FAX番号と宛先の詳細を入力してください。"
 
-msgid "Destination Number"
-msgstr "FAX番号"
-
 msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
 msgstr ""
 
@@ -1759,7 +1711,7 @@ msgid "e.g. Jane Doe"
 msgstr ""
 
 msgid "Voice Number"
-msgstr ""
+msgstr "電話番号"
 
 msgid "Address"
 msgstr ""
@@ -1814,7 +1766,7 @@ msgid "Send via Line"
 msgstr "送信回線"
 
 msgid "No modems configured"
-msgstr ""
+msgstr "モデムは設定されていません。"
 
 #, fuzzy
 msgid "Cover Comments"
@@ -1835,9 +1787,6 @@ msgstr "FAXカテゴリを閲覧"
 
 msgid "Retries automatically on busy signal."
 msgstr "話し中の場合は自動的に再試行します。"
-
-msgid "Notify on retry"
-msgstr "再試行時に通知"
 
 msgid "The original fax is sent along."
 msgstr ""
@@ -2015,16 +1964,16 @@ msgid "Back to settings"
 msgstr ""
 
 msgid "Previous fax"
-msgstr ""
+msgstr "前の FAX"
 
 msgid "Prev"
 msgstr "前へ"
 
 msgid "Next fax"
-msgstr ""
+msgstr "次の FAX"
 
 msgid "Rotate fax"
-msgstr ""
+msgstr "FAXの回転"
 
 #, python-format
 msgid "Invalid fax number: %(number)s"
@@ -2033,37 +1982,16 @@ msgstr ""
 msgid "Address book entry saved."
 msgstr ""
 
-msgid "Please enter a company name"
-msgstr ""
-
 msgid "Please enter a valid fax number"
 msgstr ""
 
 msgid "You are not allowed to delete address book entries."
 msgstr ""
 
-msgid "Contact saved."
-msgstr ""
-
 msgid "You are not allowed to delete contacts."
 msgstr ""
 
-msgid "Modem deleted"
-msgstr ""
-
-msgid "Please enter an alias"
-msgstr ""
-
-msgid "Modem updated"
-msgstr ""
-
-msgid "Please enter a device name"
-msgstr ""
-
 msgid "This modem already exists"
-msgstr ""
-
-msgid "Modem created"
 msgstr ""
 
 msgid "January"
@@ -2108,9 +2036,6 @@ msgstr ""
 msgid "Failed to remove cover page template"
 msgstr ""
 
-msgid "Cover page template updated successfully"
-msgstr ""
-
 msgid "Failed to update cover page template"
 msgstr ""
 
@@ -2127,7 +2052,7 @@ msgid "The company and its fax numbers were deleted."
 msgstr ""
 
 msgid "Please enter a valid e-mail address."
-msgstr ""
+msgstr "有効な電子メールアドレスを入力してください。"
 
 msgid "Fax to Email settings saved"
 msgstr ""
@@ -2172,7 +2097,7 @@ msgid "SAML 2.0 configuration saved successfully."
 msgstr ""
 
 msgid "Catch All"
-msgstr ""
+msgstr "DID/DTMF ルートキャッチオール"
 
 msgid "Never"
 msgstr ""
@@ -2183,14 +2108,11 @@ msgstr ""
 msgid "Every 6 Months"
 msgstr ""
 
-msgid "Please enter a name"
-msgstr ""
-
 msgid "You must enter a username"
-msgstr ""
+msgstr "ユーザー名を入力してください。"
 
 msgid "Non-alphanumeric characters are not allowed in username."
-msgstr ""
+msgstr "ユーザー名には、英数字以外の文字は許可されません。"
 
 #, python-format
 msgid ""
@@ -2207,7 +2129,7 @@ msgid ""
 msgstr ""
 
 msgid "New User Details"
-msgstr ""
+msgstr "新規ユーザーの詳細"
 
 msgid "The user does not exist."
 msgstr ""
@@ -2222,13 +2144,13 @@ msgid "Please enter a valid number."
 msgstr ""
 
 msgid "Both sent and received faxes"
-msgstr ""
+msgstr "送信と受信の両方"
 
 msgid "Only sent faxes"
-msgstr ""
+msgstr "送信のみ"
 
 msgid "Only received faxes"
-msgstr ""
+msgstr "受信のみ"
 
 msgid "Account is disabled"
 msgstr ""
@@ -2250,9 +2172,12 @@ msgid ""
 "If this was an error just login with your new password and then change "
 "your password to what you would like it to be."
 msgstr ""
+"ユーザアカウント:%(user)s にはこのメールアドレスが登録されています。 ユーザー:%(ip)s は、新しいパスワードを要求しました。 "
+"あなたの新しいパスワード: %(password)s "
+"これが間違いであったならば、新しいパスワードでログインしてください。そして、次にパスワードを以前のものに変更してください。"
 
 msgid "Email failed to send"
-msgstr ""
+msgstr "電子メールの送信は失敗しました。"
 
 msgid "Fax Contacts"
 msgstr ""
@@ -2261,12 +2186,6 @@ msgid "Email Contacts"
 msgstr ""
 
 msgid "The fax document was not found."
-msgstr ""
-
-msgid "Failed to send email"
-msgstr ""
-
-msgid "Email sent successfully"
 msgstr ""
 
 msgid "Your session has expired. Reload the page and try again."
@@ -2295,6 +2214,84 @@ msgstr ""
 
 msgid "The password is not correct."
 msgstr ""
+
+msgid "Add a note"
+msgstr "コメントの追加"
+
+msgid "Account active"
+msgstr "アカウントの有効"
+
+msgid "The cover page was updated"
+msgstr ""
+
+msgid "The modem was created"
+msgstr ""
+
+msgid "The modem was deleted"
+msgstr ""
+
+msgid "The modem was updated"
+msgstr "モデムは更新されました。"
+
+msgid "Archive - show"
+msgstr ""
+
+msgid "Inbox - show"
+msgstr ""
+
+msgid "Assign a company name"
+msgstr "会社名の設定"
+
+msgid "You must enter a company name"
+msgstr "会社名を入力してください"
+
+msgid "Contact details saved"
+msgstr "コンタクトの詳細を保存しました。"
+
+msgid "Remove entries"
+msgstr "リストの削除"
+
+msgid "Save list name"
+msgstr "リスト名の保存"
+
+msgid "The email failed to send."
+msgstr "電子メールの送信は失敗しました。"
+
+msgid "The email was sent successfully."
+msgstr "電子メールを送信しました。"
+
+msgid "Destination fax numbers"
+msgstr "宛先 FAX 番号"
+
+msgid "You must enter an alias"
+msgstr "エリアスを入力してください。"
+
+msgid "You must enter a device name"
+msgstr "デバイス名を入力してください。"
+
+msgid "Modify Job"
+msgstr "ジョブの更新"
+
+msgid "You must enter a name."
+msgstr "名前が入力されていません。"
+
+msgid "Notify on requeue"
+msgstr "再びキューに入れる"
+
+msgid "Forward fax via email"
+msgstr "FAXを電子メールで転送"
+
+msgid "To person"
+msgstr "氏名"
+
+msgid "User can delete faxes"
+msgstr "ユーザーはFAXを削除できる"
+
+msgid "User settings have been saved."
+msgstr "ユーザー設定は更新されました。"
+
+msgid "Select All Faxes"
+msgstr "すべて選択"
 
 #~ msgid "High"
 #~ msgstr "High"

@@ -8,12 +8,12 @@ from namifax.common.validators import is_valid_email
 from namifax.db.repository import MDBOData
 
 DEFAULT_LANG = {
-    "ASSIGN_MISSING": "Please enter a company name",
+    "ASSIGN_MISSING": "You must enter a company name",
     "COMPANY_EXISTS": "Company already exists",
     "FAXNUMID_NOT_CREATED": "Fax number could not be created",
     "NO_COMPANY_FOR_FAXNUM": "No company configured for fax number",
     "REGWARN_MAIL": "Please enter a valid e-mail address.",
-    "NAME_MISSING": "Please enter a name",
+    "NAME_MISSING": "You must enter a name.",
     "REGWARN_MAIL_EXISTS": "A contact with that e-mail address already exists",
 }
 
@@ -65,7 +65,7 @@ class AFAddressBook:
     def create(self, companyname: str | None) -> bool:
         """Create a new company entry."""
         if not companyname:
-            self.error = self.lang.get("ASSIGN_MISSING", "Please enter a company name")
+            self.error = self.lang.get("ASSIGN_MISSING", "You must enter a company name")
             return False
 
         self.company = companyname
@@ -174,7 +174,7 @@ class AFAddressBook:
             self.error = "No abook_id loaded"
             return False
         if not companyname:
-            self.error = self.lang.get("ASSIGN_MISSING", "Please enter a company name")
+            self.error = self.lang.get("ASSIGN_MISSING", "You must enter a company name")
             return False
 
         self.company = companyname
@@ -457,7 +457,7 @@ class AFAddressBook:
             return False
 
         if not name:
-            self.error = self.lang.get("NAME_MISSING", "Please enter a name")
+            self.error = self.lang.get("NAME_MISSING", "You must enter a name.")
             return False
 
         if self.addressbookemail.find({"contact_email": email}):
@@ -559,7 +559,7 @@ class AFAddressBook:
             return False
 
         if not name:
-            self.error = self.lang.get("NAME_MISSING", "Please enter a name")
+            self.error = self.lang.get("NAME_MISSING", "You must enter a name.")
             return False
 
         self.email_array["contact_name"] = name

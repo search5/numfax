@@ -269,7 +269,7 @@ SCENARIOS = [
                     ]
                 }
             ],
-            "required_text": ["Send Fax", "Destination Number"]
+            "required_text": ["Send Fax", "Destination fax numbers"]
         },
         "html_content": """<!DOCTYPE html>
 <html>

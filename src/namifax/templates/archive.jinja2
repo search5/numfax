@@ -129,9 +129,9 @@
                   <button type="submit" class="px-2 py-1 bg-slate-100 rounded text-xs">{{ _('Select') }}</button>
                 </form>
               {% elif r.assign == 'x' %}
-                <a href="/assignx?fid={{ r.id }}" class="text-blue-700 hover:underline" title="{{ _('Assign company name') }}">{{ r.company or r.origfaxnum or _('Unknown') }}</a>
+                <a href="/assignx?fid={{ r.id }}" class="text-blue-700 hover:underline" title="{{ _('Assign a company name') }}">{{ r.company or r.origfaxnum or _('Unknown') }}</a>
               {% elif r.assign == 'c' %}
-                <a href="/assign?cid={{ r.cid }}" class="text-blue-700 hover:underline" title="{{ _('Assign company name') }}">{{ r.company }}</a>
+                <a href="/assign?cid={{ r.cid }}" class="text-blue-700 hover:underline" title="{{ _('Assign a company name') }}">{{ r.company }}</a>
               {% elif r.cid %}
                 <a href="/addressbook?abook_id={{ r.cid }}" class="font-semibold text-slate-900 hover:text-blue-700 hover:underline">{{ r.company }}</a>
               {% else %}{{ r.company or r.origfaxnum }}{% endif %}

@@ -93,7 +93,7 @@ msgid "Upload contacts file (vCard)"
 msgstr ""
 
 msgid "Upload"
-msgstr ""
+msgstr "تحميل"
 
 msgid "Company"
 msgstr "شركة"
@@ -114,12 +114,8 @@ msgstr "وصف"
 msgid "Category"
 msgstr "الفئة"
 
-#, fuzzy
-msgid "Attention Person"
-msgstr "الى شخص"
-
 msgid "Location"
-msgstr ""
+msgstr "موقع"
 
 msgid "Voice Telephone"
 msgstr "رقم الهاتف الصوتي"
@@ -257,9 +253,8 @@ msgstr "Barcode Routing"
 msgid "Barcode:"
 msgstr "Barcode Routing"
 
-#, fuzzy
 msgid "Contact:"
-msgstr "يتصل بـ"
+msgstr "اتصل ب"
 
 msgid "None"
 msgstr "لا يوجد"
@@ -416,7 +411,7 @@ msgid "Company Forwarding Rules"
 msgstr "قواعد إعادة توجيه الشركة"
 
 msgid "fax numbers"
-msgstr ""
+msgstr "أرقام الفاكس"
 
 msgid "Email:"
 msgstr "البريد الإلكتروني:"
@@ -553,7 +548,7 @@ msgid "Are you sure you want to delete this modem?"
 msgstr ""
 
 msgid "Create"
-msgstr ""
+msgstr "أنشاء"
 
 msgid "Appliance Note:"
 msgstr "ملاحظة الجهاز:"
@@ -780,9 +775,8 @@ msgstr ""
 msgid "Sent automatically by NamiFAX Gateway."
 msgstr ""
 
-#, fuzzy
 msgid "Last updated"
-msgstr "تدوير الفاكس"
+msgstr "آخر تحديث"
 
 #, fuzzy
 msgid "Save Gateway Settings"
@@ -941,7 +935,7 @@ msgid "Transmissions and server events will be streamed here in real time."
 msgstr "سيتم بث عمليات الإرسال وأحداث الخادم هنا في الوقت الفعلي."
 
 msgid "Delete User"
-msgstr ""
+msgstr "حذف المستخدم"
 
 msgid "Are you sure you want to delete the user"
 msgstr ""
@@ -953,7 +947,7 @@ msgid "Create New User"
 msgstr "إنشاء مستخدم جديد"
 
 msgid "Last IP"
-msgstr ""
+msgstr "آخر IP"
 
 msgid "Superuser"
 msgstr "مشرف متميز (Superuser)"
@@ -968,22 +962,16 @@ msgid "NO"
 msgstr "لا"
 
 msgid "users"
-msgstr ""
+msgstr "المستخدمين"
 
 msgid "user"
-msgstr ""
+msgstr "مستخدم"
 
 msgid "Modify User"
-msgstr ""
+msgstr "تغيير المستخدم"
 
 msgid "New User"
-msgstr ""
-
-msgid "User details saved"
-msgstr ""
-
-msgid "Account enabled"
-msgstr ""
+msgstr "مستخدم جديد"
 
 msgid "Full Name"
 msgstr "الاسم الكامل"
@@ -1001,7 +989,7 @@ msgid "Password expiration cycle"
 msgstr ""
 
 msgid "Language"
-msgstr ""
+msgstr "لغة"
 
 msgid "Password can be reused"
 msgstr ""
@@ -1027,12 +1015,6 @@ msgstr ""
 msgid "New fax sound"
 msgstr ""
 
-msgid "Inbox shows"
-msgstr ""
-
-msgid "Archive shows"
-msgstr ""
-
 msgid "Permissions & Capabilities"
 msgstr "الأذونات والإمكانيات"
 
@@ -1041,9 +1023,6 @@ msgstr "وحدة تحكم المشرف"
 
 msgid "Superuser Rights"
 msgstr "صلاحيات المشرف المتميز"
-
-msgid "Can Delete Faxes"
-msgstr "يمكنه حذف الفاكسات"
 
 msgid "Send on Any Modem"
 msgstr "الإرسال عبر أي مودم"
@@ -1082,10 +1061,10 @@ msgstr ""
 "المزيد من المعايير."
 
 msgid "Company search"
-msgstr ""
+msgstr "البحث عن شركة"
 
 msgid "Company list"
-msgstr ""
+msgstr "قائمة الشركات"
 
 #, fuzzy
 msgid "Fax ID"
@@ -1095,7 +1074,7 @@ msgid "e.g. 104"
 msgstr ""
 
 msgid "Keywords"
-msgstr ""
+msgstr "الكلمات الرئيسية"
 
 msgid "Company, number, notes..."
 msgstr ""
@@ -1105,13 +1084,13 @@ msgid "All Categories"
 msgstr "عرض فئات الفاكس"
 
 msgid "User"
-msgstr ""
+msgstr "مستخدم"
 
 msgid "Start Date"
-msgstr ""
+msgstr "من تاريخ"
 
 msgid "End Date"
-msgstr ""
+msgstr "الى تاريخ"
 
 #, fuzzy
 msgid "Direction"
@@ -1119,23 +1098,23 @@ msgstr "DID/DTMF Route groups"
 
 #, python-format
 msgid "Total %(n)d results found."
-msgstr ""
+msgstr "مجموع %(n)d النتائج الموجودة."
 
 msgid "Pages"
 msgstr "صفحات"
 
 msgid "Download PDF"
-msgstr ""
+msgstr "تنزيل PDF"
 
 msgid "Reply to fax"
-msgstr ""
+msgstr "الرد على فاكس"
 
 #, fuzzy
 msgid "Re-send"
 msgstr "ارسال"
 
 msgid "Email PDF"
-msgstr ""
+msgstr "ارسال PDF"
 
 msgid "Add note to fax"
 msgstr ""
@@ -1149,9 +1128,6 @@ msgstr ""
 msgid "Select"
 msgstr "اختيار"
 
-msgid "Assign company name"
-msgstr ""
-
 msgid "Unknown"
 msgstr ""
 
@@ -1163,7 +1139,7 @@ msgid "Sent"
 msgstr ""
 
 msgid "No results were found"
-msgstr ""
+msgstr "لم يتم العثور على نتائج"
 
 msgid "Reset filters"
 msgstr "إعادة تعيين عوامل التصفية"
@@ -1193,7 +1169,7 @@ msgid "No contacts found"
 msgstr ""
 
 msgid "Add"
-msgstr ""
+msgstr "إضافة"
 
 msgid "Close"
 msgstr "إغلاق"
@@ -1222,9 +1198,6 @@ msgstr "قائمة الاسماء"
 msgid "e.g. Executive Sales Team"
 msgstr ""
 
-msgid "Save name"
-msgstr ""
-
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "أعضاء المجموعة (جهات الاتصال وأرقام الفاكس)"
 
@@ -1238,11 +1211,8 @@ msgstr "لم يتم تعيين جهات اتصال لهذه القائمة بع�
 msgid "Add Member"
 msgstr "إضافة عضو"
 
-msgid "Remove selected"
-msgstr ""
-
 msgid "Delete this distribution list?"
-msgstr ""
+msgstr "حذف قائمة التوزيع هذه؟"
 
 msgid "Edit Distribution List"
 msgstr "تعديل قائمة التوزيع"
@@ -1275,10 +1245,10 @@ msgid "Add contacts to the list"
 msgstr ""
 
 msgid "Changes saved"
-msgstr ""
+msgstr "تم حفظ التغيرات"
 
 msgid "Back"
-msgstr ""
+msgstr "خلف"
 
 #, fuzzy
 msgid "Email Address Book"
@@ -1326,11 +1296,8 @@ msgstr "تفاصيل الملف التعريفي لجهة الاتصال"
 msgid "John Doe"
 msgstr ""
 
-msgid "Modify Fax Job"
-msgstr ""
-
 msgid "New Destination"
-msgstr ""
+msgstr "الوجهة الجديدة"
 
 msgid "Priority"
 msgstr "الأولوية"
@@ -1339,22 +1306,22 @@ msgid "Modem / Device"
 msgstr ""
 
 msgid "Number of tries"
-msgstr ""
+msgstr "عدد المحاولات"
 
 msgid "Expire after"
 msgstr ""
 
 msgid "Now"
-msgstr ""
+msgstr "الان"
 
 msgid "Minutes"
-msgstr ""
+msgstr "دقائق"
 
 msgid "Hours"
-msgstr ""
+msgstr "ساعات"
 
 msgid "Days"
-msgstr ""
+msgstr "ايام"
 
 msgid "Schedule Send Time"
 msgstr ""
@@ -1385,10 +1352,10 @@ msgid ""
 msgstr ""
 
 msgid "E-mail address"
-msgstr ""
+msgstr "عنوان البريد الالكتروني"
 
 msgid "Send Password"
-msgstr ""
+msgstr "إرسال كلمة المرور"
 
 msgid "Received faxes appear here automatically in real time."
 msgstr "تظهر الفاكسات المستلمة هنا تلقائياً في الوقت الفعلي."
@@ -1399,9 +1366,6 @@ msgstr "فاكسات"
 msgid "Fax"
 msgstr "الفاكس"
 
-msgid "Select All"
-msgstr "تحديد الكل"
-
 #, fuzzy
 msgid "Archive Selected"
 msgstr "ارشيف"
@@ -1410,7 +1374,7 @@ msgid "Delete Selected"
 msgstr "حذف المحدد"
 
 msgid "fax"
-msgstr ""
+msgstr "الفاكس"
 
 #, fuzzy
 msgid "Preview"
@@ -1423,7 +1387,7 @@ msgid "Page"
 msgstr "صفحة"
 
 msgid "of"
-msgstr ""
+msgstr "من"
 
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
@@ -1442,9 +1406,6 @@ msgstr "ارشيف"
 
 msgid "Email Fax"
 msgstr "إرسال الفاكس بالبريد الإلكتروني"
-
-msgid "Add Note"
-msgstr "إضافة ملاحظة"
 
 msgid "Rotate"
 msgstr "تدوير الفاكس"
@@ -1589,15 +1550,11 @@ msgstr "هل أنت متأكد أنك تريد حذف هذا الفاكس؟"
 msgid "This operation will permanently purge the fax document archive."
 msgstr "ستؤدي هذه العملية إلى حذف مستند الفاكس نهائياً من الأرشيف."
 
-#, fuzzy
-msgid "Send Fax via Email"
-msgstr "إرسال فاكس"
-
 msgid "Dispatch PDF document attachment to email recipients"
 msgstr "إرسال مرفق مستند PDF إلى مستلمي البريد الإلكتروني"
 
 msgid "From"
-msgstr ""
+msgstr "من"
 
 msgid "Recipients"
 msgstr "المستلمون"
@@ -1615,7 +1572,7 @@ msgid "Subject"
 msgstr "موضوع"
 
 msgid "PDF file name"
-msgstr ""
+msgstr "PDF اسم الملف"
 
 msgid "Message"
 msgstr "الرسالة"
@@ -1644,7 +1601,6 @@ msgstr "إيصال تأكيد تسليم الفاكس الرسمي"
 msgid "Print"
 msgstr "اطبع"
 
-#, fuzzy
 msgid "Company:"
 msgstr "شركة"
 
@@ -1652,7 +1608,7 @@ msgid "Pages:"
 msgstr "الصفحات:"
 
 msgid "Fax Number:"
-msgstr ""
+msgstr "رقم الفاكس"
 
 msgid "Database unavailable"
 msgstr ""
@@ -1682,7 +1638,7 @@ msgid "Job ID"
 msgstr "معرف المهمة"
 
 msgid "Dials"
-msgstr ""
+msgstr "الأوجه"
 
 msgid "TTS"
 msgstr ""
@@ -1691,7 +1647,7 @@ msgid "Modify"
 msgstr ""
 
 msgid "Kill job"
-msgstr ""
+msgstr "انهاء"
 
 msgid "Kill"
 msgstr ""
@@ -1770,9 +1726,6 @@ msgstr "رقم الفاكس"
 msgid "Enter the fax number and recipient details."
 msgstr "أدخل رقم الفاكس وتفاصيل المستلم."
 
-msgid "Destination Number"
-msgstr "رقم الفاكس"
-
 msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
 msgstr ""
 
@@ -1795,7 +1748,7 @@ msgid "e.g. Jane Doe"
 msgstr ""
 
 msgid "Voice Number"
-msgstr ""
+msgstr "رقم الهاتف"
 
 msgid "Address"
 msgstr ""
@@ -1873,9 +1826,6 @@ msgstr "عرض فئات الفاكس"
 
 msgid "Retries automatically on busy signal."
 msgstr "إعادة المحاولة تلقائياً عند إشارة مشغول."
-
-msgid "Notify on retry"
-msgstr "إشعار عند إعادة المحاولة"
 
 msgid "The original fax is sent along."
 msgstr ""
@@ -2054,16 +2004,16 @@ msgid "Back to settings"
 msgstr ""
 
 msgid "Previous fax"
-msgstr ""
+msgstr "رقم الفاكس السابق"
 
 msgid "Prev"
 msgstr "السابق"
 
 msgid "Next fax"
-msgstr ""
+msgstr "رقم الفاكس التالي"
 
 msgid "Rotate fax"
-msgstr ""
+msgstr "تدوير الفاكس"
 
 #, python-format
 msgid "Invalid fax number: %(number)s"
@@ -2072,37 +2022,16 @@ msgstr ""
 msgid "Address book entry saved."
 msgstr ""
 
-msgid "Please enter a company name"
-msgstr ""
-
 msgid "Please enter a valid fax number"
 msgstr ""
 
 msgid "You are not allowed to delete address book entries."
 msgstr ""
 
-msgid "Contact saved."
-msgstr ""
-
 msgid "You are not allowed to delete contacts."
 msgstr ""
 
-msgid "Modem deleted"
-msgstr ""
-
-msgid "Please enter an alias"
-msgstr ""
-
-msgid "Modem updated"
-msgstr ""
-
-msgid "Please enter a device name"
-msgstr ""
-
 msgid "This modem already exists"
-msgstr ""
-
-msgid "Modem created"
 msgstr ""
 
 msgid "January"
@@ -2147,9 +2076,6 @@ msgstr ""
 msgid "Failed to remove cover page template"
 msgstr ""
 
-msgid "Cover page template updated successfully"
-msgstr ""
-
 msgid "Failed to update cover page template"
 msgstr ""
 
@@ -2166,7 +2092,7 @@ msgid "The company and its fax numbers were deleted."
 msgstr ""
 
 msgid "Please enter a valid e-mail address."
-msgstr ""
+msgstr "الرجاء إدخال عنوان بريد إلكتروني صحيح."
 
 msgid "Fax to Email settings saved"
 msgstr ""
@@ -2211,7 +2137,7 @@ msgid "SAML 2.0 configuration saved successfully."
 msgstr ""
 
 msgid "Catch All"
-msgstr ""
+msgstr "القبض على جميع"
 
 msgid "Never"
 msgstr ""
@@ -2222,14 +2148,11 @@ msgstr ""
 msgid "Every 6 Months"
 msgstr ""
 
-msgid "Please enter a name"
-msgstr ""
-
 msgid "You must enter a username"
-msgstr ""
+msgstr "يجب إدخال اسم المستخدم"
 
 msgid "Non-alphanumeric characters are not allowed in username."
-msgstr ""
+msgstr "غير أحرف أبجدية رقمية لا يسمح في اسم المستخدم."
 
 #, python-format
 msgid ""
@@ -2246,7 +2169,7 @@ msgid ""
 msgstr ""
 
 msgid "New User Details"
-msgstr ""
+msgstr "تفاصيل مستخدم جديد"
 
 msgid "The user does not exist."
 msgstr ""
@@ -2261,13 +2184,13 @@ msgid "Please enter a valid number."
 msgstr ""
 
 msgid "Both sent and received faxes"
-msgstr ""
+msgstr "كل الفاكسات المرسلة والواردة"
 
 msgid "Only sent faxes"
-msgstr ""
+msgstr "فقط الفاكسات المرسلة"
 
 msgid "Only received faxes"
-msgstr ""
+msgstr "فقط الفاكسات الواردة"
 
 msgid "Account is disabled"
 msgstr ""
@@ -2289,9 +2212,13 @@ msgid ""
 "If this was an error just login with your new password and then change "
 "your password to what you would like it to be."
 msgstr ""
+"حساب المستخدم %(user)s مرتبطة بهذا البريد الالكتروني . A web user from "
+"%(ip)s has just requested that a new password be sent. كلمة السر الجديدة "
+"هي: %(password)s اذا كان هذا مجرد خطأ في تسجيل الدخول وكلمة المرور "
+"الجديدة ثم تغيير كلمة السر الخاصة بك الى ما تريد أن تكون."
 
 msgid "Email failed to send"
-msgstr ""
+msgstr "فشل إرسال البريد الإلكتروني"
 
 msgid "Fax Contacts"
 msgstr ""
@@ -2300,12 +2227,6 @@ msgid "Email Contacts"
 msgstr ""
 
 msgid "The fax document was not found."
-msgstr ""
-
-msgid "Failed to send email"
-msgstr ""
-
-msgid "Email sent successfully"
 msgstr ""
 
 msgid "Your session has expired. Reload the page and try again."
@@ -2334,6 +2255,84 @@ msgstr ""
 
 msgid "The password is not correct."
 msgstr ""
+
+msgid "Add a note"
+msgstr "اضف ملاحظة"
+
+msgid "Account active"
+msgstr "حساب نشط"
+
+msgid "The cover page was updated"
+msgstr ""
+
+msgid "The modem was created"
+msgstr "تم انشاء مودم"
+
+msgid "The modem was deleted"
+msgstr "تم حذف مودم"
+
+msgid "The modem was updated"
+msgstr "تم تحديث مودم"
+
+msgid "Archive - show"
+msgstr ""
+
+msgid "Inbox - show"
+msgstr ""
+
+msgid "Assign a company name"
+msgstr "تعين اسم الشركة"
+
+msgid "You must enter a company name"
+msgstr "يجب ادخال اسم الشركة"
+
+msgid "Contact details saved"
+msgstr "تم حفظ تفاصيل الاتصال"
+
+msgid "Remove entries"
+msgstr "ازالة محتوى"
+
+msgid "Save list name"
+msgstr "حفظ قائمة الاسماء"
+
+msgid "The email failed to send."
+msgstr "فشل البريد الالكتروني بالارسال"
+
+msgid "The email was sent successfully."
+msgstr "تم إرسال البريد الإلكتروني بنجاح."
+
+msgid "Destination fax numbers"
+msgstr "أرقام الفاكسات المراد الارسال اليها"
+
+msgid "You must enter an alias"
+msgstr "يجب إدخال اسم مستعار"
+
+msgid "You must enter a device name"
+msgstr "يجب إدخال اسم الجهاز"
+
+msgid "Modify Job"
+msgstr "تعديل وظائف"
+
+msgid "You must enter a name."
+msgstr "يجب عليك إدخال اسم."
+
+msgid "Notify on requeue"
+msgstr "ابلاغ لأعادة الارسال"
+
+msgid "Forward fax via email"
+msgstr "ارسال الفاكس عبر البريد الإلكتروني"
+
+msgid "To person"
+msgstr "الى شخص"
+
+msgid "User can delete faxes"
+msgstr "يمكن للمستخدم حذف الفاكسات"
+
+msgid "User settings have been saved."
+msgstr "تم حفظ إعدادات ألمستخدم ."
+
+msgid "Select All Faxes"
+msgstr "تحديد الكل"
 
 #~ msgid "High"
 #~ msgstr "High"

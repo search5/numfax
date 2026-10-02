@@ -106,7 +106,7 @@ msgstr ""
 msgid "Category"
 msgstr ""
 
-msgid "Attention Person"
+msgid "To person"
 msgstr ""
 
 msgid "Location"
@@ -909,10 +909,10 @@ msgstr ""
 msgid "New User"
 msgstr ""
 
-msgid "User details saved"
+msgid "User settings have been saved."
 msgstr ""
 
-msgid "Account enabled"
+msgid "Account active"
 msgstr ""
 
 msgid "Full Name"
@@ -957,10 +957,10 @@ msgstr ""
 msgid "New fax sound"
 msgstr ""
 
-msgid "Inbox shows"
+msgid "Inbox - show"
 msgstr ""
 
-msgid "Archive shows"
+msgid "Archive - show"
 msgstr ""
 
 msgid "Permissions & Capabilities"
@@ -972,7 +972,7 @@ msgstr ""
 msgid "Superuser Rights"
 msgstr ""
 
-msgid "Can Delete Faxes"
+msgid "User can delete faxes"
 msgstr ""
 
 msgid "Send on Any Modem"
@@ -1068,7 +1068,7 @@ msgstr ""
 msgid "Select"
 msgstr ""
 
-msgid "Assign company name"
+msgid "Assign a company name"
 msgstr ""
 
 msgid "Unknown"
@@ -1140,7 +1140,7 @@ msgstr ""
 msgid "e.g. Executive Sales Team"
 msgstr ""
 
-msgid "Save name"
+msgid "Save list name"
 msgstr ""
 
 msgid "Group Members (Contacts & Fax Numbers)"
@@ -1155,7 +1155,7 @@ msgstr ""
 msgid "Add Member"
 msgstr ""
 
-msgid "Remove selected"
+msgid "Remove entries"
 msgstr ""
 
 msgid "Delete this distribution list?"
@@ -1238,7 +1238,7 @@ msgstr ""
 msgid "John Doe"
 msgstr ""
 
-msgid "Modify Fax Job"
+msgid "Modify Job"
 msgstr ""
 
 msgid "New Destination"
@@ -1310,7 +1310,7 @@ msgstr ""
 msgid "Fax"
 msgstr ""
 
-msgid "Select All"
+msgid "Select All Faxes"
 msgstr ""
 
 msgid "Archive Selected"
@@ -1352,7 +1352,7 @@ msgstr ""
 msgid "Email Fax"
 msgstr ""
 
-msgid "Add Note"
+msgid "Add a note"
 msgstr ""
 
 msgid "Rotate"
@@ -1486,7 +1486,7 @@ msgstr ""
 msgid "This operation will permanently purge the fax document archive."
 msgstr ""
 
-msgid "Send Fax via Email"
+msgid "Forward fax via email"
 msgstr ""
 
 msgid "Dispatch PDF document attachment to email recipients"
@@ -1653,7 +1653,7 @@ msgstr ""
 msgid "Enter the fax number and recipient details."
 msgstr ""
 
-msgid "Destination Number"
+msgid "Destination fax numbers"
 msgstr ""
 
 msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
@@ -1751,7 +1751,7 @@ msgstr ""
 msgid "Retries automatically on busy signal."
 msgstr ""
 
-msgid "Notify on retry"
+msgid "Notify on requeue"
 msgstr ""
 
 msgid "The original fax is sent along."
@@ -1940,7 +1940,7 @@ msgstr ""
 msgid "Address book entry saved."
 msgstr ""
 
-msgid "Please enter a company name"
+msgid "You must enter a company name"
 msgstr ""
 
 msgid "Please enter a valid fax number"
@@ -1949,28 +1949,28 @@ msgstr ""
 msgid "You are not allowed to delete address book entries."
 msgstr ""
 
-msgid "Contact saved."
+msgid "Contact details saved"
 msgstr ""
 
 msgid "You are not allowed to delete contacts."
 msgstr ""
 
-msgid "Modem deleted"
+msgid "The modem was deleted"
 msgstr ""
 
-msgid "Please enter an alias"
+msgid "You must enter an alias"
 msgstr ""
 
-msgid "Modem updated"
+msgid "The modem was updated"
 msgstr ""
 
-msgid "Please enter a device name"
+msgid "You must enter a device name"
 msgstr ""
 
 msgid "This modem already exists"
 msgstr ""
 
-msgid "Modem created"
+msgid "The modem was created"
 msgstr ""
 
 msgid "January"
@@ -2015,7 +2015,7 @@ msgstr ""
 msgid "Failed to remove cover page template"
 msgstr ""
 
-msgid "Cover page template updated successfully"
+msgid "The cover page was updated"
 msgstr ""
 
 msgid "Failed to update cover page template"
@@ -2090,7 +2090,7 @@ msgstr ""
 msgid "Every 6 Months"
 msgstr ""
 
-msgid "Please enter a name"
+msgid "You must enter a name."
 msgstr ""
 
 msgid "You must enter a username"
@@ -2170,10 +2170,10 @@ msgstr ""
 msgid "The fax document was not found."
 msgstr ""
 
-msgid "Failed to send email"
+msgid "The email failed to send."
 msgstr ""
 
-msgid "Email sent successfully"
+msgid "The email was sent successfully."
 msgstr ""
 
 msgid "Your session has expired. Reload the page and try again."

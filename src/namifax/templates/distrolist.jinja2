@@ -80,7 +80,7 @@
           <label for="listname" class="block font-semibold text-slate-700 text-xs mb-1.5">{{ _('List Name') }} *</label>
           <div class="flex gap-2">
             <input type="text" name="listname" id="listname" value="{{ selected_list.listname if selected_list else '' }}" required maxlength="100" placeholder="{{ _('e.g. Executive Sales Team') }}" class="w-full border border-slate-300 rounded-lg px-3.5 py-2 bg-slate-50/50 text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-600 transition" />
-            {% if selected_list %}<button type="submit" name="savename" value="1" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg font-bold text-xs whitespace-nowrap transition">{{ _('Save name') }}</button>{% endif %}
+            {% if selected_list %}<button type="submit" name="savename" value="1" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg font-bold text-xs whitespace-nowrap transition">{{ _('Save list name') }}</button>{% endif %}
           </div>
         </div>
 
@@ -102,7 +102,7 @@
             </div>
             <div class="flex items-center gap-2">
               <a href="/helper/distrolist?dl_id={{ selected_list.dl_id }}" class="px-4 py-2 bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 rounded-lg font-bold text-xs transition">{{ _('Add Member') }}</a>
-              <button type="submit" name="remove" value="1" class="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 rounded-lg font-semibold text-xs transition">{{ _('Remove selected') }}</button>
+              <button type="submit" name="remove" value="1" class="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 rounded-lg font-semibold text-xs transition">{{ _('Remove entries') }}</button>
             </div>
           </div>
         {% endif %}

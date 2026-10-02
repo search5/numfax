@@ -89,7 +89,7 @@
 | 웹 진입점 74개(`*.php` 36, `ajax/` 13, `admin/` 25) ↔ 라우트 | 이름으로 대응시켜 빠진 것이 없음을 확인했고, 이름만으로 불분명한 것(`rubrica*`, `no-database`, `file`·`pdf`, `archivefax`와 `ajaxarchivefax`)은 소스를 읽어 확인했다(나머지의 동작 동일성은 이 대조의 범위 밖). `rubrica.php`·`rubrica_edit.php`는 템플릿이 없고 링크되지 않는 죽은 코드라 제외(`ARCHITECTURE.md` 17.8에 기록). 관리자 전용 로그인 4개(`admin/index·check_login·logout·pwdexpired`)는 한 로그인에서 권한으로 나누기로 한 결정(C10) |
 | DB 테이블 14개(`create_tables.sql`, `db-update-*.sql`) ↔ 모델 | 테이블·컬럼 모두 있음(`UserAccount` 32/32, `FaxArchive` 17/17). 이식본에만 있는 6개는 새 기능(`FaxOCR`, `NetworkPrinters`, `SystemConfig`, `SystemSettings`, `UserTOTP`, `UserWebAuthnCredentials`) |
 | 명령줄·훅 14개(`includes/` 6, `tools/` 8) ↔ `namifax.cli` | `update_contacts`(2.x 이전 DB용, 지원하지 않기로 함)를 뺀 13개 모두 대응 |
-| 설정 변수 147개 ↔ 코드·문서 | 이름이 없는 약 70개 중 대부분은 대체됨(`AFDB_*`→`DATABASE_URL`, 테마 경로→Tailwind, `SMTP_*`·`SYSTEM_EMAIL_SIG_*`→관리자 SMTP 화면, 변환 도구 변수→Ghostscript 등, `SYSTEM_IP`→요청 주소). 아래 G1~G7이 실제 차이 |
+| 설정 변수 147개 ↔ 코드·문서 | 이름이 없는 약 70개 중 대부분은 대체됨(`AFDB_*`→`DATABASE_URL`, 테마 경로→Tailwind, `SMTP_*`·`SYSTEM_EMAIL_SIG_*`→관리자 SMTP 화면, 변환 도구 변수→Ghostscript 등, `SYSTEM_IP`→요청 주소). 아래 G1~G8이 실제 차이 |
 | 화면 문구 332개 ↔ `namifax.pot` | 144개가 문구 일치로는 찾아지지 않았으나 대부분 문구를 다르게 쓴 것이라 누락 개수로 보지 않음. 동작을 암시하는 문구(모뎀 상태, 오디오 선택, 비밀번호 재사용 등)만 골라 확인했고 추가 누락은 없었음 |
 
 **실제 차이** (모두 처리함)
@@ -103,6 +103,7 @@
 | G5 ✅ | 수신함에서 새 팩스가 와도 목록이 새로고침되지 않았다(배지만 갱신). 원본은 수신함 화면에서 건수가 바뀌면 `window.location.reload()`로 목록을 다시 불러오고, 소리가 재생 중이면 끝난 뒤에 불러온다. 다른 화면은 건수만 갱신한다 | `avantfax.js:359-395`, `inbox.tpl:141-145` |
 | G6 ✅ | TIFF→PDF 대체 경로(libtiff·HylaFAX의 `tiff2pdf`가 없을 때)가 쪽을 RGB로 바꾸고 해상도를 버렸다. 3쪽 팩스가 TIFF의 6.7배(833KB 대 125KB)이고 쪽 크기가 24×30.6인치여서 PDF를 인쇄하면 크기가 틀어졌다. 이제 흑백 그대로, 팩스 해상도(204×196 또는 204×98dpi, 없으면 204×196)로 저장한다. 보내기 파일의 TIFF 합치기(`convert2pdf`)도 같은 함수를 쓰고, `PAPERSIZE`(기본 a4)는 PostScript 변환의 Ghostscript에 `-sPAPERSIZE`로 전달한다(설정은 있었으나 쓰이지 않았다) | `functions.php:982,1006`, `config.php:382-386`, `helpers.py` |
 | G7 ✅ | 원본이 DB에 **HTML 엔티티로 저장한** 이름(`M&uuml;ller`, `&amp;`)이 이식본 화면에 글자 그대로 보였다. 원본은 값을 HTML에 그대로 출력해서 브라우저가 글자로 그렸고, 이식본은 이스케이프한다. 원본이 만든 실제 데이터로 확인했다(`tools/migration_rehearsal/check_text.py`). **읽을 때 풀어서 보여 주는 방식**으로 처리했다: 사람이 입력하는 텍스트 컬럼의 타입(`LegacyHtmlString`, `LegacyHtmlText`)이 완전한 참조(`&uuml;`, `&#039;`, `&#xFC;`)만 풀고, 검색은 검색어의 원본 인코딩 형태도 함께 비교한다. DB는 건드리지 않는다. 한계: 원본이 이중 인코딩해 깨뜨린 값(사용자 이름의 한글)은 복원하지 않고, 엔티티 모양을 글자 그대로 입력한 값도 풀린다 | `docs/MIGRATING_FROM_AVANTFAX3.md` 4.1 |
+| G8 ✅ | 이식본의 영어 화면 문구가 원본과 같은 뜻인데 표현이 달라서, 원본의 번역(22개 언어)을 이어받지 못했다. **같은 화면에서 같은 역할로 쓰이는 26개 문구**를 원본의 영어 원문으로 맞췄다(`Modem created`→`The modem was created`, `Notify on retry`→`Notify on requeue`, `Destination Number`→`Destination fax numbers` 등. 전체 목록은 `tools/i18n_import_legacy.py`의 `RENAMES`). 여러 화면에서 함께 쓰는 짧은 문구(`Company`, `Address`, `City`)와 뜻이 다른 문구(`Reboot Services`와 `Reboot server`)는 바꾸지 않았다. 원문이 같아진 문구 가운데 번역이 없거나 fuzzy였던 것에는 원본의 번역을 채웠다(언어당 55~85개, 이미 번역이 있으면 유지, 제품명 `AvantFAX`가 든 문구와 마크업이 든 문구는 제외). 번역되어 보이는 문구는 한국어 외 로케일에서 약 35%에서 42~47%로 늘었다. 원본의 일본어 파일에서 반대 뜻으로 번역된 두 문구(`ADMIN_MODEM_CREATED`, `ADMIN_MODEM_DELETED`)는 가져오지 않았다. 한계: 같은 뜻인지를 사람이 한 건씩 판단했고, 짝이 안 맞는 나머지 문구(원본 209개 중 26개만 짝을 찾음)의 번역은 이어지지 않는다 | `tools/i18n_import_legacy.py` |
 
 **변환 도구 변수 대조** (레거시 `config.php:354-386`)
 

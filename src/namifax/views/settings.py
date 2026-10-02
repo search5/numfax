@@ -106,7 +106,7 @@ def settings_view(request):
             name = (params.get("name", profile_data["name"]) or "").strip()
             email = (params.get("email", profile_data["email"]) or "").strip()
             if not name:
-                error = _("Please enter a name")
+                error = _("You must enter a name.")
             elif not is_valid_email(email):
                 error = _("Please enter a valid e-mail address.")
             elif user_loaded and not user_account.set_email(email):

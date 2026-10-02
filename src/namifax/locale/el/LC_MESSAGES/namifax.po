@@ -115,12 +115,8 @@ msgstr "Περιγραφή"
 msgid "Category"
 msgstr "Κατηγορία"
 
-#, fuzzy
-msgid "Attention Person"
-msgstr "Υπόψιν"
-
 msgid "Location"
-msgstr ""
+msgstr "Τοποθεσία"
 
 msgid "Voice Telephone"
 msgstr "Τηλέφωνο φωνής"
@@ -258,9 +254,8 @@ msgstr "Barcode Routing"
 msgid "Barcode:"
 msgstr "Barcode Routing"
 
-#, fuzzy
 msgid "Contact:"
-msgstr "Επαφές"
+msgstr "Επικοινωνία με"
 
 msgid "None"
 msgstr "Κανένα"
@@ -423,7 +418,7 @@ msgid "Company Forwarding Rules"
 msgstr "Κανόνες προώθησης ανά εταιρεία"
 
 msgid "fax numbers"
-msgstr ""
+msgstr "Αριθμοί Φαξ"
 
 msgid "Email:"
 msgstr "Email:"
@@ -560,7 +555,7 @@ msgid "Are you sure you want to delete this modem?"
 msgstr ""
 
 msgid "Create"
-msgstr ""
+msgstr "Δημιουργία"
 
 msgid "Appliance Note:"
 msgstr "Σημείωση συσκευής:"
@@ -787,9 +782,8 @@ msgstr ""
 msgid "Sent automatically by NamiFAX Gateway."
 msgstr ""
 
-#, fuzzy
 msgid "Last updated"
-msgstr "Περιστροφή φαξ"
+msgstr "Τελευταία ανανέωση"
 
 #, fuzzy
 msgid "Save Gateway Settings"
@@ -957,7 +951,7 @@ msgstr ""
 "πραγματικό χρόνο."
 
 msgid "Delete User"
-msgstr ""
+msgstr "Διαγραφή χρήστη"
 
 msgid "Are you sure you want to delete the user"
 msgstr ""
@@ -971,7 +965,7 @@ msgid "Create New User"
 msgstr "Δημιουργία νέου χρήστη"
 
 msgid "Last IP"
-msgstr ""
+msgstr "Τελευταία είσοδος από IP"
 
 msgid "Superuser"
 msgstr "Υπερχρήστης"
@@ -986,22 +980,16 @@ msgid "NO"
 msgstr "Όχι"
 
 msgid "users"
-msgstr ""
+msgstr "Χρήστες"
 
 msgid "user"
-msgstr ""
+msgstr "Χρήστης"
 
 msgid "Modify User"
-msgstr ""
+msgstr "Μεταβολή χρήστη"
 
 msgid "New User"
-msgstr ""
-
-msgid "User details saved"
-msgstr ""
-
-msgid "Account enabled"
-msgstr ""
+msgstr "Νέος χρήστης"
 
 msgid "Full Name"
 msgstr "Πλήρες όνομα"
@@ -1019,7 +1007,7 @@ msgid "Password expiration cycle"
 msgstr ""
 
 msgid "Language"
-msgstr ""
+msgstr "Γλώσσα"
 
 msgid "Password can be reused"
 msgstr ""
@@ -1045,12 +1033,6 @@ msgstr ""
 msgid "New fax sound"
 msgstr ""
 
-msgid "Inbox shows"
-msgstr ""
-
-msgid "Archive shows"
-msgstr ""
-
 msgid "Permissions & Capabilities"
 msgstr "Δικαιώματα & Δυνατότητες"
 
@@ -1059,9 +1041,6 @@ msgstr "Κονσόλα διαχειριστή"
 
 msgid "Superuser Rights"
 msgstr "Δικαιώματα υπερχρήστη"
-
-msgid "Can Delete Faxes"
-msgstr "Δυνατότητα διαγραφής φαξ"
 
 msgid "Send on Any Modem"
 msgstr "Αποστολή μέσω οποιουδήποτε μόντεμ"
@@ -1100,10 +1079,10 @@ msgstr ""
 "αποτελέσματα προσθέτοντας περισσότερα κριτήρια."
 
 msgid "Company search"
-msgstr ""
+msgstr "Αναζήτηση εταιρίας"
 
 msgid "Company list"
-msgstr ""
+msgstr "Λίστα εταιριών"
 
 #, fuzzy
 msgid "Fax ID"
@@ -1113,7 +1092,7 @@ msgid "e.g. 104"
 msgstr ""
 
 msgid "Keywords"
-msgstr ""
+msgstr "Λέξεις-κλειδιά"
 
 msgid "Company, number, notes..."
 msgstr ""
@@ -1123,13 +1102,13 @@ msgid "All Categories"
 msgstr "Προβολή κατηγοριών φαξ"
 
 msgid "User"
-msgstr ""
+msgstr "Χρήστης"
 
 msgid "Start Date"
-msgstr ""
+msgstr "Από ημερομηνία"
 
 msgid "End Date"
-msgstr ""
+msgstr "Εώς ημερομηνία"
 
 #, fuzzy
 msgid "Direction"
@@ -1137,23 +1116,23 @@ msgstr "DID/DTMF Route groups"
 
 #, python-format
 msgid "Total %(n)d results found."
-msgstr ""
+msgstr "Βρέθηκαν %(n)d αποτελέσματα"
 
 msgid "Pages"
 msgstr "Σελίδες"
 
 msgid "Download PDF"
-msgstr ""
+msgstr "Λήψη PDF"
 
 msgid "Reply to fax"
-msgstr ""
+msgstr "Απάντηση φαξ"
 
 #, fuzzy
 msgid "Re-send"
 msgstr "Αποστολή"
 
 msgid "Email PDF"
-msgstr ""
+msgstr "Αποστολή PDF με e-mail"
 
 msgid "Add note to fax"
 msgstr ""
@@ -1167,9 +1146,6 @@ msgstr ""
 msgid "Select"
 msgstr "Επιλογή"
 
-msgid "Assign company name"
-msgstr ""
-
 msgid "Unknown"
 msgstr ""
 
@@ -1181,7 +1157,7 @@ msgid "Sent"
 msgstr ""
 
 msgid "No results were found"
-msgstr ""
+msgstr "Δεν βρέθηκαν αποτελέσματα"
 
 msgid "Reset filters"
 msgstr "Επαναφορά φίλτρων"
@@ -1211,7 +1187,7 @@ msgid "No contacts found"
 msgstr ""
 
 msgid "Add"
-msgstr ""
+msgstr "Προσθήκη"
 
 msgid "Close"
 msgstr "Κλείσιμο"
@@ -1240,9 +1216,6 @@ msgstr "Ονομασία λίστας"
 msgid "e.g. Executive Sales Team"
 msgstr ""
 
-msgid "Save name"
-msgstr ""
-
 msgid "Group Members (Contacts & Fax Numbers)"
 msgstr "Μέλη ομάδας (Επαφές & Αριθμοί φαξ)"
 
@@ -1256,11 +1229,8 @@ msgstr "Δεν έχουν εκχωρηθεί ακόμη επαφές σε αυτ
 msgid "Add Member"
 msgstr "Προσθήκη μέλους"
 
-msgid "Remove selected"
-msgstr ""
-
 msgid "Delete this distribution list?"
-msgstr ""
+msgstr "Είστε σίγουρος ότι θέλετε να διαγραφεί αυτή η λίστα;"
 
 msgid "Edit Distribution List"
 msgstr "Επεξεργασία λίστας διανομής"
@@ -1295,10 +1265,10 @@ msgid "Add contacts to the list"
 msgstr ""
 
 msgid "Changes saved"
-msgstr ""
+msgstr "Οι αλλαγές αποθηκεύτηκαν"
 
 msgid "Back"
-msgstr ""
+msgstr "[ Πίσω ]"
 
 #, fuzzy
 msgid "Email Address Book"
@@ -1344,9 +1314,6 @@ msgid "Contact Profile Details"
 msgstr "Στοιχεία προφίλ επαφής"
 
 msgid "John Doe"
-msgstr ""
-
-msgid "Modify Fax Job"
 msgstr ""
 
 msgid "New Destination"
@@ -1405,10 +1372,10 @@ msgid ""
 msgstr ""
 
 msgid "E-mail address"
-msgstr ""
+msgstr "Διεύθυνση e-mail"
 
 msgid "Send Password"
-msgstr ""
+msgstr "Αποστολή συνθηματικού"
 
 msgid "Received faxes appear here automatically in real time."
 msgstr "Τα ληφθέντα φαξ εμφανίζονται εδώ αυτόματα σε πραγματικό χρόνο."
@@ -1419,9 +1386,6 @@ msgstr "φαξ"
 msgid "Fax"
 msgstr "Φαξ"
 
-msgid "Select All"
-msgstr "Επιλογή όλων"
-
 #, fuzzy
 msgid "Archive Selected"
 msgstr "Αρχείο"
@@ -1430,7 +1394,7 @@ msgid "Delete Selected"
 msgstr "Διαγραφή επιλεγμένων"
 
 msgid "fax"
-msgstr ""
+msgstr "Φαξ"
 
 #, fuzzy
 msgid "Preview"
@@ -1443,7 +1407,7 @@ msgid "Page"
 msgstr "Σελίδα"
 
 msgid "of"
-msgstr ""
+msgstr "από"
 
 msgid "This number belongs to several companies. Which one is it?"
 msgstr ""
@@ -1462,9 +1426,6 @@ msgstr "Αρχείο"
 
 msgid "Email Fax"
 msgstr "Αποστολή φαξ μέσω Email"
-
-msgid "Add Note"
-msgstr "Προσθήκη σημείωσης"
 
 msgid "Rotate"
 msgstr "Περιστροφή φαξ"
@@ -1615,15 +1576,11 @@ msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε 
 msgid "This operation will permanently purge the fax document archive."
 msgstr "Αυτή η λειτουργία θα διαγράψει οριστικά το αρχείο εγγράφων φαξ."
 
-#, fuzzy
-msgid "Send Fax via Email"
-msgstr "Νέο φαξ"
-
 msgid "Dispatch PDF document attachment to email recipients"
 msgstr "Αποστολή συνημμένου εγγράφου PDF σε παραλήπτες email"
 
 msgid "From"
-msgstr ""
+msgstr "Από"
 
 msgid "Recipients"
 msgstr "Παραλήπτες"
@@ -1641,7 +1598,7 @@ msgid "Subject"
 msgstr "Θέμα"
 
 msgid "PDF file name"
-msgstr ""
+msgstr "Όνομα αρχείου PDF"
 
 msgid "Message"
 msgstr "Μήνυμα"
@@ -1670,7 +1627,6 @@ msgstr "Επίσημη απόδειξη επιβεβαίωσης παράδοσ�
 msgid "Print"
 msgstr "Print"
 
-#, fuzzy
 msgid "Company:"
 msgstr "Εταιρία"
 
@@ -1678,7 +1634,7 @@ msgid "Pages:"
 msgstr "Σελίδες:"
 
 msgid "Fax Number:"
-msgstr ""
+msgstr "Αριθμός φαξ"
 
 msgid "Database unavailable"
 msgstr ""
@@ -1800,9 +1756,6 @@ msgstr "Αριθμός φαξ"
 msgid "Enter the fax number and recipient details."
 msgstr "Εισαγάγετε τον αριθμό φαξ και τα στοιχεία του παραλήπτη."
 
-msgid "Destination Number"
-msgstr "Αριθμός φαξ"
-
 msgid "e.g. +1-555-0199  —  separate multiple numbers with semicolons"
 msgstr ""
 
@@ -1825,7 +1778,7 @@ msgid "e.g. Jane Doe"
 msgstr ""
 
 msgid "Voice Number"
-msgstr ""
+msgstr "Αριθμός τηλεφώνου"
 
 msgid "Address"
 msgstr ""
@@ -1882,7 +1835,7 @@ msgid "Send via Line"
 msgstr "Αποστολή μέσω γραμμής"
 
 msgid "No modems configured"
-msgstr ""
+msgstr "Δεν έχουν ρυθμιστεί φαξ modems"
 
 #, fuzzy
 msgid "Cover Comments"
@@ -1903,9 +1856,6 @@ msgstr "Προβολή κατηγοριών φαξ"
 
 msgid "Retries automatically on busy signal."
 msgstr "Αυτόματη επανάληψη σε περίπτωση σήματος κατειλημμένου."
-
-msgid "Notify on retry"
-msgstr "Ειδοποίηση κατά την επανάληψη"
 
 msgid "The original fax is sent along."
 msgstr ""
@@ -2086,16 +2036,16 @@ msgid "Back to settings"
 msgstr ""
 
 msgid "Previous fax"
-msgstr ""
+msgstr "Προηγούμενο φαξ"
 
 msgid "Prev"
 msgstr "Προηγ."
 
 msgid "Next fax"
-msgstr ""
+msgstr "Επόμενο φαξ"
 
 msgid "Rotate fax"
-msgstr ""
+msgstr "Περιστροφή φαξ"
 
 #, python-format
 msgid "Invalid fax number: %(number)s"
@@ -2104,37 +2054,16 @@ msgstr ""
 msgid "Address book entry saved."
 msgstr ""
 
-msgid "Please enter a company name"
-msgstr ""
-
 msgid "Please enter a valid fax number"
 msgstr ""
 
 msgid "You are not allowed to delete address book entries."
 msgstr ""
 
-msgid "Contact saved."
-msgstr ""
-
 msgid "You are not allowed to delete contacts."
 msgstr ""
 
-msgid "Modem deleted"
-msgstr ""
-
-msgid "Please enter an alias"
-msgstr ""
-
-msgid "Modem updated"
-msgstr ""
-
-msgid "Please enter a device name"
-msgstr ""
-
 msgid "This modem already exists"
-msgstr ""
-
-msgid "Modem created"
 msgstr ""
 
 msgid "January"
@@ -2179,9 +2108,6 @@ msgstr ""
 msgid "Failed to remove cover page template"
 msgstr ""
 
-msgid "Cover page template updated successfully"
-msgstr ""
-
 msgid "Failed to update cover page template"
 msgstr ""
 
@@ -2198,7 +2124,7 @@ msgid "The company and its fax numbers were deleted."
 msgstr ""
 
 msgid "Please enter a valid e-mail address."
-msgstr ""
+msgstr "Παρακαλώ εισάγετε ένα έγκυρο e-mail."
 
 msgid "Fax to Email settings saved"
 msgstr ""
@@ -2254,14 +2180,11 @@ msgstr ""
 msgid "Every 6 Months"
 msgstr ""
 
-msgid "Please enter a name"
-msgstr ""
-
 msgid "You must enter a username"
 msgstr ""
 
 msgid "Non-alphanumeric characters are not allowed in username."
-msgstr ""
+msgstr "Απαγορεύεται η χρήση μη αλφαριθμητικών χαρακτήρων στο όνομα χρήστη."
 
 #, python-format
 msgid ""
@@ -2278,7 +2201,7 @@ msgid ""
 msgstr ""
 
 msgid "New User Details"
-msgstr ""
+msgstr "Στοιχεία νέου χρήστη"
 
 msgid "The user does not exist."
 msgstr ""
@@ -2293,13 +2216,13 @@ msgid "Please enter a valid number."
 msgstr ""
 
 msgid "Both sent and received faxes"
-msgstr ""
+msgstr "Απεσταλμένα και ληφθέντα φαξ"
 
 msgid "Only sent faxes"
-msgstr ""
+msgstr "Μόνο απεσταλμένα φαξ"
 
 msgid "Only received faxes"
-msgstr ""
+msgstr "Μόνο ληφθέντα φαξ"
 
 msgid "Account is disabled"
 msgstr ""
@@ -2321,9 +2244,14 @@ msgid ""
 "If this was an error just login with your new password and then change "
 "your password to what you would like it to be."
 msgstr ""
+"Ο λογαριασμός %(user)s έχει αυτό το email συνδεμένο με ατόν. Ένας χρήστης"
+" web από %(ip)s ζήτησε την αποστολή νέου συνθηματικού. Το νέο σας "
+"συνθηματικό είναι: %(password)s Αν η συγκεκριμένη ενέργεια προήλθε από "
+"λάθος, εισέλθετε με το νέο σας συνθηματικό και αλλάξτε το σε αυτό που θα "
+"θέλατε να έχετε."
 
 msgid "Email failed to send"
-msgstr ""
+msgstr "Αποτυχία αποστολής e-mail."
 
 msgid "Fax Contacts"
 msgstr ""
@@ -2332,12 +2260,6 @@ msgid "Email Contacts"
 msgstr ""
 
 msgid "The fax document was not found."
-msgstr ""
-
-msgid "Failed to send email"
-msgstr ""
-
-msgid "Email sent successfully"
 msgstr ""
 
 msgid "Your session has expired. Reload the page and try again."
@@ -2366,6 +2288,84 @@ msgstr ""
 
 msgid "The password is not correct."
 msgstr ""
+
+msgid "Add a note"
+msgstr "Προσθήκη σημείωσης"
+
+msgid "Account active"
+msgstr "Ενεργοποιημένος λογαριασμός"
+
+msgid "The cover page was updated"
+msgstr ""
+
+msgid "The modem was created"
+msgstr "Το φαξ modem δημιουργήθηκε"
+
+msgid "The modem was deleted"
+msgstr "Το φαξ modem διαγράφηκε"
+
+msgid "The modem was updated"
+msgstr "Το φαξ modem ανανεώθηκε"
+
+msgid "Archive - show"
+msgstr ""
+
+msgid "Inbox - show"
+msgstr ""
+
+msgid "Assign a company name"
+msgstr "Ορισμός ονομασίας εταιρίας"
+
+msgid "You must enter a company name"
+msgstr "Πρέπει να εισάγετε την ονομασία της εταιρίας"
+
+msgid "Contact details saved"
+msgstr "Τα στοιχεία επαφής αποθηκεύτηκαν"
+
+msgid "Remove entries"
+msgstr "Διαγραφή στοιχείων"
+
+msgid "Save list name"
+msgstr "Αποθήκευση ονομασίας λίστας"
+
+msgid "The email failed to send."
+msgstr "Η αποστολή email απέτυχε."
+
+msgid "The email was sent successfully."
+msgstr "Το e-mail στάλθηκε επιτυχώς."
+
+msgid "Destination fax numbers"
+msgstr "Αριθμοί φαξ των παραληπτών"
+
+msgid "You must enter an alias"
+msgstr ""
+
+msgid "You must enter a device name"
+msgstr ""
+
+msgid "Modify Job"
+msgstr ""
+
+msgid "You must enter a name."
+msgstr "Πρέπει να εισάγετε ένα όνομα."
+
+msgid "Notify on requeue"
+msgstr "Ειδοποίηση κατά την επανάληψη"
+
+msgid "Forward fax via email"
+msgstr "Προώθηση φαξ μέσω e-mail"
+
+msgid "To person"
+msgstr "Υπόψιν"
+
+msgid "User can delete faxes"
+msgstr "Δικαιώμα διαγραφής φαξ"
+
+msgid "User settings have been saved."
+msgstr "Οι επιλογές του χρήστη αποθηκεύτηκαν."
+
+msgid "Select All Faxes"
+msgstr "Επιλογή όλων"
 
 #~ msgid "High"
 #~ msgstr "High"

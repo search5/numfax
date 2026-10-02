@@ -101,7 +101,7 @@ def test_admin_view_registers_renames_and_removes_through_the_session(admin_call
     dup = admin_call(admin_covers_view, "POST", {"create": "1", "title": "Other", "file": "standard.ps"})
     assert dup["error"] == "Cover page already exists"
     saved = admin_call(admin_covers_view, "POST", {"save": "1", "cover_id": str(cover_id), "title": "Renamed"})
-    assert saved["message"] == "Cover page template updated successfully"
+    assert saved["message"] == "The cover page was updated"
     assert [c["title"] for c in saved["covers"]] == ["Renamed"]
     gone = admin_call(admin_covers_view, "POST", {"delete": "1", "cover_id": str(cover_id)})
     assert gone["message"] == "Cover page template removed successfully" and gone["covers"] == []

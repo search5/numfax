@@ -15,8 +15,8 @@
           <input type="hidden" name="fid" value="{{ fid }}" /><input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
           <button type="submit" class="px-2 py-1 bg-slate-100 rounded text-xs">{{ _('Select') }}</button>
         </form>
-      {% elif assign == 'x' %}<a href="/assignx?fid={{ fid }}" class="text-sky-700 hover:underline" title="{{ _('Assign company name') }}">{{ company or origfaxnum or '-' }}</a>
-      {% elif assign == 'c' %}<a href="/assign?cid={{ cid }}" class="text-sky-700 hover:underline" title="{{ _('Assign company name') }}">{{ company }}</a>
+      {% elif assign == 'x' %}<a href="/assignx?fid={{ fid }}" class="text-sky-700 hover:underline" title="{{ _('Assign a company name') }}">{{ company or origfaxnum or '-' }}</a>
+      {% elif assign == 'c' %}<a href="/assign?cid={{ cid }}" class="text-sky-700 hover:underline" title="{{ _('Assign a company name') }}">{{ company }}</a>
       {% elif cid %}<a href="/addressbook?abook_id={{ cid }}" class="text-sky-700 hover:underline">{{ company }}</a>
       {% else %}{{ company or origfaxnum or '-' }}{% endif %}
     </h2>
