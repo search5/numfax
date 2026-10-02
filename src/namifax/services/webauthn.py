@@ -8,6 +8,7 @@ from typing import Any
 import webauthn
 from webauthn.helpers import (
     base64url_to_bytes,
+    bytes_to_base64url,
     options_to_json,
 )
 from webauthn.helpers.structs import (
@@ -87,7 +88,8 @@ class WebAuthnService:
             require_user_verification=False,
         )
         return {
-            "credential_id": verification.credential_id.decode("utf-8") if isinstance(verification.credential_id, bytes) else str(verification.credential_id),
+            # random bytes, not text: stored (and looked up) as base64url, which is also how the browser reports the id
+            "credential_id": bytes_to_base64url(verification.credential_id) if isinstance(verification.credential_id, bytes) else str(verification.credential_id),
             "credential_public_key": verification.credential_public_key.hex(),
             "sign_count": verification.sign_count,
         }

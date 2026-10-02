@@ -99,3 +99,18 @@ def test_server_database(monkeypatch, server_db_url, alembic_cfg):
             assert s.execute(sa.select(sa.func.count()).select_from(UserWebAuthnCredentials)).scalar() == 0
     finally:
         engine.dispose()
+
+
+def test_a_binary_credential_id_is_stored_as_base64url(svc):
+    from webauthn.helpers import base64url_to_bytes, bytes_to_base64url
+
+    """A real authenticator's credential id is random bytes, not UTF-8 text (registration failed with a codec error)."""
+    from types import SimpleNamespace
+    from unittest.mock import patch
+
+    raw = bytes([0x00, 0xFF, 0xFE, 0x80, 0x10, 0xC3, 0x28])
+    fake = SimpleNamespace(credential_id=raw, credential_public_key=b"\x01\x02", sign_count=0)
+    with patch("namifax.services.webauthn.webauthn.verify_registration_response", return_value=fake):
+        result = svc.verify_registration_response({"id": "x"}, bytes_to_base64url(b"challenge"))
+    assert result["credential_id"] == bytes_to_base64url(raw)
+    assert base64url_to_bytes(result["credential_id"]) == raw
