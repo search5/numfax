@@ -72,3 +72,7 @@ verified: true
 | 시험이 DB 를 건드리지 않음 | `test_db_isolation_fixture.py` | |
 [코드] 파일 존재는 `git ls-files tests` 로, 시험 이름과 docstring 은 각 파일 앞부분을 읽어 확인했다(모든 시험 본문을 읽은 것은 아니고 실행하지 않았으므로 통과 여부는 주장하지 않는다). `test_db_isolation_fixture.py` 는 `cli_session` 과 기본 URL 이 작업 트리 DB 를 건드리지 않는지 확인한다.
 - 관련: [[architecture-and-modules]], [[overview]]
+
+## 마지막 실행 기록
+- [코드] 2026-10-02: `uv run pytest tests -q -k "not serverdb"` → 2274 passed, 5 skipped, 141 deselected(서버 DB 시험 제외), 약 5분 27초. 같은 날 서버 DB 시험(`serverdb`)은 **돌리지 않았다**. 상세와 이유는 [[known-gaps-and-decisions]] 5.1.
+

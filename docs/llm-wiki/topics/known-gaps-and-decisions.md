@@ -114,3 +114,25 @@ verified: true
 - **실제 클라우드·프린터·메일**: S3/GCS 계정, 네트워크 프린터, Postfix 이메일→팩스.
 - **대용량·오래된 DB**: 수년치 `FaxArchive` 의 첫 기동 시간, 3.0~3.2.x 업그레이드 이력이 있는 DB [문서].
 - **이 세션의 한계**: 코드를 읽고 grep 으로만 확인했다. 시험도 서버도 실행하지 않았으므로 "해결됨"은 "지금 코드에서 보고된 증상이 보이지 않는다"는 뜻이지 "시험으로 증명했다"가 아니다.
+
+## 5. 다음에 정할 것 (일부러 고치지 않은 것과 이유, 2026-10-02 기준)
+위 표의 "남음"과 겹치는 것도 있지만, 여기는 **이번 수정 작업(커밋 `ad5dc09`~`21a56e2`)에서 알고도 손대지 않은 것**만 모았다. 각 항목의 근거는 링크한 페이지에 있다.
+
+| 항목 | 지금 상태 | 왜 고치지 않았나 / 하려면 무엇이 필요한가 | 근거 |
+|---|---|---|---|
+| 로그인 세션이 프로세스 메모리에 있다 | [코드] `sessions.py` 의 `SessionManager._sessions`. 워커가 여러 개면 서로 보지 못하고 재시작하면 모두 로그아웃 | 서버 쪽 세션 저장소(DB 나 외부 저장소)를 도입하는 설계가 필요하다 | [[authentication-and-security]], [[architecture-and-modules]] |
+| SAML 재전송 방지 캐시가 메모리에 있다 | [코드] 프로세스마다 따로라 워커가 여럿이면 다른 워커에 같은 응답을 다시 낼 수 있다 | 공용 저장소와 만료 정리가 필요하다 | [[authentication-and-security]] |
+| 패스키·SAML 로그인이 TOTP 를 거치지 않는다 | [코드] 두 방식 자체가 강한 인증이라고 볼지는 제품 정책 | 바꾸려면 `_finish_login` 을 두 경로에서도 부르는 설계가 필요하다 | [[authentication-and-security]] |
+| 로그인 시도 제한이 `POST /login` 에만 있다 | [코드] `/pwdexpired`·`/forgot`·`REMOTE_USER`·패스키·SAML 에는 없다. 프록시 뒤에서 `remote_addr` 가 프록시 주소로 보이면 주소별 한도(기본 50)를 모든 사용자가 공유한다 [추정] | `/pwdexpired` 는 올바른 비밀번호로 로그인한 뒤에만 도달해 추측 경로가 아니다. 프록시 주소 처리(`X-Forwarded-For`)는 배포 환경을 알아야 정할 수 있다 | [[authentication-and-security]] |
+| 발송 팩스는 S3 에 올라가지 않는다 | [코드] 업로드는 수신(`faxrcvd`)에서만. 업로드 실패 재시도, 원격 내려받기, 서명 URL 도 없다 | `notify` 훅(발송 완료 처리)에 같은 방식으로 붙이면 되지만 그 지점은 읽어 확인하지 않았다. 재시도는 "업로드 성공 표시" 저장 설계가 먼저다 | [[scheduler-and-storage]] |
+| 업로드가 확인된 뒤에만 로컬 TIFF 를 지우는 안전장치가 없다 | [코드] 업로드가 실패해도 PDF 가 있으면 로컬 TIFF 는 기간이 지나면 지워진다(로컬 PDF 는 남음) | "업로드 성공" 표시(DB 컬럼 등)와 실패분 재시도를 한 묶음으로 설계해야 의미가 있다 | [[scheduler-and-storage]] |
+| 원격 TIFF 만 지우는 정책을 켤 화면이 없다 | [코드] 설정 키 `storage_remote_tiff_only` 를 DB 에 직접 써야 한다. 원격 TIFF 는 보관 기간(`full_retention_days`) 뒤에만 지운다(로컬 TIFF 삭제 기간과 연동하지 않음) | 설계 문서와 같은 의도인지 확인이 필요하다 `[NEEDS_CLARIFICATION]` | [[scheduler-and-storage]] |
+| 정기 작업의 실행 표식이 원자적이지 않다 | [코드] 두 프로세스가 같은 순간에 시작하면 둘 다 통과할 수 있다. 죽은 프로세스의 표식은 6시간 동안 실행을 막는다(화면의 Stop 으로 취소 요청은 가능) | 근본적으로는 DB 잠금이나 compare-and-set 이 필요하다 | [[scheduler-and-storage]] |
+| `cron -d`(보관함 날짜 삭제)와 웹·AJAX 삭제는 원격 객체를 지우지 않는다 | [코드] 원격 삭제는 수명주기 작업에서만 | 삭제 경로마다 원격 삭제를 붙일지는 정책 결정이다 | [[scheduler-and-storage]] |
+| 나머지 22개 언어는 새 문구가 영어로 보인다 | [문서] 한국어만 새 문구까지 번역된다 | 번역 작업량이 크고 번역 품질 확인이 필요하다 | [[i18n-and-ui]], [[migration-from-avantfax]] |
+| `/ajax/faxalter` 에 남의 작업을 막는 소유권 검사가 없다 | [코드] 원본처럼 HylaFAX 에 맡긴다. 일반 사용자의 owner 는 자기 이름으로 고정, 슈퍼유저만 바꿀 수 있다 | 원본과 같은 동작이라 정책 결정(막을지)이 먼저다 | 위 1.2 표의 faxalter 행 |
+
+### 5.1 이번에도 하지 못한 시험
+- **서버 DB(PostgreSQL·MySQL·MariaDB) 시험을 이번 수정 작업 동안 한 번도 돌리지 않았다.** 일반 시험(`-k "not serverdb"`)만 돌렸고 2274개가 통과했다(2026-10-02, 약 5분 27초, `uv run pytest tests -q -k "not serverdb"`). 서버 DB 시험은 컨테이너로 서버를 띄워 `NAMIFAX_TEST_*_URL` 을 설정해야 하며([[testing]]) 시간이 더 걸린다. 이번에 DB 계층(리비전, 모델)은 바꾸지 않았지만, `SystemConfig` 키가 늘었다(로그인 제한, 스케줄러, `storage_remote_tiff_only`).
+- 실제 HylaFAX·CUPS·S3·systemd·cron·IdP 에서의 동작은 시험하지 못했다. 환경 파일 배선, CUPS 백엔드 스크립트, 훅은 가짜 실행 파일과 `sh` 로 변수·인자 전달만 확인했다.
+

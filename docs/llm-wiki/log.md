@@ -21,3 +21,9 @@ ARCHITECTURE.md(앞·뒤 절반), 결함 보고서(종합과 1~5라운드), 감�
 로그인 쿠키 `Secure` 가 `session.secure`/`NAMIFAX_SESSION_SECURE` 를 따름(authentication), 시스템 기능 데몬 상태가 `pgrep` 실제 값(known-gaps), 숫자 판정 `isdecimal`·비밀 화면 superuser 한정·가상 프린터 `sendfax` 연결을 known-gaps 새 행으로 기록.
 hylafax-integration 의 "sendfax 를 호출하지 않는다"와 scheduler-and-storage 의 "일반 관리자도 `/admin/storage` 가능"을 정정, operations 3.1 의 환경 파일 따옴표 경고를 문서화·시험됨으로 갱신.
 `cli/print_in.py` 가 `pyproject.toml`·`main.py`·`deploy/` 어디에도 연결돼 있지 않다는 점은 다시 확인해 그대로 남김. 시험은 읽기만 했다.
+
+## [2026-10-02] topic | 마무리: 추가 수정과 푸시
+`[코드]` 재검증 뒤에 더 고친 것: 로그인 쿠키 `Secure`(`NAMIFAX_SESSION_SECURE`), 시스템 기능 화면의 데몬 상태를 `pgrep` 실제 값으로, 숫자 판정 `isdigit`→`isdecimal`(위첨자 숫자 500), 가상 프린터가 실제로 `sendfax` 에 넘김과 `namifax print-in`·CUPS 백엔드 연결, 환경 파일 값에 `&`·공백이 있으면 큰따옴표, SMTP·프린터·스토리지·SAML 화면은 슈퍼유저만.
+위키 반영: [[authentication-and-security]], [[known-gaps-and-decisions]], [[hylafax-integration]], [[operations-and-deployment]], [[scheduler-and-storage]]. 일반 시험 2274개 통과, 서버 DB 시험은 미실행. 커밋 `9408385..21a56e2` 푸시.
+알고도 고치지 않은 것과 이유는 [[known-gaps-and-decisions]] 5절에 모았다.
+
