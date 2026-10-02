@@ -8,6 +8,7 @@ An address is still locked for a while only: it can be a whole office or a proxy
 
 from __future__ import annotations
 
+import json
 import re
 from unittest.mock import patch
 
@@ -139,6 +140,20 @@ def test_a_success_stays_possible_before_the_limit(testapp, victim):
     client = _client(testapp)
     _fail(client, "victim", 4)
     assert _login(client, "victim", PW).status_int == 302
+
+
+def test_the_right_password_on_the_fifth_attempt_clears_the_count(testapp, victim, dbsession):
+    client = _client(testapp)
+    _fail(client, "victim", 4)
+    assert _login(client, "victim", PW).status_int == 302                         # the fifth attempt is the right one
+    assert not _is_locked(dbsession, "victim")
+    row = dbsession.get(SystemConfig, lt._key("user", "victim"))
+    assert json.loads(row.value or "{}") == {}                                    # nothing is left of the four failures
+    other = _client(testapp)
+    _fail(other, "victim", 4)                                                     # four more are allowed again
+    assert _login(other, "victim", PW).status_int == 302
+    _fail(_client(testapp), "victim", 5)                                          # and only five in a row lock it
+    assert LOCKED in _login(_client(testapp), "victim", PW).text
 
 
 # --- an administrator unlocks it --------------------------------------------------------------------------------------------
