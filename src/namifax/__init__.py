@@ -54,6 +54,8 @@ def create_app(global_config=None, **settings):
             event["barcode_enabled"] = barcode_enabled()
             event["dl_tiff_enabled"] = flag("ENABLE_DL_TIFF", False)
             event["show_server_name"] = flag("SHOWSERVER_DETAILS", False)
+            event["focus_on_new_fax"] = flag("FOCUS_ON_NEW_FAX", False)
+            event["popup_on_new_fax"] = flag("FOCUS_ON_NEW_FAX_POPUP", False)
             event["server_name"] = text("AVANTFAX_SERVERNAME", socket.gethostname())
             _add_page_counters(event)
 

@@ -1,7 +1,8 @@
 /* New-fax notification and modem status, like the original's avantfax.js / ajaxmodemstatus.js:
  * the unread count is fetched every 30 seconds (data-inbox-poll), the modem status every 20 seconds (data-modem-poll).
- * A new fax updates the badge and the title, tries to bring the window forward, shows a browser notification when it was
- * allowed and plays the user's sound file. There is no modal alert. */
+ * A new fax updates the badge and the title. With FOCUS_ON_NEW_FAX (data-focus-new-fax on the body) the window is brought
+ * forward; with FOCUS_ON_NEW_FAX_POPUP (data-popup-new-fax) the fax is announced by a browser notification, if it was
+ * allowed, and the user's sound file is played. Both are off by default, as in the original. There is no modal alert. */
 (function () {
   var body = document.body;
   if (!body || !window.fetch) return;
@@ -17,7 +18,10 @@
   }
 
   function announce(count, sound) {
-    try { window.focus(); } catch (e) {}
+    if (body.getAttribute('data-focus-new-fax')) {
+      try { window.focus(); } catch (e) {}
+    }
+    if (!body.getAttribute('data-popup-new-fax')) return;
     if (window.Notification && Notification.permission === 'granted') {
       try { new Notification('NamiFAX', { body: count + ' ' + (body.getAttribute('data-new-fax') || 'new fax') }); } catch (e) {}
     }

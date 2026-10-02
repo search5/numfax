@@ -25,7 +25,7 @@
     body { background: #fff !important; }
   </style>
 </head>
-<body data-inbox-poll="30" data-modem-poll="20" data-new-fax="{{ _('new fax') }}" class="min-h-full flex flex-col text-slate-900 font-sans antialiased bg-slate-50">
+<body data-inbox-poll="30" data-modem-poll="20" data-new-fax="{{ _('new fax') }}"{% if focus_on_new_fax %} data-focus-new-fax="1"{% endif %}{% if popup_on_new_fax %} data-popup-new-fax="1"{% endif %} class="min-h-full flex flex-col text-slate-900 font-sans antialiased bg-slate-50">
 
   {% if current_user %}
   <!-- ───────────── Header ───────────── -->

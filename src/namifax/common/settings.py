@@ -82,6 +82,16 @@ def default_faxes_per_page_archive() -> int:
     return number("DEFAULT_FAXES_PER_PAGE_ARCHIVE", 30)
 
 
+def focus_on_new_fax() -> bool:
+    """``FOCUS_ON_NEW_FAX`` (off by default): the inbox check brings the window forward when a new fax arrives."""
+    return flag("FOCUS_ON_NEW_FAX", False)
+
+
+def focus_on_new_fax_popup() -> bool:
+    """``FOCUS_ON_NEW_FAX_POPUP`` (off by default): a new fax is announced (and the user's sound played) in the browser."""
+    return flag("FOCUS_ON_NEW_FAX_POPUP", False)
+
+
 def hylaspool() -> str:
     return text("HYLASPOOL", "/var/spool/hylafax").rstrip("/") or "/"
 
