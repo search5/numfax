@@ -11,13 +11,13 @@ from pyramid.view import view_config
 
 from namifax.common import settings
 from namifax.common.helpers import clean_faxnum
-from namifax.services.addressbook import RESERVED_FAX_NUM, AFAddressBook
+from namifax.services.addressbook import RESERVED_FAX_NUM, NFAddressBook
 from namifax.services.archive_in import ArchiveIn
 from namifax.views.admin import get_all_admin_modems
 from namifax.views.fax_rights import fax_access, load_fax
 
 
-def _sender(ab: AFAddressBook, r: dict) -> dict:
+def _sender(ab: NFAddressBook, r: dict) -> dict:
     """Who a received fax is from, as the original's get_company_details() decides.
 
     ``assign`` is ``"x"`` when the sender is unknown (no entry, or the reserved one: the name can be given with *assignx*),
@@ -77,7 +77,7 @@ def _line_names(request, rows):
     return name
 
 
-def _inbox_row(ab: AFAddressBook, r: dict) -> dict:
+def _inbox_row(ab: NFAddressBook, r: dict) -> dict:
     who = _sender(ab, r)
     return {
         "id": r.get("fid"),
@@ -143,7 +143,7 @@ def inbox_view(request):
         rows = arc.list_inbox(devices=access.devices, index=index, limit=limit, faxcats=access.categories,
                               enable_did_routing=access.did_routing, order_by_modem=settings.inbox_list_modem())
         if rows:
-            ab = AFAddressBook(db=request.dbsession)
+            ab = NFAddressBook(db=request.dbsession)
             names = _line_names(request, rows)
             for r in rows:
                 r["_line"] = names(r)
@@ -193,7 +193,7 @@ def viewfax_view(request):
     if not load_fax(request, arc, fid, action="viewfax") or not arc.get_inbox():
         return back()
 
-    who = _sender(AFAddressBook(db=request.dbsession),
+    who = _sender(NFAddressBook(db=request.dbsession),
                   {"companyid": arc.get_companyid(), "faxnumid": arc.get_faxnumid(), "origfaxnum": arc.get_origfaxnum()})
     prev_fid, next_fid = arc.get_fid_prev(), arc.get_fid_next()
     pages = arc.get_pages() or 1
@@ -293,7 +293,7 @@ def setcompany_view(request):
 
     if fid and faxnumid:
         arc = ArchiveIn(db=request.dbsession)
-        ab = AFAddressBook(db=request.dbsession)
+        ab = NFAddressBook(db=request.dbsession)
         try:
             if load_fax(request, arc, fid, action="setcompany"):
                 arc.set_faxnumid(int(faxnumid))

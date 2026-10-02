@@ -10,7 +10,7 @@ from sqlalchemy import select, update
 
 from namifax.common import passwords
 from namifax.models import UserAccount, UserPasswords
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 
 PW = "Correct-horse-9"
 
@@ -25,7 +25,7 @@ def _row(session, username):
 
 
 def _make(session, username="argo", password=PW, **extra):
-    svc = AFUserAccount(db=session)
+    svc = NFUserAccount(db=session)
     assert svc.create({"username": username, "password": password, "email": f"{username}@x.test", "name": "A", "acc_enabled": 1,
                        "last_login": "2026-01-01 10:00:00", **extra})
     session.flush()
@@ -67,24 +67,24 @@ def test_md5_mode_keeps_the_originals_format(monkeypatch):
 def test_a_new_account_is_stored_as_argon2id_and_can_log_in(dbsession):
     _make(dbsession)
     assert _row(dbsession, "argo").password.startswith("$argon2id$")
-    assert AFUserAccount(db=dbsession).login("argo", PW)
-    assert not AFUserAccount(db=dbsession).login("argo", "wrong-password")
+    assert NFUserAccount(db=dbsession).login("argo", PW)
+    assert not NFUserAccount(db=dbsession).login("argo", "wrong-password")
 
 
 def test_an_md5_account_logs_in_and_is_upgraded(dbsession):
     _make(dbsession)
     dbsession.execute(update(UserAccount).where(UserAccount.username == "argo").values(password=_md5(PW)))
     dbsession.flush()
-    assert AFUserAccount(db=dbsession).login("argo", PW)
+    assert NFUserAccount(db=dbsession).login("argo", PW)
     assert _row(dbsession, "argo").password.startswith("$argon2id$")
-    assert AFUserAccount(db=dbsession).login("argo", PW)                      # and the upgraded hash works
+    assert NFUserAccount(db=dbsession).login("argo", PW)                      # and the upgraded hash works
 
 
 def test_a_wrong_password_does_not_upgrade_anything(dbsession):
     _make(dbsession)
     dbsession.execute(update(UserAccount).where(UserAccount.username == "argo").values(password=_md5(PW)))
     dbsession.flush()
-    assert not AFUserAccount(db=dbsession).login("argo", "nope-nope-1")
+    assert not NFUserAccount(db=dbsession).login("argo", "nope-nope-1")
     assert _row(dbsession, "argo").password == _md5(PW)
 
 
@@ -92,45 +92,45 @@ def test_in_md5_mode_nothing_is_upgraded(dbsession, monkeypatch):
     monkeypatch.setenv("NAMIFAX_PASSWORD_HASH", "md5")
     _make(dbsession)
     assert _row(dbsession, "argo").password == _md5(PW)
-    assert AFUserAccount(db=dbsession).login("argo", PW)
+    assert NFUserAccount(db=dbsession).login("argo", PW)
     assert _row(dbsession, "argo").password == _md5(PW)
 
 
 def test_the_admin_login_still_requires_the_admin_flag(dbsession):
     _make(dbsession, "plain")
     _make(dbsession, "boss", is_admin=1)
-    assert not AFUserAccount(db=dbsession).login("plain", PW, admin=True)
-    assert AFUserAccount(db=dbsession).login("boss", PW, admin=True)
+    assert not NFUserAccount(db=dbsession).login("plain", PW, admin=True)
+    assert NFUserAccount(db=dbsession).login("boss", PW, admin=True)
 
 
 def test_changing_the_password_stores_argon2id(dbsession):
     svc = _make(dbsession)
     assert svc.change_password("Another-pass-7")
     assert _row(dbsession, "argo").password.startswith("$argon2id$")
-    assert AFUserAccount(db=dbsession).login("argo", "Another-pass-7")
+    assert NFUserAccount(db=dbsession).login("argo", "Another-pass-7")
 
 
 def test_the_old_password_is_checked_against_either_format(dbsession):
     svc = _make(dbsession)
     assert svc.set_newpassword(PW, "Second-pass-8")
-    svc2 = AFUserAccount(db=dbsession)
+    svc2 = NFUserAccount(db=dbsession)
     assert svc2.load_username("argo") and not svc2.set_newpassword("wrong-old-1", "Third-pass-9")
     dbsession.execute(update(UserAccount).where(UserAccount.username == "argo").values(password=_md5("Second-pass-8")))
     dbsession.flush()
-    svc3 = AFUserAccount(db=dbsession)
+    svc3 = NFUserAccount(db=dbsession)
     assert svc3.load_username("argo") and svc3.set_newpassword("Second-pass-8", "Fourth-pass-1")
 
 
 def test_a_reset_password_works_for_login(dbsession):
     _make(dbsession)
-    ok, new = AFUserAccount(db=dbsession).reset_password("argo@x.test")
-    assert ok and AFUserAccount(db=dbsession).login("argo", new)
+    ok, new = NFUserAccount(db=dbsession).reset_password("argo@x.test")
+    assert ok and NFUserAccount(db=dbsession).login("argo", new)
     assert _row(dbsession, "argo").password.startswith("$argon2id$")
 
 
 def test_a_generated_password_works_for_login(dbsession):
     svc = _make(dbsession, "gen", password="")
-    assert AFUserAccount(db=dbsession).login("gen", svc.generated_password)
+    assert NFUserAccount(db=dbsession).login("gen", svc.generated_password)
 
 
 # --- the history that blocks reuse ------------------------------------------------------------------------------------------
@@ -138,9 +138,9 @@ def test_a_generated_password_works_for_login(dbsession):
 def test_a_used_password_is_refused_again_whatever_its_stored_format(dbsession):
     svc = _make(dbsession)
     uid = svc.uid
-    from namifax.services.user_passwords import AFUserPasswords
+    from namifax.services.user_passwords import NFUserPasswords
 
-    history = AFUserPasswords(db=dbsession)
+    history = NFUserPasswords(db=dbsession)
     dbsession.add(UserPasswords(uid=uid, pwdhash=_md5("Old-legacy-pass-3")))           # a row the original wrote
     dbsession.flush()
     assert history.password_used("Old-legacy-pass-3", uid) and history.password_used(PW, uid)

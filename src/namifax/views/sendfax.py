@@ -14,7 +14,7 @@ from typing import Any
 from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
 
-from namifax.services.addressbook import RESERVED_FAX_NUM, AFAddressBook
+from namifax.services.addressbook import RESERVED_FAX_NUM, NFAddressBook
 from namifax.services.archive_in import ArchiveIn
 from namifax.services.covers import Covers
 from namifax.common import settings
@@ -22,7 +22,7 @@ from namifax.i18n import _
 from namifax.services import upload_check
 from namifax.services.modem import FaxModem
 from namifax.services.sendfax_command import NothingToSend, Sender, SendRequest, build_plan
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 from namifax.views.fax_rights import fax_access, load_fax
 
 
@@ -92,7 +92,7 @@ def dispatch_sendfax(send: SendRequest, sender: Sender) -> dict[str, Any]:
 def _sender_number(request, fax: ArchiveIn) -> str:
     """The number to answer: the address book's number for the fax, else the number it came from (blank if unusable)."""
     number = None
-    book = AFAddressBook(db=request.dbsession)
+    book = NFAddressBook(db=request.dbsession)
     if fax.get_faxnumid() and book.loadbyfaxnumid(fax.get_faxnumid()):
         number = book.get_faxnumber()
     number = number or fax.get_origfaxnum() or ""
@@ -102,7 +102,7 @@ def _sender_number(request, fax: ArchiveIn) -> str:
 def _account(request) -> tuple[Sender, dict[str, Any]]:
     """The signed-in user as the sender of the fax, and their account values."""
     username = str((request.identity or {}).get("username") or "")
-    account = AFUserAccount(db=request.dbsession)
+    account = NFUserAccount(db=request.dbsession)
     if not username or not account.load_username(username):
         return Sender(username=username), {}
     d = account.dbdata

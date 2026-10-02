@@ -30,7 +30,7 @@ def _seen_before(assertion_id: str, not_after: float) -> bool:
         return False
 
 from namifax.db.missing import resolve_db
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 
 @dataclass
 class SAMLSettings:
@@ -255,7 +255,7 @@ class SAMLService:
         self,
         name_id: str,
         attributes: dict[str, Any] | None = None,
-    ) -> AFUserAccount | None:
+    ) -> NFUserAccount | None:
         """Find the account with the asserted email, or create one when JIT provisioning is on.
 
         An existing account is matched by email only. Matching on the local part of the NameID would let
@@ -268,14 +268,14 @@ class SAMLService:
         email = attributes.get("email") or (name_id if "@" in name_id else f"{base}@local")
         display_name = attributes.get("displayName") or attributes.get("name") or base
 
-        user = AFUserAccount(db=self.db)
+        user = NFUserAccount(db=self.db)
         if user.loadbyemail(email):
             return user
 
         if self.settings.jit_provisioning:
             username = base
             for n in range(1, 1000):
-                if not AFUserAccount(db=self.db).load_username(username):
+                if not NFUserAccount(db=self.db).load_username(username):
                     break
                 username = f"{base}{n}"
             temp_pwd = base64.b64encode(os.urandom(12)).decode("ascii")
@@ -291,7 +291,7 @@ class SAMLService:
         return None
 
 
-def apply_role_mapping(session: Any, user: AFUserAccount, multi: dict[str, list[str]], settings: SAMLSettings) -> dict[str, Any]:
+def apply_role_mapping(session: Any, user: NFUserAccount, multi: dict[str, list[str]], settings: SAMLSettings) -> dict[str, Any]:
     """Make the account's rights what the identity provider says (called at every sign-in while the mapping is on).
 
     Roles (values of ``role_attribute``) set the admin / superuser / may-delete / any-line flags. The attributes named for lines and

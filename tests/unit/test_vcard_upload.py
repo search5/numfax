@@ -40,7 +40,7 @@ def test_upload_email_contacts_vcard_post(dummy_request):
     dummy_request.POST["upload"] = file_mock
     dummy_request.POST["_submit_check"] = "1"
 
-    with patch("namifax.views.helpers.AFAddressBook") as mock_ab_cls:
+    with patch("namifax.views.helpers.NFAddressBook") as mock_ab_cls:
         inst_ab = MagicMock()
         inst_ab.create_contact.return_value = True
         mock_ab_cls.return_value = inst_ab
@@ -63,7 +63,7 @@ def test_upload_fax_contacts_vcard_post(dummy_request):
     dummy_request.POST["catid"] = "2"
     dummy_request.POST["_submit_check"] = "1"
 
-    with patch("namifax.views.helpers.AFAddressBook") as mock_ab_cls:
+    with patch("namifax.views.helpers.NFAddressBook") as mock_ab_cls:
         inst_ab = MagicMock()
         inst_ab.create.return_value = True
         inst_ab.create_faxnumid.return_value = True

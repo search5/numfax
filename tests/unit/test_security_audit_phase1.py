@@ -5,7 +5,7 @@ from pyramid import testing
 from pyramid.httpexceptions import HTTPFound
 
 from sqlsession import bare_session, empty_session, seeded_session
-from namifax.services.user_account import AFUserAccount, md5_hash
+from namifax.services.user_account import NFUserAccount, md5_hash
 from namifax.services.faxqueue import FaxQueue
 from namifax.views.auth import login_post_view
 from namifax.views.admin import get_all_syslogs
@@ -40,7 +40,7 @@ class TestSecurityAuditPhase1(unittest.TestCase):
         req_old.db = self.db
         req_old.dbsession = self.session
 
-        with patch("namifax.views.auth.AFUserAccount", return_value=AFUserAccount(db=self.db)):
+        with patch("namifax.views.auth.NFUserAccount", return_value=NFUserAccount(db=self.db)):
             res_old = login_post_view(req_old)
 
         # Must reject login (render error dict instead of redirect)
@@ -53,7 +53,7 @@ class TestSecurityAuditPhase1(unittest.TestCase):
         req_new.db = self.db
         req_new.dbsession = self.session
 
-        with patch("namifax.views.auth.AFUserAccount", return_value=AFUserAccount(db=self.db)):
+        with patch("namifax.views.auth.NFUserAccount", return_value=NFUserAccount(db=self.db)):
             res_new = login_post_view(req_new)
 
         # Must succeed and redirect to inbox
@@ -71,7 +71,7 @@ class TestSecurityAuditPhase1(unittest.TestCase):
         req.db = self.db
         req.dbsession = self.session
 
-        with patch("namifax.views.auth.AFUserAccount", return_value=AFUserAccount(db=self.db)):
+        with patch("namifax.views.auth.NFUserAccount", return_value=NFUserAccount(db=self.db)):
             res = login_post_view(req)
 
         self.assertIsInstance(res, HTTPFound)

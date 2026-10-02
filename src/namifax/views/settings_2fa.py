@@ -20,7 +20,7 @@ from namifax.common.secretbox import SecretDecryptError, SecretKeyError, decrypt
 from namifax.i18n import _
 from namifax.services.totp import TotpService
 from namifax.common.passwords import verify_password
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 
 TEMPLATE = "namifax:templates/settings_2fa.jinja2"
 _PENDING = "totp_pending"
@@ -138,7 +138,7 @@ def totp_enable_view(request):
 @view_config(route_name="totp_disable", request_method="POST", renderer=TEMPLATE, permission="view")
 def totp_disable_view(request):
     uid = _guard(request)
-    user = AFUserAccount(db=request.dbsession)
+    user = NFUserAccount(db=request.dbsession)
     if not user.load(uid) or not verify_password(user.dbdata.get("password"), request.POST.get("password") or ""):
         return _result(request, error=_("The password is not correct."))
     svc = TotpService(request.dbsession)

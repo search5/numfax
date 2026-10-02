@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from namifax.services.addressbook import AFAddressBook
+from namifax.services.addressbook import NFAddressBook
 
 PAYLOADS = [
     "x'OR(1=1)--",
@@ -17,7 +17,7 @@ PAYLOADS = [
 
 @pytest.fixture
 def ab(seeded_db):
-    return AFAddressBook(db=seeded_db)
+    return NFAddressBook(db=seeded_db)
 
 
 def test_a_normal_search_still_works(ab):

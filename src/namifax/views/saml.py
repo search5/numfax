@@ -8,7 +8,7 @@ from pyramid.view import view_config
 
 from namifax.common.helpers import avantfaxlog
 from namifax.services.saml import SAMLService, apply_role_mapping, saml_settings
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 
 def _get_saml_service(request: Request) -> SAMLService:
     base_url = request.application_url if hasattr(request, "application_url") else "http://localhost:8000"
@@ -72,7 +72,7 @@ def saml_acs_view(request: Request) -> Response:
     # sign in like the password login does: the same checks (disabled account) and the same token cookie
     username = user.get_username()
     remote_ip = getattr(request, "remote_addr", None) or "127.0.0.1"
-    if not AFUserAccount(db=request.dbsession).login_webauth(username, remote_ip=remote_ip):
+    if not NFUserAccount(db=request.dbsession).login_webauth(username, remote_ip=remote_ip):
         return _back_to_login(request, "saml_account_disabled")
 
     return HTTPFound(location=_safe_relay(relay_state), headers=remember(request, username))

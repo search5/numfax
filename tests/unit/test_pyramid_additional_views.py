@@ -42,7 +42,7 @@ def test_setcompany_view(dummy_request):
     dummy_request.method = "POST"
     dummy_request.POST = {"fid": "42", "faxnumid": "10"}
     with patch("namifax.views.inbox.ArchiveIn") as mock_arc_cls, \
-         patch("namifax.views.inbox.AFAddressBook") as mock_ab_cls, patch("namifax.views.inbox.check_csrf_token"):
+         patch("namifax.views.inbox.NFAddressBook") as mock_ab_cls, patch("namifax.views.inbox.check_csrf_token"):
         inst_arc = MagicMock()
         inst_arc.load_fax.return_value = True
         mock_arc_cls.return_value = inst_arc

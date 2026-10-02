@@ -103,12 +103,12 @@ def test_server_database_gets_the_schema_and_default_records_only(server_db_url)
 def test_the_application_runs_on_the_server_database(server_db_url):
     from namifax import create_app
     from namifax.models import UserAccount  # noqa: F401
-    from namifax.services.user_account import AFUserAccount
+    from namifax.services.user_account import NFUserAccount
 
     app = create_app(**{"sqlalchemy.url": server_db_url})
     engine = app.registry["dbengine"]
     with Session(engine) as s:
-        assert AFUserAccount(db=s).create({"username": "boss", "password": "Secret123!", "email": "boss@x.test",
+        assert NFUserAccount(db=s).create({"username": "boss", "password": "Secret123!", "email": "boss@x.test",
                                            "name": "Boss", "is_admin": 1, "superuser": 1, "acc_enabled": 1})
         s.commit()
 
@@ -137,7 +137,7 @@ def test_the_application_runs_on_the_server_database(server_db_url):
     from namifax.services.totp import TotpService
 
     with Session(engine) as s:
-        two = AFUserAccount(db=s)
+        two = NFUserAccount(db=s)
         assert two.create({"username": "twofa", "password": "Secret123!", "email": "twofa@x.test", "acc_enabled": 1,
                             "last_login": "2026-01-01 10:00:00"})
         t = TotpService(s)

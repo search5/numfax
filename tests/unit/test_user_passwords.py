@@ -80,13 +80,13 @@ def test_delete_where_on_both_repository_implementations(dbsession, seeded_db):
 
 @pytest.fixture(params=["session", "engine"])
 def history(request, dbsession, seeded_db):
-    from namifax.services.user_passwords import AFUserPasswords
+    from namifax.services.user_passwords import NFUserPasswords
 
     if request.param == "session":
         dbsession.execute(sa.text("DELETE FROM UserPasswords"))
-        return AFUserPasswords(db=dbsession)
+        return NFUserPasswords(db=dbsession)
     seeded_db.query("DELETE FROM UserPasswords")
-    return AFUserPasswords(db=seeded_db)
+    return NFUserPasswords(db=seeded_db)
 
 
 def test_a_logged_password_is_recognised_as_used(history):
@@ -123,10 +123,10 @@ def test_clear_hashes_removes_only_that_users_history(history):
 # --- the account policy that depends on it ---------------------------------------------------------
 
 def test_a_new_account_logs_its_initial_password_and_reuse_is_blocked(seeded_db):
-    from namifax.services.user_account import AFUserAccount
+    from namifax.services.user_account import NFUserAccount
 
     seeded_db.query("DELETE FROM UserPasswords")
-    acct = AFUserAccount(db=seeded_db)
+    acct = NFUserAccount(db=seeded_db)
     assert acct.create({"username": "histuser", "password": "Initial123!", "name": "H", "email": "h@x.test",
                         "pwd_reuse": 0})
     assert acct.userpasswords.password_used("Initial123!", acct.uid) is True
@@ -137,14 +137,14 @@ def test_a_new_account_logs_its_initial_password_and_reuse_is_blocked(seeded_db)
 @pytest.mark.serverdb
 def test_server_database_history(monkeypatch, server_db_url, alembic_cfg):
     from namifax.models import UserPasswords
-    from namifax.services.user_passwords import AFUserPasswords
+    from namifax.services.user_passwords import NFUserPasswords
 
     monkeypatch.setenv("DATABASE_URL", server_db_url)
     alembic.command.upgrade(alembic_cfg, "head")
     engine = sa.create_engine(server_db_url)
     try:
         with Session(engine) as session:
-            svc = AFUserPasswords(db=session)
+            svc = NFUserPasswords(db=session)
             assert svc.log_password("pa'ss\\' 한글", 1) and svc.log_password("two", 1) and svc.log_password("x", 2)
             assert svc.password_used("pa'ss\\' 한글", 1) and not svc.password_used("pa'ss\\' 한글", 2)
             assert svc.clear_hashes(1) is True

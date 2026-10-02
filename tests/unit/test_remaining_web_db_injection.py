@@ -29,18 +29,18 @@ def test_emailbook_edit_builds_the_address_book_with_the_request_session(method,
     req.params = params
     req.POST = params
     req.route_url = MagicMock(return_value="/x")
-    cls = MagicMock(name="AFAddressBook")
-    with patch.object(ab_mod, "AFAddressBook", cls), contextlib.suppress(Exception):
+    cls = MagicMock(name="NFAddressBook")
+    with patch.object(ab_mod, "NFAddressBook", cls), contextlib.suppress(Exception):
         ab_mod.emailbook_edit_view(req)
 
-    assert cls.call_args_list, "AFAddressBook was never built"
+    assert cls.call_args_list, "NFAddressBook was never built"
     assert all(call.kwargs.get("db") is req.dbsession for call in cls.call_args_list)
 
 
 def test_saml_provisioning_builds_account_with_service_db():
     db = object()
     svc = SAMLService(SAMLSettings(enabled=True), db=db)
-    with patch("namifax.services.saml.AFUserAccount") as cls:
+    with patch("namifax.services.saml.NFUserAccount") as cls:
         cls.return_value.load_by_username.return_value = True
         svc.provision_or_get_user("alice@corp.example")
     assert cls.call_args.kwargs.get("db") is db

@@ -10,7 +10,7 @@ import sys
 from typing import Any, Sequence
 
 from namifax.db.provider import cli_session
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 
 
 def run_createuser(argv: Sequence[str] | None = None, *, session: Any = None) -> int:
@@ -71,7 +71,7 @@ def run_reset_2fa(argv: Sequence[str] | None = None, *, session: Any = None) -> 
 def _reset_2fa(username: str, session: Any) -> int:
     from namifax.services.totp import TotpService
 
-    user = AFUserAccount(db=session)
+    user = NFUserAccount(db=session)
     if not user.load_username(username):
         print(f"[!] No such user: {username}")
         return 1
@@ -82,7 +82,7 @@ def _reset_2fa(username: str, session: Any) -> int:
 
 def _create_user(args: argparse.Namespace, session: Any) -> int:
     """Create or update the requested account in the given session."""
-    user_svc = AFUserAccount(db=session)
+    user_svc = NFUserAccount(db=session)
 
     # Check if username already exists
     if user_svc.load_username(args.username):

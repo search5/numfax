@@ -133,9 +133,9 @@ def _dispatch_print_job(file_path: str, destination: str, sender_user: str, db: 
 
         sender = Sender(username=sender_user)
         if db is not None:
-            from namifax.services.user_account import AFUserAccount
+            from namifax.services.user_account import NFUserAccount
 
-            account = AFUserAccount(db=db)
+            account = NFUserAccount(db=db)
             if account.load_username(sender_user):
                 d = account.dbdata
                 sender = Sender(name=d.get("name") or "", username=sender_user, email=d.get("email") or "",

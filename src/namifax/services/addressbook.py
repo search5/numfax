@@ -30,7 +30,7 @@ def clean_faxnum(faxnum: str | None) -> str:
     return re.sub(r"[^0-9+]", "", str(faxnum))
 
 
-class AFAddressBook:
+class NFAddressBook:
     """Unified service for companies, fax number routing, and email contacts.
 
     ``db`` is a SQLAlchemy ``Session`` (portable across SQLite, MySQL, MariaDB and PostgreSQL) or the legacy
@@ -578,4 +578,4 @@ class AFAddressBook:
 
 
 # Modern architectural alias
-AddressBookService = AFAddressBook
+AddressBookService = NFAddressBook

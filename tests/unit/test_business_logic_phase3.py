@@ -1,7 +1,7 @@
 """TDD Unit Tests for Phase 3 Business Logic & View Layer Refactoring.
 
 Covers:
-- AUDIT-10: settings_view real AFUserAccount DB binding, profile update, and password change
+- AUDIT-10: settings_view real NFUserAccount DB binding, profile update, and password change
 - AUDIT-15: helpers.py ocr_faxcontent and bardecode implementation
 - AUDIT-16: faxrcvd.py OCR indexing without NameError
 - AUDIT-17: outbox_view and faxqueue.py killjob success/failure branching
@@ -20,7 +20,7 @@ from PIL import Image
 
 from linked_db import close_linked, linked_db
 from sqlsession import bare_session, empty_session, seeded_session
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 from namifax.views.settings import settings_view
 from namifax.common.helpers import ocr_faxcontent, bardecode
 from namifax.views.outbox import outbox_view
@@ -78,8 +78,8 @@ def dummy_request(memory_db, linked):
 # AUDIT-10: settings_view DB Binding & Profile / Password Updates
 # ---------------------------------------------------------------------------
 def test_settings_view_load_profile_from_db(dummy_request, memory_db):
-    """Verify settings_view loads profile data from real AFUserAccount in DB."""
-    user = AFUserAccount(db=memory_db)
+    """Verify settings_view loads profile data from real NFUserAccount in DB."""
+    user = NFUserAccount(db=memory_db)
     ok = user.create({
         "username": "profileuser",
         "password": "oldpassword123",
@@ -111,7 +111,7 @@ def test_settings_view_load_profile_from_db(dummy_request, memory_db):
 
 def test_settings_view_post_updates_profile_in_db(dummy_request, memory_db):
     """Verify POST updates user.dbdata and calls user_update() to persist in DB."""
-    user = AFUserAccount(db=memory_db)
+    user = NFUserAccount(db=memory_db)
     ok = user.create({
         "username": "updateuser",
         "password": "oldpassword123",
@@ -141,7 +141,7 @@ def test_settings_view_post_updates_profile_in_db(dummy_request, memory_db):
     assert res["error"] is None
 
     # Verify directly from DB
-    reloaded = AFUserAccount(db=memory_db)
+    reloaded = NFUserAccount(db=memory_db)
     assert reloaded.load(uid) is True
     assert reloaded.dbdata.get("name") == "Updated Name"
     assert reloaded.dbdata.get("email") == "updated@example.com"
@@ -152,7 +152,7 @@ def test_settings_view_post_updates_profile_in_db(dummy_request, memory_db):
 
 def test_settings_view_password_change(dummy_request, memory_db):
     """Verify password change sets new password in DB and validates old password."""
-    user = AFUserAccount(db=memory_db)
+    user = NFUserAccount(db=memory_db)
     ok = user.create({
         "username": "pwduser",
         "password": "oldpassword123",
@@ -193,7 +193,7 @@ def test_settings_view_password_change(dummy_request, memory_db):
     assert res["error"] is None
 
     # Check login with new password
-    auth_check = AFUserAccount(db=memory_db)
+    auth_check = NFUserAccount(db=memory_db)
     assert auth_check.login("pwduser", "newpassword123") is True
     assert auth_check.login("pwduser", "oldpassword123") is False
 
@@ -248,7 +248,7 @@ def test_faxrcvd_ocr_index_logic(tmp_path, monkeypatch):
     with patch("namifax.cli.faxrcvd.FaxModem") as mock_modem, \
          patch("namifax.cli.faxrcvd.faxinfo") as mock_finfo, \
          patch("namifax.cli.faxrcvd.ArchiveIn") as mock_in, \
-         patch("namifax.cli.faxrcvd.AFAddressBook") as mock_book, \
+         patch("namifax.cli.faxrcvd.NFAddressBook") as mock_book, \
          patch("namifax.cli.faxrcvd.DIDRouting"), \
          patch("namifax.cli.faxrcvd.tiff2pdf"), patch("namifax.cli.faxrcvd.copy_tiff", return_value=True), \
          patch("namifax.cli.faxrcvd.static_preview"), \
@@ -287,7 +287,7 @@ def _queue_with_job(jid, owner, killed):
 def test_outbox_view_killjob_success(dummy_request, as_superuser):
     """Verify outbox_view sets success flash message when fq.killjob succeeds (for a job the user may see)."""
     dummy_request.method, dummy_request.POST = "POST", {"kill": "105"}
-    with patch("namifax.views.outbox.FaxQueue") as mock_fq_cls, patch("namifax.views.outbox.AFAddressBook"), \
+    with patch("namifax.views.outbox.FaxQueue") as mock_fq_cls, patch("namifax.views.outbox.NFAddressBook"), \
             patch("namifax.views.outbox.check_csrf_token", return_value=True):
         fq_inst = mock_fq_cls.return_value = _queue_with_job("105", "bob", True)
 
@@ -299,7 +299,7 @@ def test_outbox_view_killjob_success(dummy_request, as_superuser):
 def test_outbox_view_killjob_failure(dummy_request, as_superuser):
     """Verify outbox_view sets failure flash message when fq.killjob fails."""
     dummy_request.method, dummy_request.POST = "POST", {"kill": "106"}
-    with patch("namifax.views.outbox.FaxQueue") as mock_fq_cls, patch("namifax.views.outbox.AFAddressBook"), \
+    with patch("namifax.views.outbox.FaxQueue") as mock_fq_cls, patch("namifax.views.outbox.NFAddressBook"), \
             patch("namifax.views.outbox.check_csrf_token", return_value=True):
         mock_fq_cls.return_value = _queue_with_job("106", "bob", False)
 

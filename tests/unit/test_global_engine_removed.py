@@ -6,10 +6,10 @@ import pytest
 
 from namifax.db.missing import MissingDatabase
 from namifax.db.repository import MDBOData, Repository
-from namifax.services.addressbook import AFAddressBook
+from namifax.services.addressbook import NFAddressBook
 from namifax.services.archive_in import ArchiveIn
 from namifax.services.did import DIDRouting
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 
 
 def test_repository_uses_injected_session(seeded_db):
@@ -25,7 +25,7 @@ def test_repository_without_db_is_a_loud_placeholder(factory):
         repo.load(1)
 
 
-@pytest.mark.parametrize("factory", [AFUserAccount, AFAddressBook, DIDRouting, ArchiveIn], ids=lambda f: f.__name__)
+@pytest.mark.parametrize("factory", [NFUserAccount, NFAddressBook, DIDRouting, ArchiveIn], ids=lambda f: f.__name__)
 def test_domain_class_without_db_does_not_silently_use_another_database(factory):
     obj = factory()
     with pytest.raises(RuntimeError, match="database"):
@@ -37,7 +37,7 @@ def test_domain_class_without_db_does_not_silently_use_another_database(factory)
 
 
 def test_domain_class_with_db_reads_from_that_db(seeded_db):
-    user = AFUserAccount(db=seeded_db)
+    user = NFUserAccount(db=seeded_db)
     assert user.load(1) is True
 
 

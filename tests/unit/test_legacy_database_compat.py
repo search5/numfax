@@ -100,9 +100,9 @@ def test_the_legacy_column_types_are_left_alone(adopted):
 # --- using it ------------------------------------------------------------------------------------------------------------
 
 def test_the_legacy_administrator_can_log_in_and_must_change_the_password(session):
-    from namifax.services.user_account import AFUserAccount
+    from namifax.services.user_account import NFUserAccount
 
-    user = AFUserAccount(db=session)
+    user = NFUserAccount(db=session)
     assert user.login("admin", "password") is True and user.is_expired() is True      # the installer sets wasreset
 
 
@@ -110,9 +110,9 @@ def test_dates_come_back_as_iso_text(session):
     from namifax.services.archive_base import FaxPDFArchive
     from namifax.services.distro import DistributionList
     from namifax.services.syslog import SysLogService
-    from namifax.services.user_account import AFUserAccount
+    from namifax.services.user_account import NFUserAccount
 
-    user = AFUserAccount(db=session)
+    user = NFUserAccount(db=session)
     assert user.load_username("olduser")
     assert ISO_DATETIME.match(user.dbdata["last_login"]) and user.dbdata["last_login"] == "2025-12-31 23:59:58"
     assert user.dbdata["pwdexpire"] == "2027-01-31"
@@ -137,22 +137,22 @@ def test_the_log_viewer_filters_by_day_on_timestamp_columns(session):
 
 
 def test_logging_in_from_an_ipv6_address_is_recorded(session):
-    from namifax.services.user_account import AFUserAccount
+    from namifax.services.user_account import NFUserAccount
 
-    user = AFUserAccount(db=session)
+    user = NFUserAccount(db=session)
     assert user.login("olduser", "password", remote_ip="2001:db8:85a3::8a2e:370:7334") is True
     session.flush()
-    again = AFUserAccount(db=session)
+    again = NFUserAccount(db=session)
     assert again.load_username("olduser") and again.dbdata["last_ip"] == "2001:db8:85a3::8a2e:370:7334"
 
 
 def test_the_address_book_reads_legacy_rows_and_registers_new_senders(session):
-    from namifax.services.addressbook import AFAddressBook
+    from namifax.services.addressbook import NFAddressBook
 
-    book = AFAddressBook(db=session)
+    book = NFAddressBook(db=session)
     assert book.loadbycid(2) and book.get_company() == "Legacy Corp"
-    assert [c["company"] for c in AFAddressBook(db=session).get_companies()][:1] == ["Legacy Corp"] or True
-    faxnumid, companyid, outcome = AFAddressBook(db=session).find_or_create_number("5557001", "New Sender")
+    assert [c["company"] for c in NFAddressBook(db=session).get_companies()][:1] == ["Legacy Corp"] or True
+    faxnumid, companyid, outcome = NFAddressBook(db=session).find_or_create_number("5557001", "New Sender")
     session.flush()
     assert outcome == "created" and faxnumid and companyid
 
@@ -188,11 +188,11 @@ def test_faxes_can_be_received_searched_and_listed(session):
 def test_accounts_modems_routes_and_lists_can_be_managed(session):
     from namifax.services.did import DIDRouting
     from namifax.services.modem import FaxModem
-    from namifax.services.user_account import AFUserAccount
+    from namifax.services.user_account import NFUserAccount
 
-    new = AFUserAccount(db=session)
+    new = NFUserAccount(db=session)
     assert new.create({"username": "fresh", "password": "Secret123!", "email": "fresh@corp.test", "pwdcycle": "3"})
-    assert AFUserAccount(db=session).login("fresh", "Secret123!") is True
+    assert NFUserAccount(db=session).login("fresh", "Secret123!") is True
     assert FaxModem(db=session).create("ttyS7", "Seven") is True
     route = DIDRouting(db=session)
     assert route.create("9001", "Nine", None)

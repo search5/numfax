@@ -13,9 +13,9 @@ from request_identity import set_identity
 
 # (patch target, name) — local imports are patched at the source module, module-level ones on admin
 SERVICE_TARGETS = [
-    "namifax.services.user_account.AFUserAccount",
+    "namifax.services.user_account.NFUserAccount",
     "namifax.services.modem.FaxModem",
-    "namifax.services.addressbook.AFAddressBook",
+    "namifax.services.addressbook.NFAddressBook",
     "namifax.views.admin.DIDRouting",
     "namifax.views.admin.FaxPDFCategory",
     "namifax.views.admin.Covers",
@@ -58,7 +58,7 @@ def test_view_builds_domain_objects_with_request_db(name, method, params):
 
     for target, cls in zip(dict.fromkeys(SERVICE_TARGETS), classes):
         # ORM-backed services take the request session, the others the legacy request.db
-        expected = req.dbsession if target.endswith(("FaxPDFCategory", ".Covers", ".DynamicConfig", ".FaxModem", ".DIDRouting", ".BarcodeRouting", ".AFAddressBook", ".AFUserAccount")) else req.db
+        expected = req.dbsession if target.endswith(("FaxPDFCategory", ".Covers", ".DynamicConfig", ".FaxModem", ".DIDRouting", ".BarcodeRouting", ".NFAddressBook", ".NFUserAccount")) else req.db
         for call in cls.call_args_list:
             assert call.kwargs.get("db") is expected, f"{name}: {target} built with the wrong database"
     for hname, helper in helpers.items():
@@ -77,7 +77,7 @@ def test_view_builds_domain_objects_with_request_db(name, method, params):
 
 def test_get_all_admin_users_uses_given_db():
     db = object()
-    with patch("namifax.services.user_account.AFUserAccount") as cls:
+    with patch("namifax.services.user_account.NFUserAccount") as cls:
         cls.return_value.list_accounts.return_value = []
         admin_mod.get_all_admin_users(db)
     assert cls.call_args.kwargs.get("db") is db

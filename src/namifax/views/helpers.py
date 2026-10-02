@@ -8,7 +8,7 @@ from pyramid.view import view_config
 
 from namifax.common import settings
 from namifax.i18n import _
-from namifax.services.addressbook import AFAddressBook
+from namifax.services.addressbook import NFAddressBook
 from namifax.services.categories import FaxPDFCategory
 from namifax.services.distro import DistributionList
 
@@ -40,7 +40,7 @@ def popup_distrolist_helper(request):
     query = (request.params.get("regexp") or "").strip()
     options = []
     if settings.contact_lookup_allowed(query):
-        book = AFAddressBook(db=request.dbsession)
+        book = NFAddressBook(db=request.dbsession)
         numbers = book.numbers_by_company()
         for company in (book.search_companies(query) if query else book.get_companies()):
             for number in numbers.get(company.get("abook_id"), []):
@@ -82,7 +82,7 @@ def popup_distro_contacts(request):
 def popup_fax_contacts(request):
     """Pick fax numbers of the address book (faxcontacts.php), shown as "Company - number"."""
     query = (request.params.get("regexp") or "").strip()
-    book = AFAddressBook(db=request.dbsession)
+    book = NFAddressBook(db=request.dbsession)
     allowed = settings.contact_lookup_allowed(query)
     numbers = book.numbers_by_company() if allowed else {}
     options = []
@@ -97,7 +97,7 @@ def popup_fax_contacts(request):
 def popup_email_contacts(request):
     """Pick e-mail contacts (emailcontacts.php), as ``"Name" <address>``."""
     query = (request.params.get("regexp") or "").strip().lower()
-    options = [(entry, entry) for entry in (AFAddressBook(db=request.dbsession).get_contacts() or {}).values()
+    options = [(entry, entry) for entry in (NFAddressBook(db=request.dbsession).get_contacts() or {}).values()
                if not query or query in entry.lower()]
     return _picker(request, title="- NamiFAX - Email Contacts", heading=str(_("Email Contacts")), action="/helper/emailcontacts",
                    options=options, separator=", ")
@@ -170,7 +170,7 @@ def upload_email_contacts(request):
         lines, error = _vcard_lines(request)
         count = 0
         if lines:
-            book = AFAddressBook(db=request.dbsession)
+            book = NFAddressBook(db=request.dbsession)
             name = None
             for line in lines:
                 if _is_card_start(line):
@@ -202,7 +202,7 @@ def upload_fax_contacts(request):
         lines, error = _vcard_lines(request)
         count = 0
         if lines:
-            book = AFAddressBook(db=request.dbsession)
+            book = NFAddressBook(db=request.dbsession)
             name = org = None
             for line in lines:
                 if _is_card_start(line):

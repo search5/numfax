@@ -7,13 +7,13 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../.
 
 from namifax.cli.phb import generate_phonebook_content, run_phb
 from sqlsession import empty_session, seeded_session
-from namifax.services.addressbook import AFAddressBook
+from namifax.services.addressbook import NFAddressBook
 
 
 class TestCliPhb(unittest.TestCase):
     def setUp(self):
         self.engine = empty_session()
-        self.abook = AFAddressBook(db=self.engine)
+        self.abook = NFAddressBook(db=self.engine)
 
     def tearDown(self):
         self.engine.disconnect()

@@ -13,11 +13,11 @@ def test_remember_builds_account_with_request_db():
     req = testing.DummyRequest()
     req.db = object()
     req.dbsession = object()
-    user_cls = MagicMock(name="AFUserAccount")
+    user_cls = MagicMock(name="NFUserAccount")
     user_cls.return_value.load_username.return_value = False
-    with patch("namifax.security.AFUserAccount", user_cls):
+    with patch("namifax.security.NFUserAccount", user_cls):
         NamiFaxSecurityPolicy().remember(req, "admin")
 
-    assert user_cls.call_args_list, "AFUserAccount was never built"
+    assert user_cls.call_args_list, "NFUserAccount was never built"
     for call in user_cls.call_args_list:
         assert call.kwargs.get("db") is req.dbsession

@@ -29,10 +29,10 @@ from namifax.common.helpers import (
     send_mail,
 )
 from namifax.db.provider import cli_session, use_session
-from namifax.services.addressbook import AFAddressBook
+from namifax.services.addressbook import NFAddressBook
 from namifax.common import settings
 from namifax.services.archive_out import ArchiveOut
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 
 FAXMAILUSER = os.environ.get("FAXMAILUSER", "faxmail")
 WWWUSER = os.environ.get("WWWUSER", "www-data")      # (the original says "apache"; this is the Debian/Ubuntu web user)
@@ -171,7 +171,7 @@ def _process_notify(args: list[str], session: Any) -> int:
         to_company = external
 
     # AddressBook lookup & creation: the receiver is registered when the number is new (the original notify.php)
-    addressbook = AFAddressBook(db=session)
+    addressbook = NFAddressBook(db=session)
     faxnumid, cid, outcome = addressbook.find_or_create_number(external, to_company)
     cid = cid or 0
     if outcome == "multiple":
@@ -194,7 +194,7 @@ def _process_notify(args: list[str], session: Any) -> int:
 
     # Sender lookup
     from_email = get_admin_email()
-    user = AFUserAccount(db=session)
+    user = NFUserAccount(db=session)
     user_id = 0
     to_email = mailaddr
 

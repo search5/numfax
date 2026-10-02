@@ -1,8 +1,8 @@
 """Two-factor, SAML and passkey logins end to end (the first versions could not log anybody in).
 
-The old tests replaced AFUserAccount, the services and the session with mocks, so they never noticed that
+The old tests replaced NFUserAccount, the services and the session with mocks, so they never noticed that
 * the app had no HTTP session factory (a user with 2FA got a 500, passkey challenges were never stored),
-* AFUserAccount had none of the methods SAML and the passkey views call, and
+* NFUserAccount had none of the methods SAML and the passkey views call, and
 * both flows only wrote ``request.session['username']`` while the security policy authenticates by token.
 """
 
@@ -14,14 +14,14 @@ import pytest
 from webauthn.helpers import bytes_to_base64url
 
 from namifax.services.totp import TotpService
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 from request_identity import set_identity
 
 PWD = "Secret123!"
 
 
 def _user(session, username, email=None, **extra):
-    svc = AFUserAccount(db=session)
+    svc = NFUserAccount(db=session)
     assert svc.create({"username": username, "password": PWD, "email": email or f"{username}@corp.test",
                        "name": f"{username.title()} Person", **extra}), svc.error
     return svc
@@ -68,26 +68,26 @@ def test_the_totp_page_without_a_pending_login_goes_back_to_login(testapp):
     assert res.status_int == 302 and res.headers["Location"].endswith("/login")
 
 
-# --- AFUserAccount: the methods the SSO code uses ---------------------------------------------------------
+# --- NFUserAccount: the methods the SSO code uses ---------------------------------------------------------
 
 def test_user_account_lookup_helpers(dbsession):
     made = _user(dbsession, "carol", email="carol@corp.test")
-    other = AFUserAccount(db=dbsession)
+    other = NFUserAccount(db=dbsession)
     assert other.load_by_username("carol") is True
     assert (other.get_uid(), other.get_username(), other.get_name()) == (made.uid, "carol", "Carol Person")
-    assert AFUserAccount(db=dbsession).load_by_username("nobody") is False
-    by_id = AFUserAccount(db=dbsession)
+    assert NFUserAccount(db=dbsession).load_by_username("nobody") is False
+    by_id = NFUserAccount(db=dbsession)
     assert by_id.load_by_id(made.uid) is True and by_id.get_username() == "carol"
     assert by_id.load_by_id(999999) is False
 
 
 def test_create_user_wrapper(dbsession):
-    svc = AFUserAccount(db=dbsession)
+    svc = NFUserAccount(db=dbsession)
     assert svc.create_user(username="dave", password=PWD, name="Dave D", email="dave@corp.test", is_admin=False)
-    check = AFUserAccount(db=dbsession)
+    check = NFUserAccount(db=dbsession)
     assert check.load_by_username("dave") and check.get_name() == "Dave D" and not check.dbdata["is_admin"]
-    assert AFUserAccount(db=dbsession).login("dave", PWD)
-    assert AFUserAccount(db=dbsession).create_user(username="dave", password=PWD, name="x", email="o@x.test") is False
+    assert NFUserAccount(db=dbsession).login("dave", PWD)
+    assert NFUserAccount(db=dbsession).create_user(username="dave", password=PWD, name="x", email="o@x.test") is False
 
 
 # --- SAML ----------------------------------------------------------------------------------------------------
@@ -110,24 +110,24 @@ def test_saml_never_attaches_to_an_account_by_the_local_part_of_the_name_id(test
     res = _acs(testapp, "admin@other.example", email="admin@other.example", displayName="Not The Admin")
     assert res.status_int == 302 and _logged_in(testapp)
     assert _status(testapp, "/admin") == 403                                  # a new, ordinary account
-    created = AFUserAccount(db=dbsession)
+    created = NFUserAccount(db=dbsession)
     assert created.loadbyemail("admin@other.example")
     assert created.get_username() != "admin" and not created.dbdata["is_admin"] and created.get_name() == "Not The Admin"
-    original = AFUserAccount(db=dbsession)
+    original = NFUserAccount(db=dbsession)
     assert original.load_username("admin") and original.dbdata["is_admin"] and original.dbdata["email"] != "admin@other.example"
 
 
 def test_saml_provisioning_picks_a_free_username_and_a_random_password(testapp, dbsession):
     _user(dbsession, "frank", email="frank@a.test")
     _acs(testapp, "frank@b.test", email="frank@b.test")
-    second = AFUserAccount(db=dbsession)
+    second = NFUserAccount(db=dbsession)
     assert second.loadbyemail("frank@b.test") and second.get_username() == "frank1"
-    assert AFUserAccount(db=dbsession).login("frank1", "password") is False
+    assert NFUserAccount(db=dbsession).login("frank1", "password") is False
 
 
 def test_saml_refuses_disabled_accounts(testapp, dbsession):
     made = _user(dbsession, "gina", email="gina@corp.test")
-    edit = AFUserAccount(db=dbsession)
+    edit = NFUserAccount(db=dbsession)
     edit.load(made.uid)
     edit.dbdata["acc_enabled"] = 0
     edit.update()
@@ -140,7 +140,7 @@ def test_saml_without_jit_does_not_create_accounts(dbsession):
 
     svc = SAMLService(SAMLSettings(enabled=True, jit_provisioning=False), db=dbsession)
     assert svc.provision_or_get_user("nobody@corp.test", {"email": "nobody@corp.test"}) is None
-    assert AFUserAccount(db=dbsession).loadbyemail("nobody@corp.test") is False
+    assert NFUserAccount(db=dbsession).loadbyemail("nobody@corp.test") is False
 
 
 def test_saml_view_uses_the_request_session():
@@ -199,7 +199,7 @@ def test_an_unknown_passkey_is_rejected(testapp, dbsession):
 
 def test_a_passkey_cannot_log_in_a_disabled_account(testapp, dbsession):
     cid = _passkey(dbsession, uid=2)
-    edit = AFUserAccount(db=dbsession)
+    edit = NFUserAccount(db=dbsession)
     edit.load(2)
     edit.dbdata["acc_enabled"] = 0
     edit.update()
@@ -240,6 +240,6 @@ def test_faxqueue_callers_pass_the_request_session(as_superuser):
     set_identity(req, {"username": "admin", "uid": 1, "is_admin": True, "superuser": True})
     req.db, req.dbsession = object(), object()
     req.route_url = MagicMock(return_value="/x")
-    with patch.object(outbox_mod, "FaxQueue") as cls, patch.object(outbox_mod, "AFAddressBook"), contextlib.suppress(Exception):
+    with patch.object(outbox_mod, "FaxQueue") as cls, patch.object(outbox_mod, "NFAddressBook"), contextlib.suppress(Exception):
         outbox_mod.outbox_view(req)
     assert cls.call_args.kwargs.get("db") is req.dbsession

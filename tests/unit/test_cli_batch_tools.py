@@ -13,11 +13,11 @@ from namifax.cli.create_thumbnails import main as create_thumbnails_main
 
 
 def test_import_users_with_file(tmp_path, capsys):
-    """Verify batch user import parses tab-separated file and invokes AFUserAccount.create."""
+    """Verify batch user import parses tab-separated file and invokes NFUserAccount.create."""
     users_file = tmp_path / "users.txt"
     users_file.write_text("John Doe\tjohndoe\tpass123\tjohn@example.com\nJane Roe\tjaneroe\tpass456\tjane@example.com\n")
 
-    with patch("namifax.cli.import_users.AFUserAccount") as mock_user_cls:
+    with patch("namifax.cli.import_users.NFUserAccount") as mock_user_cls:
         inst = MagicMock()
         inst.create.return_value = True
         mock_user_cls.return_value = inst

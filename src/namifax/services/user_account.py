@@ -10,7 +10,7 @@ from namifax.common import settings
 from namifax.db.repository import MDBOData
 from namifax.common.passwords import hash_password, needs_rehash, verify_password
 from namifax.services import hylafax_users
-from namifax.services.user_passwords import AFUserPasswords
+from namifax.services.user_passwords import NFUserPasswords
 
 
 
@@ -24,7 +24,7 @@ def md5_hash(text: str) -> str:
     return hashlib.md5(text.encode("utf-8")).hexdigest()
 
 
-class AFUserAccount:
+class NFUserAccount:
     """Core User Account Domain Service managing user profiles, authentication, authorization, and password policies.
 
     ``db`` is a SQLAlchemy ``Session`` (portable across SQLite, MySQL, MariaDB and PostgreSQL) or the legacy
@@ -34,10 +34,10 @@ class AFUserAccount:
     def __init__(
         self,
         db: Any = None,
-        user_passwords: Optional[AFUserPasswords] = None,
+        user_passwords: Optional[NFUserPasswords] = None,
     ) -> None:
         self.db = db
-        self.userpasswords = user_passwords or AFUserPasswords(db=self.db)
+        self.userpasswords = user_passwords or NFUserPasswords(db=self.db)
         self.useraccount = MDBOData("UserAccount", db=self.db)
 
         self.uid: Optional[int] = None
@@ -583,4 +583,4 @@ class AFUserAccount:
 
 
 # Modern Alias
-UserAccountService = AFUserAccount
+UserAccountService = NFUserAccount

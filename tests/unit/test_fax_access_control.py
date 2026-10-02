@@ -14,13 +14,13 @@ import webtest
 from sqlalchemy import select
 
 from namifax.models import FaxArchive, SysLog
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 
 PWD = "Secret123!"
 
 
 def _user(session, username, **extra):
-    svc = AFUserAccount(db=session)
+    svc = NFUserAccount(db=session)
     details = {"username": username, "password": PWD, "email": f"{username}@corp.test", "name": username.title(),
                "last_login": "2026-01-01 10:00:00", "acc_enabled": 1, **extra}
     assert svc.create(details), svc.error

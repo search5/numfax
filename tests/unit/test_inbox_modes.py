@@ -13,7 +13,7 @@ import webtest
 
 from namifax.common import settings
 from namifax.models import FaxArchive
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 
 PWD = "Secret123!"
 
@@ -25,7 +25,7 @@ def _clean(monkeypatch):
 
 
 def _user(session, username, **extra):
-    svc = AFUserAccount(db=session)
+    svc = NFUserAccount(db=session)
     details = {"username": username, "password": PWD, "email": f"{username}@corp.test", "name": username.title(),
                "last_login": "2026-01-01 10:00:00", "acc_enabled": 1, **extra}
     assert svc.create(details), svc.error

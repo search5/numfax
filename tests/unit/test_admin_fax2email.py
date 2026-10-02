@@ -160,11 +160,11 @@ def test_an_address_that_was_already_odd_does_not_block_other_changes(client, db
 
 
 def test_received_faxes_are_routed_by_the_address_of_their_own_number(client, dbsession, company):
-    from namifax.services.addressbook import AFAddressBook
+    from namifax.services.addressbook import NFAddressBook
 
     row, numbers = company
     client.post("/admin/fax2email", _form(row, numbers, email=["one@omega.test", "two@omega.test"], printer=["lp1", "lp2"]))
-    book = AFAddressBook(db=dbsession)
+    book = NFAddressBook(db=dbsession)
     assert book.loadbyfaxnum("0255502")[0] and (book.get_email(), book.get_printer()) == ("two@omega.test", "lp2")
     assert book.loadbyfaxnum("0255501")[0] and book.get_email() == "one@omega.test"
 

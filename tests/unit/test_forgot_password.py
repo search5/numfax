@@ -13,14 +13,14 @@ import webtest
 from sqlalchemy import select
 
 from namifax.models import SysLog, UserAccount
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 
 OLD = "Old-pass-123"
 
 
 @pytest.fixture
 def account(dbsession):
-    svc = AFUserAccount(db=dbsession)
+    svc = NFUserAccount(db=dbsession)
     assert svc.create({"username": "forgetful", "password": OLD, "email": "forgetful@corp.test", "name": "Forgetful",
                        "last_login": "2026-01-01 10:00:00", "acc_enabled": 1}), svc.error
     dbsession.flush()

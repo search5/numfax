@@ -39,7 +39,7 @@ from namifax.common.helpers import (
     tiff2pdf,
 )
 from namifax.db.provider import cli_session, use_session
-from namifax.services.addressbook import AFAddressBook
+from namifax.services.addressbook import NFAddressBook
 from namifax.services.archive_in import ArchiveIn
 from namifax.services.barcode import BarcodeRouting
 from namifax.services.cloud_storage import upload_received_fax
@@ -166,7 +166,7 @@ def _process_faxrcvd(args: list[str], session: Any) -> int:
 
     # AddressBook
     # (loadbyfaxnum() answers with a tuple, which is always true: new senders were never registered)
-    addressbook = AFAddressBook(db=session)
+    addressbook = NFAddressBook(db=session)
     faxnumid, _company_id, outcome = addressbook.find_or_create_number(company_fax, company_name)
     if outcome == "multiple":
         print("WARNING: Multiple results for faxnumber")

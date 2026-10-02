@@ -36,9 +36,9 @@ def test_view_builds_domain_objects_with_request_db(name, kwargs, attrs):
         setattr(req, k, v)
     if name in ("fax_rotate_view", "setcompany_view"):          # these change data, so they are POSTs (with a CSRF token)
         req.method, req.POST = "POST", {**req.params}
-    arc_cls, ab_cls = MagicMock(name="ArchiveIn"), MagicMock(name="AFAddressBook")
+    arc_cls, ab_cls = MagicMock(name="ArchiveIn"), MagicMock(name="NFAddressBook")
     with patch.object(inbox_mod, "ArchiveIn", arc_cls), \
-            patch.object(inbox_mod, "AFAddressBook", ab_cls), \
+            patch.object(inbox_mod, "NFAddressBook", ab_cls), \
             patch.object(inbox_mod, "get_all_admin_modems", MagicMock(return_value=[])), \
             patch.object(inbox_mod, "check_csrf_token", MagicMock()), contextlib.suppress(Exception):
         getattr(inbox_mod, name)(req)

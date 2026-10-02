@@ -8,7 +8,7 @@ from pyramid.view import view_config
 
 from namifax.common import settings
 from namifax.i18n import _
-from namifax.services.addressbook import AFAddressBook
+from namifax.services.addressbook import NFAddressBook
 from namifax.services.archive_in import ArchiveIn
 from namifax.services.distro import DistributionList
 from namifax.services.faxqueue import FaxQueue
@@ -102,7 +102,7 @@ def ajax_inbox_count(request):
 def ajax_addressbook_suggest(request):
     """Address book auto-suggest matching legacy ajaxbook.php."""
     q = (request.params.get("q") or request.GET.get("q") or "").strip()
-    ab = AFAddressBook(db=request.dbsession)
+    ab = NFAddressBook(db=request.dbsession)
     rows_xml = []
 
     try:
@@ -134,7 +134,7 @@ def ajax_addressbook_suggest(request):
 def ajax_emailbook_suggest(request):
     """Email address auto-suggest matching legacy ajaxemailbook.php."""
     q = (request.params.get("q") or request.GET.get("q") or "").strip().lower()
-    ab = AFAddressBook(db=request.dbsession)
+    ab = NFAddressBook(db=request.dbsession)
     rows_xml = []
 
     try:
@@ -160,7 +160,7 @@ def ajax_emailbook_suggest(request):
 def ajax_addressbook_prefill(request):
     """Address book contact info prefill matching legacy ajaxprefillto.php."""
     fnid = request.GET.get("fnid", "").strip()
-    ab = AFAddressBook(db=request.dbsession)
+    ab = NFAddressBook(db=request.dbsession)
     to_company = ""
     to_person = ""
     to_address = ""
@@ -335,7 +335,7 @@ def ajax_deletefaxes_view(request):
 def ajax_archivebook_view(request):
     """Address book company auto-suggest matching legacy ajax/archivebook.php."""
     q = (request.params.get("q") or request.GET.get("q") or "").strip()
-    ab = AFAddressBook(db=request.dbsession)
+    ab = NFAddressBook(db=request.dbsession)
     rows_xml = []
 
     try:

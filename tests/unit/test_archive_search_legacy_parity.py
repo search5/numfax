@@ -15,7 +15,7 @@ from namifax.models import FaxArchive
 from namifax.services.archive_base import FaxPDFArchive
 from namifax.services.archive_in import ArchiveIn
 from namifax.services.fax_access import FaxAccess
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 
 # fid: (inbox, modemdev, faxcatid, sent_by)
 FAXES = {
@@ -51,7 +51,7 @@ def world(dbsession):
     dbsession.execute(FaxArchive.__table__.delete())
     uids = {}
     for name, (modems, cats, superuser) in USERS.items():
-        svc = AFUserAccount(db=dbsession)
+        svc = NFUserAccount(db=dbsession)
         assert svc.create({"username": name, "password": "Secret123!", "email": f"{name}@x.test", "name": name,
                            "last_login": "2026-01-01 10:00:00", "acc_enabled": 1, "modemdevs": modems, "faxcats": cats,
                            "superuser": superuser}), svc.error
@@ -118,7 +118,7 @@ def did_world(dbsession, monkeypatch):
     dbsession.execute(FaxArchive.__table__.delete())
     uids = {}
     for name, (routes, cats, superuser) in DID_USERS.items():
-        svc = AFUserAccount(db=dbsession)
+        svc = NFUserAccount(db=dbsession)
         assert svc.create({"username": name, "password": "Secret123!", "email": f"{name}@x.test", "name": name,
                            "last_login": "2026-01-01 10:00:00", "acc_enabled": 1, "didrouting": routes, "faxcats": cats,
                            "superuser": superuser}), svc.error
@@ -168,7 +168,7 @@ def _configure(session, modems=(), routes=()):
 
 
 def _root(session):
-    svc = AFUserAccount(db=session)
+    svc = NFUserAccount(db=session)
     assert svc.create({"username": "root", "password": "Secret123!", "email": "root@x.test", "name": "root",
                        "last_login": "2026-01-01 10:00:00", "acc_enabled": 1, "superuser": 1}), svc.error
 

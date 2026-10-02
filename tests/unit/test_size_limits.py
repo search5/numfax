@@ -10,7 +10,7 @@ import pytest
 from bs4 import BeautifulSoup
 
 from namifax.common import settings
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 
 NAMES = ("MAX_USERNAME_SIZE", "MAX_PASSWD_SIZE", "MIN_PASSWD_SIZE", "MAX_EMAIL_SIZE")
 
@@ -46,7 +46,7 @@ def test_a_value_that_is_not_a_number_is_ignored(monkeypatch):
 
 @pytest.fixture
 def user(dbsession):
-    svc = AFUserAccount(db=dbsession)
+    svc = NFUserAccount(db=dbsession)
     assert svc.create({"username": "limits", "password": "Secret123!", "email": "limits@corp.test", "name": "Limits",
                        "last_login": "2026-01-01 10:00:00", "acc_enabled": 1}), svc.error
     dbsession.flush()

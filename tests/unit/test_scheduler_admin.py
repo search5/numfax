@@ -216,9 +216,9 @@ def test_the_page_shows_the_last_result_and_the_scheduler_state(client, dbsessio
 
 
 def test_only_an_administrator_may_open_it(testapp, dbsession):
-    from namifax.services.user_account import AFUserAccount
+    from namifax.services.user_account import NFUserAccount
 
-    svc = AFUserAccount(db=dbsession)
+    svc = NFUserAccount(db=dbsession)
     assert svc.create({"username": "plain", "password": "Secret123!", "email": "p@x.test", "name": "P", "acc_enabled": 1,
                        "last_login": "2026-01-01 10:00:00"})
     dbsession.flush()

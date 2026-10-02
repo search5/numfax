@@ -22,7 +22,7 @@ from signxml import XMLSigner, methods
 
 from namifax.services.saml import SAMLService
 from namifax.services.system_config import SystemConfigService
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 
 SSO = "https://idp.example.com/sso"
 NS_P, NS_A = "urn:oasis:names:tc:SAML:2.0:protocol", "urn:oasis:names:tc:SAML:2.0:assertion"
@@ -55,7 +55,7 @@ def configured(dbsession, idp):
 
 @pytest.fixture
 def person(dbsession):
-    svc = AFUserAccount(db=dbsession)
+    svc = NFUserAccount(db=dbsession)
     assert svc.create({"username": "ssouser", "password": "Secret123!", "email": "sso@corp.test", "name": "Sso", "acc_enabled": 1,
                        "last_login": "2026-01-01 10:00:00"})
     dbsession.flush()

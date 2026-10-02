@@ -7,7 +7,7 @@ from pyramid.response import Response
 from pyramid.security import remember
 from pyramid.view import view_config
 
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 from namifax.services.webauthn import WebAuthnService
 
 def _json_res(data: Any, status: int = 200) -> Response:
@@ -18,13 +18,13 @@ def _json_res(data: Any, status: int = 200) -> Response:
         charset="utf-8",
     )
 
-def _get_current_user(request: Request) -> AFUserAccount | None:
+def _get_current_user(request: Request) -> NFUserAccount | None:
     username = getattr(request, "authenticated_userid", None)
     if not username and hasattr(request, "session"):
         username = request.session.get("username")
     if not username:
         return None
-    user = AFUserAccount(db=request.dbsession)
+    user = NFUserAccount(db=request.dbsession)
     if user.load_by_username(username):
         return user
     return None
@@ -87,7 +87,7 @@ def webauthn_auth_options_view(request: Request) -> Response:
     username = request.params.get("username")
     uid = None
     if username:
-        u = AFUserAccount(db=request.dbsession)
+        u = NFUserAccount(db=request.dbsession)
         if u.load_by_username(username):
             uid = u.get_uid()
 
@@ -124,11 +124,11 @@ def webauthn_auth_verify_view(request: Request) -> Response:
 
         # Sign in like the password login: the same disabled-account check and the same token cookie
         uid = cred_row["uid"]
-        user = AFUserAccount(db=request.dbsession)
+        user = NFUserAccount(db=request.dbsession)
         if user.load_by_id(uid):
             username = user.get_username()
             remote_ip = getattr(request, "remote_addr", None) or "127.0.0.1"
-            if not AFUserAccount(db=request.dbsession).login_webauth(username, remote_ip=remote_ip):
+            if not NFUserAccount(db=request.dbsession).login_webauth(username, remote_ip=remote_ip):
                 return _json_res({"error": "Account is disabled"}, status=400)
             response = _json_res({"success": True, "username": username})
             response.headerlist.extend(remember(request, username))

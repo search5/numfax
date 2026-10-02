@@ -11,7 +11,7 @@ import sys
 from typing import Any
 
 from namifax.db.provider import cli_session
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 
 
 def main(args=None, *, db: Any = None, session: Any = None):
@@ -78,7 +78,7 @@ def _import_users(lines: list[str], db: Any) -> int:
         user_details["password"] = password
         user_details["email"] = email
 
-        user = AFUserAccount(db=db)
+        user = NFUserAccount(db=db)
         if user.create(user_details):
             print(f"user> {name}: User details saved")
         else:

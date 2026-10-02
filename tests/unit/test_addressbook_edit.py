@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 from sqlalchemy import select
 
 from namifax.models import AddressBook, AddressBookFAX, FaxArchive, FaxCategory
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 
 DETAILS = {"to_person": "Kim Minsu", "to_location": "Seoul HQ", "to_voicenumber": "02-123-4567",
            "to_address": "1 Gangnam-daero", "to_zip": "06236", "to_city": "Seoul", "description": "main desk"}
@@ -188,7 +188,7 @@ def test_numbers_of_other_companies_cannot_be_edited_through_this_page(client, d
 def test_a_category_the_user_may_not_use_is_not_changed(client, dbsession):
     _create(client, newfaxcatid="2")
     company = _company(dbsession, "Gamma Ltd")
-    operator = AFUserAccount(db=dbsession)
+    operator = NFUserAccount(db=dbsession)
     assert operator.load_username("operator")
     operator.dbdata["faxcats"] = "1"                                  # may only use category 1
     operator.update()
@@ -242,7 +242,7 @@ def test_an_existing_reserved_entry_is_reused(client, dbsession):
 def test_only_users_who_may_delete_can_delete(client, dbsession):
     _create(client)
     company = _company(dbsession, "Gamma Ltd")
-    operator = AFUserAccount(db=dbsession)
+    operator = NFUserAccount(db=dbsession)
     operator.load_username("operator")
     assert not operator.dbdata.get("can_del")
     other = webtest.TestApp(client.app, extra_environ=client.extra_environ)

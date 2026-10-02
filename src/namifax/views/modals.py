@@ -10,7 +10,7 @@ from pyramid.view import view_config
 
 from namifax.common import settings
 from namifax.i18n import _
-from namifax.services.addressbook import AFAddressBook
+from namifax.services.addressbook import NFAddressBook
 from namifax.services.archive_in import ArchiveIn
 from namifax.services.faxqueue import FaxQueue
 import os
@@ -18,13 +18,13 @@ import os
 from namifax.common.helpers import send_mail, split_emails
 from namifax.common.validators import is_valid_email
 from namifax.services.categories import FaxPDFCategory
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 from namifax.views.fax_rights import fax_access, load_fax
 
 
 def _company_name(request, fax) -> str:
     """What the fax is called in a mail: its company, else the number it came from (the original's company_name)."""
-    book = AFAddressBook(db=request.dbsession)
+    book = NFAddressBook(db=request.dbsession)
     if fax.get_faxnumid() and book.loadbyfaxnumid(fax.get_faxnumid()):
         return book.get_company() or ""
     if fax.get_companyid() and book.loadbycid(fax.get_companyid()):
@@ -54,7 +54,7 @@ def modal_email_view(request):
         return HTTPFound(location=request.route_url("inbox"))
 
     access = fax_access(request)
-    account = AFUserAccount(db=request.dbsession)
+    account = NFUserAccount(db=request.dbsession)
     account.load_username(access.username)
     name, email = account.get_name() or access.username, (account.dbdata.get("email") or "")
     company = _company_name(request, arc)
@@ -93,7 +93,7 @@ def modal_email_view(request):
     if not sent:
         return page(_("The email failed to send."))
 
-    AFAddressBook(db=request.dbsession).create_contacts(values["emails"])
+    NFAddressBook(db=request.dbsession).create_contacts(values["emails"])
     if in_inbox and values["category"] in categories:
         arc.set_category(int(values["category"]), account.get_uid() or 0)
     if in_inbox and values["archive"]:
@@ -110,7 +110,7 @@ def modal_assign_view(request):
     """
     identity = request.identity or {"username": "admin", "uid": 1, "is_admin": True}
     raw = request.params.get("abook_id") or request.params.get("cid") or ""
-    ab = AFAddressBook(db=request.dbsession)
+    ab = NFAddressBook(db=request.dbsession)
     if not raw.isdecimal() or not ab.loadbycid(int(raw)):
         return HTTPFound(location=request.route_url("inbox"))
     cid = int(raw)
@@ -153,7 +153,7 @@ def assignx_view(request):
     if not fid.isdecimal() or not load_fax(request, arc, fid, action="assignx"):
         return HTTPFound(location=request.route_url("inbox"))
 
-    book = AFAddressBook(db=request.dbsession)
+    book = NFAddressBook(db=request.dbsession)
     error = None
     if request.method == "POST":
         check_csrf_token(request)
@@ -267,7 +267,7 @@ def modal_txreport_view(request):
             has_image = True
             cid = arc.get_companyid()
             if cid:
-                ab = AFAddressBook(db=request.dbsession)
+                ab = NFAddressBook(db=request.dbsession)
                 if ab.loadbycid(cid):
                     company = ab.get_company() or ""
             elif arc.get_origfaxnum():

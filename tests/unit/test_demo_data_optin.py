@@ -138,11 +138,11 @@ def test_the_password_can_come_from_the_environment_for_scripted_installs(tmp_pa
     assert run_createuser(["-u", "boss"]) == 0
     from sqlalchemy.orm import Session
 
-    from namifax.services.user_account import AFUserAccount
+    from namifax.services.user_account import NFUserAccount
 
     engine = create_sa_engine(f"sqlite:///{tmp_path / 'k.db'}")
     with Session(engine) as s:
-        assert AFUserAccount(db=s).login("boss", "FromTheEnvironment1!") is True
+        assert NFUserAccount(db=s).login("boss", "FromTheEnvironment1!") is True
     engine.dispose()
 
 
@@ -151,7 +151,7 @@ def test_createuser_can_reset_the_password_of_an_existing_account(tmp_path, monk
     from sqlalchemy.orm import Session
 
     from namifax.cli.user import run_createuser
-    from namifax.services.user_account import AFUserAccount
+    from namifax.services.user_account import NFUserAccount
 
     monkeypatch.delenv("NAMIFAX_DEMO_DATA", raising=False)
     monkeypatch.setenv("DATABASE_URL", f"sqlite:///{tmp_path / 'l.db'}")
@@ -159,6 +159,6 @@ def test_createuser_can_reset_the_password_of_an_existing_account(tmp_path, monk
     assert run_createuser(["-u", "boss", "-p", "SecondPass2!"]) == 0
     engine = create_sa_engine(f"sqlite:///{tmp_path / 'l.db'}")
     with Session(engine) as s:
-        assert AFUserAccount(db=s).login("boss", "SecondPass2!") is True
-        assert AFUserAccount(db=s).login("boss", "FirstPassword1!") is False
+        assert NFUserAccount(db=s).login("boss", "SecondPass2!") is True
+        assert NFUserAccount(db=s).login("boss", "FirstPassword1!") is False
     engine.dispose()

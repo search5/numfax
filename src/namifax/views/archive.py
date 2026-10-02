@@ -11,10 +11,10 @@ from pyramid.response import Response
 from pyramid.view import view_config
 
 from namifax.i18n import _
-from namifax.services.addressbook import AFAddressBook
+from namifax.services.addressbook import NFAddressBook
 from namifax.services.archive_base import FaxPDFArchive
 from namifax.services.categories import FaxPDFCategory
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 from namifax.views.admin import get_all_admin_modems
 from namifax.views.fax_rights import fax_access
 from namifax.views.inbox import _sender, page_size
@@ -114,10 +114,10 @@ def archive_view(request):
     pages = -(-total // limit) if total > limit else 0
     pageindex = max(min(pageindex, pages - 1), 0)
 
-    ab = AFAddressBook(db=db)
+    ab = NFAddressBook(db=db)
     cats = FaxPDFCategory(db=db)
     names = {c["catid"]: c["name"] for c in cats.get_categories() or []}
-    users = {u["uid"]: u["username"] for u in AFUserAccount(db=db).list_accounts()} if access.superuser else {}
+    users = {u["uid"]: u["username"] for u in NFUserAccount(db=db).list_accounts()} if access.superuser else {}
     can_del = bool(access.can_del or access.superuser)
 
     rows = []

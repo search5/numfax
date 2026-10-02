@@ -49,7 +49,7 @@ except ImportError:
             return cls
         return decorator
 
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 from namifax.sessions import SessionManager
 
 
@@ -156,7 +156,7 @@ class NamiFaxSecurityPolicy:
         """Set cookie headers on login."""
         token = kw.get("token", "")
         if not token:
-            user = AFUserAccount(db=request.dbsession)
+            user = NFUserAccount(db=request.dbsession)
             if user.load_username(userid):
                 sess = self.session_manager.create_session(
                     user_id=user.get_uid(),

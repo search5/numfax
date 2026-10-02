@@ -45,14 +45,14 @@ def _assert_all_db(calls, req, label, attr="db"):
 
 def test_webauthn_current_user_uses_request_db():
     req = _request(session={"username": "admin"})
-    with patch.object(webauthn_mod, "AFUserAccount") as cls:
+    with patch.object(webauthn_mod, "NFUserAccount") as cls:
         webauthn_mod._get_current_user(req)
     _assert_all_db(_calls(cls), req, "_get_current_user", attr="dbsession")  # the account is ORM-backed
 
 
 def test_webauthn_auth_options_uses_request_db():
     req = _request(params={"username": "admin"})
-    with patch.object(webauthn_mod, "AFUserAccount") as cls, \
+    with patch.object(webauthn_mod, "NFUserAccount") as cls, \
             patch.object(webauthn_mod, "_get_webauthn_service", MagicMock()), \
             contextlib.suppress(Exception):
         webauthn_mod.webauthn_auth_options_view(req)
@@ -64,7 +64,7 @@ def test_webauthn_auth_verify_uses_request_db():
     req.json_body = {"credential": {"id": "cid"}}
     svc = MagicMock()
     svc.get_credential_by_id.return_value = {"public_key": "00", "uid": 1, "sign_count": 0}
-    with patch.object(webauthn_mod, "AFUserAccount") as cls, \
+    with patch.object(webauthn_mod, "NFUserAccount") as cls, \
             patch.object(webauthn_mod, "_get_webauthn_service", MagicMock(return_value=svc)), \
             contextlib.suppress(Exception):
         webauthn_mod.webauthn_auth_verify_view(req)
@@ -80,7 +80,7 @@ def test_archive_view_uses_request_db(as_superuser):
     arc.return_value.search_archive.return_value = 0
     arc.return_value.next_archive_entry.return_value = None
     cat.return_value.get_categories.return_value = []
-    with patch.object(archive_mod, "AFUserAccount", MagicMock()), patch.object(archive_mod, "AFAddressBook", MagicMock()), \
+    with patch.object(archive_mod, "NFUserAccount", MagicMock()), patch.object(archive_mod, "NFAddressBook", MagicMock()), \
             patch.object(archive_mod, "FaxPDFArchive", arc), patch.object(archive_mod, "FaxPDFCategory", cat), \
             patch.object(archive_mod, "get_all_admin_modems", modems), patch.object(archive_mod, "page_size", MagicMock(return_value=30)), \
             contextlib.suppress(Exception):
@@ -97,7 +97,7 @@ def test_sendfax_view_uses_request_db(as_superuser):
     covers.return_value.get_covers.return_value = []
     modems.return_value.get_modems.return_value = []
     with patch.object(sendfax_mod, "Covers", covers), patch.object(sendfax_mod, "FaxModem", modems), \
-            patch.object(sendfax_mod, "AFUserAccount", MagicMock()), contextlib.suppress(Exception):
+            patch.object(sendfax_mod, "NFUserAccount", MagicMock()), contextlib.suppress(Exception):
         sendfax_mod.sendfax_view(req)
     assert modems.call_args.kwargs.get("db") is req.dbsession  # ORM-backed
     assert covers.call_args.kwargs.get("db") is req.dbsession  # ORM-backed: the request session
@@ -109,6 +109,6 @@ def test_outbox_view_passes_request_db_to_modem_helper(as_superuser):
     req.session = MagicMock()                                 # the page carries the session's CSRF token
     modems = MagicMock(return_value=[])
     with patch.object(outbox_mod, "FaxQueue", MagicMock()), patch.object(outbox_mod, "get_all_admin_modems", modems), \
-            patch.object(outbox_mod, "AFAddressBook", MagicMock()), contextlib.suppress(Exception):
+            patch.object(outbox_mod, "NFAddressBook", MagicMock()), contextlib.suppress(Exception):
         outbox_mod.outbox_view(req)
     assert modems.call_args.args[0] is req.dbsession  # modems are ORM-backed

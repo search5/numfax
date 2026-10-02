@@ -13,9 +13,9 @@ FLAGS = ("superuser", "can_del", "pwd_reuse", "is_admin", "wasreset", "acc_enabl
 # --- the service writes real numbers ------------------------------------------------------------------
 
 def test_an_account_created_through_the_service_stores_integers(seeded_db):
-    from namifax.services.user_account import AFUserAccount
+    from namifax.services.user_account import NFUserAccount
 
-    assert AFUserAccount(db=seeded_db).create({"username": "viaservice", "password": "Secret123!", "email": "e@x.test"})
+    assert NFUserAccount(db=seeded_db).create({"username": "viaservice", "password": "Secret123!", "email": "e@x.test"})
     columns = ", ".join(f"typeof({f}) AS t_{f}, {f}" for f in FLAGS)
     seeded_db.query(f"SELECT {columns} FROM UserAccount WHERE username = 'viaservice'")
     row = seeded_db.get_records()[0]

@@ -5,7 +5,7 @@ from __future__ import annotations
 import pytest
 
 from namifax.services import login_throttle
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 
 LOCKED = "Too many failed sign-in attempts"
 
@@ -25,7 +25,7 @@ def clock(monkeypatch):
 
 @pytest.fixture
 def account(dbsession):
-    assert AFUserAccount(db=dbsession).create({"username": "thr", "password": "Secret123!", "email": "t@x.test", "name": "T",
+    assert NFUserAccount(db=dbsession).create({"username": "thr", "password": "Secret123!", "email": "t@x.test", "name": "T",
                                                "acc_enabled": 1, "last_login": "2026-01-01 10:00:00"})
     dbsession.flush()
 

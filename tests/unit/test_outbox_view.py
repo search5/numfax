@@ -14,7 +14,7 @@ import pytest
 import webtest
 
 from namifax.models import AddressBook, AddressBookFAX
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 
 SENDQ = """HylaFAX scheduler on localhost: Running
 Modem ttyS0 (+82-2-555-0100): Running and idle
@@ -73,7 +73,7 @@ def hylafax(tmp_path, monkeypatch):
 @pytest.fixture
 def people(testapp, dbsession):
     for name, email in (("alice", "alice@corp.test"), ("bob", "bob@corp.test")):
-        svc = AFUserAccount(db=dbsession)
+        svc = NFUserAccount(db=dbsession)
         assert svc.create({"username": name, "password": PWD, "email": email, "name": name.title(),
                            "last_login": "2026-01-01 10:00:00", "acc_enabled": 1}), svc.error
     book = AddressBook(company="Acme Corp")

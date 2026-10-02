@@ -44,7 +44,7 @@ def test_dynconf_opens_cli_db_and_usage_does_not():
 
 def test_phb_injected_db(tmp_path):
     db = object()
-    with patch.object(phb_mod, "AFAddressBook") as cls, \
+    with patch.object(phb_mod, "NFAddressBook") as cls, \
             patch.object(phb_mod, "generate_phonebook_content", return_value="x"):
         assert phb_mod.run_phb(["phb", "-o", str(tmp_path / "pb")], db=db) == 0
     assert cls.call_args.kwargs.get("db") is db
@@ -53,7 +53,7 @@ def test_phb_injected_db(tmp_path):
 def test_phb_opens_cli_db(tmp_path):
     opened, calls = object(), []
     with patch.object(phb_mod, "cli_session", _fake_cli_db(opened, calls)), \
-            patch.object(phb_mod, "AFAddressBook") as cls, \
+            patch.object(phb_mod, "NFAddressBook") as cls, \
             patch.object(phb_mod, "generate_phonebook_content", return_value="x"):
         phb_mod.run_phb(["phb", "-o", str(tmp_path / "pb")])
     assert cls.call_args.kwargs.get("db") is opened and calls == [1]

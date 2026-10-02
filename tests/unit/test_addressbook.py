@@ -5,7 +5,7 @@ import unittest
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
 from sqlsession import empty_session, seeded_session
-from namifax.services.addressbook import AFAddressBook, AddressBookService, clean_faxnum
+from namifax.services.addressbook import NFAddressBook, AddressBookService, clean_faxnum
 
 
 class TestAFAddressBook(unittest.TestCase):
@@ -13,7 +13,7 @@ class TestAFAddressBook(unittest.TestCase):
         self.engine = empty_session()
 
         # Create AddressBook, AddressBookFAX, AddressBookEmail tables
-        self.service = AFAddressBook(db=self.engine)
+        self.service = NFAddressBook(db=self.engine)
 
     def tearDown(self):
         self.engine.disconnect()
@@ -34,7 +34,7 @@ class TestAFAddressBook(unittest.TestCase):
         self.assertEqual(self.service.get_error(), "Company already exists")
 
         # Load
-        loader = AFAddressBook(db=self.engine)
+        loader = NFAddressBook(db=self.engine)
         self.assertTrue(loader.loadbycid(cid))
         self.assertEqual(loader.get_company(), "Acme Corp")
 
@@ -85,14 +85,14 @@ class TestAFAddressBook(unittest.TestCase):
         self.assertEqual(self.service.get_faxto(), 1)
 
         # Lookup by fax number
-        finder = AFAddressBook(db=self.engine)
+        finder = NFAddressBook(db=self.engine)
         ok, mult = finder.loadbyfaxnum("+1 555 0199")
         self.assertTrue(ok)
         self.assertFalse(mult)
         self.assertEqual(finder.get_company(), "Beta Industries")
 
         # Reassign to new company
-        other = AFAddressBook(db=self.engine)
+        other = NFAddressBook(db=self.engine)
         other.create("Gamma LLC")
         new_cid = other.get_companyid()
 
@@ -100,7 +100,7 @@ class TestAFAddressBook(unittest.TestCase):
         # Old company deleted, fax reassigned to Gamma LLC
         self.assertFalse(self.service.loadbycid(cid))
 
-        rechecked = AFAddressBook(db=self.engine)
+        rechecked = NFAddressBook(db=self.engine)
         ok, _ = rechecked.loadbyfaxnum("+15550199")
         self.assertTrue(ok)
         self.assertEqual(rechecked.get_company(), "Gamma LLC")
@@ -122,7 +122,7 @@ class TestAFAddressBook(unittest.TestCase):
 
         # Load and update
         cid = list(contacts_map.keys())[0]
-        loader = AFAddressBook(db=self.engine)
+        loader = NFAddressBook(db=self.engine)
         self.assertTrue(loader.load_contact_by_id(cid))
         self.assertTrue(loader.update_contact("Alice Updated", "alice_new@example.com"))
         self.assertEqual(loader.get_contact_name(), "Alice Updated")

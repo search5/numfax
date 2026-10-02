@@ -2,13 +2,13 @@
 from namifax.services.mailer import Mailer, MailerService
 from namifax.services.covers import Covers, CoverService
 from namifax.services.categories import FaxPDFCategory, CategoryService
-from namifax.services.user_passwords import AFUserPasswords, PasswordHistoryService
+from namifax.services.user_passwords import NFUserPasswords, PasswordHistoryService
 from namifax.services.dynconf import DynamicConfig, DynamicConfigService
 from namifax.services.barcode import BarcodeRouting, BarcodeRoutingService
 from namifax.services.did import DIDRouting, DIDRoutingService
 from namifax.services.distro import DistributionList, DistributionListService
 from namifax.services.modem import FaxModem, FaxModemService
-from namifax.services.addressbook import AFAddressBook, AddressBookService
+from namifax.services.addressbook import NFAddressBook, AddressBookService
 
 __all__ = [
     "MailerService",
@@ -17,7 +17,7 @@ __all__ = [
     "CoverService",
     "FaxPDFCategory",
     "CategoryService",
-    "AFUserPasswords",
+    "NFUserPasswords",
     "PasswordHistoryService",
     "DynamicConfig",
     "DynamicConfigService",
@@ -29,6 +29,6 @@ __all__ = [
     "DistributionListService",
     "FaxModem",
     "FaxModemService",
-    "AFAddressBook",
+    "NFAddressBook",
     "AddressBookService",
 ]

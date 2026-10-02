@@ -22,7 +22,7 @@ from typing import Any, Optional, Sequence
 
 from namifax.common.helpers import avantfaxlog, faxinfo, hylafax_date_to_iso
 from namifax.db.provider import cli_session, use_session
-from namifax.services.addressbook import AFAddressBook
+from namifax.services.addressbook import NFAddressBook
 from namifax.services.archive_in import ArchiveIn
 from namifax.services.archive_out import ArchiveOut
 
@@ -77,7 +77,7 @@ def _import(options: argparse.Namespace, session: Any) -> int:
 
 def _number_ids(session: Any, number: str, company: Optional[str] = None) -> tuple[Optional[int], Optional[int]]:
     """(faxnumid, companyid) for a number, registering it when new; None when it cannot be resolved."""
-    book = AFAddressBook(db=session)
+    book = NFAddressBook(db=session)
     faxnumid, companyid, outcome = book.find_or_create_number(number, company)
     if outcome == "multiple":
         avantfaxlog("> Found fax number with multiple companies", echo=True)

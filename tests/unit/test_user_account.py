@@ -5,8 +5,8 @@ import unittest
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
 
 from sqlsession import empty_session, seeded_session
-from namifax.services.user_account import AFUserAccount, UserAccountService
-from namifax.services.user_passwords import AFUserPasswords
+from namifax.services.user_account import NFUserAccount, UserAccountService
+from namifax.services.user_passwords import NFUserPasswords
 
 
 class TestAFUserAccount(unittest.TestCase):
@@ -14,8 +14,8 @@ class TestAFUserAccount(unittest.TestCase):
         self.engine = empty_session()
 
 
-        self.passwords_svc = AFUserPasswords(db=self.engine)
-        self.user_svc = AFUserAccount(db=self.engine, user_passwords=self.passwords_svc)
+        self.passwords_svc = NFUserPasswords(db=self.engine)
+        self.user_svc = NFUserAccount(db=self.engine, user_passwords=self.passwords_svc)
 
     def tearDown(self):
         self.engine.disconnect()
@@ -33,7 +33,7 @@ class TestAFUserAccount(unittest.TestCase):
         self.assertIsNotNone(uid)
 
         # Duplicate username
-        dup_user = AFUserAccount(db=self.engine, user_passwords=self.passwords_svc)
+        dup_user = NFUserAccount(db=self.engine, user_passwords=self.passwords_svc)
         ok2 = dup_user.create({
             "name": "Alice 2",
             "email": "alice2@example.com",
@@ -44,7 +44,7 @@ class TestAFUserAccount(unittest.TestCase):
         self.assertIn("username", dup_user.get_error().lower())
 
         # Duplicate email
-        dup_email = AFUserAccount(db=self.engine, user_passwords=self.passwords_svc)
+        dup_email = NFUserAccount(db=self.engine, user_passwords=self.passwords_svc)
         ok3 = dup_email.create({
             "name": "Alice 3",
             "email": "alice@example.com",
@@ -54,7 +54,7 @@ class TestAFUserAccount(unittest.TestCase):
         self.assertFalse(ok3)
 
         # Invalid username characters
-        bad_name = AFUserAccount(db=self.engine, user_passwords=self.passwords_svc)
+        bad_name = NFUserAccount(db=self.engine, user_passwords=self.passwords_svc)
         ok4 = bad_name.create({
             "name": "Bad User",
             "email": "bad@example.com",
@@ -73,7 +73,7 @@ class TestAFUserAccount(unittest.TestCase):
             "acc_enabled": 1,
         })
 
-        client = AFUserAccount(db=self.engine, user_passwords=self.passwords_svc)
+        client = NFUserAccount(db=self.engine, user_passwords=self.passwords_svc)
 
         # 1. Successful regular login
         ok = client.login("admin", "SecretPassword1")
@@ -82,13 +82,13 @@ class TestAFUserAccount(unittest.TestCase):
         self.assertTrue(client.check_admin_login())
 
         # 2. Failed password
-        fail_client = AFUserAccount(db=self.engine, user_passwords=self.passwords_svc)
+        fail_client = NFUserAccount(db=self.engine, user_passwords=self.passwords_svc)
         self.assertFalse(fail_client.login("admin", "WrongPassword"))
         self.assertFalse(fail_client.check_login())
 
         # 3. Disabled account
         self.engine.query("UPDATE UserAccount SET acc_enabled = 0 WHERE username = 'admin'")
-        dis_client = AFUserAccount(db=self.engine, user_passwords=self.passwords_svc)
+        dis_client = NFUserAccount(db=self.engine, user_passwords=self.passwords_svc)
         self.assertFalse(dis_client.login("admin", "SecretPassword1"))
 
     def test_change_password_and_history(self):
@@ -112,7 +112,7 @@ class TestAFUserAccount(unittest.TestCase):
         self.assertTrue(self.user_svc.change_password("BrandNewPass1"))
 
         # 4. Verify login with new password
-        tester = AFUserAccount(db=self.engine, user_passwords=self.passwords_svc)
+        tester = NFUserAccount(db=self.engine, user_passwords=self.passwords_svc)
         self.assertTrue(tester.login("bob", "BrandNewPass1"))
 
     def test_reset_password(self):
@@ -127,7 +127,7 @@ class TestAFUserAccount(unittest.TestCase):
         self.assertTrue(ok)
         self.assertIsNotNone(newpwd)
 
-        tester = AFUserAccount(db=self.engine, user_passwords=self.passwords_svc)
+        tester = NFUserAccount(db=self.engine, user_passwords=self.passwords_svc)
         self.assertTrue(tester.login("charlie", newpwd))
         self.assertTrue(tester.is_expired())  # wasreset requires password change
 
@@ -164,7 +164,7 @@ class TestAFUserAccount(unittest.TestCase):
         self.user_svc.set_didrouting([10, 20])
         self.user_svc.update()
 
-        reloaded = AFUserAccount(db=self.engine, user_passwords=self.passwords_svc)
+        reloaded = NFUserAccount(db=self.engine, user_passwords=self.passwords_svc)
         reloaded.load(self.user_svc.get_uid())
 
         self.assertEqual(reloaded.get_modemdevs(), ["ttyS0", "ttyS1"])

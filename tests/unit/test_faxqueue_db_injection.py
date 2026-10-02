@@ -32,7 +32,7 @@ def _request(method="GET", params=None):
 def test_faxqueue_resolves_users_with_injected_db():
     db = object()
     fq = FaxQueue(auto_process=False, db=db)
-    with patch("namifax.services.faxqueue.AFUserAccount") as cls:
+    with patch("namifax.services.faxqueue.NFUserAccount") as cls:
         fq.get_queue()
         fq.list_owner("admin")
     assert cls.call_args_list
@@ -57,5 +57,5 @@ def test_ajax_faxalter_builds_queue_with_request_db(as_superuser):
 
 
 def test_outbox_builds_queue_with_request_db(as_superuser):
-    with patch.object(outbox_mod, "AFAddressBook", MagicMock()):
+    with patch.object(outbox_mod, "NFAddressBook", MagicMock()):
         _assert_queue_built_with_db(outbox_mod, outbox_mod.outbox_view, _request())

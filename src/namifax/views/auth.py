@@ -9,7 +9,7 @@ from pyramid.view import view_config
 
 from namifax.common.helpers import avantfaxlog, get_admin_email, send_mail
 from namifax.common.validators import is_valid_email
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 from namifax.services.totp import TotpService
 from namifax.i18n import _
 
@@ -26,7 +26,7 @@ def login_get_view(request):
 
     remote_user = (request.environ.get("REMOTE_USER") or "").strip()
     if alternate.webserver_login() and remote_user:                 # the web server has authenticated this person
-        account = AFUserAccount(db=request.dbsession)
+        account = NFUserAccount(db=request.dbsession)
         if account.login_webauth(remote_user, remote_ip=getattr(request, "remote_addr", None) or "127.0.0.1"):
             return _finish_login(request, account.get_uid(), remote_user)
         error = account.get_error()
@@ -76,8 +76,8 @@ def login_post_view(request):
     username = params.get("username", "").strip()
     password = params.get("password", "")
 
-    # Check credentials using AFUserAccount service
-    user = AFUserAccount(db=request.dbsession)
+    # Check credentials using NFUserAccount service
+    user = NFUserAccount(db=request.dbsession)
     is_valid = False
 
     remote_ip = getattr(request, "remote_addr", None) or "127.0.0.1"
@@ -232,7 +232,7 @@ def forgot_post_view(request):
         return _forgot_page(_("Please enter a valid e-mail address."))
 
     ip = request.remote_addr or ""
-    user = AFUserAccount(db=request.dbsession)
+    user = NFUserAccount(db=request.dbsession)
     ok, new_password = user.reset_password(email)
     if not ok:
         avantfaxlog(f"forgot> Attempt to reset password for email '{email}' from IP: {ip}", session=request.dbsession)
@@ -281,7 +281,7 @@ def pwdexpired_post_view(request):
     if newpwd != conpwd:
         return _pwd_page("New passwords do not match.")
 
-    user = AFUserAccount(db=request.dbsession)
+    user = NFUserAccount(db=request.dbsession)
     if not user.load(pending["uid"]):
         request.session.pop(_PWD_PENDING, None)
         return HTTPFound(location=request.route_url("login"))

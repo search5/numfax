@@ -63,7 +63,7 @@ sources:
 
 [코드] `src/namifax/views/auth.py`, `src/namifax/services/user_account.py`, `src/namifax/auth/alternate.py`
 
-1. `POST /login`: 먼저 시도 제한(아래 8번)을 확인해 잠겨 있으면 비밀번호를 보지 않고 거절한다. 그 다음 대체 인증(PAM/pwauth 등, `alternate.enabled()`)이 켜져 있으면 그것을, 꺼져 있거나 `fallback()` 이 허용되면 계정 자체 비밀번호(`AFUserAccount.login`)를 검사한다. 시험 `tests/unit/test_alternate_auth.py`, `tests/unit/test_auth_pam.py`
+1. `POST /login`: 먼저 시도 제한(아래 8번)을 확인해 잠겨 있으면 비밀번호를 보지 않고 거절한다. 그 다음 대체 인증(PAM/pwauth 등, `alternate.enabled()`)이 켜져 있으면 그것을, 꺼져 있거나 `fallback()` 이 허용되면 계정 자체 비밀번호(`NFUserAccount.login`)를 검사한다. 시험 `tests/unit/test_alternate_auth.py`, `tests/unit/test_auth_pam.py`
 2. 웹서버가 인증한 `REMOTE_USER` 로 들어오는 경로(`GET /login`)는 `alternate.webserver_login()` 이 켜진 경우에만 동작한다. 시험 `test_alternate_auth.py::test_the_web_server_login_is_off_unless_asked_for`, `test_remote_user_logs_in_when_the_web_server_authenticates`
 3. 계정이 비활성(`acc_enabled`)이면 별도 메시지("Account is disabled")를 보이고 로그에 남긴다. 실패 로그의 비밀번호는 끝 3자리만 남기고 가린다(`XXXXXX` + 마지막 3자). 시험 `tests/unit/test_login_audit_log.py`
 4. 비밀번호 만료·최초 로그인(`last_login` 없음)·관리자 초기화(`wasreset`) 중 하나면 로그인 쿠키를 발급하기 전에 `/pwdexpired` 로 보내 새 비밀번호를 정하게 한다. 이 페이지는 로그인 직후 세션에 보관된 계정 하나만 바꿀 수 있고 사용자 이름을 요청에서 받지 않는다. 시험 `tests/unit/test_forced_password_change.py` (`test_the_page_cannot_be_used_to_change_somebody_elses_password`, `test_two_factor_still_applies_after_the_change`)

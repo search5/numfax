@@ -82,7 +82,7 @@ verified: true
 
 | mock 이 한 일 | 가려진 결함(원문) | 대신 한 것 |
 |---|---|---|
-| `AFUserAccount`·서비스·세션을 가짜로 대체한 로그인 시험 | 앱에 HTTP 세션 팩토리가 없어 2FA 사용자 로그인이 500, 패스키 챌린지 미저장, SAML·패스키 뷰가 없는 메서드를 호출, 로그인이 인증 토큰이 아니라 세션만 기록(14.19) | 실제 앱·DB·WebTest 로 로그인까지 가는 `test_sso_and_2fa_login.py`. 파일 docstring 이 위 이유를 적고 있다 |
+| `NFUserAccount`·서비스·세션을 가짜로 대체한 로그인 시험 | 앱에 HTTP 세션 팩토리가 없어 2FA 사용자 로그인이 500, 패스키 챌린지 미저장, SAML·패스키 뷰가 없는 메서드를 호출, 로그인이 인증 토큰이 아니라 세션만 기록(14.19) | 실제 앱·DB·WebTest 로 로그인까지 가는 `test_sso_and_2fa_login.py`. 파일 docstring 이 위 이유를 적고 있다 |
 | 웹 "팩스 이메일 전송" 시험이 `Mailer` 를 가짜로 대체 | 뷰가 없는 `mailer.send_mail(...)` 을 불러 `AttributeError`(14.6) | 뷰가 `send_mail` 헬퍼를 호출하고, 발송 자체는 시험 안의 가짜 SMTP 서버(실제 소켓)로 끝까지 확인(`test_active_mailer.py`) |
 | `db.query()` 가 리스트를 반환한다고 가정한 mock | 서비스도 같은 잘못된 가정을 해서 패스키 목록·OCR 색인이 한 번도 동작하지 않음(14.14) | 실제 세션 시험(`test_webauthn_orm.py`, `test_ocr_orm.py`, `test_totp_orm.py`) |
 | 결함 있는 동작을 기대값으로 고정한 시험 | 계정 삭제가 `username IS NULL` 갱신을 기대(NOT NULL 열이라 실제 DB 에서는 실패)(14.13) | 기대값을 새 동작(`deleted.<uid>` 등)으로 수정. 현재 `test_user_account.py::test_remove_account` 가 그렇다 |

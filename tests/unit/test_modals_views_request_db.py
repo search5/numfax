@@ -30,13 +30,13 @@ def test_view_builds_domain_objects_with_request_db(name, method, params, as_sup
     req.method = method
     req.params = params
 
-    arc_cls, ab_cls = MagicMock(name="ArchiveIn"), MagicMock(name="AFAddressBook")
+    arc_cls, ab_cls = MagicMock(name="ArchiveIn"), MagicMock(name="NFAddressBook")
     arc_cls.return_value.load_fax.return_value = True
     arc_cls.return_value.get_companyid.return_value = 7
     ab_cls.return_value.loadbycid.return_value = True
     ab_cls.return_value.get_companies.return_value = []
     with patch.object(modals_mod, "ArchiveIn", arc_cls), \
-            patch.object(modals_mod, "AFAddressBook", ab_cls), \
+            patch.object(modals_mod, "NFAddressBook", ab_cls), \
             patch.object(modals_mod, "send_mail", MagicMock(return_value=True)), \
             contextlib.suppress(Exception):
         getattr(modals_mod, name)(req)
@@ -45,4 +45,4 @@ def test_view_builds_domain_objects_with_request_db(name, method, params, as_sup
     for call in arc_cls.call_args_list:
         assert call.kwargs.get("db") is req.dbsession, f"{name}: ArchiveIn built without request.dbsession"
     for call in ab_cls.call_args_list:          # the address book is ORM-backed
-        assert call.kwargs.get("db") is req.dbsession, f"{name}: AFAddressBook built without request.dbsession"
+        assert call.kwargs.get("db") is req.dbsession, f"{name}: NFAddressBook built without request.dbsession"

@@ -6,7 +6,7 @@ from namifax.common.passwords import hash_password, verify_password
 from namifax.db.repository import MDBOData
 
 
-class AFUserPasswords:
+class NFUserPasswords:
     """Service class for managing user password history (UserPasswords table)."""
 
     def __init__(
@@ -52,4 +52,4 @@ class AFUserPasswords:
 
 
 # Modern architectural alias
-PasswordHistoryService = AFUserPasswords
+PasswordHistoryService = NFUserPasswords

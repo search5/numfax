@@ -34,21 +34,21 @@ def test_view_builds_domain_objects_with_request_db(name, method, params):
     req.params = params
     req.route_url = MagicMock(return_value="/x")
 
-    cls = MagicMock(name="AFAddressBook")
+    cls = MagicMock(name="NFAddressBook")
     cls.return_value.get_companies.return_value = []
     # the account and category lookups have no database behind a stand-in session; this test is about the address book
-    with patch.object(mod, "AFAddressBook", cls), patch.object(mod, "AFUserAccount", MagicMock()), \
+    with patch.object(mod, "NFAddressBook", cls), patch.object(mod, "NFUserAccount", MagicMock()), \
             patch.object(mod, "FaxPDFCategory", MagicMock()), contextlib.suppress(Exception):
         getattr(mod, name)(req)
 
-    assert cls.call_args_list, f"{name} built no AFAddressBook"
+    assert cls.call_args_list, f"{name} built no NFAddressBook"
     for call in cls.call_args_list:
         assert call.kwargs.get("db") is req.dbsession, f"{name}: built without request.dbsession"
 
 
 def test_get_all_companies_uses_given_db():
     db = object()
-    with patch.object(mod, "AFAddressBook") as cls:
+    with patch.object(mod, "NFAddressBook") as cls:
         cls.return_value.get_companies.return_value = []
         mod.get_all_companies(db)
     assert cls.call_args.kwargs.get("db") is db

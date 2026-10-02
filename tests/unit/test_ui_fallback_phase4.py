@@ -52,7 +52,7 @@ class TestUIFallbackPhase4(unittest.TestCase):
         req = MockRequest()
         req.identity = {"username": "admin", "is_admin": True}
 
-        with patch("namifax.views.sendfax.AFUserAccount"), patch("namifax.views.sendfax.FaxModem"):
+        with patch("namifax.views.sendfax.NFUserAccount"), patch("namifax.views.sendfax.FaxModem"):
             res = sendfax_view(req)
         self.assertIsInstance(res, dict)
         self.assertEqual(res.get("cover_list"), [])
@@ -62,7 +62,7 @@ class TestUIFallbackPhase4(unittest.TestCase):
     # AUDIT-09: inbox and viewfax fallback removal
     # =========================================================================
     @patch("namifax.views.inbox.ArchiveIn")
-    @patch("namifax.views.inbox.AFAddressBook")
+    @patch("namifax.views.inbox.NFAddressBook")
     def test_inbox_view_empty_fields_not_injected_with_fake_defaults(self, mock_ab_cls, mock_arc_cls):
         """Verify that missing DB fields do not receive fake Acme Corp or ttyS0 defaults in inbox."""
         mock_arc = MagicMock()
@@ -104,7 +104,7 @@ class TestUIFallbackPhase4(unittest.TestCase):
         self.assertNotEqual(fax.get("description"), "Received Facsimile")
 
     @patch("namifax.views.inbox.ArchiveIn")
-    @patch("namifax.views.inbox.AFAddressBook")
+    @patch("namifax.views.inbox.NFAddressBook")
     def test_viewfax_view_nonexistent_goes_back_to_the_inbox(self, mock_ab_cls, mock_arc_cls):
         """A fax that cannot be loaded gives no made-up metadata: the visitor is sent back to the inbox."""
         mock_arc = MagicMock()

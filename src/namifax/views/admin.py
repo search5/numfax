@@ -20,8 +20,8 @@ from namifax.i18n import _
 def get_all_admin_users(db: Any = None) -> list[dict[str, Any]]:
     """Retrieve users directly from database."""
     try:
-        from namifax.services.user_account import AFUserAccount
-        svc = AFUserAccount(db=db)
+        from namifax.services.user_account import NFUserAccount
+        svc = NFUserAccount(db=db)
         rows = svc.list_accounts()
         if rows:
             users_list = []
@@ -651,11 +651,11 @@ def admin_fax2email_view(request):
     import re as _re
 
     from namifax.common.validators import is_valid_email
-    from namifax.services.addressbook import AFAddressBook
+    from namifax.services.addressbook import NFAddressBook
     from namifax.services.categories import FaxPDFCategory
 
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    ab = AFAddressBook(db=request.dbsession)
+    ab = NFAddressBook(db=request.dbsession)
     message = None
     error = None
 

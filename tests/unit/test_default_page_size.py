@@ -14,7 +14,7 @@ from sqlalchemy import update
 
 from namifax.common import settings
 from namifax.models import FaxArchive, UserAccount
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 from test_fax_access_control import _fax, _login, _user, world  # noqa: F401  (same users and helpers)
 
 

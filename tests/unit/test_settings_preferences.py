@@ -58,9 +58,9 @@ def test_a_wrong_email_is_refused_by_the_server(client, dbsession):
 
 
 def test_an_email_of_another_user_is_refused(client, dbsession):
-    from namifax.services.user_account import AFUserAccount
+    from namifax.services.user_account import NFUserAccount
 
-    other = AFUserAccount(db=dbsession)
+    other = NFUserAccount(db=dbsession)
     assert other.create({"username": "taken", "password": "Secret123!", "email": "taken@corp.test", "name": "T", "acc_enabled": 1})
     dbsession.flush()
     before = _admin(dbsession).email

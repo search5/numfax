@@ -8,9 +8,9 @@ from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
 
 from namifax.i18n import _
-from namifax.services.addressbook import AFAddressBook, clean_faxnum
+from namifax.services.addressbook import NFAddressBook, clean_faxnum
 from namifax.services.categories import FaxPDFCategory
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 
 _DETAIL_FIELDS = ("to_person", "to_location", "to_voicenumber", "to_address", "to_zip", "to_city")
 
@@ -18,7 +18,7 @@ _DETAIL_FIELDS = ("to_person", "to_location", "to_voicenumber", "to_address", "t
 def get_all_companies(db: Any = None) -> list[dict[str, Any]]:
     """Every company with its fax numbers (the reserved placeholder is left out)."""
     try:
-        ab = AFAddressBook(db=db)
+        ab = NFAddressBook(db=db)
         numbers = ab.numbers_by_company()
         result = []
         for r in ab.get_companies():
@@ -75,16 +75,16 @@ def _company_id(params) -> Optional[int]:
     return None
 
 
-def _account(request) -> AFUserAccount:
+def _account(request) -> NFUserAccount:
     identity = request.identity or {}
-    account = AFUserAccount(db=request.dbsession)
+    account = NFUserAccount(db=request.dbsession)
     uid = identity.get("user_id") or identity.get("uid")
     if uid:
         account.load(int(uid))
     return account
 
 
-def _categories(request, account: AFUserAccount) -> list[tuple[int, str]]:
+def _categories(request, account: NFUserAccount) -> list[tuple[int, str]]:
     """The categories the user may pick: all of them for an administrator, otherwise those on the account."""
     identity = request.identity or {}
     everything = FaxPDFCategory(db=request.dbsession).get_categories() or []
@@ -94,7 +94,7 @@ def _categories(request, account: AFUserAccount) -> list[tuple[int, str]]:
     return [(int(c["catid"]), c.get("name") or "") for c in everything if int(c["catid"]) in allowed]
 
 
-def _may_delete(request, account: AFUserAccount) -> bool:
+def _may_delete(request, account: NFUserAccount) -> bool:
     identity = request.identity or {}
     return bool(account.dbdata.get("can_del") or account.dbdata.get("superuser") or identity.get("superuser"))
 
@@ -109,7 +109,7 @@ def _category_value(posted: str, allowed: set, current: Any = None) -> Optional[
     return current
 
 
-def _page(request, account, *, book: Optional[AFAddressBook] = None, error=None, message=None, values=None) -> dict:
+def _page(request, account, *, book: Optional[NFAddressBook] = None, error=None, message=None, values=None) -> dict:
     cid = book.abook_id if book is not None and book.abook_id else None
     company = {"id": cid, "company": (values or {}).get("company") or (book.get_company() if cid else "") or ""}
     return {
@@ -126,7 +126,7 @@ def _page(request, account, *, book: Optional[AFAddressBook] = None, error=None,
     }
 
 
-def _save_numbers(book: AFAddressBook, post, allowed: set) -> Optional[str]:
+def _save_numbers(book: NFAddressBook, post, allowed: set) -> Optional[str]:
     """Apply the edited rows. A row with an empty number is removed (as in the original); returns an error message."""
     own = {int(n["abookfax_id"]): n for n in book.get_faxnums()}
     problem = None
@@ -152,7 +152,7 @@ def _save_numbers(book: AFAddressBook, post, allowed: set) -> Optional[str]:
     return problem
 
 
-def _new_number(book: AFAddressBook, number: str, post, allowed: set) -> bool:
+def _new_number(book: NFAddressBook, number: str, post, allowed: set) -> bool:
     """Add the number typed into the 'new fax number' block, with its details."""
     if not book.create_faxnumid(number):
         return False
@@ -166,7 +166,7 @@ def _new_number(book: AFAddressBook, number: str, post, allowed: set) -> bool:
 def addressbook_edit_view(request):
     """Add a company, or edit a company and all of its fax numbers (the original addressbook_edit.php)."""
     account = _account(request)
-    book = AFAddressBook(db=request.dbsession)
+    book = NFAddressBook(db=request.dbsession)
     allowed = {cid for cid, _name in _categories(request, account)}
     cid = _company_id(request.POST if request.method == "POST" else request.params)
 
@@ -233,7 +233,7 @@ def emailbook_list_view(request):
     """The e-mail contacts, filtered by the search box (name or address)."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
     query = request.params.get("q", "").strip().lower()
-    ab = AFAddressBook(db=request.dbsession)
+    ab = NFAddressBook(db=request.dbsession)
     companies = {c["abook_id"]: c.get("company") or "" for c in ab.get_companies(with_reserved=True)}
     contacts = []
     for row in ab.addressbookemail.select(order_by="contact_name"):
@@ -264,10 +264,10 @@ def _contact_page(request, contact: dict, *, error=None, message=None) -> dict:
 @view_config(route_name="emailbook_edit", renderer="namifax:templates/emailbook_edit.jinja2", permission="view")
 def emailbook_edit_view(request):
     """Add, change or delete an e-mail contact (the original emailbook_edit.php)."""
-    book = AFAddressBook(db=request.dbsession)
+    book = NFAddressBook(db=request.dbsession)
     identity = request.identity or {}
 
-    def contact_of(loaded: AFAddressBook) -> dict:
+    def contact_of(loaded: NFAddressBook) -> dict:
         return {"id": loaded.email_array.get("abookemail_id"), "name": loaded.get_contact_name() or "",
                 "email": loaded.get_contact_email() or ""}
 

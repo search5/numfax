@@ -5,7 +5,7 @@ import shlex
 import subprocess
 from typing import Any, Dict, List, Optional, Sequence
 
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 
 SENDQ_KEYS = ["jid", "pri", "s", "owner", "mailaddr", "number", "pages", "dials", "tts", "status"]
 DONEQ_KEYS = ["jid", "pri", "s", "owner", "mailaddr", "number", "pages", "dials", "status"]
@@ -58,7 +58,7 @@ class FaxQueue:
 
     def __init__(
         self,
-        user_account: Optional[AFUserAccount] = None,
+        user_account: Optional[NFUserAccount] = None,
         faxsendq_cmd: str = "faxstat -s",
         faxdoneq_cmd: str = "faxstat -d",
         faxrm_cmd: str = "faxrm",
@@ -118,7 +118,7 @@ class FaxQueue:
 
     def get_queue(self) -> List[Dict[str, Any]]:
         """Return queue decorated with resolved user display names."""
-        user_svc = self.user_account or AFUserAccount(db=self.db)
+        user_svc = self.user_account or NFUserAccount(db=self.db)
         ret = []
 
         for q in self.queue:
@@ -142,7 +142,7 @@ class FaxQueue:
 
     def list_owner(self, owner: str) -> List[Dict[str, Any]]:
         """Filter queue for specific owner or corresponding faxmail address."""
-        user_svc = self.user_account or AFUserAccount(db=self.db)
+        user_svc = self.user_account or NFUserAccount(db=self.db)
         ret = []
 
         for q in self.queue:

@@ -26,7 +26,7 @@ class TestPyramidTotpAuth(unittest.TestCase):
         testing.tearDown()
         close_linked(self.db, self.session)
 
-    @patch("namifax.views.auth.AFUserAccount")
+    @patch("namifax.views.auth.NFUserAccount")
     def test_login_redirects_to_totp_if_enabled(self, mock_account_cls):
         mock_account = MagicMock()
         mock_account.load_user.return_value = True

@@ -219,9 +219,9 @@ def phone_lookup(number: str, db: Any = None) -> Optional[Dict[str, Any]]:
     if not cleaned:
         return None
 
-    from namifax.services.addressbook import AFAddressBook
+    from namifax.services.addressbook import NFAddressBook
 
-    ab = AFAddressBook(db=db)
+    ab = NFAddressBook(db=db)
     res = ab.addressbookfax.find({"faxnumber": cleaned}, reduce_single=False)
     if not res:
         return None
@@ -241,9 +241,9 @@ def get_company_details(
     db: Any = None,
 ) -> Dict[str, Any]:
     """Retrieve combined company and fax information."""
-    from namifax.services.addressbook import AFAddressBook
+    from namifax.services.addressbook import NFAddressBook
 
-    ab = AFAddressBook(db=db)
+    ab = NFAddressBook(db=db)
     details: Dict[str, Any] = {
         "company": None,
         "faxnumber": orig_faxnum,

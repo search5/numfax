@@ -5,14 +5,14 @@ from __future__ import annotations
 
 import pytest
 
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 
 PAGES = ["/admin/smtp", "/admin/printers", "/admin/storage", "/admin/saml"]
 
 
 @pytest.fixture
 def plain_admin(testapp, dbsession):
-    acct = AFUserAccount(db=dbsession)
+    acct = NFUserAccount(db=dbsession)
     assert acct.create({"username": "sub", "password": "Secret123!", "email": "sub@x.test", "name": "Sub", "is_admin": 1,
                         "superuser": 0, "acc_enabled": 1, "last_login": "2026-01-01 10:00:00"})
     dbsession.flush()

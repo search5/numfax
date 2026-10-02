@@ -56,8 +56,8 @@ class TestCLINotify(unittest.TestCase):
         try:
             f = io.StringIO()
             with redirect_stdout(f), \
-                 patch("namifax.cli.notify.AFAddressBook") as mock_ab, \
-                 patch("namifax.cli.notify.AFUserAccount") as mock_user, \
+                 patch("namifax.cli.notify.NFAddressBook") as mock_ab, \
+                 patch("namifax.cli.notify.NFUserAccount") as mock_user, \
                  patch("namifax.cli.notify.ArchiveOut") as mock_out, \
                  patch("namifax.cli.notify.send_mail") as mock_send, \
                  patch("namifax.cli.notify.convert2pdf", return_value=True), \

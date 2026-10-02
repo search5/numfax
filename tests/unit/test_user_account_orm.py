@@ -53,16 +53,16 @@ def test_ddl_compiles_for_every_supported_database(dialect):
 
 @pytest.fixture(params=["session", "engine"])
 def acct(request, dbsession, seeded_db):
-    from namifax.services.user_account import AFUserAccount
+    from namifax.services.user_account import NFUserAccount
 
     if request.param == "session":
         dbsession.execute(sa.text("DELETE FROM UserPasswords"))
         dbsession.execute(sa.text("DELETE FROM UserAccount"))
-        svc = AFUserAccount(db=dbsession)
+        svc = NFUserAccount(db=dbsession)
     else:
         seeded_db.query("DELETE FROM UserPasswords")
         seeded_db.query("DELETE FROM UserAccount")
-        svc = AFUserAccount(db=seeded_db)
+        svc = NFUserAccount(db=seeded_db)
     svc.backend = request.param
     return svc
 
@@ -322,24 +322,24 @@ def test_values_with_quotes_backslashes_and_unicode_round_trip(acct):
 @pytest.mark.serverdb
 def test_server_database_service(monkeypatch, server_db_url, alembic_cfg):
     from namifax.models import UserAccount
-    from namifax.services.user_account import AFUserAccount
+    from namifax.services.user_account import NFUserAccount
 
     monkeypatch.setenv("DATABASE_URL", server_db_url)
     alembic.command.upgrade(alembic_cfg, "head")
     engine = sa.create_engine(server_db_url)
     try:
         with Session(engine) as session:
-            svc = AFUserAccount(db=session)
+            svc = NFUserAccount(db=session)
             assert svc.create({"username": "alice", "password": "Secret123!", "email": "a@x.test", "name": "Amy 'q' 한글 \\x",
                                "is_admin": 1, "pwdcycle": "6"})
-            assert AFUserAccount(db=session).create({"username": "alice", "email": "z@x.test"}) is False
-            assert AFUserAccount(db=session).login("alice", "Secret123!", admin=True) is True
-            assert AFUserAccount(db=session).login("alice", "wrong") is False
-            two = AFUserAccount(db=session)
+            assert NFUserAccount(db=session).create({"username": "alice", "email": "z@x.test"}) is False
+            assert NFUserAccount(db=session).login("alice", "Secret123!", admin=True) is True
+            assert NFUserAccount(db=session).login("alice", "wrong") is False
+            two = NFUserAccount(db=session)
             assert two.create({"username": "bob", "password": "Secret123!", "email": "b@x.test", "name": "Zed Bob"})
-            assert [a["username"] for a in AFUserAccount(db=session).list_accounts()] == ["alice", "bob"]
-            assert AFUserAccount(db=session).remove(two.uid) is True
-            assert AFUserAccount(db=session).create({"username": "bob", "password": "Secret123!", "email": "b@x.test"})
+            assert [a["username"] for a in NFUserAccount(db=session).list_accounts()] == ["alice", "bob"]
+            assert NFUserAccount(db=session).remove(two.uid) is True
+            assert NFUserAccount(db=session).create({"username": "bob", "password": "Secret123!", "email": "b@x.test"})
             session.commit()
         with Session(engine) as session:
             rows = session.execute(sa.select(UserAccount.username, UserAccount.deleted, UserAccount.is_admin)

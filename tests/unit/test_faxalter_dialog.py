@@ -9,7 +9,7 @@ from __future__ import annotations
 import pytest
 import webtest
 
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 from test_archive_search_legacy_parity import _configure
 
 PWD = "Secret123!"
@@ -41,7 +41,7 @@ def admin(testapp, dbsession):
 
 
 def _user(testapp, dbsession, name, modems):
-    svc = AFUserAccount(db=dbsession)
+    svc = NFUserAccount(db=dbsession)
     assert svc.create({"username": name, "password": PWD, "email": f"{name}@x.test", "name": name, "last_login": "2026-01-01 10:00:00",
                        "acc_enabled": 1, "modemdevs": modems}), svc.error
     dbsession.flush()

@@ -12,13 +12,13 @@ from pyramid.renderers import render_to_response
 from pyramid.view import view_config
 
 from namifax.i18n import _
-from namifax.services.addressbook import RESERVED_FAX_NUM, AFAddressBook
+from namifax.services.addressbook import RESERVED_FAX_NUM, NFAddressBook
 from namifax.services.distro import DistributionList
 
 
 def _members(db: Any, entries: list[str]) -> list[dict[str, str]]:
     """Each ``fnid|number`` entry as ``{"value", "label"}``, sorted by label; an entry whose number is gone is left out."""
-    book = AFAddressBook(db=db)
+    book = NFAddressBook(db=db)
     found = []
     for entry in entries:
         fnid = entry.split("|", 1)[0]

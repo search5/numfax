@@ -8,7 +8,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 from namifax.services import hylafax_users
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 
 
 @pytest.fixture
@@ -55,20 +55,20 @@ def test_a_missing_program_is_reported_not_raised(run):
 
 
 def test_creating_an_account_adds_the_hylafax_user(run, dbsession):
-    svc = AFUserAccount(db=dbsession)
+    svc = NFUserAccount(db=dbsession)
     assert svc.create({"username": "syncd", "password": "Secret123!", "email": "s@x.test", "name": "S", "acc_enabled": 1})
     assert any(c[1:2] == ["/usr/sbin/faxadduser"] and c[-1] == "syncd" and c[c.index("-p") + 1] == "Secret123!" for c in _commands(run))
 
 
 def test_a_generated_password_is_the_one_given_to_hylafax(run, dbsession):
-    svc = AFUserAccount(db=dbsession)
+    svc = NFUserAccount(db=dbsession)
     assert svc.create({"username": "syncg", "password": "", "email": "g@x.test", "name": "G", "acc_enabled": 1})
     add = next(c for c in _commands(run) if c[1:2] == ["/usr/sbin/faxadduser"])
     assert add[add.index("-p") + 1] == svc.generated_password
 
 
 def test_changing_the_password_updates_the_hylafax_user(run, dbsession):
-    svc = AFUserAccount(db=dbsession)
+    svc = NFUserAccount(db=dbsession)
     assert svc.create({"username": "syncc", "password": "Secret123!", "email": "c@x.test", "name": "C", "acc_enabled": 1,
                        "last_login": "2026-01-01 10:00:00"})
     run.reset_mock()
@@ -78,7 +78,7 @@ def test_changing_the_password_updates_the_hylafax_user(run, dbsession):
 
 
 def test_removing_an_account_removes_the_hylafax_user(run, dbsession):
-    svc = AFUserAccount(db=dbsession)
+    svc = NFUserAccount(db=dbsession)
     assert svc.create({"username": "syncr", "password": "Secret123!", "email": "r@x.test", "name": "R", "acc_enabled": 1})
     run.reset_mock()
     assert svc.remove(svc.uid)
@@ -86,8 +86,8 @@ def test_removing_an_account_removes_the_hylafax_user(run, dbsession):
 
 
 def test_a_reset_password_updates_the_hylafax_user(run, dbsession):
-    svc = AFUserAccount(db=dbsession)
+    svc = NFUserAccount(db=dbsession)
     assert svc.create({"username": "syncp", "password": "Secret123!", "email": "p@x.test", "name": "P", "acc_enabled": 1})
     run.reset_mock()
-    ok, new_pwd = AFUserAccount(db=dbsession).reset_password("p@x.test")
+    ok, new_pwd = NFUserAccount(db=dbsession).reset_password("p@x.test")
     assert ok and any(new_pwd in c for c in _commands(run))

@@ -22,7 +22,7 @@ def test_webauthn_register_options_view_success():
     req.db = MagicMock()
     req.dbsession = MagicMock()
     req.session = {"username": "admin"}
-    with patch("namifax.views.webauthn.AFUserAccount") as mock_user_cls:
+    with patch("namifax.views.webauthn.NFUserAccount") as mock_user_cls:
         mock_user = MagicMock()
         mock_user.load_by_username.return_value = True
         mock_user.get_uid.return_value = 1
@@ -65,7 +65,7 @@ def test_webauthn_list_and_delete_credentials_views():
     req.db = MagicMock()
     req.dbsession = MagicMock()
     req.session = {"username": "admin"}
-    with patch("namifax.views.webauthn.AFUserAccount") as mock_user_cls:
+    with patch("namifax.views.webauthn.NFUserAccount") as mock_user_cls:
         mock_user = MagicMock()
         mock_user.load_by_username.return_value = True
         mock_user.get_uid.return_value = 1

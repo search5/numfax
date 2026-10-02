@@ -11,8 +11,8 @@ from namifax.cli import faxrcvd as mod
 def _run(tmp_path, **kwargs):
     tiff = tmp_path / "fax00123.tif"
     tiff.write_bytes(b"mock tiff")
-    classes = {n: MagicMock(name=n) for n in ("FaxModem", "AFAddressBook", "ArchiveIn", "DIDRouting", "BarcodeRouting")}
-    classes["AFAddressBook"].return_value.find_or_create_number.return_value = (1, 1, "found")
+    classes = {n: MagicMock(name=n) for n in ("FaxModem", "NFAddressBook", "ArchiveIn", "DIDRouting", "BarcodeRouting")}
+    classes["NFAddressBook"].return_value.find_or_create_number.return_value = (1, 1, "found")
     classes["ArchiveIn"].return_value.create.return_value = True
     classes["ArchiveIn"].return_value.get_fid.return_value = 7
     with patch.dict("os.environ", {"ENABLE_OCR_SUPPORT": "1"}), patch.multiple(mod, **classes), \
@@ -29,7 +29,7 @@ def test_every_service_gets_the_one_session(tmp_path):
     session = object()
     code, classes, ocr = _run(tmp_path, session=session)
     assert code == 0
-    for name in ("FaxModem", "DIDRouting", "AFAddressBook", "ArchiveIn"):
+    for name in ("FaxModem", "DIDRouting", "NFAddressBook", "ArchiveIn"):
         assert classes[name].call_args_list, f"{name} not built"
         assert all(c.kwargs.get("db") is session for c in classes[name].call_args_list), name
     assert ocr.call_args.kwargs.get("db") is session

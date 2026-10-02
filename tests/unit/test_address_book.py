@@ -140,12 +140,12 @@ def test_update_where_on_both_repository_implementations(dbsession, seeded_db):
 
 @pytest.fixture(params=["session", "engine"])
 def ab(request, dbsession, seeded_db):
-    from namifax.services.addressbook import AFAddressBook
+    from namifax.services.addressbook import NFAddressBook
 
     backend = dbsession if request.param == "session" else seeded_db
     for t in ("AddressBookFAX", "AddressBookEmail", "AddressBook"):
         (backend.execute(sa.text(f"DELETE FROM {t}")) if request.param == "session" else backend.query(f"DELETE FROM {t}"))
-    return AFAddressBook(db=backend)
+    return NFAddressBook(db=backend)
 
 
 def _fresh(ab):
@@ -288,27 +288,27 @@ def test_phone_lookup_finds_the_company_by_fax_number(ab):
 @pytest.mark.serverdb
 def test_server_database_service(monkeypatch, server_db_url, alembic_cfg):
     from namifax.models import AddressBook, AddressBookEmail, AddressBookFAX
-    from namifax.services.addressbook import AFAddressBook
+    from namifax.services.addressbook import NFAddressBook
 
     monkeypatch.setenv("DATABASE_URL", server_db_url)
     alembic.command.upgrade(alembic_cfg, "head")
     engine = sa.create_engine(server_db_url)
     try:
         with Session(engine) as session:
-            ab = AFAddressBook(db=session)
+            ab = NFAddressBook(db=session)
             assert ab.create("Acme") and ab.create_faxnumid("5551234") and ab.create_faxnumid("5559999")
             assert ab.save_settings({"description": "Main", "email": "f@x.test", "faxcatid": 3}) and ab.inc_faxfrom()
-            other = AFAddressBook(db=session)
+            other = NFAddressBook(db=session)
             assert other.create("한글 'q' \\x") and other.create_faxnumid("5551234")
             assert other.create_contact("Zed", "zed@x.test") and other.create_contacts("Amy <amy@x.test>") is None
             assert [c["company"] for c in other.search_companies("acm")] == ["Acme"]
-            assert AFAddressBook(db=session).loadbyfaxnum("5551234") == (True, True)
-            mover = AFAddressBook(db=session)
+            assert NFAddressBook(db=session).loadbyfaxnum("5551234") == (True, True)
+            mover = NFAddressBook(db=session)
             assert mover.loadbycid(ab.abook_id) and mover.reassign(other.abook_id) is True
             session.commit()
         with Session(engine) as session:
             count = lambda m: session.execute(sa.select(sa.func.count()).select_from(m)).scalar()  # noqa: E731
             assert (count(AddressBook), count(AddressBookFAX), count(AddressBookEmail)) == (1, 3, 2)
-            assert list(AFAddressBook(db=session).get_contacts().values()) == ['"Amy" <amy@x.test>', '"Zed" <zed@x.test>']
+            assert list(NFAddressBook(db=session).get_contacts().values()) == ['"Amy" <amy@x.test>', '"Zed" <zed@x.test>']
     finally:
         engine.dispose()

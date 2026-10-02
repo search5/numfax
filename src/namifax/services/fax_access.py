@@ -14,7 +14,7 @@ from typing import Any, List, Optional
 from namifax.common import settings
 from namifax.services.did import DIDRouting
 from namifax.services.modem import FaxModem
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 
 
 def _did_routing_enabled() -> bool:
@@ -44,7 +44,7 @@ class FaxAccess:
         """The rights of the user behind ``request``; nobody (no rights at all) when the account cannot be found."""
         identity = request.identity or {}
         username = str(identity.get("username") or "")
-        account = AFUserAccount(db=request.dbsession)
+        account = NFUserAccount(db=request.dbsession)
         if not username or not account.load_username(username):
             return cls(username=username)
         data = account.dbdata

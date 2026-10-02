@@ -6,7 +6,7 @@ from pyramid.csrf import check_csrf_token
 from pyramid.view import view_config
 
 from namifax.i18n import _
-from namifax.services.addressbook import AFAddressBook
+from namifax.services.addressbook import NFAddressBook
 from namifax.services.faxqueue import FaxQueue
 from namifax.views.admin import get_all_admin_modems
 from namifax.views.fax_rights import fax_access
@@ -19,7 +19,7 @@ def _visible(queue: FaxQueue, access) -> list[dict]:
 
 def _with_companies(request, jobs: list[dict]) -> list[dict]:
     """Name the company of each job's number (the number itself when the address book does not know it)."""
-    book = AFAddressBook(db=request.dbsession)
+    book = NFAddressBook(db=request.dbsession)
     rows = []
     for job in jobs:
         row = dict(job, company=job.get("number", ""))

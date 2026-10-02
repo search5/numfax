@@ -47,7 +47,7 @@ class TestCLIFaxrcvd(unittest.TestCase):
             f = io.StringIO()
             with redirect_stdout(f), \
                  patch("namifax.cli.faxrcvd.FaxModem") as mock_modem, \
-                 patch("namifax.cli.faxrcvd.AFAddressBook") as mock_ab, \
+                 patch("namifax.cli.faxrcvd.NFAddressBook") as mock_ab, \
                  patch("namifax.cli.faxrcvd.ArchiveIn") as mock_in, \
                  patch("namifax.cli.faxrcvd.send_mail") as mock_send, \
                  patch("namifax.cli.faxrcvd.faxinfo") as mock_finfo, \

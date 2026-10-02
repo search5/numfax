@@ -24,7 +24,7 @@ from namifax.services.did import DIDRouting
 from namifax.services.categories import FaxPDFCategory
 from namifax.services.fax_access import _did_routing_enabled
 from namifax.services.modem import FaxModem
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 from namifax.views.admin import get_all_admin_users
 
 FAXES_PER_PAGE = ["10", "15", "20", "25", "30", "50", "100"]
@@ -105,7 +105,7 @@ def _blank() -> dict:
             "modemdevs": [], "didrouting": [], "faxcats": []}
 
 
-def _from_account(svc: AFUserAccount) -> dict:
+def _from_account(svc: NFUserAccount) -> dict:
     d = svc.dbdata
     values = _blank()
     for key in ("uid", "name", "username", "email", "language", "from_company", "from_location", "from_voicenumber",
@@ -154,7 +154,7 @@ def _mistakes(values: dict) -> list[str]:
     return errors
 
 
-def _apply(svc: AFUserAccount, v: dict) -> None:
+def _apply(svc: NFUserAccount, v: dict) -> None:
     """Copy the form onto the loaded account (the original's field list)."""
     svc.dbdata.update(
         name=v["name"], language=v["language"], is_admin=int(v["is_admin"]), superuser=int(v["superuser"]),
@@ -181,7 +181,7 @@ def _mail_new_user(request, v: dict, password: str) -> None:
 def admin_users_view(request):
     """The user list and the form to add or change one."""
     identity = request.identity or {"username": "admin", "is_admin": True, "superuser": True}
-    svc = AFUserAccount(db=request.dbsession)
+    svc = NFUserAccount(db=request.dbsession)
     errors: list[str] = []
     saved = False
     values = _blank()
@@ -209,7 +209,7 @@ def admin_users_view(request):
             "max_password": settings.max_passwd_size()}
 
 
-def _edit(request, svc: AFUserAccount, v: dict):
+def _edit(request, svc: NFUserAccount, v: dict):
     errors = []
     if not svc.load(int(v["uid"])):
         return [_("The user does not exist.")], False
@@ -233,7 +233,7 @@ def _edit(request, svc: AFUserAccount, v: dict):
     return errors, not errors
 
 
-def _create(request, svc: AFUserAccount, v: dict):
+def _create(request, svc: NFUserAccount, v: dict):
     details = {k: v[k] for k in ("name", "username", "email", "password", "language", "from_company", "from_location",
                                  "from_voicenumber", "from_faxnumber", "user_tsi", "audiofile")}
     details.update(pwdcycle=v["pwdcycle"], acc_enabled=1, **{f: int(v[f]) for f in FLAGS})
@@ -255,7 +255,7 @@ def admin_user_delete_view(request):
     """Ask before an account is deleted (the original deluser.php); yourself and the last superuser stay."""
     params = request.POST if request.method == "POST" else request.params
     uid = (params.get("uid") or "").strip()
-    svc = AFUserAccount(db=request.dbsession)
+    svc = NFUserAccount(db=request.dbsession)
     if not uid.isdecimal() or not svc.load(int(uid)):
         return HTTPFound(location=request.route_url("admin_users"))
     error = None

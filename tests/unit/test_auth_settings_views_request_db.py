@@ -29,14 +29,14 @@ def _request(method="GET", params=None, session=None):
 
 
 def _run(view, req):
-    user_cls, totp_cls = MagicMock(name="AFUserAccount"), MagicMock(name="TotpService")
+    user_cls, totp_cls = MagicMock(name="NFUserAccount"), MagicMock(name="TotpService")
     user_cls.return_value.login.return_value = True
     user_cls.return_value.load.return_value = True
     user_cls.return_value.is_expired.return_value = False
     user_cls.return_value.dbdata = {}
     totp_cls.return_value.is_totp_enabled.return_value = False
-    with patch.object(auth_mod, "AFUserAccount", user_cls), \
-            patch.object(settings_mod, "AFUserAccount", user_cls), \
+    with patch.object(auth_mod, "NFUserAccount", user_cls), \
+            patch.object(settings_mod, "NFUserAccount", user_cls), \
             patch("namifax.services.totp.TotpService", totp_cls), \
             patch("namifax.services.login_throttle.LoginThrottle",
                   MagicMock(return_value=MagicMock(is_locked=MagicMock(return_value=False)))), \

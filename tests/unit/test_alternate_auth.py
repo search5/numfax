@@ -7,7 +7,7 @@ import pytest
 import webtest
 
 from namifax.auth import alternate
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 from namifax.services.syslog import SysLogService
 
 
@@ -23,7 +23,7 @@ class FakeBackend:
 
 @pytest.fixture
 def local(dbsession):
-    svc = AFUserAccount(db=dbsession)
+    svc = NFUserAccount(db=dbsession)
     assert svc.create({"username": "sysuser", "password": "LocalPass123!", "email": "s@x.test", "name": "Sys", "acc_enabled": 1,
                        "last_login": "2026-01-01 10:00:00"})
     dbsession.flush()

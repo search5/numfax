@@ -18,13 +18,13 @@ from namifax.common.helpers import (
     unaccent,
 )
 from sqlsession import empty_session, seeded_session
-from namifax.services.addressbook import AFAddressBook
+from namifax.services.addressbook import NFAddressBook
 
 
 class TestCommonHelpers(unittest.TestCase):
     def setUp(self):
         self.engine = empty_session()
-        self.abook = AFAddressBook(db=self.engine)
+        self.abook = NFAddressBook(db=self.engine)
 
     def tearDown(self):
         self.engine.disconnect()

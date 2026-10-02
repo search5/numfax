@@ -8,7 +8,7 @@ from namifax.common import settings as app_settings
 from namifax.common.validators import is_valid_email
 from namifax.i18n import _
 from namifax.services.covers import Covers
-from namifax.services.user_account import AFUserAccount
+from namifax.services.user_account import NFUserAccount
 
 FAXES_PER_PAGE = ["10", "15", "20", "25", "30", "50", "100"]
 
@@ -29,7 +29,7 @@ def settings_view(request):
     message = None
     error = None
 
-    user_account = AFUserAccount(db=request.dbsession)
+    user_account = NFUserAccount(db=request.dbsession)
     user_loaded = False
 
     uid = identity.get("uid")

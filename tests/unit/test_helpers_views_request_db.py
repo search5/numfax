@@ -23,7 +23,7 @@ CASES = [
     ("upload_fax_contacts", "POST", POST_VCARD),
     ("upload_fax_contacts", "GET", {}),
 ]
-CLASSES = ["AFAddressBook", "FaxPDFCategory", "DistributionList"]
+CLASSES = ["NFAddressBook", "FaxPDFCategory", "DistributionList"]
 
 
 @pytest.mark.parametrize("name,method,params", CASES, ids=[f"{c[0]}-{c[1]}-{i}" for i, c in enumerate(CASES)])
@@ -43,6 +43,6 @@ def test_view_builds_domain_objects_with_request_db(name, method, params):
     calls = [c for m in mocks.values() for c in m.call_args_list]
     assert calls, f"{name} built no domain objects"
     for cls_name, mock in mocks.items():
-        expected = req.dbsession if cls_name in ("FaxPDFCategory", "DistributionList", "AFAddressBook") else req.db
+        expected = req.dbsession if cls_name in ("FaxPDFCategory", "DistributionList", "NFAddressBook") else req.db
         for call in mock.call_args_list:
             assert call.kwargs.get("db") is expected, f"{name}: {cls_name} built with the wrong database"
