@@ -28,7 +28,8 @@ def test_inbox_view_authenticated_list(authenticated_app):
     assert "- NamiFAX - Inbox" in res.text
     assert "Acme Corp" in res.text
     assert "ttyS0" in res.text
-    assert "IDLE" in res.text
+    assert "MODEM IDLE" not in res.text              # AUDIT-09: no hard-coded status text in the page
+    assert "0 FAXES" not in res.text
     
     # Verify presence of 9 action buttons for the fax item
     assert "viewfax.png" in res.text

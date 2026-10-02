@@ -10,9 +10,6 @@ from sqlalchemy.orm import Session
 
 from namifax.models.syslog import SysLog
 
-MAX_ROWS = 100
-
-
 class SysLogService:
     """Read access to the ``SysLog`` table for the admin viewer.
 
@@ -48,13 +45,25 @@ class SysLogService:
             return f"{year}"
         return ""
 
-    def search(self, kw: str = "", day: str = "", month: str = "", year: str = "") -> list[dict[str, str]]:
-        session = self._require_session()
-        stmt = select(SysLog.logdate, SysLog.logtext)
+    def _filtered(self, stmt, kw: str, day: str, month: str, year: str):
         if kw:
             stmt = stmt.where(func.lower(SysLog.logtext).contains(kw.lower(), autoescape=True))
         prefix = self._date_prefix(day, month, year)
         if prefix:
             stmt = stmt.where(SysLog.logdate.startswith(prefix, autoescape=True))
-        stmt = stmt.order_by(SysLog.logdate.desc(), SysLog.syslogid.desc()).limit(MAX_ROWS)
+        return stmt
+
+    def count(self, kw: str = "", day: str = "", month: str = "", year: str = "") -> int:
+        """How many events the filter matches."""
+        session = self._require_session()
+        return int(session.scalar(self._filtered(select(func.count()).select_from(SysLog), kw, day, month, year)) or 0)
+
+    def search(self, kw: str = "", day: str = "", month: str = "", year: str = "",
+               limit: Optional[int] = None, offset: int = 0) -> list[dict[str, str]]:
+        """The matching events, newest first. Like the original there is no row limit unless the caller asks for a page."""
+        session = self._require_session()
+        stmt = self._filtered(select(SysLog.logdate, SysLog.logtext), kw, day, month, year)
+        stmt = stmt.order_by(SysLog.logdate.desc(), SysLog.syslogid.desc())
+        if limit is not None:
+            stmt = stmt.limit(limit).offset(max(offset, 0))
         return [{"logdate": str(r.logdate), "logtext": str(r.logtext)} for r in session.execute(stmt)]

@@ -40,6 +40,30 @@ def test_the_tiff_link_and_download_with_the_setting(world, monkeypatch):
     assert client.get(f"/faxes/download/{fid}?format=tiff").status_int == 200
 
 
+@pytest.mark.parametrize("fmt", ["tiff\r\nX-Evil: 1", 'x"; filename="evil', "exe", "PDF ", "tif/../x", ""])
+def test_the_download_format_is_checked_against_a_list(world, monkeypatch, fmt):
+    """R4Z-02: with ENABLE_DL_TIFF on, only pdf, tif and tiff are served; anything else is refused, never put in a header."""
+    monkeypatch.setenv("ENABLE_DL_TIFF", "1")
+    fid = _tiffed(world)
+    res = _login(world, "alice").get(f"/faxes/download/{fid}", params={"format": fmt}, expect_errors=True)
+    assert res.status_int in (400, 404)
+    assert "X-Evil" not in res.headers and "evil" not in res.headers.get("Content-Disposition", "")
+
+
+@pytest.mark.parametrize("fid", ["abc", "1;2", "-1", "1%0d%0aX-Evil:%201", "1.5"])
+def test_the_download_fid_must_be_a_whole_number(world, fid):
+    res = _login(world, "alice").get(f"/faxes/download/{fid}", expect_errors=True)
+    assert res.status_int in (400, 404) and "X-Evil" not in res.headers
+
+
+def test_the_download_header_is_built_from_the_checked_values(world, monkeypatch):
+    monkeypatch.setenv("ENABLE_DL_TIFF", "1")
+    fid = _tiffed(world)
+    res = _login(world, "alice").get(f"/faxes/download/{fid}?format=tif")
+    assert res.headers["Content-Disposition"] == f'inline; filename="fax_{fid}.tif"'
+    assert res.headers["Content-Type"].startswith("image/tiff")
+
+
 # --- header ------------------------------------------------------------------------------------------------------------------
 
 def test_the_server_name_is_shown_when_asked(world, monkeypatch):

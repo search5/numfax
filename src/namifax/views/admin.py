@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 from typing import Any
+from urllib.parse import urlencode
 
 from pyramid.httpexceptions import HTTPFound, HTTPForbidden
 from pyramid.view import view_config
@@ -265,13 +266,26 @@ def _months_of_the_year():
             _("October"), _("November"), _("December")]
 
 
-def get_all_syslogs(kw: str = "", day: str = "", month: str = "", year: str = "", session: Any = None) -> list[dict[str, Any]]:
+def count_syslogs(kw: str = "", day: str = "", month: str = "", year: str = "", session: Any = None) -> int:
+    """How many system log events the filter matches."""
+    if session is None:
+        return 0
+    from namifax.services.syslog import SysLogService
+
+    return SysLogService(session).count(kw=kw, day=day, month=month, year=year)
+
+
+def get_all_syslogs(kw: str = "", day: str = "", month: str = "", year: str = "", session: Any = None,
+                    limit: int | None = None, offset: int = 0) -> list[dict[str, Any]]:
     """Retrieve system logs from the database through an ORM session (empty without a session)."""
     if session is None:
         return []
     from namifax.services.syslog import SysLogService
 
-    return SysLogService(session).search(kw=kw, day=day, month=month, year=year)
+    return SysLogService(session).search(kw=kw, day=day, month=month, year=year, limit=limit, offset=offset)
+
+
+SYSLOG_PER_PAGE = 100
 
 
 @view_config(route_name="admin_system_logs", renderer="namifax:templates/admin_system_logs.jinja2", permission="admin")
@@ -289,9 +303,17 @@ def admin_system_logs_view(request):
     else:                                                       # the original lists the day's events until a search is made
         kw, day, month, year = "", f"{today.day:02d}", f"{today.month:02d}", str(today.year)
 
-    logs = get_all_syslogs(kw=kw, day=day, month=month, year=year, session=request.dbsession)
+    total = count_syslogs(kw=kw, day=day, month=month, year=year, session=request.dbsession)
+    pages = max(1, -(-total // SYSLOG_PER_PAGE))
+    raw = request.params.get("page", "1")
+    page = min(max(int(raw) if raw.isdigit() else 1, 1), pages)
+    logs = get_all_syslogs(kw=kw, day=day, month=month, year=year, session=request.dbsession,
+                           limit=SYSLOG_PER_PAGE, offset=(page - 1) * SYSLOG_PER_PAGE)
+    pages = max(1, -(-total // SYSLOG_PER_PAGE))
+    query = urlencode({"_submit_check": "1", "kw": kw, "day": day, "month": month, "year": year})
 
     return {
+        "page": page, "pages": pages, "total": total, "pager_query": query,
         "title": "NamiFAX - Admin - System Logs",
         "current_user": identity,
         "active_tab": "admin",
