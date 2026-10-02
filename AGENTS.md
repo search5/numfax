@@ -21,8 +21,7 @@ avantfax/
 ├── golden_master/              # [E2E 검증] 레거시 입출력 및 웹 HTML/계약 Golden Master 데이터
 │   ├── data/                   # 백엔드 CLI 훅 Golden Master 데이터
 │   └── web/                    # 웹 라우트별 HTML DOM, 폼 계약(contract.json), 스크린샷
-├── legacy/                     # [원본 레거시] 이식 대상 구형 소스 코드 (Strict Read-Only)
-│   └── avantfax/               # PHP 스크립트, Smarty 템플릿(.tpl), CSS, JS
+├── (legacy/)                   # [제거됨] 원본 PHP 소스는 이식 완료 후 삭제 (git 이력 커밋 9408385 에서 복원 가능)
 ├── specs/                      # [명세서] 모듈 및 웹 라우트별 계약 명세서
 └── src/                        # [신규 시스템] 타깃 언어로 새로 작성되는 소스 코드
     └── namifax/                # 모던 Python/Pyramid 패키지

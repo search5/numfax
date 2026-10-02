@@ -278,9 +278,9 @@ def admin_call(app, tm, dbsession):
 
 
 # --- a database created by the original AvantFAX (MySQL / MariaDB only) --------------------------------------
-# Built from the original installer's SQL (legacy/create_tables.sql) plus its later update scripts, with a few
+# Built from the original installer's SQL (tests/fixtures/legacy_sql/create_tables.sql) plus its later update scripts, with a few
 # rows written the way the original application wrote them. ``3.3.5`` is a current installation, ``3.2.0`` an old one.
-LEGACY_ROOT = Path(__file__).resolve().parents[1] / "legacy"
+LEGACY_ROOT = Path(__file__).resolve().parent / "fixtures" / "legacy_sql"       # copies of the original installer's SQL (the legacy tree is gone)
 LEGACY_VERSIONS = {"3.3.5": ["db-update-334.sql"], "3.2.0": []}
 
 

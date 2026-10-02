@@ -153,3 +153,9 @@ SAML·패스키·TOTP·클라우드 저장소·네트워크 프린터·SMTP 관�
 2. **A2/A5(페이지 나누기·필터), A4(팩스 이미지·썸네일), C1~C3(사용자 관리)**: 원본의 핵심 기능이라 영향이 크다.
 3. **A9~A12, C5~C8, E1~E5**: 메일, 회선 제한, 배포 그룹, 시스템 기능, 수신 훅.
 4. **D, E6~E11, F**: 알림·폴링, 설정 항목, 설치 문서.
+
+## 원본(legacy/) 소스 제거 (2026-10-02)
+이식이 끝나 `legacy/` 디렉터리와 `tools/i18n_import_legacy.py`(번역 일회성 가져오기)를 삭제했다. 원본은 커밋 9408385 에서 복원할 수 있다.
+- 시험에 필요한 원본 설치 SQL 두 개(`create_tables.sql`, `db-update-334.sql`)는 `tests/fixtures/legacy_sql/` 로 옮겼다.
+- 원본 PHP가 필요한 도구는 이제 그대로 실행되지 않는다: `golden_master/runner.py --record`, `tools/migration_rehearsal/`.
+  필요하면 `git checkout 9408385 -- legacy` 로 복원해서 쓴다. (골든 마스터 재생 모드와 시험은 영향 없음.)

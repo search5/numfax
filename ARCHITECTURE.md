@@ -744,7 +744,7 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
    - 요청 단위 로케일 협상자가 쿠키, 헤더(`Accept-Language`), 기본값(`en`) 순으로 감지하여 해당 로케일의 카탈로그를 자동 적용.
 3. **24개 로케일 지원**:
    - `ar`, `bg`, `cs`, `de`, `el`, `en`, `es`, `fr`, `hu`, `it`, `ja`, `ko`, `nl`, `no`, `pl`, `pt_BR`, `pt_PT`, `ro`, `ru`, `sr`, `sv`, `tr`, `zh_CN`, `zh_TW`
-   - 레거시 AvantFAX PHP 언어 사전(`legacy/avantfax/includes/langs/`)을 자동 파싱하여 기존 번역 완벽 수용.
+   - 레거시 AvantFAX PHP 언어 사전(원본 `avantfax/includes/langs/`; 원본 소스는 삭제됨, 커밋 9408385 에서 복원 가능)을 자동 파싱하여 기존 번역 완벽 수용.
    - 한국어(`ko`)는 비즈니스 팩스 및 엔터프라이즈 UX 표준에 맞추어 416개 전체 UI 토큰을 100% 정밀 번역 제공.
 4. **Golden Master 무회귀 보장**:
    - 영문(`en`) 로케일의 경우 `msgstr ""`를 유지하여 소스 코드의 원문 텍스트가 100% 보존되도록 보장.
@@ -838,7 +838,7 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 
 ### 17.3 테이블·모델·리비전
 
-모든 테이블·컬럼 이름은 레거시 AvantFAX(`legacy/create_tables.sql`)와 같다(MySQL은 Linux에서 대소문자를 구분하고 PostgreSQL은 따옴표 없는 이름을 소문자로 접으므로 이름을 바꾸지 않는다).
+모든 테이블·컬럼 이름은 레거시 AvantFAX(`tests/fixtures/legacy_sql/create_tables.sql`)와 같다(MySQL은 Linux에서 대소문자를 구분하고 PostgreSQL은 따옴표 없는 이름을 소문자로 접으므로 이름을 바꾸지 않는다).
 
 | 테이블 | 리비전 | 비고 |
 | :--- | :--- | :--- |
@@ -895,7 +895,7 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 
 **절차**: ① DB 백업. ② `DATABASE_URL`(예: `mysql+pymysql://user:pw@host/avantfax`), `AVANTFAX_INSTALLDIR`, `AVANTFAX_ARCHIVE`(원본의 `faxes/` 경로), `NAMIFAX_SESSION_SECRET`, `NAMIFAX_SECRET_KEY` 설정. ③ 한 프로세스로 처음 기동(또는 `alembic upgrade head`를 먼저 실행). ④ 로그인해 받은함·아카이브·주소록 확인. ⑤ SMTP 비밀번호·클라우드 키를 이미 평문으로 갖고 있다면 `namifax encrypt-secrets`.
 
-**검증**: `tests/unit/test_legacy_database_compat.py`가 실제 MySQL 8.4와 MariaDB 11에 원본 설치 SQL(`legacy/create_tables.sql` + 업데이트 스크립트)로 3.3.5와 3.2.0 DB를 만들어 위 항목을 확인한다(기존 행 보존, 두 번째 기동에서 변화 없음, 모든 모델 컬럼 존재, 원본 컬럼 타입 유지, 로그인, 날짜, IPv6, 주소록, 팩스 수신·검색, 웹 페이지, 상대 경로 다운로드).
+**검증**: `tests/unit/test_legacy_database_compat.py`가 실제 MySQL 8.4와 MariaDB 11에 원본 설치 SQL(`tests/fixtures/legacy_sql/create_tables.sql` + `db-update-334.sql`)로 3.3.5와 3.2.0 DB를 만들어 위 항목을 확인한다(기존 행 보존, 두 번째 기동에서 변화 없음, 모든 모델 컬럼 존재, 원본 컬럼 타입 유지, 로그인, 날짜, IPv6, 주소록, 팩스 수신·검색, 웹 페이지, 상대 경로 다운로드).
 
 **알려진 한계**: 원본의 PHP 세션·로그인 쿠키는 이어지지 않으므로 이전 후 모든 사용자는 다시 로그인한다.
 
@@ -966,7 +966,7 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 * 서버 DB 테스트는 환경변수(`NAMIFAX_TEST_PG_URL`, `NAMIFAX_TEST_MYSQL_URL`, `NAMIFAX_TEST_MARIADB_URL`)가 있을 때만 실행된다. 서버 end-to-end 테스트는 빈 DB로 앱을 띄워 관리자 생성, 로그인, 주요 페이지, 2FA·SAML 흐름을 확인한다.
 * 서비스를 통째로 mock하는 테스트는 API 불일치를 가린다(SAML·패스키·OCR·패스키 저장소가 실제로는 동작하지 않았음). 로그인·저장 같은 흐름은 실제 앱과 DB로 검증한다.
 
-* **원본 실행 대조**: `tests/unit/test_archive_search_legacy_parity.py`의 기대값은 원본 PHP(`FaxPDFArchive`)를 PHP 5.6 + MDB2 + MariaDB로 실제 실행해 얻었다(`golden_master/Dockerfile.legacy`와 같은 계열의 `avantfax-legacy-test` 이미지, `legacy/create_tables.sql` 스키마). 같은 방법으로 다른 쿼리도 대조할 수 있다.
+* **원본 실행 대조**: `tests/unit/test_archive_search_legacy_parity.py`의 기대값은 원본 PHP(`FaxPDFArchive`)를 PHP 5.6 + MDB2 + MariaDB로 실제 실행해 얻었다(`golden_master/Dockerfile.legacy`와 같은 계열의 `avantfax-legacy-test` 이미지, `tests/fixtures/legacy_sql/create_tables.sql` 스키마). 같은 방법으로 다른 쿼리도 대조할 수 있다.
 * **골든 마스터**(`golden_master/test_web_e2e.py`, 68개): 기본 `pytest`에 포함되어 있다. 러너는 이제 **새 임시 SQLite DB(데모 데이터)** 에서 실행한다(전에는 작업 디렉터리의 `namifax.db`를 써서 개발자 DB 상태에 따라 결과가 달랐다). 폼 검사는 n번째 명세를 n번째 폼과 맞추고, 비밀번호 변경 화면(W24)은 실제 흐름(변경이 필요한 계정으로 로그인)으로 검사하며, 주소록·이메일북·Fax to Email 계약(W15/29/54/62/65/67)은 원본 방식으로 다시 만든 화면에 맞춰 갱신했다.
 
 * **입력창 예시 문구(placeholder)**는 URL·주소·장치명 같은 기술 값만 그대로 두고 모두 번역 대상이다(`test_placeholders_translated.py`가 감시). 팩스 번호 안내문은 여러 수신처를 **세미콜론**으로 나눈다고 바로잡았다(원본 규칙; 전에는 쉼표라고 되어 있었다).
