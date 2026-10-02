@@ -17,17 +17,29 @@
     document.title = (count > 0 ? '(' + count + ') ' : '') + baseTitle;
   }
 
-  function announce(count, sound) {
+  /* Announce a new fax as configured and say when it is done (a playing sound is waited for, so that a reload does not cut it). */
+  function announce(count, sound, done) {
     if (body.getAttribute('data-focus-new-fax')) {
       try { window.focus(); } catch (e) {}
     }
-    if (!body.getAttribute('data-popup-new-fax')) return;
+    if (!body.getAttribute('data-popup-new-fax')) return done();
     if (window.Notification && Notification.permission === 'granted') {
       try { new Notification('NamiFAX', { body: count + ' ' + (body.getAttribute('data-new-fax') || 'new fax') }); } catch (e) {}
     }
-    if (sound) {
-      try { new Audio('/audio/' + encodeURIComponent(sound)).play(); } catch (e) {}
-    }
+    if (!sound) return done();
+    try {
+      var beep = new Audio('/audio/' + encodeURIComponent(sound));
+      beep.addEventListener('ended', done);
+      beep.addEventListener('error', done);
+      var started = beep.play();
+      if (started && started.catch) started.catch(done);
+      setTimeout(done, 15000);                               // (never wait for ever)
+    } catch (e) { done(); }
+  }
+
+  /* On the Inbox page the list follows the count, as the original's performInboxCheck reloads it; other pages only count. */
+  function reloadInbox() {
+    if (body.getAttribute('data-page') === 'inbox') window.location.reload();
   }
 
   function checkInbox() {
@@ -37,9 +49,13 @@
         var parts = text.trim().split('|');
         var count = parseInt(parts[0], 10);
         if (isNaN(count)) return;
-        if (current !== null && count > current) announce(count, parts[1]);
+        var before = current;
         current = count;
         setBadges(count);
+        if (before === null || count === before) return;
+        var once = false;
+        function done() { if (!once) { once = true; reloadInbox(); } }
+        if (count > before) announce(count, parts[1], done); else done();
       })
       .catch(function () {});
   }

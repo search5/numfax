@@ -87,7 +87,7 @@ const document = {
 };
 function Notification(title, options) { calls.notifications.push(options.body); }
 Notification.permission = 'granted';
-function Audio(src) { this.play = () => calls.sounds.push(src); }
+function Audio(src) { this.addEventListener = () => {}; this.play = () => { calls.sounds.push(src); return Promise.resolve(); }; }
 const window = { fetch: true, Notification, focus: () => { calls.focus++; } };
 const fetch = () => { const text = answers[calls.fetched++]; return Promise.resolve({ ok: true, text: () => Promise.resolve(text) }); };
 const ctx = vm.createContext({ window, document, Notification, Audio, fetch, DOMParser: function () {},
