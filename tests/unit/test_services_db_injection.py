@@ -58,7 +58,12 @@ def test_saml_view_factory_passes_request_dbsession(db):
     req = testing.DummyRequest()
     req.db = db
     req.dbsession = object()
-    assert _get_saml_service(req).db is req.dbsession
+    from unittest.mock import patch
+
+    from namifax.services.saml import SAMLSettings
+
+    with patch("namifax.views.saml.saml_settings", return_value=SAMLSettings()):
+        assert _get_saml_service(req).db is req.dbsession
 
 
 def test_webauthn_view_factory_passes_request_dbsession(db):

@@ -6,18 +6,18 @@ from pyramid.security import remember
 from pyramid.response import Response
 from pyramid.view import view_config
 
-from namifax.services.saml import SAMLService, SAMLSettings
+from namifax.services.saml import SAMLService, saml_settings
 from namifax.services.user_account import AFUserAccount
 
 def _get_saml_service(request: Request) -> SAMLService:
     base_url = request.application_url if hasattr(request, "application_url") else "http://localhost:8000"
-    settings = SAMLSettings(
-        enabled=True,
-        sp_entity_id=f"{base_url}/auth/saml/metadata",
-        sp_acs_url=f"{base_url}/auth/saml/acs",
-        sp_sls_url=f"{base_url}/auth/saml/sls",
-    )
-    return SAMLService(settings, db=request.dbsession)
+    return SAMLService(saml_settings(request.dbsession, base_url), db=request.dbsession)
+
+
+def _back_to_login(request: Request, message_key: str) -> HTTPFound:
+    request.session.flash(message_key, "login")
+    return HTTPFound(location=request.route_url("login") if hasattr(request, "route_url") else "/login")
+
 
 def _safe_relay(target: str) -> str:
     """Only paths on this site; ``RelayState`` comes from the browser and must not become an open redirect."""
@@ -37,10 +37,12 @@ def saml_metadata_view(request: Request) -> Response:
 @view_config(route_name="saml_login")
 def saml_login_view(request: Request) -> Response:
     svc = _get_saml_service(request)
-    relay_state = request.params.get("relay_state", "/inbox")
-    req_data = svc.create_authn_request(relay_state=relay_state)
-    target_url = req_data.get("redirect_url") or "/login"
-    return HTTPFound(location=target_url)
+    if not svc.usable():                                                    # not set up: say so instead of bouncing silently
+        return _back_to_login(request, "saml_not_configured")
+    req_data = svc.create_authn_request(relay_state=request.params.get("relay_state", "/inbox"))
+    request.session["saml_request_id"] = req_data["request_id"]               # the only answer accepted for this browser
+    return HTTPFound(location=req_data["redirect_url"])
+
 
 @view_config(route_name="saml_acs", request_method="POST")
 def saml_acs_view(request: Request) -> Response:
@@ -48,25 +50,26 @@ def saml_acs_view(request: Request) -> Response:
     relay_state = request.POST.get("RelayState") or request.params.get("RelayState") or "/inbox"
 
     if not saml_response:
-        return HTTPFound(location="/login?error=missing_saml_response")
+        return _back_to_login(request, "saml_missing_response")
 
     svc = _get_saml_service(request)
-    result = svc.process_saml_response(saml_response)
+    request_id = request.session.pop("saml_request_id", None)               # one answer per sign-in
+    result = svc.process_saml_response(saml_response, expected_request_id=request_id)
     if not result.get("success"):
-        return HTTPFound(location=f"/login?error={result.get('error', 'saml_failed')}")
+        return _back_to_login(request, "saml_refused")
 
     user = svc.provision_or_get_user(
         name_id=result.get("name_id", ""),
         attributes=result.get("attributes"),
     )
     if not user:
-        return HTTPFound(location="/login?error=user_provision_failed")
+        return _back_to_login(request, "saml_no_account")
 
     # sign in like the password login does: the same checks (disabled account) and the same token cookie
     username = user.get_username()
     remote_ip = getattr(request, "remote_addr", None) or "127.0.0.1"
     if not AFUserAccount(db=request.dbsession).login_webauth(username, remote_ip=remote_ip):
-        return HTTPFound(location="/login?error=account_disabled")
+        return _back_to_login(request, "saml_account_disabled")
 
     return HTTPFound(location=_safe_relay(relay_state), headers=remember(request, username))
 

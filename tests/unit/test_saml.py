@@ -74,13 +74,12 @@ def test_create_authn_request():
     assert "AuthnRequest" in xml_str
     assert "https://fax.example.com/auth/saml/acs" in xml_str
 
-def test_process_saml_response():
-    svc = SAMLService(SAMLSettings(enabled=True))
+def test_an_unsigned_response_is_not_believed():
+    """The sample names john.doe but nobody signed it: the signed, verified cases are in test_saml_security.py."""
+    svc = SAMLService(SAMLSettings(enabled=True, idp_x509_cert="-----BEGIN CERTIFICATE-----\nAAAA\n-----END CERTIFICATE-----"))
     b64_response = base64.b64encode(SAMPLE_SAML_RESPONSE.encode("utf-8")).decode("ascii")
-    parsed = svc.process_saml_response(b64_response)
-    assert parsed["success"] is True
-    assert parsed["name_id"] == "john.doe@enterprise.com"
-    assert parsed["attributes"]["email"] == "john.doe@enterprise.com"
-    assert parsed["attributes"]["displayName"] == "John Doe"
+    parsed = svc.process_saml_response(b64_response, expected_request_id="_req")
+    assert parsed["success"] is False and "name_id" not in parsed
+
 
 # provisioning (match by email, free username, no JIT) is tested with real accounts in test_sso_and_2fa_login.py

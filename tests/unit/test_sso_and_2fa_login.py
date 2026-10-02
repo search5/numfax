@@ -132,7 +132,7 @@ def test_saml_refuses_disabled_accounts(testapp, dbsession):
     edit.dbdata["acc_enabled"] = 0
     edit.update()
     res = _acs(testapp, "gina@corp.test", email="gina@corp.test")
-    assert res.status_int == 302 and "/login?error=" in res.headers["Location"] and not _logged_in(testapp)
+    assert res.status_int == 302 and res.headers["Location"].endswith("/login") and not _logged_in(testapp)
 
 
 def test_saml_without_jit_does_not_create_accounts(dbsession):
@@ -146,11 +146,13 @@ def test_saml_without_jit_does_not_create_accounts(dbsession):
 def test_saml_view_uses_the_request_session():
     from pyramid import testing
 
+    from namifax.services.saml import SAMLSettings
     from namifax.views.saml import _get_saml_service
 
     req = testing.DummyRequest()
     req.db, req.dbsession = object(), object()
-    assert _get_saml_service(req).db is req.dbsession
+    with patch("namifax.views.saml.saml_settings", return_value=SAMLSettings()):
+        assert _get_saml_service(req).db is req.dbsession
 
 
 # --- passkeys ------------------------------------------------------------------------------------------------

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: kMIME-Version: 1.Content-Type: text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 14:08+0900\n"
+"POT-Creation-Date: 2026-10-02 14:20+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ko\n"
@@ -2078,6 +2078,18 @@ msgstr "보낸 팩스만"
 
 msgid "Only received faxes"
 msgstr "받은 팩스만"
+
+msgid "SAML sign-in is not set up on this server."
+msgstr "이 서버에는 SAML 로그인이 설정되어 있지 않습니다."
+
+msgid "The identity provider sent no answer."
+msgstr "ID 공급자(IdP)가 응답을 보내지 않았습니다."
+
+msgid "The identity provider's answer could not be accepted. Start the sign-in again."
+msgstr "ID 공급자의 응답을 받아들일 수 없었습니다. 로그인을 처음부터 다시 시작하십시오."
+
+msgid "No account here matches the identity provider's answer."
+msgstr "ID 공급자가 알려 준 사용자와 일치하는 계정이 없습니다."
 
 msgid "Account is disabled"
 msgstr "사용이 중지된 계정입니다"

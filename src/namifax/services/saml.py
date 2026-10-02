@@ -10,7 +10,23 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Any
 
-import defusedxml.ElementTree as ET
+import threading
+import time as _time
+
+_USED: dict[str, float] = {}
+_USED_LOCK = threading.Lock()
+
+
+def _seen_before(assertion_id: str, not_after: float) -> bool:
+    """Remember an assertion ID until it expires; True if it was already used (a replay)."""
+    now = _time.time()
+    with _USED_LOCK:
+        for key in [k for k, until in _USED.items() if until < now]:
+            del _USED[key]
+        if assertion_id in _USED:
+            return True
+        _USED[assertion_id] = (not_after or now) + 300
+        return False
 
 from namifax.db.missing import resolve_db
 from namifax.services.user_account import AFUserAccount
@@ -26,6 +42,25 @@ class SAMLSettings:
     sp_sls_url: str = "http://localhost:8000/auth/saml/sls"
     jit_provisioning: bool = True
     default_role: str = "user"
+
+def saml_settings(session: Any, base_url: str) -> SAMLSettings:
+    """The settings saved on the admin SAML page (disabled until an administrator turns it on and names the identity provider)."""
+    from namifax.services.system_config import SystemConfigService
+
+    cfg = SystemConfigService(session)
+    base = base_url.rstrip("/")
+    return SAMLSettings(
+        enabled=cfg.get("saml_enabled", "0") == "1",
+        idp_entity_id=cfg.get("saml_idp_entity_id", ""),
+        idp_sso_url=cfg.get("saml_idp_sso_url", ""),
+        idp_x509_cert=cfg.get("saml_idp_x509_cert", ""),
+        sp_entity_id=f"{base}/auth/saml/metadata",
+        sp_acs_url=f"{base}/auth/saml/acs",
+        sp_sls_url=f"{base}/auth/saml/sls",
+        jit_provisioning=cfg.get("saml_jit_provisioning", "1") == "1",
+        default_role=cfg.get("saml_default_role", "user"),
+    )
+
 
 class SAMLService:
     """Enterprise SAML 2.0 Service Provider implementation."""
@@ -52,6 +87,10 @@ class SAMLService:
     </md:SPSSODescriptor>
 </md:EntityDescriptor>
 """.strip()
+
+    def usable(self) -> bool:
+        """Is SAML switched on with an identity provider to send people to?"""
+        return bool(self.settings.enabled and self.settings.idp_sso_url)
 
     def create_authn_request(self, relay_state: str = "/") -> dict[str, str]:
         """Generate SAML 2.0 AuthnRequest and HTTP-Redirect parameters."""
@@ -89,44 +128,97 @@ class SAMLService:
             "redirect_url": redirect_url,
         }
 
-    def process_saml_response(self, saml_response_b64: str) -> dict[str, Any]:
-        """Decode and parse SAML Response XML."""
+    def process_saml_response(self, saml_response_b64: str, expected_request_id: str | None = None) -> dict[str, Any]:
+        """Check a SAML Response and return who signed in.
+
+        Only what the identity provider *signed* is believed: the signature must verify against the configured certificate and the
+        name and attributes are read from the signed element only. The assertion must be for this service (audience, recipient),
+        inside its time window, an answer to the request this browser started (``expected_request_id``) and not used before.
+        """
+        import time
+
+        from lxml import etree
+        from signxml import XMLVerifier
+        from signxml.exceptions import InvalidSignature
+
+        def refuse(reason: str) -> dict[str, Any]:
+            return {"success": False, "error": reason}
+
+        if not self.settings.enabled:
+            return refuse("saml_not_enabled")
+        if not (self.settings.idp_x509_cert or "").strip():
+            return refuse("saml_no_idp_certificate")
+        if not expected_request_id:
+            return refuse("saml_no_request")                                  # only answers to a sign-in this browser started
+
         try:
-            xml_bytes = base64.b64decode(saml_response_b64)
-            root = ET.fromstring(xml_bytes)
-        except Exception as e:
-            return {"success": False, "error": f"Invalid SAML XML response: {e}"}
+            xml_bytes = base64.b64decode(saml_response_b64, validate=False)
+            parser = etree.XMLParser(resolve_entities=False, no_network=True, huge_tree=False, load_dtd=False)
+            root = etree.fromstring(xml_bytes, parser)
+            if root.getroottree().docinfo.doctype:                            # no DTDs: no entity tricks
+                return refuse("saml_dtd_not_allowed")
+        except Exception:
+            return refuse("saml_invalid_xml")
 
-        # Namespaces
-        namespaces = {
-            "samlp": "urn:oasis:names:tc:SAML:2.0:protocol",
-            "saml": "urn:oasis:names:tc:SAML:2.0:assertion",
-        }
+        ns = {"samlp": "urn:oasis:names:tc:SAML:2.0:protocol", "saml": "urn:oasis:names:tc:SAML:2.0:assertion"}
+        status = root.find(".//samlp:StatusCode", ns)
+        if status is None or not status.attrib.get("Value", "").endswith(":Success"):
+            return refuse("saml_status_not_success")
+        if root.get("InResponseTo") not in (None, expected_request_id):
+            return refuse("saml_wrong_request")
 
-        # Status check
-        status_elem = root.find(".//samlp:StatusCode", namespaces)
-        if status_elem is not None:
-            status_val = status_elem.attrib.get("Value", "")
-            if "Success" not in status_val:
-                return {"success": False, "error": f"SAML Response status is {status_val}"}
+        try:
+            verified = XMLVerifier().verify(root, x509_cert=self.settings.idp_x509_cert)
+        except InvalidSignature:
+            return refuse("saml_bad_signature")
+        except Exception:
+            return refuse("saml_unsigned_or_unreadable")
+        signed = verified.signed_xml
+        assertion = signed if etree.QName(signed).localname == "Assertion" else signed.find(".//saml:Assertion", ns)
+        if assertion is None:
+            return refuse("saml_no_assertion")
 
-        # Extract NameID
-        name_id_elem = root.find(".//saml:Subject/saml:NameID", namespaces)
+        now = time.time()
+        skew = 120
+
+        def moment(value: str | None) -> float | None:
+            if not value:
+                return None
+            try:
+                return datetime.strptime(value[:19], "%Y-%m-%dT%H:%M:%S").replace(tzinfo=timezone.utc).timestamp()
+            except ValueError:
+                return None
+
+        conditions = assertion.find("saml:Conditions", ns)
+        if conditions is None:
+            return refuse("saml_no_conditions")
+        not_before, not_after = moment(conditions.get("NotBefore")), moment(conditions.get("NotOnOrAfter"))
+        if not_after is None or now >= not_after + skew or (not_before is not None and now < not_before - skew):
+            return refuse("saml_expired")
+        audiences = [a.text.strip() for a in conditions.findall("saml:AudienceRestriction/saml:Audience", ns) if a.text]
+        if self.settings.sp_entity_id not in audiences:
+            return refuse("saml_wrong_audience")
+
+        confirmations = assertion.findall("saml:Subject/saml:SubjectConfirmation/saml:SubjectConfirmationData", ns)
+        if not any(c.get("Recipient") == self.settings.sp_acs_url and c.get("InResponseTo") == expected_request_id
+                   and (moment(c.get("NotOnOrAfter")) or 0) + skew > now for c in confirmations):
+            return refuse("saml_wrong_recipient")
+
+        assertion_id = assertion.get("ID") or ""
+        if not assertion_id or _seen_before(assertion_id, not_after):
+            return refuse("saml_replayed")
+
+        name_id_elem = assertion.find("saml:Subject/saml:NameID", ns)
         name_id = name_id_elem.text.strip() if name_id_elem is not None and name_id_elem.text else ""
-
-        # Extract Attributes
+        if not name_id:
+            return refuse("saml_no_name_id")
         attributes: dict[str, str] = {}
-        for attr in root.findall(".//saml:AttributeStatement/saml:Attribute", namespaces):
+        for attr in assertion.findall("saml:AttributeStatement/saml:Attribute", ns):
             attr_name = attr.attrib.get("Name", "")
-            val_elem = attr.find("saml:AttributeValue", namespaces)
+            val_elem = attr.find("saml:AttributeValue", ns)
             if attr_name and val_elem is not None and val_elem.text:
                 attributes[attr_name] = val_elem.text.strip()
-
-        return {
-            "success": True,
-            "name_id": name_id,
-            "attributes": attributes,
-        }
+        return {"success": True, "name_id": name_id, "attributes": attributes}
 
     def provision_or_get_user(
         self,

@@ -21,7 +21,7 @@ def login_get_view(request):
     if request.identity:
         return HTTPFound(location=request.route_url("inbox"))
 
-    error = None
+    error = _saml_message(request)
     from namifax.auth import alternate
 
     remote_user = (request.environ.get("REMOTE_USER") or "").strip()
@@ -36,7 +36,34 @@ def login_get_view(request):
         "username": "",
         "error": error,
         "current_user": None,
+        "saml_enabled": _saml_usable(request),
     }
+
+
+def _saml_usable(request) -> bool:
+    from namifax.services.saml import saml_settings
+
+    try:
+        settings = saml_settings(request.dbsession, request.application_url)
+        return bool(settings.enabled and settings.idp_sso_url)
+    except Exception:
+        return False
+
+
+def _saml_message(request):
+    """What the SAML views left for the login page (one message, once)."""
+    texts = {
+        "saml_not_configured": _("SAML sign-in is not set up on this server."),
+        "saml_missing_response": _("The identity provider sent no answer."),
+        "saml_refused": _("The identity provider's answer could not be accepted. Start the sign-in again."),
+        "saml_no_account": _("No account here matches the identity provider's answer."),
+        "saml_account_disabled": _("Account is disabled"),
+    }
+    try:
+        keys = request.session.pop_flash("login")
+    except Exception:
+        return None
+    return texts.get(keys[0]) if keys else None
 
 
 _PWD_PENDING = "pwd_change_pending"
