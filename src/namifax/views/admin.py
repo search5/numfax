@@ -805,6 +805,7 @@ def admin_system_func_view(request):
         "current_user": identity,
         "active_tab": "admin",
         "active_admin": "sysfunc",
+        "daemons": sysfunc.daemon_status(),
         "message": message,
         "error": error,
     }

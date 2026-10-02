@@ -17,7 +17,9 @@ from namifax.services.sysfunc import dump_command
 @pytest.fixture
 def client(testapp):
     testapp.post("/login", {"username": "admin", "password": "password", "_submit_check": "1"})
-    return testapp
+    # (looking at the page asks the process list; keep that out of the tests that watch subprocess.Popen)
+    with patch("namifax.services.sysfunc.daemon_status", return_value={"faxq": None, "hfaxd": None, "web": "1"}):
+        yield testapp
 
 
 def _press(client, button):
@@ -89,3 +91,34 @@ def test_a_failing_dump_is_reported_instead_of_sent_empty(client, monkeypatch):
     monkeypatch.setattr(subprocess, "Popen", Boom)
     res = _press(client, "download_db")
     assert res.status_int == 200 and "text/html" in res.content_type and "could not" in res.text.lower()
+
+
+# --- the daemon panel shows what is really running, not fixed text ------------------------------------------------------------
+
+def test_daemon_status_reads_the_process_list():
+    from namifax.services import sysfunc
+
+    def fake_run(argv, **kwargs):
+        class R:
+            returncode = 0 if argv[-1] == "faxq" else 1
+            stdout = "4242\n" if argv[-1] == "faxq" else ""
+        return R()
+
+    with patch("namifax.services.sysfunc.subprocess.run", side_effect=fake_run):
+        status = sysfunc.daemon_status()
+    assert status["faxq"] == "4242" and status["hfaxd"] is None and status["web"] == str(os.getpid())
+
+
+def test_daemon_status_says_unknown_when_pgrep_is_missing():
+    from namifax.services import sysfunc
+
+    with patch("namifax.services.sysfunc.subprocess.run", side_effect=FileNotFoundError):
+        status = sysfunc.daemon_status()
+    assert status["faxq"] == "unknown" and status["hfaxd"] == "unknown" and status["web"] == str(os.getpid())
+
+
+def test_the_page_shows_real_status_and_no_invented_numbers(client):
+    with patch("namifax.services.sysfunc.daemon_status", return_value={"faxq": "4242", "hfaxd": None, "web": "77"}):
+        text = client.get("/admin/system_func").text
+    assert "pid 4242" in text and "pid 77" in text and "NOT RUNNING" in text.upper()
+    assert "pid 1024" not in text and "pid 2048" not in text and "4559" not in text

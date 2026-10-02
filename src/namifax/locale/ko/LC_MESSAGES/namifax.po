@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: kMIME-Version: 1.Content-Type: text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 16:06+0900\n"
+"POT-Creation-Date: 2026-10-02 17:17+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ko\n"
@@ -929,6 +929,12 @@ msgstr "데몬 서비스 제어"
 msgid "Restart HylaFAX and NamiFAX web services, or halt background workers."
 msgstr "HylaFAX 및 NamiFAX 웹 서비스를 재시작하거나 백그라운드 워커를 중지합니다."
 
+msgid "RUNNING"
+msgstr "실행 중"
+
+msgid "NOT RUNNING"
+msgstr "실행 중 아님"
+
 msgid "Reboot Services"
 msgstr "서비스 재시작"
 
@@ -973,6 +979,15 @@ msgstr "조건과 일치하는 시스템 로그가 없습니다."
 
 msgid "Transmissions and server events will be streamed here in real time."
 msgstr "전송 내역 및 서버 이벤트가 여기에 실시간으로 스트리밍됩니다."
+
+msgid "Previous"
+msgstr "이전"
+
+msgid "Page"
+msgstr "페이지"
+
+msgid "Next"
+msgstr "다음"
 
 msgid "Delete User"
 msgstr "사용자 삭제"
@@ -1187,12 +1202,6 @@ msgstr "검색 결과가 없습니다"
 
 msgid "Reset filters"
 msgstr "필터 초기화"
-
-msgid "Previous"
-msgstr "이전"
-
-msgid "Next"
-msgstr "다음"
 
 msgid "Name the sender"
 msgstr "발신자 지정"
@@ -1421,9 +1430,6 @@ msgstr "미리보기"
 
 msgid "Sender"
 msgstr "발신자"
-
-msgid "Page"
-msgstr "페이지"
 
 msgid "of"
 msgstr "/"
@@ -2259,6 +2265,9 @@ msgstr "ID 공급자가 알려 준 사용자와 일치하는 계정이 없습니
 msgid "Account is disabled"
 msgstr "사용이 중지된 계정입니다"
 
+msgid "Too many failed sign-in attempts. Please try again later."
+msgstr "로그인 실패가 너무 많습니다. 잠시 후 다시 시도하십시오."
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr "실패 횟수가 너무 많습니다. %(minutes)d분 뒤에 다시 시도하십시오."
@@ -2303,6 +2312,15 @@ msgstr "세션이 만료되었습니다. 페이지를 새로 고친 뒤 다시 �
 
 msgid "Invalid job number."
 msgstr "작업 번호가 올바르지 않습니다."
+
+msgid "Select a file to send, or ask for a cover page."
+msgstr "보낼 파일을 선택하거나 표지를 요청하십시오."
+
+msgid "The fax could not be sent: HylaFAX (the sendfax program) is not installed or not reachable on this server. Ask the administrator."
+msgstr "팩스를 보낼 수 없습니다. 이 서버에 HylaFAX(sendfax 프로그램)가 설치되어 있지 않거나 연결할 수 없습니다. 관리자에게 문의하십시오."
+
+msgid "The fax could not be queued:"
+msgstr "팩스를 대기열에 넣을 수 없습니다:"
 
 msgid "Any Available Line (Auto)"
 msgstr "사용 가능한 모든 회선 (자동)"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 16:06+0900\n"
+"POT-Creation-Date: 2026-10-02 17:17+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -991,6 +991,12 @@ msgstr ""
 msgid "Restart HylaFAX and NamiFAX web services, or halt background workers."
 msgstr ""
 
+msgid "RUNNING"
+msgstr ""
+
+msgid "NOT RUNNING"
+msgstr ""
+
 msgid "Reboot Services"
 msgstr ""
 
@@ -1034,6 +1040,15 @@ msgid "No system logs found matching criteria."
 msgstr ""
 
 msgid "Transmissions and server events will be streamed here in real time."
+msgstr ""
+
+msgid "Previous"
+msgstr ""
+
+msgid "Page"
+msgstr ""
+
+msgid "Next"
 msgstr ""
 
 msgid "Delete User"
@@ -1250,12 +1265,6 @@ msgid "No results were found"
 msgstr ""
 
 msgid "Reset filters"
-msgstr ""
-
-msgid "Previous"
-msgstr ""
-
-msgid "Next"
 msgstr ""
 
 msgid "Name the sender"
@@ -1489,9 +1498,6 @@ msgid "Preview"
 msgstr ""
 
 msgid "Sender"
-msgstr ""
-
-msgid "Page"
 msgstr ""
 
 msgid "of"
@@ -2362,6 +2368,9 @@ msgstr ""
 msgid "Account is disabled"
 msgstr ""
 
+msgid "Too many failed sign-in attempts. Please try again later."
+msgstr ""
+
 #, python-format
 msgid "Too many failed attempts. Try again in %(minutes)d minutes."
 msgstr ""
@@ -2402,6 +2411,17 @@ msgid "Your session has expired. Reload the page and try again."
 msgstr ""
 
 msgid "Invalid job number."
+msgstr ""
+
+msgid "Select a file to send, or ask for a cover page."
+msgstr ""
+
+msgid ""
+"The fax could not be sent: HylaFAX (the sendfax program) is not installed"
+" or not reachable on this server. Ask the administrator."
+msgstr ""
+
+msgid "The fax could not be queued:"
 msgstr ""
 
 msgid "Any Available Line (Auto)"

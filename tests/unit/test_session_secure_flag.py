@@ -28,3 +28,21 @@ def test_the_ini_wins_over_the_environment(monkeypatch):
     assert _secure({"session.secure": "false"}) is False
     monkeypatch.setenv("NAMIFAX_SESSION_SECURE", "false")
     assert _secure({"session.secure": "true"}) is True
+
+
+# --- the login cookie (namifax_session) follows the same switch as the flow cookie -----------------------------------------------
+
+def _login_cookie(testapp):
+    res = testapp.post("/login", {"username": "admin", "password": "password", "_submit_check": "1"})
+    return next(v for k, v in res.headerlist if k == "Set-Cookie" and v.startswith("namifax_session="))
+
+
+def test_the_login_cookie_is_not_secure_by_default(testapp, monkeypatch):
+    monkeypatch.delenv("NAMIFAX_SESSION_SECURE", raising=False)
+    assert "Secure" not in _login_cookie(testapp)
+
+
+def test_the_login_cookie_gets_secure_from_the_environment(testapp, monkeypatch):
+    monkeypatch.setenv("NAMIFAX_SESSION_SECURE", "1")
+    cookie = _login_cookie(testapp)
+    assert "Secure" in cookie and "HttpOnly" in cookie and "SameSite=Lax" in cookie

@@ -70,6 +70,17 @@ class RootContext:
 
 
 @implementer(ISecurityPolicy)
+def _cookie_secure(request: Any) -> bool:
+    """Whether the login cookie carries ``Secure``: ``session.secure`` (ini) wins, else ``NAMIFAX_SESSION_SECURE`` (same rule as the flow cookie)."""
+    import os
+
+    settings = getattr(getattr(request, "registry", None), "settings", None) or {}
+    flag = settings.get("session.secure")
+    if flag is None:
+        flag = os.environ.get("NAMIFAX_SESSION_SECURE", "false")
+    return str(flag).strip().lower() in ("1", "true", "yes")
+
+
 class NamiFaxSecurityPolicy:
     """Modern Pyramid Security Policy managing authentication and authorization."""
 
@@ -164,7 +175,7 @@ class NamiFaxSecurityPolicy:
                 token = sess.token
 
         headers = [
-            ("Set-Cookie", f"namifax_session={token}; Path=/; HttpOnly; SameSite=Lax")
+            ("Set-Cookie", f"namifax_session={token}; Path=/; HttpOnly; SameSite=Lax" + ("; Secure" if _cookie_secure(request) else ""))
         ]
         return headers
 
@@ -175,6 +186,6 @@ class NamiFaxSecurityPolicy:
             self.session_manager.destroy_session(token)
 
         headers = [
-            ("Set-Cookie", "namifax_session=; Path=/; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT")
+            ("Set-Cookie", "namifax_session=; Path=/; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT" + ("; Secure" if _cookie_secure(request) else ""))
         ]
         return headers
