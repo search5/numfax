@@ -86,6 +86,11 @@ class NamiFaxScheduler:
 
     config_signature: str = ""
 
+    @property
+    def engine_running(self) -> bool:
+        """Is the APScheduler engine itself running (jobs can fire)?"""
+        return self._scheduler is not None and bool(getattr(self._scheduler, "running", False))
+
     def apply_config(self, session=None) -> None:
         """(Re)schedule every job from the saved settings; a job that is switched off is removed."""
         if self._scheduler is None:
@@ -99,13 +104,12 @@ class NamiFaxScheduler:
 
         s = cfg.load(session)
         wanted = {}
-        stopped = cfg.stopped(session)
         for name, enabled, at in (("tmp", s.tmp_enabled, s.tmp_time), ("inbox", s.inbox_enabled, s.inbox_time),
                                   ("lifecycle", s.lifecycle_enabled, s.lifecycle_time)):
-            if enabled and not stopped:
+            if enabled:
                 hour, minute = at.split(":")
                 wanted[name] = CronTrigger(hour=int(hour), minute=int(minute))
-        if s.phonebook_enabled and not stopped:
+        if s.phonebook_enabled:
             wanted["phonebook"] = IntervalTrigger(minutes=s.phonebook_minutes)
         for name in cfg.JOBS:
             if name in wanted:
@@ -115,86 +119,127 @@ class NamiFaxScheduler:
                 self._scheduler.remove_job(name)
         self.config_signature = cfg.signature(session)
 
+    # --- the APScheduler engine: started and shut down as the administrator asks ----------------------------------------
+
+    def start_engine(self, session=None) -> None:
+        """Create and start the APScheduler engine with the saved jobs."""
+        if self.engine_running:
+            return
+        from apscheduler.schedulers.background import BackgroundScheduler
+
+        self._scheduler = BackgroundScheduler()
+        self._scheduler.start()
+        try:
+            self.apply_config(session)
+        except Exception as exc:
+            logger.error("[Scheduler] could not read the saved settings: %s", exc)
+        logger.info("[Scheduler] APScheduler engine started.")
+
+    def stop_engine(self) -> None:
+        """Shut the APScheduler engine down: no job fires until it is started again."""
+        engine, self._scheduler = self._scheduler, None
+        if engine is not None:
+            try:
+                engine.shutdown(wait=False)
+            except Exception:
+                pass
+            logger.info("[Scheduler] APScheduler engine stopped.")
+
     def watch_config(self, session=None) -> bool:
-        """Say the scheduler is alive and pick up changes made on the admin page; True when the jobs were rescheduled."""
+        """The controller's turn: say we are alive, start or stop the engine as asked, follow changed settings.
+
+        True when the engine was started or stopped or the jobs were rescheduled.
+        """
         if session is None:
             with cli_session(ensure_schema=True) as opened:
                 return self.watch_config(opened)
-        cfg.beat(session)
-        if self._scheduler is not None and cfg.signature(session) != self.config_signature:
+        changed = False
+        want_running = not cfg.stopped(session)
+        if want_running and not self.engine_running:
+            self.start_engine(session)
+            changed = True
+        elif not want_running and self.engine_running:
+            self.stop_engine()
+            changed = True
+        elif self.engine_running and cfg.signature(session) != self.config_signature:
             self.apply_config(session)
-            return True
-        return False
+            changed = True
+        cfg.beat(session, "running" if self.engine_running else "stopped")
+        return changed
+
+    def _control_loop(self) -> None:
+        while not self._stop_event.wait(self.control_interval):
+            try:
+                self.watch_config()
+            except Exception as exc:
+                logger.error("[Scheduler] controller check failed: %s", exc)
 
     def job_phonebook_sync(self) -> None:
         """Execute periodic address book to HylaFAX PBOOK1.1 synchronization."""
         self.run_job("phonebook")
 
+    control_interval = 15            # seconds between the controller's checks (it hears a Stop/Start within this time)
+    _control_thread: Optional[threading.Thread] = None
+
     def start(self, blocking: bool = False) -> None:
-        """Start scheduler. Uses APScheduler if available, else lightweight thread timer."""
+        """Start the scheduler: the controller thread, and the APScheduler engine unless an administrator stopped it.
+
+        With ``blocking`` the call waits until ``stop()`` (the standalone service); a Stop on the admin page shuts only the engine
+        down, the process stays so that a Start can bring it back.
+        """
         if self.is_running:
             return
-
         self._stop_event.clear()
         self.is_running = True
 
         try:
-            from apscheduler.schedulers.background import BackgroundScheduler
-            from apscheduler.schedulers.blocking import BlockingScheduler
-            from apscheduler.triggers.interval import IntervalTrigger
-
-            sched_cls = BlockingScheduler if blocking else BackgroundScheduler
-            self._scheduler = sched_cls()
-
-            # the jobs and their times come from the saved settings (Admin > Scheduler); a minute watcher follows later changes
-            self._scheduler.add_job(self.watch_config, trigger=IntervalTrigger(seconds=60), id="config_watch",
-                                    name="Scheduler settings watch", replace_existing=True, coalesce=True)
-            try:
-                self.apply_config()
-            except Exception as exc:
-                logger.error("[Scheduler] could not read the saved settings: %s", exc)
-
-            logger.info("[Scheduler] Starting APScheduler engine...")
-            self._scheduler.start()
-
-        except ImportError:
-            # Fallback to internal daemon thread if apscheduler is not installed
+            import apscheduler  # noqa: F401
+        except ImportError:                                                  # a plain thread timer when APScheduler is missing
             logger.warning("[Scheduler] APScheduler not installed; using built-in thread timer.")
 
             def _runner():
-                while not self._stop_event.is_set():
-                    # Sleep in small increments to be responsive to stop signal
-                    for _ in range(self.phonebook_sync_interval_mins * 60):
-                        if self._stop_event.is_set():
-                            break
-                        time.sleep(1)
-                    if not self._stop_event.is_set():
-                        self.job_phonebook_sync()
+                while not self._stop_event.wait(self.phonebook_sync_interval_mins * 60):
+                    self.job_phonebook_sync()
 
             t = threading.Thread(target=_runner, daemon=True, name="NamiFaxSchedulerFallback")
             t.start()
             self._fallback_threads.append(t)
+        else:
+            try:
+                with cli_session(ensure_schema=True) as session:
+                    if not cfg.stopped(session):
+                        self.start_engine(session)
+                    cfg.beat(session, "running" if self.engine_running else "stopped")
+            except Exception as exc:                                         # no database yet: run with the defaults
+                logger.error("[Scheduler] could not read the saved settings: %s", exc)
+                if not self.engine_running:
+                    self.start_engine_without_settings()
+            self._control_thread = threading.Thread(target=self._control_loop, daemon=True, name="NamiFaxSchedulerControl")
+            self._control_thread.start()
 
-            if blocking:
-                try:
-                    while not self._stop_event.is_set():
-                        time.sleep(1)
-                except KeyboardInterrupt:
-                    self.stop()
+        if blocking:
+            try:
+                while not self._stop_event.wait(1):
+                    pass
+            except KeyboardInterrupt:
+                self.stop()
+
+    def start_engine_without_settings(self) -> None:
+        from apscheduler.schedulers.background import BackgroundScheduler
+
+        self._scheduler = BackgroundScheduler()
+        self._scheduler.start()
 
     def stop(self) -> None:
-        """Stop scheduler and release workers."""
+        """Stop everything: the engine and the controller (the process is meant to end)."""
         if not self.is_running:
             return
-
         self._stop_event.set()
-        if self._scheduler:
-            try:
-                self._scheduler.shutdown(wait=False)
-            except Exception:
-                pass
-            self._scheduler = None
-
+        self.stop_engine()
+        thread = self._control_thread
+        if thread is not None and thread is not threading.current_thread():
+            thread.join(timeout=5)
+        self._control_thread = None
         self.is_running = False
         logger.info("[Scheduler] Scheduler stopped.")
 

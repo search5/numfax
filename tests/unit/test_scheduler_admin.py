@@ -243,18 +243,70 @@ def test_the_scheduler_is_running_unless_it_was_stopped(dbsession):
     assert cfg.stopped(dbsession) is False
 
 
-def test_stopping_removes_every_job_and_starting_brings_them_back(dbsession):
+def test_stopping_shuts_the_apscheduler_engine_down_and_starting_brings_it_back(dbsession):
     sched = NamiFaxScheduler()
     sched.start(blocking=False)
     try:
         sched.apply_config(dbsession)
-        assert {"tmp", "lifecycle", "phonebook"} <= set(_jobs(sched))
+        assert sched.engine_running and {"tmp", "lifecycle", "phonebook"} <= set(_jobs(sched))
+        engine = sched._scheduler
         cfg.set_stopped(dbsession, True)
         assert sched.watch_config(dbsession) is True
-        assert set(_jobs(sched)) <= {"config_watch"}                               # only the watcher stays, to hear the "start"
+        assert not sched.engine_running and sched._scheduler is None and engine.running is False       # really shut down
+        assert sched.is_running                                                                           # the controller still listens
         cfg.set_stopped(dbsession, False)
         assert sched.watch_config(dbsession) is True
-        assert {"tmp", "lifecycle", "phonebook"} <= set(_jobs(sched))
+        assert sched.engine_running and {"tmp", "lifecycle", "phonebook"} <= set(_jobs(sched))
+    finally:
+        sched.stop()
+
+
+def test_a_scheduler_that_starts_while_stopped_runs_no_engine(dbsession):
+    cfg.set_stopped(dbsession, True)
+    sched = NamiFaxScheduler()
+    sched.start(blocking=False)
+    try:
+        sched.watch_config(dbsession)
+        assert not sched.engine_running and sched.is_running
+    finally:
+        sched.stop()
+
+
+def test_the_controller_thread_ends_with_stop(dbsession):
+    sched = NamiFaxScheduler()
+    sched.start(blocking=False)
+    thread = sched._control_thread
+    assert thread is not None and thread.is_alive()
+    sched.stop()
+    thread.join(timeout=5)
+    assert not thread.is_alive() and not sched.engine_running and not sched.is_running
+
+
+def test_the_heartbeat_says_whether_the_engine_runs(dbsession):
+    sched = NamiFaxScheduler()
+    sched.start(blocking=False)
+    try:
+        sched.watch_config(dbsession)
+        assert cfg.engine_state(dbsession) == "running"
+        cfg.set_stopped(dbsession, True)
+        sched.watch_config(dbsession)
+        assert cfg.engine_state(dbsession) == "stopped"
+    finally:
+        sched.stop()
+
+
+def test_stopping_from_the_page_acts_at_once_in_the_process_that_hosts_the_scheduler(client, dbsession):
+    sched = NamiFaxScheduler()
+    sched.start(blocking=False)
+    try:
+        with patch("namifax.views.admin_scheduler.get_scheduler", return_value=sched):
+            cfg.beat(dbsession)
+            stop = next(f for f in client.get("/admin/scheduler").forms.values() if f.fields.get("action") and f["action"].value == "stop")
+            stop.submit()
+            assert not sched.engine_running                                                   # no waiting for the next check
+            start = next(f for f in client.get("/admin/scheduler").forms.values() if f.fields.get("action") and f["action"].value == "start")
+            start.submit()
+            assert sched.engine_running
     finally:
         sched.stop()
 
@@ -262,11 +314,11 @@ def test_stopping_removes_every_job_and_starting_brings_them_back(dbsession):
 def test_a_stopped_scheduler_still_answers_with_a_heartbeat(dbsession):
     cfg.set_stopped(dbsession, True)
     NamiFaxScheduler().watch_config(dbsession)
-    assert cfg.alive(dbsession) is True
+    assert cfg.alive(dbsession) is True and cfg.engine_state(dbsession) == "stopped"
 
 
 def test_the_page_has_a_stop_button_and_then_a_start_button(client, dbsession):
-    cfg.beat(dbsession)
+    cfg.beat(dbsession, "running")
     page = client.get("/admin/scheduler")
     stop = next(f for f in page.forms.values() if f.fields.get("action") and f["action"].value == "stop")
     assert "stop" in page.text.lower()
@@ -278,7 +330,7 @@ def test_the_page_has_a_stop_button_and_then_a_start_button(client, dbsession):
 
 
 def test_the_state_says_stopped_while_stopped(client, dbsession):
-    cfg.beat(dbsession)
+    cfg.beat(dbsession, "stopped")
     cfg.set_stopped(dbsession, True)
     text = client.get("/admin/scheduler").text.lower()
     assert "scheduler is stopped" in text and "scheduler is running" not in text

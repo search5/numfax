@@ -102,9 +102,15 @@ def last_run(session: Any, job: str) -> Optional[dict]:
         return None
 
 
-def beat(session: Any) -> None:
-    """A scheduler is alive: it says so every minute."""
-    SystemConfigService(session).set(HEARTBEAT_KEY, datetime.now().isoformat(timespec="seconds"))
+def beat(session: Any, state: str = "running") -> None:
+    """A scheduler process is alive: it says so (and whether its APScheduler engine is ``running`` or ``stopped``)."""
+    store = SystemConfigService(session)
+    store.set(HEARTBEAT_KEY, datetime.now().isoformat(timespec="seconds"))
+    store.set("sched_engine_state", state)
+
+
+def engine_state(session: Any) -> str:
+    return SystemConfigService(session).get("sched_engine_state", "running")
 
 
 def heartbeat(session: Any) -> Optional[datetime]:
