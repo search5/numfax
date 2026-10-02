@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 16:02+0900\n"
+"POT-Creation-Date: 2026-10-02 16:06+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -900,7 +900,7 @@ msgstr ""
 msgid "Send Diagnostic Email"
 msgstr ""
 
-msgid "Enterprise storage lifecycle policies and S3 / MinIO / GCS cloud backends"
+msgid "Enterprise storage lifecycle policies and S3 / MinIO cloud backends"
 msgstr ""
 
 msgid "Storage Lifecycle Policies"
@@ -945,15 +945,6 @@ msgstr ""
 msgid "Endpoint URL (MinIO / S3 Compatible)"
 msgstr ""
 
-msgid "Endpoint URL"
-msgstr ""
-
-msgid ""
-"Google Cloud Storage is reached through its S3-compatible interface: use "
-"the endpoint https://storage.googleapis.com and an HMAC key (Cloud "
-"Storage > Settings > Interoperability)."
-msgstr ""
-
 msgid "Region"
 msgstr ""
 
@@ -963,13 +954,7 @@ msgstr ""
 msgid "Access Key ID"
 msgstr ""
 
-msgid "HMAC Access Key"
-msgstr ""
-
 msgid "Secret Access Key"
-msgstr ""
-
-msgid "HMAC Secret"
 msgstr ""
 
 msgid "Key Prefix"

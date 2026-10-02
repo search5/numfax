@@ -15,7 +15,7 @@
       </div>
       <div>
         <h1 class="text-xl font-bold text-slate-100">{{ _('Storage & Cloud') }}</h1>
-        <p class="text-xs text-slate-400">{{ _('Enterprise storage lifecycle policies and S3 / MinIO / GCS cloud backends') }}</p>
+        <p class="text-xs text-slate-400">{{ _('Enterprise storage lifecycle policies and S3 / MinIO cloud backends') }}</p>
       </div>
     </div>
   </div>
@@ -86,7 +86,7 @@
       </form>
     </div>
 
-    <!-- Cloud Storage Backend (S3 / MinIO / GCS) -->
+    <!-- Cloud Storage Backend (S3 / MinIO) -->
     <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-5 space-y-4">
       <div class="border-b border-slate-800 pb-2 flex items-center justify-between">
         <h2 class="text-base font-semibold text-slate-200">{{ _('Cloud Storage Backend') }}</h2>
@@ -99,18 +99,16 @@
           <select name="storage_type" data-provider-switch="cloud-fields" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-blue-500">
             <option value="LOCAL" {% if cloud.storage_type == 'LOCAL' %}selected{% endif %}>{{ _('Local Filesystem (Default)') }}</option>
             <option value="S3" {% if cloud.storage_type == 'S3' %}selected{% endif %}>Amazon S3 / MinIO / Ceph</option>
-            <option value="GCS" {% if cloud.storage_type == 'GCS' %}selected{% endif %}>Google Cloud Storage (GCS)</option>
           </select>
         </div>
 
         <p id="cloud-note-LOCAL" class="{% if cloud.storage_type != 'LOCAL' %}hidden {% endif %}text-xs text-slate-500">{{ _('Faxes stay in the archive folder on this server. There is nothing to connect.') }}</p>
 
-        <div id="cloud-fields" class="space-y-4{% if cloud.storage_type not in ('S3', 'GCS') %} hidden{% endif %}">
+        <div id="cloud-fields" class="space-y-4{% if cloud.storage_type != 'S3' %} hidden{% endif %}">
         <div>
-          <label class="block text-xs font-medium text-slate-400 mb-1"><span data-for="S3"{% if cloud.storage_type == 'GCS' %} class="hidden"{% endif %}>{{ _('Endpoint URL (MinIO / S3 Compatible)') }}</span><span data-for="GCS"{% if cloud.storage_type != 'GCS' %} class="hidden"{% endif %}>{{ _('Endpoint URL') }}</span></label>
+          <label class="block text-xs font-medium text-slate-400 mb-1">{{ _('Endpoint URL (MinIO / S3 Compatible)') }}</label>
           <input type="text" name="endpoint_url" value="{{ cloud.endpoint_url }}" placeholder="https://s3.amazonaws.com or http://minio.internal:9000"
                  class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-blue-500">
-          <p data-for="GCS" class="{% if cloud.storage_type != 'GCS' %}hidden {% endif %}text-[11px] text-slate-500 mt-1">{{ _('Google Cloud Storage is reached through its S3-compatible interface: use the endpoint https://storage.googleapis.com and an HMAC key (Cloud Storage > Settings > Interoperability).') }}</p>
         </div>
 
         <div class="grid grid-cols-2 gap-3">
@@ -128,12 +126,12 @@
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-medium text-slate-400 mb-1"><span data-for="S3"{% if cloud.storage_type == 'GCS' %} class="hidden"{% endif %}>{{ _('Access Key ID') }}</span><span data-for="GCS"{% if cloud.storage_type != 'GCS' %} class="hidden"{% endif %}>{{ _('HMAC Access Key') }}</span></label>
+            <label class="block text-xs font-medium text-slate-400 mb-1">{{ _('Access Key ID') }}</label>
             <input type="text" name="access_key" value="{{ cloud.access_key }}" placeholder="AKIA..."
                    class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-blue-500">
           </div>
           <div>
-            <label class="block text-xs font-medium text-slate-400 mb-1"><span data-for="S3"{% if cloud.storage_type == 'GCS' %} class="hidden"{% endif %}>{{ _('Secret Access Key') }}</span><span data-for="GCS"{% if cloud.storage_type != 'GCS' %} class="hidden"{% endif %}>{{ _('HMAC Secret') }}</span></label>
+            <label class="block text-xs font-medium text-slate-400 mb-1">{{ _('Secret Access Key') }}</label>
             <input type="password" name="secret_key" placeholder="{% if cloud.has_secret_key %}••••••••••••{% endif %}"
                    class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-blue-500">
           </div>
@@ -151,7 +149,7 @@
           <button type="submit" name="action" value="save_cloud" class="py-2 px-4 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm transition shadow-lg shadow-blue-500/20">
             {{ _('Save Storage Config') }}
           </button>
-          <button id="cloud-test" type="submit" name="action" value="test_cloud" class="{% if cloud.storage_type not in ('S3', 'GCS') %}hidden {% endif %}py-2 px-4 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium text-sm transition">
+          <button id="cloud-test" type="submit" name="action" value="test_cloud" class="{% if cloud.storage_type != 'S3' %}hidden {% endif %}py-2 px-4 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium text-sm transition">
             {{ _('Test Connection') }}
           </button>
         </div>

@@ -7,7 +7,7 @@ from typing import Any, Dict, List, Optional
 
 @dataclass
 class StorageConfig:
-    storage_type: str = "LOCAL"  # LOCAL, S3, GCS
+    storage_type: str = "LOCAL"  # LOCAL, S3
     endpoint_url: Optional[str] = None
     region_name: Optional[str] = None
     bucket_name: Optional[str] = None
@@ -121,7 +121,7 @@ class LocalStorageProvider(StorageProvider):
 
 
 class S3CompatibleStorageProvider(StorageProvider):
-    """High-performance S3 & S3-compatible (MinIO, GCS, Cloudflare R2) storage provider."""
+    """High-performance S3 & S3-compatible (MinIO, Ceph, Cloudflare R2) storage provider."""
 
     def __init__(self, config: StorageConfig) -> None:
         self.config = config
@@ -228,6 +228,6 @@ class CloudStorageManager:
     @staticmethod
     def get_provider(config: StorageConfig) -> StorageProvider:
         stype = (config.storage_type or "LOCAL").upper()
-        if stype in ("S3", "GCS"):
+        if stype == "S3":
             return S3CompatibleStorageProvider(config)
         return LocalStorageProvider()

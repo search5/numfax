@@ -11,7 +11,7 @@ from namifax.db.missing import resolve_db
 class StorageLifecyclePolicy:
     purge_tiff_after_days: int = 7        # Purge local TIFF if valid PDF exists after N days (0 = immediate)
     full_retention_days: int = 365        # Purge entire fax record & files after N days (0 = keep forever)
-    remote_sync_delete: bool = True        # Also purge object on remote S3/GCS when fax is deleted
+    remote_sync_delete: bool = True        # Also purge object on remote S3 when fax is deleted
     delete_remote_tiff_only: bool = False  # Purge only TIFF objects in remote cloud storage
 
 
@@ -136,7 +136,7 @@ class StorageLifecycleService:
         if not tiff_days and not keep_days:
             return None
 
-        if self.storage_provider is None and cfg.get("cloud_storage_type", "LOCAL").upper() in ("S3", "GCS"):
+        if self.storage_provider is None and cfg.get("cloud_storage_type", "LOCAL").upper() == "S3":
             self.storage_provider = CloudStorageManager.get_provider(StorageConfig(
                 storage_type=cfg.get("cloud_storage_type", "LOCAL"),
                 endpoint_url=cfg.get("cloud_endpoint_url", "") or None,
