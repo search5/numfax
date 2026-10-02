@@ -55,6 +55,7 @@ def includeme(config):
     config.add_route("admin_smtp", "/admin/smtp")
     config.add_route("admin_printers", "/admin/printers")
     config.add_route("admin_storage", "/admin/storage")
+    config.add_route("admin_scheduler", "/admin/scheduler")
     config.add_route("admin_saml", "/admin/saml")
 
     # Interaction Modal Dialog routes

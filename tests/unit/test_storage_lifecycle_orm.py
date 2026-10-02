@@ -157,14 +157,19 @@ def test_cron_prunes_with_the_session_and_removes_files(dbsession, tmp_path, mon
     assert not _exists(dbsession, fid) and not path.exists()
 
 
-def test_the_scheduler_runs_the_saved_policy_every_day():
-    from unittest.mock import patch
+def test_the_scheduler_runs_the_saved_policy_every_day(dbsession):
+    from apscheduler.triggers.cron import CronTrigger
 
     from namifax.services.scheduler import NamiFaxScheduler
 
-    with patch("namifax.services.scheduler.run_cron") as run:
-        NamiFaxScheduler(tmp_clean_days=3).job_cron_maintenance()
-    assert run.call_args.args[0] == ["cron", "-t", "3", "-s"]
+    sched = NamiFaxScheduler()
+    sched.start(blocking=False)
+    try:
+        sched.apply_config(dbsession)
+        job = sched._scheduler.get_job("lifecycle")
+        assert job is not None and isinstance(job.trigger, CronTrigger)           # once a day, at the time set on the Scheduler page
+    finally:
+        sched.stop()
 
 
 # --- real servers --------------------------------------------------------------------------------------------

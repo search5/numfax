@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: kMIME-Version: 1.Content-Type: text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 14:44+0900\n"
+"POT-Creation-Date: 2026-10-02 15:10+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ko\n"
@@ -446,6 +446,9 @@ msgstr "SMTP 게이트웨이"
 msgid "Storage & Cloud"
 msgstr "스토리지 및 클라우드"
 
+msgid "Scheduled Tasks"
+msgstr "예약 작업"
+
 msgid "SAML 2.0 SSO"
 msgstr "SAML 2.0 SSO"
 
@@ -670,6 +673,78 @@ msgstr "SP 엔터티 ID / 메타데이터 URL"
 
 msgid "NameID Format"
 msgstr "NameID 형식"
+
+msgid "Housekeeping that runs by itself: temporary files, moving old faxes to the archive, the retention policy and the phonebook export."
+msgstr "저절로 도는 정리 작업입니다: 임시 파일, 오래된 팩스의 보관함 이동, 보존 기간 정책, 전화번호부 내보내기."
+
+msgid "A scheduler is running"
+msgstr "스케줄러가 실행 중입니다"
+
+msgid "last seen"
+msgstr "마지막 확인"
+
+msgid "seconds ago"
+msgstr "초 전"
+
+msgid "No scheduler is running"
+msgstr "실행 중인 스케줄러가 없습니다"
+
+msgid "Start the web service with NAMIFAX_ENABLE_SCHEDULER=1 (the default) or run \"namifax scheduler\" as a service; until then the tasks below only run when you press Run now."
+msgstr "웹 서비스를 NAMIFAX_ENABLE_SCHEDULER=1(기본값)로 시작하거나 \"namifax scheduler\"를 서비스로 실행하십시오. 그때까지 아래 작업은 '지금 실행'을 눌러야만 돕니다."
+
+msgid "Clean the temporary folder"
+msgstr "임시 폴더 정리"
+
+msgid "Delete temporary files older than the days given, every day at the time given."
+msgstr "지정한 시각에 매일, 지정한 일수보다 오래된 임시 파일을 지웁니다."
+
+msgid "Time (HH:MM)"
+msgstr "시각 (HH:MM)"
+
+msgid "Older than (days)"
+msgstr "기준 일수(일)"
+
+msgid "Last run"
+msgstr "마지막 실행"
+
+msgid "Has not run yet."
+msgstr "아직 실행된 적이 없습니다."
+
+msgid "Run now"
+msgstr "지금 실행"
+
+msgid "Move old faxes to the archive"
+msgstr "오래된 팩스를 보관함으로 이동"
+
+msgid "Faxes in the inbox older than the days given go to the archive (nothing is deleted)."
+msgstr "받은 팩스함에서 지정한 일수보다 오래된 팩스를 보관함으로 옮깁니다(삭제하지 않습니다)."
+
+msgid "Apply the retention policy"
+msgstr "보존 기간 정책 적용"
+
+msgid "Runs the TIFF purge and the retention period saved on the Storage page. Nothing is removed until a policy has been saved there."
+msgstr "Storage 화면에 저장한 TIFF 정리와 보존 기간을 적용합니다. 그곳에 정책을 저장하기 전에는 아무것도 지우지 않습니다."
+
+msgid "Saved policy"
+msgstr "저장된 정책"
+
+msgid "keep"
+msgstr "보존"
+
+msgid "days"
+msgstr "일"
+
+msgid "No policy saved yet"
+msgstr "저장된 정책이 없습니다"
+
+msgid "Export the address book to HylaFAX"
+msgstr "주소록을 HylaFAX로 내보내기"
+
+msgid "Writes the address book as a HylaFAX phonebook, repeatedly."
+msgstr "주소록을 HylaFAX 전화번호부로 주기적으로 내보냅니다."
+
+msgid "Every (minutes)"
+msgstr "주기(분)"
 
 msgid "External SMTP Gateway"
 msgstr "외부 SMTP 게이트웨이"
@@ -2049,6 +2124,15 @@ msgstr "클라우드 저장소 설정을 저장했습니다."
 
 msgid "SAML 2.0 configuration saved successfully."
 msgstr "SAML 2.0 설정을 저장했습니다."
+
+msgid "Unknown task."
+msgstr "알 수 없는 작업입니다."
+
+msgid "A time must be written HH:MM (24 hours); the old time was kept."
+msgstr "시각은 HH:MM(24시간) 형식이어야 합니다. 이전 시각을 유지했습니다."
+
+msgid "Scheduled tasks saved. A running scheduler picks the change up within a minute."
+msgstr "예약 작업을 저장했습니다. 실행 중인 스케줄러는 1분 안에 변경을 반영합니다."
 
 msgid "Catch All"
 msgstr "모두 받기"

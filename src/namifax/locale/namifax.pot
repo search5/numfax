@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 14:44+0900\n"
+"POT-Creation-Date: 2026-10-02 15:10+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -466,6 +466,9 @@ msgstr ""
 msgid "Storage & Cloud"
 msgstr ""
 
+msgid "Scheduled Tasks"
+msgstr ""
+
 msgid "SAML 2.0 SSO"
 msgstr ""
 
@@ -706,6 +709,89 @@ msgid "SP Entity ID / Metadata URL"
 msgstr ""
 
 msgid "NameID Format"
+msgstr ""
+
+msgid ""
+"Housekeeping that runs by itself: temporary files, moving old faxes to "
+"the archive, the retention policy and the phonebook export."
+msgstr ""
+
+msgid "A scheduler is running"
+msgstr ""
+
+msgid "last seen"
+msgstr ""
+
+msgid "seconds ago"
+msgstr ""
+
+msgid "No scheduler is running"
+msgstr ""
+
+msgid ""
+"Start the web service with NAMIFAX_ENABLE_SCHEDULER=1 (the default) or "
+"run \"namifax scheduler\" as a service; until then the tasks below only "
+"run when you press Run now."
+msgstr ""
+
+msgid "Clean the temporary folder"
+msgstr ""
+
+msgid ""
+"Delete temporary files older than the days given, every day at the time "
+"given."
+msgstr ""
+
+msgid "Time (HH:MM)"
+msgstr ""
+
+msgid "Older than (days)"
+msgstr ""
+
+msgid "Last run"
+msgstr ""
+
+msgid "Has not run yet."
+msgstr ""
+
+msgid "Run now"
+msgstr ""
+
+msgid "Move old faxes to the archive"
+msgstr ""
+
+msgid ""
+"Faxes in the inbox older than the days given go to the archive (nothing "
+"is deleted)."
+msgstr ""
+
+msgid "Apply the retention policy"
+msgstr ""
+
+msgid ""
+"Runs the TIFF purge and the retention period saved on the Storage page. "
+"Nothing is removed until a policy has been saved there."
+msgstr ""
+
+msgid "Saved policy"
+msgstr ""
+
+msgid "keep"
+msgstr ""
+
+msgid "days"
+msgstr ""
+
+msgid "No policy saved yet"
+msgstr ""
+
+msgid "Export the address book to HylaFAX"
+msgstr ""
+
+msgid "Writes the address book as a HylaFAX phonebook, repeatedly."
+msgstr ""
+
+msgid "Every (minutes)"
 msgstr ""
 
 msgid "External SMTP Gateway"
@@ -2138,6 +2224,17 @@ msgid "Cloud storage configuration saved successfully."
 msgstr ""
 
 msgid "SAML 2.0 configuration saved successfully."
+msgstr ""
+
+msgid "Unknown task."
+msgstr ""
+
+msgid "A time must be written HH:MM (24 hours); the old time was kept."
+msgstr ""
+
+msgid ""
+"Scheduled tasks saved. A running scheduler picks the change up within a "
+"minute."
 msgstr ""
 
 msgid "Catch All"

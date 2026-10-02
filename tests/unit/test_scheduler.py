@@ -25,14 +25,13 @@ class TestScheduler(unittest.TestCase):
         s2 = get_scheduler()
         self.assertIs(s1, s2)
 
-    def test_job_cron_maintenance(self):
-        with patch("namifax.services.scheduler.run_cron") as mock_cron:
-            self.scheduler.job_cron_maintenance()
-            mock_cron.assert_called_once_with(["cron", "-t", "1", "-s"])
-
     def test_job_phonebook_sync(self):
-        with patch("namifax.services.scheduler.export_phonebook", return_value=5) as mock_phb:
-            self.scheduler.job_phonebook_sync()
+        with patch("namifax.services.scheduler.export_phonebook", return_value=5) as mock_phb, \
+                patch("namifax.services.scheduler.cli_session") as session:
+            session.return_value.__enter__.return_value = MagicMock()
+            with patch("namifax.services.scheduler.cfg") as config:
+                config.JOBS = ("tmp", "inbox", "lifecycle", "phonebook")
+                self.scheduler.job_phonebook_sync()
             mock_phb.assert_called_once()
 
     def test_start_and_stop_fallback(self):

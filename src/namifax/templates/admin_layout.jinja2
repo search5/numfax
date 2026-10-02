@@ -88,6 +88,7 @@
           <option value="/admin/sysfunc" {% if current_admin_tab == 'sysfunc' %}selected{% endif %}>System Functions</option>
           <option value="/admin/smtp" {% if current_admin_tab == 'smtp' %}selected{% endif %}>SMTP Gateway</option>
           <option value="/admin/storage" {% if current_admin_tab == 'storage' %}selected{% endif %}>Storage &amp; Cloud</option>
+          <option value="/admin/scheduler" {% if current_admin_tab == 'scheduler' %}selected{% endif %}>Scheduled Tasks</option>
           <option value="/admin/saml" {% if current_admin_tab == 'saml' %}selected{% endif %}>SAML 2.0 SSO</option>
         </optgroup>
         <option value="">-- Portal Navigation --</option>
@@ -248,6 +249,14 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2 1.5 3 3.5 3h9c2 0 3.5-1 3.5-3V7M4 7c0-2 1.5-3 3.5-3h9c2 0 3.5 1 3.5 3M4 7h16m-8 4v4m-2-2h4" />
           </svg>
           <span>{{ _('Storage & Cloud') }}</span>
+        </a>
+        <a href="/admin/scheduler"
+           class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium transition
+                  {% if current_admin_tab == 'scheduler' %}bg-blue-600/15 text-blue-400 border border-blue-500/30 font-semibold{% else %}text-slate-300 hover:text-white hover:bg-slate-800/60 border border-transparent{% endif %}">
+          <svg class="w-4 h-4 text-slate-400 {% if current_admin_tab == 'scheduler' %}text-blue-400{% endif %}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>{{ _('Scheduled Tasks') }}</span>
         </a>
         <a href="/admin/saml"
            class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium transition
