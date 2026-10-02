@@ -51,16 +51,32 @@ def test_ddl_compiles_for_every_supported_database(dialect):
 
 # --- service ---------------------------------------------------------------------------
 
-def test_newest_first_and_limited_to_100(dbsession):
+def test_newest_first_and_nothing_is_cut_off(dbsession):
+    """C8: the original has no row limit; every event of the filter is reachable (here 120 rows > the old 100)."""
     from namifax.services.syslog import SysLogService
 
     dbsession.execute(text("DELETE FROM SysLog"))
     _add(dbsession, *[(f"2026-10-01 10:{m:02d}:00", f"entry {m}") for m in range(0, 60)],
          *[(f"2026-10-01 11:{m:02d}:00", f"later {m}") for m in range(0, 60)])
-    rows = SysLogService(dbsession).search()
-    assert len(rows) == 100
+    svc = SysLogService(dbsession)
+    rows = svc.search()
+    assert len(rows) == 120 and svc.count() == 120
     assert rows[0] == {"logdate": "2026-10-01 11:59:00", "logtext": "later 59"}
     assert rows[0]["logdate"] > rows[-1]["logdate"]
+    assert rows[-1]["logtext"] == "entry 0"
+
+
+def test_pages_cover_every_row_once(dbsession):
+    from namifax.services.syslog import SysLogService
+
+    dbsession.execute(text("DELETE FROM SysLog"))
+    _add(dbsession, *[(f"2026-10-01 10:{m:02d}:00", f"entry {m}") for m in range(0, 60)],
+         *[(f"2026-10-01 11:{m:02d}:00", f"later {m}") for m in range(0, 45)])
+    svc = SysLogService(dbsession)
+    pages = [svc.search(limit=50, offset=o) for o in (0, 50, 100)]
+    assert [len(p) for p in pages] == [50, 50, 5]
+    assert [r["logtext"] for p in pages for r in p] == [r["logtext"] for r in svc.search()]
+    assert svc.count(kw="later") == 45 and len(svc.search(kw="later", limit=50)) == 45
 
 
 def test_keyword_is_a_case_insensitive_substring(dbsession):

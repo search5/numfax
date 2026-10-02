@@ -40,10 +40,8 @@ def _faxcover_command() -> list[str]:
 
 
 def _simulation_wanted() -> bool:
-    flag = os.environ.get("NAMIFAX_QUEUE_SIMULATION")
-    if flag is not None:
-        return flag.lower() in ("1", "true", "yes")
-    return bool(os.environ.get("PYTEST_CURRENT_TEST")) or not os.path.exists("/var/spool/hylafax")
+    """Only an explicit NAMIFAX_QUEUE_SIMULATION=1 (a development machine) may fake a send; otherwise a missing HylaFAX is an error."""
+    return os.environ.get("NAMIFAX_QUEUE_SIMULATION", "").strip().lower() in ("1", "true", "yes")
 
 
 def dispatch_sendfax(send: SendRequest, sender: Sender) -> dict[str, Any]:
@@ -52,14 +50,15 @@ def dispatch_sendfax(send: SendRequest, sender: Sender) -> dict[str, Any]:
         plan = build_plan(send, sender, images_dir=_images_dir(), tmp_dir=_tmp_dir(),
                           default_tsi=os.environ.get("DEFAULT_TSI_ID", ""))
     except NothingToSend:
-        return {"success": False, "error": "Select a file to send, or ask for a cover page."}
+        return {"success": False, "error": str(_("Select a file to send, or ask for a cover page."))}
 
     sendfax_bin = settings.binary("sendfax")
     if not sendfax_bin:
         if _simulation_wanted():
             return {"success": True, "jobid": str(uuid.uuid4().int)[:6], "destination": send.destinations.strip(),
                     "files_count": len(send.files), "simulated": True}
-        return {"success": False, "error": "HylaFAX sendfax binary not found on host system.", "simulated": False}
+        return {"success": False, "error": str(_("The fax could not be sent: HylaFAX (the sendfax program) is not installed or not reachable on this server. "
+                              "Ask the administrator.")), "simulated": False}
 
     binaries = {"sendfax": [sendfax_bin], "faxcover": _faxcover_command()}
     try:
@@ -81,7 +80,7 @@ def dispatch_sendfax(send: SendRequest, sender: Sender) -> dict[str, Any]:
         match = re.search(r"request id is (\d+)", output)
         return {"success": True, "output": output, "jobid": match.group(1) if match else None}
     except OSError as exc:
-        return {"success": False, "error": str(exc)}
+        return {"success": False, "error": f"{_('The fax could not be queued:')} {exc}"}
     finally:
         for path in [*plan.files_to_write, *plan.cleanup]:
             try:

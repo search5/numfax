@@ -49,3 +49,30 @@ def test_the_years_reach_from_the_first_release_to_next_year(client):
     soup = BeautifulSoup(client.get("/admin/system_logs").text, "html.parser")
     values = [o["value"] for o in soup.find("select", {"name": "year"}).find_all("option") if o["value"]]
     assert values[0] == "2004" and values[-1] == str(date.today().year + 1)
+
+
+def test_a_long_log_is_paged_and_every_page_is_reachable(client, dbsession):
+    """C8: a filter with more than one page of events shows a pager; walking the pages shows every event once."""
+    from namifax.views.admin import SYSLOG_PER_PAGE
+
+    svc = SysLogService(dbsession)
+    total = SYSLOG_PER_PAGE * 2 + 7
+    for n in range(total):
+        svc.add(f"bulk event {n:04d}", f"2018-05-06 10:{n // 60:02d}:{n % 60:02d}")
+    seen = []
+    for page in (1, 2, 3):
+        res = client.get(f"/admin/system_logs?_submit_check=1&kw=bulk+event&year=2018&page={page}")
+        seen += [t for t in _texts(res) if t.startswith("bulk event")]
+        pager = BeautifulSoup(res.text, "html.parser").select_one("nav[aria-label=pager]")
+        assert pager is not None and f"{page} / 3" in pager.get_text()
+        assert "kw=bulk+event" in str(pager) and "year=2018" in str(pager)
+    assert len(seen) == total == len(set(seen))
+    assert seen[0] == f"bulk event {total - 1:04d}"
+
+
+def test_a_short_log_has_no_pager_and_a_bad_page_number_is_the_first(client):
+    res = client.get("/admin/system_logs?_submit_check=1&kw=event&year=2019&page=zzz")
+    assert BeautifulSoup(res.text, "html.parser").select_one("nav[aria-label=pager]") is None
+    assert any("event of 2019" in t for t in _texts(res))
+    res = client.get("/admin/system_logs?_submit_check=1&kw=event&year=2019&page=99")
+    assert any("event of 2019" in t for t in _texts(res))                     # beyond the end: the last page

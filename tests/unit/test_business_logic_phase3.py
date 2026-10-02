@@ -335,6 +335,21 @@ def test_dispatch_sendfax_simulation_mode(monkeypatch):
         assert "jobid" in res
 
 
+@pytest.mark.parametrize("flag", [None, "", "0", "false", "no"])
+def test_dispatch_sendfax_never_fakes_success_unless_simulation_is_explicit(monkeypatch, flag):
+    """AUDIT-07: no sendfax binary and no explicit NAMIFAX_QUEUE_SIMULATION=1 is an error, never a made-up job number
+    (not even under pytest, and not when /var/spool/hylafax is missing)."""
+    if flag is None:
+        monkeypatch.delenv("NAMIFAX_QUEUE_SIMULATION", raising=False)
+    else:
+        monkeypatch.setenv("NAMIFAX_QUEUE_SIMULATION", flag)
+    with patch("shutil.which", return_value=None), patch("os.path.exists", return_value=False):
+        res = dispatch_sendfax(SendRequest(destinations="02-123-4567", coverpage=True), Sender())
+    assert res["success"] is False
+    assert not res.get("simulated") and "jobid" not in res
+    assert "HylaFAX" in res["error"]
+
+
 def test_dispatch_sendfax_binary_not_found_without_simulation(monkeypatch):
     """Verify dispatch_sendfax returns clear error when binary absent in production mode."""
     monkeypatch.setenv("NAMIFAX_QUEUE_SIMULATION", "0")
@@ -343,7 +358,7 @@ def test_dispatch_sendfax_binary_not_found_without_simulation(monkeypatch):
          patch("os.path.exists", return_value=True):
         res = dispatch_sendfax(SendRequest(destinations="02-123-4567", coverpage=True), Sender())
         assert res["success"] is False
-        assert "not found" in res["error"].lower()
+        assert "not installed or not reachable" in res["error"]
 
 
 def test_dispatch_sendfax_with_binary():

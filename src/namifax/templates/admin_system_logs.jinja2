@@ -86,5 +86,13 @@
     </div>
   </div>
 
+  {% if pages > 1 %}
+  <nav aria-label="pager" class="flex items-center justify-center gap-4 text-xs text-slate-400">
+    {% if page > 1 %}<a href="/admin/system_logs?{{ pager_query }}&amp;page={{ page - 1 }}" class="text-sky-400">&lsaquo; {{ _('Previous') }}</a>{% endif %}
+    <span>{{ _('Page') }} {{ page }} / {{ pages }}</span>
+    {% if page < pages %}<a href="/admin/system_logs?{{ pager_query }}&amp;page={{ page + 1 }}" class="text-sky-400">{{ _('Next') }} &rsaquo;</a>{% endif %}
+  </nav>
+  {% endif %}
+
 </div>
 {% endblock %}

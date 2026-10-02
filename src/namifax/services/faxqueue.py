@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import shlex
 import subprocess
 from typing import Any, Dict, List, Optional, Sequence
 
@@ -83,12 +84,18 @@ class FaxQueue:
             self.process_queue()
 
     def shell_exec(self, cmd: str) -> str:
-        """Execute system command and return stdout."""
+        """Run a command (the configured faxstat command, split like a shell would) without a shell; return its stdout.
+
+        A command that cannot be run (missing program, empty or malformed command) gives an empty output, never an error text.
+        """
         try:
-            res = subprocess.run(cmd, shell=True, capture_output=True, text=True, check=False)
-            return res.stdout
-        except Exception as e:
-            return str(e)
+            argv = shlex.split(cmd)
+            if not argv:
+                return ""
+            res = subprocess.run(argv, capture_output=True, text=True, check=False)
+            return res.stdout or ""
+        except (OSError, ValueError):
+            return ""
 
     def process_queue(self, raw_output: Optional[str] = None) -> List[Dict[str, Any]]:
         """Parse active sending queue."""

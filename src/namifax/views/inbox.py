@@ -5,7 +5,7 @@ from __future__ import annotations
 import os
 
 from pyramid.csrf import check_csrf_token
-from pyramid.httpexceptions import HTTPFound, HTTPMethodNotAllowed, HTTPNotFound
+from pyramid.httpexceptions import HTTPBadRequest, HTTPFound, HTTPMethodNotAllowed, HTTPNotFound
 from pyramid.response import Response
 from pyramid.view import view_config
 
@@ -215,11 +215,16 @@ def viewfax_view(request):
     }
 
 
+DOWNLOAD_FORMATS = ("pdf", "tif", "tiff")
+
+
 @view_config(route_name="fax_download", permission="view")
 def fax_download_view(request):
     """Stream PDF or TIFF binary file matching legacy file.php and pdf.php."""
     fid = request.matchdict.get("fid", "1")
     fmt = request.params.get("format", "pdf")
+    if not (fid.isascii() and fid.isdigit()) or fmt not in DOWNLOAD_FORMATS:      # both end up in a header: whole numbers and a list only
+        raise HTTPBadRequest()
     if fmt != "pdf" and not settings.flag("ENABLE_DL_TIFF", False):        # the original shows the TIFF only when asked to
         raise HTTPNotFound()
     content_type = "application/pdf" if fmt == "pdf" else "image/tiff"

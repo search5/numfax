@@ -23,7 +23,7 @@ SERVICE_TARGETS = [
     "namifax.views.admin.DynamicConfig",
     "namifax.services.categories.FaxPDFCategory",
 ]
-HELPERS = ["get_all_admin_users", "get_all_admin_modems", "get_all_syslogs"]
+HELPERS = ["get_all_admin_users", "get_all_admin_modems", "get_all_syslogs", "count_syslogs"]
 
 CASES = [
     ("admin_dashboard_view", "GET", {}),
@@ -63,7 +63,7 @@ def test_view_builds_domain_objects_with_request_db(name, method, params):
             assert call.kwargs.get("db") is expected, f"{name}: {target} built with the wrong database"
     for hname, helper in helpers.items():
         for call in helper.call_args_list:
-            if hname == "get_all_syslogs":  # ORM-backed: takes the request session
+            if hname in ("get_all_syslogs", "count_syslogs"):  # ORM-backed: takes the request session
                 assert call.kwargs.get("session") is req.dbsession, f"{name}: {hname} called without request.dbsession"
                 continue
             if hname in ("get_all_admin_modems", "get_all_admin_users"):  # modems and accounts are ORM-backed too

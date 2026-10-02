@@ -111,6 +111,27 @@ class TestSecurityAuditPhase1(unittest.TestCase):
         self.assertEqual(called_kwargs["env"].get("FAXUSER"), malicious_user)
 
     @patch("subprocess.run")
+    def test_shell_exec_runs_an_argument_list_without_a_shell(self, mock_run):
+        """FaxQueue.shell_exec (faxstat -s / -d) takes an argument list and no shell, so metacharacters stay plain text."""
+        mock_run.return_value = MagicMock(stdout="out")
+        fq = FaxQueue(auto_process=False)
+        self.assertEqual(fq.shell_exec("faxstat -s"), "out")
+        argv = mock_run.call_args.args[0]
+        self.assertEqual(argv, ["faxstat", "-s"])
+        self.assertFalse(mock_run.call_args.kwargs.get("shell", False))
+        fq.shell_exec("faxstat -s; touch /tmp/pwned")
+        self.assertEqual(mock_run.call_args.args[0], ["faxstat", "-s;", "touch", "/tmp/pwned"])
+        self.assertFalse(mock_run.call_args.kwargs.get("shell", False))
+
+    def test_shell_exec_with_a_missing_program_gives_an_empty_queue_not_an_error_text(self):
+        """No faxstat on the host: the output is empty (so no row is parsed from an error message)."""
+        fq = FaxQueue(auto_process=False, faxsendq_cmd="/nonexistent/faxstat -s")
+        self.assertEqual(fq.shell_exec("/nonexistent/faxstat -s"), "")
+        self.assertEqual(fq.process_queue(), [])
+        self.assertEqual(fq.shell_exec(""), "")
+        self.assertEqual(fq.shell_exec("unterminated 'quote"), "")
+
+    @patch("subprocess.run")
     def test_killjob_returns_false_on_failure(self, mock_run):
         """Verify killjob returns False when subprocess exits non-zero."""
         mock_proc = MagicMock()
