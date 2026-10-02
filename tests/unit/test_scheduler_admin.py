@@ -231,3 +231,68 @@ def test_only_an_administrator_may_open_it(testapp, dbsession):
 
 def test_the_menu_links_to_it(client):
     assert 'href="/admin/scheduler"' in client.get("/admin").text
+
+
+# --- stopping and starting -------------------------------------------------------------------------------------------------
+
+def test_the_scheduler_is_running_unless_it_was_stopped(dbsession):
+    assert cfg.stopped(dbsession) is False
+    cfg.set_stopped(dbsession, True)
+    assert cfg.stopped(dbsession) is True
+    cfg.set_stopped(dbsession, False)
+    assert cfg.stopped(dbsession) is False
+
+
+def test_stopping_removes_every_job_and_starting_brings_them_back(dbsession):
+    sched = NamiFaxScheduler()
+    sched.start(blocking=False)
+    try:
+        sched.apply_config(dbsession)
+        assert {"tmp", "lifecycle", "phonebook"} <= set(_jobs(sched))
+        cfg.set_stopped(dbsession, True)
+        assert sched.watch_config(dbsession) is True
+        assert set(_jobs(sched)) <= {"config_watch"}                               # only the watcher stays, to hear the "start"
+        cfg.set_stopped(dbsession, False)
+        assert sched.watch_config(dbsession) is True
+        assert {"tmp", "lifecycle", "phonebook"} <= set(_jobs(sched))
+    finally:
+        sched.stop()
+
+
+def test_a_stopped_scheduler_still_answers_with_a_heartbeat(dbsession):
+    cfg.set_stopped(dbsession, True)
+    NamiFaxScheduler().watch_config(dbsession)
+    assert cfg.alive(dbsession) is True
+
+
+def test_the_page_has_a_stop_button_and_then_a_start_button(client, dbsession):
+    cfg.beat(dbsession)
+    page = client.get("/admin/scheduler")
+    stop = next(f for f in page.forms.values() if f.fields.get("action") and f["action"].value == "stop")
+    assert "stop" in page.text.lower()
+    res = stop.submit()
+    assert cfg.stopped(dbsession) is True and "stopped" in res.text.lower()
+    start = next(f for f in res.forms.values() if f.fields.get("action") and f["action"].value == "start")
+    res = start.submit()
+    assert cfg.stopped(dbsession) is False and "started" in res.text.lower()
+
+
+def test_the_state_says_stopped_while_stopped(client, dbsession):
+    cfg.beat(dbsession)
+    cfg.set_stopped(dbsession, True)
+    text = client.get("/admin/scheduler").text.lower()
+    assert "scheduler is stopped" in text and "scheduler is running" not in text
+
+
+def test_run_now_still_works_while_stopped(client, dbsession):
+    cfg.set_stopped(dbsession, True)
+    run = next(f for f in client.get("/admin/scheduler").forms.values() if f.fields.get("job") and f["job"].value == "phonebook")
+    with patch("namifax.services.scheduler.export_phonebook", return_value=4):
+        res = run.submit()
+    assert "4" in res.text
+
+
+def test_saving_the_settings_does_not_start_a_stopped_scheduler(client, dbsession):
+    cfg.set_stopped(dbsession, True)
+    _form(client.get("/admin/scheduler")).submit()
+    assert cfg.stopped(dbsession) is True

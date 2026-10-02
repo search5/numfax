@@ -99,12 +99,13 @@ class NamiFaxScheduler:
 
         s = cfg.load(session)
         wanted = {}
+        stopped = cfg.stopped(session)
         for name, enabled, at in (("tmp", s.tmp_enabled, s.tmp_time), ("inbox", s.inbox_enabled, s.inbox_time),
                                   ("lifecycle", s.lifecycle_enabled, s.lifecycle_time)):
-            if enabled:
+            if enabled and not stopped:
                 hour, minute = at.split(":")
                 wanted[name] = CronTrigger(hour=int(hour), minute=int(minute))
-        if s.phonebook_enabled:
+        if s.phonebook_enabled and not stopped:
             wanted["phonebook"] = IntervalTrigger(minutes=s.phonebook_minutes)
         for name in cfg.JOBS:
             if name in wanted:

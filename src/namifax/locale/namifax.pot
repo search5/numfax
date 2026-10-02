@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 15:10+0900\n"
+"POT-Creation-Date: 2026-10-02 15:20+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -716,13 +716,19 @@ msgid ""
 "the archive, the retention policy and the phonebook export."
 msgstr ""
 
-msgid "A scheduler is running"
+msgid "The scheduler is stopped"
 msgstr ""
 
 msgid "last seen"
 msgstr ""
 
 msgid "seconds ago"
+msgstr ""
+
+msgid "Nothing runs by itself until it is started."
+msgstr ""
+
+msgid "A scheduler is running"
 msgstr ""
 
 msgid "No scheduler is running"
@@ -732,6 +738,12 @@ msgid ""
 "Start the web service with NAMIFAX_ENABLE_SCHEDULER=1 (the default) or "
 "run \"namifax scheduler\" as a service; until then the tasks below only "
 "run when you press Run now."
+msgstr ""
+
+msgid "Start the scheduler"
+msgstr ""
+
+msgid "Stop the scheduler"
 msgstr ""
 
 msgid "Clean the temporary folder"
@@ -2224,6 +2236,14 @@ msgid "Cloud storage configuration saved successfully."
 msgstr ""
 
 msgid "SAML 2.0 configuration saved successfully."
+msgstr ""
+
+msgid ""
+"The scheduler was stopped. Nothing runs by itself until it is started "
+"again; Run now still works."
+msgstr ""
+
+msgid "The scheduler was started."
 msgstr ""
 
 msgid "Unknown task."

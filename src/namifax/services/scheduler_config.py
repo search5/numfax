@@ -74,9 +74,18 @@ def save(session: Any, settings: JobSettings) -> None:
     session.flush()
 
 
+def stopped(session: Any) -> bool:
+    """Has an administrator stopped the scheduler? (It keeps running as a process so that it can hear the start, but runs nothing.)"""
+    return SystemConfigService(session).get("sched_stopped", "0") == "1"
+
+
+def set_stopped(session: Any, value: bool) -> None:
+    SystemConfigService(session).set("sched_stopped", "1" if value else "0")
+
+
 def signature(session: Any) -> str:
     """A string that changes when any scheduling setting does (the running scheduler compares it)."""
-    return json.dumps(asdict(load(session)), sort_keys=True)
+    return json.dumps({**asdict(load(session)), "stopped": stopped(session)}, sort_keys=True)
 
 
 def record_run(session: Any, job: str, ok: bool, summary: str) -> dict:

@@ -46,7 +46,12 @@ def admin_scheduler_view(request):
     current = cfg.load(session)
 
     if request.method == "POST":
-        if request.POST.get("action") == "run":
+        action = request.POST.get("action")
+        if action in ("stop", "start"):
+            cfg.set_stopped(session, action == "stop")
+            message = (_("The scheduler was stopped. Nothing runs by itself until it is started again; Run now still works.")
+                       if action == "stop" else _("The scheduler was started."))
+        elif action == "run":
             job = request.POST.get("job", "")
             if job in cfg.JOBS:
                 result = NamiFaxScheduler().run_job(job, session)
@@ -73,6 +78,7 @@ def admin_scheduler_view(request):
         "s": current,
         "last": {job: cfg.last_run(session, job) for job in cfg.JOBS},
         "alive": cfg.alive(session),
+        "stopped": cfg.stopped(session),
         "seen_ago": int((datetime.now() - seen).total_seconds()) if seen else None,
         "policy": {"tiff_days": store.get("storage_purge_tiff_days", ""), "keep_days": store.get("storage_retention_days", "")},
         "message": message,

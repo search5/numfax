@@ -12,9 +12,21 @@
   {% if message %}<div class="p-4 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 text-sm">{{ message }}</div>{% endif %}
   {% if error %}<div class="p-4 rounded-lg bg-rose-950/40 border border-rose-500/30 text-rose-400 text-sm">{{ error }}</div>{% endif %}
 
-  <div class="p-4 rounded-lg border text-sm {% if alive %}bg-emerald-950/30 border-emerald-500/30 text-emerald-300{% else %}bg-amber-950/30 border-amber-500/30 text-amber-300{% endif %}">
-    {% if alive %}{{ _('A scheduler is running') }} ({{ _('last seen') }} {{ seen_ago }} {{ _('seconds ago') }}).
-    {% else %}{{ _('No scheduler is running') }}. {{ _('Start the web service with NAMIFAX_ENABLE_SCHEDULER=1 (the default) or run "namifax scheduler" as a service; until then the tasks below only run when you press Run now.') }}{% endif %}
+  <div class="p-4 rounded-lg border text-sm flex flex-wrap items-center justify-between gap-3
+              {% if alive and not stopped %}bg-emerald-950/30 border-emerald-500/30 text-emerald-300{% else %}bg-amber-950/30 border-amber-500/30 text-amber-300{% endif %}">
+    <div>
+      {% if alive and stopped %}{{ _('The scheduler is stopped') }} ({{ _('last seen') }} {{ seen_ago }} {{ _('seconds ago') }}). {{ _('Nothing runs by itself until it is started.') }}
+      {% elif alive %}{{ _('A scheduler is running') }} ({{ _('last seen') }} {{ seen_ago }} {{ _('seconds ago') }}).
+      {% else %}{{ _('No scheduler is running') }}. {{ _('Start the web service with NAMIFAX_ENABLE_SCHEDULER=1 (the default) or run "namifax scheduler" as a service; until then the tasks below only run when you press Run now.') }}{% endif %}
+    </div>
+    {% if alive %}
+    <form method="post" action="/admin/scheduler">
+      {% if stopped %}<input type="hidden" name="action" value="start">
+      <button type="submit" class="px-4 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-semibold">{{ _('Start the scheduler') }}</button>
+      {% else %}<input type="hidden" name="action" value="stop">
+      <button type="submit" class="px-4 py-1.5 rounded-lg bg-rose-800 hover:bg-rose-700 text-white text-xs font-semibold">{{ _('Stop the scheduler') }}</button>{% endif %}
+    </form>
+    {% endif %}
   </div>
 
   <form id="settings" method="post" action="/admin/scheduler"></form>
