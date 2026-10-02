@@ -24,7 +24,7 @@ hylafax-integration 의 "sendfax 를 호출하지 않는다"와 scheduler-and-st
 
 ## [2026-10-02] topic | 마무리: 추가 수정과 푸시
 `[코드]` 재검증 뒤에 더 고친 것: 로그인 쿠키 `Secure`(`NAMIFAX_SESSION_SECURE`), 시스템 기능 화면의 데몬 상태를 `pgrep` 실제 값으로, 숫자 판정 `isdigit`→`isdecimal`(위첨자 숫자 500), 가상 프린터가 실제로 `sendfax` 에 넘김과 `namifax print-in`·CUPS 백엔드 연결, 환경 파일 값에 `&`·공백이 있으면 큰따옴표, SMTP·프린터·스토리지·SAML 화면은 슈퍼유저만.
-위키 반영: [[authentication-and-security]], [[known-gaps-and-decisions]], [[hylafax-integration]], [[operations-and-deployment]], [[scheduler-and-storage]]. 일반 시험 2274개 통과, 서버 DB 시험은 미실행. 커밋 `9408385..21a56e2` 푸시.
+위키 반영: [[authentication-and-security]], [[known-gaps-and-decisions]], [[hylafax-integration]], [[operations-and-deployment]], [[scheduler-and-storage]]. 일반 시험 2274개 통과(AI 실행). 서버 DB 시험은 AI 가 돌리지 않았고, 선생님이 4개 DB 통합 시험을 직접 실행했다고 알려 주셨다. 커밋 `9408385..21a56e2` 푸시.
 알고도 고치지 않은 것과 이유는 [[known-gaps-and-decisions]] 5절에 모았다.
 
 ## [2026-10-02] ingest | 원본 문서 2개 삭제(PORTING_GAPS, NEW_FEATURES_PLAN)
@@ -39,3 +39,6 @@ hylafax-integration 의 "sendfax 를 호출하지 않는다"와 scheduler-and-st
 
 ## [2026-10-02] schema | 라이선스 표기
 프로젝트 라이선스는 BSD 3-Clause(`LICENSE`, `pyproject.toml` 의 `license`). 원본 AvantFAX 에서 가져온 자료(이미지 51개는 원본과 바이트까지 같음, 이어받은 번역, 원본 설치 SQL, 기여자 목록)는 GPL v2 로 남기고 `NOTICE.txt`·`COPYING.txt` 에 구분해 적었다. 원본 PHP 에서 이식한 코드를 BSD 로 배포해도 되는지는 법률 검토를 받지 않았다.
+
+## [2026-10-02] lint | 서버 DB 시험 서술 정정
+선생님이 4개 DB 통합 시험을 직접 실행했다고 알려 주셔서, "서버 DB 시험 미실행" 서술을 "AI 가 돌리지 않았고 선생님이 실행함(결과 세부는 기록 없음)"으로 고쳤다([[known-gaps-and-decisions]] 5.1, [[testing]], [[database-and-migrations]]).

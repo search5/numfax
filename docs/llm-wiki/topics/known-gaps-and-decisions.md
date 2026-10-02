@@ -132,7 +132,7 @@ verified: true
 | 나머지 22개 언어는 새 문구가 영어로 보인다 | [문서] 한국어만 새 문구까지 번역된다 | 번역 작업량이 크고 번역 품질 확인이 필요하다 | [[i18n-and-ui]], [[migration-from-avantfax]] |
 | `/ajax/faxalter` 에 남의 작업을 막는 소유권 검사가 없다 | [코드] 원본처럼 HylaFAX 에 맡긴다. 일반 사용자의 owner 는 자기 이름으로 고정, 슈퍼유저만 바꿀 수 있다 | 원본과 같은 동작이라 정책 결정(막을지)이 먼저다 | 위 1.2 표의 faxalter 행 |
 
-### 5.1 이번에도 하지 못한 시험
-- **서버 DB(PostgreSQL·MySQL·MariaDB) 시험을 이번 수정 작업 동안 한 번도 돌리지 않았다.** 일반 시험(`-k "not serverdb"`)만 돌렸고 2274개가 통과했다(2026-10-02, 약 5분 27초, `uv run pytest tests -q -k "not serverdb"`). 서버 DB 시험은 컨테이너로 서버를 띄워 `NAMIFAX_TEST_*_URL` 을 설정해야 하며([[testing]]) 시간이 더 걸린다. 이번에 DB 계층(리비전, 모델)은 바꾸지 않았지만, `SystemConfig` 키가 늘었다(로그인 제한, 스케줄러, `storage_remote_tiff_only`).
+### 5.1 이번 수정 작업에서 AI 가 돌리지 않았거나 하지 못한 시험
+- **서버 DB(PostgreSQL·MySQL·MariaDB) 시험은 이번 수정 작업에서 AI 가 돌리지 않았다. 대신 선생님이 4개 DB(SQLite 외 PostgreSQL·MySQL·MariaDB) 통합 시험을 직접 실행했다고 알려 주셨다(2026-10-02, 구두 보고: 통과 개수 등 결과 세부는 이 기록에 없다).** AI 가 돌린 것은 일반 시험(`-k "not serverdb"`)이고 2274개가 통과했다(2026-10-02, 약 5분 27초, `uv run pytest tests -q -k "not serverdb"`). 서버 DB 시험은 컨테이너로 서버를 띄워 `NAMIFAX_TEST_*_URL` 을 설정해야 하며([[testing]]) 시간이 더 걸린다. 이번에 DB 계층(리비전, 모델)은 바꾸지 않았지만, `SystemConfig` 키가 늘었다(로그인 제한, 스케줄러, `storage_remote_tiff_only`).
 - 실제 HylaFAX·CUPS·S3·systemd·cron 에서의 동작은 시험하지 못했다. SAML 은 Keycloak 26 으로 직접 시험했고(위 표), Okta·Entra ID 등 다른 IdP 만 시험하지 못했다. 환경 파일 배선, CUPS 백엔드 스크립트, 훅은 가짜 실행 파일과 `sh` 로 변수·인자 전달만 확인했다.
 

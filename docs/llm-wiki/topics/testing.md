@@ -74,7 +74,7 @@ verified: true
 - 관련: [[architecture-and-modules]], [[overview]]
 
 ## 마지막 실행 기록
-- [코드] 2026-10-02: `uv run pytest tests -q -k "not serverdb"` → 2274 passed, 5 skipped, 141 deselected(서버 DB 시험 제외), 약 5분 27초. 같은 날 서버 DB 시험(`serverdb`)은 **돌리지 않았다**. 상세와 이유는 [[known-gaps-and-decisions]] 5.1.
+- [코드] 2026-10-02: `uv run pytest tests -q -k "not serverdb"` → 2274 passed, 5 skipped, 141 deselected(서버 DB 시험 제외), 약 5분 27초. 같은 날 서버 DB 시험(`serverdb`)은 AI 가 돌리지 않았다. 선생님이 4개 DB(SQLite 외 PostgreSQL·MySQL·MariaDB) 통합 시험을 직접 실행했다고 알려 주셨다(2026-10-02, 구두 보고: 통과 개수 등 결과 세부는 이 기록에 없다). 상세와 이유는 [[known-gaps-and-decisions]] 5.1.
 
 ## mock 시험의 함정 (원문 14.12~14.14, 14.19)
 
