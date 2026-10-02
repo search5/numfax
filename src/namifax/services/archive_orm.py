@@ -13,7 +13,7 @@ from typing import Any, Dict, List, Optional
 
 from sqlalchemy import and_, false, func, or_, select
 
-from namifax.db.textsearch import ESCAPE_CHAR, like_pattern
+from namifax.db.textsearch import ESCAPE_CHAR, like_pattern, like_patterns
 from namifax.models.addressbook import AddressBookFAX
 from namifax.models.faxarchive import FaxArchive as F
 
@@ -152,7 +152,7 @@ def _search_conditions(c: Dict[str, Any]) -> List[Any]:
         conds.append(_eq_int(F.fid, c["faxid"]))
     if c.get("keywords"):
         pattern = like_pattern(str(c["keywords"]))
-        conds.append(or_(func.lower(F.description).like(pattern, escape=ESCAPE_CHAR),
+        conds.append(or_(*[func.lower(F.description).like(p, escape=ESCAPE_CHAR) for p in like_patterns(str(c["keywords"]))],
                          func.lower(F.faxcontent).like(pattern, escape=ESCAPE_CHAR)))
     if c.get("companyid"):
         conds.append(or_(_eq_int(AddressBookFAX.abook_id, c["companyid"]), _eq_int(F.companyid, c["companyid"])))

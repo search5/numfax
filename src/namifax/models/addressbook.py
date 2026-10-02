@@ -7,6 +7,7 @@ from typing import Optional
 from sqlalchemy import Index, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 
+from namifax.models.types import LegacyHtmlString
 from namifax.models.meta import Base
 
 
@@ -16,8 +17,8 @@ class AddressBook(Base):
     __tablename__ = "AddressBook"
 
     abook_id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    company: Mapped[Optional[str]] = mapped_column(String(255))
-    description: Mapped[Optional[str]] = mapped_column(String(255))
+    company: Mapped[Optional[str]] = mapped_column(LegacyHtmlString(255))
+    description: Mapped[Optional[str]] = mapped_column(LegacyHtmlString(255))
     faxtype: Mapped[Optional[str]] = mapped_column(String(32))
     faxnum: Mapped[Optional[str]] = mapped_column(String(64))
     phonenum: Mapped[Optional[str]] = mapped_column(String(64))
@@ -36,15 +37,15 @@ class AddressBookFAX(Base):
     abook_id: Mapped[Optional[int]] = mapped_column(Integer, index=True)
     faxnumber: Mapped[str] = mapped_column(String(64), nullable=False, index=True)
     email: Mapped[Optional[str]] = mapped_column(String(255))
-    description: Mapped[Optional[str]] = mapped_column(String(255))
-    to_person: Mapped[Optional[str]] = mapped_column(String(255))
-    to_location: Mapped[Optional[str]] = mapped_column(String(255))
-    to_voicenumber: Mapped[Optional[str]] = mapped_column(String(255))
+    description: Mapped[Optional[str]] = mapped_column(LegacyHtmlString(255))
+    to_person: Mapped[Optional[str]] = mapped_column(LegacyHtmlString(255))
+    to_location: Mapped[Optional[str]] = mapped_column(LegacyHtmlString(255))
+    to_voicenumber: Mapped[Optional[str]] = mapped_column(LegacyHtmlString(255))
     # street address, zip and city of the contact (the original added them in 3.3.4 as NOT NULL columns without a
     # default, so a row must always carry a value)
-    to_address: Mapped[str] = mapped_column(String(50), nullable=False, default="", server_default="")
+    to_address: Mapped[str] = mapped_column(LegacyHtmlString(50), nullable=False, default="", server_default="")
     to_zip: Mapped[str] = mapped_column(String(16), nullable=False, default="", server_default="")
-    to_city: Mapped[str] = mapped_column(String(50), nullable=False, default="", server_default="")
+    to_city: Mapped[str] = mapped_column(LegacyHtmlString(50), nullable=False, default="", server_default="")
     faxcatid: Mapped[Optional[int]] = mapped_column(Integer)
     faxfrom: Mapped[Optional[int]] = mapped_column(Integer, server_default="0")
     faxto: Mapped[Optional[int]] = mapped_column(Integer, server_default="0")
@@ -56,5 +57,5 @@ class AddressBookEmail(Base):
 
     abookemail_id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     abook_id: Mapped[Optional[int]] = mapped_column(Integer)
-    contact_name: Mapped[Optional[str]] = mapped_column(String(255))
+    contact_name: Mapped[Optional[str]] = mapped_column(LegacyHtmlString(255))
     contact_email: Mapped[str] = mapped_column(String(255), nullable=False, index=True)

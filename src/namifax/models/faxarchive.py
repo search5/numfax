@@ -8,7 +8,7 @@ from sqlalchemy import Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from namifax.models.meta import Base
-from namifax.models.types import IsoText
+from namifax.models.types import IsoText, LegacyHtmlText
 
 
 class FaxArchive(Base):
@@ -24,7 +24,7 @@ class FaxArchive(Base):
     pages: Mapped[Optional[int]] = mapped_column(Integer)
     faxcatid: Mapped[Optional[int]] = mapped_column(Integer)
     didr_id: Mapped[Optional[int]] = mapped_column(Integer)
-    description: Mapped[Optional[str]] = mapped_column(Text)
+    description: Mapped[Optional[str]] = mapped_column(LegacyHtmlText)
     lastoperation: Mapped[Optional[str]] = mapped_column(IsoText(32))
     lastmoduser: Mapped[Optional[int]] = mapped_column(Integer)
     lastmoddate: Mapped[Optional[str]] = mapped_column(IsoText(32))

@@ -261,12 +261,12 @@ class OrmRepository:
 
     def search_text(self, column: str, text: str, order_by: Optional[str] = None) -> list[dict[str, Any]]:
         """Rows whose ``column`` contains the words of ``text`` in order (case-insensitive, wildcards literal)."""
-        from namifax.db.textsearch import ESCAPE_CHAR, like_pattern
+        from namifax.db.textsearch import ESCAPE_CHAR, like_patterns
 
         col = self._column(column)
         order_col = self._column(order_by) if order_by else self._pk_col
         stmt = (sa.select(self.model)
-                .where(sa.func.lower(col).like(like_pattern(text), escape=ESCAPE_CHAR))
+                .where(sa.or_(*[sa.func.lower(col).like(p, escape=ESCAPE_CHAR) for p in like_patterns(text)]))
                 .order_by(order_col, self._pk_col))
         return [self._row_dict(o) for o in self.session.scalars(stmt)]
 

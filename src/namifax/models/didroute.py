@@ -7,6 +7,7 @@ from typing import Optional
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 
+from namifax.models.types import LegacyHtmlString
 from namifax.models.meta import Base
 
 
@@ -16,7 +17,7 @@ class DIDRoute(Base):
 
     didr_id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     routecode: Mapped[str] = mapped_column(String(64), nullable=False, unique=True)
-    alias: Mapped[Optional[str]] = mapped_column(String(255))
+    alias: Mapped[Optional[str]] = mapped_column(LegacyHtmlString(255))
     contact: Mapped[Optional[str]] = mapped_column(String(255))
     printer: Mapped[Optional[str]] = mapped_column(String(255))
     faxcatid: Mapped[Optional[int]] = mapped_column(Integer)

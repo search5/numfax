@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+import re
+from html.entities import codepoint2name, html5
 from typing import Any
 
 from datetime import date, datetime
 
-from sqlalchemy import Boolean, String
+from sqlalchemy import Boolean, String, Text
 from sqlalchemy.types import TypeDecorator
 
 _TRUE = {"1", "true", "t", "yes", "y", "on"}
@@ -60,3 +62,67 @@ class IsoText(TypeDecorator):
         if isinstance(value, date):
             return value.isoformat()
         return value
+
+
+_ENTITY = re.compile(r"&(#[0-9]{1,7}|#[xX][0-9A-Fa-f]{1,6}|[A-Za-z][A-Za-z0-9]{1,31});")
+
+
+def _entity(match: "re.Match[str]") -> str:
+    token = match.group(1)
+    if token[0] == "#":
+        number = int(token[2:], 16) if token[1] in "xX" else int(token[1:])
+        return chr(number) if 0 < number <= 0x10FFFF and not 0xD800 <= number <= 0xDFFF else match.group(0)
+    return html5.get(token + ";", match.group(0))
+
+
+def legacy_decode(value: Any) -> Any:
+    """Undo the HTML entities the original AvantFAX stored (it ran every form value through htmlentities, ENT_QUOTES, UTF-8).
+
+    Only complete references (``&uuml;``, ``&#039;``, ``&#xFC;``) are undone, like PHP's html_entity_decode; ``html.unescape`` would
+    also take ``&not`` out of ``&notice`` and the like."""
+    if isinstance(value, str) and "&" in value:
+        return _ENTITY.sub(_entity, value)
+    return value
+
+
+def legacy_encode(value: str) -> str:
+    """What the original's htmlentities(ENT_QUOTES, "UTF-8") makes of ``value``, to search the text it stored.
+
+    ``&``, ``<``, ``>``, ``"`` and the letters and signs that HTML 4 has a name for become named entities, ``'`` becomes ``&#039;``;
+    anything else (Korean, Japanese, ...) is left as it is."""
+    out = []
+    for char in value:
+        code = ord(char)
+        if char == "'":
+            out.append("&#039;")
+        elif char in "&<>\"" or (code > 127 and code in codepoint2name):
+            out.append(f"&{codepoint2name[code]};")
+        else:
+            out.append(char)
+    return "".join(out)
+
+
+class LegacyHtmlString(String):
+    """Text a person typed. A database written by the original AvantFAX holds it as HTML entities; it is read as the text.
+
+    It is a ``String`` (with its length) so that everything that looks at column types sees an ordinary text column."""
+
+    def result_processor(self, dialect: Any, coltype: Any):
+        plain = super().result_processor(dialect, coltype)
+
+        def process(value: Any) -> Any:
+            return legacy_decode(plain(value) if plain else value)
+
+        return process
+
+
+class LegacyHtmlText(Text):
+    """``LegacyHtmlString`` for a ``TEXT`` column."""
+
+    def result_processor(self, dialect: Any, coltype: Any):
+        plain = super().result_processor(dialect, coltype)
+
+        def process(value: Any) -> Any:
+            return legacy_decode(plain(value) if plain else value)
+
+        return process

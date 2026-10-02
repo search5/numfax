@@ -8,7 +8,7 @@ from sqlalchemy import Integer, String, Text, false, true
 from sqlalchemy.orm import Mapped, mapped_column
 
 from namifax.models.meta import Base
-from namifax.models.types import LegacyBoolean, IsoText
+from namifax.models.types import IsoText, LegacyBoolean, LegacyHtmlString, LegacyHtmlText
 
 
 class UserAccount(Base):
@@ -17,14 +17,14 @@ class UserAccount(Base):
     __tablename__ = "UserAccount"
 
     uid: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    name: Mapped[Optional[str]] = mapped_column(String(255))
+    name: Mapped[Optional[str]] = mapped_column(LegacyHtmlString(255))
     username: Mapped[str] = mapped_column(String(64), nullable=False, unique=True)
     password: Mapped[str] = mapped_column(String(64), nullable=False)     # MD5 hex, as in the legacy schema
     email: Mapped[str] = mapped_column(String(255), nullable=False, index=True)
-    email_sig: Mapped[Optional[str]] = mapped_column(Text)
-    user_tsi: Mapped[Optional[str]] = mapped_column(String(255))
-    from_company: Mapped[Optional[str]] = mapped_column(String(255))
-    from_location: Mapped[Optional[str]] = mapped_column(String(255))
+    email_sig: Mapped[Optional[str]] = mapped_column(LegacyHtmlText)
+    user_tsi: Mapped[Optional[str]] = mapped_column(LegacyHtmlString(255))
+    from_company: Mapped[Optional[str]] = mapped_column(LegacyHtmlString(255))
+    from_location: Mapped[Optional[str]] = mapped_column(LegacyHtmlString(255))
     from_voicenumber: Mapped[Optional[str]] = mapped_column(String(255))
     from_faxnumber: Mapped[Optional[str]] = mapped_column(String(255))
     coverpage_id: Mapped[Optional[int]] = mapped_column(Integer)
