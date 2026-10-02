@@ -6,7 +6,7 @@
   <title>{% block title %}- NamiFAX - Admin Control Panel{% endblock %}</title>
   
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" href="/static/css/main.css?v=3.5.1" type="text/css" />
+  <link rel="stylesheet" href="/static/css/main.css?v=3.6.0" type="text/css" />
   <style>
     /* Custom scrollbar for admin sidebar */
     .admin-nav-scroll::-webkit-scrollbar { width: 4px; }
@@ -252,7 +252,7 @@
         </a>
         <a href="/admin/scheduler"
            class="flex items-center gap-2.5 px-3 py-2 rounded-lg font-medium transition
-                  {% if current_admin_tab == 'scheduler' %}bg-blue-600/15 text-blue-400 border border-blue-500/30 font-semibold{% else %}text-slate-300 hover:text-white hover:bg-slate-800/60 border border-transparent{% endif %}">
+                  {% if current_admin_tab == 'scheduler' %}bg-blue-600/15 text-blue-400 border border-blue-500/30 font-semibold{% else %}text-slate-300 hover:text-white hover:bg-slate-800/80{% endif %}">
           <svg class="w-4 h-4 text-slate-400 {% if current_admin_tab == 'scheduler' %}text-blue-400{% endif %}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
