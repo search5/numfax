@@ -2,9 +2,11 @@
 title: 레거시 대비 미구현·결함 목록 (전수 조사)
 type: source
 updated: 2026-10-02
-sources: [docs/PORTING_GAPS.md]
+sources: ["git show 61c3663:docs/PORTING_GAPS.md (삭제됨; 현재 상태는 [[known-gaps-and-decisions]])"]
 verified: false
 ---
+
+> 원본 문서는 2026-10-02 에 저장소에서 삭제했다(위 `git show` 로 읽는다). 이 요약은 삭제 시점의 문서가 주장한 바이며 현재 코드와 다를 수 있다.
 
 ## 요약
 

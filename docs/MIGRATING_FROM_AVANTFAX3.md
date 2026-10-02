@@ -115,7 +115,7 @@ NamiFAX가 새로 쓰는 값은 순수 UTF-8이고 원본 앱에서도 정상으
 ## 5. `local_config.php` 설정 대응표
 
 원본의 `local_config.php`는 읽지 않습니다. 같은 이름의 **환경변수**로 지정합니다(systemd라면 `Environment=` 또는 `EnvironmentFile=`).
-켜고 끄는 값은 `1` 또는 `true`가 켜짐입니다(PHP의 `true`/`false`를 그대로 쓰지 마십시오). 미지정이면 기본값을 따르고, 대부분 원본과 같게 맞췄지만 일부는 다릅니다(`docs/PORTING_GAPS.md` E6, E7).
+켜고 끄는 값은 `1` 또는 `true`가 켜짐입니다(PHP의 `true`/`false`를 그대로 쓰지 마십시오). 미지정이면 기본값을 따르고, 대부분 원본과 같게 맞췄지만 일부는 다릅니다(변수별 차이는 `git show 61c3663:docs/PORTING_GAPS.md` 의 E6, E7 에 있었다).
 
 ### 5.1 같은 이름으로 지정하는 것
 
@@ -146,7 +146,7 @@ NamiFAX가 새로 쓰는 값은 순수 UTF-8이고 원본 앱에서도 정상으
 ### 5.3 필요 없는 것
 
 - 테마와 플러그인: `ADMINTHEME_DIR`, `ADMIN_THEME_PATH`, `USERTHEME_DIR`, `USER_THEME_PATH`, `PLUGINS_DIR`, `PLUGINS_PATH`, `ARCHIVE_WIDE`, `NOTHUMBIMG`
-- 변환 도구: `CONVERT`, `TIFFCP`, `TIFFCPG4`, `TIFFPS`, `TIFFSPLIT`, `GSR`, `GSN`, `GSN2`, `GSTIFF`, `GSCMD`, `PNMSCALE`, `PNMDEPTH`, `PPMTOGIF`, `PNMQUANT`, `PSRESIZE`, `DPIS`, `HYLATIFF2PS` (Ghostscript와 Pillow 등으로 대체됨, `docs/PORTING_GAPS.md` G절)
+- 변환 도구: `CONVERT`, `TIFFCP`, `TIFFCPG4`, `TIFFPS`, `TIFFSPLIT`, `GSR`, `GSN`, `GSN2`, `GSTIFF`, `GSCMD`, `PNMSCALE`, `PNMDEPTH`, `PPMTOGIF`, `PNMQUANT`, `PSRESIZE`, `DPIS`, `HYLATIFF2PS` (Ghostscript와 Pillow 등으로 대체됨, `git show 61c3663:docs/PORTING_GAPS.md` 의 G절)
 - PHP 환경: `HAS_MIME_FUNCTION`, `HAS_FILEINFO`, `HAS_NEGATIVE_TIFF`, `AVANTFAX_DEBUG`, `AVANTFAX_VERSION`, `USERSESSION`
 - 화면 문구에만 쓰이던 것: `CONTACTFILETYPES`, `SENDFAXFILETYPES`, `SYSTEM_IP`(새 사용자 메일의 주소는 요청 주소를 씁니다)
 

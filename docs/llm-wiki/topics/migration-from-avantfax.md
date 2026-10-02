@@ -74,7 +74,7 @@ verified: true
 | 테마·플러그인(`ADMINTHEME_DIR`, `PLUGINS_DIR`), 변환 도구 경로(`CONVERT`, `TIFFCP`, `GSR`), PHP 환경 | 필요 없음. 세 이름 모두 `src/namifax/` 에 참조가 없다 [코드]. 대체 도구(Ghostscript·Pillow)는 [문서] |
 
 - 켜고 끄는 값은 `1`/`true`/`True`/`yes`. PHP 의 `true`/`false` 를 그대로 쓰면 안 된다 [코드: `settings.TRUE`].
-- [문서] 설정 기본값이 원본과 다른 것이 있었으나(`PORTING_GAPS` E6, E7) 현재 코드 기본값은 이 세션에서 변수별로 모두 대조하지 않았다. 중요한 변수는 이전 전에 기본값을 코드에서 확인한다.
+- [문서] 설정 기본값이 원본과 다른 것이 있었으나(삭제된 `PORTING_GAPS` 의 E6, E7: `git show 61c3663:docs/PORTING_GAPS.md`) 현재 코드 기본값은 이 세션에서 변수별로 모두 대조하지 않았다. 중요한 변수는 이전 전에 기본값을 코드에서 확인한다.
 
 ## 5. 옛 주소 리다이렉트
 - [코드] `deploy/legacy-redirects/nginx.conf`(30줄), `apache.conf`(29줄)(`wc -l`, 2026-10-02). nginx 파일 머리글은 `deploy/nginx/namifax.conf` 의 `server` 블록 안에서 `include` 하라고 적지만, 현재 `deploy/nginx/namifax.conf` 에는 그 `include` 가 없다(직접 추가해야 함), 옛 `*.php` 주소를 쿼리 문자열을 보존하며 301 로 새 주소에 보낸다(`/index.php` → `/login`, `/inbox.php` → `/inbox`, `/pdf.php?fid=N` → `/faxes/download/N?format=pdf`, `/refax.php?fid=N` → `/sendfax?refax=N`, `/admin/conf_modems*.php` → `/admin/modems` 등). 숫자가 아닌 `fid` 는 nginx 규칙이 404 를 돌려주고, Apache 는 규칙이 적용되지 않는다(`RewriteCond` 가 숫자만 받음).

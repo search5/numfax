@@ -102,7 +102,7 @@ AvantFAX 3.x(3.0~3.3.5, MySQL/MariaDB)를 NamiFAX로 옮기는 방법 및 이전
 
 ### 5장: `local_config.php` 설정 대응표
 
-원본의 `local_config.php`는 읽지 않음. 같은 이름의 **환경변수**로 지정(systemd라면 `Environment=` 또는 `EnvironmentFile=`). 켜고 끄는 값은 `1` 또는 `true` 켜짐(PHP `true`/`false` 직접 사용 금지). 미지정이면 기본값. 일부는 원본과 다름(`docs/PORTING_GAPS.md` E6, E7)
+원본의 `local_config.php`는 읽지 않음. 같은 이름의 **환경변수**로 지정(systemd라면 `Environment=` 또는 `EnvironmentFile=`). 켜고 끄는 값은 `1` 또는 `true` 켜짐(PHP `true`/`false` 직접 사용 금지). 미지정이면 기본값. 일부는 원본과 다름(`git show 61c3663:docs/PORTING_GAPS.md` 의 E6, E7)
 
 **같은 이름으로 지정하는 것**:
 - 화면 동작: `SHOW_ALL_CONTACTS`, `RESTRICTED_USER_MODE`, `INBOX_LIST_MODEM`, `FOCUS_ON_NEW_FAX`, 등

@@ -2,9 +2,11 @@
 title: NamiFAX 신규 엔터프라이즈 기능 구현 계획
 type: source
 updated: 2026-10-02
-sources: [docs/NEW_FEATURES_PLAN.md]
+sources: ["git show 61c3663:docs/NEW_FEATURES_PLAN.md (삭제됨; 현재 상태는 [[scheduler-and-storage]], [[authentication-and-security]], [[known-gaps-and-decisions]])"]
 verified: false
 ---
+
+> 원본 문서는 2026-10-02 에 저장소에서 삭제했다(위 `git show` 로 읽는다). 이 요약은 삭제 시점의 문서가 주장한 바이며 현재 코드와 다를 수 있다.
 
 ## 요약
 

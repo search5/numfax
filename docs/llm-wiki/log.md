@@ -27,3 +27,6 @@ hylafax-integration 의 "sendfax 를 호출하지 않는다"와 scheduler-and-st
 위키 반영: [[authentication-and-security]], [[known-gaps-and-decisions]], [[hylafax-integration]], [[operations-and-deployment]], [[scheduler-and-storage]]. 일반 시험 2274개 통과, 서버 DB 시험은 미실행. 커밋 `9408385..21a56e2` 푸시.
 알고도 고치지 않은 것과 이유는 [[known-gaps-and-decisions]] 5절에 모았다.
 
+## [2026-10-02] ingest | 원본 문서 2개 삭제(PORTING_GAPS, NEW_FEATURES_PLAN)
+`docs/PORTING_GAPS.md` 는 [[known-gaps-and-decisions]] 로, `docs/NEW_FEATURES_PLAN.md` 는 `topics/` 의 코드 기준 서술로 대체되어 삭제했다. 두 `sources/` 요약의 원본 경로는 `git show 61c3663:...` 로 바꿨다.
+
