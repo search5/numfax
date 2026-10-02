@@ -384,14 +384,20 @@ def test_printer_inbound_persists_print_file(tmp_path, monkeypatch):
     """Verify process_inbound_print_job writes print data to temporary/draft file."""
     monkeypatch.setenv("NAMIFAX_TMPDIR", str(tmp_path))
     data = b"%!PS-Adobe-3.0 Sample Print Data [[FAX: 02-999-8888]]"
-    res = process_inbound_print_job(data, sender_user="testuser")
+    seen = {}
+
+    def dispatcher(send, sender):                      # (the real sendfax is not available here)
+        with open(send.files[0], "rb") as f:
+            seen["content"] = f.read()
+        return {"success": True, "jobid": "5"}
+
+    res = process_inbound_print_job(data, sender_user="testuser", dispatcher=dispatcher)
 
     assert res["dispatched"] is True
     assert res["destination"] == "02-999-8888"
     assert "file_path" in res
-    assert os.path.exists(res["file_path"])
-    with open(res["file_path"], "rb") as f:
-        assert f.read() == data
+    assert seen["content"] == data                     # the file was in the spool while it was handed over
+    assert not os.path.exists(res["file_path"])        # and is removed once the fax is queued
 
     # Test without fax tag (Draft)
     data_draft = b"%!PS-Adobe-3.0 Draft Print Data Without Tag"
