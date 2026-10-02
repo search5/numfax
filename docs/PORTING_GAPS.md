@@ -4,7 +4,7 @@
 결과입니다. 이미 원본 실행으로 확인해 맞춘 것(보관함·받은 팩스함 권한, 전송 명령, 출력함, 비밀번호 찾기, 팩스별 접근 권한 등)과
 의도한 차이(SAML·패스키·TOTP 같은 새 기능, 페이지형 대화상자, 변경 요청은 POST+CSRF, 한국어 외 번역 보류)는 뺐습니다.
 
-◐ = 일부만 처리(남은 부분은 그 줄에 적힌 내용). ✅ = 처리 완료(해당 커밋 메시지와 `ARCHITECTURE.md` 참고). 표기: **[확인]** = 제가 코드를 읽거나 실제로 실행해 확인함, **[보고]** = 조사 보고에만 있고 개별 확인은 하지 않음.
+◐ = 일부만 처리(남은 부분은 그 줄에 적힌 내용). ✅ = 처리 완료(해당 커밋 메시지와 `ARCHITECTURE.md`(삭제됨, 커밋 01f2f64 에서 복원) 참고). 표기: **[확인]** = 제가 코드를 읽거나 실제로 실행해 확인함, **[보고]** = 조사 보고에만 있고 개별 확인은 하지 않음.
 
 ## A. 화면에 있는데 고장 난 것 (가장 먼저)
 
@@ -86,7 +86,7 @@
 
 | 대조 대상 | 결과 |
 |---|---|
-| 웹 진입점 74개(`*.php` 36, `ajax/` 13, `admin/` 25) ↔ 라우트 | 이름으로 대응시켜 빠진 것이 없음을 확인했고, 이름만으로 불분명한 것(`rubrica*`, `no-database`, `file`·`pdf`, `archivefax`와 `ajaxarchivefax`)은 소스를 읽어 확인했다(나머지의 동작 동일성은 이 대조의 범위 밖). `rubrica.php`·`rubrica_edit.php`는 템플릿이 없고 링크되지 않는 죽은 코드라 제외(`ARCHITECTURE.md` 17.8에 기록). 관리자 전용 로그인 4개(`admin/index·check_login·logout·pwdexpired`)는 한 로그인에서 권한으로 나누기로 한 결정(C10) |
+| 웹 진입점 74개(`*.php` 36, `ajax/` 13, `admin/` 25) ↔ 라우트 | 이름으로 대응시켜 빠진 것이 없음을 확인했고, 이름만으로 불분명한 것(`rubrica*`, `no-database`, `file`·`pdf`, `archivefax`와 `ajaxarchivefax`)은 소스를 읽어 확인했다(나머지의 동작 동일성은 이 대조의 범위 밖). `rubrica.php`·`rubrica_edit.php`는 템플릿이 없고 링크되지 않는 죽은 코드라 제외(`ARCHITECTURE.md`(삭제됨, 커밋 01f2f64 에서 복원) 17.8에 기록). 관리자 전용 로그인 4개(`admin/index·check_login·logout·pwdexpired`)는 한 로그인에서 권한으로 나누기로 한 결정(C10) |
 | DB 테이블 14개(`create_tables.sql`, `db-update-*.sql`) ↔ 모델 | 테이블·컬럼 모두 있음(`UserAccount` 32/32, `FaxArchive` 17/17). 이식본에만 있는 6개는 새 기능(`FaxOCR`, `NetworkPrinters`, `SystemConfig`, `SystemSettings`, `UserTOTP`, `UserWebAuthnCredentials`) |
 | 명령줄·훅 14개(`includes/` 6, `tools/` 8) ↔ `namifax.cli` | `update_contacts`(2.x 이전 DB용, 지원하지 않기로 함)를 뺀 13개 모두 대응 |
 | 설정 변수 147개 ↔ 코드·문서 | 이름이 없는 약 70개 중 대부분은 대체됨(`AFDB_*`→`DATABASE_URL`, 테마 경로→Tailwind, `SMTP_*`·`SYSTEM_EMAIL_SIG_*`→관리자 SMTP 화면, 변환 도구 변수→Ghostscript 등, `SYSTEM_IP`→요청 주소). 아래 G1~G8이 실제 차이 |
@@ -162,5 +162,5 @@ SAML·패스키·TOTP·클라우드 저장소·네트워크 프린터·SMTP 관�
 
 ## dev/ 제거 (2026-10-02)
 `dev/`(golden_master 데이터·실행기, specs 명세, prompts)를 삭제했다(커밋 72a7324 에서 복원 가능; 지식 문서는 별도 llm-wiki 로 구성 예정).
-기본 `pytest` 의 골든 마스터 68개 시험은 이제 없다(`pyproject.toml` testpaths 는 `tests` 만). ARCHITECTURE.md 와 과거 보고서에 있는
+기본 `pytest` 의 골든 마스터 68개 시험은 이제 없다(`pyproject.toml` testpaths 는 `tests` 만). ARCHITECTURE.md(삭제됨)와 과거 보고서에 있는
 `golden_master/`, `specs/` 경로 언급은 그 시점의 기록이다.

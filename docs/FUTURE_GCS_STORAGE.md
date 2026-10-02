@@ -11,7 +11,7 @@
     (Cloud Storage > 설정 > 상호 운용성)를 사용하십시오."
   - 템플릿 구조: `#cloud-fields` 묶음 + `data-for="S3"` / `data-for="GCS"` 라벨 + `static/js/storage.js` (제공자 선택에 따라 보임/숨김).
 - 코드: GCS 전용 코드는 없었고 `CloudStorageManager.get_provider` 가 `("S3", "GCS")` 를 모두 `S3CompatibleStorageProvider`(boto3)로
-  보냈습니다. 엔드포인트가 비어 있으면 AWS 로 접속하는 문제가 있었습니다(docs/numfax-defects.md R3D-05).
+  보냈습니다. 엔드포인트가 비어 있으면 AWS 로 접속하는 문제가 있었습니다(결함 보고서 R3D-05; 보고서는 삭제됨, 커밋 01f2f64 에서 복원 가능).
 - 실제 GCS 계정으로는 한 번도 시험하지 않았습니다.
 
 ## 다시 추가할 때의 선택지
