@@ -18,7 +18,7 @@ NOTHUMB = os.path.join(os.path.dirname(os.path.dirname(__file__)), "static", "im
 def _folder(request, fid) -> str:
     """The folder of fax ``fid`` on disk, or a 404 when there is no such fax or the user may not use it."""
     arc = ArchiveIn(db=request.dbsession)
-    if not str(fid).isdigit() or not load_fax(request, arc, fid, action="image"):
+    if not str(fid).isdecimal() or not load_fax(request, arc, fid, action="image"):
         raise HTTPNotFound()
     return os.path.dirname(arc.get_pdfpath() or "")
 
@@ -34,7 +34,7 @@ def _send(path: str, content_type: str) -> FileResponse:
 def fax_image_view(request):
     """One page of the fax as a PNG; pages are counted from 1."""
     page = request.matchdict.get("page", "")
-    if not page.isdigit() or int(page) < 1:
+    if not page.isdecimal() or int(page) < 1:
         raise HTTPNotFound()
     path = fax_images.ensure_page(_folder(request, request.matchdict["fid"]), int(page) - 1)
     if not path:

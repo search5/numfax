@@ -128,7 +128,7 @@ def settings_view(request):
                 "user_tsi": params.get("user_tsi", "") if identity.get("superuser") else profile_data["user_tsi"],
                 "email_sig": params.get("email_sig", ""),
                 "language": selected_lang,
-                "coverpage_id": cover if cover.isdigit() else "",
+                "coverpage_id": cover if cover.isdecimal() else "",
                 "faxperpageinbox": per_page("faxperpageinbox", profile_data["faxperpageinbox"]),
                 "faxperpagearchive": per_page("faxperpagearchive", profile_data["faxperpagearchive"]),
             })

@@ -200,7 +200,7 @@ def run_faxcover(argv: Sequence[str] | None = None, *, db: Any = None) -> int:
             values[parts[0].strip()] = parts[1].strip().strip("'")
     fax_comments = re.sub(r"{([^}]*)}", "", fax_comments)
 
-    if NUM_PAGES_FOLLOW and str(values.get("page-count") or "").isdigit():
+    if NUM_PAGES_FOLLOW and str(values.get("page-count") or "").isdecimal():
         values["page-count"] = str(int(values["page-count"]) + 1)          # the cover page counts too
 
     if using_html:

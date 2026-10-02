@@ -22,7 +22,7 @@ def _hasher() -> PasswordHasher:
     for env, key in (("NAMIFAX_ARGON2_TIME_COST", "time_cost"), ("NAMIFAX_ARGON2_MEMORY_COST", "memory_cost"),
                      ("NAMIFAX_ARGON2_PARALLELISM", "parallelism")):
         value = os.environ.get(env, "")
-        if value.isdigit() and int(value) > 0:
+        if value.isdecimal() and int(value) > 0:
             kwargs[key] = int(value)
     return PasswordHasher(**kwargs)
 

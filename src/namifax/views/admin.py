@@ -113,9 +113,9 @@ def admin_modems_view(request):
         device, alias = (post.get("device") or "").strip(), (post.get("alias") or "").strip()
         contact, printer = (post.get("contact") or "").strip(), (post.get("printer") or "").strip()
         faxcat = (post.get("faxcatid") or "").strip()
-        faxcatid = int(faxcat) if faxcat.isdigit() else None
+        faxcatid = int(faxcat) if faxcat.isdecimal() else None
         devid = (post.get("devid") or "").strip()
-        if devid.isdigit():
+        if devid.isdecimal():
             selected_devid = int(devid)
             if post.get("delete"):
                 if fm.delete_device(int(devid)):
@@ -145,7 +145,7 @@ def admin_modems_view(request):
             error = fm.get_error()
     else:
         raw = (request.params.get("devid") or "").strip()
-        selected_devid = int(raw) if raw.isdigit() else None
+        selected_devid = int(raw) if raw.isdecimal() else None
         if not selected_devid and request.params.get("device"):
             if fm.load_device(request.params["device"]):
                 selected_devid = fm.devid
@@ -171,7 +171,7 @@ def admin_routing_did_view(request):
     error = None
 
     didr_id_param = request.params.get("didr_id")
-    selected_id = int(didr_id_param) if didr_id_param and str(didr_id_param).isdigit() else None
+    selected_id = int(didr_id_param) if didr_id_param and str(didr_id_param).isdecimal() else None
 
     if request.method == "POST":
         route_code = request.params.get("route", "").strip()
@@ -179,7 +179,7 @@ def admin_routing_did_view(request):
         contact = request.params.get("contact", "").strip()
         printer = request.params.get("printer", "").strip()
         cat_param = request.params.get("faxcatid")
-        faxcatid = int(cat_param) if cat_param and str(cat_param).isdigit() else None
+        faxcatid = int(cat_param) if cat_param and str(cat_param).isdecimal() else None
 
         if request.params.get("delete") and selected_id:
             try:
@@ -306,7 +306,7 @@ def admin_system_logs_view(request):
     total = count_syslogs(kw=kw, day=day, month=month, year=year, session=request.dbsession)
     pages = max(1, -(-total // SYSLOG_PER_PAGE))
     raw = request.params.get("page", "1")
-    page = min(max(int(raw) if raw.isdigit() else 1, 1), pages)
+    page = min(max(int(raw) if raw.isdecimal() else 1, 1), pages)
     logs = get_all_syslogs(kw=kw, day=day, month=month, year=year, session=request.dbsession,
                            limit=SYSLOG_PER_PAGE, offset=(page - 1) * SYSLOG_PER_PAGE)
     pages = max(1, -(-total // SYSLOG_PER_PAGE))
@@ -338,11 +338,11 @@ def admin_covers_view(request):
     error = None
 
     cover_id_param = request.params.get("cover_id")
-    selected_id = int(cover_id_param) if cover_id_param and str(cover_id_param).isdigit() else None
+    selected_id = int(cover_id_param) if cover_id_param and str(cover_id_param).isdecimal() else None
 
     if request.method == "POST":
         cover_id = request.params.get("cover_id")
-        cid = int(cover_id) if cover_id and str(cover_id).isdigit() else selected_id
+        cid = int(cover_id) if cover_id and str(cover_id).isdecimal() else selected_id
 
         if request.params.get("delete") and cid:
             if cv.delete_cover(cid):
@@ -425,11 +425,11 @@ def admin_categories_view(request):
     error = None
 
     catid_param = request.params.get("catid")
-    selected_id = int(catid_param) if catid_param and str(catid_param).isdigit() else None
+    selected_id = int(catid_param) if catid_param and str(catid_param).isdecimal() else None
 
     if request.method == "POST":
         catid = request.params.get("catid")
-        cid = int(catid) if catid and str(catid).isdigit() else selected_id
+        cid = int(catid) if catid and str(catid).isdecimal() else selected_id
 
         if request.params.get("delete") and cid:
             if fc.delete_category(cid):
@@ -492,7 +492,7 @@ def admin_barcodes_view(request):
     error = None
 
     barcode_id_param = request.params.get("barcode_id")
-    selected_id = int(barcode_id_param) if barcode_id_param and str(barcode_id_param).isdigit() else None
+    selected_id = int(barcode_id_param) if barcode_id_param and str(barcode_id_param).isdecimal() else None
 
     if request.method == "POST":
         barcode = request.params.get("barcode", "").strip()
@@ -500,9 +500,9 @@ def admin_barcodes_view(request):
         contact = request.params.get("contact", "").strip()
         printer = request.params.get("printer", "").strip()
         faxcat = (request.params.get("faxcatid") or "").strip()
-        faxcatid = int(faxcat) if faxcat.isdigit() else None
+        faxcatid = int(faxcat) if faxcat.isdecimal() else None
         barcode_id = request.params.get("barcode_id")
-        bid = int(barcode_id) if barcode_id and str(barcode_id).isdigit() else selected_id
+        bid = int(barcode_id) if barcode_id and str(barcode_id).isdecimal() else selected_id
 
         if request.params.get("delete") and bid:
             if bc.delete_route(bid):
@@ -567,11 +567,11 @@ def admin_dynconf_view(request):
     error = None
 
     dynconf_id_param = request.params.get("dynconf_id")
-    selected_id = int(dynconf_id_param) if dynconf_id_param and str(dynconf_id_param).isdigit() else None
+    selected_id = int(dynconf_id_param) if dynconf_id_param and str(dynconf_id_param).isdecimal() else None
 
     if request.method == "POST":
         dynconf_id = request.params.get("dynconf_id")
-        cid = int(dynconf_id) if dynconf_id and str(dynconf_id).isdigit() else selected_id
+        cid = int(dynconf_id) if dynconf_id and str(dynconf_id).isdecimal() else selected_id
 
         if request.params.get("delete") and cid:
             if dc.remove(cid):
@@ -661,7 +661,7 @@ def admin_fax2email_view(request):
 
     params = request.POST if request.method == "POST" else request.params
     raw_id = params.get("abook_id") or params.get("c_id") or params.get("id")
-    selected_id = int(raw_id) if raw_id and str(raw_id).isdigit() else None
+    selected_id = int(raw_id) if raw_id and str(raw_id).isdecimal() else None
 
     def bad_address(value: str) -> bool:
         parts = [p.strip() for p in _re.split(r"[;,]", value) if p.strip()]
@@ -684,7 +684,7 @@ def admin_fax2email_view(request):
             columns = {key: params.getall(key) for key in ("email", "printer", "faxcatid")}
             changes = []
             for i, raw in enumerate(ids):
-                if not raw.isdigit() or int(raw) not in own:
+                if not raw.isdecimal() or int(raw) not in own:
                     continue                                   # not a number of this company: never touched
                 current = own[int(raw)]
                 email = (columns["email"][i] if i < len(columns["email"]) else "").strip()
@@ -693,7 +693,7 @@ def admin_fax2email_view(request):
                 if email != (current.get("email") or "") and bad_address(email):
                     error = _("Please enter a valid e-mail address.") + f" ({email})"
                     break
-                changes.append((int(raw), {"email": email, "printer": printer, "faxcatid": int(cat) if cat.isdigit() else None}))
+                changes.append((int(raw), {"email": email, "printer": printer, "faxcatid": int(cat) if cat.isdecimal() else None}))
             if not company and not error:
                 error = _("You must enter a company name")
             if not error:
@@ -818,9 +818,9 @@ def admin_smtp_view(request):
     session = getattr(request, "session", {})
     is_admin = False
     if identity:
-        is_admin = bool(identity.get("superuser") or identity.get("is_admin") or identity.get("is_superadmin"))
+        is_admin = bool(identity.get("superuser") or identity.get("is_superadmin"))
     elif session:
-        is_admin = bool(session.get("is_superadmin") or session.get("is_admin"))
+        is_admin = bool(session.get("is_superadmin") or session.get("superuser"))
 
     if not is_admin:
         raise HTTPForbidden(_("Access denied. Superadmin permission required."))
@@ -890,9 +890,9 @@ def admin_printers_view(request):
     session = getattr(request, "session", {})
     is_admin = False
     if identity:
-        is_admin = bool(identity.get("superuser") or identity.get("is_admin") or identity.get("is_superadmin"))
+        is_admin = bool(identity.get("superuser") or identity.get("is_superadmin"))
     elif session:
-        is_admin = bool(session.get("is_superadmin") or session.get("is_admin"))
+        is_admin = bool(session.get("is_superadmin") or session.get("superuser"))
 
     if not is_admin:
         raise HTTPForbidden(_("Access denied. Superadmin permission required."))
@@ -958,9 +958,9 @@ def admin_storage_view(request):
     session = getattr(request, "session", {})
     is_admin = False
     if identity:
-        is_admin = bool(identity.get("superuser") or identity.get("is_admin") or identity.get("is_superadmin"))
+        is_admin = bool(identity.get("superuser") or identity.get("is_superadmin"))
     elif session:
-        is_admin = bool(session.get("is_superadmin") or session.get("is_admin"))
+        is_admin = bool(session.get("is_superadmin") or session.get("superuser"))
 
     if not is_admin:
         raise HTTPForbidden(_("Access denied. Superadmin permission required."))
@@ -1070,9 +1070,9 @@ def admin_saml_view(request):
     session = getattr(request, "session", {})
     is_admin = False
     if identity:
-        is_admin = bool(identity.get("superuser") or identity.get("is_admin") or identity.get("is_superadmin"))
+        is_admin = bool(identity.get("superuser") or identity.get("is_superadmin"))
     elif session:
-        is_admin = bool(session.get("is_superadmin") or session.get("is_admin"))
+        is_admin = bool(session.get("is_superadmin") or session.get("superuser"))
 
     if not is_admin:
         raise HTTPForbidden(_("Access denied. Superadmin permission required."))

@@ -22,7 +22,7 @@ def _members(db: Any, entries: list[str]) -> list[dict[str, str]]:
     found = []
     for entry in entries:
         fnid = entry.split("|", 1)[0]
-        if fnid.isdigit() and book.loadbyfaxnumid(int(fnid)):
+        if fnid.isdecimal() and book.loadbyfaxnumid(int(fnid)):
             company = book.get_company() or RESERVED_FAX_NUM
             found.append({"value": entry, "label": f"{company} - {book.get_faxnumber()}",
                           "company": company, "faxnumber": book.get_faxnumber()})
@@ -80,12 +80,12 @@ def distrolist_edit_view(request):
     dl.set_moduser(int(who) if who else None)
     here = lambda i: HTTPFound(location=request.route_url("distrolist", _query={"dl_id": i}))      # noqa: E731
 
-    if post.get("delete") and dl_id.isdigit():
+    if post.get("delete") and dl_id.isdecimal():
         dl.delete_list(int(dl_id))
         return HTTPFound(location=request.route_url("distrolist"))
 
     name = (post.get("listname") or "").strip()
-    if not dl_id.isdigit():                                                       # a new list
+    if not dl_id.isdecimal():                                                       # a new list
         if dl.create(name):
             return here(dl.get_dl_id())
         return render_to_response("namifax:templates/distrolist_edit.jinja2", {**page, "error": dl.get_error()}, request=request)

@@ -70,7 +70,7 @@ def addressbook_list_view(request):
 def _company_id(params) -> Optional[int]:
     for key in ("abook_id", "id", "company_id", "cid"):
         value = params.get(key)
-        if value and str(value).isdigit():
+        if value and str(value).isdecimal():
             return int(value)
     return None
 
@@ -90,7 +90,7 @@ def _categories(request, account: AFUserAccount) -> list[tuple[int, str]]:
     everything = FaxPDFCategory(db=request.dbsession).get_categories() or []
     if identity.get("is_admin") or identity.get("superuser") or account.dbdata.get("superuser"):
         return [(int(c["catid"]), c.get("name") or "") for c in everything]
-    allowed = {int(x) for x in account.get_faxcats() if str(x).isdigit()}
+    allowed = {int(x) for x in account.get_faxcats() if str(x).isdecimal()}
     return [(int(c["catid"]), c.get("name") or "") for c in everything if int(c["catid"]) in allowed]
 
 
@@ -104,7 +104,7 @@ def _category_value(posted: str, allowed: set, current: Any = None) -> Optional[
     posted = (posted or "").strip()
     if not posted:
         return None
-    if posted.isdigit() and int(posted) in allowed:
+    if posted.isdecimal() and int(posted) in allowed:
         return int(posted)
     return current
 
@@ -133,7 +133,7 @@ def _save_numbers(book: AFAddressBook, post, allowed: set) -> Optional[str]:
     ids = post.getall("abookfax_id")
     columns = {key: post.getall(key) for key in ("faxnumber", "description", "faxcatid", *_DETAIL_FIELDS)}
     for i, raw_id in enumerate(ids):
-        if not raw_id.isdigit() or int(raw_id) not in own:
+        if not raw_id.isdecimal() or int(raw_id) not in own:
             continue                                   # not one of this company's numbers: never touched
         current = own[int(raw_id)]
         number_text = (columns["faxnumber"][i] if i < len(columns["faxnumber"]) else "").strip()
@@ -249,7 +249,7 @@ def emailbook_list_view(request):
 def _contact_id(params) -> Optional[int]:
     for key in ("abookemail_id", "email_id"):
         value = params.get(key)
-        if value and str(value).isdigit():
+        if value and str(value).isdecimal():
             return int(value)
     return None
 

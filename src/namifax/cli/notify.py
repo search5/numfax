@@ -282,7 +282,7 @@ def _process_notify(args: list[str], session: Any) -> int:
         pdf_preview(faxpath)
 
         outbox = ArchiveOut(db=session)
-        pages_int = int(totpages) if totpages.isdigit() else 0
+        pages_int = int(totpages) if totpages.isdecimal() else 0
         if outbox.create(faxpath, user_id, cid, external, pages_int):
             text += f"\nFax ID: {outbox.get_fid()}\n{LANG['PN_PAGES']}: {totpages}\n"
             if regarding:

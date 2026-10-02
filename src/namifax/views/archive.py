@@ -25,7 +25,7 @@ SENTRECVD = ("*", "s", "r")
 
 def _number(value: Optional[str]) -> Optional[int]:
     value = (value or "").strip()
-    return int(value) if value.isdigit() else None
+    return int(value) if value.isdecimal() else None
 
 
 def _bounds(p) -> tuple[Optional[str], Optional[str]]:
@@ -141,7 +141,7 @@ def archive_view(request):
     if access.superuser:
         category_list = [(str(cid), name) for cid, name in names.items()]
     else:
-        category_list = [(str(c), names[c]) for c in (int(x) for x in access.faxcats or [] if str(x).isdigit()) if c in names]
+        category_list = [(str(c), names[c]) for c in (int(x) for x in access.faxcats or [] if str(x).isdecimal()) if c in names]
 
     # a company the form is set to is offered even before the list is fetched
     companies = []

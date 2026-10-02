@@ -14,7 +14,7 @@ OVER_LIMIT = "File size is over the limit"
 
 def max_bytes() -> int:
     raw = os.environ.get("NAMIFAX_MAX_UPLOAD_BYTES", "")
-    return int(raw) if raw.isdigit() and int(raw) > 0 else DEFAULT_MAX_BYTES
+    return int(raw) if raw.isdecimal() and int(raw) > 0 else DEFAULT_MAX_BYTES
 
 
 def max_label() -> str:

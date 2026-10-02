@@ -115,7 +115,7 @@ def page_size(request, column: str = "faxperpageinbox", default: int | None = No
         value = request.dbsession.execute(select(getattr(UserAccount, column)).where(UserAccount.uid == uid)).scalar()
         size = int(value) if value else default
     limit = (request.params.get("pagelimit") or "").strip()
-    if limit.isdigit():
+    if limit.isdecimal():
         size = max(int(limit), MIN_PAGE_LIMIT)
     return size
 
@@ -124,7 +124,7 @@ def page_index(request, total: int, limit: int) -> tuple[int, int]:
     """(page index, number of pages) with an index out of range moved to the nearest page, as inbox.php does."""
     pages = -(-total // limit) if total > limit else 0
     raw = (request.params.get("pageindex") or "").strip()
-    index = int(raw) if raw.isdigit() else 0
+    index = int(raw) if raw.isdecimal() else 0
     return max(min(index, pages - 1), 0), pages
 
 
@@ -166,7 +166,7 @@ def inbox_view(request):
         "page": index,
         "first_shown": index * limit + 1,
         "last_shown": index * limit + len(faxes),
-        "page_limit_param": request.params.get("pagelimit") if (request.params.get("pagelimit") or "").isdigit() else None,
+        "page_limit_param": request.params.get("pagelimit") if (request.params.get("pagelimit") or "").isdecimal() else None,
         "modem_list": modem_list,
         "csrf_token": request.session.get_csrf_token(),
         "can_del": bool(fax_access(request).can_del or fax_access(request).superuser),
@@ -184,7 +184,7 @@ def viewfax_view(request):
     def back():
         return HTTPFound(location=request.route_url("inbox"))
 
-    if not fid.isdigit():
+    if not fid.isdecimal():
         return back()
 
     access = fax_access(request)
@@ -223,7 +223,7 @@ def fax_download_view(request):
     """Stream PDF or TIFF binary file matching legacy file.php and pdf.php."""
     fid = request.matchdict.get("fid", "1")
     fmt = request.params.get("format", "pdf")
-    if not (fid.isascii() and fid.isdigit()) or fmt not in DOWNLOAD_FORMATS:      # both end up in a header: whole numbers and a list only
+    if not (fid.isascii() and fid.isdecimal()) or fmt not in DOWNLOAD_FORMATS:      # both end up in a header: whole numbers and a list only
         raise HTTPBadRequest()
     if fmt != "pdf" and not settings.flag("ENABLE_DL_TIFF", False):        # the original shows the TIFF only when asked to
         raise HTTPNotFound()
@@ -272,7 +272,7 @@ def fax_rotate_view(request):
     back = request.POST.get("redirect")
     if back == "inbox":
         return HTTPFound(location=request.route_url("inbox"))
-    if back == "viewfax" and str(fid).isdigit():
+    if back == "viewfax" and str(fid).isdecimal():
         return HTTPFound(location=request.route_url("viewfax", _query={"fid": fid}))
     return {"status": "ok", "fid": str(fid), "rotation": 90}
 

@@ -126,12 +126,41 @@ def extract_fax_tags(text_content: str) -> List[str]:
     return cleaned
 
 
+def _dispatch_print_job(file_path: str, destination: str, sender_user: str, db: Any, dispatcher: Any) -> Dict[str, Any]:
+    """Queue the spooled file for ``destination`` as ``sender_user`` through the Send Fax code path; never raises."""
+    try:
+        from namifax.services.sendfax_command import Sender, SendRequest
+
+        sender = Sender(username=sender_user)
+        if db is not None:
+            from namifax.services.user_account import AFUserAccount
+
+            account = AFUserAccount(db=db)
+            if account.load_username(sender_user):
+                d = account.dbdata
+                sender = Sender(name=d.get("name") or "", username=sender_user, email=d.get("email") or "",
+                                company=d.get("from_company") or "", location=d.get("from_location") or "",
+                                voicenumber=d.get("from_voicenumber") or "", faxnumber=d.get("from_faxnumber") or "")
+        send = SendRequest(destinations=destination, files=[file_path])
+        if dispatcher is None:
+            from namifax.views.sendfax import dispatch_sendfax as dispatcher
+        return dispatcher(send, sender)
+    except Exception as exc:                              # a failed hand-over is a result for the caller, not a crash of the CUPS backend
+        return {"success": False, "error": str(exc)}
+
+
 def process_inbound_print_job(
     print_data: bytes,
     sender_user: str = "guest",
     db: Any = None,
+    dispatcher: Any = None,
 ) -> Dict[str, Any]:
-    """Process inbound print stream from CUPS virtual queue and persist files."""
+    """Process an inbound print stream from the CUPS virtual queue.
+
+    With a ``[[FAX: number]]`` tag the job is handed to ``sendfax`` (the same path as the Send Fax page; ``dispatcher(send, sender)``
+    can be replaced in tests) and reported as queued only if that worked. Without a tag, or when sending failed, the file stays
+    in a folder (drafts / spool) and the result says so.
+    """
     import tempfile
     import uuid
 
@@ -156,15 +185,24 @@ def process_inbound_print_job(
         with open(file_path, "wb") as f_out:
             f_out.write(print_data)
 
-        return {
-            "dispatched": True,
-            "status": "QUEUED",
+        outcome = _dispatch_print_job(file_path, destination, sender_user, db, dispatcher)
+        result = {
+            "dispatched": bool(outcome.get("success")),
+            "status": "QUEUED" if outcome.get("success") else "FAILED",
             "destination": destination,
             "sender": sender_user,
             "bytes_received": len(print_data),
             "file_path": file_path,
-            "job_id": job_token,
+            "job_id": str(outcome.get("jobid") or job_token),
         }
+        if outcome.get("success"):
+            try:
+                os.remove(file_path)                       # sent: nothing is left in the spool
+            except OSError:
+                pass
+        else:
+            result["message"] = f"The fax to {destination} could not be queued: {outcome.get('error') or 'unknown error'}"
+        return result
     else:
         # Fallback to web drafts repository
         drafts_dir = os.path.join(tmp_dir, "namifax_drafts")

@@ -23,7 +23,7 @@ def popup_distrolist_helper(request):
 
     dl_id = (request.params.get("dl_id") or "").strip()
     dl = DistributionList(db=request.dbsession)
-    if not dl_id.isdigit() or not dl.load_list(int(dl_id)):
+    if not dl_id.isdecimal() or not dl.load_list(int(dl_id)):
         raise HTTPFound(location=request.route_url("distrolist"))
 
     added = False
@@ -32,7 +32,7 @@ def popup_distrolist_helper(request):
         chosen = request.POST.getall("myselect[]") or request.POST.getall("myselect")
         who = (request.identity or {}).get("user_id") or (request.identity or {}).get("uid")
         dl.set_moduser(int(who) if who else None)
-        if dl.add_entries([c for c in chosen if c.split("|", 1)[0].isdigit()]):
+        if dl.add_entries([c for c in chosen if c.split("|", 1)[0].isdecimal()]):
             added = True
         else:
             error = dl.get_error()
@@ -198,7 +198,7 @@ def upload_fax_contacts(request):
     message = error = None
     if request.method == "POST":
         catid = request.POST.get("catid")
-        catid_int = int(catid) if catid and str(catid).isdigit() else None
+        catid_int = int(catid) if catid and str(catid).isdecimal() else None
         lines, error = _vcard_lines(request)
         count = 0
         if lines:

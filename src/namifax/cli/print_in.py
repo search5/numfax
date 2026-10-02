@@ -39,14 +39,16 @@ def main(argv: Sequence[str] | None = None) -> int:
         print("[NamiFAX Print-to-Fax] No print data received.", file=sys.stderr)
         return 0
 
-    result = process_inbound_print_job(print_data, sender_user=user)
+    from namifax.db.provider import cli_session
+
+    with cli_session() as session:
+        result = process_inbound_print_job(print_data, sender_user=user, db=session)
 
     if result.get("dispatched"):
         print(f"[NamiFAX Print-to-Fax] Job successfully enqueued for {result['destination']}.")
-    else:
-        print(f"[NamiFAX Print-to-Fax] {result.get('message', 'Saved to drafts.')}")
-
-    return 0
+        return 0
+    print(f"[NamiFAX Print-to-Fax] {result.get('message', 'Saved to drafts.')}", file=sys.stderr)
+    return 1 if result.get("status") == "FAILED" else 0       # (a job without a tag is only saved as a draft: not a failure)
 
 
 if __name__ == "__main__":

@@ -170,7 +170,7 @@ def ajax_addressbook_prefill(request):
     to_voicenumber = ""
 
     try:
-        if fnid.isdigit():
+        if fnid.isdecimal():
             fid_int = int(fnid)
             if ab.loadbyfaxnumid(fid_int):
                 to_company = ab.get_company() or ""
@@ -210,7 +210,7 @@ def ajax_distrolist_faxes(request):
     faxes_str = "Invalid list id"
 
     try:
-        if dl_id.isdigit() and dl.load_list(int(dl_id)):
+        if dl_id.isdecimal() and dl.load_list(int(dl_id)):
             numbers = [e.split("|", 1)[1] for e in dl.list_entries() if "|" in e]      # entries are "<id>|<number>"
             faxes_str = "; ".join(numbers)
     except Exception:
@@ -226,7 +226,7 @@ def _fids(request) -> list[int]:
         return getall(name) if getall else ([request.params[name]] if name in request.params else [])
 
     values = all_of("fids") + all_of("fid")
-    return [int(v) for raw in values for v in str(raw).split(",") if v.strip().isdigit()]
+    return [int(v) for raw in values for v in str(raw).split(",") if v.strip().isdecimal()]
 
 
 def _done(request):
@@ -234,7 +234,7 @@ def _done(request):
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
         return Response("", status_code=200)
     following = str(request.params.get("next") or "").strip()              # the viewer goes on to the next fax
-    if following.isdigit():
+    if following.isdecimal():
         return HTTPFound(location=request.route_url("viewfax", _query={"fid": following}))
     return HTTPFound(location=request.route_url("inbox"))
 
@@ -287,8 +287,8 @@ def ajax_faxalter(request):
     if request.method != "POST":
         return page()
 
-    if not (jid.isdigit() and (not values["killtime"] or values["killtime"].isdigit())
-            and (not values["numtries"] or values["numtries"].isdigit())):
+    if not (jid.isdecimal() and (not values["killtime"] or values["killtime"].isdecimal())
+            and (not values["numtries"] or values["numtries"].isdecimal())):
         return page(_("Please enter a valid number."))
 
     operations: dict = {}

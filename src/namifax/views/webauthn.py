@@ -165,7 +165,7 @@ def webauthn_delete_credential_view(request: Request) -> Response:
         return _json_res({"error": "Unauthorized"}, status=401)
 
     cred_db_id = request.POST.get("credential_db_id") or request.params.get("credential_db_id")
-    if not cred_db_id or not str(cred_db_id).isdigit():
+    if not cred_db_id or not str(cred_db_id).isdecimal():
         return _json_res({"error": "Invalid credential ID"}, status=400)
 
     svc = _get_webauthn_service(request)

@@ -35,11 +35,11 @@ class SysLogService:
     def _date_prefix(day: str, month: str, year: str) -> str:
         """Build the 'YYYY[-MM[-DD]]' prefix from the viewer's drop-downs ('*' means any)."""
         if day and month and year and day != "*" and month != "*" and year != "*":
-            d_val = f"{int(day):02d}" if day.isdigit() else day
-            m_val = f"{int(month):02d}" if month.isdigit() else month
+            d_val = f"{int(day):02d}" if day.isdecimal() else day
+            m_val = f"{int(month):02d}" if month.isdecimal() else month
             return f"{year}-{m_val}-{d_val}"
         if month and year and month != "*" and year != "*":
-            m_val = f"{int(month):02d}" if month.isdigit() else month
+            m_val = f"{int(month):02d}" if month.isdecimal() else month
             return f"{year}-{m_val}"
         if year and year != "*":
             return f"{year}"

@@ -71,7 +71,7 @@ def outbox_view(request):
 
 def _kill(fq: FaxQueue, access, jid: str) -> str:
     """Remove a job, but only one the user may see (waiting, else failed), in the name of the job's owner."""
-    if not (jid.isdigit() and len(jid) <= 8):
+    if not (jid.isdecimal() and len(jid) <= 8):
         return _("Invalid job number.")
     for load in (fq.process_queue, fq.process_failed_queue):
         load()

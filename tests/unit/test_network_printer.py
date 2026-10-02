@@ -92,9 +92,41 @@ class TestNetworkPrinter(unittest.TestCase):
             print_data=b"Document with [[FAX: 02-555-1234]]",
             sender_user="erp_system",
             db=self.session,
+            dispatcher=lambda send, sender: {"success": True, "jobid": "77"},
         )
         self.assertTrue(job_result["dispatched"])
         self.assertEqual(job_result["destination"], "02-555-1234")
+        self.assertEqual(job_result["job_id"], "77")
+
+    def test_the_print_job_is_really_handed_to_sendfax_and_the_spool_file_goes(self):
+        seen = {}
+
+        def dispatcher(send, sender):
+            seen["send"], seen["sender"] = send, sender
+            seen["exists"] = os.path.exists(send.files[0])
+            return {"success": True, "jobid": "12"}
+
+        out = process_inbound_print_job(b"%PDF-1.4 [[FAX: 031-111-2222]]", sender_user="erp", db=self.session, dispatcher=dispatcher)
+        self.assertEqual(seen["send"].destinations, "031-111-2222")
+        self.assertEqual(seen["sender"].username, "erp")
+        self.assertTrue(seen["exists"] and seen["send"].files[0].endswith(".pdf"))
+        self.assertTrue(out["dispatched"] and out["status"] == "QUEUED")
+        self.assertFalse(os.path.exists(out["file_path"]))                     # sent: nothing left in the spool
+
+    def test_a_failed_dispatch_is_not_reported_as_queued(self):
+        out = process_inbound_print_job(b"x [[FAX: 02-1]]", sender_user="erp", db=self.session,
+                                        dispatcher=lambda send, sender: {"success": False, "error": "sendfax is not installed"})
+        self.assertFalse(out["dispatched"])
+        self.assertEqual(out["status"], "FAILED")
+        self.assertIn("sendfax is not installed", out["message"])
+        self.assertTrue(os.path.exists(out["file_path"]))                      # kept, so that it can be sent again
+
+    def test_a_dispatcher_that_raises_is_a_failure_too(self):
+        def boom(send, sender):
+            raise OSError("no sendfax")
+
+        out = process_inbound_print_job(b"x [[FAX: 02-1]]", sender_user="erp", db=self.session, dispatcher=boom)
+        self.assertFalse(out["dispatched"]) and self.assertEqual(out["status"], "FAILED")
 
     @patch("src.namifax.services.printer.extract_fax_tags")
     def test_process_inbound_print_job_without_tag(self, mock_extract):

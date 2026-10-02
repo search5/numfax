@@ -20,7 +20,7 @@ def text(name: str, default: str) -> str:
 
 def number(name: str, default: int) -> int:
     raw = os.environ.get(name, "")
-    return int(raw) if raw.isdigit() else default
+    return int(raw) if raw.isdecimal() else default
 
 
 def restricted_user_mode() -> bool:

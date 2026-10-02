@@ -37,7 +37,7 @@ def _categories_for(request, access) -> dict:
     cats = FaxPDFCategory(db=request.dbsession)
     if access.superuser:
         return {str(c["catid"]): c["name"] for c in cats.get_categories() or []}
-    return {str(c): cats.get_name(int(c)) for c in access.faxcats if str(c).isdigit() and cats.get_name(int(c))}
+    return {str(c): cats.get_name(int(c)) for c in access.faxcats if str(c).isdecimal() and cats.get_name(int(c))}
 
 
 @view_config(route_name="modal_email", renderer="namifax:templates/modal_email.jinja2", permission="view")
@@ -50,7 +50,7 @@ def modal_email_view(request):
     params = request.POST if request.method == "POST" else request.params
     fid = (params.get("fid") or "").strip()
     arc = ArchiveIn(db=request.dbsession)
-    if not fid.isdigit() or not load_fax(request, arc, fid, action="email"):
+    if not fid.isdecimal() or not load_fax(request, arc, fid, action="email"):
         return HTTPFound(location=request.route_url("inbox"))
 
     access = fax_access(request)
@@ -111,7 +111,7 @@ def modal_assign_view(request):
     identity = request.identity or {"username": "admin", "uid": 1, "is_admin": True}
     raw = request.params.get("abook_id") or request.params.get("cid") or ""
     ab = AFAddressBook(db=request.dbsession)
-    if not raw.isdigit() or not ab.loadbycid(int(raw)):
+    if not raw.isdecimal() or not ab.loadbycid(int(raw)):
         return HTTPFound(location=request.route_url("inbox"))
     cid = int(raw)
     message = error = None
@@ -119,7 +119,7 @@ def modal_assign_view(request):
     if request.method == "POST":
         myselect = (request.POST.get("myselect") or "").strip()
         regexp = (request.POST.get("regexp") or "").strip()
-        if myselect.isdigit() and int(myselect) != cid:
+        if myselect.isdecimal() and int(myselect) != cid:
             old = ab.get_companyid()
             if ab.reassign(int(myselect)):
                 ArchiveIn(db=request.dbsession).reassign(old, int(myselect))
@@ -150,7 +150,7 @@ def assignx_view(request):
     """
     fid = (request.params.get("fid") or "").strip()
     arc = ArchiveIn(db=request.dbsession)
-    if not fid.isdigit() or not load_fax(request, arc, fid, action="assignx"):
+    if not fid.isdecimal() or not load_fax(request, arc, fid, action="assignx"):
         return HTTPFound(location=request.route_url("inbox"))
 
     book = AFAddressBook(db=request.dbsession)
@@ -160,7 +160,7 @@ def assignx_view(request):
         chosen = (request.POST.get("abook_id") or "").strip()
         name = (request.POST.get("regexp") or "").strip()
         cid = None
-        if chosen.isdigit() and book.loadbycid(int(chosen)):
+        if chosen.isdecimal() and book.loadbycid(int(chosen)):
             cid = int(chosen)
         elif name:
             if book.create(name):
@@ -225,7 +225,7 @@ def modal_delete_view(request):
             pass
         following = (request.params.get("next") or "").strip()            # from the viewer: on to the next fax
         if status == "deleted" and following:
-            if following.isdigit():
+            if following.isdecimal():
                 return HTTPFound(location=request.route_url("viewfax", _query={"fid": following}))
             return HTTPFound(location=request.route_url("inbox"))
 
@@ -242,7 +242,7 @@ def modal_delete_view(request):
 def modal_refax_view(request):
     """The original's refax.php?fid=N: the reply to a received fax is the Send Fax page (``sendfax?refax=N``)."""
     fid = (request.params.get("fid") or "").strip()
-    if fid.isdigit():
+    if fid.isdecimal():
         return HTTPFound(location=request.route_url("sendfax", _query={"refax": fid}))
     return HTTPFound(location=request.route_url("sendfax"))
 
@@ -260,7 +260,7 @@ def modal_txreport_view(request):
 
     arc = ArchiveIn(db=request.dbsession)
     try:
-        if fid and str(fid).isdigit() and load_fax(request, arc, fid, action="txreport"):
+        if fid and str(fid).isdecimal() and load_fax(request, arc, fid, action="txreport"):
             date_val = arc.get_archstamp() or ""
             pages_val = arc.get_pages() or 0
             faxnum = arc.get_origfaxnum() or ""

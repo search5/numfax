@@ -16,9 +16,10 @@ NamiFAX와 HylaFAX를 연결하는 순서입니다. 파일은 `deploy/` 폴더�
 - cron(`deploy/cron.d/namifax`): cron 에는 `EnvironmentFile` 이 없어서 각 줄이 `sh -c 'set -a; . /etc/namifax.env; set +a; exec …'` 로 파일을 먼저 읽습니다.
 - HylaFAX 훅 스크립트(`deploy/hylafax/bin/*`): `set -a; . /etc/namifax.env; set +a` 뒤에 `exec` 합니다.
 
-**서식은 `KEY=value` 한 줄씩이며, 따옴표·`export`·값 뒤의 `#` 주석을 쓰지 마십시오.** systemd 와 셸이 같은 파일을 읽는데,
-systemd 는 따옴표와 줄 끝 주석을 셸과 다르게 해석합니다(줄 끝 `#` 은 값의 일부가 됩니다). 주석은 `#` 으로 시작하는 별도의 줄로 쓰십시오.
-값에 공백이 있으면 안 됩니다(필요하면 URL 인코딩).
+**서식은 `KEY=value` 한 줄씩이며, `export` 와 값 뒤의 `#` 주석은 쓰지 마십시오.** systemd 와 셸이 같은 파일을 읽는데,
+systemd 는 줄 끝 `#` 을 값의 일부로 읽습니다. 주석은 `#` 으로 시작하는 별도의 줄로 쓰십시오.
+값에 `&` `;` `(` `)` `<` `>` `|` 공백이 들어 있으면(예: `?charset=utf8mb4&x=1` 이 붙은 DB 주소) **큰따옴표로 감싸십시오**: 큰따옴표는 systemd 와 셸이
+똑같이 벗깁니다. 따옴표 없이 쓰면 셸은 `&` 에서 명령을 끊어 값이 비거나 잘립니다. 큰따옴표 안에는 `$` 백슬래시 역따옴표 `"` 를 넣지 마십시오.
 
 ```
 DATABASE_URL=mysql+pymysql://avantfax:비밀번호@localhost/avantfax

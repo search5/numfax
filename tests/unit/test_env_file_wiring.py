@@ -104,4 +104,14 @@ def test_install_guide_sample_uses_the_plain_key_value_format():
     lines = [ln for ln in lines if ln]
     assert lines
     for line in lines:
-        assert re.fullmatch(r"[A-Z_][A-Z0-9_]*=[^\s'\"]*", line), line
+        assert re.fullmatch(r"[A-Z_][A-Z0-9_]*=([^\s'\"]*|\"[^$`\\\"]*\")", line), line
+
+
+def test_a_quoted_value_with_special_characters_survives_the_shell_and_the_cron_line(tmp_path):
+    """DATABASE_URL=...&x=1 must be quoted in the env file: unquoted, `sh` would cut it at the & (the guide says so)."""
+    home, env_file = _fake_install(tmp_path, "namifax-notify")
+    env_file.write_text('DATABASE_URL="mysql+pymysql://u:pw@localhost/db?charset=utf8mb4&x=1 y;z"\nNAMIFAX_SECRET_KEY=abc123\n')
+    script = tmp_path / "notify"
+    script.write_text((ROOT / "deploy" / "hylafax" / "bin" / "notify").read_text().replace(ENV_FILE, str(env_file)))
+    res = subprocess.run(["sh", str(script)], capture_output=True, text=True, env=_clean_env(NAMIFAX_HOME=str(home)))
+    assert res.stdout.strip() == "DB=mysql+pymysql://u:pw@localhost/db?charset=utf8mb4&x=1 y;z SECRET=abc123 ARGS="

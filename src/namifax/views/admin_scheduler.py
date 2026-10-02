@@ -32,7 +32,7 @@ def _read(post, current: cfg.JobSettings) -> tuple[cfg.JobSettings, list[str]]:
 
     def number(name: str, old: int) -> int:
         raw = (post.get(name) or "").strip()
-        return int(raw) if raw.isdigit() else old
+        return int(raw) if raw.isdecimal() else old
 
     updated = cfg.JobSettings(
         tmp_enabled="tmp_enabled" in post, tmp_time=time("tmp_time", current.tmp_time), tmp_days=number("tmp_days", current.tmp_days),

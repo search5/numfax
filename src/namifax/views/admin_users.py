@@ -160,7 +160,7 @@ def _apply(svc: AFUserAccount, v: dict) -> None:
         name=v["name"], language=v["language"], is_admin=int(v["is_admin"]), superuser=int(v["superuser"]),
         can_del=int(v["can_del"]), any_modem=int(v["any_modem"]), acc_enabled=int(v["acc_enabled"]),
         pwd_reuse=int(v["pwd_reuse"]), audiofile=v["audiofile"] or None,
-        coverpage_id=int(v["coverpage_id"]) if v["coverpage_id"].isdigit() else None,
+        coverpage_id=int(v["coverpage_id"]) if v["coverpage_id"].isdecimal() else None,
         from_company=v["from_company"], from_location=v["from_location"], from_voicenumber=v["from_voicenumber"],
         from_faxnumber=v["from_faxnumber"], user_tsi=v["user_tsi"], faxperpageinbox=int(v["faxperpageinbox"]),
         faxperpagearchive=int(v["faxperpagearchive"]))
@@ -199,7 +199,7 @@ def admin_users_view(request):
             values = _from_account(svc)
     else:
         uid = (request.params.get("uid") or "").strip()
-        if uid.isdigit() and svc.load(int(uid)):
+        if uid.isdecimal() and svc.load(int(uid)):
             values = _from_account(svc)
 
     users = get_all_admin_users(request.dbsession)
@@ -238,7 +238,7 @@ def _create(request, svc: AFUserAccount, v: dict):
                                  "from_voicenumber", "from_faxnumber", "user_tsi", "audiofile")}
     details.update(pwdcycle=v["pwdcycle"], acc_enabled=1, **{f: int(v[f]) for f in FLAGS})
     details.update(faxperpageinbox=int(v["faxperpageinbox"]), faxperpagearchive=int(v["faxperpagearchive"]),
-                   coverpage_id=int(v["coverpage_id"]) if v["coverpage_id"].isdigit() else None)
+                   coverpage_id=int(v["coverpage_id"]) if v["coverpage_id"].isdecimal() else None)
     if not svc.create(details):
         return [svc.get_error()], False
     svc.set_modemdevs(v["modemdevs"])
@@ -256,7 +256,7 @@ def admin_user_delete_view(request):
     params = request.POST if request.method == "POST" else request.params
     uid = (params.get("uid") or "").strip()
     svc = AFUserAccount(db=request.dbsession)
-    if not uid.isdigit() or not svc.load(int(uid)):
+    if not uid.isdecimal() or not svc.load(int(uid)):
         return HTTPFound(location=request.route_url("admin_users"))
     error = None
     if request.method == "POST":

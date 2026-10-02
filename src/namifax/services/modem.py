@@ -140,7 +140,7 @@ class FaxModem:
 
     def delete_device(self, devid_or_device: int | str) -> bool:
         """Delete modem by devid or device name."""
-        if isinstance(devid_or_device, int) or (isinstance(devid_or_device, str) and devid_or_device.isdigit()):
+        if isinstance(devid_or_device, int) or (isinstance(devid_or_device, str) and devid_or_device.isdecimal()):
             self.modems.data.set_id(int(devid_or_device))
             ok = bool(self.modems.delete_entry())
             if ok:
