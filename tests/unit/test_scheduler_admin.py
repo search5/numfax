@@ -144,14 +144,14 @@ def test_the_lifecycle_job_says_when_no_policy_was_saved(dbsession):
 
 
 def test_a_failing_job_is_recorded_not_raised(dbsession):
-    with patch("namifax.services.scheduler.export_phonebook", side_effect=OSError("disk full")):
+    with patch("namifax.services.scheduler.export_phonebook_count", side_effect=OSError("disk full")):
         result = NamiFaxScheduler().run_job("phonebook", dbsession)
     assert result["ok"] is False and "disk full" in result["summary"]
     assert cfg.last_run(dbsession, "phonebook")["ok"] is False
 
 
 def test_the_last_run_is_remembered(dbsession):
-    with patch("namifax.services.scheduler.export_phonebook", return_value=7):
+    with patch("namifax.services.scheduler.export_phonebook_count", return_value=7):
         NamiFaxScheduler().run_job("phonebook", dbsession)
     last = cfg.last_run(dbsession, "phonebook")
     assert last["ok"] is True and "7" in last["summary"] and last["at"]
@@ -200,13 +200,13 @@ def test_a_bad_time_is_not_stored(client, dbsession):
 def test_run_now_runs_the_job_and_shows_the_result(client):
     page = client.get("/admin/scheduler")
     run = next(f for f in page.forms.values() if f.fields.get("job") and f["job"].value == "phonebook")
-    with patch("namifax.views.admin_scheduler.THREADED", False), patch("namifax.services.scheduler.export_phonebook", return_value=12):
+    with patch("namifax.views.admin_scheduler.THREADED", False), patch("namifax.services.scheduler.export_phonebook_count", return_value=12):
         res = run.submit()
     assert "12" in res.text
 
 
 def test_the_page_shows_the_last_result_and_the_scheduler_state(client, dbsession):
-    with patch("namifax.services.scheduler.export_phonebook", return_value=3):
+    with patch("namifax.services.scheduler.export_phonebook_count", return_value=3):
         NamiFaxScheduler().run_job("phonebook", dbsession)
     html = client.get("/admin/scheduler").text
     assert "3" in html and "no scheduler is running" in html.lower()           # no scheduler heartbeat in a test
@@ -339,7 +339,7 @@ def test_the_state_says_stopped_while_stopped(client, dbsession):
 def test_run_now_still_works_while_stopped(client, dbsession):
     cfg.set_stopped(dbsession, True)
     run = next(f for f in client.get("/admin/scheduler").forms.values() if f.fields.get("job") and f["job"].value == "phonebook")
-    with patch("namifax.views.admin_scheduler.THREADED", False), patch("namifax.services.scheduler.export_phonebook", return_value=4):
+    with patch("namifax.views.admin_scheduler.THREADED", False), patch("namifax.services.scheduler.export_phonebook_count", return_value=4):
         res = run.submit()
     assert "4" in res.text
 

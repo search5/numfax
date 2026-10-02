@@ -37,7 +37,7 @@ def test_a_running_job_is_known_while_it_runs_and_forgotten_after(dbsession):
         seen["running"] = sched_mod.is_running("phonebook", dbsession)
         return 2
 
-    with patch("namifax.services.scheduler.export_phonebook", side_effect=work):
+    with patch("namifax.services.scheduler.export_phonebook_count", side_effect=work):
         NamiFaxScheduler().run_job("phonebook", dbsession)
     assert seen["running"] is True and sched_mod.is_running("phonebook", dbsession) is False
 
@@ -162,8 +162,8 @@ def test_run_now_starts_the_job_and_the_same_page_shows_stop(client):
         return 1
 
     run = next(f for f in client.get("/admin/scheduler").forms.values() if f.fields.get("job") and f["job"].value == "phonebook")
-    with patch("namifax.services.scheduler.export_phonebook", side_effect=slow), \
-            patch("namifax.services.scheduler.cli_session"):
+    with patch("namifax.services.scheduler.export_phonebook_count", side_effect=slow), \
+            patch("namifax.services.scheduler.cli_session"), patch("namifax.services.scheduler.cfg.running_marker", return_value=None):
         res = run.submit()
         block = _job(res, "phonebook")
         assert block.find("button", string=lambda s: s and "Stop" in s) is not None
@@ -199,3 +199,48 @@ def test_a_stopped_result_is_shown_in_amber_not_as_a_failure(client, dbsession):
     cfg.record_run(dbsession, "inbox", True, "stopped after 3 fax(es)", stopped=True)
     block = _job(client.get("/admin/scheduler"), "inbox")
     assert "stopped after 3" in block.get_text() and "text-amber" in str(block)
+
+
+# --- the phonebook summary counts real entries; schedules do not overlap across processes -------------------------------------------
+
+def test_the_phonebook_export_reports_how_many_entries_it_wrote(tmp_path):
+    from namifax.cli import phb
+
+    class Book:
+        def get_companies(self):
+            return [{"company": "A", "abook_id": 1}, {"company": "B", "abook_id": 2}]
+
+        def loadbycid(self, cid):
+            pass
+
+        def get_faxnums(self):
+            return [{"faxnumber": "123"}]
+
+    out = tmp_path / "pb"
+    assert phb.export_phonebook_count(str(out), addressbook=Book()) == 2
+    assert phb.export_phonebook(str(out), addressbook=Book()) == 0           # the exit code contract is unchanged
+
+
+def test_the_phonebook_job_summary_uses_the_real_entry_count(dbsession, tmp_path):
+    with patch("namifax.cli.phb.DEFAULT_PHONEBOOK_PATH", str(tmp_path / "pb")), \
+            patch("namifax.services.scheduler.export_phonebook_count", return_value=3):
+        result = NamiFaxScheduler().run_job("phonebook", dbsession)
+    assert result["ok"] is True and "3 entries" in result["summary"]
+
+
+def test_a_scheduled_run_yields_to_a_fresh_marker_of_another_process(dbsession):
+    cfg.mark_running(dbsession, "phonebook", by="schedule")
+    with patch("namifax.services.scheduler.export_phonebook_count") as work:
+        result = NamiFaxScheduler().run_job("phonebook", dbsession)
+    assert result["ok"] is False and result["stopped"] is False and "already running" in result["summary"]
+    work.assert_not_called()
+    assert sched_mod.running_handle("phonebook") is None                       # the local reservation was given back
+    assert cfg.running_marker(dbsession, "phonebook") is not None              # the other process's marker is left alone
+
+
+def test_a_stale_marker_does_not_block_and_the_marker_is_cleared_at_the_end(dbsession):
+    cfg.mark_running(dbsession, "phonebook", by="schedule", started="2000-01-01 00:00:00")
+    with patch("namifax.services.scheduler.export_phonebook_count", return_value=1):
+        result = NamiFaxScheduler().run_job("phonebook", dbsession)
+    assert result["ok"] is True
+    assert cfg.running_marker(dbsession, "phonebook") is None

@@ -26,7 +26,13 @@ DEFAULT_PHONEBOOK_PATH = settings.phonebook_path()
 
 def generate_phonebook_content(addressbook: AFAddressBook, should_stop=None) -> str:
     """Generate HylaFAX PBOOK1.1 stream content from address book (``JobStopped`` when asked to stop: no half file is written)."""
+    return build_phonebook(addressbook, should_stop)[0]
+
+
+def build_phonebook(addressbook: AFAddressBook, should_stop=None) -> tuple[str, int]:
+    """Like ``generate_phonebook_content`` but also gives the number of entries (companies) written."""
     out = ["PBOOK1.1"]
+    count = 0
 
     companies = addressbook.get_companies()
     if companies:
@@ -44,12 +50,19 @@ def generate_phonebook_content(addressbook: AFAddressBook, should_stop=None) -> 
             valid_nums = [f.get("faxnumber") for f in faxnums if f.get("faxnumber")]
             out.append(";".join(valid_nums))
             out.append("|||||||")
+            count += 1
 
-    return "".join(out)
+    return "".join(out), count
 
 
 def run_phb(argv: Sequence[str] | None = None, addressbook: AFAddressBook | None = None, *, db: Any = None, should_stop=None) -> int:
-    """Execute phonebook export logic."""
+    """Execute phonebook export logic (exit code 0)."""
+    _run_phb(argv, addressbook, db=db, should_stop=should_stop)
+    return 0
+
+
+def _run_phb(argv: Sequence[str] | None, addressbook: AFAddressBook | None, *, db: Any, should_stop) -> int:
+    """Export the phonebook file; returns the number of entries written."""
     parser = argparse.ArgumentParser(description="Generate HylaFAX phonebook from AvantFAX address book.")
     parser.add_argument(
         "-o",
@@ -60,12 +73,12 @@ def run_phb(argv: Sequence[str] | None = None, addressbook: AFAddressBook | None
     args = parser.parse_args(argv[1:] if argv is not None else None)
 
     if addressbook is not None:
-        content = generate_phonebook_content(addressbook, should_stop)
+        content, count = build_phonebook(addressbook, should_stop)
     elif db is not None:
-        content = generate_phonebook_content(AFAddressBook(db=db), should_stop)
+        content, count = build_phonebook(AFAddressBook(db=db), should_stop)
     else:
         with cli_session(ensure_schema=True) as opened:
-            content = generate_phonebook_content(AFAddressBook(db=opened), should_stop)
+            content, count = build_phonebook(AFAddressBook(db=opened), should_stop)
 
     out_path = os.path.abspath(args.output)
     parent_dir = os.path.dirname(out_path)
@@ -78,13 +91,19 @@ def run_phb(argv: Sequence[str] | None = None, addressbook: AFAddressBook | None
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(content)
 
-    return 0
+    return count
 
 
 def export_phonebook(output_path: str = DEFAULT_PHONEBOOK_PATH, addressbook: AFAddressBook | None = None, *, db: Any = None,
                      should_stop=None) -> int:
     """Convenience helper to export phonebook directly."""
     return run_phb(["phb", "-o", output_path], addressbook=addressbook, db=db, should_stop=should_stop)
+
+
+def export_phonebook_count(output_path: str = DEFAULT_PHONEBOOK_PATH, addressbook: AFAddressBook | None = None, *, db: Any = None,
+                           should_stop=None) -> int:
+    """Export the phonebook and return how many entries were written (``export_phonebook`` returns the exit code)."""
+    return _run_phb(["phb", "-o", output_path], addressbook, db=db, should_stop=should_stop)
 
 
 def main() -> None:

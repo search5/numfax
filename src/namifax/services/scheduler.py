@@ -20,7 +20,7 @@ if SRC_DIR not in sys.path:
     sys.path.insert(0, SRC_DIR)
 
 from namifax.cli.cron import run_cron
-from namifax.cli.phb import export_phonebook
+from namifax.cli.phb import export_phonebook_count
 from namifax.db.provider import cli_session
 from namifax.services import scheduler_config as cfg
 from namifax.services.archive_in import ArchiveIn
@@ -130,6 +130,10 @@ class NamiFaxScheduler:
 
     def _run_claimed(self, name: str, session, handle: JobHandle, commit: bool) -> dict:
         settings = cfg.load(session)
+        # Another process (the web's built-in scheduler, or ``namifax scheduler``) may be running this job: its marker is fresh.
+        # Checked before our own marker is written, and we hold the in-process claim, so the marker is never our own.
+        if cfg.running_marker(session, name):
+            return {"ok": False, "stopped": False, "summary": "already running", "at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
         cfg.mark_running(session, name, handle.by)
         cfg.clear_cancel(session, name)
         if commit:
@@ -160,7 +164,7 @@ class NamiFaxScheduler:
                 summary = ("no policy saved on the Storage page: nothing was removed" if result is None else
                            f"{result.get('tiffs_purged', 0)} TIFF file(s) and {result.get('faxes_purged', 0)} fax(es) removed")
             else:
-                summary = f"phonebook exported ({export_phonebook(db=session, should_stop=should_stop)} entries)"
+                summary = f"phonebook exported ({export_phonebook_count(db=session, should_stop=should_stop)} entries)"
             ok = True
             if handle.cancel.is_set():
                 stopped, summary = True, f"stopped by an administrator; {summary.split(' (')[0] if name == 'phonebook' else summary}"
