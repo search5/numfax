@@ -9,7 +9,7 @@
 9: 1. **UI & View Data Contract Extraction (명세 및 계약 추출)**:
 10:    - 레거시 PHP 컨트롤러의 동작 분석: 요청 파라미터(Query/Form), 세션 인증/권한 검사, 호출하는 서비스 로직.
 11:    - Smarty 템플릿(`.tpl`)으로 전달되는 컨텍스트 변수 맵(`$smarty->assign(...)`) 및 제어문(if, foreach) 블록 명세화.
-12:    - 화면의 구조적 마크업(DOM 계층, 폼 컨트롤, 테이블 컬럼, 액션 버튼, 에러 알림 등)을 분석하여 `specs/web/<route_name>.md`로 저장.
+12:    - 화면의 구조적 마크업(DOM 계층, 폼 컨트롤, 테이블 컬럼, 액션 버튼, 에러 알림 등)을 분석하여 `dev/specs/web/<route_name>.md`로 저장.
 13: 
 14: 2. **View Characterization & Golden Test 작성 (테스트 우선)**:
 15:    - Pyramid `pyramid.testing.DummyRequest` 및 `webtest.TestApp`을 활용한 뷰 단위/통합 테스트 작성 (`tests/web/test_<view_name>.py`).

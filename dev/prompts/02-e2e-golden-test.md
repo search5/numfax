@@ -14,12 +14,12 @@
 14:    - **주소록 및 배포 그룹**: 주소록 목록(`addressbook.php`), 연락처 추가/수정 폼(`addressbook_edit.php`), 배포 그룹(`distrolist.php`).
 15:    - **관리자 포털 (Admin)**: 대시보드(`admin/index.php`), 사용자 관리(`admin/users.php`), 모뎀 설정(`admin/modems.php`), DID 라우팅(`admin/did.php`), 바코드 라우팅(`admin/barcodes.php`), 시스템 로그(`admin/syslog.php`).
 16: 
-17: 3. **Golden Master 데이터 아티팩트 저장 (`golden_master/web/<scenario_id>/`)**:
+17: 3. **Golden Master 데이터 아티팩트 저장 (`dev/golden_master/web/<scenario_id>/`)**:
 18:    - `response.html`: 레거시 PHP 서버가 Smarty로 렌더링한 원본 HTML 마크업 스냅샷
 19:    - `contract.json`: HTTP 상태 코드, 리다이렉트 URL(Location), 폼 필드 명세(`name`, `type`, `value`, `method`, `action`), 세션 쿠키 키
 20:    - `screenshot.png` (선택/권장): Playwright 또는 헤드리스 브라우저로 캡처한 화면 기준 스크린샷
 21: 
-22: 4. **웹 차분 검증(Differential Web Verification) 스크립트 작성 (`golden_master/web_runner.py`)**:
+22: 4. **웹 차분 검증(Differential Web Verification) 스크립트 작성 (`dev/golden_master/web_runner.py`)**:
 23:    - Pyramid 웹 서버를 대상으로 동일한 HTTP 요청(GET/POST, 쿠키, 파라미터)을 전송하여 레거시 Golden Master와 비교 검증:
 24:      1) **HTTP 응답 및 라우팅 일치성**: Status Code, Content-Type, Redirect Location 일치 여부
 25:      2) **HTML 시맨틱 & 폼 계약 일치성**: 폼 필드(input, select, hidden 등), 버튼, 링크, 테이블 컬럼 헤더, 오류 메시지 엘리먼트 100% 매칭 검증
@@ -27,6 +27,6 @@
 27:      4) **Tailwind CSS 레이아웃 건전성**: 주요 컨테이너 구조 및 Tailwind 스타일 적용 상태 무결성 확인
 28: 
 29: 5. **기존 백엔드 CLI Golden Master와의 통합**:
-30:    - 기존 백엔드 CLI 훅(dynconf, avantfaxcron, faxcover, notify, faxrcvd) Golden Master 검증과 웹 프런트엔드 차분 검증을 단일 pytest 명령(`pytest golden_master/`)으로 일괄 실행할 수 있도록 통합할 것.
+30:    - 기존 백엔드 CLI 훅(dynconf, avantfaxcron, faxcover, notify, faxrcvd) Golden Master 검증과 웹 프런트엔드 차분 검증을 단일 pytest 명령(`pytest dev/golden_master/`)으로 일괄 실행할 수 있도록 통합할 것.
 31: 
 

@@ -2,7 +2,7 @@
 """AvantFAX Full-System E2E Golden Master Test Runner & Differential Checker.
 
 Supports:
-- --record : Execute legacy PHP implementation in Docker container and store stdout, stderr, exit code to golden_master/data/<scenario>/
+- --record : Execute legacy PHP implementation in Docker container and store stdout, stderr, exit code to dev/golden_master/data/<scenario>/
 - --verify : Execute target Python implementation and compare differential output against recorded golden master
 """
 
@@ -14,8 +14,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-ROOT_DIR = Path(__file__).resolve().parent.parent
-GOLDEN_MASTER_DIR = ROOT_DIR / "golden_master"
+ROOT_DIR = Path(__file__).resolve().parents[2]          # the project root (dev/golden_master/<file>)
+GOLDEN_MASTER_DIR = ROOT_DIR / "dev" / "golden_master"
 DATA_DIR = GOLDEN_MASTER_DIR / "data"
 
 # Lines the port adds on purpose to a command's output. Each entry maps the port's line to the legacy line it replaces (None: the line

@@ -17,12 +17,12 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 from webtest import TestApp
 
-ROOT_DIR = Path(__file__).resolve().parent.parent
+ROOT_DIR = Path(__file__).resolve().parents[2]          # the project root (dev/golden_master/<file>)
 sys.path.insert(0, str(ROOT_DIR / "src"))
 
 from namifax import create_app as make_app
 
-GOLDEN_WEB_DIR = ROOT_DIR / "golden_master" / "web"
+GOLDEN_WEB_DIR = ROOT_DIR / "dev" / "golden_master" / "web"
 
 
 def normalize_text(text: str) -> str:

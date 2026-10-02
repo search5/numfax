@@ -8,8 +8,8 @@ derived from legacy AvantFAX PHP + Smarty markup and form specifications.
 import json
 from pathlib import Path
 
-ROOT_DIR = Path(__file__).resolve().parent.parent
-WEB_GOLDEN_DIR = ROOT_DIR / "golden_master" / "web"
+ROOT_DIR = Path(__file__).resolve().parents[2]          # the project root (dev/golden_master/<file>)
+WEB_GOLDEN_DIR = ROOT_DIR / "dev" / "golden_master" / "web"
 
 SCENARIOS = [
     {

@@ -309,8 +309,8 @@ MySQL 스키마(`create_tables.sql`)를 기준으로 신규 Python 시스템(`SQ
 ## 6. Verification & Golden Master Strategy
 
 ### 6.1 Phase 2: E2E Golden Master Test Suite 구축 완료
-- **테스트 러너 스크립트**: `golden_master/runner.py` (CLI 차분 검증기) 및 `golden_master/test_e2e.py` (pytest 연동)
-- **도커 격리 환경**: `golden_master/Dockerfile.legacy` (PHP 5.6 + mysqli + PEAR MDB2 기반 레거시 순수 환경)
+- **테스트 러너 스크립트**: `dev/golden_master/runner.py` (CLI 차분 검증기) 및 `dev/golden_master/test_e2e.py` (pytest 연동)
+- **도커 격리 환경**: `dev/golden_master/Dockerfile.legacy` (PHP 5.6 + mysqli + PEAR MDB2 기반 레거시 순수 환경)
 - **구축된 시나리오 (14개)**:
   1. `01_dynconf_no_args`: 인자 없는 호출 시 사용법 출력 및 반환코드 검증
   2. `02_dynconf_empty_callid`: 디바이스명만 전달되고 CallID가 비어있는 케이스 검증
@@ -326,10 +326,10 @@ MySQL 스키마(`create_tables.sql`)를 기준으로 신규 Python 시스템(`SQ
   12. `12_faxrcvd_no_args`: 수신 훅 스크립트 인자 누락 시 사용법 출력 검증
   13. `13_faxrcvd_missing_args`: 필수 인자 3개 누락 케이스 검증
   14. `14_faxrcvd_nonexistent_file`: 존재하지 않는 수신 TIFF 파일 입력 시 에러 처리 검증
-- **검증 데이터 저장소**: `golden_master/data/<scenario_id>/` (stdout, stderr, exit_code, meta.json 보관 완료)
+- **검증 데이터 저장소**: `dev/golden_master/data/<scenario_id>/` (stdout, stderr, exit_code, meta.json 보관 완료)
 - **차분 검증 실행법**:
-  - `python3 golden_master/runner.py --verify`
-  - `pytest golden_master/test_e2e.py`
+  - `python3 dev/golden_master/runner.py --verify`
+  - `pytest dev/golden_master/test_e2e.py`
 
 ---
 
@@ -375,7 +375,7 @@ NamiFAX는 초고속 모던 패키지 관리자인 **`uv`**를 기반으로 패�
 
   # 개발/테스트 의존성 포함 실행
   uv run pytest
-  uv run python golden_master/runner.py --verify
+  uv run python dev/golden_master/runner.py --verify
 
   # NamiFAX CLI 명령어 실행
   uv run namifax --help
@@ -540,7 +540,7 @@ Pyramid 뷰 컨트롤러는 Jinja2 템플릿에 다음 표준 컨텍스트 딕�
 
 웹 프런트엔드 포팅 시 발생할 수 있는 폼 필드 누락, 라우팅 오류, 화면 깨짐을 방지하기 위한 블랙박스 Golden Master 검증 규격입니다.
 
-### 11.1 Golden Master 데이터 보관 규격 (`golden_master/web/<scenario_id>/`)
+### 11.1 Golden Master 데이터 보관 규격 (`dev/golden_master/web/<scenario_id>/`)
 - `response.html`: 레거시 PHP 서버가 Smarty로 렌더링한 원본 HTML 스냅샷
 - `contract.json`: HTTP 상태 코드, 리다이렉트 URL(Location), 폼 필드 명세(`name`, `type`, `value`, `method`, `action`), 세션 쿠키 키
 - `screenshot.png`: 헤드리스 브라우저(Playwright)로 캡처한 화면 기준 스크린샷 (Visual Baseline)
@@ -610,12 +610,12 @@ Pyramid 뷰 컨트롤러는 Jinja2 템플릿에 다음 표준 컨텍스트 딕�
 | `18_import_blacklist_no_args` | `tools/import_blacklist.php` | 필수 인수 누락 시 Usage 안내 메시지 출력 검증 | `38-tools-batch.md` |
 | `19_reroute_no_args` | `tools/reroute.php` | 필수 인수 누락 시 Usage 안내 메시지 출력 검증 | `38-tools-batch.md` |
 
-### 11.4 웹 차분 검증 러너 (`golden_master/web_runner.py`)
+### 11.4 웹 차분 검증 러너 (`dev/golden_master/web_runner.py`)
 - **검증 방식**: Pyramid 웹 애플리케이션을 대상으로 각 시나리오별 HTTP 요청을 보내 레거시 Golden Master와 비교:
   1) HTTP 응답 코드, Location 헤더 일치 여부 확인
   2) DOM 트리 내 `form[action]`, `input[name]`, `select[name]`, `button` 요소 및 속성 계약 일치 검증
   3) 테이블 컬럼 헤더, 본문 데이터 텍스트 정규화 비교
-  4) 실행 명령: `python golden_master/web_runner.py --verify` 또는 `pytest golden_master/`
+  4) 실행 명령: `python dev/golden_master/web_runner.py --verify` 또는 `pytest dev/golden_master/`
 
 ---
 
@@ -697,7 +697,7 @@ Pyramid 뷰 컨트롤러는 Jinja2 템플릿에 다음 표준 컨텍스트 딕�
 
 NamiFAX 웹 시스템은 정적 필드 유무 검사뿐만 아니라 **화면별 `<form>` 태그의 정확한 개수, 인풋/버튼의 정확한 총 개수 및 순서(DOM Sequence), 그리고 자바스크립트 상호작용에 따른 동적 상태(Dynamic States)**를 골든 마스터로 추적 및 상시 검증합니다.
 
-### 13.1 검증 항목 및 규격 (`golden_master/web_runner.py`)
+### 13.1 검증 항목 및 규격 (`dev/golden_master/web_runner.py`)
 1. **Exact Form Count**: 페이지 내 존재하는 `<form>` 태그 개수 일치 (`total_forms`)
 2. **Exact Element Counts**:
    - `inputs_count`: 폼 내부의 `<input>`, `<select>`, `<textarea>` 총 개수 엄격 일치 (배열 필드 `[]`의 경우 최소 기준치 보장)
@@ -725,7 +725,7 @@ NamiFAX 웹 시스템은 정적 필드 유무 검사뿐만 아니라 **화면별
 2. **Pyramid 뷰 컨트롤러 12종 전면 전환**:
    - 뷰 응답 컨텍스트 `title` 및 이메일 발신자명을 `NamiFAX`로 전환.
 3. **골든 마스터 레거시 원형 보존 및 하위 호환성 검증**:
-   - 원본 골든 마스터(`golden_master/data/`, `golden_master/web/`)의 레거시 기준 데이터는 100% 엄격 보존하면서, 리브랜딩된 NamiFAX 화면에 대한 E2E Golden Master 검증(68/68 PASS) 및 전체 단위 테스트(374/374 PASS)를 무회귀로 완료.
+   - 원본 골든 마스터(`dev/golden_master/data/`, `dev/golden_master/web/`)의 레거시 기준 데이터는 100% 엄격 보존하면서, 리브랜딩된 NamiFAX 화면에 대한 E2E Golden Master 검증(68/68 PASS) 및 전체 단위 테스트(374/374 PASS)를 무회귀로 완료.
 
 ---
 
@@ -966,8 +966,8 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 * 서버 DB 테스트는 환경변수(`NAMIFAX_TEST_PG_URL`, `NAMIFAX_TEST_MYSQL_URL`, `NAMIFAX_TEST_MARIADB_URL`)가 있을 때만 실행된다. 서버 end-to-end 테스트는 빈 DB로 앱을 띄워 관리자 생성, 로그인, 주요 페이지, 2FA·SAML 흐름을 확인한다.
 * 서비스를 통째로 mock하는 테스트는 API 불일치를 가린다(SAML·패스키·OCR·패스키 저장소가 실제로는 동작하지 않았음). 로그인·저장 같은 흐름은 실제 앱과 DB로 검증한다.
 
-* **원본 실행 대조**: `tests/unit/test_archive_search_legacy_parity.py`의 기대값은 원본 PHP(`FaxPDFArchive`)를 PHP 5.6 + MDB2 + MariaDB로 실제 실행해 얻었다(`golden_master/Dockerfile.legacy`와 같은 계열의 `avantfax-legacy-test` 이미지, `tests/fixtures/legacy_sql/create_tables.sql` 스키마). 같은 방법으로 다른 쿼리도 대조할 수 있다.
-* **골든 마스터**(`golden_master/test_web_e2e.py`, 68개): 기본 `pytest`에 포함되어 있다. 러너는 이제 **새 임시 SQLite DB(데모 데이터)** 에서 실행한다(전에는 작업 디렉터리의 `namifax.db`를 써서 개발자 DB 상태에 따라 결과가 달랐다). 폼 검사는 n번째 명세를 n번째 폼과 맞추고, 비밀번호 변경 화면(W24)은 실제 흐름(변경이 필요한 계정으로 로그인)으로 검사하며, 주소록·이메일북·Fax to Email 계약(W15/29/54/62/65/67)은 원본 방식으로 다시 만든 화면에 맞춰 갱신했다.
+* **원본 실행 대조**: `tests/unit/test_archive_search_legacy_parity.py`의 기대값은 원본 PHP(`FaxPDFArchive`)를 PHP 5.6 + MDB2 + MariaDB로 실제 실행해 얻었다(`dev/golden_master/Dockerfile.legacy`와 같은 계열의 `avantfax-legacy-test` 이미지, `tests/fixtures/legacy_sql/create_tables.sql` 스키마). 같은 방법으로 다른 쿼리도 대조할 수 있다.
+* **골든 마스터**(`dev/golden_master/test_web_e2e.py`, 68개): 기본 `pytest`에 포함되어 있다. 러너는 이제 **새 임시 SQLite DB(데모 데이터)** 에서 실행한다(전에는 작업 디렉터리의 `namifax.db`를 써서 개발자 DB 상태에 따라 결과가 달랐다). 폼 검사는 n번째 명세를 n번째 폼과 맞추고, 비밀번호 변경 화면(W24)은 실제 흐름(변경이 필요한 계정으로 로그인)으로 검사하며, 주소록·이메일북·Fax to Email 계약(W15/29/54/62/65/67)은 원본 방식으로 다시 만든 화면에 맞춰 갱신했다.
 
 * **입력창 예시 문구(placeholder)**는 URL·주소·장치명 같은 기술 값만 그대로 두고 모두 번역 대상이다(`test_placeholders_translated.py`가 감시). 팩스 번호 안내문은 여러 수신처를 **세미콜론**으로 나눈다고 바로잡았다(원본 규칙; 전에는 쉼표라고 되어 있었다).
 * **번역 카탈로그**: `namifax.pot`를 다시 추출(`pybabel extract -F babel.cfg --no-location .`)해 24개 언어 `.po`를 갱신했고, 한국어는 새 문구 195개(이번 작업뿐 아니라 SAML, 프린터, 스토리지, 패스키, 2FA 화면 포함)를 번역해 **빠진 번역이 0개**이며 `tests/unit/test_ko_catalog_complete.py`가 이를 지킨다(번역 누락과 `%(x)s` 자리표시자 불일치를 잡는다). 다른 23개 언어는 새 문구가 영어로 보인다. 언어는 `?lang=ko` 또는 `_LOCALE_` 쿠키로 정한다.

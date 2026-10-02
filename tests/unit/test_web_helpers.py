@@ -1,4 +1,4 @@
-"""Unit tests for popup helper views and vCard upload views matching specs/web/25-popup-helpers.md."""
+"""Unit tests for popup helper views and vCard upload views matching dev/specs/web/25-popup-helpers.md."""
 
 from unittest.mock import MagicMock
 from pyramid import testing

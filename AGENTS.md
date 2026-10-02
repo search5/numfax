@@ -13,16 +13,17 @@ avantfax/
 ├── SYSTEM_PROMPT.md            # [마스터] LLM 전역 행동 지침 (AGENTS.md 심볼릭 링크)
 ├── AGENTS.md                   # [마스터] LLM 전역 행동 지침 원본
 ├── ARCHITECTURE.md             # [상태/명세] AI가 관리하는 단일 진실 공급원(SSOT)
-├── prompts/                    # [단계별 워크플로우 프롬프트]
-│   ├── 01-scan-architecture.md # Phase 1: 의존성, 웹 라우팅/템플릿 및 ARCHITECTURE.md 초기화
-│   ├── 02-e2e-golden-test.md   # Phase 2: 백엔드 CLI & 웹 프런트엔드 E2E Golden Master 스위트
-│   ├── 03-module-porting.md    # Phase 3: 단위 모듈 및 웹 UI(Pyramid+Tailwind) 이식 루프
-│   └── 04-final-integration.md # Phase 4: 최종 엔트리포인트 전환 및 풀스택 검증
-├── golden_master/              # [E2E 검증] 레거시 입출력 및 웹 HTML/계약 Golden Master 데이터
-│   ├── data/                   # 백엔드 CLI 훅 Golden Master 데이터
-│   └── web/                    # 웹 라우트별 HTML DOM, 폼 계약(contract.json), 스크린샷
+├── dev/                        # [이식 작업 산출물] 개발하면서 생긴 자료
+│   ├── prompts/                # [단계별 워크플로우 프롬프트]
+│   │   ├── 01-scan-architecture.md # Phase 1: 의존성, 웹 라우팅/템플릿 및 ARCHITECTURE.md 초기화
+│   │   ├── 02-e2e-golden-test.md   # Phase 2: 백엔드 CLI & 웹 프런트엔드 E2E Golden Master 스위트
+│   │   ├── 03-module-porting.md    # Phase 3: 단위 모듈 및 웹 UI(Pyramid+Tailwind) 이식 루프
+│   │   └── 04-final-integration.md # Phase 4: 최종 엔트리포인트 전환 및 풀스택 검증
+│   ├── golden_master/          # [E2E 검증] 레거시 입출력 및 웹 HTML/계약 Golden Master 데이터
+│   │   ├── data/               # 백엔드 CLI 훅 Golden Master 데이터
+│   │   └── web/                # 웹 라우트별 HTML DOM, 폼 계약(contract.json), 스크린샷
+│   └── specs/                  # [명세서] 모듈 및 웹 라우트별 계약 명세서
 ├── (legacy/)                   # [제거됨] 원본 PHP 소스는 이식 완료 후 삭제 (git 이력 커밋 9408385 에서 복원 가능)
-├── specs/                      # [명세서] 모듈 및 웹 라우트별 계약 명세서
 └── src/                        # [신규 시스템] 타깃 언어로 새로 작성되는 소스 코드
     └── namifax/                # 모던 Python/Pyramid 패키지
         ├── views/              # Pyramid 뷰 컨트롤러 (@view_config)
