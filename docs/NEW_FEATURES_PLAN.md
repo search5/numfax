@@ -3,10 +3,12 @@
 
 ---
 
+> **구현 현황 (2026-10-02)**: Google Cloud Storage(GCS)는 코드와 화면에서 제거했습니다(보류, `docs/FUTURE_GCS_STORAGE.md`). 아래 GCS 언급은 계획 기록입니다. 또 3.8 의 "팩스 수신/발신 완료 시 S3 로 자동 업로드"와 "스마트 다운로드"는 배선되지 않았습니다(`upload_file` 을 부르는 코드 없음; 현재 S3 는 연결 시험과 수명주기의 원격 삭제에만 쓰임).
+
 ## 1. 개요 및 배경
 
 NamiFAX는 오픈소스 팩스 솔루션인 AvantFAX(PHP 5 + MySQL + HylaFAX)를 모던 Python/Pyramid 스택으로 100% 무회귀 이식한 시스템입니다.
-현재 코어 시스템, 24개 다국어 지원, E2E Golden Master(68개 시나리오) 검증이 완료된 상태이며, 현대적인 기업 환경의 보안, 스토리지 효율성, 클라우드 연동 및 사용자 편의성을 강화하기 위해 **9대 핵심 엔터프라이즈 기능**의 도입을 추진합니다.
+현재 코어 시스템과 24개 다국어 지원이 완료된 상태이며(E2E Golden Master 68개 시나리오 검증은 `dev/` 와 함께 삭제됐고 기본 pytest 에서도 빠졌습니다), 현대적인 기업 환경의 보안, 스토리지 효율성, 클라우드 연동 및 사용자 편의성을 강화하기 위해 **9대 핵심 엔터프라이즈 기능**의 도입을 추진합니다.
 
 본 문서는 사용자가 요청한 9가지 기능에 대해 **[1] 레거시 시스템(AvantFAX)의 기존 동작 방식 및 한계**를 전수 대조하고, **[2] NamiFAX 환경에서 구축할 신규 아키텍처 및 구현 로드맵**을 정의합니다.
 
@@ -136,7 +138,7 @@ NamiFAX는 오픈소스 팩스 솔루션인 AvantFAX(PHP 5 + MySQL + HylaFAX)를
 
 ---
 
-### 3.8 멀티 클라우드 오브젝트 스토리지 연동 (AWS S3 & Google Cloud Storage)
+### 3.8 멀티 클라우드 오브젝트 스토리지 연동 (AWS S3 & Google Cloud Storage; GCS 는 제거됨)
 - **레거시 한계**:
   - 클라우드 스토리지 개념 부재. 온프레미스 단일 서버 디스크에만 보관되어 디스크 용량 고갈 및 이중화 백업에 한계.
 - **신규 아키텍처**:
@@ -147,14 +149,13 @@ NamiFAX는 오픈소스 팩스 솔루션인 AvantFAX(PHP 5 + MySQL + HylaFAX)를
     - `generate_presigned_url(remote_key, expires_in)`
   - **지원 스토리지 프로바이더**:
     1. **AWS S3 & S3 호환 스토리지**: AWS S3, MinIO, SeaweedFS, Garage, Cloudflare R2, Ceph RADOS (`boto3` 기반).
-    2. **Google Cloud Storage (GCS)**:
+    2. **Google Cloud Storage (GCS)** (2026-10-02 제거, 계획 기록): 
        - **GCS 상호 운용성(HMAC) 방식**: GCS의 S3 호환 XML 엔드포인트(`https://storage.googleapis.com`)에 HMAC Access/Secret Key로 접속하여 일관된 Boto3 클라이언트로 고속 통신.
        - **GCP 서비스 계정 키 방식**: 서비스 계정 JSON 키 업로드를 통한 네이티브 인증 지원.
   - **관리자 설정 UI (`Admin > Storage & Retention > Cloud Storage`)**:
-    - 스토리지 유형 선택: `Local Only`, `AWS S3 / S3-Compatible`, `Google Cloud Storage (GCS)`
+    - 스토리지 유형 선택: `Local Only`, `AWS S3 / S3-Compatible` (GCS 는 제거됨)
     - 설정 입력 필드:
       - S3 모드: Endpoint URL, Region, Bucket Name, Access Key, Secret Key, Prefix
-      - GCS 모드: Project ID, Bucket Name, HMAC Key (또는 Service Account JSON 파일 업로드), Prefix
     - "Test Connection" 진단 버튼 (버킷 존재 확인 및 읽기/쓰기/삭제 권한 실시간 진단).
   - **동기화 및 뷰어 전략**:
     - **업로드 파이프라인**: 팩스 수신(`faxrcvd`) 및 발신(`notify`) 완료 시 로컬 저장과 동시에 백그라운드 워커로 S3/GCS에 `fax.tif`, `fax.pdf`, `thumb.png` 자동 업로드.
@@ -285,7 +286,7 @@ flowchart LR
 ### Milestone Phase B: 클라우드 스토리지 & 하드웨어 확장 (완료)
 1. **네트워크 프린터 추가 및 인쇄 엔진** [완료]: RAW 9100 / IPP / LPD 소켓 직접 제어 UI (Spec 42).
 2. **팩스 커버 업로드 및 썸네일 관리 스튜디오** [완료]: 파일 업로드, 렌더링 미리보기, 변수 태깅 (Spec 44).
-3. **S3 Compatible Object Storage 연동** [완료]: MinIO / AWS S3 동기화 및 Presigned URL 뷰어 (Spec 41).
+3. **S3 Compatible Object Storage 연동** [완료]: MinIO / AWS S3 연결 시험과 수명주기의 원격 삭제까지 구현 (Spec 41). 수신/발신 자동 업로드, 다운로드, Presigned URL 뷰어는 배선되지 않았습니다(GCS 는 2026-10-02 제거).
 
 ### Milestone Phase C: 차세대 보안 인증 체계 구축 (완료)
 1. **TOTP 2FA** [완료]: QR 코드 발급, 6자리 챌린지 검증, 비상 복구 코드 (Spec 43).
@@ -298,7 +299,7 @@ flowchart LR
 ## 6. 무회귀 검증 및 호환성 원칙
 
 1. **골든 마스터 불변성 보장**:
-   - 신규 기능 추가 후에도 기존 68개 Web E2E Golden Master 시나리오 및 291개 pytest 테스트가 100% PASS를 유지해야 합니다.
+   - 신규 기능 추가 후에도 pytest 테스트가 100% PASS를 유지해야 합니다(Web E2E Golden Master 68개 시나리오는 삭제되어 더는 검증하지 않습니다).
 2. **기본 동작 하위 호환성 (Zero Disruption)**:
    - 신규 기능(S3, TOTP, 네트워크 프린터, TIFF 삭제)은 초기 설정 시 '비활성화' 또는 '기본 모드'로 시작하여, 기존 온프레미스 로컬 환경 운영에 어떠한 사이드 이펙트도 유발하지 않도록 설계합니다.
 3. **모듈식 독립성**:

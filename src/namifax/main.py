@@ -62,17 +62,39 @@ Run 'namifax <command> --help' for details on a specific command.
 """
 
 
+def _load_ini_settings(path: str) -> dict:
+    """The [app:main] settings of a PasteDeploy ini file (``%(here)s`` expanded), as ``pserve`` would pass them."""
+    if not os.path.isfile(path):
+        raise FileNotFoundError(f"no such file: {path}")
+    from pyramid.paster import get_appsettings
+
+    return dict(get_appsettings(os.path.abspath(path), name="main"))
+
+
 def serve_main(argv: list[str] | None = None) -> int:
     """Entry point for namifax-server / namifax serve."""
     parser = argparse.ArgumentParser(prog="namifax serve", description="Start NamiFAX Web Service")
     parser.add_argument("--host", default=os.environ.get("NAMIFAX_HOST", "0.0.0.0"), help="Bind host")
     parser.add_argument("--port", type=int, default=int(os.environ.get("NAMIFAX_PORT", "8000")), help="Bind port")
+    parser.add_argument(
+        "--config", "-c", default=os.environ.get("NAMIFAX_INI") or None,
+        help="ini file whose [app:main] section supplies the app settings (session.secret, session.secure, "
+             "csrf.trusted_origins, secret.key, sqlalchemy.url ...); default: $NAMIFAX_INI, else none",
+    )
     args, _ = parser.parse_known_args(argv or [])
     host = args.host
     port = args.port
 
+    settings: dict = {}
+    if args.config:
+        try:
+            settings = _load_ini_settings(args.config)
+        except Exception as exc:
+            print(f"[!] Cannot read the configuration file {args.config}: {exc}", file=sys.stderr)
+            return 1
+
     # Ensure DB tables exist (same URL resolution as the web app, no global engine)
-    engine = create_sa_engine(resolve_database_url({}, os.environ))
+    engine = create_sa_engine(resolve_database_url(settings, os.environ))
     try:
         ensure_schema(engine)
     finally:
@@ -87,7 +109,7 @@ def serve_main(argv: list[str] | None = None) -> int:
 
     try:
         from namifax import create_app as make_app
-        app = make_app()
+        app = make_app(**settings)
     except Exception as exc:
         print(f"[!] NamiFAX web application failed to start: {exc!r}", file=sys.stderr)
         if enable_internal_sched:

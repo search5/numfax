@@ -7,14 +7,15 @@ NamiFAX를 운영 환경에 올리기 전에 한 번, 그리고 운영 중 주�
 
 | 항목 | 방법 | 이유 |
 |---|---|---|
+| 환경 파일 배선 | `/etc/namifax.env`(`KEY=value` 한 줄씩, 따옴표·`export`·줄 끝 주석 없음)를 두면 systemd 서비스 2개(`EnvironmentFile=-`), cron 줄(`sh -c 'set -a; . /etc/namifax.env; …'`), HylaFAX 훅 스크립트(`set -a; . …`)가 모두 같은 파일을 읽습니다. | 파일이 전달되지 않으면 `DATABASE_URL` 이 없어 현재 폴더의 SQLite(`namifax.db`)로 조용히 떨어집니다. |
 | 세션 서명 키 고정 | `session.secret`(ini) 또는 환경변수 `NAMIFAX_SESSION_SECRET` | 없으면 프로세스마다 임의 키를 쓰고 경고만 남깁니다. 워커가 여러 개거나 재시작하면 2FA 중간 단계 상태와 로그인 흐름이 끊깁니다. |
-| HTTPS면 보안 쿠키 | `session.secure = true` | 기본값은 false입니다. |
+| HTTPS면 보안 쿠키 | ini 의 `session.secure = true`. ini 는 `namifax serve --config <파일.ini>` 또는 환경변수 `NAMIFAX_INI` 로 읽힙니다(`pserve` 로 띄워도 됩니다). 옵션이 없으면 ini 를 읽지 않습니다. | 기본값은 false입니다. `csrf.trusted_origins`, `secret.key` 도 같은 방식입니다. |
 | 자격증명 암호화 키 | 환경변수 `NAMIFAX_SECRET_KEY`(또는 ini `secret.key`)를 정하고 `namifax encrypt-secrets`를 한 번 실행 | 클라우드 키, SMTP 비밀번호, 2FA 시드를 암호화해 저장합니다. **키를 잃으면 암호화된 값을 복구할 수 없습니다.** 비밀 저장소에 따로 보관하십시오. |
 | 첫 관리자 | `namifax createuser -u <이름> -e <메일>` (비밀번호는 `-p`, `NAMIFAX_NEW_USER_PASSWORD` 또는 프롬프트) | 서버 DB(MySQL, MariaDB, PostgreSQL)에는 데모 계정이 만들어지지 않습니다. 내장 기본 비밀번호도 없습니다. |
 | SMTP 게이트웨이 | 관리자 화면에서 설정 | **비밀번호 찾기**, 수신 팩스 메일 전달, 알림 메일이 모두 이 설정을 씁니다. 메일을 보낼 수 없으면 비밀번호 찾기는 "Email failed to send"를 보여 주고 기존 비밀번호는 그대로 둡니다. |
 | 데모 데이터 끄기 | `NAMIFAX_DEMO_DATA`를 켜지 않기 | SQLite에서만 동작하는 옵트인입니다. SQLite는 운영 DB가 아닙니다. |
-
-| 비밀번호 해시 | 기본 Argon2id. 원본 PHP와 한 DB를 함께 쓰는 동안은 `NAMIFAX_PASSWORD_HASH=md5` | 원본은 Argon2id를 읽지 못합니다(`docs/MIGRATING_FROM_AVANTFAX3.md` 4.3). |
+| 주기 작업 | 내장 스케줄러(`/admin/scheduler`)가 임시 폴더 정리(`tmp`), 받은 팩스함 보관 이동(`inbox`, 기본 꺼짐), 저장 정책 실행(`lifecycle`), 전화번호부 내보내기(`phonebook`) 4종을 돌립니다. | 보관함의 오래된 팩스를 날짜로 지우는 `cron -d` 에 정확히 대응하는 작업은 없으므로 필요하면 `deploy/cron.d/namifax` 에 적습니다. |
+| 비밀번호 해시 | 기본 Argon2id. 원본 PHP와 한 DB를 함께 쓰는 동안은 `NAMIFAX_PASSWORD_HASH=md5` | 원본은 Argon2id를 읽지 못합니다(`docs/MIGRATING_FROM_AVANTFAX3.md` 4.5). |
 
 ### SAML 로그인과 권한
 
@@ -39,6 +40,7 @@ NamiFAX를 운영 환경에 올리기 전에 한 번, 그리고 운영 중 주�
 
 - 원본 MySQL/MariaDB DB에 그대로 붙습니다(`ARCHITECTURE.md`(삭제됨, 커밋 01f2f64 에서 복원) 17.5a). 큰 `FaxArchive` 테이블은 **첫 기동에서 검색용 인덱스를 만드느라 오래 걸릴 수 있습니다.** 소요 시간은 측정하지 않았으니 점검 시간대에 첫 기동을 하십시오.
 - **PHP 세션과 로그인 쿠키는 이어지지 않습니다.** 이전 직후 모든 사용자가 다시 로그인해야 합니다.
+- 마이그레이션 예행연습 도구 `tools/migration_rehearsal/` 은 저장소에 남아 있지만 `legacy/` 를 `git checkout 9408385 -- legacy` 로 되살리기 전에는 실행되지 않습니다.
 - 원본 DB는 첫 기동 전에 백업하십시오(스키마 보정이 일어납니다).
 - 이전 버전의 포트가 만든 SQLite 파일은 시작 시 보정되지만, 아주 초기 버전의 것은 일부만 보정됩니다. 운영 데이터가 아니라면 지우고 새로 만드십시오.
 - 기존 보관 팩스 파일은 `namifax import-archive`로 들여옵니다. 사용자는 `namifax import-users`.

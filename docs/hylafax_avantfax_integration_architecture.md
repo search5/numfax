@@ -1,5 +1,13 @@
 # HylaFAX & AvantFAX (NamiFAX) 연동 아키텍처 및 스토리지 관리 명세서
 
+> **구현 현황 안내 (2026-10-02, 코드 기준)**: 이 문서는 설계 명세이며, 일부는 현재 코드와 다릅니다. 코드가 맞습니다.
+> - 모뎀 상태와 대기열은 TCP 4559(`hfaxd`)에 접속하지 않고 **`faxstat` 외부 프로세스를 실행**해서만 구합니다(2.5).
+> - 쪽 이미지 이름은 `preview<N>.png` 가 아니라 **`page<N>.png`** 입니다(`services/archive_base.py` 의 `PREVIMG = "page"`).
+> - 스케줄러 화면은 `/admin/maintenance` 가 아니라 **`/admin/scheduler`** 입니다. 이력은 작업별 "마지막 실행 결과" 한 건뿐입니다(7장).
+> - **S3 로의 자동 업로드(9.1~9.3)와 `REMOTE_*` 정책(7.2, 9.4)은 구현돼 있지 않습니다.** `upload_file` 을 부르는 코드는 없고, S3 는 Storage 화면의 연결 시험과 수명주기의 원격 삭제(`delete_fax`)에만 쓰입니다.
+> - **GCS 는 2026-10-02 에 제거**했습니다(보류, `docs/FUTURE_GCS_STORAGE.md`). 아래 GCS 언급은 설계 기록입니다.
+> - 서비스 파일은 `deploy/systemd/` 가 아니라 최상위 `systemd/` 에 있습니다. `/etc/namifax.env` 와 `namifax serve --config` 는 `docs/INSTALL_HYLAFAX.md` 를 보십시오.
+
 ---
 
 ## 1. 개요 (Overview)
@@ -59,7 +67,7 @@ HylaFAX와 AvantFAX는 단일 프로세스가 아니며, **CLI 바이너리 호�
    faxrcvd "recvq/fax00000001.tif" "ttyS0" "00000001" "" "<CIDNumber>" "<CIDName>" "<DIDNum>"
    ```
 4. AvantFAX/NamiFAX의 `faxrcvd` 훅이 구동되어 다음과 같은 일괄 처리를 수행합니다:
-   - 원본 TIFF 무손실 PDF 변환 (`fax.pdf`) 및 페이지별 웹 프리뷰 이미지(`previewN.png`) 생성
+   - 원본 TIFF 무손실 PDF 변환 (`fax.pdf`) 및 페이지별 웹 프리뷰 이미지(`pageN.png`) 생성
    - 발신자 번호(CID) 및 DID 착신 번호를 주소록(`AddressBook`) 및 DID 규칙(`DIDRoute`)과 매핑
    - 영구 아카이브 디렉터리로 파일 이동 및 DB(`FaxArchive`)에 `inbox = 1`로 등록
    - 담당자 이메일 발송(PDF 첨부) 및 네트워크 프린터 자동 인쇄 수행
@@ -75,8 +83,8 @@ HylaFAX와 AvantFAX는 단일 프로세스가 아니며, **CLI 바이너리 호�
 1. 전화벨이 울리는 순간 HylaFAX가 발신자 번호(CID)를 감지하고 `/var/spool/hylafax/etc/dynconf`를 호출합니다.
 2. AvantFAX의 차단 목록 DB(`DynConf`)를 조회하여 블랙리스트 등록 번호인 경우 `RejectCall: true`를 반환하여 모뎀이 즉시 통화를 끊도록 지시합니다.
 
-### 2.5 실시간 모뎀 상태 모니터링 (`faxstat` & TCP 4559)
-1. 웹 상단 툴바 및 대시보드에 모뎀 회선의 실시간 상태(IDLE, SENDING, RECEIVING)를 표시하기 위해 AvantFAX는 `faxstat -s -d` 출력을 파싱하거나, HylaFAX 클라이언트 프로토콜 데몬(`hfaxd`, TCP 4559 포트) 소켓과 통신합니다.
+### 2.5 실시간 모뎀 상태 모니터링 (`faxstat`)
+1. 웹 상단 툴바 및 대시보드에 모뎀 회선의 실시간 상태(IDLE, SENDING, RECEIVING)를 표시하기 위해 `faxstat -s -d` 출력을 파싱합니다(원본 AvantFAX 는 `hfaxd` TCP 4559 소켓과 통신하는 방법도 썼지만, NamiFAX 는 TCP 4559 에 접속하지 않고 `faxstat` 프로세스를 실행해서만 구합니다. `src/namifax/services/faxqueue.py`).
 
 ---
 
@@ -157,31 +165,31 @@ HylaFAX 자체도 `/usr/sbin/faxqclean` cron 작업을 통해 `/var/spool/hylafa
 | **`fax.tif`** | Multi-page TIFF | 1개 | 수신된 원본 전체 페이지를 그대로 보존한 무손실 원본 파일 |
 | **`fax.pdf`** | Multi-page PDF | 1개 | 사용자가 웹에서 다운로드하거나 이메일로 전달받는 전체 통합 PDF 문서 |
 | **`thumb.png`** | Single PNG | 1개 | 웹 수신함 목록 테이블에서 보여주기 위한 1페이지 대표 축소 썸네일 (160x220) |
-| **`preview0.png`**<br>**`preview1.png`**<br>...<br>**`preview(N-1).png`** | Single PNG | **N개** | 웹 브라우저 팩스 뷰어(`viewfax`)에서 페이지 넘김 및 캔버스 렌더링을 위해 **전체 페이지 수(N)만큼 낱장으로 쪼개어 생성한 고해상도 PNG 이미지** |
+| **`page0.png`**<br>**`page1.png`**<br>...<br>**`page(N-1).png`** | Single PNG | **N개** | 웹 브라우저 팩스 뷰어(`viewfax`)에서 페이지 넘김 및 캔버스 렌더링을 위해 **전체 페이지 수(N)만큼 낱장으로 쪼개어 생성한 고해상도 PNG 이미지** |
 
 ### 5.3 페이지 수에 따른 파일 생성 수량 비교 매트릭스
 
 | 수신 팩스 분량 | 생성되는 파일 구성 | 총 저장 파일 개수 |
 | :---: | :--- | :---: |
-| **1페이지 팩스 1통** | `fax.tif`(1), `fax.pdf`(1), `thumb.png`(1), `preview0.png`(1) | **총 4개 파일** |
-| **5페이지 팩스 1통** | `fax.tif`(1), `fax.pdf`(1), `thumb.png`(1), `preview0.png` ~ `preview4.png`(5) | **총 8개 파일** |
-| **30페이지 팩스 1통** | `fax.tif`(1), `fax.pdf`(1), `thumb.png`(1), `preview0.png` ~ `preview29.png`(30) | **총 33개 파일** |
-| **100페이지 팩스 1통** | `fax.tif`(1), `fax.pdf`(1), `thumb.png`(1), `preview0.png` ~ `preview99.png`(100) | **총 103개 파일** |
+| **1페이지 팩스 1통** | `fax.tif`(1), `fax.pdf`(1), `thumb.png`(1), `page0.png`(1) | **총 4개 파일** |
+| **5페이지 팩스 1통** | `fax.tif`(1), `fax.pdf`(1), `thumb.png`(1), `page0.png` ~ `page4.png`(5) | **총 8개 파일** |
+| **30페이지 팩스 1통** | `fax.tif`(1), `fax.pdf`(1), `thumb.png`(1), `page0.png` ~ `page29.png`(30) | **총 33개 파일** |
+| **100페이지 팩스 1통** | `fax.tif`(1), `fax.pdf`(1), `thumb.png`(1), `page0.png` ~ `page99.png`(100) | **총 103개 파일** |
 
 ---
 
 ## 6. 스토리지 부하 및 NamiFAX 신규 엔터프라이즈 기능 연계
 
 ### 6.1 레거시 구조의 문제점 및 I/O 병목
-* **디렉터리 파일 폭증(Inode 고갈)**: 하루 수백 통의 팩스가 수신되는 기업 환경에서는 페이지별 `previewN.png` 파일로 인해 디스크 아이노드(Inode)와 메타데이터 검색 속도가 급격히 저하됩니다.
-* **중복 스토리지 점유**: 원본 `fax.tif`, 변환본 `fax.pdf`, 각 페이지별 `previewN.png`가 모두 로컬 디스크에 중복 보관되어 스토리지 용량 소모가 3배 이상 증가합니다.
+* **디렉터리 파일 폭증(Inode 고갈)**: 하루 수백 통의 팩스가 수신되는 기업 환경에서는 페이지별 `pageN.png` 파일로 인해 디스크 아이노드(Inode)와 메타데이터 검색 속도가 급격히 저하됩니다.
+* **중복 스토리지 점유**: 원본 `fax.tif`, 변환본 `fax.pdf`, 각 페이지별 `pageN.png`가 모두 로컬 디스크에 중복 보관되어 스토리지 용량 소모가 3배 이상 증가합니다.
 
 ### 6.2 NamiFAX 신규 엔터프라이즈 로드맵과의 연계
 이러한 레거시의 구조적 한계를 극복하기 위해, NamiFAX 신규 개발 로드맵 중 다음 기능들이 설계되었습니다:
 1. **S3 호환 오브젝트 스토리지 연동 (기능 #8)**:
    - 로컬 디스크 공간을 비우고, PDF 및 원본 파일을 AWS S3, MinIO, Ceph 등으로 자동 오프로드/아카이빙.
 2. **스토리지 수명주기 관리 및 TIFF 자동 정리 (기능 #9)**:
-   - PDF 생성 및 S3 업로드가 완료된 후 디스크 내 고용량 `fax.tif` 및 구형 `previewN.png` 파일을 자동으로 선별 삭제하여 로컬 디스크 사용량을 최대 80% 이상 절감.
+   - PDF 생성 및 S3 업로드가 완료된 후 디스크 내 고용량 `fax.tif` 및 구형 `pageN.png` 파일을 자동으로 선별 삭제하여 로컬 디스크 사용량을 최대 80% 이상 절감.
 
 ---
 
@@ -194,13 +202,13 @@ HylaFAX 자체도 `/usr/sbin/faxqclean` cron 작업을 통해 `/var/spool/hylafa
 | 비교 항목 | 레거시 AvantFAX (`avantfaxcron.php`) | NamiFAX APScheduler 기반 신규 아키텍처 |
 | :--- | :--- | :--- |
 | **실행 주체** | OS crontab 데몬 (`/etc/cron.d/avantfax`) | NamiFAX 웹 내부 인프로세스 또는 독립 서비스 데몬 |
-| **설정 방식** | 서버 쉘 접속 후 crontab 파일 수동 편집 | 관리자 웹 콘솔 (`Admin > Maintenance`) UI 설정 |
+| **설정 방식** | 서버 쉘 접속 후 crontab 파일 수동 편집 | 관리자 웹 콘솔 (`Admin > Scheduled Tasks`, `/admin/scheduler`) UI 설정 |
 | **설정 항목** | 정적 CLI 인자 (`-t`, `-i`, `-d`) 고정 | 보존 일수, 실행 시각, TIFF 정리 여부 동적 설정 |
 | **모니터링** | 파일 시스템 로그 확인 외 UI 모니터링 불가 | 최종 실행 시각, 성공 여부, 정리된 파일 수/용량 실시간 대시보드 |
 | **수동 실행** | 터미널 명령어 직접 실행 | 관리자 콘솔 내 `[Run Clean Now]` 버튼 즉시 트리거 |
 
 ### 7.2 관리자 웹 UI 명세 (`Admin > Storage Lifecycle & Scheduled Tasks`)
-* **위치**: `/admin/maintenance` 또는 `/admin/lifecycle`
+* **위치**: `/admin/scheduler` (실제 경로. `/admin/maintenance`, `/admin/lifecycle` 라우트는 없음). 내장 스케줄러 작업은 4종: `tmp`(임시 폴더 정리), `inbox`(받은 팩스함 보관 이동, 기본 꺼짐), `lifecycle`(저장 정책 실행), `phonebook`(전화번호부 내보내기). 아래 필드 이름은 설계 명세이며 실제 키는 `sched_*` 입니다. `-d` 에 정확히 대응하는 작업은 없고 `cron -d` 로만 가능합니다.
 * **주요 설정 필드**:
   1. **임시 파일 보존 기간 (`tmp_retention_days`)**: 변환 임시 파일 정리 기준일 (기본: 2일)
   2. **수신함 팩스 보존 기간 (`inbox_retention_days`)**: 수신함에 머문 팩스를 아카이브로 자동 전환할 기준일 (기본: 30일)
@@ -215,7 +223,7 @@ HylaFAX 자체도 `/usr/sbin/faxqclean` cron 작업을 통해 `/var/spool/hylafa
      - `REMOTE_PURGE_TIFF_ONLY`: 원격 버킷에서도 보존 기간이 지난 대용량 원본 TIFF만 골라 삭제하고 PDF만 영구 보존
   6. **자동 스케줄 설정**: 매일 특정 시각(예: 03:00) 또는 사용자 정의 Cron 표현식
 * **작업 이력 및 진단 패널**:
-  - 최근 작업 실행 시각 (Last Run Time)
+  - 최근 작업 실행 시각 (Last Run Time, 작업별 마지막 한 건만 보관)
   - 실행 상태 (SUCCESS, FAILED, RUNNING)
   - 정리 결과 (삭제된 임시 파일 수, 아카이빙된 팩스 수, 삭제된 팩스 수, 삭제된 원격 S3/GCS 객체 수, 회수된 디스크 용량 MB)
   - `[Run Clean Now]` 즉시 실행 버튼 (로컬 및 원격 클라우드 동시 수명주기 정리 트리거)
@@ -330,7 +338,9 @@ HylaFAX와 NamiFAX 웹 서비스가 각각 독립된 Docker 컨테이너 또는 
 
 ---
 
-## 9. 멀티 클라우드(AWS S3 & GCP GCS) 연동, 3단계 무결성 보장 및 원격 수명주기 동기화
+## 9. 멀티 클라우드(AWS S3 & GCP GCS) 연동, 3단계 무결성 보장 및 원격 수명주기 동기화 (설계안: 업로드 미구현, GCS 제거)
+
+> 이 장은 설계안입니다. 현재 코드에는 수신 훅에서 S3 로 업로드하는 단계가 없고(`upload_file` 호출 지점 없음), GCS 는 2026-10-02 에 제거됐습니다(`docs/FUTURE_GCS_STORAGE.md`).
 
 팩스가 전화선으로 전송 중인 불완전한 상태에서 원격 오브젝트 스토리지에 업로드되는 것을 원천 차단하기 위해, 시스템은 **이벤트 완료 보장 → 포맷 무결성 검증 → 로컬 트랜잭션 완료**의 3단계 파이프라인을 엄격히 적용합니다.
 
@@ -372,7 +382,7 @@ sequenceDiagram
 * **TIFF 구조 무결성 검사**: Python `Pillow` 및 LibTIFF 라이브러리로 원본 TIFF를 열어, 파일 헤더의 유효성, IFD(Image File Directory) 엔드 태그 정상 종료 여부, 페이지 수(Pages) 메타데이터를 정밀 파싱합니다. 손상된 파일은 클라우드 전송을 중단하고 관리자 감사 로그에 기록합니다.
 
 ### 9.3 3단계: 로컬 무손실 PDF 변환 트랜잭션 후 클라우드 업로드
-* **로컬 가공 선행**: 수신된 TIFF로부터 `fax.pdf`와 `previewN.png`를 로컬 디렉터리에서 완전히 생성합니다.
+* **로컬 가공 선행**: 수신된 TIFF로부터 `fax.pdf`와 `pageN.png`를 로컬 디렉터리에서 완전히 생성합니다.
 * **업로드 트리거 조건**:
   - `os.path.exists(pdffile)` 및 `os.path.getsize(pdffile) > 0` 검증 통과
   - `os.path.exists(faxfile)` 및 `os.path.getsize(faxfile) > 0` 검증 통과

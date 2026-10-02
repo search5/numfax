@@ -11,6 +11,9 @@ Environment="PYTHONPATH=/opt/namifax/src"
 Environment="NAMIFAX_HOST=0.0.0.0"
 Environment="NAMIFAX_PORT=8000"
 Environment="NAMIFAX_ENABLE_SCHEDULER=1"
+# DATABASE_URL, NAMIFAX_SESSION_SECRET, NAMIFAX_SECRET_KEY ... as plain KEY=value lines (no quotes, no export). The leading -
+# lets the service start without the file. Values in the file override the Environment= lines above.
+EnvironmentFile=-/etc/namifax.env
 ExecStart=/opt/namifax/.venv/bin/namifax serve
 Restart=always
 RestartSec=5s

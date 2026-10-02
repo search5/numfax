@@ -8,6 +8,8 @@ User=uucp
 Group=uucp
 WorkingDirectory=/opt/namifax
 Environment="PYTHONPATH=/opt/namifax/src"
+# Same file as the web service and the HylaFAX hooks (KEY=value lines; the leading - lets the service start without the file).
+EnvironmentFile=-/etc/namifax.env
 ExecStart=/opt/namifax/.venv/bin/namifax scheduler
 Restart=always
 RestartSec=5s
