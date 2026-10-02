@@ -21,6 +21,18 @@ sources:
   - src/namifax/__init__.py
   - src/namifax/db/bootstrap.py
   - src/namifax/db/seed.py
+  - src/namifax/services/login_throttle.py
+  - src/namifax/auth/alternate.py
+  - src/namifax/common/settings.py
+  - src/namifax/models/useraccount.py
+  - src/namifax/models/types.py
+  - src/namifax/cli/user.py
+  - src/namifax/cli/encrypt_secrets.py
+  - src/namifax/views/ajax.py
+  - src/namifax/views/fax_rights.py
+  - src/namifax/views/sendfax.py
+  - src/namifax/main.py
+  - systemd/namifax.service
   - "[[defects-report-summary]]"
   - "[[defects-rounds-1-2]]"
   - "[[defects-rounds-3]]"
@@ -32,7 +44,7 @@ sources:
 
 # 인증과 보안
 
-이 페이지는 2026-10-02 시점의 `src/`·`tests/` 를 직접 읽고 쓴 것이다. 과거 결함 보고([[defects-report-summary]], [[defects-rounds-1-2]] 등)는 당시 시점의 주장이며, 아래에서 코드로 다시 확인한 항목만 현재 상태로 적었다. 시험은 이 세션에서 실행하지 않았고 시험 이름과 목적만 읽었다(통과 여부는 확인하지 않음). 다른 주제: [[architecture-and-modules]], [[database-and-migrations]], [[operations-and-deployment]], [[known-gaps-and-decisions]], [[migration-from-avantfax]].
+이 페이지는 2026-10-02 시점(`git log` HEAD `47295d4`, 로그인 시도 제한·SAML Issuer 검사·`NAMIFAX_SESSION_SECURE` 도입 커밋 `403b549` 이후)의 `src/`·`tests/` 를 직접 읽고 쓴 것이다. 과거 결함 보고([[defects-report-summary]], [[defects-rounds-1-2]] 등)는 당시 시점의 주장이며, 아래에서 코드로 다시 확인한 항목만 현재 상태로 적었다. 시험은 이 세션에서 실행하지 않았고 시험 이름과 목적만 읽었다(통과 여부는 확인하지 않음). 다른 주제: [[architecture-and-modules]], [[database-and-migrations]], [[operations-and-deployment]], [[known-gaps-and-decisions]], [[migration-from-avantfax]].
 
 ## 1. 비밀번호 해시
 
@@ -51,14 +63,17 @@ sources:
 
 [코드] `src/namifax/views/auth.py`, `src/namifax/services/user_account.py`, `src/namifax/auth/alternate.py`
 
-1. `POST /login`: 대체 인증(PAM/pwauth 등, `alternate.enabled()`)이 켜져 있으면 그것을 먼저, 꺼져 있거나 `fallback()` 이 허용되면 계정 자체 비밀번호(`AFUserAccount.login`)를 검사한다. 시험 `tests/unit/test_alternate_auth.py`, `tests/unit/test_auth_pam.py`
+1. `POST /login`: 먼저 시도 제한(아래 8번)을 확인해 잠겨 있으면 비밀번호를 보지 않고 거절한다. 그 다음 대체 인증(PAM/pwauth 등, `alternate.enabled()`)이 켜져 있으면 그것을, 꺼져 있거나 `fallback()` 이 허용되면 계정 자체 비밀번호(`AFUserAccount.login`)를 검사한다. 시험 `tests/unit/test_alternate_auth.py`, `tests/unit/test_auth_pam.py`
 2. 웹서버가 인증한 `REMOTE_USER` 로 들어오는 경로(`GET /login`)는 `alternate.webserver_login()` 이 켜진 경우에만 동작한다. 시험 `test_alternate_auth.py::test_the_web_server_login_is_off_unless_asked_for`, `test_remote_user_logs_in_when_the_web_server_authenticates`
 3. 계정이 비활성(`acc_enabled`)이면 별도 메시지("Account is disabled")를 보이고 로그에 남긴다. 실패 로그의 비밀번호는 끝 3자리만 남기고 가린다(`XXXXXX` + 마지막 3자). 시험 `tests/unit/test_login_audit_log.py`
 4. 비밀번호 만료·최초 로그인(`last_login` 없음)·관리자 초기화(`wasreset`) 중 하나면 로그인 쿠키를 발급하기 전에 `/pwdexpired` 로 보내 새 비밀번호를 정하게 한다. 이 페이지는 로그인 직후 세션에 보관된 계정 하나만 바꿀 수 있고 사용자 이름을 요청에서 받지 않는다. 시험 `tests/unit/test_forced_password_change.py` (`test_the_page_cannot_be_used_to_change_somebody_elses_password`, `test_two_factor_still_applies_after_the_change`)
 5. 2단계 인증이 켜져 있으면 `session["2fa_pending_uid"]` 를 두고 `/login/totp` 로 보낸다. 코드가 맞아야 로그인 쿠키가 발급된다. 시험 `tests/unit/test_sso_and_2fa_login.py::test_a_user_with_2fa_logs_in_through_the_code_step`
 6. 비밀번호 분실(`/forgot`): 이메일로 임시 비밀번호를 보내고, 메일 발송이 실패하면 이전 비밀번호를 되살린다(`undo_reset`). 새 비밀번호는 로그에 쓰지 않는다. 시험 `tests/unit/test_forgot_password.py`
 7. 로그아웃은 GET 으로는 확인 화면만 보이고 CSRF 토큰이 있는 POST 로만 세션을 지운다. 시험 `tests/unit/test_logout_post.py`
-8. 비밀번호 로그인 자체에는 시도 횟수 제한이 없다. 제한(잠금)은 TOTP 단계에만 있다. [코드] `auth.py`/`user_account.py` 에 로그인 시도 카운터가 없고 `services/totp.py` 에만 있음. 한계로 기록한다.
+8. 비밀번호 로그인 시도 제한: `POST /login` 에서 사용자 이름별·접속 주소별로 실패를 센다. 기본은 실패 10회(`NAMIFAX_LOGIN_MAX_FAILURES`)에 15분 잠금(`NAMIFAX_LOGIN_LOCK_MINUTES`)이고, 잠겨 있으면 올바른 비밀번호도 보지 않고 "Too many failed sign-in attempts..." 를 돌려준다. 접속 주소는 한도가 5배(`IP_FACTOR`)다. 존재하지 않는 이름도 똑같이 센다. 계수기는 `SystemConfig` 행(`login_throttle:user|ip:<sha256 앞 32자>`)에 JSON 으로 저장돼 워커가 여러 개여도 공유된다. 성공하면 그 사용자 이름 계수기만 지우고 주소 계수기는 지우지 않는다. 이미 잠긴 동안 실패해도 잠금 시각은 연장하지 않는다. [코드] `src/namifax/services/login_throttle.py`, `views/auth.py` `login_post_view`; 시험 `tests/unit/test_login_throttle.py` (`test_too_many_failures_lock_even_the_right_password`, `test_an_unknown_user_name_is_limited_the_same_way`, `test_one_address_trying_many_names_is_locked_at_a_higher_limit`, `test_the_state_is_in_the_database_not_the_process` 등)
+   - 범위: `login_throttle` 은 `auth.py` 의 `POST /login` 에서만 호출된다(`grep -rn LoginThrottle src`). `REMOTE_USER` 로그인(`GET /login`), 패스키, SAML, `/pwdexpired`, `/forgot` 에는 적용되지 않는다. [코드]
+   - 주소는 `request.remote_addr` 를 그대로 쓴다. 코드에는 `X-Forwarded-For` 를 해석하거나 `ProxyFix` 를 쓰는 곳이 없고(`grep -rn "X-Forwarded-For\|ProxyFix" src` 결과 없음), `deploy/nginx/namifax.conf` 는 `X-Forwarded-For` 만 넘긴다. 따라서 프록시 뒤에서는 모든 사용자가 프록시 주소 하나로 보여 주소 한도(기본 50회)를 함께 소진할 수 있다. [추정: 프록시 뒤 `remote_addr` 값은 배포 환경에서 실제로 확인하지 못함]
+   - 한계: 한도는 잠금으로 서비스 거부를 일으킬 수 있다(남이 내 사용자 이름으로 10번 틀리면 15분간 내가 로그인하지 못한다). 코드에 이를 막는 장치는 없다. [코드: `record_failure` 는 인증 여부와 무관하게 센다]
 
 > 모순: [[defects-rounds-1-2]] F3-01("2FA 가 로그인에서 전혀 강제 안 됨")은 현재 코드와 다르다. `_finish_login()` 이 `TotpService.is_totp_enabled` 를 검사해 코드 단계를 거치게 한다.
 
@@ -107,29 +122,30 @@ ACS(`POST /auth/saml/acs`)에서 `process_saml_response` 가 확인하는 것(�
 3. XML 을 DTD 금지·엔티티 해석 금지·네트워크 금지 파서로 읽는다. 시험 `test_xml_with_an_entity_bomb_is_refused`
 4. `StatusCode` 가 Success 인지, `InResponseTo` 가 기대한 요청 ID 인지. 시험 `test_an_answer_to_another_request_is_refused`
 5. 서명 검증(`signxml.XMLVerifier`, 설정한 IdP 인증서로). 서명된 요소에서만 이름·속성을 읽는다. 서명 없음/다른 IdP 서명/서명 후 변조 거절. 시험 `test_an_unsigned_response_is_refused`, `test_a_response_signed_by_somebody_else_is_refused`, `test_changing_the_signed_assertion_breaks_the_signature`, `tests/unit/test_saml.py::test_an_unsigned_response_is_not_believed`
-6. `Conditions` 의 `NotBefore`/`NotOnOrAfter`(시계 오차 120초), Audience 가 SP entity ID 인지, `SubjectConfirmationData` 의 `Recipient`=ACS URL·`InResponseTo`·만료. 시험 `test_a_response_for_another_time_audience_or_address_is_refused`
-7. 재전송 방지: assertion ID 를 만료 시각 + 300초까지 기억하고 두 번째는 거절. 이 기억은 프로세스 메모리(`_USED`)라 워커가 여러 개면 워커별로 따로다. 시험 `test_the_same_response_cannot_be_used_twice` [한계: 다중 워커 공유는 코드상 없음]
-8. NameID 가 있어야 한다.
+6. Issuer: 관리자가 `saml_idp_entity_id` 를 설정했으면 서명된 Assertion 안의 `Issuer` 텍스트가 그 값과 같아야 한다(다르거나 없으면 `saml_wrong_issuer` 로 거절). 설정이 비어 있으면 검사하지 않고 경고를 남긴다("no IdP entity ID is configured..."). 시험 `test_a_response_from_another_issuer_is_refused_even_if_the_signature_is_good`, `test_the_configured_issuer_is_accepted`, `test_without_a_configured_issuer_the_check_is_skipped_with_a_warning`
+7. `Conditions` 의 `NotBefore`/`NotOnOrAfter`(시계 오차 120초), Audience 가 SP entity ID 인지, `SubjectConfirmationData` 의 `Recipient`=ACS URL·`InResponseTo`·만료. 시험 `test_a_response_for_another_time_audience_or_address_is_refused`
+8. 재전송 방지: assertion ID 를 만료 시각 + 300초까지 기억하고 두 번째는 거절. 이 기억은 프로세스 메모리(`_USED`)라 워커가 여러 개면 워커별로 따로다. 시험 `test_the_same_response_cannot_be_used_twice` [한계: 다중 워커 공유는 코드상 없음]
+9. NameID 가 있어야 한다.
 
 계정 연결: 기존 계정은 이메일로만 찾는다(NameID 의 `@` 앞부분으로 맞추지 않아 `admin@다른회사` 가 로컬 `admin` 으로 로그인하는 것을 막음). 없으면 JIT 프로비저닝이 켜진 경우에만 새 계정(비어 있지 않은 무작위 비밀번호, 사용자명은 비어 있는 이름 선택, `saml_default_role=admin` 이고 역할 매핑이 꺼진 경우에만 관리자)을 만든다. 시험 `tests/unit/test_sso_and_2fa_login.py` (`test_saml_never_attaches_to_an_account_by_the_local_part_of_the_name_id`, `test_saml_provisioning_picks_a_free_username_and_a_random_password`, `test_saml_without_jit_does_not_create_accounts`, `test_saml_refuses_disabled_accounts`)
 
-역할 매핑(`saml_role_mapping=1`): 로그인할 때마다 IdP 가 준 `role_attribute` 값으로 `superuser`, `is_admin`(superuser 이면 함께 켬), `can_del`, `any_modem` 을 덮어쓴다. 이름이 빈 설정은 관리하지 않는다. `attr_modems`/`attr_faxcats`/`attr_didroutes` 는 이름 목록을 모뎀·카테고리·DID 경로 ID 로 바꾸며, 없는 이름은 무시한다. [코드] `saml.py::apply_role_mapping`. 시험 `tests/unit/test_saml_role_mapping.py` (`test_roles_set_the_flags`, `test_a_role_that_is_gone_takes_the_right_away`, `test_a_blank_attribute_name_leaves_that_setting_alone`, `test_the_roles_are_only_believed_when_signed`).
+역할 매핑(`saml_role_mapping=1`): 로그인할 때마다 IdP 가 준 `role_attribute` 값으로 `superuser`, `is_admin`(superuser 이면 함께 켬), `can_del`, `any_modem` 을 덮어쓴다. 해당 역할 이름(`role_admin` 등) 설정이 비어 있으면 그 권리는 항상 꺼진다(켜진 권리를 회수함). `attr_modems`/`attr_faxcats`/`attr_didroutes` 는 이름 목록을 모뎀·카테고리·DID 경로 ID 로 바꾸며, 없는 이름은 무시하고, 속성 이름 설정이 비어 있으면 그 열은 건드리지 않는다(`test_a_blank_attribute_name_leaves_that_setting_alone`). [코드] `saml.py::apply_role_mapping`. 시험 `tests/unit/test_saml_role_mapping.py` (`test_roles_set_the_flags`, `test_a_role_that_is_gone_takes_the_right_away`, `test_a_blank_attribute_name_leaves_that_setting_alone`, `test_the_roles_are_only_believed_when_signed`).
 
 릴레이 상태는 `/` 로 시작하고 `//`·`\` 가 없는 경로만 허용해 오픈 리다이렉트를 막는다. 시험 `test_the_relay_state_stays_on_this_site`. ACS/SLS 는 IdP 가 다른 사이트에서 POST 하므로 `origin_guard` 예외다. 시험 `tests/unit/test_origin_guard.py::test_the_identity_providers_callbacks_are_exempt`
 
-한계: AuthnRequest 에 서명하지 않는다(메타데이터도 `AuthnRequestsSigned="false"`). SLS 는 세션 쿠키 정리 수준이고 로그아웃 메시지 서명 검증은 없다(세션 비움 + `/login` 으로 이동). 실제 IdP 와의 연동은 시험하지 못했다고 과거 보고가 밝혔다. [코드] `saml.py::generate_sp_metadata`, `views/saml.py::saml_sls_view`; [문서] [[defects-report-summary]]
+한계: AuthnRequest 에 서명하지 않는다(메타데이터도 `AuthnRequestsSigned="false"`). SLS(`saml_sls_view`)는 로그아웃 메시지를 검증하지 않고 흐름 쿠키 세션(`namifax_flow`)만 비우고 `/login` 으로 보낸다. 로그인 세션(`namifax_session` 토큰)은 파기하지 않는다. 실제 IdP 와의 연동은 시험하지 못했다고 과거 보고가 밝혔다. [코드] `saml.py::generate_sp_metadata`, `views/saml.py::saml_sls_view`; [문서] [[defects-report-summary]]
 
-> 모순: [[defects-rounds-1-2]] K04("SAML 응답 서명/Audience/NotOnOrAfter/InResponseTo 검증 없음"), K05(설정 미사용), F3-15, F3-16 은 현재 코드와 다르다. 서명·Audience·기간·수신처·InResponseTo·재전송을 모두 검사하고 `saml_*` 설정을 읽는다. 다만 Issuer 값 자체를 설정한 `saml_idp_entity_id` 와 비교하는 코드는 찾지 못했다(서명 인증서 일치로 대신함). [코드 확인: `process_saml_response` 에 Issuer 비교 없음]
+> 모순: [[defects-rounds-1-2]] K04("SAML 응답 서명/Audience/NotOnOrAfter/InResponseTo 검증 없음"), K05(설정 미사용), F3-15, F3-16 은 현재 코드와 다르다. 서명·Audience·기간·수신처·InResponseTo·재전송을 모두 검사하고 `saml_*` 설정을 읽는다. Issuer 는 이전 판에서는 비교하지 않았으나 커밋 `403b549` 이후 `saml_idp_entity_id` 가 설정돼 있으면 비교한다(위 6번). 다만 값이 비어 있으면 여전히 검사하지 않는다(경고만). [코드] `services/saml.py` `process_saml_response`
 
 ## 6. 권한 모델
 
 [코드] `src/namifax/models/useraccount.py`, `src/namifax/security.py`, `src/namifax/services/fax_access.py`
 
 - 계정 플래그(`UserAccount` 열): `is_admin`(관리 콘솔), `superuser`(모든 팩스), `can_del`(삭제 권리), `any_modem`(발송 시 "아무 회선" 선택), `pwd_reuse`, `acc_enabled`, `deleted`, `wasreset`. 모뎀·DID 경로·카테고리 제한은 `modemdevs`/`didrouting`/`faxcats` 에 `|` 로 이은 문자열이다.
-- Pyramid ACL(`RootContext.__acl__`): 모두에게 `public`, 로그인 사용자에게 `view`·`send_fax`, `role:admin` 에게 `admin`, 그 밖은 `admin` 거부. `is_admin` 이거나 `superuser` 이면 `role:admin`, 아니면 `role:user` 로 취급한다(superuser 는 관리 콘솔도 쓸 수 있음). 시험 `tests/unit/test_security_policy.py`, `tests/unit/test_pyramid_authorization.py`
-- 뷰마다 `permission` 을 지정한다. `admin` 은 22곳, `public` 은 로그인 관련 `auth.py` 9곳과 `archive.py` 1곳(OpenSearch 설명서 `/search`)에서 쓴다. 기본 권한(`set_default_permission`)은 설정하지 않으므로 `permission` 이 없는 뷰(`webauthn.py`, `saml.py`, `notfound`, `forbidden`, `no_database`)는 공개다. 시험 `tests/unit/test_anonymous_access.py::test_every_route_needs_a_login` 은 익명 GET·POST 에서 200 이 나오는 경로가 `GET /search` 뿐임을 확인한다.
+- Pyramid ACL(`RootContext.__acl__`): 모두에게 `public`, 로그인 사용자에게 `view`·`send_fax`, `role:admin` 에게 `admin`, 그 밖은 `admin` 거부. `is_admin` 이거나 `superuser` 이면 `role:admin`, 아니면 `role:user` 로 취급한다(superuser 는 관리 콘솔도 쓸 수 있음). 단 비밀·인증서를 다루는 SMTP·프린터·스토리지·SAML 화면(`/admin/smtp`, `/admin/printers`, `/admin/storage`, `/admin/saml`)은 라우트 권한(`admin`)을 통과한 뒤 뷰가 다시 `superuser` 또는 `is_superadmin` 만 허용한다. `is_admin` 만 있는 일반 관리자는 403(커밋 `26fcf82`, 이전에는 `is_admin` 도 통과). [코드] `views/admin.py`(`admin_smtp_view` 등 4개); 시험 `tests/unit/test_admin_secret_pages_superuser.py`(읽기만 함, 실행 안 함). 시험 `tests/unit/test_security_policy.py`, `tests/unit/test_pyramid_authorization.py`
+- 뷰마다 `permission` 을 지정한다. `admin` 은 22곳(`grep -rno 'permission="admin"' src/namifax/views`, 2026-10-02), `public` 은 로그인 관련 `auth.py` 9곳, `archive.py` 1곳(OpenSearch 설명서 `/search`), `default.py` 1곳(작은따옴표, `home`)에서 쓰고, 나머지 일반 화면은 `view`(로그인 사용자), 팩스 발송은 `send_fax` 다. 기본 권한(`set_default_permission`)은 설정하지 않으므로 `permission` 이 없는 뷰(`webauthn.py`, `saml.py`, `notfound`, `forbidden`, `no_database`)는 공개다. 시험 `tests/unit/test_anonymous_access.py::test_every_route_needs_a_login` 은 `PUBLIC` 으로 미리 뺀 12개 라우트(`home`, `login`, `logout`, `forgot`, `pwdexpired`, `login_totp`, `saml_*` 4개, `api_webauthn_auth_options`, `api_webauthn_auth_verify`)를 제외한 라우트를 익명으로 GET·POST 해 200 이 나오는 것이 `GET /search` 뿐이라고 단언한다(코드로 읽음, 실행하지 않음). `api_webauthn_register_*`·`credentials*` 는 뷰가 직접 401 을 돌려준다.
 - 팩스 단위 권한(`FaxAccess`): superuser 는 설정된 모뎀·DID 경로의 모든 팩스를 본다. 그 밖의 사용자는 자기 모뎀(또는 DID 경로)·카테고리에 속한 팩스와 자기가 보낸 팩스만 보고 바꾼다. 삭제는 `can_del` 이 있어야 하며 거절은 로그("Access denied ...")에 남긴다. 권한은 요청마다 DB 에서 읽으므로 관리자의 변경이 즉시 적용된다. 시험 `tests/unit/test_fax_access_control.py` (`test_a_pdf_can_only_be_downloaded_with_the_right`, `test_deleting_needs_the_flag_and_the_right_ajax`, `test_a_refused_delete_is_logged` 등), `tests/unit/test_modemstatus_rights.py`
-- `any_modem`: 발송 화면의 회선 드롭다운에 "Any Available Line (Auto)" 선택지를 줄지 결정한다. [코드] `src/namifax/views/sendfax.py` `_line_choices` 근처(128행)
+- `any_modem`: 발송 화면의 회선 드롭다운에 "Any Available Line (Auto)" 선택지를 줄지 결정한다. [코드] `src/namifax/views/sendfax.py` `_lines()`(`account.get("any_modem")` 이 참일 때만 "Any Available Line (Auto)" 선택지를 넣음)
 - 플래그 열은 `LegacyBoolean` 타입으로 읽는다. 옛 코드가 문자열 `'False'` 로 써 둔 값을 `Boolean` 이 참으로 읽어 권한이 생기는 사고를 막기 위해, 알 수 없는 문자열은 거짓이다. 시험 `tests/unit/test_boolean_flags.py::test_the_orm_never_reads_the_text_false_as_true`
 
 > 모순: [[defects-report-summary]] 의 USR-04("사용자별 모뎀 접근 제한 완전 비동작"), SEC-03(IDOR), USR-06(`/ajax/faxalter` 쉘 주입), SEC-04(`/ajax/deletefaxes` 반사 XSS)는 현재 코드에서 다르다. 모뎀·카테고리 제한은 `FaxAccess` 로 강제되고 시험이 있다. `fids` 는 숫자만 골라 `int` 로 바꾼다(`views/ajax.py::_fids`). 셸 주입 시험은 `tests/unit/test_security_audit_phase1.py` (`test_faxalter_safe_execution_and_meta_char_safety`, `test_killjob_safe_execution_and_meta_char_safety`).
@@ -148,23 +164,25 @@ ACS(`POST /auth/saml/acs`)에서 `process_saml_response` 가 확인하는 것(�
 ## 8. origin_guard, CSRF, 세션
 
 - origin_guard(tween): POST/PUT/PATCH/DELETE 가 `Origin`(없으면 `Referer`)을 말하면 이 사이트(요청 host, `X-Forwarded-Host` 첫 값, ini `csrf.trusted_origins` 목록)여야 하고 아니면 403. `Origin: null` 은 거절. 둘 다 없는 요청(스크립트·시험 클라이언트)은 통과, GET 등은 검사하지 않는다. SAML `/auth/saml/acs`, `/auth/saml/sls` 는 예외. [코드] `src/namifax/origin_guard.py`, `src/namifax/__init__.py`(tween 등록); 시험 `tests/unit/test_origin_guard.py`
-- 명시적 CSRF 토큰: 로그아웃, 2FA 설정 4종, 받은 팩스함·보낼 팩스함·모달 일부(회전·회사 지정 등)가 Pyramid `check_csrf_token` 을 쓴다. 그 밖의 대부분의 POST 는 토큰이 아니라 `SameSite=Lax` 쿠키와 origin_guard 에 의존한다. [코드] `grep check_csrf_token src/namifax/views`: auth 2곳, inbox 3, modals 2, outbox 2, settings_2fa 2. 시험 `tests/unit/test_state_changing_posts.py`, `test_logout_post.py`
+- 명시적 CSRF 토큰: 로그아웃, 2FA 설정 4종, 받은 팩스함·보낼 팩스함·모달 일부(회전·회사 지정 등)가 Pyramid `check_csrf_token` 을 쓴다. 그 밖의 대부분의 POST 는 토큰이 아니라 `SameSite=Lax` 쿠키와 origin_guard 에 의존한다. [코드] `grep -rn check_csrf_token src/namifax/views` 에서 import 를 뺀 호출 지점: `auth.py` 1(로그아웃), `inbox.py` 2(회전·회사 지정), `modals.py` 1, `outbox.py` 1, `settings_2fa.py` 1(`_guard()` 가 2FA 설정 4개 POST 뷰를 모두 대표). 시험 `tests/unit/test_state_changing_posts.py`, `test_logout_post.py`
 
 > 모순: [[porting-gaps]] B3("상태 변경 POST 에 CSRF 토큰 없음, SameSite=Lax 의존")은 부분적으로만 맞다. 일부 흐름에는 토큰이 생겼고, origin_guard 가 추가됐다. 전 경로에 토큰이 있는 것은 아니다.
 
-- 로그인 세션: 로그인하면 `SessionManager` 가 무작위 토큰(`secrets.token_hex(32)`)을 만들고, 쿠키 `namifax_session`(`HttpOnly; SameSite=Lax; Path=/`)에 담는다. 세션은 서버 프로세스 메모리의 딕셔너리이고 비활동 7200초 후 만료된다. 쿠키에 `Secure` 속성은 붙지 않는다. `Authorization: Bearer` 헤더도 토큰으로 받는다. [코드] `src/namifax/security.py`, `src/namifax/sessions.py`; 시험 `tests/unit/test_sessions_module.py`, `test_security_policy.py::test_remember_and_forget`
-- 흐름 상태용 서명 쿠키(`namifax_flow`; 2FA 대기, 패스키 챌린지, SAML 요청 ID, 임시 TOTP 비밀): `HttpOnly`, `SameSite=Lax`, `session.secure` 설정 시 `Secure`, 30분 시간 제한. 비밀은 `session.secret` 또는 `NAMIFAX_SESSION_SECRET`, 없으면 프로세스마다 무작위 값을 쓰고 경고를 남긴다(재시작·다른 워커에서 흐름 상태를 잃음). 시험 `test_sso_and_2fa_login.py::test_the_flow_cookie_is_http_only_and_same_site`
+- 로그인 세션: 로그인하면 `SessionManager` 가 무작위 토큰(`secrets.token_hex(32)`)을 만들고, 쿠키 `namifax_session`(`HttpOnly; SameSite=Lax; Path=/`)에 담는다. 세션은 서버 프로세스 메모리의 딕셔너리이고 비활동 7200초 후 만료된다. 로그인 쿠키의 `Secure` 속성은 `session.secure`(ini)가 있으면 그 값이, 없으면 `NAMIFAX_SESSION_SECURE`(기본 `false`)가 정한다(`1`/`true`/`yes` 만 참; `security.py::_cookie_secure` 가 `remember` 와 `forget` 의 `Set-Cookie` 끝에 `; Secure` 를 붙임. 흐름 쿠키와 같은 규칙; 2026-10-02 커밋 `740e12e` 로 바뀜. 그 전에는 이 쿠키에 `Secure` 가 없었다).  `Authorization: Bearer` 헤더도 토큰으로 받는다. [코드] `src/namifax/security.py`, `src/namifax/sessions.py`; 시험 `tests/unit/test_sessions_module.py`, `test_security_policy.py::test_remember_and_forget`
+- 흐름 상태용 서명 쿠키(`namifax_flow`; 2FA 대기, 패스키 챌린지, SAML 요청 ID, 임시 TOTP 비밀): `HttpOnly`, `SameSite=Lax`, 30분 시간 제한(`timeout=1800`), `Secure` 는 ini `session.secure` 가 있으면 그 값이, 없으면 환경변수 `NAMIFAX_SESSION_SECURE`(기본 `false`)가 정하며 `1`/`true`/`yes` 만 참이다(ini 가 환경변수보다 우선). ini 는 `namifax serve --config <ini>` 또는 `NAMIFAX_INI` 가 있을 때만 읽는다. 비밀은 `session.secret` 또는 `NAMIFAX_SESSION_SECRET`, 없으면 프로세스마다 무작위 값을 쓰고 경고를 남긴다(재시작·다른 워커에서 흐름 상태를 잃음). 시험 `test_sso_and_2fa_login.py::test_the_flow_cookie_is_http_only_and_same_site`, `tests/unit/test_session_secure_flag.py` (`test_it_is_off_by_default`, `test_the_environment_variable_turns_it_on`, `test_the_ini_wins_over_the_environment`), `tests/unit/test_serve_main_db.py`. `systemd/namifax.service` 는 `EnvironmentFile=-/etc/namifax.env` 로 환경변수를 받는다.
 
 ## 9. 알려진 보안 판단과 한계(코드 기준)
 
 | 항목 | 현재 상태 | 근거 |
 |---|---|---|
 | 로그인 세션 저장소 | 메모리. 재시작하면 모두 로그아웃, 워커가 여러 개면 서로 세션을 모름 | `sessions.py` |
-| 로그인 쿠키 `Secure` | 붙이지 않음. HTTPS 종단을 프록시가 하더라도 쿠키 속성은 그대로 | `security.py::remember` |
-| 비밀번호 시도 제한 | 없음(TOTP 만 있음) | `auth.py`, `user_account.py` |
+| 로그인 쿠키 `Secure` | 기본 꺼짐. `session.secure`(ini) 또는 `NAMIFAX_SESSION_SECURE=true` 로 켬(ini 가 우선). 로그인(`remember`)과 로그아웃(`forget`)의 `Set-Cookie` 모두에 붙음. 커밋 `740e12e` 에서 바뀜 | `security.py::_cookie_secure`; `tests/unit/test_session_secure_flag.py` |
+| 흐름 쿠키 `Secure` | 기본 꺼짐. `session.secure`(ini) 또는 `NAMIFAX_SESSION_SECURE=true` 로 켬 | `__init__.py::_session_factory`; `tests/unit/test_session_secure_flag.py` |
+| 비밀번호 시도 제한 | `POST /login` 에 있음: 이름별 10회·주소별 50회 실패(기본) 시 15분 잠금, DB 공유. 패스키·SAML·`REMOTE_USER` 로그인에는 없음. 프록시 뒤 주소 판별은 위 §2 8번 참고 | `services/login_throttle.py`, `views/auth.py` |
 | 비밀번호 최대 길이 | 기본 15(원본 계승) | `common/settings.py` |
 | SAML 재전송 캐시 | 프로세스 메모리 | `services/saml.py::_seen_before` |
 | SAML AuthnRequest | 서명하지 않음 | `generate_sp_metadata` |
+| SAML Issuer 검사 | `saml_idp_entity_id` 가 설정된 경우에만(서명 검증 뒤). 비어 있으면 경고만 하고 통과 | `services/saml.py::process_saml_response` |
 | 패스키 사용자 확인 | 강제하지 않음 | `require_user_verification=False` |
 | 데모 계정 | 기본 꺼짐. SQLite 새 DB 에서 `NAMIFAX_DEMO_DATA=1`(또는 `demo.data = true`)일 때만 알려진 비밀번호의 계정이 생기고 서버 DB 에는 만들지 않는다. 첫 관리자는 `namifax createuser` 로 만든다(비밀번호 기본값 없음, 8자 이상) | `db/bootstrap.py`, `db/seed.py`, `cli/user.py`; 시험 `tests/unit/test_demo_data_optin.py` |
 | 레거시 DB 의 기본 관리자 | 원본 설치의 기본 관리자는 로그인 시 비밀번호 변경을 강제 | 시험 `tests/unit/test_forced_password_change.py::test_the_installers_administrator_must_change_the_default_password`, `test_legacy_database_compat.py::test_the_legacy_administrator_can_log_in_and_must_change_the_password` |

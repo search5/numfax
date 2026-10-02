@@ -84,6 +84,12 @@ HylaFAX 서버(`hfaxd`)에 사용자 이름이 등록돼 있어야 `faxrm`, `fax
 `deploy/postfix/setup-email2fax.md`. 원본의 `setup-postfix.sh`가 하던 설정이며, 이 저장소의 스크립트는 시스템 파일을 직접
 고치지 않으므로 적용 전에 내용을 읽고 직접 넣으십시오.
 
+## 5-1. 가상 프린터로 팩스 보내기 (선택)
+인쇄한 문서를 팩스로 보내는 CUPS 백엔드입니다. `deploy/cups/namifax-fax` 를 `/usr/lib/cups/backend/namifax-fax` 로 복사하고(소유자 root, 권한 0700),
+CUPS 에서 장치 주소 `namifax-fax:/` 로 프린터를 추가하십시오. 인쇄 내용에 `[[FAX: 02-123-4567]]` 같은 태그가 있어야 하고, 작업은 CUPS 사용자 이름으로
+`sendfax` 에 넘겨집니다(태그가 없으면 임시 폴더에 초안으로만 저장되고, `sendfax` 가 실패하면 CUPS 에 실패로 돌려줍니다). 확인: `echo "[[FAX: 123]]" | namifax print-in 1 사용자 제목 1 ""`.
+**이 저장소에서는 실제 CUPS 와 HylaFAX 에 붙여 시험하지 못했습니다**(백엔드 스크립트의 인자 전달과 `namifax print-in` 의 동작만 시험됨).
+
 ## 6. 파일 권한
 
 - 보관 폴더(`/var/spool/hylafax/archive`, `…/sent`)는 훅을 실행하는 사용자와 웹 서비스 사용자가 모두 쓸 수 있어야 합니다

@@ -51,6 +51,7 @@ Available commands:
   faxrcvd            Execute HylaFAX inbound received fax processing hook
   faxcover           Generate HylaFAX fax cover page
   phb                Generate HylaFAX PBOOK1.1 format phonebook
+  print-in           CUPS backend: send a printed document as a fax (needs a [[FAX: number]] tag in the text)
   ocr-import         Execute OCR text extraction batch on archive
   create-thumbnails  Batch generate fax page thumbnails
   import-users       Import user accounts from tab-delimited text
@@ -199,6 +200,10 @@ def main(argv: list[str] | None = None) -> int:
 
     elif cmd == "phb":
         return run_phb()
+
+    elif cmd in ("print-in", "print_in"):
+        from namifax.cli import print_in
+        return print_in.main(["print_in"] + sub_args)
 
     elif cmd in ("ocr-import", "ocr_import"):
         from namifax.cli import ocr_import

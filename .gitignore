@@ -48,3 +48,6 @@ node_modules
 faxes/
 *.zip
 
+
+# Claude Code agent worktrees
+.claude/worktrees/

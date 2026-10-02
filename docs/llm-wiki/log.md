@@ -15,3 +15,9 @@ ARCHITECTURE.md(앞·뒤 절반), 결함 보고서(종합과 1~5라운드), 감�
 형식(frontmatter)·링크·고아 페이지·비밀 값 점검: 문제 없음(HylaFAX 문법 `[[FAX: 번호]]` 는 코드 표기로 바꿔 링크로 오인되지 않게 함).
 에이전트 주장 4건을 코드로 직접 확인: systemd 단위에 `EnvironmentFile` 없음, `upload_file` 의 바깥 호출처 없음, `export_phonebook` 이 개수가 아니라 0 을 반환, `namifax serve` 가 `wsgiref` 로 `create_app` 을 설정 없이 호출. 모두 일치.
 코드 쪽 결함 후보(위키에는 `> 모순:` 으로 기록, 아직 고치지 않음): 전화번호부 작업 요약이 항상 "0 entries", 정기 실행이 프로세스 간 동시 실행을 막지 않음, 환경 파일이 서비스에 전달되지 않음, `namifax serve` 가 ini 설정을 읽지 못함.
+
+## [2026-10-02] topic | 코드 수정 반영과 [코드] 전체 재검증
+직전 두 커밋 `740e12e`, `26fcf82` 의 변경을 현재 코드로 확인해 topics 에 반영했다.
+로그인 쿠키 `Secure` 가 `session.secure`/`NAMIFAX_SESSION_SECURE` 를 따름(authentication), 시스템 기능 데몬 상태가 `pgrep` 실제 값(known-gaps), 숫자 판정 `isdecimal`·비밀 화면 superuser 한정·가상 프린터 `sendfax` 연결을 known-gaps 새 행으로 기록.
+hylafax-integration 의 "sendfax 를 호출하지 않는다"와 scheduler-and-storage 의 "일반 관리자도 `/admin/storage` 가능"을 정정, operations 3.1 의 환경 파일 따옴표 경고를 문서화·시험됨으로 갱신.
+`cli/print_in.py` 가 `pyproject.toml`·`main.py`·`deploy/` 어디에도 연결돼 있지 않다는 점은 다시 확인해 그대로 남김. 시험은 읽기만 했다.
