@@ -15,6 +15,7 @@ from webauthn.helpers.structs import (
     AttestationConveyancePreference,
     AuthenticatorAttachment,
     AuthenticatorSelectionCriteria,
+    ResidentKeyRequirement,
     PublicKeyCredentialDescriptor,
     UserVerificationRequirement,
 )
@@ -65,6 +66,9 @@ class WebAuthnService:
             user_display_name=user_display_name or user_name,
             attestation=AttestationConveyancePreference.NONE,
             authenticator_selection=AuthenticatorSelectionCriteria(
+                # a discoverable credential: the login page offers passkeys without asking for a user name first
+                resident_key=ResidentKeyRequirement.REQUIRED,
+                require_resident_key=True,
                 user_verification=UserVerificationRequirement.PREFERRED,
             ),
         )

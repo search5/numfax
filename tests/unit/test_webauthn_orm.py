@@ -114,3 +114,10 @@ def test_a_binary_credential_id_is_stored_as_base64url(svc):
         result = svc.verify_registration_response({"id": "x"}, bytes_to_base64url(b"challenge"))
     assert result["credential_id"] == bytes_to_base64url(raw)
     assert base64url_to_bytes(result["credential_id"]) == raw
+
+
+def test_registration_asks_for_a_discoverable_passkey(svc):
+    """The login page signs in without a user name, so the browser must be able to list the passkey itself."""
+    options = svc.generate_registration_options(user_id=1, user_name="admin")
+    selection = options["authenticatorSelection"]
+    assert selection["residentKey"] == "required" and selection["requireResidentKey"] is True
