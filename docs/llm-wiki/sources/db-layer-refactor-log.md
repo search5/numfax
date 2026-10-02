@@ -2,9 +2,11 @@
 title: DB 계층 전환 기록 (아키텍처 스냅샷)
 type: source
 updated: 2026-10-02
-sources: [docs/history/db-layer-refactor-log.md]
+sources: ["git show 54dd654:docs/history/db-layer-refactor-log.md (삭제됨; 지금도 유효한 규칙은 [[database-and-migrations]] 8·9절과 [[testing]] 'mock 시험의 함정' 으로 옮김)"]
 verified: false
 ---
+
+> 원본 문서는 2026-10-02 에 저장소에서 삭제했다(위 `git show` 로 읽는다). 과정 기록 중 `DatabaseEngine`, `cli_unit`, `bridge_cli` 등 지금 코드에 없는 이름은 옮기지 않았다. 이 요약은 삭제 시점의 문서가 주장한 바이며 현재 코드와 다를 수 있다.
 
 ## 요약
 

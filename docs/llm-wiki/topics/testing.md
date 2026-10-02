@@ -2,7 +2,7 @@
 title: 시험
 type: topic
 updated: 2026-10-02
-sources: [pyproject.toml, tests/conftest.py, tests/sqlsession.py, tests/request_identity.py, tests/unit/test_ko_catalog_complete.py, tests/unit/test_legacy_trees_removed.py, tests/unit/test_fax_archive_orm.py, tests/unit/test_migrations_match_models.py, tests/test_i18n.py, tests/fixtures/, tests/unit/test_login_throttle.py, tests/unit/test_session_secure_flag.py, tests/unit/test_remote_upload.py, tests/unit/test_env_file_wiring.py, tests/unit/test_serve_main_db.py, tests/unit/test_global_engine_removed.py, tests/unit/test_db_injection.py, tests/unit/test_multi_dialect_safety.py, tests/unit/test_state_changing_posts.py, tests/unit/test_logout_post.py, tests/unit/test_origin_guard.py, tests/unit/test_legacy_redirects.py, tests/unit/test_db_isolation_fixture.py, tests/unit/test_alembic_wiring.py, tests/unit/test_demo_data_optin.py, src/namifax/db/bootstrap.py, tools/migration_rehearsal/, "[[architecture-md-part2]]", "[[agents-md-legacy-instructions]]", "[[db-layer-refactor-log]]"]
+sources: [pyproject.toml, tests/conftest.py, tests/sqlsession.py, tests/request_identity.py, tests/unit/test_ko_catalog_complete.py, tests/unit/test_legacy_trees_removed.py, tests/unit/test_fax_archive_orm.py, tests/unit/test_migrations_match_models.py, tests/test_i18n.py, tests/fixtures/, tests/unit/test_login_throttle.py, tests/unit/test_session_secure_flag.py, tests/unit/test_remote_upload.py, tests/unit/test_env_file_wiring.py, tests/unit/test_serve_main_db.py, tests/unit/test_global_engine_removed.py, tests/unit/test_db_injection.py, tests/unit/test_multi_dialect_safety.py, tests/unit/test_state_changing_posts.py, tests/unit/test_logout_post.py, tests/unit/test_origin_guard.py, tests/unit/test_legacy_redirects.py, tests/unit/test_db_isolation_fixture.py, tests/unit/test_alembic_wiring.py, tests/unit/test_demo_data_optin.py, tests/unit/test_sso_and_2fa_login.py, tests/unit/test_active_mailer.py, tests/unit/test_pyramid_modals_action.py, tests/unit/test_user_account.py, tests/unit/test_webauthn_orm.py, tests/unit/test_ocr_orm.py, tests/unit/test_totp_orm.py, src/namifax/views/modals.py, src/namifax/common/helpers.py, src/namifax/db/bootstrap.py, tools/migration_rehearsal/, "[[architecture-md-part2]]", "[[agents-md-legacy-instructions]]", "[[db-layer-refactor-log]]"]
 verified: true
 ---
 
@@ -76,3 +76,22 @@ verified: true
 ## 마지막 실행 기록
 - [코드] 2026-10-02: `uv run pytest tests -q -k "not serverdb"` → 2274 passed, 5 skipped, 141 deselected(서버 DB 시험 제외), 약 5분 27초. 같은 날 서버 DB 시험(`serverdb`)은 **돌리지 않았다**. 상세와 이유는 [[known-gaps-and-decisions]] 5.1.
 
+## mock 시험의 함정 (원문 14.12~14.14, 14.19)
+
+[[db-layer-refactor-log]](원본 삭제됨, `git show 54dd654:docs/history/db-layer-refactor-log.md`)에서 mock 이 결함을 가렸던 사례 중 시험 작성에 쓸 교훈만 옮겼다. 해결된 결함 자체의 설명은 뺐다.
+
+| mock 이 한 일 | 가려진 결함(원문) | 대신 한 것 |
+|---|---|---|
+| `AFUserAccount`·서비스·세션을 가짜로 대체한 로그인 시험 | 앱에 HTTP 세션 팩토리가 없어 2FA 사용자 로그인이 500, 패스키 챌린지 미저장, SAML·패스키 뷰가 없는 메서드를 호출, 로그인이 인증 토큰이 아니라 세션만 기록(14.19) | 실제 앱·DB·WebTest 로 로그인까지 가는 `test_sso_and_2fa_login.py`. 파일 docstring 이 위 이유를 적고 있다 |
+| 웹 "팩스 이메일 전송" 시험이 `Mailer` 를 가짜로 대체 | 뷰가 없는 `mailer.send_mail(...)` 을 불러 `AttributeError`(14.6) | 뷰가 `send_mail` 헬퍼를 호출하고, 발송 자체는 시험 안의 가짜 SMTP 서버(실제 소켓)로 끝까지 확인(`test_active_mailer.py`) |
+| `db.query()` 가 리스트를 반환한다고 가정한 mock | 서비스도 같은 잘못된 가정을 해서 패스키 목록·OCR 색인이 한 번도 동작하지 않음(14.14) | 실제 세션 시험(`test_webauthn_orm.py`, `test_ocr_orm.py`, `test_totp_orm.py`) |
+| 결함 있는 동작을 기대값으로 고정한 시험 | 계정 삭제가 `username IS NULL` 갱신을 기대(NOT NULL 열이라 실제 DB 에서는 실패)(14.13) | 기대값을 새 동작(`deleted.<uid>` 등)으로 수정. 현재 `test_user_account.py::test_remove_account` 가 그렇다 |
+
+교훈
+- mock 이 반환 **형태**까지 정하면 서비스와 시험이 같은 오해를 공유해 통과한다. 경계(DB, 메일 서버, 파일 시스템)는 가능하면 진짜(임시 SQLite, 임시 소켓)로 두고, 가짜는 외부 서비스에만 쓴다.
+- 존재하지 않는 속성을 `MagicMock()` 으로 만들면 오타·삭제된 API 도 통과한다. 쓰려면 `spec=`/`autospec=` 로 실제 객체의 모양을 강제한다. [추정: 일반 pytest 관행, 이 저장소에 일괄 적용된 규칙은 아님]
+- 사용자 흐름(로그인, 저장, 발송)은 mock 시험 외에 **실제 앱 + WebTest 한 번**의 끝-끝 시험을 둔다. `testapp`, `dbsession` 픽스처가 있다(위 "픽스처" 절).
+- 시험이 결함 있는 동작을 정답으로 박았는지 의심한다. 결함을 고칠 때 먼저 그 기대값 시험이 있는지 찾는다.
+
+> 관찰: 현재도 `tests/unit/test_pyramid_modals_action.py` 의 `dummy_request` 픽스처는 `request.db = MagicMock()` 으로 `request.db` 를 만든다. 지금 앱에는 `request.db` 가 없다(`grep -rn "request\.db\b" src` 결과 없음). 읽는 쪽이 없으므로 무해하지만, 낡은 mock 이 남아 있는 예다. 이 파일은 `request.dbsession = MagicMock()` 도 쓴다. [코드]
+> 관찰: 위 mock 사용 시험 파일은 `grep -rln "MagicMock\|mock.patch\|monkeypatch.setattr" tests/unit` 로 75개가 나온다(2026-10-02). 모두 문제라는 뜻은 아니다. [코드]

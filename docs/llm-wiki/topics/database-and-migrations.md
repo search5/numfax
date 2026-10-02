@@ -34,6 +34,19 @@ sources:
   - src/namifax/views/no_database.py
   - tests/conftest.py
   - pyproject.toml
+  - src/namifax/services/archive_orm.py
+  - src/namifax/services/syslog.py
+  - src/namifax/models/faxocr.py
+  - src/namifax/models/syslog.py
+  - tests/sqlsession.py
+  - tests/unit/test_routes_and_modems.py
+  - tests/unit/test_orm_repository.py
+  - tests/unit/test_system_config.py
+  - tests/unit/test_fax_archive_orm.py
+  - tests/unit/test_boolean_flags.py
+  - tests/unit/test_schema_seed_safety.py
+  - tests/unit/test_schema_seed_first_run.py
+  - tests/unit/test_demo_data_optin.py
   - "[[db-layer-refactor-log]]"
   - "[[migrating-from-avantfax3]]"
   - "[[architecture-md-part1]]"
@@ -134,3 +147,54 @@ sources:
 - 기본 실행은 시험마다 임시 SQLite 파일을 쓰고 작업 디렉터리의 `namifax.db` 는 건드리지 않는다(`DATABASE_URL`/`NAMIFAX_DB_PATH` 를 임시 경로로 설정). 시험 `tests/unit/test_db_isolation_fixture.py`
 - 서버 시험이 있는 파일(`serverdb` 마커 또는 `server_db_url` 사용)은 `grep -rl "serverdb\|server_db_url" tests` 로 24개(그중 `conftest.py` 1개이므로 시험 파일 23개, 2026-10-02)가 나온다(예: `test_bootstrap.py`, `test_system_config_migration.py`, `test_orm_repository.py`, `test_user_account_orm.py`, `test_totp_orm.py`, `test_webauthn_orm.py`, `test_syslog.py`, `test_legacy_database_compat.py`). 개수는 시점에 따라 달라진다.
 - 이 세션에서는 서버 DB 시험을 실행하지 않았다. 서버 DB 에서 통과한다는 주장은 코드와 시험 구조로 본 "지원하도록 작성됨"이지 이 세션의 실행 결과가 아니다. [추정: 이전 과거 문서의 "PostgreSQL 16 / MySQL 8.4 검증" 서술은 [[db-layer-refactor-log]] [문서]]
+
+## 8. 방언 주의점 (SQLite·MySQL·MariaDB·PostgreSQL에서 같게 돌리기)
+
+원문 14.2(다중 DB 조사)와 14.11(NULL 정렬)에서 지금도 코드가 지키는 규칙만 옮겼다. 과거의 실패 목록(DDL 20개 실패, `INSERT OR REPLACE` 분포, 74곳 `quote()`)은 해결된 이력이라 뺐다(원문 14.2, 14.21).
+
+**NULL 정렬(원문 14.11)**
+- 문제: 오름차순에서 SQLite·MySQL 은 NULL 을 먼저, PostgreSQL 은 나중에 둔다. 규칙: **NULL 은 오름차순이면 먼저, 내림차순이면 나중**에 오게 고정한다.
+- 구현 위치 두 곳. (1) `OrmRepository.select(order_by, descending)`: 정렬 열이 `nullable` 이면 `CASE WHEN col IS NULL THEN ...` 순위를 첫 정렬 키로 넣고, 그다음 열, 마지막에 기본키(동률 안정화). [코드] `src/namifax/db/orm_repository.py::select`. (2) 받은편지함 모뎀별 정렬은 `F.modemdev.is_(None).desc(), F.modemdev, F.fid.desc()` 로 NULL 을 항상 앞에 둔다("레거시 순서"라는 코드 주석). [코드] `src/namifax/services/archive_orm.py::list_inbox`
+- 시험: `tests/unit/test_routes_and_modems.py::test_select_puts_null_values_first_when_ascending_on_every_backend`(NULL 별칭 행이 오름차순 맨 앞, 내림차순 맨 뒤). 이 시험에는 `serverdb` 마커가 없다. 서버 DB 에서 도는 것은 `NAMIFAX_SUITE_DB` 로 스위트 전체를 서버에 돌릴 때뿐이다(원문은 "서버 3종 테스트"라고 적음). [코드] 시험 파일 읽음, 실행 안 함.
+- 새 쿼리 규칙: 널 가능 열로 정렬하는 쿼리는 `Repository.select` 를 쓰거나 위처럼 NULL 순서를 직접 명시한다. 모든 정렬 끝에 기본키 같은 유일 열을 붙여 순서를 고정한다(PostgreSQL 은 순서를 보장하지 않는다). [코드] `select`, `find`, `search_text` 가 모두 기본키로 마무리.
+- 문자열 정렬(한글·영문 혼합)은 DB collation 이 정하므로 계약에 넣지 않는다. 시험은 ASCII 항목의 상대 순서만 확인한다. [코드] `tests/unit/test_orm_repository.py::test_server_database_repository_behaviour`(`# collation decides where 한글 goes`)
+
+> 모순: `search_text(column, text, order_by=...)` 는 `order_by` 열이 NULL 가능이어도 위 NULL 보정을 하지 않고 `order_by(order_col, pk)` 만 쓴다(`orm_repository.py::search_text`). 현재 호출처가 NULL 열로 정렬하는지는 확인하지 않았다. 새로 쓸 때는 이 점에 주의. [코드]
+
+**대소문자·이름 접힘·예약어(원문 14.2, 14.3)**
+- 테이블·열 이름은 레거시 철자(대소문자 혼합)를 유지한다. 이유: MySQL/MariaDB 리눅스는 테이블 이름 대소문자를 구분하고, PostgreSQL 은 따옴표 없는 이름을 소문자로 접는다. ORM 은 이름을 인용해 문제없지만 **손으로 쓴 원시 SQL 은 PostgreSQL 에서 실패**한다. 그래서 서버 DB 시험은 원시 SQL 대신 모델 기반 쿼리(`select(func.count()).select_from(Model)`)를 쓰고, 옛 원시 SQL 시험은 conftest 의 보정 리스너가 따옴표를 씌운다. [코드] `tests/conftest.py::_quote_bare_tables`, `_quote_key_column`
+- 예약어 `key`(`SystemConfig.key`)는 ORM 이 알아서 인용하며(MySQL 은 백틱), DDL 컴파일 시험이 이를 확인한다. [코드] `tests/unit/test_system_config.py`(`"`key`" in ddl`)
+- 모든 `String` 열은 길이를 가진다(MySQL/MariaDB 는 길이 없는 `VARCHAR` 를 못 만든다). [코드] `tests/unit/test_system_config.py::test_every_string_column_has_a_length`
+- 긴 본문은 `Text().with_variant(LONGTEXT, "mysql", "mariadb")`(일반 `TEXT` 는 MySQL 에서 64KB). [코드] `src/namifax/models/faxocr.py::LongText`
+
+**값·타입(원문 14.2, 14.8, 14.13, 14.15)**
+- 값은 항상 바인드 파라미터다. 문자열 이스케이프(`quote()`)는 코드에서 사라졌다. MySQL 계열의 역슬래시 이스케이프 문제는 "값을 문자열에 끼워 넣지 않는다"로 풀렸다. 시험은 `x\' OR 1=1 --` 같은 값이 그대로 저장·조회되는지 본다. [코드] `grep "def quote" src` 결과 없음; `tests/unit/test_system_config.py::test_service_stores_quotes_and_backslashes_verbatim`
+- 정수 열 비교에 `"5"` 문자열을 주면 PostgreSQL 은 자동 변환하지 않아 실패한다 → `OrmRepository._coerce` 가 열 타입에 맞게 변환하고, 변환할 수 없는 값(`"abc"`)과 `None` 은 아무것도 일치시키지 않는다(`sa.false()`). 정수 열과 `''` 를 비교하지 않는다(archive_orm 의 `_eq_int` 도 숫자가 아니면 일치 없음). [코드] `orm_repository.py::_coerce`, `find`; `services/archive_orm.py` 29~35행; 시험 `test_orm_repository.py` (`catid: "abc"`)
+- 불리언: 옛 코드가 텍스트 `'False'` 를 저장했고 `Boolean` 은 비어 있지 않은 텍스트를 참으로 읽어 권한 상승이 됐다(원문 14.13). 지금은 `LegacyBoolean` 이 드라이버 원시 값을 읽어 알 수 없는 문자열은 거짓으로 처리한다. 새 불리언 열은 이 타입을 쓴다. [코드] `src/namifax/models/types.py`; 시험 `tests/unit/test_boolean_flags.py`
+- 날짜·시각: 앱은 ISO 문자열로 다루고(`IsoText`), 날짜 접두어 검색은 `startswith(..., autoescape=True)` 다. 원문 14.4 는 `SysLog.logdate` 를 문자열로 둔 이유를 "PostgreSQL timestamp 에는 날짜 접두어 `LIKE` 가 안 된다"로 적는다. [코드] `models/types.py::IsoText`, `models/syslog.py`(`IsoText(32)`), `services/syslog.py`(`startswith`) / [문서] 이유 부분
+- 부분 일치 검색: `lower(col) LIKE 패턴 ESCAPE '!'`, 입력의 `%`·`_`·`!` 는 리터럴. `ESCAPE '!'` 는 모든 DB 에서 같은 뜻이다. [코드] `src/namifax/db/textsearch.py`, `OrmRepository.search_text`; 시험 `test_orm_repository.py::test_search_text_is_case_insensitive_ordered_and_literal_on_both_backends`, `tests/unit/test_addressbook_search_injection.py`
+- 페이지 나누기는 `LIMIT/OFFSET`(SQLAlchemy `.limit().offset()`). MySQL 식 `LIMIT a, b` 는 쓰지 않는다. [코드] `archive_orm.py` 77, 175행
+- `find` 는 `None` 비교를 `= NULL` 처럼 취급해 일치 0건(레거시 의미 보존). 갱신·삭제는 대상이 없어도 성공. DB 오류(고유 제약 등)는 `False` 가 아니라 예외. [코드] `orm_repository.py::find`; 시험 `test_orm_repository.py` (`= NULL matches nothing`, `IntegrityError`)
+
+**원시 SQL 이 남은 곳**: 상수에서 만든 DDL·보정(`db/adopt.py`, `db/sqlite_upgrade.py`)뿐이다(위 3절). SQLite 전용 구문은 `sqlite_upgrade.py` 에만 둔다.
+
+## 9. 시드 안전 규칙 (시작할 때마다 기존 데이터를 건드리지 않는다)
+
+배경(원문 14.9): 옛 `db/schema.py` 는 **앱을 시작할 때마다** 데모 값을 다시 적용했다 — `admin` 비밀번호 기본값 복원, 모뎀·카테고리·표지를 `INSERT OR REPLACE` 로 덮어씀, 1번 행(DID·주소록·목록·`DynConf`)을 데모 값으로 덮어씀, 받은 팩스가 없으면 **실제 팩스 #1 을 데모 행으로 교체**, NULL 인 `faxnumid`/`modemdev` 를 데모 값으로 채움. 지금 이 파일들은 없고 규칙만 남았다.
+
+규칙(현재 코드):
+1. 시드는 시작·훅 호출마다 돌 수 있으므로 **이미 있는 데이터를 바꾸지 않는다**. [코드] `src/namifax/db/seed.py` 모듈 docstring("Both run on every start, so they must never alter data that already exists.")
+2. 데모 데이터는 **SQLite 이고 사용자가 0명인 새 DB 이고 명시적으로 켰을 때만**(`NAMIFAX_DEMO_DATA=1` 또는 `demo.data`). 서버 DB 는 요청해도 경고하고 무시한다. 기존에 사용자가 있는 DB 에는 켜도 데모 행이 들어가지 않는다. [코드] `db/bootstrap.py::demo_data_wanted`, `db/seed.py::seed_if_empty`; 시험 `test_demo_data_optin.py`(`test_the_switch_never_touches_a_database_that_already_has_users`, `test_the_demo_data_is_not_created_on_servers_even_if_asked`)
+3. 기본 레코드(표지 3종)는 **테이블이 비어 있을 때만** 넣는다. 카테고리는 만들지 않는다(원본 설치도 카테고리 없음). [코드] `seed.py::seed_default_records`; 시험 `test_schema_seed_safety.py::test_the_original_default_cover_pages_are_provided_and_no_categories_are_made_up`
+4. 행 추가는 `_add_missing`(키가 있으면 건너뜀, `INSERT OR IGNORE` 의미)이고, 모든 개별 시드 블록은 "테이블이 비었을 때"(`_count(...) == 0`, 모뎀·DID 는 `< 2`) 또는 "그 이름의 행이 없을 때"만 실행한다. `INSERT OR REPLACE`, 복구용 `else: UPDATE`, 데모 마이그레이션 UPDATE 는 없다. [코드] `seed.py`
+5. 기본 시드는 새 DB(`UserAccount` 테이블이 없던 DB)에서만 돈다(`elif fresh`). [코드] `bootstrap.py::ensure_schema`
+6. 새 DB 는 **첫 시작에서** 완전해야 한다(두 번째 시작에서야 채워지면 안 됨). 예: 데모 받은 팩스 #1 의 `companyid` 는 같은 시드 호출 끝에서 Acme 주소록 항목에 연결한다. [코드] `seed.py` 끝부분; 시험 `tests/unit/test_schema_seed_first_run.py` (원문 13.5, 14.9)
+7. 서버 DB 에는 데모 계정(알려진 비밀번호)을 만들지 않는다. 첫 관리자는 `namifax createuser`. [코드] `bootstrap.py` docstring, `test_demo_data_optin.py`
+
+지키는 시험:
+- `tests/unit/test_schema_seed_safety.py`: 데모 행을 "관리자가 고친 운영 데이터"로 바꾼 뒤(비밀번호 변경, 모뎀 삭제·수정, 바코드 기본키 변경, 팩스 삭제·수정 등) `upgrade_schema()` 를 다시 돌려 **모든 테이블 스냅샷이 같아야** 한다(`test_restarting_changes_nothing_in_a_database_with_real_data`). 사용자가 이미 있는 DB 는 데모 행이 늘지 않는다. 새 DB 재시작은 멱등.
+- `tests/unit/test_schema_seed_first_run.py`: 첫 시작에 팩스 #1 이 Acme 에 연결되고, 두 번째 시작에서 건수가 같다.
+- 새 시드를 추가할 때: 위 스냅샷 시험이 새 테이블까지 자동으로 보지만, 데모 행을 "고친 데이터"로 바꾸는 목록(`_as_edited_production_data`)에는 새 행을 직접 추가해야 보호가 확인된다. [추정] 목록이 수동이라는 코드 관찰에서 나온 권고.
+
+> 모순: 원문 14.9 는 구조용 백필 `_backfill_alias_columns` 를 "마이그레이션 직후와 시드 직후"에 돌린다고 적었다. 지금은 `db/sqlite_upgrade.py::_backfill_alias_columns` 로 존재하지만 SQLite 옛 테이블 보정 단계에서만 호출된다(`sqlite_upgrade.py` 53행, 시드 뒤가 아님). 또 원문은 기본 카테고리 3개와 표지 2개를 시드한다고 적었으나(14.16) 지금은 표지 3개뿐이다. [코드]
+> 관찰: 새 SQLite 데모 DB 의 `admin`/`password` 는 데모를 켠 개발·시험 전용이다. 기본(꺼짐)에서는 만들어지지 않는다. [코드] `test_demo_data_optin.py::test_nobody_can_log_in_with_the_old_demo_password_on_a_default_start`
