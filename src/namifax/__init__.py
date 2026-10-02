@@ -118,12 +118,17 @@ def _session_factory(settings):
         secret = secrets.token_hex(32)
         logging.getLogger("namifax").warning(
             "No session.secret / NAMIFAX_SESSION_SECRET configured: using a random one for this process only")
+    # the ini wins; without it NAMIFAX_SESSION_SECURE (for a deployment that has no ini) decides
+    flag = settings.get("session.secure")
+    if flag is None:
+        flag = os.environ.get("NAMIFAX_SESSION_SECURE", "false")
+    secure = str(flag).strip().lower() in ("1", "true", "yes")
     return SignedCookieSessionFactory(
         secret,
         cookie_name="namifax_flow",
         httponly=True,
         samesite="Lax",
-        secure=str(settings.get("session.secure", "false")).lower() in ("1", "true", "yes"),
+        secure=secure,
         timeout=1800,
     )
 

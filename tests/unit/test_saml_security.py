@@ -79,7 +79,8 @@ def _start(client):
 
 
 def _response(idp_key_cert, *, in_response_to, email="sso@corp.test", audience="http://example.com/auth/saml/metadata",
-              recipient="http://example.com/auth/saml/acs", not_after=None, not_before=None, sign=True, tamper=False, attributes=None):
+              recipient="http://example.com/auth/saml/acs", not_after=None, not_before=None, sign=True, tamper=False, attributes=None,
+              issuer="https://idp.example.com"):
     key, cert = idp_key_cert
     now = datetime.now(timezone.utc)
     fmt = lambda t: t.strftime("%Y-%m-%dT%H:%M:%SZ")                                    # noqa: E731
@@ -90,10 +91,10 @@ def _response(idp_key_cert, *, in_response_to, email="sso@corp.test", audience="
                     for name, values in (attributes or {}).items())
     xml = f"""<samlp:Response xmlns:samlp="{NS_P}" xmlns:saml="{NS_A}" ID="_{uuid.uuid4().hex}" Version="2.0" IssueInstant="{fmt(now)}"
        Destination="{recipient}" InResponseTo="{in_response_to}">
-  <saml:Issuer>https://idp.example.com</saml:Issuer>
+  <saml:Issuer>{issuer}</saml:Issuer>
   <samlp:Status><samlp:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:Success"/></samlp:Status>
   <saml:Assertion ID="{aid}" Version="2.0" IssueInstant="{fmt(now)}">
-    <saml:Issuer>https://idp.example.com</saml:Issuer>
+    <saml:Issuer>{issuer}</saml:Issuer>
     <saml:Subject><saml:NameID>{email}</saml:NameID>
       <saml:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer">
         <saml:SubjectConfirmationData InResponseTo="{in_response_to}" Recipient="{recipient}" NotOnOrAfter="{fmt(not_after)}"/>
@@ -192,6 +193,27 @@ def test_a_response_for_another_time_audience_or_address_is_refused(client, conf
     request_id = _start(client)
     res = _post(client, _response(idp, in_response_to=request_id, **override))
     assert "/login" in res.headers["Location"] and not _signed_in(client)
+
+
+def test_a_response_from_another_issuer_is_refused_even_if_the_signature_is_good(client, configured, person, idp):
+    request_id = _start(client)
+    res = _post(client, _response(idp, in_response_to=request_id, issuer="https://other-idp.example.net"))
+    assert "/login" in res.headers["Location"] and not _signed_in(client)
+
+
+def test_the_configured_issuer_is_accepted(client, configured, person, idp):
+    request_id = _start(client)
+    _post(client, _response(idp, in_response_to=request_id))
+    assert _signed_in(client)
+
+
+def test_without_a_configured_issuer_the_check_is_skipped_with_a_warning(client, configured, person, idp, caplog):
+    configured.set("saml_idp_entity_id", "")
+    request_id = _start(client)
+    with caplog.at_level("WARNING", logger="namifax"):
+        _post(client, _response(idp, in_response_to=request_id, issuer="https://whoever.example"))
+    assert _signed_in(client)
+    assert "Issuer of the response is not checked" in caplog.text
 
 
 def test_an_answer_to_another_request_is_refused(client, configured, person, idp):

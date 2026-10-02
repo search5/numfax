@@ -84,6 +84,18 @@ def login_post_view(request):
     from namifax.auth import alternate
 
     # The system password first when that is configured; the account's own password when it is not, or may follow
+    from namifax.services.login_throttle import LoginThrottle
+
+    throttle = LoginThrottle(request.dbsession)
+    if throttle.is_locked(username, remote_ip):                    # the password is not even looked at
+        return {
+            "title": "- NamiFAX - Login",
+            "server_name": "NamiFAX Server 3.3.5",
+            "username": username,
+            "error": _("Too many failed sign-in attempts. Please try again later."),
+            "current_user": None,
+        }
+
     alt_error = None
     if alternate.enabled():
         if user.login_alternate_auth(username, password, remote_ip=remote_ip):
@@ -96,6 +108,7 @@ def login_post_view(request):
         alt_error = None if is_valid else user.get_error()
 
     if not is_valid:
+        throttle.record_failure(username, remote_ip)
         request.response.status_code = 200
         problem = alt_error or user.get_error()
         if problem == "Account is disabled":
@@ -112,6 +125,7 @@ def login_post_view(request):
             "current_user": None,
         }
 
+    throttle.record_success(username)
     uid = getattr(user, "get_uid", lambda: None)() or getattr(user, "uid", None)
 
     # An account that was reset, has expired or has never been used must choose a new password first. The login

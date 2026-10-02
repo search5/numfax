@@ -38,6 +38,8 @@ def _run(view, req):
     with patch.object(auth_mod, "AFUserAccount", user_cls), \
             patch.object(settings_mod, "AFUserAccount", user_cls), \
             patch("namifax.services.totp.TotpService", totp_cls), \
+            patch("namifax.services.login_throttle.LoginThrottle",
+                  MagicMock(return_value=MagicMock(is_locked=MagicMock(return_value=False)))), \
             contextlib.suppress(Exception):
         view(req)
     return user_cls, totp_cls
