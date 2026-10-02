@@ -12,6 +12,7 @@
 - [[authentication-and-security]] - 비밀번호 해시, 2단계 인증, 패스키, SAML, 권한 모델, 비밀 저장, 세션·CSRF, 현재 한계
 - [[scheduler-and-storage]] - APScheduler 정기 작업과 관리자 화면(정지·시작·작업별 중지), 로컬/S3 스토리지와 수명주기
 - [[hylafax-integration]] - HylaFAX 훅·송신·수신 처리와 모뎀 상태, 실제 HylaFAX 로 시험하지 못한 범위와 대체 검증
+- [[hylafax-operations-notes]] - HylaFAX 쪽 운영 지식(수신 스풀 이동, faxqclean, 팩스 한 통의 파일 구조), 발송 첨부 형식, print-to-fax 구현과 목표 설계
 - [[i18n-and-ui]] - 다국어(번역 절차와 규칙), Jinja2·Tailwind(CSS 재빌드), 레이아웃 규칙
 - [[testing]] - 시험 구성과 실행법, 서버 DB 시험, 삭제된 골든 마스터의 영향, 시험이 지키는 규칙
 - [[operations-and-deployment]] - 실행·배포(ini, 환경 변수, 웹 서버, systemd, cron), 운영 점검

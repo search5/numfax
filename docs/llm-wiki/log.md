@@ -30,3 +30,6 @@ hylafax-integration 의 "sendfax 를 호출하지 않는다"와 scheduler-and-st
 ## [2026-10-02] ingest | 원본 문서 2개 삭제(PORTING_GAPS, NEW_FEATURES_PLAN)
 `docs/PORTING_GAPS.md` 는 [[known-gaps-and-decisions]] 로, `docs/NEW_FEATURES_PLAN.md` 는 `topics/` 의 코드 기준 서술로 대체되어 삭제했다. 두 `sources/` 요약의 원본 경로는 `git show 61c3663:...` 로 바꿨다.
 
+
+## [2026-10-02] topic | hylafax-operations-notes 추가, 설계 문서 삭제
+`docs/hylafax_avantfax_integration_architecture.md` 에서 위키에 없던 내용(원문 3장 수신 스풀 이동, 4.2·5장 `faxqclean`·팩스 한 통의 파일 구조, 10장 발송 첨부 형식, 11장 print-to-fax)을 [[hylafax-operations-notes]] 로 옮기고 문서를 삭제했다. 아카이브 단계 파일 이름과 보관 폴더 설정(`AVANTFAX_ARCHIVE`), 업로드 형식 검사는 코드로 직접 확인했다. 나머지 장은 [[hylafax-integration]]·[[scheduler-and-storage]] 에 이미 있거나 설계안(미구현)이라 옮기지 않았다.

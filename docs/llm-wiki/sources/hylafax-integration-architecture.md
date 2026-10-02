@@ -2,9 +2,11 @@
 title: HylaFAX & AvantFAX 연동 아키텍처 및 스토리지 관리
 type: source
 updated: 2026-10-02
-sources: [docs/hylafax_avantfax_integration_architecture.md]
+sources: ["git show 614f7b0:docs/hylafax_avantfax_integration_architecture.md (삭제됨; 옮긴 내용은 [[hylafax-operations-notes]], 나머지는 [[hylafax-integration]], [[scheduler-and-storage]])"]
 verified: false
 ---
+
+> 원본 문서는 2026-10-02 에 저장소에서 삭제했다(위 `git show` 로 읽는다). 위키에 없던 부분(스풀 이동, 파일 구조, 첨부 형식, print-to-fax)은 [[hylafax-operations-notes]] 로 옮겼다. 이 요약은 삭제 시점의 문서가 주장한 바이며 현재 코드와 다를 수 있다.
 
 ## 요약
 

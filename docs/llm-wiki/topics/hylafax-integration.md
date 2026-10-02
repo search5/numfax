@@ -94,7 +94,7 @@ HylaFAX 가 부르는 실행 파일 4개와 NamiFAX 모듈의 연결. [코드] `
 - [코드] 관리자 대시보드의 HylaFAX 버전은 `faxstat -i` 출력에서 정규식으로 뽑는다(`services/hylafax_info.py`). 못 구하면 `None`(값을 지어내지 않는다).
 - [코드] `FaxQueue.shell_exec` 은 이름과 달리 **쉘을 쓰지 않는다**. 명령 문자열을 `shlex.split` 해 인자 리스트로 `subprocess.run` 하고, 실행 불가·빈 명령·구문 오류는 빈 문자열을 돌려준다(커밋 `c59af5e` 이전에는 `shell=True` 였고 오류 문자열을 출력으로 돌려줬다). 명령은 생성자 기본값 `faxstat -s`/`faxstat -d`. `killjob` 은 `faxrm <jid>` 를 환경 변수 `FAXUSER` 와 함께, `faxalter` 는 인자 리스트로 실행한다.
 
-> 모순: 저장소 문서는 해결됨(커밋 `91dbc4a`, 2026-10-02 확인: `docs/hylafax_avantfax_integration_architecture.md` 첫머리가 "TCP 4559 에 접속하지 않고 `faxstat` 을 실행"으로 바로잡음). 위키 요약 [[hylafax-integration-architecture]] 만 아직 "실시간 모뎀 상태 조회(`faxstat` + TCP 4559)"라고 적는다. 코드에서 TCP 4559(`hfaxd` 포트) 소켓 접속은 찾지 못했다(`src/` 에서 `4559` 검색 결과 없음). 모뎀 상태와 대기열 모두 **`faxstat` 외부 프로세스 실행**으로만 구한다.
+> 모순: 저장소 문서는 해결됨(커밋 `91dbc4a`, 2026-10-02 확인: `docs/hylafax_avantfax_integration_architecture.md`(삭제됨, `git show 614f7b0:docs/hylafax_avantfax_integration_architecture.md`) 첫머리가 "TCP 4559 에 접속하지 않고 `faxstat` 을 실행"으로 바로잡음). 위키 요약 [[hylafax-integration-architecture]] 만 아직 "실시간 모뎀 상태 조회(`faxstat` + TCP 4559)"라고 적는다. 코드에서 TCP 4559(`hfaxd` 포트) 소켓 접속은 찾지 못했다(`src/` 에서 `4559` 검색 결과 없음). 모뎀 상태와 대기열 모두 **`faxstat` 외부 프로세스 실행**으로만 구한다.
 
 ## 5. 메일 → 팩스 (Postfix)
 
@@ -124,7 +124,7 @@ HylaFAX 가 부르는 실행 파일 4개와 NamiFAX 모듈의 연결. [코드] `
 
 ## 9. 문서-코드 차이 요약
 
-1. TCP 4559 로 모뎀 상태를 읽는다는 설명은 코드에 없다. `faxstat` 프로세스 실행뿐(§4). `docs/hylafax_avantfax_integration_architecture.md` 는 `91dbc4a` 이후 이 점을 바로잡았다(위키 `sources/` 요약은 옛 서술 그대로).
-2. 쪽 이미지 이름은 `preview<N>.png` 가 아니라 `page<N>.png`(§3). 저장소 문서(`docs/hylafax_avantfax_integration_architecture.md`)는 정정됐다.
+1. TCP 4559 로 모뎀 상태를 읽는다는 설명은 코드에 없다. `faxstat` 프로세스 실행뿐(§4). `docs/hylafax_avantfax_integration_architecture.md`(삭제됨, `git show 614f7b0:docs/hylafax_avantfax_integration_architecture.md`) 는 `91dbc4a` 이후 이 점을 바로잡았다(위키 `sources/` 요약은 옛 서술 그대로).
+2. 쪽 이미지 이름은 `preview<N>.png` 가 아니라 `page<N>.png`(§3). 저장소 문서(`docs/hylafax_avantfax_integration_architecture.md`(삭제됨, `git show 614f7b0:docs/hylafax_avantfax_integration_architecture.md`))는 정정됐다.
 3. 서비스 파일 위치는 `deploy/systemd/` 가 아니라 `systemd/`(§6). 해결됨(`91dbc4a`).
 4. 이미지 업로드 "자동 래핑"(§2)은 코드에 없다. 가상 프린터의 `sendfax` 연결(§8)은 `26fcf82` 로, 진입점 `namifax print-in` 과 CUPS 백엔드 스크립트는 `88bb5d8` 로 생겼다(실제 CUPS 시험은 없음).
