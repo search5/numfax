@@ -2127,6 +2127,9 @@ msgstr "코드가 일치하지 않습니다. 휴대폰의 시간을 확인하고
 msgid "The password is not correct."
 msgstr "비밀번호가 올바르지 않습니다."
 
+msgid "Search the White Pages"
+msgstr "화이트 페이지에서 찾기"
+
 #~ msgid "High"
 #~ msgstr "높음"
 

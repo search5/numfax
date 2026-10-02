@@ -2,10 +2,13 @@
 
 from __future__ import annotations
 
+import re
+
 from pyramid.csrf import check_csrf_token
 from pyramid.httpexceptions import HTTPFound, HTTPForbidden
 from pyramid.view import view_config
 
+from namifax.common import settings
 from namifax.i18n import _
 from namifax.services.addressbook import AFAddressBook
 from namifax.services.archive_in import ArchiveIn
@@ -131,8 +134,11 @@ def modal_assign_view(request):
 
     companies = [{"id": c.get("abook_id"), "name": c.get("company")}
                  for c in ab.get_companies() or [] if c.get("company") and c.get("abook_id") != cid]
+    company = ab.get_company() or ""
+    lookup = company if re.fullmatch(r"[0-9]+", company) else ""      # a company that is only a number (the original's rule)
     return {"title": "- NamiFAX - Assign Company", "current_user": identity, "abook_id": cid,
-            "company": ab.get_company(), "companies": companies, "message": message, "error": error}
+            "company": company, "companies": companies, "message": message, "error": error,
+            "whitepages_url": settings.whitepages_url() + lookup if lookup else ""}
 
 
 @view_config(route_name="assignx", renderer="namifax:templates/assignx.jinja2", permission="view")

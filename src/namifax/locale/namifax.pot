@@ -2203,3 +2203,5 @@ msgstr ""
 msgid "The password is not correct."
 msgstr ""
 
+msgid "Search the White Pages"
+msgstr ""

@@ -92,6 +92,11 @@ def focus_on_new_fax_popup() -> bool:
     return flag("FOCUS_ON_NEW_FAX_POPUP", False)
 
 
+def whitepages_url() -> str:
+    """``WHITEPAGES``: the address of a reverse phone look-up; the number is put behind its last ``=``."""
+    return text("WHITEPAGES", "http://www.whitepages.com/search/ReversePhone?full_phone=")
+
+
 def hylaspool() -> str:
     return text("HYLASPOOL", "/var/spool/hylafax").rstrip("/") or "/"
 
