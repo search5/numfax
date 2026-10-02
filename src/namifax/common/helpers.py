@@ -16,6 +16,7 @@ from typing import Any, Dict, List, Optional, Sequence
 from PIL import Image
 
 from namifax.common.settings import binary as settings_binary
+from namifax.common.settings import papersize as settings_papersize
 
 
 DEFAULT_ADMIN_EMAIL = "admin@localhost"
@@ -357,8 +358,6 @@ def convert2pdf(path: str, convertfiles: Sequence[str]) -> bool:
     "cover") is first, then the other PDFs, the PostScript and the TIFFs. A file that cannot be converted fails the whole call
     (and no half-made PDF is left) instead of being left out. Files that do not exist are skipped.
     """
-    from io import BytesIO
-
     from pypdf import PdfReader, PdfWriter
 
     os.makedirs(path, exist_ok=True)
@@ -392,20 +391,17 @@ def convert2pdf(path: str, convertfiles: Sequence[str]) -> bool:
             out = tmpfilename(".pdf")
             temporary.append(out)
             argv = [gs, "-dCompatibilityLevel=1.4", "-dSAFER", "-q", "-dNOPAUSE", "-dBATCH", "-sDEVICE=pdfwrite",
-                    f"-sOutputFile={out}", "-f", *postscripts]
+                    f"-sOutputFile={out}", f"-sPAPERSIZE={settings_papersize()}", "-f", *postscripts]
             if subprocess.run(argv, capture_output=True, check=False).returncode != 0:
                 return False
             for page in PdfReader(out).pages:
                 writer.add_page(page)
-        for name in tiffs:
-            with Image.open(name) as img:
-                frames = []
-                for i in range(getattr(img, "n_frames", 1)):
-                    img.seek(i)
-                    frames.append(img.convert("RGB"))
-            buffer = BytesIO()
-            frames[0].save(buffer, save_all=True, append_images=frames[1:], format="PDF", resolution=200)
-            for page in PdfReader(BytesIO(buffer.getvalue())).pages:
+        for name in tiffs:                                       # (the original: tiff2ps | gs, one PDF for each TIFF)
+            out = tmpfilename(".pdf")
+            temporary.append(out)
+            if not tiff2pdf(name, out):
+                return False
+            for page in PdfReader(out).pages:
                 writer.add_page(page)
         with open(pdffile, "wb") as out_file:
             writer.write(out_file)
@@ -528,15 +524,24 @@ def tiff2pdf(tiff_file: str, pdf: str) -> bool:
     except Exception:
         pass
 
-    # 2. Robust Python Pillow conversion fallback
+    # 2. Pillow fallback: the pages stay black and white, and the PDF page is as many inches as the fax is (a fax has its own
+    #    resolution, 204 x 196 dpi "fine" or 204 x 98 dpi "normal"; the pixels are made square as ``tiff2ps`` does)
     try:
         with Image.open(tiff_file) as img:
             pages: List[Image.Image] = []
+            dpi = 0.0
             for i in range(getattr(img, "n_frames", 1)):
                 img.seek(i)
-                pages.append(img.convert("RGB"))
+                xres, yres = (float(v) for v in (img.info.get("dpi") or (0, 0)))
+                if min(xres, yres) < 50:                       # none given (Pillow then says 1 x 1): a fax is 204 x 196 dpi
+                    xres, yres = 204.0, 196.0
+                dpi = dpi or xres
+                page = img.copy() if img.mode in ("1", "L", "RGB") else img.convert("RGB")
+                if abs(xres - yres) > 0.1 * xres:
+                    page = page.resize((page.width, max(round(page.height * xres / yres), 1)), Image.NEAREST)
+                pages.append(page)
             if pages:
-                pages[0].save(pdf, save_all=True, append_images=pages[1:], format="PDF")
+                pages[0].save(pdf, save_all=True, append_images=pages[1:], format="PDF", resolution=dpi)
                 return True
     except Exception:
         pass
