@@ -8,7 +8,7 @@ NamiFAX는 HylaFAX 팩스 서버의 웹 프런트엔드입니다. [AvantFAX](htt
 
 AvantFAX는 David D. Mimms, Jr. <david(at)avantfax.com>가 만들었습니다. NamiFAX는 그 코드를 바탕으로 다시 만든 파생물이며(Lee Ji-ho), 화면 이미지와 번역의 상당 부분이 원본에서 왔습니다.
 
-이 소프트웨어는 GNU General Public License 2판의 조건으로 배포됩니다(`COPYING.txt`, http://www.fsf.org/licenses/gpl.html). 파생물과 이후 버전도 같은 라이선스의 자유 소프트웨어로 취급됩니다.
+**라이선스**: NamiFAX가 새로 쓴 코드와 문서는 BSD 3-Clause 라이선스입니다(`LICENSE`). 원본 AvantFAX에서 가져온 자료(이미지, 번역, 원본 설치 SQL, 기여자 목록)는 원본의 GNU General Public License 2판을 따릅니다(`COPYING.txt`, http://www.fsf.org/licenses/gpl.html). 어느 파일이 어느 쪽인지는 `NOTICE.txt`에 있습니다.
 
 아이콘(AvantFAX 로고 제외)은 Silvestre Herrera가 디자인했고 GNU General Public License 2판으로 공개되었습니다.
 

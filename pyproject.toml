@@ -3,6 +3,8 @@ name = "namifax"
 version = "4.0.0"
 description = "Modernized Enterprise HylaFAX Platform with Pyramid, SQLAlchemy, and APScheduler"
 readme = "README.md"
+license = "BSD-3-Clause"
+license-files = ["LICENSE", "NOTICE.txt", "COPYING.txt"]
 authors = [
     { name = "Lee Ji-ho", email = "search5@mz.co.kr" }
 ]

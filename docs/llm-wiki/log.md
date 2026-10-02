@@ -36,3 +36,6 @@ hylafax-integration 의 "sendfax 를 호출하지 않는다"와 scheduler-and-st
 
 ## [2026-10-02] topic | DB 계층 전환 기록 삭제, 유효한 규칙만 이전
 `docs/history/db-layer-refactor-log.md` 에서 지금도 유효한 규칙을 코드로 확인해 [[database-and-migrations]] 8절(방언 주의점: NULL 정렬, 이름·타입)과 9절(시드 안전 규칙), [[testing]] 'mock 시험의 함정' 으로 옮기고 문서를 삭제했다. `DatabaseEngine`·`cli_unit`·`bridge_cli` 등 지금 없는 이름의 변천 과정은 옮기지 않았다. NULL 정렬 근거(`OrmRepository.select` 의 `CASE` 순위, 시험 `test_select_puts_null_values_first...`)는 직접 확인했다.
+
+## [2026-10-02] schema | 라이선스 표기
+프로젝트 라이선스는 BSD 3-Clause(`LICENSE`, `pyproject.toml` 의 `license`). 원본 AvantFAX 에서 가져온 자료(이미지 51개는 원본과 바이트까지 같음, 이어받은 번역, 원본 설치 SQL, 기여자 목록)는 GPL v2 로 남기고 `NOTICE.txt`·`COPYING.txt` 에 구분해 적었다. 원본 PHP 에서 이식한 코드를 BSD 로 배포해도 되는지는 법률 검토를 받지 않았다.
