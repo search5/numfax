@@ -42,6 +42,16 @@ class SAMLSettings:
     sp_sls_url: str = "http://localhost:8000/auth/saml/sls"
     jit_provisioning: bool = True
     default_role: str = "user"
+    # roles and attributes of the identity provider that become the account's settings (all off until switched on)
+    role_mapping: bool = False
+    role_attribute: str = "Role"
+    role_admin: str = "namifax-admin"
+    role_superuser: str = "namifax-superuser"
+    role_can_del: str = "namifax-can-delete"
+    role_any_modem: str = "namifax-any-modem"
+    attr_modems: str = ""
+    attr_faxcats: str = ""
+    attr_didroutes: str = ""
 
 def saml_settings(session: Any, base_url: str) -> SAMLSettings:
     """The settings saved on the admin SAML page (disabled until an administrator turns it on and names the identity provider)."""
@@ -59,6 +69,15 @@ def saml_settings(session: Any, base_url: str) -> SAMLSettings:
         sp_sls_url=f"{base}/auth/saml/sls",
         jit_provisioning=cfg.get("saml_jit_provisioning", "1") == "1",
         default_role=cfg.get("saml_default_role", "user"),
+        role_mapping=cfg.get("saml_role_mapping", "0") == "1",
+        role_attribute=cfg.get("saml_role_attribute", "Role"),
+        role_admin=cfg.get("saml_role_admin", "namifax-admin"),
+        role_superuser=cfg.get("saml_role_superuser", "namifax-superuser"),
+        role_can_del=cfg.get("saml_role_can_del", "namifax-can-delete"),
+        role_any_modem=cfg.get("saml_role_any_modem", "namifax-any-modem"),
+        attr_modems=cfg.get("saml_attr_modems", ""),
+        attr_faxcats=cfg.get("saml_attr_faxcats", ""),
+        attr_didroutes=cfg.get("saml_attr_didroutes", ""),
     )
 
 
@@ -213,12 +232,14 @@ class SAMLService:
         if not name_id:
             return refuse("saml_no_name_id")
         attributes: dict[str, str] = {}
+        multi: dict[str, list[str]] = {}
         for attr in assertion.findall("saml:AttributeStatement/saml:Attribute", ns):
             attr_name = attr.attrib.get("Name", "")
-            val_elem = attr.find("saml:AttributeValue", ns)
-            if attr_name and val_elem is not None and val_elem.text:
-                attributes[attr_name] = val_elem.text.strip()
-        return {"success": True, "name_id": name_id, "attributes": attributes}
+            values = [v.text.strip() for v in attr.findall("saml:AttributeValue", ns) if v.text and v.text.strip()]
+            if attr_name and values:
+                attributes[attr_name] = values[0]
+                multi.setdefault(attr_name, []).extend(values)
+        return {"success": True, "name_id": name_id, "attributes": attributes, "attributes_multi": multi}
 
     def provision_or_get_user(
         self,
@@ -253,8 +274,44 @@ class SAMLService:
                 password=temp_pwd,
                 name=display_name,
                 email=email,
-                is_admin=False,
+                is_admin=(self.settings.default_role == "admin" and not self.settings.role_mapping),
             ):
                 return user
 
         return None
+
+
+def apply_role_mapping(session: Any, user: AFUserAccount, multi: dict[str, list[str]], settings: SAMLSettings) -> dict[str, Any]:
+    """Make the account's rights what the identity provider says (called at every sign-in while the mapping is on).
+
+    Roles (values of ``role_attribute``) set the admin / superuser / may-delete / any-line flags. The attributes named for lines and
+    categories list their names; a name that does not exist here is ignored. A setting whose attribute name is blank is not managed.
+    Returns what was set, for the log.
+    """
+    from namifax.services.categories import FaxPDFCategory
+    from namifax.services.did import DIDRouting
+    from namifax.services.modem import FaxModem
+
+    if not settings.role_mapping or not getattr(user, "uid", None):
+        return {}
+    roles = set(multi.get(settings.role_attribute, [])) if settings.role_attribute else set()
+    superuser = bool(settings.role_superuser) and settings.role_superuser in roles
+    changes: dict[str, Any] = {
+        "superuser": int(superuser),
+        "is_admin": int(superuser or (bool(settings.role_admin) and settings.role_admin in roles)),      # (a superuser may use the console)
+        "can_del": int(bool(settings.role_can_del) and settings.role_can_del in roles),
+        "any_modem": int(bool(settings.role_any_modem) and settings.role_any_modem in roles),
+    }
+    if settings.attr_modems:
+        known = set(FaxModem(db=session).get_modems() or [])
+        changes["modemdevs"] = "|".join(v for v in multi.get(settings.attr_modems, []) if v in known) or None
+    if settings.attr_faxcats:
+        by_name = {c["name"]: str(c["catid"]) for c in FaxPDFCategory(db=session).get_categories() or []}
+        changes["faxcats"] = "|".join(by_name[v] for v in multi.get(settings.attr_faxcats, []) if v in by_name) or None
+    if settings.attr_didroutes:
+        routes = {str(r.get("routecode") or ""): str(r["didr_id"]) for r in DIDRouting(db=session).list_all()}
+        routes.update({str(r.get("alias") or ""): str(r["didr_id"]) for r in DIDRouting(db=session).list_all() if r.get("alias")})
+        changes["didrouting"] = "|".join(routes[v] for v in multi.get(settings.attr_didroutes, []) if v in routes) or None
+    user.useraccount.update_entry({"uid": user.uid, **changes})
+    user.dbdata.update(changes)
+    return changes

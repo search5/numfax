@@ -79,13 +79,15 @@ def _start(client):
 
 
 def _response(idp_key_cert, *, in_response_to, email="sso@corp.test", audience="http://example.com/auth/saml/metadata",
-              recipient="http://example.com/auth/saml/acs", not_after=None, not_before=None, sign=True, tamper=False):
+              recipient="http://example.com/auth/saml/acs", not_after=None, not_before=None, sign=True, tamper=False, attributes=None):
     key, cert = idp_key_cert
     now = datetime.now(timezone.utc)
     fmt = lambda t: t.strftime("%Y-%m-%dT%H:%M:%SZ")                                    # noqa: E731
     not_after = not_after or now + timedelta(minutes=5)
     not_before = not_before or now - timedelta(minutes=1)
     aid = f"_{uuid.uuid4().hex}"
+    extra = "".join(f'<saml:Attribute Name="{name}">' + "".join(f"<saml:AttributeValue>{v}</saml:AttributeValue>" for v in values) + "</saml:Attribute>"
+                    for name, values in (attributes or {}).items())
     xml = f"""<samlp:Response xmlns:samlp="{NS_P}" xmlns:saml="{NS_A}" ID="_{uuid.uuid4().hex}" Version="2.0" IssueInstant="{fmt(now)}"
        Destination="{recipient}" InResponseTo="{in_response_to}">
   <saml:Issuer>https://idp.example.com</saml:Issuer>
@@ -98,7 +100,7 @@ def _response(idp_key_cert, *, in_response_to, email="sso@corp.test", audience="
       </saml:SubjectConfirmation></saml:Subject>
     <saml:Conditions NotBefore="{fmt(not_before)}" NotOnOrAfter="{fmt(not_after)}">
       <saml:AudienceRestriction><saml:Audience>{audience}</saml:Audience></saml:AudienceRestriction></saml:Conditions>
-    <saml:AttributeStatement><saml:Attribute Name="email"><saml:AttributeValue>{email}</saml:AttributeValue></saml:Attribute></saml:AttributeStatement>
+    <saml:AttributeStatement><saml:Attribute Name="email"><saml:AttributeValue>{email}</saml:AttributeValue></saml:Attribute>{extra}</saml:AttributeStatement>
   </saml:Assertion>
 </samlp:Response>"""
     root = etree.fromstring(xml.encode())

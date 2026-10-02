@@ -6,7 +6,8 @@ from pyramid.security import remember
 from pyramid.response import Response
 from pyramid.view import view_config
 
-from namifax.services.saml import SAMLService, saml_settings
+from namifax.common.helpers import avantfaxlog
+from namifax.services.saml import SAMLService, apply_role_mapping, saml_settings
 from namifax.services.user_account import AFUserAccount
 
 def _get_saml_service(request: Request) -> SAMLService:
@@ -64,6 +65,9 @@ def saml_acs_view(request: Request) -> Response:
     )
     if not user:
         return _back_to_login(request, "saml_no_account")
+    if svc.settings.role_mapping:                                            # the identity provider decides the rights
+        applied = apply_role_mapping(request.dbsession, user, result.get("attributes_multi") or {}, svc.settings)
+        avantfaxlog(f"saml> rights of '{user.get_username()}' set from the identity provider: {applied}", echo=False, session=request.dbsession)
 
     # sign in like the password login does: the same checks (disabled account) and the same token cookie
     username = user.get_username()

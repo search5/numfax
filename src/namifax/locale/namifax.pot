@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 14:20+0900\n"
+"POT-Creation-Date: 2026-10-02 14:44+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -647,6 +647,45 @@ msgid "Auto-create account on first login"
 msgstr ""
 
 msgid "Default Role for JIT Users"
+msgstr ""
+
+msgid "Take rights from the identity provider"
+msgstr ""
+
+msgid ""
+"At every sign-in the account's administrator, superuser, delete and line "
+"rights follow the roles below (a role that is gone takes the right away)."
+" Settings changed here by hand are overwritten at the next SSO sign-in."
+msgstr ""
+
+msgid "Attribute that holds the roles"
+msgstr ""
+
+msgid "Role: administrator"
+msgstr ""
+
+msgid "Role: superuser"
+msgstr ""
+
+msgid "Role: may delete faxes"
+msgstr ""
+
+msgid "Role: send on any line"
+msgstr ""
+
+msgid "Attribute with the lines (blank: not managed)"
+msgstr ""
+
+msgid "modems"
+msgstr ""
+
+msgid "Attribute with the categories (blank: not managed)"
+msgstr ""
+
+msgid "faxcats"
+msgstr ""
+
+msgid "Attribute with the DID routes (blank: not managed)"
 msgstr ""
 
 msgid "Save SAML Configuration"

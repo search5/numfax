@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: kMIME-Version: 1.Content-Type: text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 14:20+0900\n"
+"POT-Creation-Date: 2026-10-02 14:44+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ko\n"
@@ -616,6 +616,42 @@ msgstr "첫 로그인 때 계정 자동 생성"
 
 msgid "Default Role for JIT Users"
 msgstr "JIT 사용자의 기본 권한"
+
+msgid "Take rights from the identity provider"
+msgstr "권한을 ID 공급자(IdP)에서 가져오기"
+
+msgid "At every sign-in the account's administrator, superuser, delete and line rights follow the roles below (a role that is gone takes the right away). Settings changed here by hand are overwritten at the next SSO sign-in."
+msgstr "SSO로 로그인할 때마다 계정의 관리자·슈퍼유저·삭제·회선 권한이 아래 역할을 따릅니다(역할이 없어지면 권한도 사라집니다). 이 화면에서 손으로 바꾼 값은 다음 SSO 로그인 때 덮어써집니다."
+
+msgid "Attribute that holds the roles"
+msgstr "역할이 들어 있는 속성"
+
+msgid "Role: administrator"
+msgstr "역할: 관리자"
+
+msgid "Role: superuser"
+msgstr "역할: 슈퍼유저"
+
+msgid "Role: may delete faxes"
+msgstr "역할: 팩스 삭제 가능"
+
+msgid "Role: send on any line"
+msgstr "역할: 아무 회선으로 전송"
+
+msgid "Attribute with the lines (blank: not managed)"
+msgstr "회선이 들어 있는 속성(비우면 관리하지 않음)"
+
+msgid "modems"
+msgstr "modems"
+
+msgid "Attribute with the categories (blank: not managed)"
+msgstr "카테고리가 들어 있는 속성(비우면 관리하지 않음)"
+
+msgid "faxcats"
+msgstr "faxcats"
+
+msgid "Attribute with the DID routes (blank: not managed)"
+msgstr "DID 경로가 들어 있는 속성(비우면 관리하지 않음)"
 
 msgid "Save SAML Configuration"
 msgstr "SAML 설정 저장"

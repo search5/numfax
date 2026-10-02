@@ -1077,6 +1077,10 @@ def admin_saml_view(request):
         set_cfg("saml_idp_x509_cert", idp_x509_cert)
         set_cfg("saml_jit_provisioning", "1" if jit_provisioning else "0")
         set_cfg("saml_default_role", default_role)
+        set_cfg("saml_role_mapping", "1" if "saml_role_mapping" in request.params else "0")
+        for key in ("role_attribute", "role_admin", "role_superuser", "role_can_del", "role_any_modem",
+                    "attr_modems", "attr_faxcats", "attr_didroutes"):
+            set_cfg(f"saml_{key}", request.params.get(f"saml_{key}", "").strip())
         message = _("SAML 2.0 configuration saved successfully.")
 
     settings = {
@@ -1086,6 +1090,15 @@ def admin_saml_view(request):
         "idp_x509_cert": get_cfg("saml_idp_x509_cert", ""),
         "jit_provisioning": get_cfg("saml_jit_provisioning", "1") == "1",
         "default_role": get_cfg("saml_default_role", "user"),
+        "role_mapping": get_cfg("saml_role_mapping", "0") == "1",
+        "role_attribute": get_cfg("saml_role_attribute", "Role"),
+        "role_admin": get_cfg("saml_role_admin", "namifax-admin"),
+        "role_superuser": get_cfg("saml_role_superuser", "namifax-superuser"),
+        "role_can_del": get_cfg("saml_role_can_del", "namifax-can-delete"),
+        "role_any_modem": get_cfg("saml_role_any_modem", "namifax-any-modem"),
+        "attr_modems": get_cfg("saml_attr_modems", ""),
+        "attr_faxcats": get_cfg("saml_attr_faxcats", ""),
+        "attr_didroutes": get_cfg("saml_attr_didroutes", ""),
         "sp_metadata_url": request.route_url("saml_metadata"),
         "sp_acs_url": request.route_url("saml_acs"),
     }

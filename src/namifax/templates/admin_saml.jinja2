@@ -110,6 +110,36 @@
           </div>
         </div>
 
+
+        <div class="space-y-3 border-t border-slate-800 pt-4">
+          <div class="flex items-center gap-3 p-3 bg-slate-950/60 border border-slate-800 rounded-lg">
+            <input type="checkbox" id="saml_role_mapping" name="saml_role_mapping" value="1" {% if saml.role_mapping %}checked{% endif %}
+                   class="w-4 h-4 rounded bg-slate-900 border-slate-700 text-blue-600 focus:ring-0">
+            <div>
+              <label for="saml_role_mapping" class="text-sm font-medium text-slate-200 cursor-pointer">{{ _('Take rights from the identity provider') }}</label>
+              <p class="text-xs text-slate-500">{{ _('At every sign-in the account\'s administrator, superuser, delete and line rights follow the roles below (a role that is gone takes the right away). Settings changed here by hand are overwritten at the next SSO sign-in.') }}</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div><label class="block text-xs font-medium text-slate-400 mb-1">{{ _('Attribute that holds the roles') }}</label>
+              <input type="text" name="saml_role_attribute" value="{{ saml.role_attribute }}" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500"></div>
+            <div><label class="block text-xs font-medium text-slate-400 mb-1">{{ _('Role: administrator') }}</label>
+              <input type="text" name="saml_role_admin" value="{{ saml.role_admin }}" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500"></div>
+            <div><label class="block text-xs font-medium text-slate-400 mb-1">{{ _('Role: superuser') }}</label>
+              <input type="text" name="saml_role_superuser" value="{{ saml.role_superuser }}" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500"></div>
+            <div><label class="block text-xs font-medium text-slate-400 mb-1">{{ _('Role: may delete faxes') }}</label>
+              <input type="text" name="saml_role_can_del" value="{{ saml.role_can_del }}" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500"></div>
+            <div><label class="block text-xs font-medium text-slate-400 mb-1">{{ _('Role: send on any line') }}</label>
+              <input type="text" name="saml_role_any_modem" value="{{ saml.role_any_modem }}" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500"></div>
+            <div><label class="block text-xs font-medium text-slate-400 mb-1">{{ _('Attribute with the lines (blank: not managed)') }}</label>
+              <input type="text" name="saml_attr_modems" value="{{ saml.attr_modems }}" placeholder="{{ _('modems') }}" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500"></div>
+            <div><label class="block text-xs font-medium text-slate-400 mb-1">{{ _('Attribute with the categories (blank: not managed)') }}</label>
+              <input type="text" name="saml_attr_faxcats" value="{{ saml.attr_faxcats }}" placeholder="{{ _('faxcats') }}" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500"></div>
+            <div><label class="block text-xs font-medium text-slate-400 mb-1">{{ _('Attribute with the DID routes (blank: not managed)') }}</label>
+              <input type="text" name="saml_attr_didroutes" value="{{ saml.attr_didroutes }}" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500"></div>
+          </div>
+        </div>
+
         <div class="pt-2">
           <button type="submit" class="py-2 px-4 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm transition shadow-lg shadow-blue-500/20">
             {{ _('Save SAML Configuration') }}
