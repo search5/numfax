@@ -685,7 +685,7 @@ Pyramid 뷰 컨트롤러는 Jinja2 템플릿에 다음 표준 컨텍스트 딕�
 | **동적상태**| 회사별 이메일전달 편집 | `fax2email_edit.php` | `views/admin.py` (`/admin/fax2email?c_id=1`) | `[COMPLETE]` | 회사별 포워딩 매핑 로드 및 수정/삭제 (W62) |
 | **동적상태**| 팩스 카테고리 선택편집 | `fax_cat_edit.php` | `views/admin.py` (`/admin/categories?catid=1`) | `[COMPLETE]` | 카테고리 로드 및 수정/삭제 폼 계약 (W63) |
 | **동적상태**| 사용자 계정/권한 선택편집| `users.php` | `views/admin.py` (`/admin/users?uid=1`) | `[COMPLETE]` | 계정 상세 정보/권한 로드 및 수정/삭제 (W64) |
-| **동적상태**| 주소록 연락처 선택편집 | `rubrica_edit.php` | `views/addressbook.py` (`/addressbook/edit?company_id=1`) | `[COMPLETE]` | 연락처 정보 로드 및 수정/삭제 폼 계약 (W65) |
+| **동적상태**| 주소록 연락처 선택편집 | `addressbook_edit.php` | `views/addressbook.py` (`/addressbook/edit?company_id=1`) | `[COMPLETE]` | 연락처 정보 로드 및 수정/삭제 폼 계약 (W65). 이전 표에는 `rubrica_edit.php`로 적혀 있었으나 그 파일은 제거 대상이다(17.8) |
 | **동적상태**| 배포 목록 그룹 선택편집 | `distrolist_edit.php` | `views/distrolist.py` (`/distrolist/edit?dl_id=1`) | `[COMPLETE]` | 그룹 멤버 로드 및 수정/삭제 폼 계약 (W66) |
 | **동적상태**| 이메일북 연락처 선택편집| `emailbook_edit.php` | `views/addressbook.py` (`/emailbook/edit?email_id=1`) | `[COMPLETE]` | 이메일 연락처 로드 및 수정/삭제 계약 (W67) |
 | **동적상태**| 미인증 브라우저 리다이렉트 | `check_login.php` | `views/forbidden.py` (`/inbox` -> 302 `/login`) | `[COMPLETE]` | 세션 만료 시 로그인 페이지 자동 이동 (W68) |
@@ -975,6 +975,7 @@ NamiFAX는 `pyramid.i18n` 및 Python **Babel** 표준 도구 체인을 기반으
 
 ### 17.8 제거된 로직 (Dead Code Removal Protocol)
 
+* `rubrica.php`, `rubrica_edit.php`(옛 이름의 주소록 화면): 대응하는 템플릿(`rubrica.tpl`)이 없고 어디에서도 링크되지 않는 죽은 코드라서 이식하지 않는다(주소록은 `addressbook*.php`). 레거시 소스를 읽어 확인했다.
 * PHP→Python JSON 브리지 전체(`db/bridge_cli.py`, `*Bridge.php` 24개): 호출자가 없었고 임의 SQL·임의 실행 파일 실행이 가능했다.
 * 레거시 DB 계층: `DatabaseEngine`, `QueryBuilder`, `MDBObject`, 엔티티 클래스, 문자열 SQL 스키마 모듈, `request.db`, `cli_db`, `cli_unit`.
 * 포트가 임의로 만든 `FaxArchive.company` 컬럼·시드·읽기 폴백, 호환 뷰 `DIDRouting`/`FaxPDFCategory`, 참조되지 않던 `AddressBookDistro` 테이블, 사용하지 않던 주소록 중복 컬럼(`ab_id`, `fax_id`, `default_num` 등).

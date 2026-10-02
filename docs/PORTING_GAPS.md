@@ -67,7 +67,7 @@
 | E4 ✅ | (PS/PDF 변환·합치기, 변환 실패 시 중단, 복사 실패 시 중단, 팩스 ID 주석, `TIFF_TO_G4` 처리됨; PS는 Ghostscript 필요하며 리눅스 컨테이너의 실제 `gs`로 확인함) | **[보고]** |
 | E5 ✅ | faxcover: HTML 표지(`html2ps`, `USE_HTML_COVERPAGE`)와 `NUM_PAGES_FOLLOW` 없음(시드의 HTML 표지는 쓸 수 없음), 치환값의 PostScript 이스케이프 없음(이름·제목에 괄호나 한글이 있으면 PS가 깨질 수 있음), `-C` 확장자 검사 없음 | **[보고]** |
 | E6 ◐ | (`ARCHIVEFAX2EMAIL`, `FAXRCVD_INCLUDE_PDF`, `AUTOCONFDID`, 날짜 형식은 원본 기본값으로 처리됨; `WWWUSER`는 Debian 웹 사용자 `www-data`라 그대로 둠) 이전 내용: 기본값이 원본과 반대: `ARCHIVEFAX2EMAIL`, `FAXRCVD_INCLUDE_PDF`, `AUTOCONFDID`(원본 true), 날짜 형식(`FAXCOVER_DATE_FORMAT`, 메일 제목), `WWWUSER` | **[보고]** (일부는 운영 문서에 기록) |
-| E7 ◐ | (`HYLASPOOL`, `BINARYDIR`, 날짜 형식, `PAPERSIZE`/`DPI`, 썸네일 크기 `PREV_TN`/`PREV_SP`는 `common/settings.py`로 처리됨) (`CALLIDN_*` 순서, 바코드·OCR 켜기·명령·언어, `EMAIL_ENCODING_*`도 처리됨) (`RESTRICTED_USER_MODE`·`INBOX_LIST_MODEM`도 같은 이름의 환경변수로 켤 수 있음: 아카이브 검색의 회선·분류 AND 조건, 수신함 회선별 정렬과 제목 행) (`SHOW_ALL_CONTACTS`도 처리됨: 기본 켜짐, 끄면 검색어 2글자 이상일 때만 `/ajax/book`·`/ajax/archivebook`·연락처 선택창이 조회) (`SENDFAX_USE_COVERPAGE`·`SENDFAX_REQUEUE_EMAIL`도 처리됨: 둘 다 기본 켜짐, 보내기 화면의 표지 스위치와 '재시도 알림' 체크의 시작 상태) (`MAX_USERNAME_SIZE`·`MAX_PASSWD_SIZE`·`MIN_PASSWD_SIZE`·`MAX_EMAIL_SIZE`도 같은 이름의 환경변수로 처리됨: 기본값은 원본의 15·15·8·99. 이식본이 쓰던 40·64에서 원본 값으로 되돌렸으므로 16자 이상 비밀번호가 필요하면 `MAX_PASSWD_SIZE`를 지정) 남은 것: 없음(`SENDFAX_*`는 원본에 두 항목뿐), `MAX/MIN_*_SIZE`. 이전 내용: 같은 이름 설정이 없는 것: HylaFAX 경로(`BINARYDIR`, `HYLAFAX_PREFIX`, `HYLASPOOL`), `CALLIDn_*` 순서, 바코드·OCR 사용 여부와 명령·언어, `EMAIL_ENCODING_*`, `EMAIL_DATE_FORMAT`, `PAPERSIZE`, `DPI`, 썸네일 크기, `RESTRICTED_USER_MODE`·`INBOX_LIST_MODEM`(코드는 있으나 켤 방법이 없음), `SHOW_ALL_CONTACTS`, `SENDFAX_*`, `DEFAULT_FAXES_PER_PAGE_*`, `MAX/MIN_*_SIZE` | **[보고]** |
+| E7 ✅ | (`HYLASPOOL`, `BINARYDIR`, 날짜 형식, `PAPERSIZE`/`DPI`, 썸네일 크기 `PREV_TN`/`PREV_SP`는 `common/settings.py`로 처리됨) (`CALLIDN_*` 순서, 바코드·OCR 켜기·명령·언어, `EMAIL_ENCODING_*`도 처리됨) (`RESTRICTED_USER_MODE`·`INBOX_LIST_MODEM`도 같은 이름의 환경변수로 켤 수 있음: 아카이브 검색의 회선·분류 AND 조건, 수신함 회선별 정렬과 제목 행) (`SHOW_ALL_CONTACTS`도 처리됨: 기본 켜짐, 끄면 검색어 2글자 이상일 때만 `/ajax/book`·`/ajax/archivebook`·연락처 선택창이 조회) (`SENDFAX_USE_COVERPAGE`·`SENDFAX_REQUEUE_EMAIL`도 처리됨: 둘 다 기본 켜짐, 보내기 화면의 표지 스위치와 '재시도 알림' 체크의 시작 상태) (`MAX_USERNAME_SIZE`·`MAX_PASSWD_SIZE`·`MIN_PASSWD_SIZE`·`MAX_EMAIL_SIZE`도 같은 이름의 환경변수로 처리됨: 기본값은 원본의 15·15·8·99. 이식본이 쓰던 40·64에서 원본 값으로 되돌렸으므로 16자 이상 비밀번호가 필요하면 `MAX_PASSWD_SIZE`를 지정) (`DEFAULT_FAXES_PER_PAGE_INBOX`/`_ARCHIVE`도 처리됨: 수신함 25, 보관함 30, 아래 G4) 남은 것: 없음. `SENDFAX_*`는 원본에 두 항목뿐, `MAX/MIN_*_SIZE`. 이전 내용: 같은 이름 설정이 없는 것: HylaFAX 경로(`BINARYDIR`, `HYLAFAX_PREFIX`, `HYLASPOOL`), `CALLIDn_*` 순서, 바코드·OCR 사용 여부와 명령·언어, `EMAIL_ENCODING_*`, `EMAIL_DATE_FORMAT`, `PAPERSIZE`, `DPI`, 썸네일 크기, `RESTRICTED_USER_MODE`·`INBOX_LIST_MODEM`(코드는 있으나 켤 방법이 없음), `SHOW_ALL_CONTACTS`, `SENDFAX_*`, `DEFAULT_FAXES_PER_PAGE_*`, `MAX/MIN_*_SIZE` | **[보고]** |
 | E8 ✅ | (dynconf 시스템 로그, 훅마다 마이그레이션하지 않는 단축, 보존 기간 정리용 cron 안내는 `docs/INSTALL_HYLAFAX.md`와 `deploy/cron.d/namifax`에 처리됨) 이전 내용: 내장 스케줄러는 임시 파일 정리만 돌리고 보존 기간 정리(`-i`/`-d`)는 별도 cron이 필요한데 안내가 없다. 훅이 호출될 때마다 스키마 검사·마이그레이션(DDL)을 시도한다(벨마다 호출되는 dynconf 포함) | **[보고]** |
 | E9 ✅ | 업로드 검사 클래스(`FileUpload`)가 어디에서도 쓰이지 않는다(보내기·vCard는 형식·크기를 서버에서 검사하지 않음) | **[보고]** |
 | E10 ✅ | 새 DB의 기본 표지가 `standard.ps`/`urgent.ps`인데 실제 파일은 `cover.ps`, `cover-letter.ps`, `coverpage.html`이라 가리키는 파일이 없다. 원본에 없는 카테고리 General/Invoices/Legal을 시드한다 | **[확인]** `db/seed.py:34`, 정적 파일 목록 |
@@ -77,6 +77,69 @@
 
 - ◐ (처리됨: 훅 스크립트·설정 조각·sudoers·cron·nginx/apache·postfix 안내·설치 문서 `docs/INSTALL_HYLAFAX.md`, 사용자 동기화 `HYLAFAX_USER_SYNC`; 실제 HylaFAX에서는 시험하지 못함) 이전 내용: 이메일-팩스 게이트웨이(`email2fax`, postfix/sendmail 설정)와 HylaFAX 훅 배선(`CoverCmd`, `JobFmt`(`Mailaddr` 열), `UseJobTSI`, `FaxRcvdCmd`/`DynamicConfig`/`NotifyCmd`), 크론 등록, 파일 권한·소유자, 웹 서버 설정, `sudoers`(`faxadduser`/`faxdeluser`) 설치 스크립트와 문서가 없다. 연동 문서는 개념 설명과 예시 한두 줄뿐이다 **[보고]**.
 - ✅ (처리됨, 기본은 꺼짐) HylaFAX 사용자 동기화(`faxadduser`/`faxdeluser`)가 없다. 포트는 `FAXUSER` 환경변수만 지정하므로 `hosts.hfaxd`에 없는 사용자로 `faxrm`/`faxalter`가 실패하는지 확인이 필요하다 **[보고, 확인 필요]**.
+
+## G. 레거시와 다시 대조한 결과 (진입점·설정·스키마·스크립트·화면 문구·JS)
+
+앞의 A~F는 조사 보고에 근거한 항목이 많아서(**[보고]**), 레거시 소스를 직접 열어 기계적으로 다시 대조했습니다. 아래는 모두 **[확인]**(코드를 읽거나 스크립트로 비교)입니다.
+
+**범위별 결과**
+
+| 대조 대상 | 결과 |
+|---|---|
+| 웹 진입점 74개(`*.php` 36, `ajax/` 13, `admin/` 25) ↔ 라우트 | 이름으로 대응시켜 빠진 것이 없음을 확인했고, 이름만으로 불분명한 것(`rubrica*`, `no-database`, `file`·`pdf`, `archivefax`와 `ajaxarchivefax`)은 소스를 읽어 확인했다(나머지의 동작 동일성은 이 대조의 범위 밖). `rubrica.php`·`rubrica_edit.php`는 템플릿이 없고 링크되지 않는 죽은 코드라 제외(`ARCHITECTURE.md` 17.8에 기록). 관리자 전용 로그인 4개(`admin/index·check_login·logout·pwdexpired`)는 한 로그인에서 권한으로 나누기로 한 결정(C10) |
+| DB 테이블 14개(`create_tables.sql`, `db-update-*.sql`) ↔ 모델 | 테이블·컬럼 모두 있음(`UserAccount` 32/32, `FaxArchive` 17/17). 이식본에만 있는 6개는 새 기능(`FaxOCR`, `NetworkPrinters`, `SystemConfig`, `SystemSettings`, `UserTOTP`, `UserWebAuthnCredentials`) |
+| 명령줄·훅 14개(`includes/` 6, `tools/` 8) ↔ `namifax.cli` | `update_contacts`(2.x 이전 DB용, 지원하지 않기로 함)를 뺀 13개 모두 대응 |
+| 설정 변수 147개 ↔ 코드·문서 | 이름이 없는 약 70개 중 대부분은 대체됨(`AFDB_*`→`DATABASE_URL`, 테마 경로→Tailwind, `SMTP_*`·`SYSTEM_EMAIL_SIG_*`→관리자 SMTP 화면, 변환 도구 변수→Ghostscript 등, `SYSTEM_IP`→요청 주소). 아래 G1~G4가 실제 차이 |
+| 화면 문구 332개 ↔ `namifax.pot` | 144개가 문구 일치로는 찾아지지 않았으나 대부분 문구를 다르게 쓴 것이라 누락 개수로 보지 않음. 동작을 암시하는 문구(모뎀 상태, 오디오 선택, 비밀번호 재사용 등)만 골라 확인했고 추가 누락은 없었음 |
+
+**실제 차이** (모두 처리함)
+
+| # | 내용 | 근거 |
+|---|---|---|
+| G1 ✅ | 업체 지정(`/assign`) 화면에 "White Pages에서 찾기" 링크(`WHITEPAGES`)가 없었다. 업체 이름이 숫자로만 이루어졌을 때만 보인다(원본의 규칙) | `assign.tpl:20`, `assign.php:27` |
+| G2 ✅ | `FOCUS_ON_NEW_FAX`·`FOCUS_ON_NEW_FAX_POPUP` 스위치가 없고, 이식본은 새 팩스가 오면 항상 창을 앞으로 가져오고 알림·소리를 실행했다. 이제 둘 다 기본이 꺼짐이고, 포커스는 앞의 것, 알림(브라우저 알림, 원본의 `alert` 대신)과 소리는 뒤의 것이 켜졌을 때만 실행한다 | `avantfax.js:375-387`, `inbox.tpl:147` |
+| G3 ✅ | 보관함에서 행에 마우스를 올리면 큰 미리보기를 옆에 띄우는 동작(`previewImage`, `#faxpreview`)이 없었다. 행을 `#FFF0B6`으로 강조하고, 상자는 행 왼쪽 110px에 두며, 페이지 끝까지 130px 미만이면 끌어올린다 | `avantfax.js:218`, `archive.tpl:50,103` |
+| G4 ✅ | 수신함 한 쪽 기본 건수가 원본은 25인데 이식본은 10이었고(상수와 컬럼 기본값), 환경변수도 없었다. `DEFAULT_FAXES_PER_PAGE_INBOX`(25)·`_ARCHIVE`(30)로 처리했고, 컬럼 기본값은 마이그레이션 0025로 없앴다. **이미 저장된 값(예전 기본값 10 포함)은 사용자가 고른 값과 구분할 수 없어 그대로 둔다** | `inbox.php:28`, `models/useraccount.py` |
+| G5 ✅ | 수신함에서 새 팩스가 와도 목록이 새로고침되지 않았다(배지만 갱신). 원본은 수신함 화면에서 건수가 바뀌면 `window.location.reload()`로 목록을 다시 불러오고, 소리가 재생 중이면 끝난 뒤에 불러온다. 다른 화면은 건수만 갱신한다 | `avantfax.js:359-395`, `inbox.tpl:141-145` |
+| G6 ✅ | TIFF→PDF 대체 경로(libtiff·HylaFAX의 `tiff2pdf`가 없을 때)가 쪽을 RGB로 바꾸고 해상도를 버렸다. 3쪽 팩스가 TIFF의 6.7배(833KB 대 125KB)이고 쪽 크기가 24×30.6인치여서 PDF를 인쇄하면 크기가 틀어졌다. 이제 흑백 그대로, 팩스 해상도(204×196 또는 204×98dpi, 없으면 204×196)로 저장한다. 보내기 파일의 TIFF 합치기(`convert2pdf`)도 같은 함수를 쓰고, `PAPERSIZE`(기본 a4)는 PostScript 변환의 Ghostscript에 `-sPAPERSIZE`로 전달한다(설정은 있었으나 쓰이지 않았다) | `functions.php:982,1006`, `config.php:382-386`, `helpers.py` |
+
+**변환 도구 변수 대조** (레거시 `config.php:354-386`)
+
+| 변수 | 레거시에서 하는 일 | 이식본 |
+|---|---|---|
+| `TIFFCP`, `TIFFCPG4` | 받은 팩스 TIFF 복사(`TIFF_TO_G4`이면 G4 재압축) | `helpers.copy_tiff(group4=)` ✅ |
+| `TIFFSPLIT`, `CONVERT`, `GSCMD` | 팩스 주석 달기(쪽 나누기→글자 넣기→PDF) | `helpers.annotate_fax`(Pillow) ✅ |
+| `TIFFPS`+`GSR`, `HYLATIFF2PS` | TIFF→PDF | libtiff `tiff2pdf`, 없으면 Pillow. `HYLATIFF2PS`(HylaFAX 동봉 `bin/tiff2pdf`)는 쓰지 않는다. G6 처리 ✅ |
+| `GSCMD`, `TIFFPS`, `GSR` | 보내기 파일 합치기(`convert2pdf`) | `helpers.convert2pdf` ✅ (G6) |
+| `GSN`, `GSN2`, `PNMSCALE`, `PNMDEPTH`, `PPMTOGIF`, `PNMQUANT` | 쪽 이미지·썸네일(GIF) | `services/fax_images`(Ghostscript+Pillow, PNG). GIF→PNG는 의도한 차이 ✅ |
+| `PRINTFAXCMD` | 받은 팩스 인쇄 | `services/printing.py`(`PRINTFAX2PS`, `PRINTCMD`, `PDFPRINTCMD`) ✅ |
+| `PSRESIZE`, `GSTIFF`, `DPIS` | 정의만 있고 레거시 코드 어디에서도 쓰이지 않음(죽은 변수) | 이식하지 않음 |
+| `HAS_MIME_FUNCTION`, `HAS_FILEINFO`, `HAS_NEGATIVE_TIFF` | PHP 확장 유무 판정 | 해당 없음 |
+
+**JavaScript 대조** (레거시 `js/` 12개 파일)
+
+| 레거시 | 이식본 |
+|---|---|
+| `ajaxbook.js`, `archivebook.js`, `emailbook.js`, `faxcontacts.js`, `dlcontacts.js` (업체·연락처 실시간 필터, 선택 창에서 값 넣기, 표지 자동 채우기) | `livefilter.js`, 선택 창 스크립트, `/ajax/prefillto` ✅ |
+| `ajaxmodemstatus.js` (20초마다 모뎀 상태) | `notify.js` ✅ |
+| `multifile_upload.js` (여러 파일 목록) | `sendfax.js` ✅ |
+| `sendfax_coverpage.js` (표지 접기) | `sendfax.js` ✅ (`SENDFAX_USE_COVERPAGE` 반영) |
+| `avantfax.js`: `checkInbox`·`performInboxCheck` | `notify.js` ✅ (G2, G5) |
+| `avantfax.js`: `previewImage` | `archive.js` ✅ (G3) |
+| `avantfax.js`: `selectAllFaxes`, `getSelectedFaxIDs` | 수신함 일괄 선택·처리 ✅ |
+| `avantfax.js`: `changeDisplayedFax`, `showNextImage`, `showDisplayedFax` (팩스 보기의 쪽 넘김) | `viewfax.jinja2` 안의 스크립트 ✅ (페이드 효과만 없음) |
+| `avantfax.js`: `highlightrow`, `imageRoll` | Tailwind `hover:`로 대체(표시 효과뿐) |
+| `avantfax.js`: `mkwin`·`mknoteswin`·`mkpdfwin`, `dialog.js`의 `dialogDeleteFax`·`archiveFax`·`dialogNote`·`dialogFaxAlter` 등 | 페이지형 대화상자(의도한 차이). 레거시는 보관·삭제 뒤 행을 화면에서 지우고 건수를 줄이며(`removeFaxDIV`, `decFaxCount`) 이식본은 화면을 다시 불러온다 |
+| `xhrobject.js`, `scriptaculous-js` | 해당 없음(`fetch`와 CSS 효과로 대체) |
+| `avantfax.js`: `newfax`, `gotoInbox`, `serialize_array`, `preloadImg`, `basename` | 보조 함수(`newfax`는 호출하는 곳을 찾지 못함) |
+| `PN_PAGE_UP`·`PN_PAGE_DN`, `ADMIN_STATS`, `ADMIN_ROUTEBY_KEYWORD` 문구 | 레거시에서도 쓰이지 않는 문구 |
+
+**확인하지 못한 것**
+
+- 실제 HylaFAX 연동(훅, `faxstat` 파싱, 사용자 동기화)과 큰 `FaxArchive`의 첫 기동 시간. 실서버가 없어서 이번 대조에서 제외했다.
+- 화면 레이아웃과 스타일의 시각 대조(스크린샷 비교).
+- JavaScript는 함수와 동작 단위로 대조했고, 이식본의 클라이언트 동작은 Node에서 가짜 DOM으로 실행해 검증했다(G2, G3, G5). 실제 브라우저에서 눈으로 확인한 것은 아니다.
+- 이름으로 대응시킨 웹 진입점의 세부 동작 동일성.
 
 ## 제외(이미 결정했거나 대체됨)
 
