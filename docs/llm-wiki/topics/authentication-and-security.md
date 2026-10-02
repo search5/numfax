@@ -74,6 +74,8 @@ sources:
    - 범위: `login_throttle` 은 `auth.py` 의 `POST /login` 에서만 호출된다(`grep -rn LoginThrottle src`). `REMOTE_USER` 로그인(`GET /login`), 패스키, SAML, `/pwdexpired`, `/forgot` 에는 적용되지 않는다. [코드]
    - 주소는 `request.remote_addr` 를 그대로 쓴다. 코드에는 `X-Forwarded-For` 를 해석하거나 `ProxyFix` 를 쓰는 곳이 없고(`grep -rn "X-Forwarded-For\|ProxyFix" src` 결과 없음), `deploy/nginx/namifax.conf` 는 `X-Forwarded-For` 만 넘긴다. 따라서 프록시 뒤에서는 모든 사용자가 프록시 주소 하나로 보여 주소 한도(기본 50회)를 함께 소진할 수 있다. [추정: 프록시 뒤 `remote_addr` 값은 배포 환경에서 실제로 확인하지 못함]
    - 한계: 한도는 잠금으로 서비스 거부를 일으킬 수 있다(남이 내 사용자 이름으로 10번 틀리면 15분간 내가 로그인하지 못한다). 코드에 이를 막는 장치는 없다. [코드: `record_failure` 는 인증 여부와 무관하게 센다]
+   - 동시 요청 [코드]: 횟수는 `SystemConfigService.locked_update` 로 행을 잠그고 읽어서 올린다. 예전에는 읽고-더하고-쓰기라서 병렬 실패가 덜 세어졌다(MySQL 에서 3~40개 동시 실패가 1~3회로 기록되어 한도 10 에 닿지 못했고, 요청의 70~90% 가 DB 사용 불가 화면으로 끝났다. 2026-10-02 로그인 화면으로 측정). 지금은 오류 화면이 없고 횟수가 정확하다([[testing]] 의 "마지막 실행 기록"). 사용자 이름 키를 주소 키보다 먼저 잠그는 순서가 항상 같아서 서로를 기다리지 않는다.
+   - 남는 한계 [추정: `auth.py` 의 호출 순서를 읽은 것이고 시험하지 않았다]: `is_locked`(요청 첫머리)와 `record_failure`(비밀번호를 확인한 뒤)가 떨어져 있어서, 한 번에 도착한 요청들은 모두 잠기기 전에 비밀번호 확인을 통과한다. 따라서 한 번의 병렬 묶음은 한도보다 많은 추측을 시도할 수 있다. 횟수는 정확하므로 그다음 묶음부터는 막힌다.
 
 > 모순: [[defects-rounds-1-2]] F3-01("2FA 가 로그인에서 전혀 강제 안 됨")은 현재 코드와 다르다. `_finish_login()` 이 `TotpService.is_totp_enabled` 를 검사해 코드 단계를 거치게 한다.
 

@@ -66,6 +66,7 @@ verified: true
 | 구형 트리 제거 유지 | `test_legacy_trees_removed.py` | |
 | 옛 `*.php` 주소 리다이렉트 규칙이 앱 주소와 어긋나지 않음 | `test_legacy_redirects.py` | 규칙 자체는 실제 웹 서버로 시험 |
 | 로그인 시도 제한 | `test_login_throttle.py` | 기본 10회·15분 |
+| 겹치는 요청에서 설정 키·로그인 실패 횟수 | `test_system_config_atomic.py` | 일부는 서버 DB 필요(`serverdb`) |
 | 세션 쿠키 Secure 플래그 | `test_session_secure_flag.py` | ini 우선 |
 | 수신 팩스 S3 업로드와 원격 정책 | `test_remote_upload.py` | |
 | env 파일 배선 | `test_env_file_wiring.py` | systemd·cron·훅 |
@@ -74,17 +75,16 @@ verified: true
 - 관련: [[architecture-and-modules]], [[overview]]
 
 ## 마지막 실행 기록
-- [코드] 2026-10-02, 커밋 `0c77622`, SQLite 전체: `.venv/bin/python -m pytest tests -q -p no:randomly` → 2278 passed, 142 skipped(서버 DB 시험은 서버 주소가 없어 건너뜀), 약 5분 2초.
+- [코드] 2026-10-02, 커밋 `c353db5`, SQLite 전체: `.venv/bin/python -m pytest tests -q -p no:randomly` → 2283 passed, 163 skipped(서버 DB 시험은 서버 주소가 없어 건너뜀), 약 5분 7초.
 - [코드] 같은 커밋, 서버 DB 전체: `NAMIFAX_SUITE_DB=<종류>` 와 `NAMIFAX_TEST_*_URL` 로 세 서버를 동시에 실행. 서버는 Docker 임시 컨테이너(`postgres:16` = 16.15, `mysql:8.4` = 8.4.11, `mariadb:10.11` = 10.11.16).
   | 서버 | 결과 | 시간 |
   |---|---|---|
-  | PostgreSQL 16.15 | 2417 passed, 3 skipped | 약 20분 5초 |
-  | MySQL 8.4.11 | 2415 passed, **2 failed**, 3 skipped | 약 30분 53초 |
-  | MariaDB 10.11.16 | 2415 passed, **2 failed**, 3 skipped | 약 24분 53초 |
-- [코드] 서버 DB 의 실패 2건(MySQL·MariaDB 가 같다): `test_scheduler_admin.py::test_a_scheduler_that_starts_while_stopped_runs_no_engine` 와 `::test_stopping_from_the_page_acts_at_once_in_the_process_that_hosts_the_scheduler`. 둘 다 `SystemConfig` 의 `sched_heartbeat` 를 INSERT 하다 `Duplicate entry ... for key 'SystemConfig.PRIMARY'`(1062)로 실패한다. PostgreSQL 과 SQLite 는 통과한다.
-  - 원인 확인 [코드]: MySQL 의 전역 격리 수준을 `READ-COMMITTED` 로 바꾸면 이 파일의 43개가 모두 통과하고, 기본 `REPEATABLE-READ` 에서는 2개가 실패한다(같은 컨테이너에서 두 수준으로 각각 실행, 2026-10-02).
-  - 메커니즘 [추정]: 스케줄러 스레드가 별도 연결로 같은 키를 먼저 커밋하는데, 시험의 `dbsession` 은 먼저 연 트랜잭션의 스냅샷 때문에 그 행을 보지 못해 `SystemConfigService.set`(`merge`)이 UPDATE 대신 INSERT 한다. 쿼리 로그로 직접 확인하지는 않았다. 운영에서는 이 키가 처음 만들어지는 순간의 경쟁에만 해당할 것으로 본다 [추정].
-  - 고칠지(시험에서 격리 수준을 맞출지, `set` 을 경쟁에 견디게 할지)는 정하지 않았다. [[known-gaps-and-decisions]] 5.1.
+  | PostgreSQL 16.15 | 2443 passed, 3 skipped | 약 18분 9초 |
+  | MySQL 8.4.11 | 2443 passed, 3 skipped | 약 32분 12초 |
+  | MariaDB 10.11.16 | 2443 passed, 3 skipped | 약 24분 56초 |
+- [코드] 새 시험 `test_system_config_atomic.py`(서버 DB 시험 21개 포함)는 서버 3종 + SQLite 에서 40번 연달아 돌려 실패 0건이었다(2026-10-02).
+- 앞선 실행(커밋 `0c77622`)에서는 MySQL·MariaDB 가 각각 2 failed 였다: `test_scheduler_admin.py` 의 시험 2건이 `SystemConfig` 의 `sched_heartbeat` 를 INSERT 하다 `Duplicate entry`(1062). 원인 확인 [코드]: MySQL 전역 격리 수준을 `READ-COMMITTED` 로 바꾸면 통과하고 `REPEATABLE-READ` 에서는 실패(두 수준으로 각각 실행). `SystemConfigService.set` 이 `merge`(읽은 뒤 INSERT) 라서 낡은 스냅샷에서 이미 있는 키를 INSERT 하려던 것이다. 이 원인이 로그인 제한에도 있어 병렬 로그인 실패가 덜 세어지는 것을 웹 요청으로 측정했고(아래), 둘 다 `c353db5` 에서 고쳤다. 방법과 실패한 시도는 [[database-and-migrations]] 7장.
+- [코드] 로그인 실패 병렬 측정(2026-10-02, 로그인 화면에 틀린 비밀번호를 동시에 N개, 새 사용자·새 IP, 한도 10): 고치기 전 MySQL 은 N=3~40 에서 기록 1~3회, 요청의 70~90% 가 "database unavailable" 화면; PostgreSQL 은 N=10 에서 기록 3~5회. 고친 뒤 두 DB 모두 오류 화면 0건, 기록 횟수가 한도(10)까지 정확하고 한도에 닿으면 잠긴다(N=3 은 3회, N=10·40 은 10회에서 잠금). 동시에 출발시킨 최악의 경우이고, 같은 프로세스 안의 스레드로 보낸 요청이라 네트워크 지연은 없다.
 - 같은 날 선생님이 4개 DB 통합 시험을 직접 실행했다고 알려 주셨다(구두 보고, 결과 세부는 기록 없음). 위 실행은 그와 별개로 AI 가 같은 방법으로 다시 돌린 것이다.
 - 골든 마스터는 기본 실행 대상에서 빠졌고 원본 트리도 삭제되어 실행하지 않았다.
 
