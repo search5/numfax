@@ -20,7 +20,7 @@ verified: true
 | DB | SQLAlchemy 2 ORM, pyramid_tm + zope.sqlalchemy + pyramid_retry, 마이그레이션 Alembic | [코드] `pyproject.toml`, `src/namifax/models/__init__.py` |
 | DB 종류 | SQLite(기본), PostgreSQL(`psycopg`), MySQL/MariaDB(`pymysql`) | [코드] `pyproject.toml` 선택 의존성, `src/namifax/db/provider.py` |
 | 정기 작업 | APScheduler | [코드] `src/namifax/services/scheduler.py` |
-| 인증 | Argon2id(`argon2-cffi`), TOTP(`pyotp`), WebAuthn, SAML(`signxml`), 비밀번호 로그인 시도 제한(`services/login_throttle.py`, 기본 10회 실패 시 15분 잠금, `NAMIFAX_LOGIN_MAX_FAILURES`/`NAMIFAX_LOGIN_LOCK_MINUTES`) | [코드] `pyproject.toml`, `src/namifax/services/{totp,webauthn,saml,login_throttle}.py` |
+| 인증 | Argon2id(`argon2-cffi`), TOTP(`pyotp`), WebAuthn, SAML(`signxml`), 비밀번호 로그인 시도 제한(`services/login_throttle.py`, 기본 5회 실패 시 계정 잠금(관리자만 해제), 주소는 15분 잠금, `NAMIFAX_LOGIN_MAX_FAILURES`/`NAMIFAX_LOGIN_LOCK_MINUTES`) | [코드] `pyproject.toml`, `src/namifax/services/{totp,webauthn,saml,login_throttle}.py` |
 | 문서·이미지 | Pillow, pypdf, pytesseract(OCR), segno(QR) | [코드] `pyproject.toml` |
 | 외부 저장소 | boto3 (S3 호환). 수신 팩스는 S3 설정 시 `upload_received_fax` 가 `faxrcvd` 훅에서 올린다(키 `fax<fid>/...`) | [코드] `pyproject.toml`, `src/namifax/services/cloud_storage.py`, `src/namifax/cli/faxrcvd.py` |
 | 화면 | Jinja2 + Tailwind CSS 3(빌드 산출물 `main.css` 를 저장소에 포함) | [코드] `package.json`, `tailwind.config.js` |

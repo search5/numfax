@@ -51,3 +51,6 @@ MySQL·MariaDB 의 스케줄러 시험 2건 실패를 따라가다 `SystemConfig
 
 ## [2026-10-02] topic | 로그인 시도를 비밀번호 확인 전에 세도록 바꿈
 한 번에 도착한 요청은 모두 "잠겼나" 확인을 통과해 한도보다 많이 확인되던 점(검사-후-행동 사이의 틈)을 `LoginThrottle.begin_attempt`(행 잠금 후 먼저 센다, 성공하면 주소 카운터를 되돌린다)로 고쳤다(`baf16ca`). 로그인 화면에 틀린 비밀번호 30개를 동시에 보내도 확인은 한도만큼만 일어남을 서버 3종에서 시험으로 확인했다. 서버 3종 각 2456 passed, SQLite 2290 passed. 반영: [[authentication-and-security]], [[testing]], [[database-and-migrations]], [[known-gaps-and-decisions]].
+
+## [2026-10-03] topic | 비밀번호 5회 초과 시 계정 잠금, 해제는 관리자만
+요청: 시도가 5회를 넘으면 맞는 비밀번호도 막고 해제는 관리자만. `LoginThrottle` 계정 카운터에서 시간 만료와 시간제 잠금을 없애고(`locked` 표시), 한도 기본 5회, 주소 카운터는 시간제 잠금을 유지하되 한도를 10배로 해 50회를 지켰다(`c87a87d`). 해제는 관리자 사용자 목록의 Unlock 버튼과 `namifax unlock-user`. 반영: [[authentication-and-security]], [[operations-and-deployment]], [[migration-from-avantfax]], [[overview]], [[known-gaps-and-decisions]], [[testing]].

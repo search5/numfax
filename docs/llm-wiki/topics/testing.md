@@ -76,6 +76,7 @@ verified: true
 - 관련: [[architecture-and-modules]], [[overview]]
 
 ## 마지막 실행 기록
+- [코드] 2026-10-03, 커밋 `c87a87d`(계정 잠금을 관리자만 해제), SQLite 전체: 2307 passed, 169 skipped, 약 4분 39초. 서버 3종 전체: 각 2467 passed, 3 skipped, **6 failed**(PostgreSQL 약 20분 15초, MySQL 약 31분 27초, MariaDB 약 25분 20초). 실패 6건은 세 서버 모두 같은 두 시험 `test_failures_that_arrive_together_are_all_counted`, `test_failures_on_an_existing_counter_are_all_counted` 였고, 기본 한도가 10일 때 8번을 센다고 가정한 시험의 오류였다(5번째에서 잠기고 이후는 세지 않는 것이 새 동작). 한도를 100으로 올려 고쳤고, 고친 뒤에는 잠금 관련 4개 파일(`test_system_config_atomic`, `test_login_throttle_reserve`, `test_login_account_lock`, `test_login_throttle`)만 서버 3종에서 다시 돌려 각 65 passed 였다. **고친 뒤 서버 3종 전체 시험은 다시 돌리지 않았다.**
 - [코드] 2026-10-02, 커밋 `baf16ca`, SQLite 전체: `.venv/bin/python -m pytest tests -q -p no:randomly` → 2290 passed, 169 skipped(서버 DB 시험은 서버 주소가 없어 건너뜀), 약 5분 8초.
 - [코드] 같은 커밋, 서버 DB 전체: `NAMIFAX_SUITE_DB=<종류>` 와 `NAMIFAX_TEST_*_URL` 로 세 서버를 동시에 실행. 서버는 Docker 임시 컨테이너(`postgres:16` = 16.15, `mysql:8.4` = 8.4.11, `mariadb:10.11` = 10.11.16).
   | 서버 | 결과 | 시간 |

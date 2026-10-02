@@ -44,7 +44,7 @@ verified: true
 - [코드] 원본 PHP 는 Argon2id 를 읽지 못한다. 병행 운영이나 되돌릴 가능성이 있으면 `NAMIFAX_PASSWORD_HASH=md5` 로 두면 새 비밀번호도 원본 형식이 된다(`hash_password`). 전환이 확정되면 설정을 지운다 [문서].
 - [코드] 비밀번호 길이 한도는 원본과 같게 8~15자이며 `MIN_PASSWD_SIZE`, `MAX_PASSWD_SIZE` 로 바꾼다(`common/settings.py`).
 - [코드] 비밀번호 만료(`pwdexpire` 지남 + `pwdcycle` 이 0 이 아님), 한 번도 로그인하지 않은 계정(`last_login` 이 NULL), `wasreset=1` 계정은 로그인 직후 `/pwdexpired` 에서 새 비밀번호를 정해야 로그인 쿠키가 나간다(`views/auth.py` `login_post_view`, `pwdexpired_post_view`; 판정은 `services/user_account.py` `login`). 관리자가 비밀번호 없이 만든 사용자는 임의 비밀번호가 생성되어 메일로 가고 `wasreset=1` 이 된다(`services/user_account.py` `create`, `views/admin_users.py`).
-- [코드] 비밀번호 로그인은 실패가 쌓이면 잠긴다(`services/login_throttle.py`: 사용자 이름별 `NAMIFAX_LOGIN_MAX_FAILURES` 기본 10회, `NAMIFAX_LOGIN_LOCK_MINUTES` 기본 15분, 주소별은 5배 한도, 카운터는 `SystemConfig` 에 저장, 성공하면 사용자 이름 쪽만 지움). 원본에는 없던 동작이다(원본에 있었는지는 이 세션에서 확인하지 않았다). 이전 직후 다시 로그인하는 사용자가 한꺼번에 실수하면 걸릴 수 있다.
+- [코드] 비밀번호 로그인은 실패가 쌓이면 잠긴다(`services/login_throttle.py`: 계정은 `NAMIFAX_LOGIN_MAX_FAILURES` 기본 5회 연속 실패로 잠기고 시간이 지나도 풀리지 않으며 관리자만 해제한다. 접속 주소는 10배 한도에 `NAMIFAX_LOGIN_LOCK_MINUTES` 기본 15분 동안만 잠근다. 카운터는 `SystemConfig` 에 저장). 원본에는 없던 동작이다(원본에 있었는지는 이 세션에서 확인하지 않았다). 이전 직후 다시 로그인하는 사용자가 한꺼번에 실수하면 걸릴 수 있다.
 
 ## 3. 달라 보이는 점
 ### 3.1 HTML 엔티티로 저장된 이름

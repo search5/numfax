@@ -44,7 +44,7 @@ verified: true
 | `NAMIFAX_ENABLE_SCHEDULER` | `1` | 웹 프로세스 안 스케줄러(`1`/`true`/`True`) | `src/namifax/main.py` |
 | `NAMIFAX_SESSION_SECRET` | 없음(프로세스마다 임의 키 + 경고 로그) | 흐름 상태 쿠키(`namifax_flow`: 2FA 단계, 패스키 챌린지)의 서명 키. ini 의 `session.secret` 이 있으면 그것이 먼저 | `src/namifax/__init__.py` |
 | `NAMIFAX_SESSION_SECURE` | `false` | 그 쿠키의 `Secure` 표시(`1`/`true`/`yes`). ini 에 `session.secure` 가 있으면 ini 가 이김(커밋 `403b549`) | `src/namifax/__init__.py`, `tests/unit/test_session_secure_flag.py` |
-| `NAMIFAX_LOGIN_MAX_FAILURES` | `10` | 비밀번호 로그인 연속 실패 허용 횟수(양의 정수만 인정, 아니면 기본값). 같은 클라이언트 주소는 5배까지 | `src/namifax/services/login_throttle.py` |
+| `NAMIFAX_LOGIN_MAX_FAILURES` | `5` | 비밀번호 로그인 연속 실패 허용 횟수(양의 정수만 인정, 아니면 기본값). 넘으면 계정이 잠기고 관리자가 풀 때까지 유지된다. 같은 클라이언트 주소는 10배까지(기본 50회)이고 주소 잠금만 시간이 지나면 풀린다 | `src/namifax/services/login_throttle.py` |
 | `NAMIFAX_LOGIN_LOCK_MINUTES` | `15` | 위 횟수에 이르면 잠그는 시간(분). 실패를 세는 구간도 같은 길이 | `src/namifax/services/login_throttle.py` |
 | `NAMIFAX_SECRET_KEY` | 없음 | SMTP 비밀번호·클라우드 키·2FA 시드 암호화. Fernet 키 또는 16자 이상 문장. 쉼표로 여러 개면 첫 키로 암호화·모두로 복호화(회전). 환경 변수가 ini `secret.key` 보다 먼저 | `src/namifax/common/secretbox.py` |
 | `NAMIFAX_PASSWORD_HASH` | `argon2` | `md5`(대소문자 무시)면 새 비밀번호를 원본 형식으로 저장 | `src/namifax/common/passwords.py` |
@@ -120,7 +120,7 @@ verified: true
 |---|---|---|
 | `namifax serve`(wsgiref 스레드 서버) 그대로 운영할지, `pserve`+waitress 로 갈지 | 단위 파일은 전자를 쓴다. 쿠키 `Secure` 는 이제 어느 쪽에서도 켤 수 있어 이 이유는 사라졌고, 남는 차이는 서버 구현(wsgiref 는 참고 구현)이다 | [코드] `main.py`, `__init__.py` |
 | 쿠키 `Secure` 표시 | HTTPS 에서는 켠다: `NAMIFAX_SESSION_SECURE=1` 또는 ini + `--config`. 기본은 꺼짐 | [코드] `__init__.py` |
-| 로그인 시도 제한 값 | 기본은 사용자 이름당 10회 실패 시 15분 잠금(주소당은 5배). 사무실 하나가 한 공인 주소를 쓰면 `NAMIFAX_LOGIN_MAX_FAILURES` 를 올릴지 판단 | [코드] `services/login_throttle.py`, `views/auth.py` |
+| 로그인 시도 제한 값 | 기본은 사용자 이름당 5회 실패 시 계정 잠금(관리자 해제 전까지 유지), 주소당은 10배(50회)에서 15분 잠금. 잠긴 계정은 관리자 사용자 목록의 "Unlock" 버튼이나 `namifax unlock-user <이름>` 으로 푼다. 사무실 하나가 한 공인 주소를 쓰면 주소 한도(`NAMIFAX_LOGIN_MAX_FAILURES` 의 10배)를 올릴지 판단 | [코드] `services/login_throttle.py`, `views/auth.py` |
 | SAML IdP Entity ID 설정 | 설정하지 않으면 응답의 `Issuer` 를 검사하지 않고 경고만 남김(`saml_idp_entity_id`) | [코드] `services/saml.py`, `views/admin.py` |
 | `/forgot` 요청 횟수 제한(앞단) | 이메일만 알면 남의 기존 비밀번호를 무효화할 수 있음. 새 비밀번호는 본인 메일로만 간다 | [문서] [[operations-checklist]] |
 | 사용자 동기화(`HYLAFAX_USER_SYNC`) 켤지 | `faxadduser` 가 비밀번호를 명령줄 인자로 받아 `ps` 로 노출됨. 전용 장비에서만 | [문서] [[install-hylafax]], sudoers 의 `faxadduser -u * -p * *` [코드] |
