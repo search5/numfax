@@ -27,3 +27,34 @@
 
   setInterval(refresh, 3000);
 })();
+
+/* The per-job blocks (last result, Run now / Stop): a click acts without reloading and a running job is watched until it ends. */
+(function () {
+  var cards = document.querySelectorAll('[data-job-status]');
+  if (!cards.length || !window.fetch) return;
+
+  function swap(html) {
+    var doc = new DOMParser().parseFromString(html, 'text/html');
+    doc.querySelectorAll('[data-job-status]').forEach(function (fresh) {
+      var old = document.querySelector('[data-job-status="' + fresh.getAttribute('data-job-status') + '"]');
+      if (old) old.replaceWith(fresh);
+    });
+  }
+
+  function refresh() {
+    fetch('/admin/scheduler/jobs', { credentials: 'same-origin' }).then(function (r) { return r.ok ? r.text() : null; })
+      .then(function (html) { if (html) swap(html); }).catch(function () {});
+  }
+
+  document.addEventListener('submit', function (event) {
+    var form = event.target.closest('form[data-job-action]');
+    if (!form) return;
+    event.preventDefault();
+    fetch(form.getAttribute('action'), { method: 'POST', body: new URLSearchParams(new FormData(form)), credentials: 'same-origin',
+                                          headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+      .then(function () { refresh(); })
+      .catch(function () { HTMLFormElement.prototype.submit.call(form); });
+  });
+
+  setInterval(refresh, 2000);
+})();

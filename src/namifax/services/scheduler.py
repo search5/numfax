@@ -10,6 +10,8 @@ import os
 import sys
 import threading
 import time
+from dataclasses import dataclass, field
+from datetime import datetime
 from typing import Callable, Optional
 
 # Ensure src directory is on sys.path
@@ -22,8 +24,74 @@ from namifax.cli.phb import export_phonebook
 from namifax.db.provider import cli_session
 from namifax.services import scheduler_config as cfg
 from namifax.services.archive_in import ArchiveIn
+from namifax.services.job_control import JobStopped  # noqa: F401  (re-exported)
 
 logger = logging.getLogger("namifax.scheduler")
+
+
+@dataclass
+class JobHandle:
+    """A job that is running in this process."""
+
+    name: str
+    by: str
+    started: datetime = field(default_factory=datetime.now)
+    cancel: threading.Event = field(default_factory=threading.Event)
+
+
+_RUNNING: dict[str, JobHandle] = {}
+_RUNNING_LOCK = threading.Lock()
+
+
+def claim(name: str, by: str = "schedule") -> Optional[JobHandle]:
+    """Reserve a job for running; None when it is already running here (a job never runs twice at once)."""
+    with _RUNNING_LOCK:
+        if name in _RUNNING:
+            return None
+        handle = _RUNNING[name] = JobHandle(name, by)
+        return handle
+
+
+def release(handle: JobHandle) -> None:
+    with _RUNNING_LOCK:
+        if _RUNNING.get(handle.name) is handle:
+            del _RUNNING[handle.name]
+
+
+def running_handle(name: str) -> Optional[JobHandle]:
+    return _RUNNING.get(name)
+
+
+def is_running(name: str, session=None) -> bool:
+    """Is the job running - in this process, or (when a ``session`` is given) in another one that left a fresh marker?"""
+    if name in _RUNNING:
+        return True
+    return bool(session is not None and cfg.running_marker(session, name))
+
+
+def request_stop(name: str, session=None) -> bool:
+    """Ask a running job to stop at its next safe point. Returns whether there was a job to ask."""
+    handle = _RUNNING.get(name)
+    if handle is not None:
+        handle.cancel.set()
+    elif session is None or not cfg.running_marker(session, name):
+        return False
+    if session is not None:
+        cfg.request_cancel(session, name)             # (a job in another process reads this)
+    return True
+
+
+def launch(name: str, by: str = "manual", background: bool = True, session=None) -> Optional[JobHandle]:
+    """Start a job now: reserved at once (so the page can show it running), executed in a thread unless ``background`` is false."""
+    handle = claim(name, by)
+    if handle is None:
+        return None
+    scheduler = NamiFaxScheduler()
+    if background:
+        threading.Thread(target=scheduler.run_job, args=(name, None, by, handle), daemon=True, name=f"namifax-job-{name}").start()
+    else:
+        scheduler.run_job(name, session, by, handle)
+    return handle
 
 
 class NamiFaxScheduler:
@@ -39,44 +107,79 @@ class NamiFaxScheduler:
 
     # --- the jobs -----------------------------------------------------------------------------------------------------
 
-    def run_job(self, name: str, session=None) -> dict:
+    def run_job(self, name: str, session=None, by: str = "schedule", handle: Optional[JobHandle] = None) -> dict:
         """Run one job now (on a schedule or from the admin page) and remember how it went; never raises.
 
-        Returns ``{"ok", "summary", "at"}``. ``session`` is used when given, else the job opens its own on the configured database.
+        Returns ``{"ok", "summary", "at", "stopped"}``. ``session`` is used when given, else the job opens its own on the configured
+        database. A job that is already running is not started again. ``handle`` is a reservation made by ``claim``/``launch``.
+        While it runs the job can be asked to stop (``request_stop``); it stops at its next safe point and the result says so.
         """
         if name not in cfg.JOBS:
             raise ValueError(f"unknown job: {name}")
-        if session is None:
-            with cli_session(ensure_schema=True) as opened:
-                return self.run_job(name, opened)
+        handle = handle or claim(name, by)
+        if handle is None:
+            return {"ok": False, "stopped": False, "summary": "already running", "at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+        owns_session = session is None
+        try:
+            if owns_session:
+                with cli_session(ensure_schema=True) as opened:
+                    return self._run_claimed(name, opened, handle, commit=True)
+            return self._run_claimed(name, session, handle, commit=False)
+        finally:
+            release(handle)
 
+    def _run_claimed(self, name: str, session, handle: JobHandle, commit: bool) -> dict:
         settings = cfg.load(session)
+        cfg.mark_running(session, name, handle.by)
+        cfg.clear_cancel(session, name)
+        if commit:
+            session.commit()
+        last_check = [0.0]
+
+        def should_stop() -> bool:
+            if handle.cancel.is_set():
+                return True
+            if time.monotonic() - last_check[0] > 1.0:                      # a Stop asked in another process: look about once a second
+                last_check[0] = time.monotonic()
+                if cfg.cancel_requested(session, name):
+                    handle.cancel.set()
+            return handle.cancel.is_set()
+
+        stopped = False
         try:
             if name == "tmp":
-                run_cron(["cron", "-t", str(settings.tmp_days)], db=session)
+                run_cron(["cron", "-t", str(settings.tmp_days)], db=session, should_stop=should_stop)
                 summary = f"temporary files older than {settings.tmp_days} day(s) removed"
             elif name == "inbox":
-                moved = ArchiveIn(db=session).prune_inbox(settings.inbox_days)
+                moved = ArchiveIn(db=session).prune_inbox(settings.inbox_days, should_stop=should_stop)
                 summary = f"{moved} fax(es) older than {settings.inbox_days} day(s) moved to the archive"
             elif name == "lifecycle":
                 from namifax.services.storage_lifecycle import StorageLifecycleService
 
-                result = StorageLifecycleService(db=session).run_saved_policy()
+                result = StorageLifecycleService(db=session).run_saved_policy(should_stop=should_stop)
                 summary = ("no policy saved on the Storage page: nothing was removed" if result is None else
                            f"{result.get('tiffs_purged', 0)} TIFF file(s) and {result.get('faxes_purged', 0)} fax(es) removed")
             else:
-                summary = f"phonebook exported ({export_phonebook(db=session)} entries)"
+                summary = f"phonebook exported ({export_phonebook(db=session, should_stop=should_stop)} entries)"
             ok = True
+            if handle.cancel.is_set():
+                stopped, summary = True, f"stopped by an administrator; {summary.split(' (')[0] if name == 'phonebook' else summary}"
+        except JobStopped:
+            ok, stopped, summary = True, True, "stopped by an administrator before anything was written"
         except Exception as exc:                                      # a failed job is a result, not a crash of the scheduler
             logger.error("[Scheduler] job %s failed: %s", name, exc, exc_info=True)
             ok, summary = False, f"failed: {exc}"
-        result = cfg.record_run(session, name, ok, summary)
+        result = cfg.record_run(session, name, ok, summary, stopped=stopped)
+        cfg.clear_running(session, name)
+        cfg.clear_cancel(session, name)
         try:
             from namifax.common.helpers import avantfaxlog
 
             avantfaxlog(f"scheduler> {name}: {summary}", echo=False, session=session)
         except Exception:
             pass
+        if commit:
+            session.commit()
         return result
 
     def _scheduled(self, name: str) -> None:

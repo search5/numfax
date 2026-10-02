@@ -53,6 +53,7 @@ def run_cron(
     tmp_dir: str | None = None,
     *,
     db: Any = None,
+    should_stop=None,
 ) -> int:
     """Execute cron tasks based on command line options.
 
@@ -61,7 +62,7 @@ def run_cron(
     args = list(argv[1:]) if argv is not None else list(sys.argv[1:])
     stack = contextlib.ExitStack()
     with stack:
-        return _run_cron(args, stack, db, archive_in, archive_base, tmp_dir)
+        return _run_cron(args, stack, db, archive_in, archive_base, tmp_dir, should_stop)
 
 
 def _run_cron(
@@ -71,6 +72,7 @@ def _run_cron(
     archive_in: ArchiveIn | None,
     archive_base: FaxPDFArchive | None,
     tmp_dir: str | None,
+    should_stop=None,
 ) -> int:
     def get_db() -> Any:
         nonlocal db
@@ -115,9 +117,10 @@ def _run_cron(
     if os.path.exists(target_tmp):
         now = time.time()
         for item in os.listdir(target_tmp):
+            if should_stop and should_stop():
+                return 0
             if item in (".", "..", "index.html"):
                 continue
-
             full_p = os.path.join(target_tmp, item)
             try:
                 mtime = os.path.getmtime(full_p)

@@ -30,7 +30,7 @@ class StorageLifecycleService:
             "NAMIFAX_ARCHIVE_DIR", "/var/spool/hylafax/archive"
         )
 
-    def purge_local_tiffs(self, days_old: int = 7) -> Dict[str, Any]:
+    def purge_local_tiffs(self, days_old: int = 7, should_stop=None) -> Dict[str, Any]:
         """Purge raw TIFF files where a valid, non-empty PDF counterpart exists."""
         if not os.path.exists(self.archive_dir):
             return {"purged_count": 0, "reclaimed_bytes": 0}
@@ -40,6 +40,8 @@ class StorageLifecycleService:
         reclaimed_bytes = 0
 
         for root, _, files in os.walk(self.archive_dir):
+            if should_stop and should_stop():
+                break
             if "fax.tif" in files:
                 tif_path = os.path.join(root, "fax.tif")
                 pdf_path = os.path.join(root, "fax.pdf")
@@ -64,7 +66,7 @@ class StorageLifecycleService:
             "reclaimed_bytes": reclaimed_bytes,
         }
 
-    def purge_expired_faxes(self, retention_days: int, use_remote: bool = True) -> Dict[str, Any]:
+    def purge_expired_faxes(self, retention_days: int, use_remote: bool = True, should_stop=None) -> Dict[str, Any]:
         """Delete faxes archived more than ``retention_days`` ago: database row, files and remote copy.
 
         The age is the fax's ``archstamp`` (as the legacy cron's ``-d`` uses) and its files are found through
@@ -79,6 +81,8 @@ class StorageLifecycleService:
         cutoff = (datetime.now() - timedelta(days=retention_days)).strftime("%Y-%m-%d %H:%M:%S")
         purged = 0
         for fid in archive_orm.fids_older_than(self.db, cutoff):
+            if should_stop and should_stop():
+                break
             arc = FaxPDFArchive(db=self.db)
             if not arc.load_fax(fid):
                 continue
@@ -104,11 +108,11 @@ class StorageLifecycleService:
         if target != root and target.startswith(root + os.sep) and os.path.isdir(target):
             shutil.rmtree(target, ignore_errors=True)
 
-    def run_lifecycle(self, policy: StorageLifecyclePolicy) -> Dict[str, Any]:
+    def run_lifecycle(self, policy: StorageLifecyclePolicy, should_stop=None) -> Dict[str, Any]:
         """Execute complete storage lifecycle sequence based on active policy."""
-        tiff_res = self.purge_local_tiffs(days_old=policy.purge_tiff_after_days)
+        tiff_res = self.purge_local_tiffs(days_old=policy.purge_tiff_after_days, should_stop=should_stop)
         fax_res = self.purge_expired_faxes(
-            retention_days=policy.full_retention_days, use_remote=policy.remote_sync_delete
+            retention_days=policy.full_retention_days, use_remote=policy.remote_sync_delete, should_stop=should_stop
         )
 
         return {
@@ -118,7 +122,7 @@ class StorageLifecycleService:
             "executed_at": datetime.now().isoformat(),
         }
 
-    def run_saved_policy(self) -> Optional[Dict[str, Any]]:
+    def run_saved_policy(self, should_stop=None) -> Optional[Dict[str, Any]]:
         """Run the policy an administrator saved on the storage page (``None`` when none was saved).
 
         Nothing runs on the displayed defaults: deleting faxes automatically has to be an explicit choice.
@@ -147,4 +151,4 @@ class StorageLifecycleService:
             full_retention_days=int(keep_days or 0),
             remote_sync_delete=cfg.get("storage_remote_sync_delete", "1") == "1",
         )
-        return self.run_lifecycle(policy)
+        return self.run_lifecycle(policy, should_stop)

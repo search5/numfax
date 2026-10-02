@@ -134,7 +134,7 @@ def test_the_inbox_job_archives_by_the_saved_days(dbsession):
     with patch("namifax.services.scheduler.ArchiveIn") as inbox:
         inbox.return_value.prune_inbox.return_value = 4
         result = NamiFaxScheduler().run_job("inbox", dbsession)
-    inbox.return_value.prune_inbox.assert_called_once_with(21)
+    assert inbox.return_value.prune_inbox.call_args.args == (21,)
     assert result["ok"] and "4" in result["summary"]
 
 
@@ -200,7 +200,7 @@ def test_a_bad_time_is_not_stored(client, dbsession):
 def test_run_now_runs_the_job_and_shows_the_result(client):
     page = client.get("/admin/scheduler")
     run = next(f for f in page.forms.values() if f.fields.get("job") and f["job"].value == "phonebook")
-    with patch("namifax.services.scheduler.export_phonebook", return_value=12):
+    with patch("namifax.views.admin_scheduler.THREADED", False), patch("namifax.services.scheduler.export_phonebook", return_value=12):
         res = run.submit()
     assert "12" in res.text
 
@@ -339,7 +339,7 @@ def test_the_state_says_stopped_while_stopped(client, dbsession):
 def test_run_now_still_works_while_stopped(client, dbsession):
     cfg.set_stopped(dbsession, True)
     run = next(f for f in client.get("/admin/scheduler").forms.values() if f.fields.get("job") and f["job"].value == "phonebook")
-    with patch("namifax.services.scheduler.export_phonebook", return_value=4):
+    with patch("namifax.views.admin_scheduler.THREADED", False), patch("namifax.services.scheduler.export_phonebook", return_value=4):
         res = run.submit()
     assert "4" in res.text
 

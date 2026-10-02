@@ -10,8 +10,12 @@ from pyramid.view import view_config
 
 from namifax.i18n import _
 from namifax.services import scheduler_config as cfg
-from namifax.services.scheduler import NamiFaxScheduler, get_scheduler
+from namifax.services import scheduler as engine
+from namifax.services.scheduler import NamiFaxScheduler, get_scheduler, launch, request_stop
 from namifax.services.system_config import SystemConfigService
+
+
+THREADED = True        # "Run now" runs in a thread so that the page can show it running (tests run it inline)
 
 
 def _read(post, current: cfg.JobSettings) -> tuple[cfg.JobSettings, list[str]]:
@@ -56,6 +60,29 @@ def _state(session) -> dict:
             "seen_ago": int((datetime.now() - seen).total_seconds()) if seen else None}
 
 
+def _jobs_html(request, session) -> dict:
+    """The status block (last result, Run now or Stop) of every job."""
+    html = {}
+    for job in cfg.JOBS:
+        handle = engine.running_handle(job)
+        marker = None if handle else cfg.running_marker(session, job)
+        running = handle is not None or marker is not None
+        started = handle.started.strftime("%Y-%m-%d %H:%M:%S") if handle else (marker or {}).get("started")
+        html[job] = render("namifax:templates/admin_scheduler_job.jinja2", {
+            "job": job, "running": running, "started": started, "by": handle.by if handle else (marker or {}).get("by"),
+            "stopping": bool(running and ((handle and handle.cancel.is_set()) or cfg.cancel_requested(session, job))),
+            "last": cfg.last_run(session, job)}, request=request)
+    return html
+
+
+@view_config(route_name="admin_scheduler_jobs", permission="admin")
+def admin_scheduler_jobs_view(request):
+    """The job status blocks alone, for the page to refresh while a job runs."""
+    blocks = _jobs_html(request, request.dbsession)
+    body = "".join(blocks.values())
+    return Response(body, content_type="text/html", charset="utf-8")
+
+
 def _fragment(request, session) -> str:
     return render("namifax:templates/admin_scheduler_state.jinja2", {"st": _state(session)}, request=request)
 
@@ -84,12 +111,16 @@ def admin_scheduler_view(request):
                        if action == "stop" else _("The scheduler was started."))
         elif action == "run":
             job = request.POST.get("job", "")
-            if job in cfg.JOBS:
-                result = NamiFaxScheduler().run_job(job, session)
-                message = f"{job}: {result['summary']}" if result["ok"] else None
-                error = None if result["ok"] else f"{job}: {result['summary']}"
-            else:
+            if job not in cfg.JOBS:
                 error = _("Unknown task.")
+            elif engine.is_running(job, session):
+                error = _("This task is already running.")
+            else:
+                launch(job, "manual", background=THREADED, session=None if THREADED else session)
+        elif action == "stop_job":
+            job = request.POST.get("job", "")
+            if job in cfg.JOBS and request_stop(job, session):
+                message = _("The task was asked to stop; it stops at the next safe point.")
         else:
             updated, bad = _read(request.POST, current)
             cfg.save(session, updated)
@@ -109,7 +140,7 @@ def admin_scheduler_view(request):
         "active_tab": "admin",
         "active_admin": "scheduler",
         "s": current,
-        "last": {job: cfg.last_run(session, job) for job in cfg.JOBS},
+        "job_html": _jobs_html(request, session),
         "state_html": _fragment(request, session),
         "policy": {"tiff_days": store.get("storage_purge_tiff_days", ""), "keep_days": store.get("storage_retention_days", "")},
         "message": message,

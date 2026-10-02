@@ -115,11 +115,13 @@ class ArchiveIn(FaxPDFArchive):
 
         return True
 
-    def prune_inbox(self, days: int) -> int:
-        """Archive inbox faxes older than given number of days."""
+    def prune_inbox(self, days: int, should_stop=None) -> int:
+        """Archive inbox faxes older than given number of days (``should_stop()`` is asked between faxes)."""
         cutoff = (datetime.now() - timedelta(days=days)).strftime("%Y-%m-%d 00:00:00")
         archived = 0
         for fid in self._fids_older_than(cutoff, inbox=1):
+            if should_stop and should_stop():
+                break
             if fid and self.set_archivebox(fid):
                 archived += 1
         return archived

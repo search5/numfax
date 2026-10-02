@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 15:31+0900\n"
+"POT-Creation-Date: 2026-10-02 15:38+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -730,15 +730,6 @@ msgstr ""
 msgid "Older than (days)"
 msgstr ""
 
-msgid "Last run"
-msgstr ""
-
-msgid "Has not run yet."
-msgstr ""
-
-msgid "Run now"
-msgstr ""
-
 msgid "Move old faxes to the archive"
 msgstr ""
 
@@ -774,6 +765,24 @@ msgid "Writes the address book as a HylaFAX phonebook, repeatedly."
 msgstr ""
 
 msgid "Every (minutes)"
+msgstr ""
+
+msgid "Stopping"
+msgstr ""
+
+msgid "started"
+msgstr ""
+
+msgid "Last run"
+msgstr ""
+
+msgid "Has not run yet."
+msgstr ""
+
+msgid "Stop"
+msgstr ""
+
+msgid "Run now"
 msgstr ""
 
 msgid "A scheduler is running"
@@ -2256,6 +2265,12 @@ msgid "The scheduler was started."
 msgstr ""
 
 msgid "Unknown task."
+msgstr ""
+
+msgid "This task is already running."
+msgstr ""
+
+msgid "The task was asked to stop; it stops at the next safe point."
 msgstr ""
 
 msgid "A time must be written HH:MM (24 hours); the old time was kept."

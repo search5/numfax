@@ -24,13 +24,17 @@ from namifax.common import settings  # noqa: E402
 DEFAULT_PHONEBOOK_PATH = settings.phonebook_path()
 
 
-def generate_phonebook_content(addressbook: AFAddressBook) -> str:
-    """Generate HylaFAX PBOOK1.1 stream content from address book."""
+def generate_phonebook_content(addressbook: AFAddressBook, should_stop=None) -> str:
+    """Generate HylaFAX PBOOK1.1 stream content from address book (``JobStopped`` when asked to stop: no half file is written)."""
     out = ["PBOOK1.1"]
 
     companies = addressbook.get_companies()
     if companies:
         for entry in companies:
+            if should_stop and should_stop():
+                from namifax.services.job_control import JobStopped
+
+                raise JobStopped()
             cname = entry.get("company", "")
             cid = entry.get("abook_id")
             out.append(f"{cname}|")
@@ -44,7 +48,7 @@ def generate_phonebook_content(addressbook: AFAddressBook) -> str:
     return "".join(out)
 
 
-def run_phb(argv: Sequence[str] | None = None, addressbook: AFAddressBook | None = None, *, db: Any = None) -> int:
+def run_phb(argv: Sequence[str] | None = None, addressbook: AFAddressBook | None = None, *, db: Any = None, should_stop=None) -> int:
     """Execute phonebook export logic."""
     parser = argparse.ArgumentParser(description="Generate HylaFAX phonebook from AvantFAX address book.")
     parser.add_argument(
@@ -56,12 +60,12 @@ def run_phb(argv: Sequence[str] | None = None, addressbook: AFAddressBook | None
     args = parser.parse_args(argv[1:] if argv is not None else None)
 
     if addressbook is not None:
-        content = generate_phonebook_content(addressbook)
+        content = generate_phonebook_content(addressbook, should_stop)
     elif db is not None:
-        content = generate_phonebook_content(AFAddressBook(db=db))
+        content = generate_phonebook_content(AFAddressBook(db=db), should_stop)
     else:
         with cli_session(ensure_schema=True) as opened:
-            content = generate_phonebook_content(AFAddressBook(db=opened))
+            content = generate_phonebook_content(AFAddressBook(db=opened), should_stop)
 
     out_path = os.path.abspath(args.output)
     parent_dir = os.path.dirname(out_path)
@@ -77,9 +81,10 @@ def run_phb(argv: Sequence[str] | None = None, addressbook: AFAddressBook | None
     return 0
 
 
-def export_phonebook(output_path: str = DEFAULT_PHONEBOOK_PATH, addressbook: AFAddressBook | None = None, *, db: Any = None) -> int:
+def export_phonebook(output_path: str = DEFAULT_PHONEBOOK_PATH, addressbook: AFAddressBook | None = None, *, db: Any = None,
+                     should_stop=None) -> int:
     """Convenience helper to export phonebook directly."""
-    return run_phb(["phb", "-o", output_path], addressbook=addressbook, db=db)
+    return run_phb(["phb", "-o", output_path], addressbook=addressbook, db=db, should_stop=should_stop)
 
 
 def main() -> None:

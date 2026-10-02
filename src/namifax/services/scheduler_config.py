@@ -74,6 +74,46 @@ def save(session: Any, settings: JobSettings) -> None:
     session.flush()
 
 
+STALE_RUNNING_SECONDS = 6 * 3600          # a "running" marker older than this was left by a process that died
+
+
+def mark_running(session: Any, job: str, by: str = "schedule", started: Optional[str] = None) -> None:
+    """Say a job is running (so that another process can show it and ask it to stop)."""
+    SystemConfigService(session).set(f"sched_running_{job}", json.dumps(
+        {"by": by, "started": started or datetime.now().strftime("%Y-%m-%d %H:%M:%S")}))
+
+
+def running_marker(session: Any, job: str) -> Optional[dict]:
+    raw = SystemConfigService(session).get(f"sched_running_{job}", "")
+    try:
+        info = json.loads(raw) if raw else None
+    except ValueError:
+        return None
+    if not info:
+        return None
+    try:
+        age = (datetime.now() - datetime.strptime(info["started"], "%Y-%m-%d %H:%M:%S")).total_seconds()
+    except (KeyError, ValueError):
+        return None
+    return info if age < STALE_RUNNING_SECONDS else None
+
+
+def clear_running(session: Any, job: str) -> None:
+    SystemConfigService(session).set(f"sched_running_{job}", "")
+
+
+def request_cancel(session: Any, job: str) -> None:
+    SystemConfigService(session).set(f"sched_cancel_{job}", "1")
+
+
+def cancel_requested(session: Any, job: str) -> bool:
+    return SystemConfigService(session).get(f"sched_cancel_{job}", "") == "1"
+
+
+def clear_cancel(session: Any, job: str) -> None:
+    SystemConfigService(session).set(f"sched_cancel_{job}", "")
+
+
 def stopped(session: Any) -> bool:
     """Has an administrator stopped the scheduler? (It keeps running as a process so that it can hear the start, but runs nothing.)"""
     return SystemConfigService(session).get("sched_stopped", "0") == "1"
@@ -88,8 +128,8 @@ def signature(session: Any) -> str:
     return json.dumps({**asdict(load(session)), "stopped": stopped(session)}, sort_keys=True)
 
 
-def record_run(session: Any, job: str, ok: bool, summary: str) -> dict:
-    result = {"ok": bool(ok), "summary": summary, "at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+def record_run(session: Any, job: str, ok: bool, summary: str, stopped: bool = False) -> dict:
+    result = {"ok": bool(ok), "summary": summary, "at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "stopped": bool(stopped)}
     SystemConfigService(session).set(f"sched_last_{job}", json.dumps(result))
     return result
 
