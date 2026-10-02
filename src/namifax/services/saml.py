@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import base64
+import logging
 import re
 import os
 import urllib.parse
@@ -196,6 +197,15 @@ class SAMLService:
         assertion = signed if etree.QName(signed).localname == "Assertion" else signed.find(".//saml:Assertion", ns)
         if assertion is None:
             return refuse("saml_no_assertion")
+
+        expected_issuer = (self.settings.idp_entity_id or "").strip()
+        if expected_issuer:
+            issuer = assertion.find("saml:Issuer", ns)                       # (inside the signed part)
+            if issuer is None or (issuer.text or "").strip() != expected_issuer:
+                return refuse("saml_wrong_issuer")
+        else:
+            logging.getLogger("namifax").warning(
+                "SAML: no IdP entity ID is configured, so the Issuer of the response is not checked")
 
         now = time.time()
         skew = 120
