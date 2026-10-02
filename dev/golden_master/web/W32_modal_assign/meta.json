@@ -1,8 +1,0 @@
-{
-  "id": "W32_modal_assign",
-  "description": "Modal dialog to assign company name to fax",
-  "route": "/assign?abook_id=1",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

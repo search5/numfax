@@ -1,8 +1,0 @@
-{
-  "id": "W39_api_addressbook_suggest",
-  "description": "Async AJAX address book company auto-suggest XML",
-  "route": "/ajax/book",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

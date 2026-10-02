@@ -1,8 +1,0 @@
-{
-  "id": "W44_api_faxalter",
-  "description": "Modal dialog to modify queued fax job attributes",
-  "route": "/ajax/faxalter",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

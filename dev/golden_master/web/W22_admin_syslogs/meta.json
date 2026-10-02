@@ -1,8 +1,0 @@
-{
-  "id": "W22_admin_syslogs",
-  "description": "Admin system logs viewer and keyword filter",
-  "route": "/admin/system_logs",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

@@ -1,8 +1,0 @@
-{
-  "id": "W26_admin_categories",
-  "description": "Admin fax category tag manager",
-  "route": "/admin/categories",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

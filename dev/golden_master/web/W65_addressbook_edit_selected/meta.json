@@ -1,8 +1,0 @@
-{
-  "id": "W65_addressbook_edit_selected",
-  "description": "Address book contact editing mode with existing contact details",
-  "route": "/addressbook/edit?company_id=1",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

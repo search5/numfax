@@ -1,8 +1,0 @@
-{
-  "id": "W27_admin_barcodes",
-  "description": "Admin barcode routing rules manager",
-  "route": "/admin/barcodes",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

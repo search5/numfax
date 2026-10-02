@@ -1,2 +1,0 @@
-usage: import_archive.php faxPath faxCategoryId
-Example: import_archive.php /var/www/avantfax/faxes/ 3

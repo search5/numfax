@@ -1,4 +1,4 @@
-"""Unit tests for administrative batch CLI tools matching dev/specs/38-tools-batch.md."""
+"""Unit tests for administrative batch CLI tools."""
 
 import io
 import sys

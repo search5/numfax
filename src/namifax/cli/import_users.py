@@ -1,6 +1,6 @@
 """namifax.cli.import_users
 
-Batch user import tool matching legacy tools/import_users.php and dev/specs/38-tools-batch.md.
+Batch user import tool matching legacy tools/import_users.php.
 """
 
 from __future__ import annotations

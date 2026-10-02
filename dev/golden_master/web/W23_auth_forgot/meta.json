@@ -1,8 +1,0 @@
-{
-  "id": "W23_auth_forgot",
-  "description": "Lost password reset recovery form",
-  "route": "/forgot",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

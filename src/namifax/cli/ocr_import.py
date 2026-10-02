@@ -1,6 +1,6 @@
 """namifax.cli.ocr_import
 
-OCR import batch tool matching legacy tools/ocr_import.php and dev/specs/38-tools-batch.md.
+OCR import batch tool matching legacy tools/ocr_import.php.
 """
 
 from __future__ import annotations

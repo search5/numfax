@@ -1,8 +1,0 @@
-{
-  "id": "W16_distrolist",
-  "description": "Distribution lists management",
-  "route": "/distrolist",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

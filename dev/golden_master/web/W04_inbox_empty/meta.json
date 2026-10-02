@@ -1,8 +1,0 @@
-{
-  "id": "W04_inbox_empty",
-  "description": "Empty inbox page for authenticated user",
-  "route": "/inbox?empty=1",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

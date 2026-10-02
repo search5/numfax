@@ -1,6 +1,6 @@
 """namifax.cli.create_thumbnails
 
-Batch thumbnail generation matching legacy tools/create_thumbnails.php and dev/specs/38-tools-batch.md.
+Batch thumbnail generation matching legacy tools/create_thumbnails.php.
 """
 
 from __future__ import annotations

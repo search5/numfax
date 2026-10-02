@@ -1,4 +1,4 @@
-"""Unit tests for NamiFAX asynchronous AJAX API views matching dev/specs/web/24-ajax-api.md."""
+"""Unit tests for NamiFAX asynchronous AJAX API views."""
 
 from unittest.mock import MagicMock, patch
 from pyramid import testing

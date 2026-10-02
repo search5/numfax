@@ -1,8 +1,0 @@
-{
-  "id": "W09_sendfax_form",
-  "description": "Fax submission form with file upload",
-  "route": "/sendfax",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

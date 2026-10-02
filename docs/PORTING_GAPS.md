@@ -159,3 +159,8 @@ SAML·패스키·TOTP·클라우드 저장소·네트워크 프린터·SMTP 관�
 - 시험에 필요한 원본 설치 SQL 두 개(`create_tables.sql`, `db-update-334.sql`)는 `tests/fixtures/legacy_sql/` 로 옮겼다.
 - 원본 PHP가 필요한 도구는 이제 그대로 실행되지 않는다: `dev/golden_master/runner.py --record`, `tools/migration_rehearsal/`.
   필요하면 `git checkout 9408385 -- legacy` 로 복원해서 쓴다. (골든 마스터 재생 모드와 시험은 영향 없음.)
+
+## dev/ 제거 (2026-10-02)
+`dev/`(golden_master 데이터·실행기, specs 명세, prompts)를 삭제했다(커밋 72a7324 에서 복원 가능; 지식 문서는 별도 llm-wiki 로 구성 예정).
+기본 `pytest` 의 골든 마스터 68개 시험은 이제 없다(`pyproject.toml` testpaths 는 `tests` 만). ARCHITECTURE.md 와 과거 보고서에 있는
+`golden_master/`, `specs/` 경로 언급은 그 시점의 기록이다.

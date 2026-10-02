@@ -1,5 +1,0 @@
-usage: avantfaxcron.php [-i num-days] [-d num-days] -t num-days
-options:
- -i num-days	prune Inbox of faxes older than number of days
- -d num-days	delete faxes from Inbox/Archive that are older than number of days
- -t num-days	clean AvantFAX temporary directory of files older than number of days

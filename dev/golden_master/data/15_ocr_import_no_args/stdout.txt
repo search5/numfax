@@ -1,1 +1,0 @@
-You must enable ENABLE_OCR_SUPPORT in local_config.php first

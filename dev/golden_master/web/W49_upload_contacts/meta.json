@@ -1,8 +1,0 @@
-{
-  "id": "W49_upload_contacts",
-  "description": "Upload vCard file to import email contacts",
-  "route": "/upload/contacts",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

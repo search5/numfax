@@ -1,8 +1,0 @@
-{
-  "id": "W40_api_emailbook_suggest",
-  "description": "Async AJAX email address auto-suggest XML",
-  "route": "/ajax/emailbook",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

@@ -1,8 +1,0 @@
-{
-  "id": "W19_admin_users",
-  "description": "Admin users management view",
-  "route": "/admin/users",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

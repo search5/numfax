@@ -1,8 +1,0 @@
-{
-  "id": "W21_admin_routing",
-  "description": "Admin DID inbound routing configuration",
-  "route": "/admin/routing/did",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

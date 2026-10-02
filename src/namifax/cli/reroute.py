@@ -1,6 +1,6 @@
 """namifax.cli.reroute
 
-Reroute modem or DID routing contact email matching legacy tools/reroute.php and dev/specs/38-tools-batch.md.
+Reroute modem or DID routing contact email matching legacy tools/reroute.php.
 """
 
 from __future__ import annotations

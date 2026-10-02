@@ -1,8 +1,0 @@
-{
-  "id": "W30_admin_sysfunc",
-  "description": "Admin system functions reboot and shutdown",
-  "route": "/admin/system_func",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

@@ -1,5 +1,0 @@
-{
-  "command": "python src/avantfax/cli/import_archive.py",
-  "legacy_command": "php tools/import_archive.php",
-  "description": "Batch archive directory import CLI hook without arguments"
-}

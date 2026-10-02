@@ -1,8 +1,0 @@
-{
-  "id": "W64_admin_user_edit",
-  "description": "Admin user account editing mode with permission checkboxes",
-  "route": "/admin/users?uid=1",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

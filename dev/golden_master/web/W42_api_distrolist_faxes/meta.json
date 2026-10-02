@@ -1,8 +1,0 @@
-{
-  "id": "W42_api_distrolist_faxes",
-  "description": "Async AJAX distribution list fax numbers string",
-  "route": "/ajax/dlist",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

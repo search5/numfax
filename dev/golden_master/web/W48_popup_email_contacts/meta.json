@@ -1,8 +1,0 @@
-{
-  "id": "W48_popup_email_contacts",
-  "description": "Popup dialog to select email contacts from address book",
-  "route": "/helper/emailcontacts",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

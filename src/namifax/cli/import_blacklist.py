@@ -1,6 +1,6 @@
 """namifax.cli.import_blacklist
 
-Blacklist/DynamicConfig batch import tool matching legacy tools/import_blacklist.php and dev/specs/38-tools-batch.md.
+Blacklist/DynamicConfig batch import tool matching legacy tools/import_blacklist.php.
 """
 
 from __future__ import annotations

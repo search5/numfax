@@ -1,8 +1,0 @@
-{
-  "id": "W25_admin_covers",
-  "description": "Admin configure cover page templates",
-  "route": "/admin/covers",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

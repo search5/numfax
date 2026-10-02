@@ -1,8 +1,0 @@
-{
-  "id": "W47_popup_fax_contacts",
-  "description": "Popup dialog to select address book contacts for fax recipient",
-  "route": "/helper/faxcontacts",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

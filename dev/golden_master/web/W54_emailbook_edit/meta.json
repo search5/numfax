@@ -1,7 +1,0 @@
-{
-  "scenario_id": "W54_emailbook_edit",
-  "route": "/emailbook/edit",
-  "method": "GET",
-  "description": "Edit email contact matching legacy emailbook_edit.php",
-  "implemented": true
-}

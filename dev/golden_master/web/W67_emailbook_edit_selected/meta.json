@@ -1,8 +1,0 @@
-{
-  "id": "W67_emailbook_edit_selected",
-  "description": "Email book contact editing mode with contact data and delete action",
-  "route": "/emailbook/edit?email_id=1",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

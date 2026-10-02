@@ -74,8 +74,8 @@ addopts = "--strict-markers"
 markers = [
     "serverdb: runs against a throw-away database on a real PostgreSQL, MySQL or MariaDB server (see tests/conftest.py; skipped when the server URL is not configured)",
 ]
-testpaths = ["tests", "dev/golden_master/test_web_e2e.py"]
+testpaths = ["tests"]
 # a single test that has not finished after 20 s (the slowest takes under 2 s, even on the server databases) dumps every
 # thread's stack to stderr and the run goes on, so a stall shows where it is stuck instead of just hanging
 faulthandler_timeout = 20
-pythonpath = [".", "src", "dev"]
+pythonpath = [".", "src"]

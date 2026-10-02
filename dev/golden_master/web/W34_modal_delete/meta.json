@@ -1,8 +1,0 @@
-{
-  "id": "W34_modal_delete",
-  "description": "Modal dialog to confirm fax deletion",
-  "route": "/delete",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

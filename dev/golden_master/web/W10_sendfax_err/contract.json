@@ -1,7 +1,0 @@
-{
-  "status_code": 200,
-  "required_text": [
-    "Fax number is required",
-    "Send Fax"
-  ]
-}

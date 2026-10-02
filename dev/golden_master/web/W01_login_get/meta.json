@@ -1,8 +1,0 @@
-{
-  "id": "W01_login_get",
-  "description": "Login page initial GET request",
-  "route": "/",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}

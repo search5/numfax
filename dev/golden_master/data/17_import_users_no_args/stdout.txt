@@ -1,6 +1,0 @@
-usage: import_users.php filename
-Example: import_users.php users.txt
-One user entry per line with fields: name, username, password, and email separated by 1 tab
-Example:
-John Doe	johndoe	passw0rd	john.doe@mycompany.com
-NOTE: Be sure to set $AVANTFAX_SERVERNAME in includes/local_config.php before running this script

@@ -1,8 +1,0 @@
-FROM php:5.6-cli
-
-# Install mysql/mysqli and PEAR MDB2
-RUN docker-php-ext-install mysql mysqli \
-    && pear install MDB2 MDB2_Driver_mysql \
-    && mkdir -p /var/log /var/spool/hylafax
-
-WORKDIR /app

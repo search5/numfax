@@ -1,8 +1,0 @@
-{
-  "id": "W60_admin_cover_edit",
-  "description": "Admin cover page editing and deletion mode",
-  "route": "/admin/covers?cover_id=1",
-  "method": "GET",
-  "expected_status": 200,
-  "implemented": true
-}
