@@ -45,6 +45,7 @@
             <tr class="hover:bg-slate-800/40 transition">
               <td class="py-3 px-4 font-mono font-bold text-white">
                 <a href="/admin/users?uid={{ u.uid }}" class="hover:text-sky-400 hover:underline transition">{{ u.username }}</a>
+                {% if u.locked %}<span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-rose-950 text-rose-300 border border-rose-800">{{ _('Locked') }}</span>{% endif %}
               </td>
               <td class="py-3 px-4 text-slate-300 font-medium">{{ u.name }}</td>
               <td class="py-3 px-4 font-mono text-sky-400">
@@ -67,6 +68,13 @@
                 {% endif %}
               </td>
               <td class="py-3 px-4 text-right whitespace-nowrap">
+                {% if u.locked %}
+                <form action="/admin/users" method="post" data-unlock="1" class="inline">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+                  <input type="hidden" name="unlock_uid" value="{{ u.uid }}" />
+                  <button type="submit" class="inline-flex items-center px-2.5 py-1 bg-rose-900 hover:bg-rose-800 text-rose-100 rounded-lg text-xs font-semibold border border-rose-700 transition">{{ _('Unlock') }}</button>
+                </form>
+                {% endif %}
                 <a href="/admin/users?uid={{ u.uid }}" class="inline-flex items-center px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-sky-400 rounded-lg text-xs font-semibold border border-slate-700 transition">
                   {{ _('Edit') }}
                 </a>

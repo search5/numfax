@@ -2595,3 +2595,11 @@ msgstr "비밀번호가 올바르지 않습니다."
 #~ msgid "HMAC Secret"
 #~ msgstr "HMAC 시크릿"
 
+msgid "Too many failed sign-in attempts. This account is locked until an administrator unlocks it."
+msgstr "로그인 실패가 너무 많아 이 계정이 잠겼습니다. 관리자가 잠금을 해제할 때까지 로그인할 수 없습니다."
+
+msgid "Locked"
+msgstr "잠김"
+
+msgid "Unlock"
+msgstr "잠금 해제"

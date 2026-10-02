@@ -137,6 +137,10 @@ class NFUserAccount:
             if self.uid:
                 self.userpasswords.log_password(pwdxemail, self.uid)
             hylafax_users.add_user(self.uid, str(self.dbdata.get("username") or ""), pwdxemail)
+            if hasattr(self.db, "execute"):
+                from namifax.services.login_throttle import LoginThrottle
+
+                LoginThrottle(self.db).forget(str(self.dbdata.get("username") or ""))     # a stranger may have tried the name first
             return True
 
         self.error = "Account creation failed"

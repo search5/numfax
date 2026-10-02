@@ -126,14 +126,16 @@ def test_a_transaction_that_read_early_can_still_set_a_key_committed_meanwhile(e
 
 
 @pytest.mark.serverdb
-def test_failures_that_arrive_together_are_all_counted(engine):
+def test_failures_that_arrive_together_are_all_counted(engine, monkeypatch):
+    monkeypatch.setenv("NAMIFAX_LOGIN_MAX_FAILURES", "100")                # far from the limit: this test is about the counting
     outcome = _together(engine, 8, lambda s, i: lt.LoginThrottle(s).record_failure("burst-user", None))
     assert outcome == ["ok"] * 8
     assert json.loads(_raw(engine, lt._key("user", "burst-user")))["n"] == 8
 
 
 @pytest.mark.serverdb
-def test_failures_on_an_existing_counter_are_all_counted(engine):
+def test_failures_on_an_existing_counter_are_all_counted(engine, monkeypatch):
+    monkeypatch.setenv("NAMIFAX_LOGIN_MAX_FAILURES", "100")
     with Session(engine) as session:
         SystemConfigService(session).set(lt._key("user", "known-user"), json.dumps({"n": 3, "start": lt._now()}))
         session.commit()
@@ -147,7 +149,7 @@ def test_a_burst_over_the_limit_locks_the_account_and_stops_counting(engine):
     outcome = _together(engine, 25, lambda s, i: lt.LoginThrottle(s).record_failure("attacked-user", None))
     assert outcome == ["ok"] * 25
     state = json.loads(_raw(engine, lt._key("user", "attacked-user")))
-    assert state["n"] == lt.max_failures() and state["until"] > lt._now()
+    assert state["n"] == lt.max_failures() and state["locked"] is True
 
 
 @pytest.mark.serverdb
@@ -191,4 +193,4 @@ def test_a_wrong_password_burst_through_the_login_view_locks_without_error_pages
     [t.join() for t in threads]
     assert not [page for page in codes if "database" in page.lower() and "unavailable" in page.lower()]
     state = json.loads(_raw(engine, lt._key("user", "victim")))
-    assert state["n"] == lt.max_failures() and state["until"] > lt._now()
+    assert state["n"] == lt.max_failures() and state["locked"] is True

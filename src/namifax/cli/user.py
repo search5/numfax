@@ -57,6 +57,27 @@ def _password(given: str | None) -> str | None:
     return password
 
 
+def run_unlock_user(argv: Sequence[str] | None = None, *, session: Any = None) -> int:
+    """Lift the lock of an account that was locked by too many wrong passwords (the administration does the same from the user list)."""
+    parser = argparse.ArgumentParser(prog="namifax unlock-user", description="Unlock an account that too many wrong passwords locked")
+    parser.add_argument("username")
+    args = parser.parse_args(argv)
+    if session is not None:
+        return _unlock_user(args.username, session)
+    with cli_session(ensure_schema=True) as opened:
+        return _unlock_user(args.username, opened)
+
+
+def _unlock_user(username: str, session: Any) -> int:
+    from namifax.services.login_throttle import LoginThrottle
+
+    if not LoginThrottle(session).unlock(username):
+        print(f"{username} is not locked.")
+        return 1
+    print(f"{username} is unlocked.")
+    return 0
+
+
 def run_reset_2fa(argv: Sequence[str] | None = None, *, session: Any = None) -> int:
     """Turn two-factor authentication off for a user who lost their device and their recovery codes."""
     parser = argparse.ArgumentParser(prog="namifax reset-2fa", description="Remove a user's two-factor enrolment")

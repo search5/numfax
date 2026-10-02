@@ -92,7 +92,9 @@ def login_post_view(request):
             "title": "- NamiFAX - Login",
             "server_name": "NamiFAX Server 3.3.5",
             "username": username,
-            "error": _("Too many failed sign-in attempts. Please try again later."),
+            "error": (_("Too many failed sign-in attempts. This account is locked until an administrator unlocks it.")
+                      if throttle.lock_reason(username) == "account"
+                      else _("Too many failed sign-in attempts. Please try again later.")),
             "current_user": None,
         }
 

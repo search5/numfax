@@ -30,7 +30,7 @@ from namifax.cli.faxcover import run_faxcover
 from namifax.cli.faxrcvd import run_faxrcvd
 from namifax.cli.notify import run_notify
 from namifax.cli.phb import main as run_phb
-from namifax.cli.user import run_createuser, run_reset_2fa
+from namifax.cli.user import run_createuser, run_reset_2fa, run_unlock_user
 from namifax.services.scheduler import get_scheduler, run_scheduler_standalone
 
 USAGE = """NamiFAX Modernized Enterprise System CLI
@@ -43,6 +43,7 @@ Available commands:
   scheduler          Start the standalone background APScheduler daemon
   createuser         Create or update user account (ID / PW credentials)
   import-archive     Import an existing HylaFAX/AvantFAX fax archive directory into the database
+  unlock-user        Unlock an account that too many wrong passwords locked
   reset-2fa          Turn off two-factor authentication for a user (lost device and recovery codes)
   encrypt-secrets    Encrypt stored credentials (cloud key, SMTP password, 2FA seeds) with NAMIFAX_SECRET_KEY
   dynconf            Execute HylaFAX dynamic configuration call filter
@@ -224,6 +225,9 @@ def main(argv: list[str] | None = None) -> int:
     elif cmd in ("import-archive", "import_archive"):
         from namifax.cli import import_archive
         return import_archive.main(sub_args)
+
+    elif cmd in ("unlock-user", "unlock_user"):
+        return run_unlock_user(sub_args)
 
     elif cmd in ("reset-2fa", "reset_2fa"):
         return run_reset_2fa(sub_args)

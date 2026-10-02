@@ -78,25 +78,27 @@ def test_a_success_clears_the_user_name_and_gives_the_address_its_count_back(dbs
 
 
 def test_a_success_on_the_attempt_that_reached_the_limit_does_not_leave_a_lock(dbsession, clock, monkeypatch):
-    monkeypatch.setenv("NAMIFAX_LOGIN_MAX_FAILURES", "1")             # the address limit is 5 times this
+    monkeypatch.setenv("NAMIFAX_LOGIN_MAX_FAILURES", "1")             # the address limit is IP_FACTOR times this
     throttle = lt.LoginThrottle(dbsession)
-    for _ in range(4):
-        throttle.begin_attempt(f"user{_}", "10.0.0.6")                # four failures on the address (limit 5)
-    assert throttle.begin_attempt("fifth", "10.0.0.6") is True       # the fifth reaches the limit and locks the address
+    last = lt.IP_FACTOR
+    for i in range(last - 1):
+        throttle.begin_attempt(f"user{i}", "10.0.0.6")                # failures on the address, one short of its limit
+    reaching = lt.LoginThrottle(dbsession)
+    assert reaching.begin_attempt("final", "10.0.0.6") is True       # this one reaches the limit and locks the address
     assert throttle.is_locked("someone-else", "10.0.0.6") is True
-    throttle.record_success("fifth", "10.0.0.6")                      # ... but its password was right
+    reaching.record_success("final", "10.0.0.6")                      # ... but its password was right
     assert throttle.is_locked("someone-else", "10.0.0.6") is False
-    assert _state(dbsession, "ip", "10.0.0.6")["n"] == 4
+    assert _state(dbsession, "ip", "10.0.0.6")["n"] == last - 1
 
 
-def test_the_lock_ends_after_the_time(dbsession, clock):
+def test_the_lock_of_an_account_does_not_end_with_time(dbsession, clock):
     throttle = lt.LoginThrottle(dbsession)
     for _ in range(LIMIT):
         throttle.begin_attempt("erin", None)
-    assert throttle.begin_attempt("erin", None) is False
-    clock["now"] += 15 * 60 + 1
-    assert throttle.begin_attempt("erin", None) is True
-    assert _state(dbsession, "user", "erin")["n"] == 1
+    for later in (15 * 60 + 1, 24 * 3600, 365 * 24 * 3600):
+        clock["now"] += later
+        assert throttle.begin_attempt("erin", None) is False
+    assert _state(dbsession, "user", "erin")["n"] == LIMIT
 
 
 def test_the_login_view_does_not_look_at_the_password_of_a_locked_user_name(testapp, dbsession, clock):

@@ -11,6 +11,7 @@ import os
 import re
 from datetime import date
 
+from pyramid.csrf import check_csrf_token
 from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
 
@@ -23,6 +24,7 @@ from namifax.services.covers import Covers
 from namifax.services.did import DIDRouting
 from namifax.services.categories import FaxPDFCategory
 from namifax.services.fax_access import _did_routing_enabled
+from namifax.services.login_throttle import LoginThrottle
 from namifax.services.modem import FaxModem
 from namifax.services.user_account import NFUserAccount
 from namifax.views.admin import get_all_admin_users
@@ -186,6 +188,9 @@ def admin_users_view(request):
     saved = False
     values = _blank()
 
+    if request.method == "POST" and request.POST.get("unlock_uid"):
+        return _unlock(request, svc)
+
     if request.method == "POST":
         values = _posted(request.POST)
         if request.POST.get("delete") and values["uid"]:
@@ -203,10 +208,26 @@ def admin_users_view(request):
             values = _from_account(svc)
 
     users = get_all_admin_users(request.dbsession)
+    locked = LoginThrottle(request.dbsession).locked_accounts([str(u["username"]) for u in users if u.get("username")])
+    for user in users:
+        user["locked"] = str(user.get("username")) in locked
     return {"title": "NamiFAX - Admin - Users", "current_user": identity, "active_tab": "admin", "active_admin": "users",
-            "users": users, "values": values, "errors": errors, "saved": saved, "choices": _choices(request),
+            "csrf_token": request.session.get_csrf_token(), "users": users, "values": values, "errors": errors, "saved": saved, "choices": _choices(request),
             "max_username": settings.max_username_size(), "max_email": settings.max_email_size(),
             "max_password": settings.max_passwd_size()}
+
+
+def _unlock(request, svc: NFUserAccount):
+    """Lift the lock that too many wrong passwords put on an account (only an administrator can; the page is admin-only)."""
+    if not check_csrf_token(request, raises=False):
+        request.session.flash(str(_("The form has expired. Please try again.")), "error")
+        return HTTPFound(location=request.route_url("admin_users"))
+    uid = (request.POST.get("unlock_uid") or "").strip()
+    if uid.isdecimal() and svc.load(int(uid)):
+        username = str(svc.dbdata.get("username") or "")
+        if LoginThrottle(request.dbsession).unlock(username):
+            svc._log(f"Account {username} unlocked by {(request.identity or {}).get('username', 'admin')}")
+    return HTTPFound(location=request.route_url("admin_users"))
 
 
 def _edit(request, svc: NFUserAccount, v: dict):
