@@ -4,7 +4,7 @@ NamiFAX는 HylaFAX 팩스 서버의 웹 프런트엔드입니다. [AvantFAX](htt
 
 원본에 없던 기능이 있습니다: 2단계 인증(TOTP)과 패스키, SAML 로그인, Argon2id 비밀번호 해시, 관리자 화면에서 설정하는 정기 작업(APScheduler), S3 호환 스토리지로의 수신 팩스 업로드와 보존 정책, 인쇄해서 팩스 보내기(CUPS), 24개 언어(한국어는 전체 번역).
 
-**상태**: 이 저장소에서는 실제 HylaFAX, CUPS, S3, IdP(SAML)에 붙여 시험하지 못했습니다. 이 부분은 가짜 실행 파일과 mock으로만 확인했습니다. 운영에 쓰기 전에 시험 서버에서 `docs/INSTALL_HYLAFAX.md`와 `docs/OPERATIONS_CHECKLIST.md`를 한 번 거치십시오.
+**상태**: 이 저장소에서는 실제 HylaFAX, CUPS, S3에 붙여 시험하지 못했습니다. 이 부분은 가짜 실행 파일과 mock으로만 확인했습니다. SAML은 Keycloak 26으로 시험했고, Okta·Entra ID 등 다른 IdP와의 연동은 시험하지 못했습니다. 운영에 쓰기 전에 시험 서버에서 `docs/INSTALL_HYLAFAX.md`와 `docs/OPERATIONS_CHECKLIST.md`를 한 번 거치십시오.
 
 AvantFAX는 David D. Mimms, Jr. <david(at)avantfax.com>가 만들었습니다. NamiFAX는 그 코드를 바탕으로 다시 만든 파생물이며(Lee Ji-ho), 화면 이미지와 번역의 상당 부분이 원본에서 왔습니다.
 

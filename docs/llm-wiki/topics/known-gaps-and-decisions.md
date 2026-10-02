@@ -101,7 +101,7 @@ verified: true
 |---|---|---|
 | TOTP 2단계 인증, 복구 코드, 잠금 | [코드] `services/totp.py`, `tests/unit/test_totp*.py` | 인증 앱과의 실사용은 확인 못함 |
 | WebAuthn 패스키 | [코드] `services/webauthn.py`, `tests/unit/test_webauthn*.py`, `test_pyramid_webauthn.py` | 실제 보안 키·기기는 확인 못함 |
-| SAML 2.0 SSO | [코드] `services/saml.py`(Issuer 검사는 `saml_idp_entity_id` 설정 시, 2026-10-02 `403b549`), `views/saml.py`, `tests/unit/test_saml*.py`, `test_pyramid_saml.py` | [문서] Keycloak 26 컨테이너로 확인함. **실제 IdP(Okta, Entra ID 등)는 시험하지 못함** |
+| SAML 2.0 SSO | [코드] `services/saml.py`(Issuer 검사는 `saml_idp_entity_id` 설정 시, 2026-10-02 `403b549`), `views/saml.py`, `tests/unit/test_saml*.py`, `test_pyramid_saml.py` | [코드] Keycloak 26 컨테이너로 2026-10-02 에 직접 시험했다(로그인, 위조·재사용 거부, 역할 부여·회수, 회선 속성 반영; 수동 시험이라 저장소에 자동 시험으로는 남아 있지 않다. 서명된 응답을 만들어 검사하는 자동 시험은 `tests/unit/test_saml*.py`). **Okta, Entra ID 등 다른 IdP 는 시험하지 못함** |
 | 네트워크 프린터(IPP/LPD/RAW) | [코드] `services/printer.py`, `tests/unit/test_network_printer*.py` | 실제 프린터는 확인 못함 |
 | 표지 스튜디오 | [코드] `services/cover_studio.py`, `tests/unit/test_cover_studio.py` | — |
 | 클라우드 스토리지(S3 호환)와 수명주기 | [코드] `services/cloud_storage.py`, `storage_lifecycle.py`, `tests/unit/test_cloud_storage.py`, `test_storage_lifecycle*.py`, `test_remote_upload.py`. 2026-10-02 수정(커밋 `2c18c45`): 수신 팩스를 S3 설정 시 올린다 — `cli/faxrcvd.py` 가 보관함 등록 성공 뒤 `upload_received_fax(session, faxid, faxpath)` 를 불러 `fax.tif`/`fax.pdf` 를 키 `fax<fid>/fax.tif`·`fax.pdf`(+접두사)로 업로드하고 실패는 로그만 남긴다(과거 K06 "관리 화면에만 연결"은 수신 쪽은 해결). 원격 TIFF 선별 삭제(`delete_remote_tiff_only` ← 설정 `storage_remote_tiff_only`)가 동작하며 `delete_fax` 가 `fax1` 삭제 때 `fax10` 을 지우던 접두사 버그를 고쳤다(`fax<fid>/` 정확한 접두사만). **남음**: 발신 팩스 업로드(`notify`)는 없다(`upload_received_fax` 호출자는 `faxrcvd` 하나). `storage_remote_tiff_only` 는 관리자 화면에 저장 항목이 없다 | 실제 S3·GCS 계정은 확인 못함(GCS 는 제거됨). 업로드·삭제 시험은 가짜 제공자 위주로 보이며(`test_remote_upload.py`) 실행하지 않았다 |
@@ -134,5 +134,5 @@ verified: true
 
 ### 5.1 이번에도 하지 못한 시험
 - **서버 DB(PostgreSQL·MySQL·MariaDB) 시험을 이번 수정 작업 동안 한 번도 돌리지 않았다.** 일반 시험(`-k "not serverdb"`)만 돌렸고 2274개가 통과했다(2026-10-02, 약 5분 27초, `uv run pytest tests -q -k "not serverdb"`). 서버 DB 시험은 컨테이너로 서버를 띄워 `NAMIFAX_TEST_*_URL` 을 설정해야 하며([[testing]]) 시간이 더 걸린다. 이번에 DB 계층(리비전, 모델)은 바꾸지 않았지만, `SystemConfig` 키가 늘었다(로그인 제한, 스케줄러, `storage_remote_tiff_only`).
-- 실제 HylaFAX·CUPS·S3·systemd·cron·IdP 에서의 동작은 시험하지 못했다. 환경 파일 배선, CUPS 백엔드 스크립트, 훅은 가짜 실행 파일과 `sh` 로 변수·인자 전달만 확인했다.
+- 실제 HylaFAX·CUPS·S3·systemd·cron 에서의 동작은 시험하지 못했다. SAML 은 Keycloak 26 으로 직접 시험했고(위 표), Okta·Entra ID 등 다른 IdP 만 시험하지 못했다. 환경 파일 배선, CUPS 백엔드 스크립트, 훅은 가짜 실행 파일과 `sh` 로 변수·인자 전달만 확인했다.
 

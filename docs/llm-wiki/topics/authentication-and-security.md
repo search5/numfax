@@ -133,7 +133,7 @@ ACS(`POST /auth/saml/acs`)에서 `process_saml_response` 가 확인하는 것(�
 
 릴레이 상태는 `/` 로 시작하고 `//`·`\` 가 없는 경로만 허용해 오픈 리다이렉트를 막는다. 시험 `test_the_relay_state_stays_on_this_site`. ACS/SLS 는 IdP 가 다른 사이트에서 POST 하므로 `origin_guard` 예외다. 시험 `tests/unit/test_origin_guard.py::test_the_identity_providers_callbacks_are_exempt`
 
-한계: AuthnRequest 에 서명하지 않는다(메타데이터도 `AuthnRequestsSigned="false"`). SLS(`saml_sls_view`)는 로그아웃 메시지를 검증하지 않고 흐름 쿠키 세션(`namifax_flow`)만 비우고 `/login` 으로 보낸다. 로그인 세션(`namifax_session` 토큰)은 파기하지 않는다. 실제 IdP 와의 연동은 시험하지 못했다고 과거 보고가 밝혔다. [코드] `saml.py::generate_sp_metadata`, `views/saml.py::saml_sls_view`; [문서] [[defects-report-summary]]
+한계: AuthnRequest 에 서명하지 않는다(메타데이터도 `AuthnRequestsSigned="false"`). SLS(`saml_sls_view`)는 로그아웃 메시지를 검증하지 않고 흐름 쿠키 세션(`namifax_flow`)만 비우고 `/login` 으로 보낸다. 로그인 세션(`namifax_session` 토큰)은 파기하지 않는다. Keycloak 26 이 아닌 IdP(Okta, Entra ID 등)와의 연동은 시험하지 못했다고 과거 보고가 밝혔다. [코드] `saml.py::generate_sp_metadata`, `views/saml.py::saml_sls_view`; [문서] [[defects-report-summary]]
 
 > 모순: [[defects-rounds-1-2]] K04("SAML 응답 서명/Audience/NotOnOrAfter/InResponseTo 검증 없음"), K05(설정 미사용), F3-15, F3-16 은 현재 코드와 다르다. 서명·Audience·기간·수신처·InResponseTo·재전송을 모두 검사하고 `saml_*` 설정을 읽는다. Issuer 는 이전 판에서는 비교하지 않았으나 커밋 `403b549` 이후 `saml_idp_entity_id` 가 설정돼 있으면 비교한다(위 6번). 다만 값이 비어 있으면 여전히 검사하지 않는다(경고만). [코드] `services/saml.py` `process_saml_response`
 

@@ -132,6 +132,6 @@ verified: true
 
 ## 6. 확인하지 못한 것
 - 실제 HylaFAX 서버와의 연동(`JobFmt` 열 순서, `faxrm`/`faxalter` 의 소유자 권한, 배포판별 서비스 이름 `faxq`/`hfaxd`/`faxgetty`, 훅 환경 변수 전달). 문서와 파일 내용만 읽었고 연동은 이 세션에서 시험하지 않았다. 출력함은 가짜 `faxstat` 출력으로만 시험됐다고 문서는 말한다 [문서].
-- Okta, Entra ID 등 실제 IdP(문서는 Keycloak 26 컨테이너로만 확인했다고 함) [문서].
+- Okta, Entra ID 등 Keycloak 이 아닌 IdP. Keycloak 26 컨테이너로는 2026-10-02 에 직접 시험했다(로그인, 위조·재사용 거부, 역할 부여·회수, 회선 속성 반영).
 - 단위 파일·nginx·apache 설정을 실제 서버에 적용해 시작해 보는 것. 이 세션에서는 서버를 띄우지 않았다.
 - 이메일 → 팩스(Postfix `faxmail`)는 설명서만 있고 시험하지 않았다 [문서: [[setup-email2fax]]].
