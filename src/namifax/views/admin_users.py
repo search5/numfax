@@ -28,7 +28,16 @@ from namifax.services.user_account import AFUserAccount
 from namifax.views.admin import get_all_admin_users
 
 FAXES_PER_PAGE = ["10", "15", "20", "25", "30", "50", "100"]
-DEFAULT_INBOX, DEFAULT_ARCHIVE = "25", "30"
+
+
+def _default_inbox() -> str:
+    return str(settings.default_faxes_per_page_inbox())
+
+
+def _default_archive() -> str:
+    return str(settings.default_faxes_per_page_archive())
+
+
 FLAGS = ("is_admin", "superuser", "can_del", "any_modem", "pwd_reuse")
 
 
@@ -91,7 +100,7 @@ def _blank() -> dict:
             "pwd_reuse": False, "language": "en", "from_company": os.environ.get("FROM_COMPANY", ""),
             "from_location": os.environ.get("FROM_LOCATION", ""), "from_voicenumber": os.environ.get("FROM_VOICENUMBER", ""),
             "from_faxnumber": os.environ.get("FROM_FAXNUMBER", ""), "user_tsi": os.environ.get("DEFAULT_TSI_ID", ""),
-            "coverpage_id": "", "audiofile": "", "faxperpageinbox": DEFAULT_INBOX, "faxperpagearchive": DEFAULT_ARCHIVE,
+            "coverpage_id": "", "audiofile": "", "faxperpageinbox": _default_inbox(), "faxperpagearchive": _default_archive(),
             "is_admin": False, "superuser": False, "can_del": False, "any_modem": False,
             "modemdevs": [], "didrouting": [], "faxcats": []}
 
@@ -104,8 +113,8 @@ def _from_account(svc: AFUserAccount) -> dict:
         values[key] = d.get(key) if d.get(key) is not None else values[key]
     values.update(
         acc_enabled=bool(d.get("acc_enabled")), pwdcycle=str(d.get("pwdcycle") or "0"),
-        coverpage_id=str(d.get("coverpage_id") or ""), faxperpageinbox=str(d.get("faxperpageinbox") or DEFAULT_INBOX),
-        faxperpagearchive=str(d.get("faxperpagearchive") or DEFAULT_ARCHIVE),
+        coverpage_id=str(d.get("coverpage_id") or ""), faxperpageinbox=str(d.get("faxperpageinbox") or _default_inbox()),
+        faxperpagearchive=str(d.get("faxperpagearchive") or _default_archive()),
         modemdevs=svc.get_modemdevs(), didrouting=svc.get_didrouting(), faxcats=svc.get_faxcats(),
         **{f: bool(d.get(f)) for f in FLAGS})
     return values
@@ -123,8 +132,8 @@ def _posted(post) -> dict:
         acc_enabled=bool(post.get("acc_enabled")), pwdcycle=number("pwdcycle", ("0", "3", "6"), "0"),
         language=(post.get("language") or "en").strip(), coverpage_id=(post.get("coverpage_id") or "").strip(),
         audiofile=os.path.basename(post.get("audiofile") or ""),
-        faxperpageinbox=number("faxperpageinbox", FAXES_PER_PAGE, DEFAULT_INBOX),
-        faxperpagearchive=number("faxperpagearchive", FAXES_PER_PAGE, DEFAULT_ARCHIVE),
+        faxperpageinbox=number("faxperpageinbox", FAXES_PER_PAGE, _default_inbox()),
+        faxperpagearchive=number("faxperpagearchive", FAXES_PER_PAGE, _default_archive()),
         modemdevs=post.getall("modemdevs[]"), didrouting=post.getall("didrouting[]"), faxcats=post.getall("faxcats[]"),
         **{f: bool(post.get(f)) for f in FLAGS})
     for key in ("from_company", "from_location", "from_voicenumber", "from_faxnumber", "user_tsi"):

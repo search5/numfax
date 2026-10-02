@@ -83,7 +83,7 @@ def archive_view(request):
     today = datetime.date.today()
 
     searched = "kw" in params
-    limit = page_size(request, "faxperpagearchive", 30)
+    limit = page_size(request, "faxperpagearchive")
     pageindex = max(_number(params.get("pageindex")) or 0, 0)
     userid = _number(params.get("userid")) if access.superuser else access.uid
 

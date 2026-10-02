@@ -95,16 +95,19 @@ def _inbox_row(ab: AFAddressBook, r: dict) -> dict:
     }
 
 
-DEFAULT_FAXES_PER_PAGE_INBOX = 10
 MIN_PAGE_LIMIT = 10
 
 
-def page_size(request, column: str = "faxperpageinbox", default: int = DEFAULT_FAXES_PER_PAGE_INBOX) -> int:
-    """The user's own page size ($faxesperpage of the original), then the optional ``pagelimit`` (never below 10)."""
+def page_size(request, column: str = "faxperpageinbox", default: int | None = None) -> int:
+    """The user's own page size ($faxesperpage of the original; the configured default when they have none), then the optional
+    ``pagelimit`` (never below 10)."""
     from sqlalchemy import select
 
     from namifax.models import UserAccount
 
+    if default is None:
+        default = (settings.default_faxes_per_page_archive() if column == "faxperpagearchive"
+                   else settings.default_faxes_per_page_inbox())
     size = default
     who = request.identity or {}
     uid = who.get("user_id") or who.get("uid")

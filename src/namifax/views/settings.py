@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pyramid.view import view_config
 
+from namifax.common import settings as app_settings
 from namifax.common.validators import is_valid_email
 from namifax.i18n import _
 from namifax.services.covers import Covers
@@ -49,8 +50,8 @@ def settings_view(request):
             "email_sig": user_account.dbdata.get("email_sig") or "",
             "language": user_account.dbdata.get("language") or "en",
             "coverpage_id": str(user_account.dbdata.get("coverpage_id") or ""),
-            "faxperpageinbox": str(user_account.dbdata.get("faxperpageinbox") or "10"),
-            "faxperpagearchive": str(user_account.dbdata.get("faxperpagearchive") or "30"),
+            "faxperpageinbox": str(user_account.dbdata.get("faxperpageinbox") or app_settings.default_faxes_per_page_inbox()),
+            "faxperpagearchive": str(user_account.dbdata.get("faxperpagearchive") or app_settings.default_faxes_per_page_archive()),
         }
     else:
         profile_data = {
@@ -63,7 +64,8 @@ def settings_view(request):
             "user_tsi": identity.get("user_tsi", "ENTERPRISE-HQ"),
             "email_sig": identity.get("email_sig", "-- \nBest regards,\nNamiFAX Administrator"),
             "language": identity.get("language", "en"),
-            "coverpage_id": "", "faxperpageinbox": "10", "faxperpagearchive": "30",
+            "coverpage_id": "", "faxperpageinbox": str(app_settings.default_faxes_per_page_inbox()),
+            "faxperpagearchive": str(app_settings.default_faxes_per_page_archive()),
         }
 
     # Determine current language from cookie, session, profile, or identity

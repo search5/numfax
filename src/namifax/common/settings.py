@@ -72,6 +72,16 @@ def max_email_size() -> int:
     return number("MAX_EMAIL_SIZE", 99)
 
 
+def default_faxes_per_page_inbox() -> int:
+    """``DEFAULT_FAXES_PER_PAGE_INBOX`` (25): the Inbox page size of a user who has not chosen one."""
+    return number("DEFAULT_FAXES_PER_PAGE_INBOX", 25)
+
+
+def default_faxes_per_page_archive() -> int:
+    """``DEFAULT_FAXES_PER_PAGE_ARCHIVE`` (30): the Archive page size of a user who has not chosen one."""
+    return number("DEFAULT_FAXES_PER_PAGE_ARCHIVE", 30)
+
+
 def hylaspool() -> str:
     return text("HYLASPOOL", "/var/spool/hylafax").rstrip("/") or "/"
 
