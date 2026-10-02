@@ -30,9 +30,9 @@ def test_models_map_the_legacy_tables(model, table, pk, unique, columns):
     assert set(t.c.keys()) == columns  # BarcodeRoute.bcr_id (a duplicate of barcode_id the port added) is not modelled
     assert isinstance(t.c[pk].type, Integer) and t.c[pk].autoincrement is True
     assert t.c[unique].unique is True and t.c[unique].nullable is False
-    assert isinstance(t.c[unique].type, String) and t.c[unique].type.length in (64, 255)
+    assert isinstance(getattr(t.c[unique].type, "impl", t.c[unique].type), String) and t.c[unique].type.length in (64, 255)
     for name in ("alias", "contact", "printer"):
-        assert isinstance(t.c[name].type, String) and t.c[name].type.length == 255 and t.c[name].nullable
+        assert isinstance(getattr(t.c[name].type, "impl", t.c[name].type), String) and t.c[name].type.length == 255 and t.c[name].nullable
     assert isinstance(t.c.faxcatid.type, Integer) and t.c.faxcatid.nullable
 
 

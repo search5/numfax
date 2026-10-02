@@ -102,27 +102,25 @@ def legacy_encode(value: str) -> str:
     return "".join(out)
 
 
-class LegacyHtmlString(String):
+class LegacyHtmlString(TypeDecorator):
     """Text a person typed. A database written by the original AvantFAX holds it as HTML entities; it is read as the text.
 
-    It is a ``String`` (with its length) so that everything that looks at column types sees an ordinary text column."""
+    It is a ``TypeDecorator`` and not a ``String`` subclass on purpose: a dialect that has its own string type (PostgreSQL's
+    psycopg dialect does) replaces a subclass by its own class and the decoding is lost. Code that looks at the kind of a
+    column has to look through it (``column.type.impl``)."""
 
-    def result_processor(self, dialect: Any, coltype: Any):
-        plain = super().result_processor(dialect, coltype)
+    impl = String
+    cache_ok = True
 
-        def process(value: Any) -> Any:
-            return legacy_decode(plain(value) if plain else value)
-
-        return process
+    def process_result_value(self, value: Any, dialect: Any) -> Any:
+        return legacy_decode(value)
 
 
-class LegacyHtmlText(Text):
+class LegacyHtmlText(TypeDecorator):
     """``LegacyHtmlString`` for a ``TEXT`` column."""
 
-    def result_processor(self, dialect: Any, coltype: Any):
-        plain = super().result_processor(dialect, coltype)
+    impl = Text
+    cache_ok = True
 
-        def process(value: Any) -> Any:
-            return legacy_decode(plain(value) if plain else value)
-
-        return process
+    def process_result_value(self, value: Any, dialect: Any) -> Any:
+        return legacy_decode(value)

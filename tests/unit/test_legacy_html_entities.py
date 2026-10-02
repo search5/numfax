@@ -12,7 +12,7 @@ import pytest
 from sqlalchemy import text
 
 from namifax.models import AddressBook, AddressBookEmail, AddressBookFAX, FaxArchive, FaxCategory, Modems
-from namifax.models.types import legacy_decode, legacy_encode
+from namifax.models.types import LegacyHtmlString, LegacyHtmlText, legacy_decode, legacy_encode
 
 STORED_COMPANY = "M&uuml;ller &amp; S&ouml;hne GmbH"
 SHOWN_COMPANY = "Müller & Söhne GmbH"
@@ -49,6 +49,17 @@ def test_the_original_encoding_is_reproduced_for_searching():
 @pytest.mark.parametrize("text_", ["Müller & Söhne", "O'Brien \"Bob\"", "한글 plain", "&amp; already", "x"])
 def test_decoding_what_the_original_wrote_gives_back_the_text(text_):
     assert legacy_decode(legacy_encode(text_)) == text_
+
+
+@pytest.mark.parametrize("dialect", ["sqlite", "mysql", "postgresql"])
+@pytest.mark.parametrize("column_type", [LegacyHtmlString(255), LegacyHtmlText()])
+def test_every_database_dialect_keeps_the_decoding(dialect, column_type):
+    """A dialect with its own string type (PostgreSQL's psycopg one) must not replace the type and lose the decoding."""
+    from sqlalchemy.dialects import mysql, postgresql, sqlite
+
+    chosen = {"sqlite": sqlite.dialect(), "mysql": mysql.dialect(), "postgresql": postgresql.psycopg.dialect()}[dialect]
+    process = column_type.dialect_impl(chosen).result_processor(chosen, None)
+    assert process("M&uuml;ller &amp; S&ouml;hne") == "Müller & Söhne"
 
 
 # --- the screens -------------------------------------------------------------------------------------------------------------

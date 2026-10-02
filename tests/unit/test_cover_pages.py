@@ -20,7 +20,7 @@ def test_model_maps_the_legacy_table():
     assert set(t.c.keys()) == {"cover_id", "title", "file"}
     assert isinstance(t.c.cover_id.type, Integer) and t.c.cover_id.autoincrement is True
     for name in ("title", "file"):
-        assert isinstance(t.c[name].type, String) and t.c[name].type.length == 255 and not t.c[name].nullable
+        assert isinstance(getattr(t.c[name].type, "impl", t.c[name].type), String) and t.c[name].type.length == 255 and not t.c[name].nullable
 
 
 @pytest.mark.parametrize("dialect", [sqlite.dialect(), mysql.dialect(), MariaDBDialect(), postgresql.dialect()],

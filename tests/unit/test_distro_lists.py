@@ -23,7 +23,7 @@ def test_model_maps_the_legacy_table():
     assert t.name == "DistroList" and [c.name for c in t.primary_key.columns] == ["dl_id"]
     assert set(t.c.keys()) == {"dl_id", "listname", "listdata", "lastmod_date", "lastmod_user"}
     assert isinstance(t.c.dl_id.type, Integer) and t.c.dl_id.autoincrement is True
-    assert isinstance(t.c.listname.type, String) and t.c.listname.type.length == 255 and not t.c.listname.nullable
+    assert isinstance(getattr(t.c.listname.type, "impl", t.c.listname.type), String) and t.c.listname.type.length == 255 and not t.c.listname.nullable
     assert isinstance(t.c.listdata.type, Text) and t.c.listdata.nullable
     assert isinstance(t.c.lastmod_date.type, (String, IsoText)) and t.c.lastmod_date.type.length == 32
     assert isinstance(t.c.lastmod_user.type, Integer) and t.c.lastmod_user.nullable

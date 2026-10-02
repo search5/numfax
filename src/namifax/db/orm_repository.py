@@ -25,6 +25,8 @@ from typing import Any, Optional
 import sqlalchemy as sa
 from sqlalchemy.orm import Session
 
+from namifax.models.types import LegacyHtmlString, LegacyHtmlText
+
 SQL_AND = " AND "
 SQL_OR = " OR "
 
@@ -48,6 +50,8 @@ def _coerce(column: sa.Column, value: Any) -> Any:
     if value is None:
         return None
     col_type = column.type
+    if isinstance(col_type, (LegacyHtmlString, LegacyHtmlText)):
+        col_type = col_type.impl                      # (text that is read with its HTML entities undone)
     if isinstance(col_type, sa.Boolean):
         if isinstance(value, str):
             return value.strip().lower() in ("1", "true", "on", "yes")

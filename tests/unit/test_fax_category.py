@@ -21,7 +21,7 @@ def test_model_maps_the_legacy_table():
     assert t.name == "FaxCategory"
     assert [c.name for c in t.primary_key.columns] == ["catid"]
     assert isinstance(t.c.catid.type, Integer) and t.c.catid.autoincrement is True
-    assert isinstance(t.c.name.type, String) and t.c.name.type.length == 255
+    assert isinstance(getattr(t.c.name.type, "impl", t.c.name.type), String) and t.c.name.type.length == 255
     assert t.c.name.unique is True and t.c.name.nullable is False
 
 

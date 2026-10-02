@@ -30,7 +30,7 @@ def test_models_use_the_legacy_primary_keys_and_leave_out_the_port_duplicates():
     assert {"abookfax_id", "abook_id", "faxnumber", "email", "description", "to_person", "to_location",
             "to_voicenumber", "to_address", "to_zip", "to_city", "faxcatid", "faxfrom", "faxto", "printer"} == set(fax.c.keys())
     assert set(email.c.keys()) == {"abookemail_id", "abook_id", "contact_name", "contact_email"}
-    assert isinstance(ab.c.company.type, String) and ab.c.company.type.length == 255
+    assert isinstance(getattr(ab.c.company.type, "impl", ab.c.company.type), String) and ab.c.company.type.length == 255
     assert not fax.c.faxnumber.nullable and not email.c.contact_email.nullable
     for table in (ab, fax, email):
         assert table.c[list(table.primary_key.columns)[0].name].autoincrement is True
