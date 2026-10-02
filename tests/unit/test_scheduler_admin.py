@@ -348,3 +348,52 @@ def test_saving_the_settings_does_not_start_a_stopped_scheduler(client, dbsessio
     cfg.set_stopped(dbsession, True)
     _form(client.get("/admin/scheduler")).submit()
     assert cfg.stopped(dbsession) is True
+
+
+# --- the buttons follow what was asked, at once ---------------------------------------------------------------------------
+
+def _actions(page):
+    return [f["action"].value for f in page.forms.values() if f.fields.get("action") and f["action"].value in ("stop", "start")]
+
+
+def test_pressing_start_shows_the_stop_button_on_that_same_page(client, dbsession):
+    cfg.beat(dbsession, "stopped")                       # the scheduler process has not applied the start yet
+    cfg.set_stopped(dbsession, True)
+    start = next(f for f in client.get("/admin/scheduler").forms.values() if f.fields.get("action") and f["action"].value == "start")
+    res = start.submit()
+    assert _actions(res) == ["stop"]                     # not "start" again, whatever the scheduler has applied so far
+    assert "starting" in res.text.lower()
+
+
+def test_pressing_stop_shows_the_start_button_on_that_same_page(client, dbsession):
+    cfg.beat(dbsession, "running")
+    stop = next(f for f in client.get("/admin/scheduler").forms.values() if f.fields.get("action") and f["action"].value == "stop")
+    res = stop.submit()
+    assert _actions(res) == ["start"] and "stopping" in res.text.lower()
+
+
+def test_the_buttons_show_even_when_no_scheduler_has_reported(client, dbsession):
+    assert _actions(client.get("/admin/scheduler")) == ["stop"]
+
+
+def test_the_state_can_be_fetched_without_reloading(client, dbsession):
+    cfg.beat(dbsession, "running")
+    res = client.get("/admin/scheduler/state")
+    assert res.status_int == 200 and 'value="stop"' in res.text and "scheduler is running" in res.text.lower()
+    cfg.set_stopped(dbsession, True)
+    cfg.beat(dbsession, "stopped")
+    again = client.get("/admin/scheduler/state").text
+    assert 'value="start"' in again and "scheduler is stopped" in again.lower()
+
+
+def test_a_script_call_gets_just_the_state_back(client, dbsession):
+    cfg.beat(dbsession, "running")
+    res = client.post("/admin/scheduler", {"action": "stop"}, headers={"X-Requested-With": "XMLHttpRequest"})
+    assert cfg.stopped(dbsession) is True and 'value="start"' in res.text and "<html" not in res.text.lower()
+
+
+def test_the_page_polls_the_state(client):
+    html = client.get("/admin/scheduler").text
+    assert "/static/js/scheduler.js" in html and 'id="scheduler-state"' in html and 'data-state-url="/admin/scheduler/state"' in html
+    script = client.get("/static/js/scheduler.js").body
+    assert b"fetch(" in script and b"getAttribute('action')" in script          # (form.action is the <input name=action> here)

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: kMIME-Version: 1.Content-Type: text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 15:20+0900\n"
+"POT-Creation-Date: 2026-10-02 15:31+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ko\n"
@@ -677,33 +677,6 @@ msgstr "NameID 형식"
 msgid "Housekeeping that runs by itself: temporary files, moving old faxes to the archive, the retention policy and the phonebook export."
 msgstr "저절로 도는 정리 작업입니다: 임시 파일, 오래된 팩스의 보관함 이동, 보존 기간 정책, 전화번호부 내보내기."
 
-msgid "The scheduler is stopped"
-msgstr "스케줄러가 정지되어 있습니다"
-
-msgid "last seen"
-msgstr "마지막 확인"
-
-msgid "seconds ago"
-msgstr "초 전"
-
-msgid "Nothing runs by itself until it is started."
-msgstr "시작하기 전에는 아무 작업도 저절로 실행되지 않습니다."
-
-msgid "A scheduler is running"
-msgstr "스케줄러가 실행 중입니다"
-
-msgid "No scheduler is running"
-msgstr "실행 중인 스케줄러가 없습니다"
-
-msgid "Start the web service with NAMIFAX_ENABLE_SCHEDULER=1 (the default) or run \"namifax scheduler\" as a service; until then the tasks below only run when you press Run now."
-msgstr "웹 서비스를 NAMIFAX_ENABLE_SCHEDULER=1(기본값)로 시작하거나 \"namifax scheduler\"를 서비스로 실행하십시오. 그때까지 아래 작업은 '지금 실행'을 눌러야만 돕니다."
-
-msgid "Start the scheduler"
-msgstr "스케줄러 시작"
-
-msgid "Stop the scheduler"
-msgstr "스케줄러 정지"
-
 msgid "Clean the temporary folder"
 msgstr "임시 폴더 정리"
 
@@ -757,6 +730,42 @@ msgstr "주소록을 HylaFAX 전화번호부로 주기적으로 내보냅니다.
 
 msgid "Every (minutes)"
 msgstr "주기(분)"
+
+msgid "A scheduler is running"
+msgstr "스케줄러가 실행 중입니다"
+
+msgid "last seen"
+msgstr "마지막 확인"
+
+msgid "seconds ago"
+msgstr "초 전"
+
+msgid "The scheduler is starting"
+msgstr "스케줄러를 시작하는 중입니다"
+
+msgid "The change is applied within a few seconds."
+msgstr "몇 초 안에 반영됩니다."
+
+msgid "The scheduler is stopping"
+msgstr "스케줄러를 정지하는 중입니다"
+
+msgid "The scheduler is stopped"
+msgstr "스케줄러가 정지되어 있습니다"
+
+msgid "Nothing runs by itself until it is started."
+msgstr "시작하기 전에는 아무 작업도 저절로 실행되지 않습니다."
+
+msgid "No scheduler is running"
+msgstr "실행 중인 스케줄러가 없습니다"
+
+msgid "Start the web service with NAMIFAX_ENABLE_SCHEDULER=1 (the default) or run \"namifax scheduler\" as a service; until then the tasks below only run when you press Run now."
+msgstr "웹 서비스를 NAMIFAX_ENABLE_SCHEDULER=1(기본값)로 시작하거나 \"namifax scheduler\"를 서비스로 실행하십시오. 그때까지 아래 작업은 '지금 실행'을 눌러야만 돕니다."
+
+msgid "Start the scheduler"
+msgstr "스케줄러 시작"
+
+msgid "Stop the scheduler"
+msgstr "스케줄러 정지"
 
 msgid "External SMTP Gateway"
 msgstr "외부 SMTP 게이트웨이"

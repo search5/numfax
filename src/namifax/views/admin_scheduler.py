@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from datetime import datetime
 
+from pyramid.renderers import render
+from pyramid.response import Response
 from pyramid.view import view_config
 
 from namifax.i18n import _
@@ -36,6 +38,32 @@ def _read(post, current: cfg.JobSettings) -> tuple[cfg.JobSettings, list[str]]:
         phonebook_enabled="phonebook_enabled" in post, phonebook_minutes=number("phonebook_minutes", current.phonebook_minutes),
     )
     return updated, problems
+
+
+def _state(session) -> dict:
+    """What the state box shows: what an administrator asked for (the buttons) and what the scheduler has done about it so far."""
+    seen = cfg.heartbeat(session)
+    asked_stop = cfg.stopped(session)
+    engine = cfg.engine_state(session)
+    alive = cfg.alive(session)
+    if not alive:
+        phase = "none"
+    elif asked_stop:
+        phase = "stopped" if engine == "stopped" else "stopping"
+    else:
+        phase = "running" if engine == "running" else "starting"
+    return {"alive": alive, "asked_stop": asked_stop, "phase": phase,
+            "seen_ago": int((datetime.now() - seen).total_seconds()) if seen else None}
+
+
+def _fragment(request, session) -> str:
+    return render("namifax:templates/admin_scheduler_state.jinja2", {"st": _state(session)}, request=request)
+
+
+@view_config(route_name="admin_scheduler_state", permission="admin")
+def admin_scheduler_state_view(request):
+    """The state box alone, for the page to refresh without reloading."""
+    return Response(_fragment(request, request.dbsession), content_type="text/html", charset="utf-8")
 
 
 @view_config(route_name="admin_scheduler", renderer="namifax:templates/admin_scheduler.jinja2", permission="admin")
@@ -71,8 +99,10 @@ def admin_scheduler_view(request):
             else:
                 message = _("Scheduled tasks saved. A running scheduler picks the change up within a minute.")
 
+    if request.method == "POST" and request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        return Response(_fragment(request, session), content_type="text/html", charset="utf-8")
+
     store = SystemConfigService(session)
-    seen = cfg.heartbeat(session)
     return {
         "title": "NamiFAX - Admin - Scheduled Tasks",
         "current_user": request.identity,
@@ -80,9 +110,7 @@ def admin_scheduler_view(request):
         "active_admin": "scheduler",
         "s": current,
         "last": {job: cfg.last_run(session, job) for job in cfg.JOBS},
-        "alive": cfg.alive(session),
-        "stopped": cfg.stopped(session) or cfg.engine_state(session) == "stopped",
-        "seen_ago": int((datetime.now() - seen).total_seconds()) if seen else None,
+        "state_html": _fragment(request, session),
         "policy": {"tiff_days": store.get("storage_purge_tiff_days", ""), "keep_days": store.get("storage_retention_days", "")},
         "message": message,
         "error": error,

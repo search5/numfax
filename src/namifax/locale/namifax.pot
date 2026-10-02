@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 15:20+0900\n"
+"POT-Creation-Date: 2026-10-02 15:31+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -716,36 +716,6 @@ msgid ""
 "the archive, the retention policy and the phonebook export."
 msgstr ""
 
-msgid "The scheduler is stopped"
-msgstr ""
-
-msgid "last seen"
-msgstr ""
-
-msgid "seconds ago"
-msgstr ""
-
-msgid "Nothing runs by itself until it is started."
-msgstr ""
-
-msgid "A scheduler is running"
-msgstr ""
-
-msgid "No scheduler is running"
-msgstr ""
-
-msgid ""
-"Start the web service with NAMIFAX_ENABLE_SCHEDULER=1 (the default) or "
-"run \"namifax scheduler\" as a service; until then the tasks below only "
-"run when you press Run now."
-msgstr ""
-
-msgid "Start the scheduler"
-msgstr ""
-
-msgid "Stop the scheduler"
-msgstr ""
-
 msgid "Clean the temporary folder"
 msgstr ""
 
@@ -804,6 +774,45 @@ msgid "Writes the address book as a HylaFAX phonebook, repeatedly."
 msgstr ""
 
 msgid "Every (minutes)"
+msgstr ""
+
+msgid "A scheduler is running"
+msgstr ""
+
+msgid "last seen"
+msgstr ""
+
+msgid "seconds ago"
+msgstr ""
+
+msgid "The scheduler is starting"
+msgstr ""
+
+msgid "The change is applied within a few seconds."
+msgstr ""
+
+msgid "The scheduler is stopping"
+msgstr ""
+
+msgid "The scheduler is stopped"
+msgstr ""
+
+msgid "Nothing runs by itself until it is started."
+msgstr ""
+
+msgid "No scheduler is running"
+msgstr ""
+
+msgid ""
+"Start the web service with NAMIFAX_ENABLE_SCHEDULER=1 (the default) or "
+"run \"namifax scheduler\" as a service; until then the tasks below only "
+"run when you press Run now."
+msgstr ""
+
+msgid "Start the scheduler"
+msgstr ""
+
+msgid "Stop the scheduler"
 msgstr ""
 
 msgid "External SMTP Gateway"
