@@ -8,6 +8,8 @@ off needs the password as well.
 from __future__ import annotations
 
 import hmac
+from datetime import datetime
+import re
 from typing import Any, Optional
 
 from pyramid.csrf import check_csrf_token
@@ -64,6 +66,15 @@ def _guard(request: Any) -> int:
     return uid
 
 
+def _backup_file(user: str, stamp: str, codes: list, secret: Optional[str]) -> str:
+    lines = ["NamiFAX two-factor authentication", f"Account: {user}", f"Saved: {stamp}", ""]
+    if secret:
+        lines += ["Authenticator key (type it into an authenticator app if you cannot scan the QR code):", secret, ""]
+    lines += ["Recovery codes (each works once if you lose your authenticator):", *codes, "",
+              "Keep this file somewhere safe and private. Anyone who has it can pass the second step of your login."]
+    return "\n".join(lines) + "\n"
+
+
 def _setup_page(request: Any, secret: str, error: Optional[str] = None) -> dict:
     import segno
 
@@ -75,8 +86,14 @@ def _setup_page(request: Any, secret: str, error: Optional[str] = None) -> dict:
     }
 
 
-def _result(request: Any, *, error: Optional[str] = None, message: Optional[str] = None, codes: Optional[list] = None) -> dict:
+def _result(request: Any, *, error: Optional[str] = None, message: Optional[str] = None, codes: Optional[list] = None,
+            secret: Optional[str] = None) -> dict:
+    """``secret`` is passed only right after turning 2FA on, so that the key can go into the file the user saves (it is not kept)."""
+    stamp = datetime.now().strftime("%Y-%m-%d")
+    who = re.sub(r"[^A-Za-z0-9_.-]", "_", _username(request) or "user")
+    file_text = _backup_file(who, stamp, codes or [], secret) if codes else ""
     return {"mode": "codes" if codes else "message", "error": error, "message": message, "codes": codes or [],
+            "secret": secret, "backup_file": file_text, "backup_name": f"namifax-2fa-{who}-{stamp}.txt",
             "current_user": request.identity, "active_tab": "settings"}
 
 
@@ -117,7 +134,7 @@ def totp_enable_view(request):
     if not result["success"]:
         return _setup_page(request, secret, error=_("The code did not match. Check the time on your phone and try again."))
     request.session.pop(_PENDING, None)
-    return _result(request, codes=result["backup_codes"])
+    return _result(request, codes=result["backup_codes"], secret=secret)
 
 
 @view_config(route_name="totp_disable", request_method="POST", renderer=TEMPLATE, permission="view")

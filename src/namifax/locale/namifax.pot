@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:54+0900\n"
+"POT-Creation-Date: 2026-10-02 13:56+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,19 +23,25 @@ msgstr ""
 msgid "Save frequently used fax numbers for quick access when sending."
 msgstr ""
 
-msgid "Company or fax number..."
+msgid "Email Book"
 msgstr ""
 
-msgid "Search"
+msgid "Distribution Lists"
 msgstr ""
 
 msgid "New Company"
 msgstr ""
 
-msgid "Email Book"
+msgid "Search"
 msgstr ""
 
-msgid "Distribution Lists"
+msgid "Company or fax number..."
+msgstr ""
+
+msgid "Contacts"
+msgstr ""
+
+msgid "companies"
 msgstr ""
 
 msgid "Company / Name"
@@ -1206,9 +1212,6 @@ msgstr ""
 msgid "New Contact"
 msgstr ""
 
-msgid "Contacts"
-msgstr ""
-
 msgid "recipients"
 msgstr ""
 
@@ -1475,6 +1478,9 @@ msgid "Search Company Name"
 msgstr ""
 
 msgid "Type company name to filter..."
+msgstr ""
+
+msgid "Search the White Pages"
 msgstr ""
 
 msgid "Delete Fax"
@@ -1901,6 +1907,12 @@ msgstr ""
 msgid "Key"
 msgstr ""
 
+msgid "Copied"
+msgstr ""
+
+msgid "Copy key"
+msgstr ""
+
 msgid "2. Enter the 6-digit code the app shows"
 msgstr ""
 
@@ -1913,6 +1925,20 @@ msgstr ""
 msgid ""
 "Each code works once if you lose your phone. They are shown only now; "
 "store them somewhere safe."
+msgstr ""
+
+msgid "Copy codes"
+msgstr ""
+
+msgid "Download as a file"
+msgstr ""
+
+msgid "key and codes"
+msgstr ""
+
+msgid ""
+"The file is made in your browser from what is shown here and is not "
+"stored on the server. Codes are kept on the server only as hashes."
 msgstr ""
 
 msgid "Done"
@@ -2203,5 +2229,3 @@ msgstr ""
 msgid "The password is not correct."
 msgstr ""
 
-msgid "Search the White Pages"
-msgstr ""

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: kMIME-Version: 1.Content-Type: text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 00:54+0900\n"
+"POT-Creation-Date: 2026-10-02 13:56+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ko\n"
@@ -20,20 +20,26 @@ msgstr "주소록"
 msgid "Save frequently used fax numbers for quick access when sending."
 msgstr "자주 사용하는 팩스 번호를 저장하여 전송 시 빠르게 선택하세요."
 
-msgid "Company or fax number..."
-msgstr "회사 또는 팩스 번호..."
-
-msgid "Search"
-msgstr "검색"
-
-msgid "New Company"
-msgstr "새 회사 추가"
-
 msgid "Email Book"
 msgstr "이메일 주소록"
 
 msgid "Distribution Lists"
 msgstr "배포 그룹"
+
+msgid "New Company"
+msgstr "새 회사 추가"
+
+msgid "Search"
+msgstr "검색"
+
+msgid "Company or fax number..."
+msgstr "회사 또는 팩스 번호..."
+
+msgid "Contacts"
+msgstr "연락처"
+
+msgid "companies"
+msgstr "개 업체"
 
 msgid "Company / Name"
 msgstr "회사명 / 수신자"
@@ -1158,9 +1164,6 @@ msgstr "이메일 수신자, 전송 라우팅 및 연락처 디렉터리를 관�
 msgid "New Contact"
 msgstr "새 연락처"
 
-msgid "Contacts"
-msgstr "연락처"
-
 msgid "recipients"
 msgstr "명의 수신자"
 
@@ -1415,6 +1418,9 @@ msgstr "회사명 검색"
 
 msgid "Type company name to filter..."
 msgstr "회사 이름을 입력해 찾으십시오..."
+
+msgid "Search the White Pages"
+msgstr "화이트 페이지에서 찾기"
 
 msgid "Delete Fax"
 msgstr "팩스 삭제"
@@ -1818,6 +1824,12 @@ msgstr "1. Google Authenticator, Authy 등 RFC 6238 앱으로 이 코드를 스�
 msgid "Key"
 msgstr "키"
 
+msgid "Copied"
+msgstr "복사했습니다"
+
+msgid "Copy key"
+msgstr "키 복사"
+
 msgid "2. Enter the 6-digit code the app shows"
 msgstr "2. 앱에 표시된 6자리 코드를 입력하십시오"
 
@@ -1829,6 +1841,18 @@ msgstr "복구 코드를 저장하십시오"
 
 msgid "Each code works once if you lose your phone. They are shown only now; store them somewhere safe."
 msgstr "휴대폰을 잃어버렸을 때 각 코드는 한 번씩 쓸 수 있습니다. 지금만 표시되니 안전한 곳에 보관하십시오."
+
+msgid "Copy codes"
+msgstr "코드 복사"
+
+msgid "Download as a file"
+msgstr "파일로 내려받기"
+
+msgid "key and codes"
+msgstr "키와 코드"
+
+msgid "The file is made in your browser from what is shown here and is not stored on the server. Codes are kept on the server only as hashes."
+msgstr "파일은 이 화면에 표시된 내용으로 브라우저에서 만들어지며 서버에는 저장되지 않습니다. 서버에는 복구 코드가 해시로만 보관됩니다."
 
 msgid "Done"
 msgstr "완료"
@@ -2126,9 +2150,6 @@ msgstr "코드가 일치하지 않습니다. 휴대폰의 시간을 확인하고
 
 msgid "The password is not correct."
 msgstr "비밀번호가 올바르지 않습니다."
-
-msgid "Search the White Pages"
-msgstr "화이트 페이지에서 찾기"
 
 #~ msgid "High"
 #~ msgstr "높음"

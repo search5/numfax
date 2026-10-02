@@ -25,7 +25,7 @@ def _secret(page):
 
 
 def _codes(page):
-    return re.findall(r"\b[A-Z2-9]{5}-[A-Z2-9]{5}\b", page.text)
+    return list(dict.fromkeys(re.findall(r"\b[A-Z2-9]{5}-[A-Z2-9]{5}\b", page.text)))        # (shown, copied, saved: once each)
 
 
 @pytest.fixture
