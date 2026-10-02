@@ -42,3 +42,6 @@ hylafax-integration 의 "sendfax 를 호출하지 않는다"와 scheduler-and-st
 
 ## [2026-10-02] lint | 서버 DB 시험 서술 정정
 선생님이 4개 DB 통합 시험을 직접 실행했다고 알려 주셔서, "서버 DB 시험 미실행" 서술을 "AI 가 돌리지 않았고 선생님이 실행함(결과 세부는 기록 없음)"으로 고쳤다([[known-gaps-and-decisions]] 5.1, [[testing]], [[database-and-migrations]]).
+
+## [2026-10-02] topic | 4개 DB 전체 시험 실행 결과 기록
+커밋 `0c77622` 에서 SQLite(2278 passed), PostgreSQL 16.15(2417 passed), MySQL 8.4.11 과 MariaDB 10.11.16(각각 2415 passed, 2 failed)을 AI 가 직접 실행했다. 실패 2건은 스케줄러 시험이고 MySQL 계열의 기본 격리 수준(`REPEATABLE-READ`)에서만 나며 `READ-COMMITTED` 에서는 통과함을 직접 확인했다. 원인 설명 중 메커니즘은 [추정]으로 표시했다. 고칠지는 미결. 반영: [[testing]], [[database-and-migrations]], [[known-gaps-and-decisions]].

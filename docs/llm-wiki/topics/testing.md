@@ -74,7 +74,19 @@ verified: true
 - 관련: [[architecture-and-modules]], [[overview]]
 
 ## 마지막 실행 기록
-- [코드] 2026-10-02: `uv run pytest tests -q -k "not serverdb"` → 2274 passed, 5 skipped, 141 deselected(서버 DB 시험 제외), 약 5분 27초. 같은 날 서버 DB 시험(`serverdb`)은 AI 가 돌리지 않았다. 선생님이 4개 DB(SQLite 외 PostgreSQL·MySQL·MariaDB) 통합 시험을 직접 실행했다고 알려 주셨다(2026-10-02, 구두 보고: 통과 개수 등 결과 세부는 이 기록에 없다). 상세와 이유는 [[known-gaps-and-decisions]] 5.1.
+- [코드] 2026-10-02, 커밋 `0c77622`, SQLite 전체: `.venv/bin/python -m pytest tests -q -p no:randomly` → 2278 passed, 142 skipped(서버 DB 시험은 서버 주소가 없어 건너뜀), 약 5분 2초.
+- [코드] 같은 커밋, 서버 DB 전체: `NAMIFAX_SUITE_DB=<종류>` 와 `NAMIFAX_TEST_*_URL` 로 세 서버를 동시에 실행. 서버는 Docker 임시 컨테이너(`postgres:16` = 16.15, `mysql:8.4` = 8.4.11, `mariadb:10.11` = 10.11.16).
+  | 서버 | 결과 | 시간 |
+  |---|---|---|
+  | PostgreSQL 16.15 | 2417 passed, 3 skipped | 약 20분 5초 |
+  | MySQL 8.4.11 | 2415 passed, **2 failed**, 3 skipped | 약 30분 53초 |
+  | MariaDB 10.11.16 | 2415 passed, **2 failed**, 3 skipped | 약 24분 53초 |
+- [코드] 서버 DB 의 실패 2건(MySQL·MariaDB 가 같다): `test_scheduler_admin.py::test_a_scheduler_that_starts_while_stopped_runs_no_engine` 와 `::test_stopping_from_the_page_acts_at_once_in_the_process_that_hosts_the_scheduler`. 둘 다 `SystemConfig` 의 `sched_heartbeat` 를 INSERT 하다 `Duplicate entry ... for key 'SystemConfig.PRIMARY'`(1062)로 실패한다. PostgreSQL 과 SQLite 는 통과한다.
+  - 원인 확인 [코드]: MySQL 의 전역 격리 수준을 `READ-COMMITTED` 로 바꾸면 이 파일의 43개가 모두 통과하고, 기본 `REPEATABLE-READ` 에서는 2개가 실패한다(같은 컨테이너에서 두 수준으로 각각 실행, 2026-10-02).
+  - 메커니즘 [추정]: 스케줄러 스레드가 별도 연결로 같은 키를 먼저 커밋하는데, 시험의 `dbsession` 은 먼저 연 트랜잭션의 스냅샷 때문에 그 행을 보지 못해 `SystemConfigService.set`(`merge`)이 UPDATE 대신 INSERT 한다. 쿼리 로그로 직접 확인하지는 않았다. 운영에서는 이 키가 처음 만들어지는 순간의 경쟁에만 해당할 것으로 본다 [추정].
+  - 고칠지(시험에서 격리 수준을 맞출지, `set` 을 경쟁에 견디게 할지)는 정하지 않았다. [[known-gaps-and-decisions]] 5.1.
+- 같은 날 선생님이 4개 DB 통합 시험을 직접 실행했다고 알려 주셨다(구두 보고, 결과 세부는 기록 없음). 위 실행은 그와 별개로 AI 가 같은 방법으로 다시 돌린 것이다.
+- 골든 마스터는 기본 실행 대상에서 빠졌고 원본 트리도 삭제되어 실행하지 않았다.
 
 ## mock 시험의 함정 (원문 14.12~14.14, 14.19)
 

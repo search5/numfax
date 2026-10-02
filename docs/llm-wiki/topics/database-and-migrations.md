@@ -146,7 +146,9 @@ sources:
 - 전체 시험을 서버 DB 로 돌리기: 환경변수 `NAMIFAX_SUITE_DB=postgresql|mysql|mariadb` 를 주면 `isolated_database` autouse 픽스처가 시험마다 임시 서버 DB 를 만들고 앱으로 스키마를 만든 뒤 데모 행을 넣는다(앱은 서버 DB 에 데모 데이터를 만들지 않으므로 시험 쪽에서 `_seed_server_database`). PostgreSQL 에서는 대소문자 혼합 테이블 이름을 따옴표로 감싸고, 시퀀스를 `sync_sequences` 로 맞춘다. [코드] `tests/conftest.py`
 - 기본 실행은 시험마다 임시 SQLite 파일을 쓰고 작업 디렉터리의 `namifax.db` 는 건드리지 않는다(`DATABASE_URL`/`NAMIFAX_DB_PATH` 를 임시 경로로 설정). 시험 `tests/unit/test_db_isolation_fixture.py`
 - 서버 시험이 있는 파일(`serverdb` 마커 또는 `server_db_url` 사용)은 `grep -rl "serverdb\|server_db_url" tests` 로 24개(그중 `conftest.py` 1개이므로 시험 파일 23개, 2026-10-02)가 나온다(예: `test_bootstrap.py`, `test_system_config_migration.py`, `test_orm_repository.py`, `test_user_account_orm.py`, `test_totp_orm.py`, `test_webauthn_orm.py`, `test_syslog.py`, `test_legacy_database_compat.py`). 개수는 시점에 따라 달라진다.
-- AI 작업 세션에서는 서버 DB 시험을 실행하지 않았다. 선생님이 4개 DB(SQLite 외 PostgreSQL·MySQL·MariaDB) 통합 시험을 직접 실행했다고 알려 주셨다(2026-10-02, 구두 보고: 통과 개수 등 결과 세부는 이 기록에 없다). 이 페이지의 서버 DB 서술은 코드와 시험 구조에 근거한 것이고, AI 가 확인한 실행 결과가 아니다. [추정: 이전 과거 문서의 "PostgreSQL 16 / MySQL 8.4 검증" 서술은 [[db-layer-refactor-log]] [문서]]
+- 서버 DB 시험 결과(2026-10-02, 커밋 `0c77622`, AI 가 Docker 임시 컨테이너로 직접 실행) [코드]: PostgreSQL 16.15 는 2417 passed, MySQL 8.4.11 과 MariaDB 10.11.16 은 각각 2415 passed 와 2 failed 다. 실패 2건은 스케줄러 시험이고 MySQL 계열의 기본 격리 수준(`REPEATABLE-READ`)에서만 난다. 원인, 서버 버전, 시간은 [[testing]] 의 "마지막 실행 기록". 선생님이 같은 날 4개 DB 통합 시험을 직접 실행했다는 구두 보고도 있다(결과 세부는 기록 없음).
+- 격리 수준 주의 [코드]: `SystemConfigService.set` 은 `merge`(SELECT 후 INSERT 또는 UPDATE)라서, 다른 연결이 같은 키를 방금 커밋했는데 이 연결의 트랜잭션이 그보다 먼저 열려 있으면(`REPEATABLE-READ` 의 스냅샷) 그 행을 못 보고 INSERT 해서 기본키 중복(1062)이 난다. PostgreSQL 의 기본 `READ COMMITTED` 는 새 행을 본다. 영향은 새 키가 처음 만들어지는 순간에 한정된다 [추정].
+- 이전 과거 문서의 "PostgreSQL 16 / MySQL 8.4 검증" 서술은 [[db-layer-refactor-log]] [문서]에 있고, 이번 실행의 서버 버전(PostgreSQL 16.15, MySQL 8.4.11)과 같은 계열이다.
 
 ## 8. 방언 주의점 (SQLite·MySQL·MariaDB·PostgreSQL에서 같게 돌리기)
 
