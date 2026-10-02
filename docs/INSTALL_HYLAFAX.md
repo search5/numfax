@@ -1,7 +1,7 @@
 # HylaFAX 연동 설치 가이드
 
 NamiFAX와 HylaFAX를 연결하는 순서입니다. 파일은 `deploy/` 폴더에 있습니다. **이 저장소에서는 실제 HylaFAX에 붙여 시험하지
-못했습니다.** 아래 순서는 원본 AvantFAX의 설치 스크립트(`legacy/debian-install.sh`, `setup-postfix.sh`)가 하던 일을 그대로
+못했습니다.** 아래 순서는 원본 AvantFAX의 설치 스크립트(`debian-install.sh`, `setup-postfix.sh` 등; 원본 소스는 커밋 9408385 의 `legacy/` 에 있다)가 하던 일을 그대로
 옮긴 것이고, 각 단계의 확인 방법을 함께 적었습니다. 운영 서버에 적용하기 전에 시험 서버에서 한 번 거치십시오.
 
 경로 가정: NamiFAX는 `/opt/namifax`(가상환경 `.venv`), HylaFAX 스풀은 `/var/spool/hylafax`, 서비스 사용자는 `uucp`입니다.
