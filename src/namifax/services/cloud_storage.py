@@ -189,13 +189,9 @@ class S3CompatibleStorageProvider(StorageProvider):
         bucket = self.config.bucket_name or ""
         try:
             client = self._get_client()
+            # Only the exact "fax<fid>/" prefix: "fax1" alone would also match fax10, fax100...
             res = client.list_objects_v2(Bucket=bucket, Prefix=fax_prefix)
             contents = res.get("Contents", [])
-            if not contents:
-                # Also check parent directory style
-                parent_prefix = self._resolve_key(f"fax{fid}")
-                res2 = client.list_objects_v2(Bucket=bucket, Prefix=parent_prefix)
-                contents = res2.get("Contents", [])
 
             if contents:
                 delete_keys = [{"Key": obj["Key"]} for obj in contents]
@@ -231,3 +227,50 @@ class CloudStorageManager:
         if stype == "S3":
             return S3CompatibleStorageProvider(config)
         return LocalStorageProvider()
+
+
+def fax_object_key(fid: Any, name: str) -> str:
+    """The remote key of one file of a fax (``fax<fid>/<name>``): the rule ``delete_fax`` removes by."""
+    return f"fax{fid}/{name}"
+
+
+def provider_from_config(cfg: Any) -> Optional[StorageProvider]:
+    """The remote provider the administrator saved (``None`` for LOCAL: there is no remote copy)."""
+    if (cfg.get("cloud_storage_type", "LOCAL") or "LOCAL").upper() != "S3":
+        return None
+    return CloudStorageManager.get_provider(StorageConfig(
+        storage_type="S3",
+        endpoint_url=cfg.get("cloud_endpoint_url", "") or None,
+        region_name=cfg.get("cloud_region_name", "") or None,
+        bucket_name=cfg.get("cloud_bucket_name", "") or None,
+        access_key=cfg.get("cloud_access_key", "") or None,
+        secret_key=cfg.get_secret("cloud_secret_key", "") or None,
+        prefix=cfg.get("cloud_prefix", ""),
+    ))
+
+
+def upload_received_fax(session: Any, fid: Any, faxpath: str) -> bool:
+    """Copy a received fax's TIFF and PDF to the remote store when the settings say S3.
+
+    Never raises: a failure is only logged, so it cannot fail the fax reception. Returns True when every
+    existing file was uploaded (also True when there is nothing to do because storage is LOCAL).
+    """
+    from namifax.common import helpers
+    from namifax.services.system_config import SystemConfigService
+
+    try:
+        provider = provider_from_config(SystemConfigService(session))
+        if provider is None:
+            return True
+        ok = True
+        for name in ("fax.tif", "fax.pdf"):
+            local = os.path.join(faxpath, name)
+            if not os.path.exists(local):
+                continue
+            if not provider.upload_file(local, fax_object_key(fid, name)):
+                helpers.avantfaxlog(f"cloud> upload of fax {fid} {name} failed", echo=False)
+                ok = False
+        return ok
+    except Exception as exc:
+        helpers.avantfaxlog(f"cloud> upload of fax {fid} failed: {exc}", echo=False)
+        return False

@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Any, Dict, Optional
 from namifax.db.missing import resolve_db
+from namifax.services.cloud_storage import fax_object_key, provider_from_config
 
 
 @dataclass
@@ -66,7 +67,8 @@ class StorageLifecycleService:
             "reclaimed_bytes": reclaimed_bytes,
         }
 
-    def purge_expired_faxes(self, retention_days: int, use_remote: bool = True, should_stop=None) -> Dict[str, Any]:
+    def purge_expired_faxes(self, retention_days: int, use_remote: bool = True, should_stop=None,
+                            tiff_only: bool = False) -> Dict[str, Any]:
         """Delete faxes archived more than ``retention_days`` ago: database row, files and remote copy.
 
         The age is the fax's ``archstamp`` (as the legacy cron's ``-d`` uses) and its files are found through
@@ -88,9 +90,12 @@ class StorageLifecycleService:
                 continue
             faxpath = arc._on_disk(arc.dbdata.get("faxpath") or "") if arc.dbdata.get("faxpath") else ""
 
-            if use_remote and self.storage_provider and hasattr(self.storage_provider, "delete_fax"):
+            if use_remote and self.storage_provider:
                 try:
-                    self.storage_provider.delete_fax(fid)
+                    if tiff_only:                 # REMOTE_PURGE_TIFF_ONLY: the remote PDF stays
+                        self.storage_provider.delete_file(fax_object_key(fid, "fax.tif"))
+                    else:
+                        self.storage_provider.delete_fax(fid)
                 except Exception:
                     pass          # an unreachable bucket must not keep local data forever
 
@@ -112,7 +117,8 @@ class StorageLifecycleService:
         """Execute complete storage lifecycle sequence based on active policy."""
         tiff_res = self.purge_local_tiffs(days_old=policy.purge_tiff_after_days, should_stop=should_stop)
         fax_res = self.purge_expired_faxes(
-            retention_days=policy.full_retention_days, use_remote=policy.remote_sync_delete, should_stop=should_stop
+            retention_days=policy.full_retention_days, use_remote=policy.remote_sync_delete, should_stop=should_stop,
+            tiff_only=policy.delete_remote_tiff_only,
         )
 
         return {
@@ -128,7 +134,6 @@ class StorageLifecycleService:
         Nothing runs on the displayed defaults: deleting faxes automatically has to be an explicit choice.
         The remote provider comes from the saved cloud settings; with ``LOCAL`` there is no remote copy.
         """
-        from namifax.services.cloud_storage import CloudStorageManager, StorageConfig
         from namifax.services.system_config import SystemConfigService
 
         cfg = SystemConfigService(self.db)
@@ -136,19 +141,12 @@ class StorageLifecycleService:
         if not tiff_days and not keep_days:
             return None
 
-        if self.storage_provider is None and cfg.get("cloud_storage_type", "LOCAL").upper() == "S3":
-            self.storage_provider = CloudStorageManager.get_provider(StorageConfig(
-                storage_type=cfg.get("cloud_storage_type", "LOCAL"),
-                endpoint_url=cfg.get("cloud_endpoint_url", "") or None,
-                region_name=cfg.get("cloud_region_name", "") or None,
-                bucket_name=cfg.get("cloud_bucket_name", "") or None,
-                access_key=cfg.get("cloud_access_key", "") or None,
-                secret_key=cfg.get_secret("cloud_secret_key", "") or None,
-                prefix=cfg.get("cloud_prefix", ""),
-            ))
+        if self.storage_provider is None:
+            self.storage_provider = provider_from_config(cfg)
         policy = StorageLifecyclePolicy(
             purge_tiff_after_days=int(tiff_days or 7),
             full_retention_days=int(keep_days or 0),
             remote_sync_delete=cfg.get("storage_remote_sync_delete", "1") == "1",
+            delete_remote_tiff_only=cfg.get("storage_remote_tiff_only", "0") == "1",
         )
         return self.run_lifecycle(policy, should_stop)

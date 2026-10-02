@@ -42,6 +42,7 @@ from namifax.db.provider import cli_session, use_session
 from namifax.services.addressbook import AFAddressBook
 from namifax.services.archive_in import ArchiveIn
 from namifax.services.barcode import BarcodeRouting
+from namifax.services.cloud_storage import upload_received_fax
 from namifax.services.did import DIDRouting
 from namifax.services.modem import FaxModem
 
@@ -202,6 +203,7 @@ def _process_faxrcvd(args: list[str], session: Any) -> int:
                 OcrService(db=session).index_fax(fax_file=faxname, tiff_path=faxfile, fax_id=faxid)
             except Exception as e:
                 avantfaxlog(f"faxrcvd> OCR indexing failed for {faxfile}: {e}", echo=False)
+        upload_received_fax(session, faxid, faxpath)                    # S3 only; a failure is just logged
 
     # Routing Priorities: DID/Modem -> Fax2Email -> Barcode
     printer = PRINTERNAME
