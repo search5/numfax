@@ -73,6 +73,9 @@ def _load_session(session):
     session.add_all([FaxArchive(**r) for r in ROWS])
     session.add_all([AddressBookFAX(abookfax_id=i, abook_id=a, faxnumber=f"5{i}") for i, a in FAX_NUMBERS])
     session.flush()
+    from conftest import sync_sequences
+
+    sync_sequences(session.connection())                        # the rows above carry their own ids
 
 
 @pytest.fixture

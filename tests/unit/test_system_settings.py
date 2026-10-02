@@ -130,7 +130,7 @@ def test_reads_a_row_written_by_the_legacy_raw_sql_path(dbsession):
     dbsession.execute(text("DELETE FROM SystemSettings"))
     dbsession.execute(text(
         "INSERT INTO SystemSettings (id, smtp_host, smtp_port, smtp_security, smtp_auth, from_email, updated_at) "
-        "VALUES (1, 'legacy.example.com', 2525, 'SSL', 1, 'f@legacy', '2026-10-01T10:00:00.123456')"))
+        "VALUES (1, 'legacy.example.com', 2525, 'SSL', TRUE, 'f@legacy', '2026-10-01T10:00:00.123456')"))
     cfg = SmtpSettingsService(dbsession).get_settings()
     assert (cfg.smtp_host, cfg.smtp_port, cfg.smtp_security, cfg.smtp_auth) == ("legacy.example.com", 2525, "SSL", True)
     assert cfg.updated_at == "2026-10-01T10:00:00.123456"

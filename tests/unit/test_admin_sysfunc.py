@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import gzip
 import io
+import os
 import tarfile
 from unittest.mock import patch
 
@@ -59,6 +60,7 @@ def test_the_archive_download_is_a_tarball_of_the_received_and_sent_folders(clie
     assert any(n.endswith("fax.pdf") for n in names) and any(n.endswith("out.pdf") for n in names)
 
 
+@pytest.mark.skipif(bool(os.environ.get("NAMIFAX_SUITE_DB")), reason="a SQLite dump; on a server the real dump tool would wait for the test's open transaction")
 def test_the_database_dump_of_a_sqlite_database_is_gzipped_sql(client):
     res = _press(client, "download_db")
     assert "avantfax-schema-" in res.headers["Content-Disposition"] and res.headers["Content-Disposition"].endswith('.sql.gz"')

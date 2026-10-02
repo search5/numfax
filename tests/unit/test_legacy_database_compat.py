@@ -278,7 +278,7 @@ def test_fax_to_email_settings_are_per_number_on_a_legacy_database(adopted):
 
     client = webtest.TestApp(create_app(**{"sqlalchemy.url": adopted.url}), extra_environ={"HTTP_HOST": "example.com"})
     first = client.post("/login", {"username": "admin", "password": "password", "_submit_check": "1"})
-    client.post("/pwdexpired", {"oldpwd": "password", "newpwd": "A-different-pass-9", "conpwd": "A-different-pass-9"})
+    client.post("/pwdexpired", {"oldpwd": "password", "newpwd": "Different-pw-9", "conpwd": "Different-pw-9"})
     page = client.get("/admin/fax2email?abook_id=2")
     row_id = re.search(r'name="abookfax_id" value="(\d+)"', page.text).group(1)
     client.post("/admin/fax2email", {"_submit_check": "1", "save": "1", "abook_id": "2", "company": "Legacy Corp",

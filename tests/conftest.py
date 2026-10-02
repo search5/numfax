@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import contextlib
 import re
 import shutil
 import os
@@ -43,25 +44,92 @@ def _secret_key(monkeypatch):
 
 
 @pytest.fixture(autouse=True)
-def isolated_database(tmp_path, monkeypatch):
-    """Point the application at a per-test database so no test touches the working-tree namifax.db."""
+def isolated_database(request, tmp_path, monkeypatch):
+    """Point the application at a per-test database so no test touches the working-tree namifax.db.
+
+    SQLite by default. ``NAMIFAX_SUITE_DB=postgresql|mysql|mariadb`` (with the matching ``NAMIFAX_TEST_*_URL``) runs the
+    test on a throw-away database of that server instead, to check the screens against a real server."""
     db_file = tmp_path / "namifax-test.db"
     monkeypatch.setenv("DATABASE_URL", f"sqlite:///{db_file}")
     monkeypatch.setenv("NAMIFAX_DB_PATH", str(db_file))
     monkeypatch.delenv("AFDB_URL", raising=False)
-    yield
+    kind = os.environ.get("NAMIFAX_SUITE_DB")
+    if not kind or request.node.get_closest_marker("serverdb"):          # those tests make their own databases
+        yield
+        return
+    with throwaway_database(kind) as url:
+        monkeypatch.setenv("DATABASE_URL", url)
+        engine = create_sa_engine(resolve_database_url({}, os.environ))
+        try:
+            create_app(dbengine=engine)                          # builds the schema
+            _seed_server_database(engine)                       # tests that start their own app find the demo rows too
+        finally:
+            engine.dispose()
+        yield
 
 
 # --- Pyramid starter style fixtures -------------------------------------------------------
 # A doomed transaction manager and a session joined to it make every database write made through
 # ``request.dbsession`` disappear at the end of the test, without touching other tests.
 
+_BARE_TABLE = re.compile(r"\b(FROM|INTO|UPDATE|JOIN)(\s+)(?!\")([A-Z][A-Za-z0-9]*)\b")
+_DDL = re.compile(r"\s*(CREATE|ALTER|DROP|COMMENT)\b", re.IGNORECASE)
+
+
+def _quote_bare_tables(conn, cursor, statement, parameters, context, executemany):
+    """PostgreSQL folds an unquoted ``FROM SysLog`` to lower case, but the tables are made with their mixed-case names.
+    Raw data statements written for SQLite/MySQL in the tests are quoted here; the application's own ones already are."""
+    if _DDL.match(statement):
+        return statement, parameters
+    return _BARE_TABLE.sub(lambda m: f'{m.group(1)}{m.group(2)}"{m.group(3)}"', statement), parameters
+
+
+_BARE_KEY = re.compile(r"(?<=[(,\s])(?<!%\()key(?=\s*(?:,|\)|=))")
+
+
+def _quote_key_column(conn, cursor, statement, parameters, context, executemany):
+    """``key`` is a reserved word in MySQL/MariaDB; raw test SQL written for SQLite uses it as a column name unquoted."""
+    if "SystemConfig" in statement and not _DDL.match(statement):
+        statement = _BARE_KEY.sub("`key`", statement)
+    return statement, parameters
+
+
 @pytest.fixture
 def dbengine():
     """SQLAlchemy engine for this test's isolated database."""
     engine = create_sa_engine(resolve_database_url({}, os.environ))
+    if engine.dialect.name == "postgresql":
+        sa.event.listen(engine, "before_cursor_execute", _quote_bare_tables, retval=True)
+    elif engine.dialect.name in ("mysql", "mariadb"):
+        sa.event.listen(engine, "before_cursor_execute", _quote_key_column, retval=True)
     yield engine
     engine.dispose()
+
+
+def sync_sequences(connection):
+    """PostgreSQL: move the id sequences past rows that were added with explicit ids (other databases need nothing)."""
+    if connection.dialect.name != "postgresql":
+        return
+    for table in models.Base.metadata.sorted_tables:
+        for column in table.primary_key.columns:
+            if column.autoincrement is True or (column.autoincrement == "auto" and column.type._type_affinity is sa.Integer):
+                sequence = f"pg_get_serial_sequence('\"{table.name}\"', '{column.name}')"
+                connection.execute(sa.text(
+                    f'SELECT setval({sequence}, COALESCE((SELECT MAX("{column.name}") FROM "{table.name}"), 0) + 1, false) '
+                    f"WHERE {sequence} IS NOT NULL"))
+
+
+def _seed_server_database(engine):
+    """The demo rows the suite relies on, put into a server database (the application makes them in SQLite only)."""
+    from sqlalchemy.orm import Session
+
+    from namifax.db.seed import seed_demo_records
+
+    with Session(engine) as session:
+        seed_demo_records(session)
+        session.commit()
+    with engine.begin() as conn:
+        sync_sequences(conn)                                    # the rows were added with explicit ids
 
 
 @pytest.fixture
@@ -141,28 +209,35 @@ SERVER_DB_ENV = {
 }
 
 
-@pytest.fixture(params=list(SERVER_DB_ENV), ids=list(SERVER_DB_ENV))
-def server_db_url(request):
-    """URL of a freshly created, empty database on a real server (skipped when not configured)."""
-    env_name = SERVER_DB_ENV[request.param]
-    base = os.environ.get(env_name)
+@contextlib.contextmanager
+def throwaway_database(kind):
+    """URL of a freshly created, empty database on the ``kind`` server; dropped afterwards."""
+    base = os.environ.get(SERVER_DB_ENV[kind])
     if not base:
-        pytest.skip(f"{env_name} not set")
+        pytest.skip(f"{SERVER_DB_ENV[kind]} not set")
     name = f"nami_test_{uuid.uuid4().hex[:8]}"
     admin = sa.create_engine(base, isolation_level="AUTOCOMMIT")
     with admin.connect() as conn:
-        if request.param == "postgresql":
+        if kind == "postgresql":
             conn.execute(sa.text(f'CREATE DATABASE "{name}"'))
         else:
             conn.execute(sa.text(f"CREATE DATABASE `{name}` CHARACTER SET utf8mb4"))
-    url = sa.engine.make_url(base).set(database=name).render_as_string(hide_password=False)
-    yield url
-    with admin.connect() as conn:
-        if request.param == "postgresql":
-            conn.execute(sa.text(f'DROP DATABASE IF EXISTS "{name}" WITH (FORCE)'))
-        else:
-            conn.execute(sa.text(f"DROP DATABASE IF EXISTS `{name}`"))
-    admin.dispose()
+    try:
+        yield sa.engine.make_url(base).set(database=name).render_as_string(hide_password=False)
+    finally:
+        with admin.connect() as conn:
+            if kind == "postgresql":
+                conn.execute(sa.text(f'DROP DATABASE IF EXISTS "{name}" WITH (FORCE)'))
+            else:
+                conn.execute(sa.text(f"DROP DATABASE IF EXISTS `{name}`"))
+        admin.dispose()
+
+
+@pytest.fixture(params=list(SERVER_DB_ENV), ids=list(SERVER_DB_ENV))
+def server_db_url(request):
+    """URL of a freshly created, empty database on a real server (skipped when not configured)."""
+    with throwaway_database(request.param) as url:
+        yield url
 
 
 # --- Alembic ------------------------------------------------------------------------------

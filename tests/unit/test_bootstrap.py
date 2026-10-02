@@ -117,7 +117,7 @@ def test_the_application_runs_on_the_server_database(server_db_url):
     res = client.post("/login", {"username": "boss", "password": "Secret123!", "_submit_check": "1"})
     assert res.status_int == 302 and res.headers["Location"].endswith("/pwdexpired"), res.text[:300]
     assert client.get("/inbox", expect_errors=True).status_int != 200
-    res = client.post("/pwdexpired", {"oldpwd": "Secret123!", "newpwd": "My-own-password-9", "conpwd": "My-own-password-9"})
+    res = client.post("/pwdexpired", {"oldpwd": "Secret123!", "newpwd": "My-own-pass-9", "conpwd": "My-own-pass-9"})
     assert res.status_int == 302 and res.headers["Location"].endswith("/inbox"), res.text[:300]
     bad = []
     for path in ("/inbox", "/archive", "/archive?sentrecvd=*", "/addressbook", "/distrolist", "/outbox", "/sendfax",
