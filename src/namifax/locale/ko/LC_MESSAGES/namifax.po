@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: kMIME-Version: 1.Content-Type: text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 15:38+0900\n"
+"POT-Creation-Date: 2026-10-02 16:02+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ko\n"
@@ -881,8 +881,17 @@ msgstr "저장소 종류"
 msgid "Local Filesystem (Default)"
 msgstr "로컬 파일 시스템 (기본)"
 
+msgid "Faxes stay in the archive folder on this server. There is nothing to connect."
+msgstr "팩스는 이 서버의 보관 폴더에 그대로 저장됩니다. 연결할 설정이 없습니다."
+
 msgid "Endpoint URL (MinIO / S3 Compatible)"
 msgstr "엔드포인트 URL (MinIO / S3 호환)"
+
+msgid "Endpoint URL"
+msgstr "엔드포인트 URL"
+
+msgid "Google Cloud Storage is reached through its S3-compatible interface: use the endpoint https://storage.googleapis.com and an HMAC key (Cloud Storage > Settings > Interoperability)."
+msgstr "Google Cloud Storage는 S3 호환 인터페이스로 연결합니다. 엔드포인트는 https://storage.googleapis.com, 인증은 HMAC 키(Cloud Storage > 설정 > 상호 운용성)를 사용하십시오."
 
 msgid "Region"
 msgstr "리전"
@@ -893,8 +902,14 @@ msgstr "버킷 이름"
 msgid "Access Key ID"
 msgstr "액세스 키 ID"
 
+msgid "HMAC Access Key"
+msgstr "HMAC 액세스 키"
+
 msgid "Secret Access Key"
 msgstr "시크릿 액세스 키"
+
+msgid "HMAC Secret"
+msgstr "HMAC 시크릿"
 
 msgid "Key Prefix"
 msgstr "키 접두어"
