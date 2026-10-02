@@ -74,17 +74,23 @@ class SystemConfigService:
         self._upsert(key, value, overwrite=True)
         self.session.flush()
 
-    def locked_update(self, key: str, change: Callable[[str], str]) -> str:
-        """Store ``change(old value)`` (an empty string for a missing key) while no other transaction can change the key.
+    def lock(self, key: str) -> SystemConfig:
+        """The row of ``key`` (made empty if it is missing), read with ``SELECT ... FOR UPDATE`` and fresh.
 
-        The row is made if it is missing, then read with ``SELECT ... FOR UPDATE``: that waits for a transaction that changes the
-        key and then reads what that one committed, so two requests that add one to a counter at the same moment give two, not
-        one. The lock is held until this transaction ends. (SQLite has no row lock; it has one writer at a time, and it is not a
-        production database.)
+        It waits for a transaction that changes the key and then reads what that one committed. The lock is held until this
+        transaction ends. Take the locks of several keys always in the same order, or two requests can wait for each other.
+        (SQLite has no row lock; it has one writer at a time, and it is not a production database.)
         """
         self._upsert(key, "", overwrite=False)
         statement = select(SystemConfig).where(SystemConfig.key == key).with_for_update().execution_options(populate_existing=True)
-        row = self.session.execute(statement).scalar_one()
+        return self.session.execute(statement).scalar_one()
+
+    def locked_update(self, key: str, change: Callable[[str], str]) -> str:
+        """Store ``change(old value)`` (an empty string for a missing key) while no other transaction can change the key.
+
+        Two requests that add one to a counter at the same moment give two, not one (see ``lock``).
+        """
+        row = self.lock(key)
         new = change(row.value or "")
         row.value = new
         self.session.flush()
