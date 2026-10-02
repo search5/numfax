@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from namifax.auth.password import PasswordManager
+from namifax.common.passwords import hash_password, verify_password
 from namifax.db.repository import MDBOData
 
 
@@ -30,7 +30,7 @@ class AFUserPasswords:
         if not pwd or uid is None:
             return False
 
-        pwdhash = PasswordManager.hash_password(pwd)
+        pwdhash = hash_password(pwd)
         return bool(self.userpasswords.new_entry({"uid": uid, "pwdhash": pwdhash}))
 
     def password_used(self, pwd: str, uid: int) -> bool:
@@ -38,9 +38,10 @@ class AFUserPasswords:
         if not pwd or uid is None:
             return False
 
-        pwdhash = PasswordManager.hash_password(pwd)
-        res = self.userpasswords.find({"uid": uid, "pwdhash": pwdhash})
-        return bool(res)
+        rows = self.userpasswords.find({"uid": uid}, reduce_single=False) or []
+        if isinstance(rows, dict):
+            rows = [rows]
+        return any(verify_password(row.get("pwdhash"), pwd) for row in rows)       # (salted hashes: compare one by one)
 
     def clear_hashes(self, uid: int) -> bool:
         """Clear all historical password records for user."""

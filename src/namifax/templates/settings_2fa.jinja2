@@ -42,7 +42,7 @@
     </ul>
     <div class="flex flex-wrap items-center gap-2">
       <button type="button" data-copy="{{ codes|join('\n') }}" data-done="{{ _('Copied') }}" class="px-4 py-2 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold">{{ _('Copy codes') }}</button>
-      <button type="button" data-download="{{ backup_file }}" data-filename="{{ backup_name }}" class="px-4 py-2 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold">{{ _('Download as a file') }}{% if secret %} ({{ _('key and codes') }}){% endif %}</button>
+      <button type="button" data-download="{{ backup_file }}" data-filename="{{ backup_name }}" class="px-4 py-2 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold">{{ _('Download as a file') }}</button>
     </div>
     <p class="text-[11px] text-slate-400">{{ _('The file is made in your browser from what is shown here and is not stored on the server. Codes are kept on the server only as hashes.') }}</p>
     <div class="flex justify-end"><a href="/settings" class="px-5 py-2.5 bg-sky-600 hover:bg-sky-500 text-white rounded-lg font-semibold transition">{{ _('Done') }}</a></div>

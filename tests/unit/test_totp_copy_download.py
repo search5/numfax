@@ -39,7 +39,7 @@ def test_the_codes_page_can_copy_and_download(client):
     download = soup.find("button", attrs={"data-download": True})
     assert download["data-filename"].startswith("namifax-2fa-") and download["data-filename"].endswith(".txt")
     content = download["data-download"]
-    assert all(c in content for c in codes) and secret in content        # the key and every code, in the file
+    assert all(c in content for c in codes) and secret not in content    # every code, and never the authenticator key
 
 
 def test_recovery_codes_are_only_stored_as_hashes(client, dbsession):

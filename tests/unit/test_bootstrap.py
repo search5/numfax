@@ -159,7 +159,7 @@ def test_the_application_runs_on_the_server_database(server_db_url):
     secret = re.search(r'data-secret="([A-Z2-7]+)"', page.text).group(1)
     token = re.search(r'name="csrf_token" value="([^"]+)"', page.text).group(1)
     done = client.post("/settings/2fa/enable", {"csrf_token": token, "code": pyotp.TOTP(secret).now()})
-    assert done.status_int == 200 and len(re.findall(r"\b[A-Z2-9]{5}-[A-Z2-9]{5}\b", done.text)) == 8
+    assert done.status_int == 200 and len(set(re.findall(r"\b[A-Z2-9]{5}-[A-Z2-9]{5}\b", done.text))) == 8
 
     third = webtest.TestApp(app, extra_environ={"HTTP_HOST": "example.com"})
     result = {"success": True, "name_id": "sso@x.test", "attributes": {"email": "sso@x.test", "displayName": "Sso User"}}

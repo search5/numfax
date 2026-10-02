@@ -22,7 +22,7 @@ def test_model_maps_the_legacy_table():
     assert set(t.c.keys()) == {"upid", "uid", "pwdhash"}
     assert isinstance(t.c.upid.type, Integer) and t.c.upid.autoincrement is True
     assert isinstance(t.c.uid.type, Integer) and not t.c.uid.nullable
-    assert isinstance(t.c.pwdhash.type, String) and t.c.pwdhash.type.length == 64 and not t.c.pwdhash.nullable
+    assert isinstance(t.c.pwdhash.type, String) and t.c.pwdhash.type.length == 255 and not t.c.pwdhash.nullable
 
 
 @pytest.mark.parametrize("dialect", [sqlite.dialect(), mysql.dialect(), MariaDBDialect(), postgresql.dialect()],
@@ -97,12 +97,13 @@ def test_a_logged_password_is_recognised_as_used(history):
 
 
 def test_the_hash_not_the_password_is_stored(history):
-    from namifax.auth.password import PasswordManager
+    from namifax.common.passwords import verify_password
     from namifax.db.repository import Repository
 
     history.log_password("Secret123!", 5)
     stored = Repository("UserPasswords", db=history.db).find({"uid": 5})
-    assert stored["pwdhash"] == PasswordManager.hash_password("Secret123!") != "Secret123!"
+    assert stored["pwdhash"].startswith("$argon2id$") and verify_password(stored["pwdhash"], "Secret123!")
+    assert stored["pwdhash"] != "Secret123!"
 
 
 def test_missing_arguments_are_rejected(history):

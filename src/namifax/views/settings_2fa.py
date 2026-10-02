@@ -19,7 +19,8 @@ from pyramid.view import view_config
 from namifax.common.secretbox import SecretDecryptError, SecretKeyError, decrypt, encrypt
 from namifax.i18n import _
 from namifax.services.totp import TotpService
-from namifax.services.user_account import AFUserAccount, md5_hash
+from namifax.common.passwords import verify_password
+from namifax.services.user_account import AFUserAccount
 
 TEMPLATE = "namifax:templates/settings_2fa.jinja2"
 _PENDING = "totp_pending"
@@ -66,10 +67,9 @@ def _guard(request: Any) -> int:
     return uid
 
 
-def _backup_file(user: str, stamp: str, codes: list, secret: Optional[str]) -> str:
+def _backup_file(user: str, stamp: str, codes: list) -> str:
+    """The text the user can save: the recovery codes only (the authenticator key is never put in a file)."""
     lines = ["NamiFAX two-factor authentication", f"Account: {user}", f"Saved: {stamp}", ""]
-    if secret:
-        lines += ["Authenticator key (type it into an authenticator app if you cannot scan the QR code):", secret, ""]
     lines += ["Recovery codes (each works once if you lose your authenticator):", *codes, "",
               "Keep this file somewhere safe and private. Anyone who has it can pass the second step of your login."]
     return "\n".join(lines) + "\n"
@@ -86,14 +86,12 @@ def _setup_page(request: Any, secret: str, error: Optional[str] = None) -> dict:
     }
 
 
-def _result(request: Any, *, error: Optional[str] = None, message: Optional[str] = None, codes: Optional[list] = None,
-            secret: Optional[str] = None) -> dict:
-    """``secret`` is passed only right after turning 2FA on, so that the key can go into the file the user saves (it is not kept)."""
+def _result(request: Any, *, error: Optional[str] = None, message: Optional[str] = None, codes: Optional[list] = None) -> dict:
     stamp = datetime.now().strftime("%Y-%m-%d")
     who = re.sub(r"[^A-Za-z0-9_.-]", "_", _username(request) or "user")
-    file_text = _backup_file(who, stamp, codes or [], secret) if codes else ""
+    file_text = _backup_file(who, stamp, codes or []) if codes else ""
     return {"mode": "codes" if codes else "message", "error": error, "message": message, "codes": codes or [],
-            "secret": secret, "backup_file": file_text, "backup_name": f"namifax-2fa-{who}-{stamp}.txt",
+            "backup_file": file_text, "backup_name": f"namifax-2fa-{who}-{stamp}.txt",
             "current_user": request.identity, "active_tab": "settings"}
 
 
@@ -134,15 +132,14 @@ def totp_enable_view(request):
     if not result["success"]:
         return _setup_page(request, secret, error=_("The code did not match. Check the time on your phone and try again."))
     request.session.pop(_PENDING, None)
-    return _result(request, codes=result["backup_codes"], secret=secret)
+    return _result(request, codes=result["backup_codes"])
 
 
 @view_config(route_name="totp_disable", request_method="POST", renderer=TEMPLATE, permission="view")
 def totp_disable_view(request):
     uid = _guard(request)
     user = AFUserAccount(db=request.dbsession)
-    if not user.load(uid) or not hmac.compare_digest(
-            str(user.dbdata.get("password") or ""), md5_hash(request.POST.get("password") or "")):
+    if not user.load(uid) or not verify_password(user.dbdata.get("password"), request.POST.get("password") or ""):
         return _result(request, error=_("The password is not correct."))
     svc = TotpService(request.dbsession)
     problem = _check_code(svc, uid, request.POST.get("code", ""))

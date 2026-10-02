@@ -14,6 +14,8 @@ NamiFAX를 운영 환경에 올리기 전에 한 번, 그리고 운영 중 주�
 | SMTP 게이트웨이 | 관리자 화면에서 설정 | **비밀번호 찾기**, 수신 팩스 메일 전달, 알림 메일이 모두 이 설정을 씁니다. 메일을 보낼 수 없으면 비밀번호 찾기는 "Email failed to send"를 보여 주고 기존 비밀번호는 그대로 둡니다. |
 | 데모 데이터 끄기 | `NAMIFAX_DEMO_DATA`를 켜지 않기 | SQLite에서만 동작하는 옵트인입니다. SQLite는 운영 DB가 아닙니다. |
 
+| 비밀번호 해시 | 기본 Argon2id. 원본 PHP와 한 DB를 함께 쓰는 동안은 `NAMIFAX_PASSWORD_HASH=md5` | 원본은 Argon2id를 읽지 못합니다(`docs/MIGRATING_FROM_AVANTFAX3.md` 4.3). |
+
 ## 2. HylaFAX 연동 (실제 서버에서만 확인 가능)
 
 원본 `submit_fax()`와 같은 명령줄을 만드는 것은 테스트로 확인했지만, **실제 HylaFAX와의 연결은 이 저장소에서 검증하지 못했습니다.**

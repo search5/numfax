@@ -15,4 +15,4 @@ class UserPasswords(Base):
 
     upid: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     uid: Mapped[int] = mapped_column(Integer, nullable=False)
-    pwdhash: Mapped[str] = mapped_column(String(64), nullable=False)
+    pwdhash: Mapped[str] = mapped_column(String(255), nullable=False)

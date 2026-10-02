@@ -19,7 +19,7 @@ class UserAccount(Base):
     uid: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     name: Mapped[Optional[str]] = mapped_column(LegacyHtmlString(255))
     username: Mapped[str] = mapped_column(String(64), nullable=False, unique=True)
-    password: Mapped[str] = mapped_column(String(64), nullable=False)     # MD5 hex, as in the legacy schema
+    password: Mapped[str] = mapped_column(String(255), nullable=False)    # Argon2id (MD5 hex, the legacy format, until the next login)
     email: Mapped[str] = mapped_column(String(255), nullable=False, index=True)
     email_sig: Mapped[Optional[str]] = mapped_column(LegacyHtmlText)
     user_tsi: Mapped[Optional[str]] = mapped_column(LegacyHtmlString(255))

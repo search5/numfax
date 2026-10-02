@@ -37,7 +37,7 @@ def test_model_maps_the_legacy_table():
     for name in ("username", "password", "email"):
         assert not t.c[name].nullable, name
     assert t.c.username.unique is True and t.c.username.type.length == 64
-    assert t.c.email.type.length == 255 and t.c.password.type.length == 64
+    assert t.c.email.type.length == 255 and t.c.password.type.length == 255
     for name in ("last_mod", "last_login", "pwdexpire"):              # ISO text, readable on every database
         assert isinstance(t.c[name].type, (String, IsoText)) and t.c[name].type.length == 32, name
 
@@ -91,12 +91,12 @@ def test_create_validates_and_rejects_duplicates(acct):
     assert other.create({"username": "bob", "email": "alice@x.test"}) is False and other.error == "Email already in use"
 
 
-def test_create_stores_the_md5_hash_defaults_and_expiry(acct):
-    from namifax.auth.password import PasswordManager
+def test_create_stores_the_argon2id_hash_defaults_and_expiry(acct):
+    from namifax.common.passwords import verify_password
 
     user = _new(acct, "alice", "Secret123!", pwdcycle="3")
     row = _fresh(acct)
-    assert row.load(user.uid) and row.dbdata["password"] == PasswordManager.hash_password("Secret123!")
+    assert row.load(user.uid) and verify_password(row.dbdata["password"], "Secret123!")
     assert row.dbdata["acc_enabled"] and not row.dbdata["is_admin"] and not row.dbdata["deleted"]
     assert not row.dbdata["wasreset"]
     expected = (datetime.now() + timedelta(days=90)).strftime("%Y-%m-%d")
@@ -107,7 +107,7 @@ def test_create_without_a_password_generates_one_and_forces_a_change(acct):
     user = _fresh(acct)
     assert user.create({"username": "gen", "email": "gen@x.test"}) is True
     row = _fresh(acct)
-    assert row.load(user.uid) and row.dbdata["wasreset"] and len(row.dbdata["password"]) == 32
+    assert row.load(user.uid) and row.dbdata["wasreset"] and row.dbdata["password"].startswith("$argon2id$")
 
 
 def test_the_initial_password_goes_into_the_history(acct):

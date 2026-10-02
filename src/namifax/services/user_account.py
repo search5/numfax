@@ -8,6 +8,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from namifax.common import settings
 from namifax.db.repository import MDBOData
+from namifax.common.passwords import hash_password, needs_rehash, verify_password
 from namifax.services import hylafax_users
 from namifax.services.user_passwords import AFUserPasswords
 
@@ -105,11 +106,11 @@ class AFUserAccount:
         if not raw_pwd:
             pwdxemail = genpasswd()
             self.generated_password = pwdxemail                # (the caller mails it; it is never stored in clear)
-            self.dbdata["password"] = md5_hash(pwdxemail)
+            self.dbdata["password"] = hash_password(pwdxemail)
             self.dbdata["wasreset"] = 1
         else:
             pwdxemail = str(raw_pwd)
-            self.dbdata["password"] = md5_hash(pwdxemail)
+            self.dbdata["password"] = hash_password(pwdxemail)
             self.dbdata["wasreset"] = 0
 
         # Default flags
@@ -181,7 +182,7 @@ class AFUserAccount:
         else:
             self.dbdata["pwdexpire"] = None
 
-        self.dbdata["password"] = md5_hash(pwd)
+        self.dbdata["password"] = hash_password(pwd)
         self.dbdata["wasreset"] = 0
 
         if self.useraccount.update_entry(self.dbdata):
@@ -217,7 +218,7 @@ class AFUserAccount:
         self.load(found.uid)
         self._before_reset = (self.dbdata.get("password"), self.dbdata.get("wasreset"))
         new_pwd = genpasswd()
-        self.dbdata["password"] = md5_hash(new_pwd)
+        self.dbdata["password"] = hash_password(new_pwd)
         self.dbdata["wasreset"] = 1
 
         if self.useraccount.update_entry(self.dbdata):
@@ -244,8 +245,10 @@ class AFUserAccount:
             self.error = "Old password too short"
             return False
 
-        rec = self.useraccount.find({"uid": self.uid, "password": md5_hash(oldpwd)})
-        if not rec:
+        rec = self.useraccount.find({"uid": self.uid})
+        if isinstance(rec, list):
+            rec = rec[0] if rec else None
+        if not rec or not verify_password(rec.get("password"), oldpwd):
             self.error = "Incorrect old password"
             return False
 
@@ -258,13 +261,14 @@ class AFUserAccount:
         admin: bool = False,
         remote_ip: str = "127.0.0.1",
     ) -> bool:
-        creds: Dict[str, Any] = {"username": username, "password": md5_hash(password)}
+        creds: Dict[str, Any] = {"username": username}
         if admin:
             creds["is_admin"] = 1
 
-        data = self.useraccount.find(creds)
-        if isinstance(data, list) and data:
-            data = data[0]
+        found = self.useraccount.find(creds, reduce_single=False) or []
+        if isinstance(found, dict):
+            found = [found]
+        data = next((row for row in found if verify_password(row.get("password"), password)), None)
 
         if data:
             if data.get("acc_enabled") in (1, True, "1"):
@@ -297,6 +301,8 @@ class AFUserAccount:
                     "last_login": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                     "last_ip": remote_ip,
                 }
+                if needs_rehash(data.get("password")):             # an MD5 account of the original: store Argon2id from now on
+                    update_info["password"] = hash_password(password)
                 self.useraccount.update_entry(update_info)
                 return True
             else:

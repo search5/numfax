@@ -11,6 +11,7 @@ import pytest
 from bs4 import BeautifulSoup
 from sqlalchemy import select
 
+from namifax.common.passwords import verify_password
 from namifax.models import UserAccount
 
 
@@ -99,7 +100,7 @@ def test_a_new_user_without_a_password_gets_a_random_one_by_mail(client, dbsessi
     password = re.search(r"Password - (\S+)", text).group(1)
     user = _user(dbsession, "newp")
     import hashlib
-    assert user.password == hashlib.md5(password.encode()).hexdigest() and password != "password" and user.wasreset
+    assert verify_password(user.password, password) and user.password.startswith("$argon2id$") and password != "password" and user.wasreset
 
 
 def test_a_new_user_with_a_chosen_password_is_not_forced_to_change_it(client, dbsession, mails):

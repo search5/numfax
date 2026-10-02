@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NamiFAX 4.0.Language: kMIME-Version: 1.Content-Type: text/plain; charset=utf-Content-Transfer-Encoding: 8bi\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-02 13:56+0900\n"
+"POT-Creation-Date: 2026-10-02 14:08+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ko\n"
@@ -1848,9 +1848,6 @@ msgstr "코드 복사"
 msgid "Download as a file"
 msgstr "파일로 내려받기"
 
-msgid "key and codes"
-msgstr "키와 코드"
-
 msgid "The file is made in your browser from what is shown here and is not stored on the server. Codes are kept on the server only as hashes."
 msgstr "파일은 이 화면에 표시된 내용으로 브라우저에서 만들어지며 서버에는 저장되지 않습니다. 서버에는 복구 코드가 해시로만 보관됩니다."
 
@@ -2384,4 +2381,7 @@ msgstr "비밀번호가 올바르지 않습니다."
 
 #~ msgid "Transmitted Successfully (OK)"
 #~ msgstr "정상 전송 완료 (OK)"
+
+#~ msgid "key and codes"
+#~ msgstr "키와 코드"
 

@@ -6,6 +6,12 @@ import contextlib
 import re
 import shutil
 import os
+
+# cheap Argon2 settings keep the thousands of test logins fast (production uses the library defaults)
+os.environ.setdefault("NAMIFAX_ARGON2_TIME_COST", "1")
+os.environ.setdefault("NAMIFAX_ARGON2_MEMORY_COST", "1024")
+os.environ.setdefault("NAMIFAX_ARGON2_PARALLELISM", "1")
+
 import uuid
 from pathlib import Path
 
