@@ -102,7 +102,7 @@ def populate_all():
 
         print(f"[{loc}] Updated {updated} translations from {php_file}")
 
-    # Ensure English remains blank msgstr for strict Golden Master fidelity
+    # English keeps an empty msgstr, so the original English text of the source is shown as it is
     en_po = os.path.join(locale_dir, "en", "LC_MESSAGES", "namifax.po")
     en_mo = os.path.join(locale_dir, "en", "LC_MESSAGES", "namifax.mo")
     with open(en_po, "rb") as f:

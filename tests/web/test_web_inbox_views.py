@@ -1,7 +1,7 @@
 """Pyramid Web Integration Test for Inbox Views (W04, W05).
 
-Verifies the rendered HTML structure, form elements, links, and Tailwind CSS styling
-against the Web Golden Master contract.
+Verifies the rendered HTML of the inbox: the page title, the fax rows, the action icons (shown or withheld by the
+rights and settings of the user) and the empty-inbox text.
 """
 
 from pathlib import Path
