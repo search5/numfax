@@ -1,7 +1,7 @@
 ---
 title: 데이터베이스와 마이그레이션
 type: topic
-updated: 2026-10-02
+updated: 2026-10-03
 verified: true
 sources:
   - src/namifax/db/provider.py
@@ -147,7 +147,7 @@ sources:
 - 기본 실행은 시험마다 임시 SQLite 파일을 쓰고 작업 디렉터리의 `namifax.db` 는 건드리지 않는다(`DATABASE_URL`/`NAMIFAX_DB_PATH` 를 임시 경로로 설정). 시험 `tests/unit/test_db_isolation_fixture.py`
 - 서버 시험이 있는 파일(`serverdb` 마커 또는 `server_db_url` 사용)은 `grep -rl "serverdb\|server_db_url" tests` 로 24개(그중 `conftest.py` 1개이므로 시험 파일 23개, 2026-10-02)가 나온다(예: `test_bootstrap.py`, `test_system_config_migration.py`, `test_orm_repository.py`, `test_user_account_orm.py`, `test_totp_orm.py`, `test_webauthn_orm.py`, `test_syslog.py`, `test_legacy_database_compat.py`). 개수는 시점에 따라 달라진다.
 - 서버 DB 시험 결과(2026-10-02, 커밋 `baf16ca`, AI 가 Docker 임시 컨테이너로 직접 실행) [코드]: PostgreSQL 16.15, MySQL 8.4.11, MariaDB 10.11.16 이 각각 2456 passed, 실패 0건이다. 서버 버전, 시간, 앞선 실행(MySQL 계열 각 2 failed)의 기록은 [[testing]] 의 "마지막 실행 기록". 선생님이 같은 날 4개 DB 통합 시험을 직접 실행했다는 구두 보고도 있다(결과 세부는 기록 없음).
-- **겹치는 요청에서의 쓰기 규칙** [코드]: (1) 읽고 나서 INSERT 하는 `merge` 는 두 연결이 같은 새 키를 함께 만들면 한쪽이 기본키 중복으로 실패한다. MySQL·MariaDB 는 `REPEATABLE-READ` 라서 트랜잭션이 처음 읽은 시점의 스냅샷이 고정되므로, 그 뒤에 다른 연결이 커밋한 키를 못 보고 INSERT 하다 실패하기도 한다(로그인 화면은 요청 첫머리에서 카운터를 읽으므로 요청이 끝날 때까지 이 창이 열려 있다). PostgreSQL 의 기본 `READ COMMITTED` 는 새 행을 보지만, 둘 다 "없다"고 읽은 경우는 같다. (2) 저장점 안에서 INSERT 하고 오류를 무시하는 방법과 존재하지 않는 행을 `SELECT ... FOR UPDATE` 로 잠그는 방법은 **MySQL·MariaDB 에서 교착(InnoDB 1213)을 낸다**: 틈새 잠금 때문에 두 요청이 서로를 기다리고 InnoDB 가 한쪽 트랜잭션 전체를 되돌려서, 이어지는 저장점 해제가 `1305 SAVEPOINT does not exist` 로 보인다. 40번 반복에서 13번 실패해서 버렸다. (3) 그래서 만들기와 덮어쓰기를 한 문장 upsert 로 하고, 이미 있는 행만 `FOR UPDATE` 로 잠근다. (4) 문장은 반드시 매핑된 클래스를 대상으로 해야 요청 트랜잭션이 커밋한다. [추정: 운영에서 새 키가 처음 만들어지는 순간에만 문제가 되던 것은 스케줄러 하트비트이고, 로그인 제한은 병렬 시도에서 실제로 영향이 있었다([[authentication-and-security]]).]
+- **겹치는 요청에서의 쓰기 규칙** [코드]: (1) 읽고 나서 INSERT 하는 `merge` 는 두 연결이 같은 새 키를 함께 만들면 한쪽이 기본키 중복으로 실패한다. MySQL·MariaDB 는 `REPEATABLE-READ` 라서 트랜잭션이 처음 읽은 시점의 스냅샷이 고정되므로, 그 뒤에 다른 연결이 커밋한 키를 못 보고 INSERT 하다 실패하기도 한다(로그인 화면은 요청 첫머리에서 카운터를 읽으므로 요청이 끝날 때까지 이 창이 열려 있다). PostgreSQL 의 기본 `READ COMMITTED` 는 새 행을 보지만, 둘 다 "없다"고 읽은 경우는 같다. (2) 저장점 안에서 INSERT 하고 오류를 무시하는 방법과 존재하지 않는 행을 `SELECT ... FOR UPDATE` 로 잠그는 방법은 **MySQL·MariaDB 에서 교착(InnoDB 1213)을 낸다**: 틈새 잠금 때문에 두 요청이 서로를 기다리고 InnoDB 가 한쪽 트랜잭션 전체를 되돌려서, 이어지는 저장점 해제가 `1305 SAVEPOINT does not exist` 로 보인다. 40번 반복에서 13번 실패해서 버렸다. (3) 그래서 만들기와 덮어쓰기를 한 문장 upsert 로 하고, 이미 있는 행만 `FOR UPDATE` 로 잠근다. (4) 문장은 반드시 매핑된 클래스를 대상으로 해야 요청 트랜잭션이 커밋한다. [코드] `SystemConfigService` 를 쓰는 곳(2026-10-03 `grep`): 스케줄러 상태(`scheduler_config.py`: 실행 표지, 취소 요청, 마지막 결과, 정지 상태, 하트비트), 로그인 시도 제한(`login_throttle.py`), 관리자 화면의 설정(`views/admin.py`, `views/admin_scheduler.py`), 스토리지 수명주기·클라우드·SAML 설정 읽기. 겹치는 요청이 같은 새 키를 만들 수 있는 경로는 이 가운데 스케줄러의 키들과 로그인 카운터이고, 로그인 카운터는 시험으로 재현했다([[authentication-and-security]], [[testing]]).
 - 이전 과거 문서의 "PostgreSQL 16 / MySQL 8.4 검증" 서술은 [[db-layer-refactor-log]] [문서]에 있고, 이번 실행의 서버 버전(PostgreSQL 16.15, MySQL 8.4.11)과 같은 계열이다.
 
 ## 8. 방언 주의점 (SQLite·MySQL·MariaDB·PostgreSQL에서 같게 돌리기)
@@ -196,7 +196,7 @@ sources:
 지키는 시험:
 - `tests/unit/test_schema_seed_safety.py`: 데모 행을 "관리자가 고친 운영 데이터"로 바꾼 뒤(비밀번호 변경, 모뎀 삭제·수정, 바코드 기본키 변경, 팩스 삭제·수정 등) `upgrade_schema()` 를 다시 돌려 **모든 테이블 스냅샷이 같아야** 한다(`test_restarting_changes_nothing_in_a_database_with_real_data`). 사용자가 이미 있는 DB 는 데모 행이 늘지 않는다. 새 DB 재시작은 멱등.
 - `tests/unit/test_schema_seed_first_run.py`: 첫 시작에 팩스 #1 이 Acme 에 연결되고, 두 번째 시작에서 건수가 같다.
-- 새 시드를 추가할 때: 위 스냅샷 시험이 새 테이블까지 자동으로 보지만, 데모 행을 "고친 데이터"로 바꾸는 목록(`_as_edited_production_data`)에는 새 행을 직접 추가해야 보호가 확인된다. [추정] 목록이 수동이라는 코드 관찰에서 나온 권고.
+- 새 시드를 추가할 때: 위 스냅샷 시험이 새 테이블까지 자동으로 보지만, 데모 행을 "고친 데이터"로 바꾸는 목록(`_as_edited_production_data`)에는 새 행을 직접 추가해야 보호가 확인된다. [코드] 그 목록은 손으로 쓴 UPDATE·DELETE 문 14개이고(`tests/unit/test_schema_seed_safety.py` 31~51행), 시드된 테이블과 대조하는 시험은 없다(그 파일의 시험은 4개). 그래서 새 시드 행은 직접 추가해야 보호된다.
 
 > 모순: 원문 14.9 는 구조용 백필 `_backfill_alias_columns` 를 "마이그레이션 직후와 시드 직후"에 돌린다고 적었다. 지금은 `db/sqlite_upgrade.py::_backfill_alias_columns` 로 존재하지만 SQLite 옛 테이블 보정 단계에서만 호출된다(`sqlite_upgrade.py` 53행, 시드 뒤가 아님). 또 원문은 기본 카테고리 3개와 표지 2개를 시드한다고 적었으나(14.16) 지금은 표지 3개뿐이다. [코드]
 > 관찰: 새 SQLite 데모 DB 의 `admin`/`password` 는 데모를 켠 개발·시험 전용이다. 기본(꺼짐)에서는 만들어지지 않는다. [코드] `test_demo_data_optin.py::test_nobody_can_log_in_with_the_old_demo_password_on_a_default_start`

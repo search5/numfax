@@ -1,7 +1,7 @@
 ---
 title: 아키텍처와 모듈
 type: topic
-updated: 2026-10-02
+updated: 2026-10-03
 sources: [src/namifax/__init__.py, src/namifax/main.py, src/namifax/routes.py, src/namifax/security.py, src/namifax/sessions.py, src/namifax/origin_guard.py, src/namifax/models/__init__.py, src/namifax/db/provider.py, src/namifax/db/repository.py, src/namifax/db/bootstrap.py, src/namifax/views/inbox.py, src/namifax/views/auth.py, src/namifax/views/archive.py, src/namifax/views/fax_rights.py, src/namifax/services/login_throttle.py, src/namifax/services/scheduler.py, src/namifax/db/missing.py, src/namifax/db/orm_repository.py, src/namifax/models/meta.py, development.ini, deploy/, systemd/, tests/unit/test_origin_guard.py, tests/unit/test_serve_main_db.py, tests/unit/test_session_secure_flag.py, pyproject.toml, "[[architecture-md-part1]]", "[[architecture-md-part2]]", "[[db-layer-refactor-log]]"]
 verified: true
 ---
@@ -30,7 +30,7 @@ views  ->  services  ->  db(Repository/ORM)  ->  models
   \          \-> common, auth
    \-> templates(Jinja2)         cli -> services/db/common   (웹과 독립된 진입점)
 ```
-의존은 위에서 아래로만 흐른다. [추정] 순환을 막는 규칙이 코드로 강제되는지는 확인하지 못했다(시험은 찾지 못함).
+의존은 대체로 위에서 아래로 흐르지만 엄격하지 않다. [코드] `ast` 로 `src/namifax` 의 import 를 패키지별로 모아 확인했다(2026-10-03). 규칙에 어긋나는 import: `services/scheduler.py` 가 모듈 맨 위에서 `namifax.cli.cron`·`namifax.cli.phb` 를 가져온다(services → cli). 함수 안에서 늦게 가져오는 것: `services/printer.py:146` → `views.sendfax`, `services/user_account.py:344` → `auth`, `common/helpers.py` → `services`·`db`(여러 곳), `db/adopt.py`·`db/textsearch.py`·`db/orm_repository.py` → `models`, `models/__init__.py:35` → `db.provider`. `db/seed.py` 와 `db/orm_repository.py` 는 모듈 맨 위에서 `models` 를 가져오고 `models` 는 함수 안에서 `db` 를 가져와, 순환은 늦은 import 로 피한다. 계층 규칙을 강제하는 도구나 시험은 없다(`importlinter`/`import-linter` 를 쓰는 파일이 `pyproject.toml`, `tests`, `src` 에 없음).
 
 | 패키지 | 책임 | 근거 |
 |---|---|---|

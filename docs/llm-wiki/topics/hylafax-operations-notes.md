@@ -1,7 +1,7 @@
 ---
 title: HylaFAX 운영 메모 (스풀 이동, 수신 파일, 첨부 형식, print-to-fax)
 type: topic
-updated: 2026-10-02
+updated: 2026-10-03
 sources: [src/namifax/common/settings.py, src/namifax/cli/faxrcvd.py, src/namifax/services/fax_images.py, src/namifax/services/archive_base.py, src/namifax/services/cloud_storage.py, src/namifax/common/helpers.py, src/namifax/services/upload_check.py, src/namifax/services/sendfax_command.py, src/namifax/views/sendfax.py, src/namifax/templates/sendfax.jinja2, src/namifax/cli/print_in.py, src/namifax/services/printer.py, src/namifax/main.py, deploy/cups/namifax-fax, docs/INSTALL_HYLAFAX.md, "git show 로 읽을 수 있는 원본: docs/hylafax_avantfax_integration_architecture.md (삭제됨; git show 614f7b0:docs/hylafax_avantfax_integration_architecture.md)", [[hylafax-integration]], [[scheduler-and-storage]]]
 verified: true
 ---
@@ -29,7 +29,6 @@ verified: true
   대용량 NVMe/SAN/NFS 마운트 지점을 쓸 수 있다.
 - 주의(원문이 직접 말하는 것 + 위 절차에서 읽히는 것):
   - [문서] 이동 중에는 반드시 HylaFAX 를 멈춘다(수신 중 파일을 옮기지 않는다). 링크·마운트 뒤 소유자를 `uucp` 로 맞춘다.
-  - [추정] NFS 를 쓰면 `faxgetty` 가 쓰는 동안의 지연과 마운트 끊김이 수신 실패로 이어질 수 있다. 원문에 근거 없는 일반 상식이므로 실제 운영에서 확인할 것.
   - [코드] NamiFAX 는 `recvq` 경로를 직접 읽지 않는다. 훅이 인자로 받은 TIFF 경로(`argv[1]`)를 쓸 뿐이다(`cli/faxrcvd.py`). 그래서 링크나 마운트로 옮겨도 NamiFAX 설정은 바꿀 필요가 없다. 스풀 루트는 `HYLASPOOL`(기본 `/var/spool/hylafax`)이고 훅 폴더·전화번호부·기본 보관 폴더가 여기서 파생된다(`common/settings.py::hylaspool`).
 
 ### 1.2 NamiFAX 쪽 (최종 보관 경로는 자유롭게)
@@ -45,7 +44,7 @@ verified: true
 ### 2.1 HylaFAX 단계
 - [문서] 한 통화로 온 팩스는 쪽수가 1이든 100이든 `recvq` 에 **멀티페이지 TIFF 한 개**(`fax<번호>.tif`, 예 `fax00000042.tif`)로 생긴다. T.30/G3·G4 압축이고 한 파일 안에 쪽마다 프레임(IFD)이 이어진다.
 - [문서] 수신이 끝나면(회선을 끊고 파일을 닫은 뒤에만) `FaxRcvdCmd` 훅이 실행된다. 인자·래퍼는 [[hylafax-integration]] 1.1. 이 때문에 훅이 돌았다는 것이 곧 "수신 완료"의 증거다.
-- [문서] **`faxqclean`**: HylaFAX 의 정리 프로그램(cron 으로 돌림). `recvq` 와 `doneq` 에 남은 오래된 원본 임시 파일을 지운다. 원문은 "30일 단위"라 적는다. 이 기준은 `faxqclean` 의 옵션·설정에 따라 다르므로 값은 설치된 HylaFAX 의 설명서로 확인할 것 [추정: 원문의 30일은 기본값인지 불명].
+- [문서] **`faxqclean`**: HylaFAX 의 정리 프로그램. 설명서(manpages.debian.org `faxqclean(8)`, 2026-10-03 조회)는 `doneq` 의 끝난 작업을 처리하고(`-j`, 기본 15분) `docq` 에서 어떤 작업도 참조하지 않는 문서 파일을 지운다고(`-d`, 기본 1시간) 한다. `recvq` 와 `tmp` 는 `faxqclean` 이 아니라 `faxcron` 이 정리한다(`faxcron(8)`: 받은 팩스 `recvq` 7일, `tmp` 1일, 원격 장치 정보와 세션 로그 30일 이상을 삭제하고 옵션은 `-rcv`, `-tmp`, `-info`, `-log`). 원문의 "30일 단위" 는 `faxcron` 의 info·log 기본값과 같은 숫자이지만 원문이 어느 프로그램을 가리키는지는 원문만으로 알 수 없다. 설치된 HylaFAX 버전의 설명서와 다를 수 있다.
 - [코드] NamiFAX 의 `src/`·`deploy/` 에는 `faxqclean`, `recvq` 라는 문자열이 없다. 즉 `recvq` 의 원본은 NamiFAX 가 지우지 않고, 지우는 일은 전적으로 HylaFAX 쪽 정리(`faxqclean` 등)에 맡겨져 있다. 보관 폴더의 정리는 별개로 NamiFAX 스케줄러가 한다([[scheduler-and-storage]]).
 
 ### 2.2 NamiFAX 아카이브 단계 (`faxrcvd`)
@@ -129,7 +128,7 @@ verified: true
 - 태그 부가 문법(`TO:`, `COVER:`), `<<FAX: ...>>` 꼴, 태그 흰 사각형 마스킹이나 표지 대체, PyMuPDF/pdfplumber 텍스트 추출과 OCR.
 - 웹 "임시 보관함(Outbox Drafts)", 발송자 IP/계정 기반 등록, "방금 인쇄된 문서가 대기 중" 안내 배너: 현재 초안은 서버 임시 폴더의 파일일 뿐이며 웹 화면에서 이를 읽는 코드가 없다(`namifax_drafts` 는 `cli/print_in.py` 와 `services/printer.py` 에서만 나온다).
 
-> 모순: 원문 11.3 은 CUPS 백엔드가 `/usr/lib/cups/backend/namifax` 이고 `namifax print-in "$1" "$2" ...` 로 호출한다고 하지만, 실제 스크립트는 `deploy/cups/namifax-fax`(설치 이름 `namifax-fax`, 장치 주소 `namifax-fax:/`)이고 `"$@"` 로 모두 넘긴다. 또 원문은 태그를 PDF 텍스트 레이어/OCR 로 찾는다고 하지만 코드는 인쇄 바이트를 텍스트로 디코드해 찾는다. [추정] 그래서 텍스트 레이어가 압축된 PDF 로 들어오는 인쇄 작업에서는 태그를 못 찾을 수 있다(이 세션에서 그런 파일로 확인하지 않았다). 원문은 PostScript 로 인쇄하는 "Generic / PostScript" 드라이버를 쓰게 하므로 PS 텍스트로 들어오는 경우를 전제한 것으로 보인다.
+> 모순: 원문 11.3 은 CUPS 백엔드가 `/usr/lib/cups/backend/namifax` 이고 `namifax print-in "$1" "$2" ...` 로 호출한다고 하지만, 실제 스크립트는 `deploy/cups/namifax-fax`(설치 이름 `namifax-fax`, 장치 주소 `namifax-fax:/`)이고 `"$@"` 로 모두 넘긴다. 또 원문은 태그를 PDF 텍스트 레이어/OCR 로 찾는다고 하지만 코드는 인쇄 바이트를 텍스트로 디코드해 찾는다. [코드, 측정 2026-10-03] 같은 문장 `[[FAX: 02-1234-5678]]` 을 PostScript(`%!PS`)로 만든 입력에서는 `extract_fax_tags` 가 태그를 찾았지만, Ghostscript 로 같은 내용을 PDF 로 만든 입력은 압축하지 않은 것(`-dCompressStreams=false`)과 압축한 것 모두에서 찾지 못했다(`pdftotext` 는 두 PDF 에서 태그를 읽는다). 즉 PostScript 로 들어올 때만 동작하고 PDF 로 들어오면 태그를 찾지 못한다. 원문이 PostScript 로 인쇄하는 "Generic / PostScript" 드라이버를 쓰게 하는 것은 이 제약과 맞는다.
 
 ## 5. 다시 읽을 곳
 - 훅 이름·인자·래퍼, `sendfax` 인자 구성, 모뎀·대기열 파싱, 사용자 동기화: [[hylafax-integration]].

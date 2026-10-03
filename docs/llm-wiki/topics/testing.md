@@ -32,7 +32,7 @@ verified: true
 - 환경변수(없으면 해당 시험은 skip): `NAMIFAX_TEST_PG_URL`(예 `postgresql+psycopg://user:pw@host:port/postgres`), `NAMIFAX_TEST_MYSQL_URL`(`mysql+pymysql://...`), `NAMIFAX_TEST_MARIADB_URL`(`mariadb+pymysql://...`). 접속 정보 값은 위키에 적지 않는다. [코드] `tests/conftest.py` `SERVER_DB_ENV`
 - `throwaway_database(kind)` 가 `nami_test_<8자리>` DB 를 만들고(MySQL 계열은 `utf8mb4`) 끝나면 지운다. 픽스처 `server_db_url` 은 설정된 서버마다 1회씩 돈다. `legacy_db` 픽스처는 원본 AvantFAX 가 만든 DB(`3.3.5`, `3.2.0`)를 MySQL/MariaDB 에 재현한다(`tests/fixtures/legacy_sql`). [코드] `tests/conftest.py`
 - **스위트 전체를 서버 DB 로 돌리기**: `NAMIFAX_SUITE_DB=postgresql|mysql|mariadb`(해당 `NAMIFAX_TEST_*_URL` 필요). 그러면 `serverdb` 마커가 없는 시험도 시험마다 일회용 서버 DB 에서 돌고, 데모 행은 `seed_demo_records` 로 직접 넣는다(앱은 SQLite 에서만 데모 데이터를 만든다). [코드] `tests/conftest.py` `isolated_database`, `src/namifax/db/bootstrap.py`
-- 실행 예(상태를 바꾸므로 이 조사에서는 실행하지 않았다): `NAMIFAX_TEST_PG_URL=... uv run pytest -m serverdb`. [추정] 명령 형태는 마커와 변수명에서 유추.
+- 실행 예: `NAMIFAX_TEST_PG_URL=... uv run pytest -m serverdb`. [코드, 측정 2026-10-03] 이 명령 그대로 PostgreSQL 16 임시 컨테이너 하나만 주었을 때 32 passed, 136 skipped, 2309 deselected, 약 11초였다(MySQL·MariaDB 주소가 필요한 시험은 건너뜀).
 - DB 쪽 설계는 [[database-and-migrations]].
 
 ## 실행 명령
@@ -43,7 +43,7 @@ verified: true
 ## 골든 마스터는 삭제되었다
 - 이전 방식의 골든 마스터(레거시 입출력, 웹 HTML/폼 계약 스냅샷)와 `dev/`, `legacy/` 는 저장소에 없다. 삭제 커밋: `dev/` → `01f2f64`(그 부모 `72a7324` 에서 `dev/` 를 읽는다), `legacy/` → `083920e`(그 부모 `9408385` 에서 읽는다), `golden_master`·`specs`·`prompts` 를 `dev/` 로 옮긴 커밋 `72a7324`. 필요하면 `git show <커밋>:<경로>` 로 읽는다. [코드] `git log`, `git ls-files`
 - 영향:
-  - 레거시 PHP 를 기준으로 한 차분 비교(원본과 같은 HTML/DOM, 같은 훅 출력)는 더 이상 시험이 자동으로 지켜 주지 않는다. 그 역할은 현재 시험이 기대값을 직접 박아 둔 방식(예: `tests/fixtures/legacy_sendfax_commands.json`)으로 부분적으로만 남아 있다. [코드] 파일 존재 / [추정] 완전한 대체는 아님
+  - 레거시 PHP 를 기준으로 한 차분 비교(원본과 같은 HTML/DOM, 같은 훅 출력)는 더 이상 시험이 자동으로 지켜 주지 않는다. 그 역할은 현재 시험이 기대값을 직접 박아 둔 방식(예: `tests/fixtures/legacy_sendfax_commands.json`)으로 부분적으로만 남아 있다. [코드] 파일 존재. 원본 HTML 이나 훅 출력과 비교하는 자료를 읽는 시험은 없다(2026-10-03 `grep -rn "contract.json\|response.html\|golden_master" tests` 는 `W04`, `W05` 같은 옛 화면 이름이 시험 설명 문구에 남은 것만 찾았다). 따라서 대체는 부분적이다.
   - 원본의 SQL 은 시험 기반 자료로만 남았다: `tests/fixtures/legacy_sql/*.sql`. [코드]
   - "골든" 이라는 이름은 한 군데 남아 있다: `tests/unit/data/fax_archive_search_golden.json` 는 옛 SQL 구현을 지우기 전에 기록한 보관함 검색 응답이며 ORM 쿼리가 같은 답을 내야 한다(서버 DB 시험에서도 같은 행렬이 돈다). 이것은 레거시 PHP 골든 마스터와 다른 것이다. [코드] `tests/unit/test_fax_archive_orm.py`
   - 원본과 새 코드를 나란히 돌리는 이관 리허설 도구는 `tools/migration_rehearsal/` 에 따로 있다(시험 스위트 밖). [코드] `git ls-files tools`
@@ -103,7 +103,7 @@ verified: true
 
 교훈
 - mock 이 반환 **형태**까지 정하면 서비스와 시험이 같은 오해를 공유해 통과한다. 경계(DB, 메일 서버, 파일 시스템)는 가능하면 진짜(임시 SQLite, 임시 소켓)로 두고, 가짜는 외부 서비스에만 쓴다.
-- 존재하지 않는 속성을 `MagicMock()` 으로 만들면 오타·삭제된 API 도 통과한다. 쓰려면 `spec=`/`autospec=` 로 실제 객체의 모양을 강제한다. [추정: 일반 pytest 관행, 이 저장소에 일괄 적용된 규칙은 아님]
+- 존재하지 않는 속성을 `MagicMock()` 으로 만들면 오타·삭제된 API 도 통과한다. 쓰려면 `spec=`/`autospec=` 로 실제 객체의 모양을 강제한다. [코드, 측정 2026-10-03] `MagicMock()` 은 없는 메서드 호출도 통과하고 `MagicMock(spec=클래스)` 는 `AttributeError` 를 낸다(실행 확인). 이 저장소의 `tests/` 에는 `MagicMock(` 이 196곳이고 `spec` 을 준 것은 0곳, `autospec` 은 2곳이어서 일괄 적용된 규칙은 아니다.
 - 사용자 흐름(로그인, 저장, 발송)은 mock 시험 외에 **실제 앱 + WebTest 한 번**의 끝-끝 시험을 둔다. `testapp`, `dbsession` 픽스처가 있다(위 "픽스처" 절).
 - 시험이 결함 있는 동작을 정답으로 박았는지 의심한다. 결함을 고칠 때 먼저 그 기대값 시험이 있는지 찾는다.
 

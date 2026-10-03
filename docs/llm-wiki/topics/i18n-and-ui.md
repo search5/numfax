@@ -1,7 +1,7 @@
 ---
 title: 다국어와 화면(Jinja2 + Tailwind)
 type: topic
-updated: 2026-10-02
+updated: 2026-10-03
 sources: [src/namifax/i18n.py, src/namifax/__init__.py, src/namifax/routes.py, src/namifax/cli/i18n.py, src/namifax/cli/populate_ko.py, src/namifax/cli/populate_all_locales.py, src/namifax/cli/populate_missing_translations.py, babel.cfg, package.json, tailwind.config.js, src/namifax/static/css/input.css, src/namifax/templates/layout.jinja2, src/namifax/templates/admin_layout.jinja2, tests/unit/test_ko_catalog_complete.py, tests/unit/test_ko_pages.py, tests/test_i18n.py, src/namifax/templates/ (grep extends/main.css), src/namifax/static/, src/namifax/views/outbox.py, "[[architecture-md-part2]]", "[[agents-md-legacy-instructions]]"]
 verified: true
 ---
@@ -33,7 +33,7 @@ verified: true
 - 규칙: `locale/namifax.pot` 의 모든 메시지가 `ko` 카탈로그에 번역(비어 있지 않고 fuzzy 가 아님)되어 있어야 하고, 번역은 영어 원문의 자리표시자(`%(name)s`, `%(n)d`, `%s`, `%d`)를 같은 개수·종류로 유지해야 한다. [코드] `tests/unit/test_ko_catalog_complete.py`
 - 시험 3개(`test_every_message_of_the_template_is_translated_into_korean`, `test_translations_keep_the_placeholders_of_the_original_text`, `test_the_compiled_catalog_has_the_new_texts`): 템플릿 메시지 전부 한국어 번역됨 / 자리표시자 보존(위키 지시문의 `placeholders_translated` 에 해당하는 시험은 이 파일의 `test_translations_keep_the_placeholders_of_the_original_text`) / 컴파일된 `.mo` 가 새 문구를 가짐(`"Send Password"`→`비밀번호 보내기`, `"Schedule Send Time"`→`전송 시각 예약`). [코드] 같은 파일
 - 화면 시험 `tests/unit/test_ko_pages.py`(시험 5개): `?lang=ko` 로 `/forgot`, `/sendfax`, `/login` 이 한국어로 나오고 영어 예시가 남지 않는지(`e.g. Jane Doe` 부재, `예: 김영희`, 세미콜론 안내 `세미콜론`, `Enter your username` 부재) 확인하며, `/forgot` 은 기본이 영어다(`Send Password`). [코드] 같은 파일
-- 따라서 새 문자열을 추가하면 `.pot` 재추출 후 `ko` 번역과 `.mo` 컴파일까지 해야 시험이 통과한다. 다른 로케일의 완전성을 지키는 시험은 찾지 못했다(`tests/test_i18n.py::test_translation_multilingual` 은 `Inbox`/`Send Fax`/`Archive` 몇 개만 `en, ko, ja, de, fr` 에서 확인). [코드] `tests/` 검색 결과 [추정] 다른 로케일은 일부가 영어로 남을 수 있다.
+- 따라서 새 문자열을 추가하면 `.pot` 재추출 후 `ko` 번역과 `.mo` 컴파일까지 해야 시험이 통과한다. 다른 로케일의 완전성을 지키는 시험은 찾지 못했다(`tests/test_i18n.py::test_translation_multilingual` 은 `Inbox`/`Send Fax`/`Archive` 몇 개만 `en, ko, ja, de, fr` 에서 확인). [코드] `tests/` 검색 결과. 번역 완성도(2026-10-03, `babel` 로 `namifax.pot` 766개 메시지 중 번역이 비어 있지 않고 fuzzy 가 아닌 수): `ko` 766(100%), `en` 374(48.8%), 나머지 22개 로케일은 317~344(41.4~44.9%). 즉 `ko` 를 뺀 로케일은 절반 넘게 영어 원문으로 보인다.
 > 모순: 위키 작업 지시에 `placeholders_translated` 라는 시험 이름이 있었으나 그 이름의 시험은 없다. [코드] `tests/` 전체 검색에서 해당 문자열 없음. 실제 이름은 `test_translations_keep_the_placeholders_of_the_original_text`.
 
 ## Tailwind CSS
@@ -43,7 +43,7 @@ verified: true
 - 테마: 색 `m3.*`(Material Design 3 밝은 테마, `m3.dark.*` 어두운 테마), 레거시 색 `af.*`, 반지름 `m3-*`, 그림자 `m3-1..5`. [코드] `tailwind.config.js`
 - `input.css` 의 `@layer components` 는 `.m3-btn-filled` 와 `.inputsubmit`, `.m3-btn-tonal` 과 `.inputbutton`, `.m3-card` 와 `.af-box`, `input[type="text"]`, `select`, `textarea` 등 원본 클래스 이름에 같은 스타일을 입힌다. [코드] `src/namifax/static/css/input.css`
 - CSS 캐시 버전 쿼리: 템플릿이 `/static/css/main.css?v=3.6.0` 처럼 고정 문자열로 링크한다. `layout.jinja2`, `admin_layout.jinja2` 와 단독 페이지 15개(총 17개 파일)가 각각 직접 적고 있어 값이 한곳에 모여 있지 않다. 정적 뷰 `cache_max_age=3600`. CSS 를 바꾸고 브라우저에 확실히 반영하려면 모든 `?v=` 를 함께 올려야 한다. [코드] `grep -rn "main.css" src/namifax/templates`, `src/namifax/routes.py`
-- `static/theme.css` 는 존재하지만 `src/`, `tests/` 어디에서도 `theme.css` 문자열 참조를 `grep` 으로 찾지 못했다(2026-10-02). [코드] [추정] 사용되지 않는 잔재일 수 있다(외부 참조 여부는 확인 못 함).
+- `static/theme.css` 는 존재하지만 `src/`, `tests/` 어디에서도 `theme.css` 문자열 참조를 `grep` 으로 찾지 못했다(2026-10-02). [코드] 저장소 전체(`docs/llm-wiki` 제외)에서도 참조가 없고 첫 커밋(`82aa2d2 init`)부터 있던 파일이다(`git log --follow`, 2026-10-03). 저장소 안에서는 쓰이지 않는다. `/static/theme.css` 를 저장소 밖에서 직접 부르는지는 알 수 없어 제거 여부는 사용자 결정 대기(Dead Code 제거 후보).
 
 ## 레이아웃과 템플릿 규칙
 - 상속: `layout.jinja2`(사용자 화면, 흰 헤더 + 가운데 내비게이션 `Inbox/Send Fax/Outbox/Archive/Contacts`, 접근 키 `i s o a c`) 를 16개 템플릿이(15개는 `{% extends "layout.jinja2" %}`, `home.jinja2` 는 `"namifax:templates/layout.jinja2"`), `admin_layout.jinja2`(어두운 `slate-950` 배경의 관리자 콘솔) 를 17개 템플릿이 확장한다. [코드] `grep extends src/namifax/templates`

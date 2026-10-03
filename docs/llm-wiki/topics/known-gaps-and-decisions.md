@@ -84,7 +84,7 @@ verified: true
 | 항목 | 결정 | 이유(근거) | 다시 하려면 |
 |---|---|---|---|
 | GCS(Google Cloud Storage) 지원 | 보류: Admin > Storage 화면과 코드에서 제거(2026-10-02, 제거 커밋 `9408385` "remove Google Cloud Storage", `git log` 로 확인) | [문서] [[future-gcs-storage]]: GCS 전용 코드가 없고 S3 호환(boto3)으로만 연결했으며 **실제 GCS 계정으로 한 번도 시험하지 않았다**. 시험하지 못한 기능을 화면에 두지 않기로 함. 코드에서 `S3CompatibleStorageProvider` 는 엔드포인트가 비면 boto3 기본(AWS)으로 간다(`cloud_storage.py` 에서 `endpoint_url` 이 있을 때만 전달) | S3 호환 방식(엔드포인트 기본값 + 실제 시험) 또는 `google-cloud-storage` 전용 공급자. 제거 직전 상태는 커밋 `53ed28b` 와 [[future-gcs-storage]] |
-| 골든 마스터(E2E 시험 자료)·`dev/`(specs, prompts) | 삭제(`01f2f64`) | [코드] 커밋 제목(영문): "remove dev/ (golden master, specs, prompts); the knowledge notes move to a separate llm-wiki"(`git log -1 01f2f64`, 앞 판의 한국어 따옴표는 이를 옮긴 것). `dev/` 는 `72a7324` 에서 생겼다(`git ls-tree 72a7324` 에 `dev` 있음). 원본 PHP 가 사라져 새로 뽑을 수 없는 자료이고, 결함 보고서도 "골든 마스터가 자기 참조"를 지적했다 [문서: [[defects-report-summary]]]. 이 이유 추론은 [추정]. 남은 시험은 `tests/` 의 단위·웹 시험이며 `tests/unit/data/fax_archive_search_golden.json` 같은 개별 비교 자료만 있다 | `git show 72a7324`/`01f2f64` 에서 복원 |
+| 골든 마스터(E2E 시험 자료)·`dev/`(specs, prompts) | 삭제(`01f2f64`) | [코드] 커밋 제목(영문): "remove dev/ (golden master, specs, prompts); the knowledge notes move to a separate llm-wiki"(`git log -1 01f2f64`, 앞 판의 한국어 따옴표는 이를 옮긴 것). `dev/` 는 `72a7324` 에서 생겼다(`git ls-tree 72a7324` 에 `dev` 있음). 커밋 본문에 삭제 이유는 없고 제목만 있다(`git log -1 --format=%B 01f2f64`, 2026-10-03). 결함 보고서가 "골든 마스터가 자기 참조"를 지적했다는 것은 [문서: [[defects-report-summary]]]이며, 그 지적과 삭제의 관계는 기록에 없다. 남은 시험은 `tests/` 의 단위·웹 시험이며 `tests/unit/data/fax_archive_search_golden.json` 같은 개별 비교 자료만 있다 | `git show 72a7324`/`01f2f64` 에서 복원 |
 | `legacy/` 원본 PHP 트리 | 삭제(`083920e`) | [코드] 커밋 메시지: 이식이 끝났기 때문. 원본 설치 SQL 은 시험 자료로 `tests/fixtures/legacy_sql/` 에 보존 | `git checkout 9408385 -- legacy`. 이전 연습 도구 `tools/migration_rehearsal/` 는 남아 있으나 `legacy/` 없이는 실행 불가([[migration-from-avantfax]] 0.1) |
 | `AGENTS.md`·`SYSTEM_PROMPT.md`·`ARCHITECTURE.md`·감사/결함 보고서 | 삭제(`4368da8`), 요약은 wiki 의 [[agents-md-legacy-instructions]], [[architecture-md-part1]], [[architecture-md-part2]] 등에 남김 | [코드] 커밋 메시지(복원 경로 `01f2f64`) | `git show 01f2f64:ARCHITECTURE.md` 등 |
 | 한국어 외 번역 | 보류 | [문서] [[porting-gaps]] 제외 사항: 한국어 외 번역 보류. 한국어는 시험으로 빠진 문구 0개를 보장한다고 문서가 말함 | [[i18n-and-ui]] |
@@ -125,7 +125,7 @@ verified: true
 | 로그인 세션이 프로세스 메모리에 있다 | [코드] `sessions.py` 의 `SessionManager._sessions`. 워커가 여러 개면 서로 보지 못하고 재시작하면 모두 로그아웃 | 서버 쪽 세션 저장소(DB 나 외부 저장소)를 도입하는 설계가 필요하다 | [[authentication-and-security]], [[architecture-and-modules]] |
 | SAML 재전송 방지 캐시가 메모리에 있다 | [코드] 프로세스마다 따로라 워커가 여럿이면 다른 워커에 같은 응답을 다시 낼 수 있다 | 공용 저장소와 만료 정리가 필요하다 | [[authentication-and-security]] |
 | 패스키·SAML 로그인이 TOTP 를 거치지 않는다 | [코드] 두 방식 자체가 강한 인증이라고 볼지는 제품 정책 | 바꾸려면 `_finish_login` 을 두 경로에서도 부르는 설계가 필요하다 | [[authentication-and-security]] |
-| 로그인 시도 제한이 `POST /login` 에만 있다 | [코드] `/pwdexpired`·`/forgot`·`REMOTE_USER`·패스키·SAML 에는 없다. 프록시 뒤에서 `remote_addr` 가 프록시 주소로 보이면 주소별 한도(기본 50)를 모든 사용자가 공유한다 [추정] | `/pwdexpired` 는 올바른 비밀번호로 로그인한 뒤에만 도달해 추측 경로가 아니다. 프록시 주소 처리(`X-Forwarded-For`)는 배포 환경을 알아야 정할 수 있다 | [[authentication-and-security]] |
+| 로그인 시도 제한이 `POST /login` 에만 있다 | [코드] `/pwdexpired`·`/forgot`·`REMOTE_USER`·패스키·SAML 에는 없다. 프록시 뒤에서 `remote_addr` 가 프록시 주소로 보이면 주소별 한도(기본 50)를 모든 사용자가 공유한다 [코드: 2026-10-03 실제 서버에 `X-Forwarded-For` 를 달리 보낸 요청이 모두 접속 상대 주소로 세어짐을 측정, [[authentication-and-security]]] | `/pwdexpired` 는 올바른 비밀번호로 로그인한 뒤에만 도달해 추측 경로가 아니다. 프록시 주소 처리(`X-Forwarded-For`)는 배포 환경을 알아야 정할 수 있다 | [[authentication-and-security]] |
 | 발송 팩스는 S3 에 올라가지 않는다 | [코드] 업로드는 수신(`faxrcvd`)에서만. 업로드 실패 재시도, 원격 내려받기, 서명 URL 도 없다 | `notify` 훅(발송 완료 처리)에 같은 방식으로 붙이면 되지만 그 지점은 읽어 확인하지 않았다. 재시도는 "업로드 성공 표시" 저장 설계가 먼저다 | [[scheduler-and-storage]] |
 | 업로드가 확인된 뒤에만 로컬 TIFF 를 지우는 안전장치가 없다 | [코드] 업로드가 실패해도 PDF 가 있으면 로컬 TIFF 는 기간이 지나면 지워진다(로컬 PDF 는 남음) | "업로드 성공" 표시(DB 컬럼 등)와 실패분 재시도를 한 묶음으로 설계해야 의미가 있다 | [[scheduler-and-storage]] |
 | 원격 TIFF 만 지우는 정책을 켤 화면이 없다 | [코드] 설정 키 `storage_remote_tiff_only` 를 DB 에 직접 써야 한다. 원격 TIFF 는 보관 기간(`full_retention_days`) 뒤에만 지운다(로컬 TIFF 삭제 기간과 연동하지 않음) | 설계 문서와 같은 의도인지 확인이 필요하다 `[NEEDS_CLARIFICATION]` | [[scheduler-and-storage]] |
@@ -133,6 +133,20 @@ verified: true
 | `cron -d`(보관함 날짜 삭제)와 웹·AJAX 삭제는 원격 객체를 지우지 않는다 | [코드] 원격 삭제는 수명주기 작업에서만 | 삭제 경로마다 원격 삭제를 붙일지는 정책 결정이다 | [[scheduler-and-storage]] |
 | 나머지 22개 언어는 새 문구가 영어로 보인다 | [문서] 한국어만 새 문구까지 번역된다 | 번역 작업량이 크고 번역 품질 확인이 필요하다 | [[i18n-and-ui]], [[migration-from-avantfax]] |
 | `/ajax/faxalter` 에 남의 작업을 막는 소유권 검사가 없다 | [코드] 원본처럼 HylaFAX 에 맡긴다. 일반 사용자의 owner 는 자기 이름으로 고정, 슈퍼유저만 바꿀 수 있다 | 원본과 같은 동작이라 정책 결정(막을지)이 먼저다 | 위 1.2 표의 faxalter 행 |
+
+### 5.0 `[추정]` 점검(2026-10-03)에서 새로 확인된 것
+
+위키의 `[추정]` 27곳을 코드 읽기와 실행으로 확인하는 과정에서 나온 항목이다. 아직 고치지 않았다. 측정 방법과 값은 링크한 페이지에 있다.
+
+| 항목 | 지금 상태 | 하려면 무엇이 필요한가 | 근거 |
+|---|---|---|---|
+| 패스키가 TLS 를 프록시에서 끝내는 구성에서 실패한다 | [코드] 기대 origin 을 `Host` 와 `wsgi.url_scheme` 로 만든다. 동봉한 `deploy/nginx/namifax.conf` 와 같은 환경을 흉내 낸 요청에서 기대 origin 은 `http://...`, 브라우저가 보내는 값은 `https://...` 라 라이브러리의 문자열 비교에서 어긋난다. 실제 브라우저로는 확인하지 못했다 | `X-Forwarded-Proto` 를 믿을 프록시에서만 읽거나 설정으로 origin 을 고정한다. 어느 쪽인지 정해야 한다 | [[authentication-and-security]] |
+| 정기 작업 실행 표지가 원자적이지 않다 | [코드, 측정] 두 프로세스가 같은 작업을 같은 순간 시작하면 4개 DB 모두 40번 중 39번 둘 다 통과한다. 웹 내장 스케줄러와 `namifax scheduler` 를 함께 켜면 같은 시각에 일어날 수 있다 | 표지 확보를 행 잠금(`SystemConfigService.lock`)이나 원자적 upsert 로 바꾸고 동시 시작 시험을 둔다 | [[scheduler-and-storage]], [[operations-and-deployment]] |
+| 인쇄 후 팩스(print-in)는 PDF 로 들어오면 `[[FAX: 번호]]` 를 못 찾는다 | [코드, 측정] PostScript 에서는 찾고, Ghostscript 가 만든 PDF 는 압축 여부와 상관없이 못 찾는다 | PDF 에서는 텍스트 추출(`pdftotext` 등)을 거치게 하거나 PostScript 입력만 지원한다고 문서에 명시한다 | [[hylafax-operations-notes]] |
+| 전화번호부가 빈 번호에서 원본과 다르다 | [코드, 측정] 한 업체에 빈 번호가 있으면 원본은 `111;`, `111;;222`, 이 구현은 `111`, `111;222` 를 쓴다. 정상 입력은 같다 | 원본 모양을 따를지 정한다(원본의 `;` 는 빈 번호의 부산물로 보이지만 의도인지는 알 수 없다) | [[scheduler-and-storage]] |
+| 패스키·SAML 로그인이 TOTP 를 건너뛴다 | [코드] 두 방식이 `TotpService` 를 부르지 않는다 | 의도인지 결정이 필요하다(코드와 문서에 근거 없음) | [[authentication-and-security]] |
+| `static/theme.css` 가 어디서도 쓰이지 않는다 | [코드] 저장소 안 참조 없음, 첫 커밋부터 존재 | 제거해도 되는지 결정이 필요하다(외부에서 직접 부르는지는 알 수 없음) | [[i18n-and-ui]] |
+| `ko` 를 뺀 로케일이 절반 넘게 영어다 | [코드, 측정] `namifax.pot` 766개 중 `en` 374(48.8%), 나머지 22개 317~344(41.4~44.9%) | 번역할 로케일을 정해야 한다 | [[i18n-and-ui]] |
 
 ### 5.1 이번 수정 작업에서 AI 가 돌리지 않았거나 하지 못한 시험
 - **서버 DB(PostgreSQL·MySQL·MariaDB) 시험을 2026-10-02 커밋 `baf16ca` 에서 AI 가 Docker 임시 컨테이너로 직접 실행했고 모두 통과했다.** SQLite 2290 passed, 세 서버 각 2456 passed(수치와 방법은 [[testing]] 의 "마지막 실행 기록"). 앞선 실행(커밋 `0c77622`)에서는 MySQL 8.4.11 과 MariaDB 10.11.16 이 각각 2 failed 였고(스케줄러 시험, `REPEATABLE-READ` 에서 `sched_heartbeat` 중복 키), 같은 원인으로 로그인 제한이 병렬 실패를 덜 세는 것이 측정되어 둘 다 고쳤다([[database-and-migrations]] 7장, [[authentication-and-security]]). 선생님이 같은 날 4개 DB 통합 시험을 직접 실행했다는 구두 보고도 있다(결과 세부는 기록 없음). 서버 DB 시험은 컨테이너로 서버를 띄워 `NAMIFAX_TEST_*_URL` 을 설정해야 하며 세 서버를 동시에 돌려도 20~30분 걸린다. 이번에 DB 계층(리비전, 모델)은 바꾸지 않았지만, `SystemConfig` 키가 늘었다(로그인 제한, 스케줄러, `storage_remote_tiff_only`).
