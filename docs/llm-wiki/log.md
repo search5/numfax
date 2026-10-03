@@ -66,3 +66,6 @@ MySQL·MariaDB 의 스케줄러 시험 2건 실패를 따라가다 `SystemConfig
 
 ## [2026-10-03] topic | 별도 스케줄러 `namifax scheduler` 제거
 사용자 결정: 웹 서버 하나로 운영하고 systemd 별도 서비스는 쓰지 않는다. 같은 DB 의 스케줄러 프로세스가 둘이면 같은 작업을 같은 순간 시작하는 경쟁이 있었으므로(4개 DB 39/40) 별도 스케줄러를 없앴다. 제거: `namifax scheduler` 명령, `run_scheduler_standalone`, `scheduler_main`, 스크립트 `namifax-scheduler`, `systemd/namifax-scheduler.service`, `start(blocking=True)` 경로. 화면 안내문과 한국어 번역에서 별도 스케줄러 문구를 뺐다. 스케줄러는 웹 프로세스 안(`namifax serve`)에서만 돈다. 표지 경쟁 자체는 코드로 고치지 않았고, 같은 DB 에 웹 서비스를 둘 이상 띄울 때만 생긴다. 반영: [[scheduler-and-storage]], [[operations-and-deployment]], [[overview]], [[architecture-and-modules]], [[hylafax-integration]], [[migration-from-avantfax]], [[known-gaps-and-decisions]].
+
+## [2026-10-03] topic | 웹 서비스를 한 DB 에 둘 이상 띄우는 시험
+사용자 지적("같은 DB 에 웹 서비스를 둘 이상 띄우면 죽는다")을 임시 SQLite DB 에 `namifax serve` 두 개로 확인했다. 마이그레이션이 필요한 DB 에서 동시에 시작하면 두 번째가 `alembic_version` 중복 오류로 죽고, 시작한 뒤에는 A 에서 로그인한 쿠키가 B 에서 401 이다. 위 별도 스케줄러 제거 기록에서 "웹 서비스를 둘 이상 띄울 때만 경쟁이 생긴다"고 쓴 서술을 "한 DB 에는 웹 서비스를 하나만 운영한다"로 바로잡았다. 반영: [[operations-and-deployment]], [[scheduler-and-storage]], [[known-gaps-and-decisions]].
