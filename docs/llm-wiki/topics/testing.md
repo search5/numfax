@@ -1,7 +1,7 @@
 ---
 title: 시험
 type: topic
-updated: 2026-10-02
+updated: 2026-10-03
 sources: [pyproject.toml, tests/conftest.py, tests/sqlsession.py, tests/request_identity.py, tests/unit/test_ko_catalog_complete.py, tests/unit/test_legacy_trees_removed.py, tests/unit/test_fax_archive_orm.py, tests/unit/test_migrations_match_models.py, tests/test_i18n.py, tests/fixtures/, tests/unit/test_login_throttle.py, tests/unit/test_session_secure_flag.py, tests/unit/test_remote_upload.py, tests/unit/test_env_file_wiring.py, tests/unit/test_serve_main_db.py, tests/unit/test_global_engine_removed.py, tests/unit/test_db_injection.py, tests/unit/test_multi_dialect_safety.py, tests/unit/test_state_changing_posts.py, tests/unit/test_logout_post.py, tests/unit/test_origin_guard.py, tests/unit/test_legacy_redirects.py, tests/unit/test_db_isolation_fixture.py, tests/unit/test_alembic_wiring.py, tests/unit/test_demo_data_optin.py, tests/unit/test_sso_and_2fa_login.py, tests/unit/test_active_mailer.py, tests/unit/test_pyramid_modals_action.py, tests/unit/test_user_account.py, tests/unit/test_webauthn_orm.py, tests/unit/test_ocr_orm.py, tests/unit/test_totp_orm.py, src/namifax/views/modals.py, src/namifax/common/helpers.py, src/namifax/db/bootstrap.py, tools/migration_rehearsal/, "[[architecture-md-part2]]", "[[agents-md-legacy-instructions]]", "[[db-layer-refactor-log]]"]
 verified: true
 ---

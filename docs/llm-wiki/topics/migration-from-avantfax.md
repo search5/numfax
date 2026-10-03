@@ -1,7 +1,7 @@
 ---
 title: AvantFAX 3.x 에서 옮기기
 type: topic
-updated: 2026-10-02
+updated: 2026-10-03
 sources: [src/namifax/models/types.py, src/namifax/common/passwords.py, src/namifax/common/settings.py, src/namifax/db/provider.py, src/namifax/db/bootstrap.py, src/namifax/db/adopt.py, src/namifax/db/textsearch.py, src/namifax/views/auth.py, src/namifax/views/admin_users.py, src/namifax/services/user_account.py, src/namifax/services/smtp_settings.py, src/namifax/common/secretbox.py, src/namifax/origin_guard.py, src/namifax/services/login_throttle.py, systemd/namifax.service, systemd/namifax-scheduler.service, tools/migration_rehearsal/run.sh, src/namifax/alembic/versions/20261002_0026_password_hash_width.py, src/namifax/cli/import_archive.py, src/namifax/main.py, deploy/legacy-redirects/nginx.conf, deploy/legacy-redirects/apache.conf, tests/unit/test_legacy_redirects.py, tests/unit/test_legacy_database_compat.py, tests/unit/test_legacy_html_entities.py, tests/fixtures/legacy_sql/, tools/migration_rehearsal/, "[[migrating-from-avantfax3]]", "[[install-hylafax]]", "[[operations-checklist]]", "[[porting-gaps]]"]
 verified: true
 ---

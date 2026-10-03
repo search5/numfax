@@ -1,7 +1,7 @@
 ---
 title: 인증과 보안
 type: topic
-updated: 2026-10-02
+updated: 2026-10-03
 verified: true
 sources:
   - src/namifax/common/passwords.py

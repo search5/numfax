@@ -1,7 +1,7 @@
 ---
 title: NamiFAX 개요
 type: topic
-updated: 2026-10-02
+updated: 2026-10-03
 sources: [pyproject.toml, src/namifax/__init__.py, src/namifax/main.py, src/namifax/routes.py, src/namifax/services/scheduler.py, src/namifax/services/scheduler_config.py, src/namifax/services/cloud_storage.py, src/namifax/services/login_throttle.py, src/namifax/services/saml.py, src/namifax/db/provider.py, src/namifax/models/__init__.py, development.ini, production.ini, deploy/hylafax/, deploy/cron.d/namifax, deploy/sudoers.d/namifax, systemd/, package.json, tailwind.config.js, src/namifax/locale/, "[[architecture-md-part1]]", "[[hylafax-integration-architecture]]", "[[migrating-from-avantfax3]]"]
 verified: true
 ---

@@ -1,7 +1,7 @@
 ---
 title: 실행·배포·운영 점검
 type: topic
-updated: 2026-10-02
+updated: 2026-10-03
 sources: [src/namifax/main.py, src/namifax/__init__.py, src/namifax/db/provider.py, src/namifax/db/bootstrap.py, src/namifax/origin_guard.py, src/namifax/common/passwords.py, src/namifax/common/secretbox.py, src/namifax/common/settings.py, src/namifax/services/scheduler.py, src/namifax/services/scheduler_config.py, src/namifax/services/sysfunc.py, src/namifax/views/sendfax.py, src/namifax/services/upload_check.py, src/namifax/cli/cron.py, src/namifax/cli/user.py, src/namifax/cli/phb.py, src/namifax/cli/encrypt_secrets.py, src/namifax/cli/faxrcvd.py, src/namifax/db/seed.py, src/namifax/services/login_throttle.py, src/namifax/services/cloud_storage.py, src/namifax/services/storage_lifecycle.py, src/namifax/services/printer.py, src/namifax/services/smtp_settings.py, src/namifax/services/mailer.py, src/namifax/services/hylafax_info.py, tests/unit/test_env_file_wiring.py, tests/unit/test_serve_main_db.py, tests/unit/test_session_secure_flag.py, tests/unit/test_login_throttle.py, tests/unit/test_business_logic_phase3.py, docs/INSTALL_HYLAFAX.md, docs/OPERATIONS_CHECKLIST.md, development.ini, production.ini, pyproject.toml, systemd/namifax.service, systemd/namifax-scheduler.service, deploy/nginx/namifax.conf, deploy/apache/namifax.conf, deploy/cron.d/namifax, deploy/sudoers.d/namifax, deploy/postfix/setup-email2fax.md, deploy/hylafax/, "[[install-hylafax]]", "[[operations-checklist]]", "[[setup-email2fax]]"]
 verified: true
 ---

@@ -28,6 +28,7 @@
 - [[db-layer-refactor-log]] - DB 계층 전환 기록 (아키텍처 스냅샷)
 - [[hylafax-integration-architecture]] - HylaFAX & AvantFAX 연동 아키텍처 및 스토리지 관리
 - [[new-features-plan]] - NamiFAX 신규 엔터프라이즈 기능 구현 계획
+- [[cover-upload-plan]] - 팩스 표지 업로드·찾아보기 계획(구현 전, 결정 대기 3건)
 - [[porting-gaps]] - 레거시 대비 미구현·결함 목록 (전수 조사)
 - [[agents-md-legacy-instructions]] - 삭제된 AI 작업 규칙 (AGENTS.md 레거시 지침)
 

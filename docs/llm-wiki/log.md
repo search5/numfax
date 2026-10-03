@@ -54,3 +54,9 @@ MySQL·MariaDB 의 스케줄러 시험 2건 실패를 따라가다 `SystemConfig
 
 ## [2026-10-03] topic | 비밀번호 5회 초과 시 계정 잠금, 해제는 관리자만
 요청: 시도가 5회를 넘으면 맞는 비밀번호도 막고 해제는 관리자만. `LoginThrottle` 계정 카운터에서 시간 만료와 시간제 잠금을 없애고(`locked` 표시), 한도 기본 5회, 주소 카운터는 시간제 잠금을 유지하되 한도를 10배로 해 50회를 지켰다(`c87a87d`). 해제는 관리자 사용자 목록의 Unlock 버튼과 `namifax unlock-user`. 반영: [[authentication-and-security]], [[operations-and-deployment]], [[migration-from-avantfax]], [[overview]], [[known-gaps-and-decisions]], [[testing]].
+
+## [2026-10-03] ingest | 팩스 표지 업로드 계획
+`docs/COVER_UPLOAD_PLAN.md` 를 요약해 [[cover-upload-plan]] 을 만들고 index 에 올렸다. 계획을 쓰며 코드를 대조해 표지 스튜디오가 화면에 연결되지 않았음을 확인했고, [[known-gaps-and-decisions]] §3 의 "코드 존재" 서술을 고쳐 모순 블록을 남겼다.
+
+## [2026-10-03] lint | 오늘 고친 topics 의 날짜·근거 경로 정리
+계정 잠금과 표지 업로드 계획을 반영한 topics 6쪽의 `updated` 를 2026-10-03 으로 맞추고, [[known-gaps-and-decisions]] 와 [[authentication-and-security]] 의 `sources` 에 새로 근거로 읽은 코드 경로를 더했다. 링크 점검: 이름 중복 없음, 고아 페이지 없음. `[[FAX: 번호]]` 형태로 잡히는 항목은 인쇄 문구 예시와 규칙 문서의 예시라 끊긴 링크가 아니다.
