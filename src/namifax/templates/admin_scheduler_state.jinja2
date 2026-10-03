@@ -6,7 +6,7 @@
     {% elif st.phase == 'starting' %}{{ _('The scheduler is starting') }}&hellip; {{ _('The change is applied within a few seconds.') }}
     {% elif st.phase == 'stopping' %}{{ _('The scheduler is stopping') }}&hellip; {{ _('The change is applied within a few seconds.') }}
     {% elif st.phase == 'stopped' %}{{ _('The scheduler is stopped') }} ({{ _('last seen') }} {{ st.seen_ago }} {{ _('seconds ago') }}). {{ _('Nothing runs by itself until it is started.') }}
-    {% else %}{{ _('No scheduler is running') }}. {{ _('Start the web service with NAMIFAX_ENABLE_SCHEDULER=1 (the default) or run "namifax scheduler" as a service; until then the tasks below only run when you press Run now.') }}{% endif %}
+    {% else %}{{ _('No scheduler is running') }}. {{ _('Start the web service with NAMIFAX_ENABLE_SCHEDULER=1 (the default); until then the tasks below only run when you press Run now.') }}{% endif %}
   </div>
   <form method="post" action="/admin/scheduler" data-scheduler-action>
     {% if st.asked_stop %}<input type="hidden" name="action" value="start">

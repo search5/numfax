@@ -130,7 +130,7 @@ class NamiFaxScheduler:
 
     def _run_claimed(self, name: str, session, handle: JobHandle, commit: bool) -> dict:
         settings = cfg.load(session)
-        # Another process (the web's built-in scheduler, or ``namifax scheduler``) may be running this job: its marker is fresh.
+        # Another process on the same database (a second web service) may be running this job: its marker is fresh.
         # Checked before our own marker is written, and we hold the in-process claim, so the marker is never our own.
         if cfg.running_marker(session, name):
             return {"ok": False, "stopped": False, "summary": "already running", "at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
@@ -288,11 +288,11 @@ class NamiFaxScheduler:
     control_interval = 15            # seconds between the controller's checks (it hears a Stop/Start within this time)
     _control_thread: Optional[threading.Thread] = None
 
-    def start(self, blocking: bool = False) -> None:
+    def start(self) -> None:
         """Start the scheduler: the controller thread, and the APScheduler engine unless an administrator stopped it.
 
-        With ``blocking`` the call waits until ``stop()`` (the standalone service); a Stop on the admin page shuts only the engine
-        down, the process stays so that a Start can bring it back.
+        It runs inside the web process (``namifax serve``). A Stop on the admin page shuts only the engine down; the controller
+        stays so that a Start can bring it back.
         """
         if self.is_running:
             return
@@ -324,13 +324,6 @@ class NamiFaxScheduler:
             self._control_thread = threading.Thread(target=self._control_loop, daemon=True, name="NamiFaxSchedulerControl")
             self._control_thread.start()
 
-        if blocking:
-            try:
-                while not self._stop_event.wait(1):
-                    pass
-            except KeyboardInterrupt:
-                self.stop()
-
     def start_engine_without_settings(self) -> None:
         from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -360,16 +353,3 @@ def get_scheduler() -> NamiFaxScheduler:
     if _global_scheduler is None:
         _global_scheduler = NamiFaxScheduler()
     return _global_scheduler
-
-
-def run_scheduler_standalone() -> int:
-    """CLI entry point to run scheduler as dedicated foreground/systemd process."""
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
-    print("[*] Starting NamiFAX Standalone Scheduler Daemon (APScheduler)...")
-    sched = get_scheduler()
-    try:
-        sched.start(blocking=True)
-    except (KeyboardInterrupt, SystemExit):
-        sched.stop()
-        print("[*] NamiFAX Scheduler Daemon stopped.")
-    return 0

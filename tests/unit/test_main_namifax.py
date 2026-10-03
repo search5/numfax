@@ -18,7 +18,6 @@ from namifax.main import (
     main,
     notify_main,
     phb_main,
-    scheduler_main,
     serve_main,
 )
 
@@ -38,12 +37,6 @@ class TestNamifaxMain(unittest.TestCase):
             code = main(["dynconf", "ttyS0", "12345"])
             self.assertEqual(code, 0)
             mock_cmd.assert_called_once()
-
-    def test_main_subcommand_scheduler(self):
-        with patch("namifax.main.run_scheduler_standalone", return_value=0) as mock_sched:
-            code = main(["scheduler"])
-            self.assertEqual(code, 0)
-            mock_sched.assert_called_once()
 
     def test_shortcut_dynconf(self):
         with patch("namifax.main.run_dynconf", return_value=0) as mock_cmd, \

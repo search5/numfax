@@ -31,7 +31,7 @@ from namifax.cli.faxrcvd import run_faxrcvd
 from namifax.cli.notify import run_notify
 from namifax.cli.phb import main as run_phb
 from namifax.cli.user import run_createuser, run_reset_2fa, run_unlock_user
-from namifax.services.scheduler import get_scheduler, run_scheduler_standalone
+from namifax.services.scheduler import get_scheduler
 
 USAGE = """NamiFAX Modernized Enterprise System CLI
 
@@ -40,7 +40,6 @@ Usage:
 
 Available commands:
   serve              Start the HTTP / API web service (with integrated APScheduler)
-  scheduler          Start the standalone background APScheduler daemon
   createuser         Create or update user account (ID / PW credentials)
   import-archive     Import an existing HylaFAX/AvantFAX fax archive directory into the database
   unlock-user        Unlock an account that too many wrong passwords locked
@@ -106,7 +105,7 @@ def serve_main(argv: list[str] | None = None) -> int:
     enable_internal_sched = os.environ.get("NAMIFAX_ENABLE_SCHEDULER", "1") in ("1", "true", "True")
     if enable_internal_sched:
         scheduler = get_scheduler()
-        scheduler.start(blocking=False)
+        scheduler.start()
         print("[*] In-process APScheduler started.")
 
     try:
@@ -157,10 +156,6 @@ def phb_main() -> None:
     sys.exit(run_phb())
 
 
-def scheduler_main() -> None:
-    sys.exit(run_scheduler_standalone())
-
-
 def main(argv: list[str] | None = None) -> int:
     args = argv if argv is not None else sys.argv[1:]
 
@@ -180,9 +175,6 @@ def main(argv: list[str] | None = None) -> int:
 
     elif cmd == "createuser":
         return run_createuser(sub_args)
-
-    elif cmd == "scheduler":
-        return run_scheduler_standalone()
 
     elif cmd == "dynconf":
         return run_dynconf(["dynconf"] + sub_args)

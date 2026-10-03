@@ -38,7 +38,6 @@ dependencies = [
 [project.scripts]
 namifax = "namifax.main:main"
 namifax-server = "namifax.main:serve_main"
-namifax-scheduler = "namifax.main:scheduler_main"
 namifax-createuser = "namifax.main:createuser_main"
 namifax-dynconf = "namifax.main:dynconf_main"
 namifax-faxrcvd = "namifax.main:faxrcvd_main"

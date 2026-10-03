@@ -7,7 +7,7 @@ NamiFAX를 운영 환경에 올리기 전에 한 번, 그리고 운영 중 주�
 
 | 항목 | 방법 | 이유 |
 |---|---|---|
-| 환경 파일 배선 | `/etc/namifax.env`(`KEY=value` 한 줄씩, 따옴표·`export`·줄 끝 주석 없음)를 두면 systemd 서비스 2개(`EnvironmentFile=-`), cron 줄(`sh -c 'set -a; . /etc/namifax.env; …'`), HylaFAX 훅 스크립트(`set -a; . …`)가 모두 같은 파일을 읽습니다. | 파일이 전달되지 않으면 `DATABASE_URL` 이 없어 현재 폴더의 SQLite(`namifax.db`)로 조용히 떨어집니다. |
+| 환경 파일 배선 | `/etc/namifax.env`(`KEY=value` 한 줄씩, 따옴표·`export`·줄 끝 주석 없음)를 두면 systemd 서비스(`EnvironmentFile=-`), cron 줄(`sh -c 'set -a; . /etc/namifax.env; …'`), HylaFAX 훅 스크립트(`set -a; . …`)가 모두 같은 파일을 읽습니다. | 파일이 전달되지 않으면 `DATABASE_URL` 이 없어 현재 폴더의 SQLite(`namifax.db`)로 조용히 떨어집니다. |
 | 세션 서명 키 고정 | `session.secret`(ini) 또는 환경변수 `NAMIFAX_SESSION_SECRET` | 없으면 프로세스마다 임의 키를 쓰고 경고만 남깁니다. 워커가 여러 개거나 재시작하면 2FA 중간 단계 상태와 로그인 흐름이 끊깁니다. |
 | HTTPS면 보안 쿠키 | ini 의 `session.secure = true`. ini 는 `namifax serve --config <파일.ini>` 또는 환경변수 `NAMIFAX_INI` 로 읽힙니다(`pserve` 로 띄워도 됩니다). 옵션이 없으면 ini 를 읽지 않습니다. | 기본값은 false입니다. `csrf.trusted_origins`, `secret.key` 도 같은 방식입니다. |
 | 자격증명 암호화 키 | 환경변수 `NAMIFAX_SECRET_KEY`(또는 ini `secret.key`)를 정하고 `namifax encrypt-secrets`를 한 번 실행 | 클라우드 키, SMTP 비밀번호, 2FA 시드를 암호화해 저장합니다. **키를 잃으면 암호화된 값을 복구할 수 없습니다.** 비밀 저장소에 따로 보관하십시오. |

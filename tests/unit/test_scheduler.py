@@ -36,7 +36,7 @@ class TestScheduler(unittest.TestCase):
             mock_phb.assert_called_once()
 
     def test_start_and_stop_fallback(self):
-        self.scheduler.start(blocking=False)
+        self.scheduler.start()
         self.assertTrue(self.scheduler.is_running)
         self.scheduler.stop()
         self.assertFalse(self.scheduler.is_running)

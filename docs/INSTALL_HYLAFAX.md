@@ -11,7 +11,7 @@ NamiFAX와 HylaFAX를 연결하는 순서입니다. 파일은 `deploy/` 폴더�
 
 `/etc/namifax.env`(모드 0640)에 DB 접속과 설정을 둡니다. 저장소의 파일들이 모두 이 한 파일을 읽습니다.
 
-- systemd 서비스 2개(`systemd/namifax.service`, `systemd/namifax-scheduler.service`): `EnvironmentFile=-/etc/namifax.env`
+- systemd 서비스(`systemd/namifax.service`): `EnvironmentFile=-/etc/namifax.env`
   (`-` 때문에 파일이 없어도 시작은 합니다. 다만 그러면 `DATABASE_URL` 이 없어 현재 폴더의 SQLite 파일로 조용히 떨어지므로 꼭 만드십시오).
 - cron(`deploy/cron.d/namifax`): cron 에는 `EnvironmentFile` 이 없어서 각 줄이 `sh -c 'set -a; . /etc/namifax.env; set +a; exec …'` 로 파일을 먼저 읽습니다.
 - HylaFAX 훅 스크립트(`deploy/hylafax/bin/*`): `set -a; . /etc/namifax.env; set +a` 뒤에 `exec` 합니다.

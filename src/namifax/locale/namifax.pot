@@ -813,9 +813,8 @@ msgid "No scheduler is running"
 msgstr ""
 
 msgid ""
-"Start the web service with NAMIFAX_ENABLE_SCHEDULER=1 (the default) or "
-"run \"namifax scheduler\" as a service; until then the tasks below only "
-"run when you press Run now."
+"Start the web service with NAMIFAX_ENABLE_SCHEDULER=1 (the default); until "
+"then the tasks below only run when you press Run now."
 msgstr ""
 
 msgid "Start the scheduler"

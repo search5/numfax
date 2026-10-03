@@ -13,7 +13,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[2]
 ENV_FILE = "/etc/namifax.env"
 HOOKS = ["dynconf", "faxcover", "faxrcvd", "notify"]
-SERVICES = ["namifax.service", "namifax-scheduler.service"]
+SERVICES = ["namifax.service"]
 FIELD = r"[\d*/,-]+"
 
 

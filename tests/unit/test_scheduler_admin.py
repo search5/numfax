@@ -67,7 +67,7 @@ def test_jobs_are_scheduled_from_the_saved_settings(dbsession):
     s.tmp_time, s.inbox_enabled, s.inbox_time, s.phonebook_minutes = "04:15", True, "05:20", 30
     cfg.save(dbsession, s)
     sched = NamiFaxScheduler()
-    sched.start(blocking=False)
+    sched.start()
     try:
         sched.apply_config(dbsession)
         jobs = _jobs(sched)
@@ -81,7 +81,7 @@ def test_jobs_are_scheduled_from_the_saved_settings(dbsession):
 
 def test_a_job_that_is_switched_off_is_removed(dbsession):
     sched = NamiFaxScheduler()
-    sched.start(blocking=False)
+    sched.start()
     try:
         sched.apply_config(dbsession)
         assert "phonebook" in _jobs(sched)
@@ -96,7 +96,7 @@ def test_a_job_that_is_switched_off_is_removed(dbsession):
 
 def test_the_scheduler_notices_a_change_by_itself(dbsession):
     sched = NamiFaxScheduler()
-    sched.start(blocking=False)
+    sched.start()
     try:
         sched.apply_config(dbsession)
         before = sched.config_signature
@@ -245,7 +245,7 @@ def test_the_scheduler_is_running_unless_it_was_stopped(dbsession):
 
 def test_stopping_shuts_the_apscheduler_engine_down_and_starting_brings_it_back(dbsession):
     sched = NamiFaxScheduler()
-    sched.start(blocking=False)
+    sched.start()
     try:
         sched.apply_config(dbsession)
         assert sched.engine_running and {"tmp", "lifecycle", "phonebook"} <= set(_jobs(sched))
@@ -264,7 +264,7 @@ def test_stopping_shuts_the_apscheduler_engine_down_and_starting_brings_it_back(
 def test_a_scheduler_that_starts_while_stopped_runs_no_engine(dbsession):
     cfg.set_stopped(dbsession, True)
     sched = NamiFaxScheduler()
-    sched.start(blocking=False)
+    sched.start()
     try:
         sched.watch_config(dbsession)
         assert not sched.engine_running and sched.is_running
@@ -274,7 +274,7 @@ def test_a_scheduler_that_starts_while_stopped_runs_no_engine(dbsession):
 
 def test_the_controller_thread_ends_with_stop(dbsession):
     sched = NamiFaxScheduler()
-    sched.start(blocking=False)
+    sched.start()
     thread = sched._control_thread
     assert thread is not None and thread.is_alive()
     sched.stop()
@@ -284,7 +284,7 @@ def test_the_controller_thread_ends_with_stop(dbsession):
 
 def test_the_heartbeat_says_whether_the_engine_runs(dbsession):
     sched = NamiFaxScheduler()
-    sched.start(blocking=False)
+    sched.start()
     try:
         sched.watch_config(dbsession)
         assert cfg.engine_state(dbsession) == "running"
@@ -297,7 +297,7 @@ def test_the_heartbeat_says_whether_the_engine_runs(dbsession):
 
 def test_stopping_from_the_page_acts_at_once_in_the_process_that_hosts_the_scheduler(client, dbsession):
     sched = NamiFaxScheduler()
-    sched.start(blocking=False)
+    sched.start()
     try:
         with patch("namifax.views.admin_scheduler.get_scheduler", return_value=sched):
             cfg.beat(dbsession)

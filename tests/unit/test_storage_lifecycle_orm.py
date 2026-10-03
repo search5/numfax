@@ -163,7 +163,7 @@ def test_the_scheduler_runs_the_saved_policy_every_day(dbsession):
     from namifax.services.scheduler import NamiFaxScheduler
 
     sched = NamiFaxScheduler()
-    sched.start(blocking=False)
+    sched.start()
     try:
         sched.apply_config(dbsession)
         job = sched._scheduler.get_job("lifecycle")
