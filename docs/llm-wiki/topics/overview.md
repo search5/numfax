@@ -36,12 +36,12 @@ HylaFAX(faxgetty/faxq/hfaxd) --훅 스크립트--> namifax-faxrcvd / notify / dy
         (deploy/hylafax/bin/* 이 /etc/namifax.env 를 읽고 .venv 의 CLI 를 exec)   --> 같은 RDB + 팩스 파일 저장소
 
 cron(/etc/cron.d/namifax) --> namifax cron (임시폴더 정리 -t, 보관함 이동 -i/-d, TIFF 정리 -p, 저장소 정책 -s)
-APScheduler(웹 프로세스 또는 namifax scheduler) --> 작업 4개(tmp 만 run_cron 을 부르고 나머지는 서비스를 직접 호출)
-systemd: namifax.service(웹+스케줄러) / namifax-scheduler.service(스케줄러만)
+APScheduler(웹 프로세스 안) --> 작업 4개(tmp 만 run_cron 을 부르고 나머지는 서비스를 직접 호출)
+systemd: namifax.service(웹+스케줄러)
 ```
 - 웹: `namifax serve` 가 먼저 `ensure_schema` 를 돌려 스키마를 맞추고, 환경변수 `NAMIFAX_ENABLE_SCHEDULER`(기본 `1`)가 켜져 있으면 APScheduler 를 같은 프로세스에서 시작한 뒤 `create_app()` 을 `wsgiref` 스레드 서버로 띄운다. 기본 포트 `8000`(`NAMIFAX_PORT`), 호스트 `0.0.0.0`(`NAMIFAX_HOST`). `--config`(`NAMIFAX_INI`)로 ini 의 `[app:main]` 설정을 읽어 앱 설정과 DB URL 에 쓴다(읽지 못하면 종료 코드 `1`). [코드] `src/namifax/main.py` `serve_main`, `tests/unit/test_serve_main_db.py`
 - HylaFAX 훅: `FaxRcvdCmd: bin/faxrcvd`, `DynamicConfig: bin/dynconf`(`config.namifax`), `NotifyCmd: bin/notify`, `CoverCmd: bin/faxcover`(`etc-faxq.snippet`). 각 쉘 스크립트는 `/etc/namifax.env` 를 읽고(`set -a`) `${NAMIFAX_HOME:-/opt/namifax}/.venv/bin/namifax-faxrcvd` 등을 `exec` 한다. systemd 단위 2개(`EnvironmentFile=-/etc/namifax.env`)와 cron 줄도 같은 파일을 읽는다. [코드] `deploy/hylafax/config.namifax`, `deploy/hylafax/etc-faxq.snippet`, `deploy/hylafax/bin/{faxrcvd,notify,dynconf,faxcover}`, `systemd/*.service`, `deploy/cron.d/namifax`, `tests/unit/test_env_file_wiring.py`. 자세한 내용은 [[hylafax-integration]].
-- 정기 작업: 작업 이름은 `tmp`, `inbox`, `lifecycle`, `phonebook` 4개. 설정은 DB(`SystemConfig` 의 `sched_*` 키)에 저장되고 관리자 화면(`/admin/scheduler`)에서 바꾼다. 다른 프로세스가 신선한 실행 표식을 남겼으면 실행은 "already running" 으로 건너뛴다. `namifax scheduler` 는 독립 데몬. [코드] `src/namifax/services/scheduler_config.py`(`JOBS`, `load`, `running_marker`), `src/namifax/services/scheduler.py`(`_run_claimed`), `src/namifax/main.py`. 자세한 내용은 [[scheduler-and-storage]].
+- 정기 작업: 작업 이름은 `tmp`, `inbox`, `lifecycle`, `phonebook` 4개. 설정은 DB(`SystemConfig` 의 `sched_*` 키)에 저장되고 관리자 화면(`/admin/scheduler`)에서 바꾼다. 다른 프로세스가 신선한 실행 표식을 남겼으면 실행은 "already running" 으로 건너뛴다. 스케줄러는 웹 프로세스 안에서만 돈다(별도 `namifax scheduler` 는 2026-10-03 에 제거). [코드] `src/namifax/services/scheduler_config.py`(`JOBS`, `load`, `running_marker`), `src/namifax/services/scheduler.py`(`_run_claimed`), `src/namifax/main.py`. 자세한 내용은 [[scheduler-and-storage]].
 - 외부 데몬: HylaFAX(`hfaxd`, `faxq`, `faxgetty`), 메일 서버(Postfix email2fax, `deploy/postfix/setup-email2fax.md`), 선택적으로 PAM·외부 pwauth 인증, SAML IdP. [코드] `src/namifax/auth/pam.py`, `src/namifax/services/saml.py`, `deploy/` / [문서] [[setup-email2fax]]
 - `uucp` 사용자가 서비스를 돌리며, `sudoers.d/namifax` 는 `faxadduser`/`faxdeluser`/`reboot`/`halt` 만 허용한다. [코드] `deploy/sudoers.d/namifax`, `systemd/namifax.service`
 

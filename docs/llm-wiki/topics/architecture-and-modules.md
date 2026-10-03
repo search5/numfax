@@ -9,7 +9,7 @@ verified: true
 # 아키텍처와 모듈
 
 ## 진입점
-- `pyproject.toml` 의 스크립트: `namifax`(=`namifax.main:main`, 하위 명령 분기), `namifax-server`(`serve_main`), `namifax-scheduler`, `namifax-createuser`, `namifax-dynconf`, `namifax-faxrcvd`, `namifax-notify`, `namifax-faxcover`, `namifax-cron`, `namifax-phb`. [코드] `pyproject.toml`
+- `pyproject.toml` 의 스크립트: `namifax`(=`namifax.main:main`, 하위 명령 분기), `namifax-server`(`serve_main`), `namifax-createuser`, `namifax-dynconf`, `namifax-faxrcvd`, `namifax-notify`, `namifax-faxcover`, `namifax-cron`, `namifax-phb`. [코드] `pyproject.toml`
 - paste 진입점 `paste.app_factory: main = namifax:main` 이고 `namifax.main = create_app` 이므로 ini 로도 띄울 수 있다(`development.ini` 는 waitress, `0.0.0.0:6543`). [코드] `pyproject.toml`, `src/namifax/__init__.py`, `development.ini`
 - `namifax <명령>` 명령 목록: serve, scheduler, createuser, import-archive, reset-2fa, encrypt-secrets, dynconf, cron, notify, faxrcvd, faxcover, phb, ocr-import, create-thumbnails, import-users, import-blacklist, reroute, i18n. [코드] `src/namifax/main.py` `main()`
 - `serve_main`: `--config`/`-c`(`NAMIFAX_INI`)가 있으면 ini 의 `[app:main]` 설정을 읽고(읽기 실패 시 종료 코드 `1`), 웹 앱과 같은 방식(`resolve_database_url`)으로 URL 을 풀어 `ensure_schema` 실행 → 스케줄러 시작(`NAMIFAX_ENABLE_SCHEDULER`, 기본 `1`) → `create_app(**settings)`. 앱 생성이 실패하면 스케줄러를 멈추고 대체 앱으로 숨기지 않고 stderr 에 쓴 뒤 종료 코드 `1`. [코드] `src/namifax/main.py`, `tests/unit/test_legacy_trees_removed.py`, `tests/unit/test_serve_main_db.py`
