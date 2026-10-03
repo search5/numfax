@@ -71,4 +71,4 @@ MySQL·MariaDB 의 스케줄러 시험 2건 실패를 따라가다 `SystemConfig
 사용자 지적("같은 DB 에 웹 서비스를 둘 이상 띄우면 죽는다")을 임시 SQLite DB 에 `namifax serve` 두 개로 확인했다. 마이그레이션이 필요한 DB 에서 동시에 시작하면 두 번째가 `alembic_version` 중복 오류로 죽고, 시작한 뒤에는 A 에서 로그인한 쿠키가 B 에서 401 이다. 위 별도 스케줄러 제거 기록에서 "웹 서비스를 둘 이상 띄울 때만 경쟁이 생긴다"고 쓴 서술을 "한 DB 에는 웹 서비스를 하나만 운영한다"로 바로잡았다. 반영: [[operations-and-deployment]], [[scheduler-and-storage]], [[known-gaps-and-decisions]].
 
 ## [2026-10-03] topic | 결정 반영: TOTP 생략은 의도, theme.css 삭제
-사용자 결정: 패스키·SAML 로그인이 TOTP 를 건너뛰는 것은 의도이고(이 서비스는 TOTP 를 쓰지 않음), `static/theme.css` 는 삭제한다. `theme.css` 를 지우고 시험 `test_dead_static_files_removed.py` 를 더했다. TOTP 동작을 고정하는 시험은 만들었다가 TOTP 를 쓰지 않는다는 지적에 따라 지웠다. 반영: [[authentication-and-security]], [[known-gaps-and-decisions]], [[i18n-and-ui]].
+사용자 결정: 패스키와 SAML 은 TOTP 를 쓰지 않는 것이 의도이고(TOTP 는 비밀번호 로그인에만 적용), `static/theme.css` 는 삭제한다. `theme.css` 를 지우고 시험 `test_dead_static_files_removed.py` 를 더했다. TOTP 동작을 고정하는 시험은 만들었다가 필요 없다는 지적에 따라 지웠다. 이 결정을 처음에 "이 서비스는 TOTP 를 쓰지 않는다"로 잘못 적었다가 같은 날 바로잡았다. 반영: [[authentication-and-security]], [[known-gaps-and-decisions]], [[i18n-and-ui]].
