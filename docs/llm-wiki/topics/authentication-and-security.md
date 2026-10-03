@@ -95,7 +95,7 @@ sources:
 
 > 모순: [[defects-rounds-1-2]] SEC-07("TOTP 비밀키/백업코드 DB 평문")과 K08("TOTP 활성화 UI 경로 없음")은 현재와 다르다. 시드는 암호화, 복구 코드는 해시로 저장하고 `/settings/2fa/setup` 등(`src/namifax/routes.py` 의 `totp_*` 라우트)가 있다.
 
-한계: 패스키와 SAML 로그인은 TOTP 단계를 거치지 않는다(§4, §5). [코드] `views/webauthn.py`, `views/saml.py` 는 `TotpService` 를 호출하지 않음. 두 방식을 TOTP 없이 허용하는 것이 의도인지는 코드와 문서로 확인할 수 없다(근거 주석 없음). 사용자 결정 대기.
+한계: 패스키와 SAML 로그인은 TOTP 단계를 거치지 않는다(§4, §5). [코드] `views/webauthn.py`, `views/saml.py` 는 `TotpService` 를 호출하지 않음. 두 방식을 TOTP 없이 허용하는 것은 의도다(사용자 결정 2026-10-03: 이 서비스는 TOTP 를 쓰지 않으므로 해당 사항이 없다). 코드에 근거 주석은 없다.
 
 ## 4. WebAuthn(패스키)
 
